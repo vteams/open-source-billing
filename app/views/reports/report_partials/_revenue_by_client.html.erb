@@ -1,0 +1,112 @@
+<div class="reports">
+  <div class="content_middle">
+
+    <div class="report_content_header">
+      <div class="report_content_heading">
+        <h1>Revenue By Client</h1>
+      </div>
+
+      <div class="content_header_data">
+        <div class="header_data_left">
+          <div class="header_data_detail">
+            <ul>
+              <li class="header_name"><%= @report.client_name %></li>
+              <li class="header_duration"><%= @report.period %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- content_header_data -->
+    </div>
+    <!-- report_content_header -->
+
+    <div class="header_data_right">
+      <ul class="download_report">
+        <li class="download_report_title">Export to:</li>
+        <li class="download_sep">CSV</li>
+        <li>Excel</li>
+      </ul>
+      <ul class="print_report">
+        <li><a href="#">Print Report</a></li>
+      </ul>
+      <div class="report_duration">
+        <!--<ul>-->
+          <!--<li>01/01/2013</li>-->
+          <!--<li><span>to</span></li>-->
+          <!--<li>01/01/2013</li>-->
+        <!--</ul>-->
+      </div>
+      <!-- report_duration -->
+    </div>
+
+    <div class="revenue_by_client">
+      <div class="grid_table">
+        <table cellpadding="0" cellspacing="0" class="table_listing client_report_listing">
+          <colgroup>
+            <col class="one"/>
+            <col class="two"/>
+            <col class="three"/>
+            <col class="four"/>
+            <col class="five"/>
+            <col class="six"/>
+            <col class="seven"/>
+            <col class="eight"/>
+            <col class="nine"/>
+            <col class="ten"/>
+            <col class="eleven"/>
+            <col class="twelve"/>
+            <col class="thirteen"/>
+            <col class="fourteen"/>
+          </colgroup>
+
+          <thead>
+            <th class="align_left">Client</th>
+            <% 12.times do |month| %>
+                <th class="align_left"><%= Date::MONTHNAMES[month+1].to_s[0..2] %></th>
+            <% end %>
+            <th class="align_center">Total</th>
+          </thead>
+          <tbody>
+          <% unless @report.report_data.blank? %>
+              <% @report.report_data.each do |revenue| %>
+                  <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
+                  <tr>
+                    <td class="align_left text-overflow-class" value="<%= revenue.organization_name %>"><%= revenue.organization_name %></td>
+                    <% 12.times do |month| %>
+                        <td class="align_right"><%= number_to_currency(revenue["#{Date::MONTHNAMES[month+1]}"]).to_s.gsub("$", "").gsub(".00", "") %></td>
+                    <% end %>
+                    <td class="align_right"><%= number_to_currency(revenue.client_total) %></td>
+                  </tr>
+              <% end %>
+              <tfoot>
+              <td class="align_left">Total</td>
+              <% 12.times do |month| %>
+                  <td class="align_right"><%= @report.report_total["#{Date::MONTHNAMES[month+1]}"] == 0 ? "" : @report.report_total["#{Date::MONTHNAMES[month+1]}"]  %></td>
+              <% end %>
+              <td class="align_right"><%= number_to_currency(@report.report_total["net_total"] || "") %></td>
+              </tfoot>
+          <% else %>
+              <tr>
+                <td colspan="14">No data found against the selected criteria. Please change criteria and try again.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <!--grid_table-->
+    </div>
+    <!--revnue_by_client-->
+
+
+    <div class="content_bottom">
+      <div class="report_footer">
+
+      </div>
+      <!-- report_footer -->
+    </div>
+    <!--content_bottom-->
+
+  </div>
+  <!--content_middle-->
+</div><!--reports-->

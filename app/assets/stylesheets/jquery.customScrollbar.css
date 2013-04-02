@@ -1,0 +1,93 @@
+
+.content_scroll {
+    /*height: 400px;*/
+    /*margin: 20px 0 40px 40px;*/
+    /*overflow: auto;*/
+    /*padding: 10px;*/
+    /*width: 260px;*/
+}
+.scrollContainer{
+    width: 100%;
+    height: 175px;
+    position: relative;
+    overflow: hidden;
+}
+.mCSB_container {
+    /*margin-right: 30px;*/
+    overflow: hidden;
+    width: auto;
+}
+.mCSB_container.mCS_no_scrollbar {
+    margin-right: 0;
+}
+.mCS_disabled > .mCustomScrollBox > .mCSB_container.mCS_no_scrollbar, .mCS_destroyed > .mCustomScrollBox > .mCSB_container.mCS_no_scrollbar {
+    margin-right: 30px;
+}
+.mCustomScrollBox > .mCSB_scrollTools {
+    height: 100%;
+    right: 3px;
+    top: 0;
+    width: 16px;
+}
+.mCSB_scrollTools .mCSB_draggerContainer {
+    background: none repeat scroll 0 0 #EBEBEB;
+    border-radius: 2px 2px 2px 2px;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    width: 10px;
+}
+.mCSB_scrollTools a + .mCSB_draggerContainer {
+    margin: 20px 0;
+}
+.mCSB_scrollTools .mCSB_draggerRail {
+    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+    margin: 0 auto;
+    width: 2px;
+}
+.mCSB_scrollTools .mCSB_dragger {
+    cursor: pointer;
+    height: 30px;
+    width: 100%;
+}
+.mCSB_dragger {
+    background: url("scrl.png") no-repeat scroll 0 0 transparent;
+    height: 63px !important;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+    width: 4px;
+}
+.mCSB_scrollTools .mCSB_buttonUp, .mCSB_scrollTools .mCSB_buttonDown {
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+.mCSB_scrollTools .mCSB_buttonDown {
+    margin-top: -40px;
+    top: 100%;
+}
+.mCustomScrollBox > .mCSB_scrollTools {
+    opacity: 0.75;
+}
+.mCustomScrollBox:hover > .mCSB_scrollTools {
+    opacity: 1;
+}
+.mCSB_scrollTools .mCSB_draggerRail {
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar {
+}

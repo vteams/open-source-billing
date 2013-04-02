@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Open Source Billing</title>
+    <style type="text/css">
+      /*-----------------General Css Starts-----------------*/
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        overflow-y: scroll;
+      }
+      body {
+        background: #ffffff;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        color: #464646;
+        padding: 0px;
+      }
+      .content {
+        clear: both;
+        margin: auto;
+        min-height: 950px;
+        overflow: hidden;
+        padding: 50px 0;
+        width: 840px;
+      }
+      @font-face {
+        font-family: 'Dosis Medium';
+        font-style: normal;
+        font-weight: 500;
+        src: url(http://themes.googleusercontent.com/static/fonts/dosis/v1/ELvCmRUbtOdCk3jbD-FqUPesZW2xOQ-xsNqO47m55DA.eot);
+        src: local('Dosis Medium'), local('Dosis-Medium'), url(http://themes.googleusercontent.com/static/fonts/dosis/v1/ELvCmRUbtOdCk3jbD-FqUPesZW2xOQ-xsNqO47m55DA.eot) format('embedded-opentype'), url(http://themes.googleusercontent.com/static/fonts/dosis/v1/obisuY-MenYRAFwd-r2NhfesZW2xOQ-xsNqO47m55DA.ttf) format('truetype'), url(http://themes.googleusercontent.com/static/fonts/dosis/v1/A4RWZsncmJ25G8iqn2EHN_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
+      }
+      /*-----------------General Css Ends-----------------*/
+
+      /*-----------------Grid CSS Starts-----------------*/
+      .grid_table {
+        float: left;
+        width: 100%;
+        padding: 15px 0 0 0;
+      }
+      x:-o-prefocus, .grid_table table{
+        border-collapse: separate;
+      }
+      .grid_table table tr:first-child {
+        height: 30px;
+      }
+      .grid_table table tr {
+        height: 31px;
+      }
+      .grid_table table tr.selected {
+        background-color: #ebebeb;
+      }
+      .grid_table table tr:hover {
+        background-color: #f7f7f7;
+      }
+      tfoot tr:hover{
+        background: none !important;
+      }
+      .grid_table table th {
+        background-color: #898989;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        color: #ffffff;
+        border-right: 1px solid #c2c2c2 !important;
+      }
+      .grid_table table td {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        color: #464646;
+        border-bottom: 1px solid #D7D7D7
+      }
+      .grid_table table tfoot td {
+        border-bottom: none;
+      }
+      .grid_table table td a:hover {
+        color: #00ace5;
+      }
+      .grid_table table tr td.currency span {
+        font-size: 9px;
+        text-transform: uppercase;
+      }
+      .grid_table table td, .grid_table table th {
+        padding: 0 10px;
+      }
+      .grid_table table td.sorting, .grid_table table th.sorting {
+        padding-right: 25px;
+      }
+
+      .grid_table table td input, .grid_table table th input {
+        margin: -2px 0 0 0;
+      }
+      .grid_table table th:first-child {
+        border-radius: 5px 0 0 5px;
+      }
+      .grid_table table th:last-child {
+        border-radius: 0 5px 5px 0;
+        -o-border-radius-topleft: 10px;
+        border-right: none !important;
+      }
+      .align_left {
+        text-align: left !important;
+      }
+      .align_right {
+        text-align: right !important;
+      }
+      .align_center {
+        text-align: center !important;
+      }
+      .grid_table table td.draft {
+        color: #757575;
+      }
+      .grid_table table td.sent, .grid_table table td.viewed{
+        color: #00ace5;
+      }
+      .grid_table table td.partial, .grid_table table td.draft-partial {
+        color: #f26522;
+      }
+      .grid_table table td.paid {
+        color: #6ba500;
+      }
+      .grid_table table td.disputed {
+        color: #b1212d;
+      }
+      /*-----------------Grid CSS Ends-----------------*/
+
+      /*-----------------Invoice Preview CSS Starts-----------------*/
+      .inovice_preview_contianer{
+        margin: auto;
+        width: 99.8%;
+        border: 1px solid #d7d7d7;
+        overflow: hidden;
+        border-radius: 4px;
+        min-height: 90px;
+        background: #ffffff;
+      }
+      .invoice_tag{
+        position: absolute;
+        margin: -1px 0 0 -1px;
+        width: 90px;
+        height: 90px;
+        *margin: -1px 0 0 -839px;
+      }
+      .draft{
+        background: url(/assets/draft.png) no-repeat;
+      }
+      .sent{
+        background: url(/assets/sent.png) no-repeat;
+      }
+      .draft-partial{
+        background: url(/assets/draft_partial.png) no-repeat;
+      }
+      .partial{
+        background: url(/assets/partial.png) no-repeat;
+      }
+      .paid{
+        background: url(/assets/paid.png) no-repeat;
+      }
+      .disputed{
+        background: url(/assets/disputed.png) no-repeat;
+      }
+      .viewed{
+        background: url(/assets/viewed.png) no-repeat;
+      }
+      .invoice_preview_content{
+        float: left;
+        position: relative;
+        width: 780px;
+        padding: 54px 29px 0 29px;
+        min-height: 980px;
+      }
+      .preview_content_top{
+        float: left;
+        width: 100%;
+        padding-bottom: 40px;
+      }
+      .preview_left{
+        float: left;
+        width: 475px;
+        padding: 0 0 0 25px;
+      }
+      .invoice_name{
+        float: left;
+        width: 100%;
+        padding: 0 0 24px 0;
+        font-family: 'Dosis Medium';
+        font-size: 24px;
+      }
+      .invoice_address{
+        float: left;
+        width: 100%;
+        padding: 0 0 24px 0;
+      }
+      .invoice_address p, .invoice_organization p{
+        float: left;
+        width: 100%;
+        line-height: normal;
+        padding: 0 0 2px 0;
+      }
+      .invoice_organization{
+        float: left;
+        width: 100%;
+      }
+      .preview_heading{
+        font-weight: bold;
+      }
+      .preview_right{
+        float: right;
+        width: 254px;
+        padding: 66px 0 0 0;
+      }
+      .top_right_row{
+        float: left;
+        width: 235px;
+        height: 22px;
+        padding: 0 10px 0 9px
+      }
+      .top_right_row:last-child{
+        height: auto;
+      }
+      .preview_right_label{
+        float: left;
+        width: 120px;
+        text-align: left;
+      }
+      .preview_right_description{
+        float: left;
+        width: 115px;
+        text-align: right;
+      }
+      .preview_content_middle{
+        float: left;
+        width: 100%;
+        padding: 0 0 40px 0;
+      }
+      .grid_table table col.one{
+        width : 140px;
+      }
+      .grid_table table col.two{
+        width : 400px;
+      }
+      .grid_table table col.three{
+        width: 120px;
+      }
+      .grid_table table col.four{
+        width : 80px;
+      }
+      .grid_table table col.five{
+        width : 100px;
+      }
+      .preview_content_btm{
+        float: left;
+        width: 100%;
+        padding: 0 0 30px 0;
+      }
+      .preview_btm_top{
+        float: left;
+        width: 100%;
+      }
+      .preview_left.btm{
+        padding-left: 0px;
+        width: 500px;
+      }
+      .preview_terms{
+        float: left;
+        width: 100%;
+        padding: 0 0 22px 0;
+      }
+      .preview_terms p, .preview_notes p{
+        float: left;
+        width: 100%;
+        padding: 0 0 6px 0;
+        line-height: normal;
+      }
+      .preview_notes{
+        float: left;
+        width: 100%;
+      }
+      .preview_right.btm{
+        padding-top: 0px;
+      }
+      .top_right_row.border{
+        border-bottom: 1px solid #d7d7d7;
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+      }
+      .top_right_row.amt_paid{
+        color: #00ace5;
+      }
+      .preview_btm_footer{
+        bottom: 0;
+        float: left;
+        min-height: 42px;
+        padding-right: 29px;
+        position: absolute;
+        width: 93.1%;
+        *margin-left: -780px;
+      }
+      .preview_btm_footer ul{
+        float: right;
+      }
+      .preview_btm_footer ul li{
+        float: left;
+        display: block;
+        padding: 0 0 0 4px;
+      }
+      .footer_txt{
+        font-size: 10px;
+        padding: 1px 0 0 0 !important;
+      }
+      /*-----------------Invoice Preview CSS Ends-----------------*/
+    </style>
+  </head>
+  <body>
+    <div class="mainContainer">
+
+      <div class="header">
+        <div class="logo">
+          <!--<%= image_tag "logo.png", :size => "185x30" %>-->
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- <div class="notice"><%#= notice %></div> -->
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

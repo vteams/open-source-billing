@@ -1,0 +1,73 @@
+<div class="log_page">
+  <div class="log_container">
+
+    <div class="log_content">
+      <div class="log_top">
+        <h1>Sign up to Open<span>Source</span>Billing</h1>
+      </div>
+      <!--log_top-->
+
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+          <%#= devise_error_messages! %>
+
+          <div class="notice"><%= flash[:alert] %></div>
+          <%#= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+              <div class="log_fields">
+
+                <div class="field_row">
+                  <div class="label_field sign_up"><%= f.label :company %></div>
+                  <div class="medium_field sign_up">
+                    <%= f.text_field :company, :autofocus => true, :id => "login_company", :class => 'sign_up' %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field sign_up"><%= f.label :email %></div>
+                  <div class="medium_field sign_up">
+                    <%= f.email_field :email, :id => "login_email", :class => 'sign_up' %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field sign_up"><%= f.label :password %></div>
+                  <div class="medium_field sign_up">
+                    <%= f.password_field :password, :id => "login_pswd", :class => 'sign_up' %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row sign_up">
+                  <div class="label_field sign_up"><%= f.label :confirmation %></div>
+                  <div class="medium_field sign_up">
+                    <%= f.password_field :password_confirmation, :id => "login_pswd", :class => 'sign_up' %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+
+          <%# end %>
+
+          </div><!--log_fields-->
+
+          <div class="log_btm">
+            <%= f.submit "Sign up", :class => "btn_large submit" %>
+          </div>
+          <!--log_btm-->
+
+          </div><!--log_content-->
+      <% end %>
+
+      <div class="log_footer">
+        <a class="site_link" href="#">www.opensourcebilling.org</a>
+
+        <p class="team_link">powered by: <a href="http://vteams.com">vteams.com</a></p>
+      </div>
+
+
+      </div>
+  <!--log_container-->
+</div>
+<!--log_page-->

@@ -1,0 +1,85 @@
+<div class="tiny_form_container">
+  <div id="create_client" class="tiny_create_form">
+    <div class="tiny_form_inner">
+
+<%#= form_tag "/clients/create", :id => "create_client", :remote => true do %>
+      <div class="tiny_form_top">
+        <div class="tiny_form_heading"><h4>Add New Client</h4></div>
+        <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
+      </div>
+      <!--tiny_form_top-->
+
+      <div class="tiny_form_middle">
+
+        <div class="fields_content_data">
+
+          <div class="field_row">
+            <div class="label_field left single">Organization</div>
+            <div class="small_field">
+              <%= text_field_tag "client[organization_name]", '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single"><span>Email</span></div>
+            <div class="small_field">
+              <%= text_field_tag "client[email]", '', :required => '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">First Name</div>
+            <div class="small_field">
+              <%= text_field_tag "client[first_name]", '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">Last Name</div>
+            <div class="small_field">
+              <%= text_field_tag "client[last_name]", '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left">Business Phone</div>
+            <div class="small_field">
+              <%= text_field_tag "client[business_phone]", '' %>
+              <%= hidden_field_tag :quick_create %>
+            </div>
+          </div>
+          <!--field_row-->
+
+
+          <div id="clientModal" class="client-modal">
+            <div class="cross_btn">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!--fields_content_data-->
+      </div>
+      <!--tiny_form_middle-->
+
+      <div class="tiny_form_btm">
+<%#= submit_tag "save",:name => "save", :class => "btn_large", :style => "width:40px;" %>
+<%#= submit_tag "save & ADD MORE",:name => "add_more", :class => "btn_large" %>
+        <%= button_tag "save", :name => "save", :class => "btn_large tiny_btn btn_save" %>
+        <%= button_tag "save & ADD MORE", :name => "add_more", :class => "btn_large tiny_btn btn_save_and_add_more" %>
+      </div>
+      <!--tiny_form_btm-->
+
+
+    </div>
+    <!--tiny_form_inner-->
+  </div>
+  <!--tiny_create_form-->
+</div><!--tiny_form_container-->
+<%# end %>
+

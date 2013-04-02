@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>Dear <%= @client.first_name %>,</p>
+
+<p>
+  Following is the response to your dispute of invoice <%= @invoice.invoice_number %>:
+</p>
+<p>
+   <%= @response_to_client %>
+</p>
+<p>
+ URL for Invoice Preview:
+</p>
+<p>
+  <a href="<%= Osb::Application.config.address %>invoices/preview?inv_id=<%= @invoice.encrypted_id %>"><%= Osb::Application.config.address %>
+    view?inv_id=<%= @invoice.encrypted_id %></a>
+</p>
+<p>
+  Best regards, <br/>
+  <%= "#{@current_user.companies.first.org_name}" %>
+</p>
+</body>
+</html>
+
+

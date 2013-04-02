@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  invoice_id: 1
+  payment_amount: 
+  payment_method: MyString
+  payment_date: 2013-01-08
+  notes: MyText
+  send_payment_notification: false
+  paid_full: false
+
+two:
+  invoice_id: 1
+  payment_amount: 
+  payment_method: MyString
+  payment_date: 2013-01-08
+  notes: MyText
+  send_payment_notification: false
+  paid_full: false

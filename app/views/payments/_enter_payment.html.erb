@@ -1,0 +1,23 @@
+<div class="pay_invoice">
+  <% grand_total, due_amount, payments_entered = 0, 0, 0 %>
+
+  <% @payments.each_with_index do |payment, index| %>
+      <% #grand_total = grand_total + payment.invoice.invoice_total    %>
+      <% due_amount += Payment.invoice_remaining_amount(payment.invoice.id)
+         payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
+      %>
+      <%= fields_for "payments[]", payment do |f| %>
+          <%= render "fields", :f => f, :payment => payment, :index => index %>
+      <% end
+         end %>
+
+  <% if @payments.size > 1  %>
+      <div class="grand_total" style="display: none">
+        <div class="grand_total_box">
+          <p>Total amount due against selected invoices : <span><%= number_to_currency(due_amount) %> </span></p>
+          <p>Payments entered against selected invoices: <span><%= number_to_currency(payments_entered) %> <%#= current_user.currency_symbol %><%#=  grand_total %></span></p>
+        </div>
+      </div>
+  <% end %>
+</div><!--pay_invoice-->
+  

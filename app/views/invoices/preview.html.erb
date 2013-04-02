@@ -1,0 +1,94 @@
+<%- model_class = Invoice -%>
+
+<div class="show_invoice">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1><%= t '.title', :default => model_class.model_name.human %>:<%= @invoice.invoice_number %></h1>
+    </div>
+    <div class="primary_links">
+      <div id="active_links" class="grid_control_right">
+        <div class="grid_control_right">
+          <ul>
+            <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal">Dispute</a></li>
+            <li class="grid_control_sep sep_right"><%= link_to "PDF", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %></li>
+            <li class="grid_control_sep sep_right">
+              <!--<a href="#">Print</a>-->
+              <%= link_to "Print", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %>
+            </li>
+            <li><%= link_to "Payments history", {:controller => 'payments', :action => 'payments_history', :id => @invoice.id, :encrypted_id => params[:inv_id]}, :class => "no_padding" %></li>
+          </ul>
+        </div>
+      </div>
+    </div><!--primary_links-->
+  </div><!--content_top-->
+
+  <div class="content_bottom top">
+    <% if @invoice.status != "paid" %>
+      <%= link_to "Pay with Paypal", @invoice.paypal_url("http://#{request.host_with_port}/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "http://#{request.host_with_port}/invoices/paypal_payments"), :class => "btn_large big" %>
+      <%= link_to "Pay by Credit Card", "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
+    <% else %>
+      <div></div>
+    <% end %>
+  </div><!--content_bottom-->
+
+  <div class="content_middle">
+    <div class="response_to_client">
+      <% unless @invoice.dispute_history.blank?%>
+        <%= render :partial=>"dispute_history"%>
+      <% end %>
+    </div>
+    <div id="show_invoice_container">
+    <%= render :partial => "show_invoice" %>
+    </div>
+
+  </div>
+
+</div><!--show_invoice-->
+
+<div class="dispute_popup">
+  <%= form_tag "/invoices/dispute_invoice",:class=>"dispute_form",:novalidate => "", :remote => true do %>
+    <div id="dispute_invoice_popup" class="modal hide fad" style="width:760px; min-height: 250px; left:43.4%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="model_grey_container">
+        <div class="modal-header">
+          <h1>Dispute Invoice</h1>
+          <div class="cross_btn">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+            </button>
+          </div>
+        </div>
+        <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
+          <button class="close" type="button" style="margin:0px;">×</button>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <span></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-body">
+          <%= hidden_field_tag "invoice_id", @invoice.id %>
+          <div class="fields_content_data new_invoice_fields">
+            <div class="field_row textarea">
+              <div class="label_field textarea"><label>Reason For Dispute</label></div>
+              <div class="large_field" style="clear:both;">
+                <%= text_area_tag "reason_for_dispute" ,'',:required => ""%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer ">
+          <%= submit_tag "Send", :class => "btn_large submit" %>
+          <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div><!--dispute_popup-->
+
+<!-- popup for credit card info -->
+
+  <%= render 'credit_card_info' %>

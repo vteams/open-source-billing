@@ -1,0 +1,24 @@
+<div class="pay_invoice">
+  <div id="paymentModal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="model_grey_container">
+      <div class="modal-header">
+        <h1>Pay Invoice</h1>
+
+        <div class="cross_btn">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+          </button>
+        </div>
+      </div>
+      <%= form_tag "payments/update_individual_payment", :method => :put, :remote => true do %>
+          <div class="modal-body">
+          </div>
+          <%= hidden_field_tag :pay_invoice %>
+          <div class="footer ">
+            <p id="submit_button"><%= submit_tag "Save", :id => 'submit_payment_form', :class => "btn_large submit" %></p>
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+</div><!--pay_invoice-->

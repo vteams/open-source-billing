@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  organization_name: MyString
+  send_invoice_by: MyString
+  country: MyString
+  address_street1: MyString
+  address_street2: MyString
+  city: MyString
+  province_state: MyString
+  postal_zip_code: MyString
+  industry: MyString
+  company_size: MyString
+  business_phone: MyString
+  fax: MyString
+  internal_notes: MyText
+
+two:
+  organization_name: MyString
+  send_invoice_by: MyString
+  country: MyString
+  address_street1: MyString
+  address_street2: MyString
+  city: MyString
+  province_state: MyString
+  postal_zip_code: MyString
+  industry: MyString
+  company_size: MyString
+  business_phone: MyString
+  fax: MyString
+  internal_notes: MyText

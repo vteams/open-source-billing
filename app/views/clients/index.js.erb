@@ -1,0 +1,6 @@
+jQuery('tbody#client_body').html('<%= escape_javascript render("clients") %>');
+//jQuery('.paginator').html('<%#= escape_javascript(paginate(@clients, :remote => true).to_s) %>' +
+//        '<div class="paging_info"><%#= page_entries_info @clients %></div>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery("table.table_listing").trigger('update');

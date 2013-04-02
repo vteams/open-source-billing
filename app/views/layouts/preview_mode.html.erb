@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Open Source Billing</title>
+    <%= favicon_link_tag %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="main_container">
+      <div class="white_container">
+
+        <div class="primary_header">
+          <div class="logo">
+            <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard" %>
+          </div>
+        </div>
+        <!--header-->
+
+        <div class="navigation pdf_preview">
+        </div>
+        <!-- NAVIGATION END -->
+
+        <!-- CONTENT AREA START-->
+        <div class="content <%= controller.controller_name %>-main">
+          <div class="content_container pdf_preview">
+            <% display = if alert.blank? then
+              "display:none;"
+            end %>
+            <div class="alert alert-success"
+                 <% if notice.blank? %> style="display: none;"
+                 <% end %>>
+              <button type="button" class="close">&times;</button>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span><%= notice %></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="alert alert-error" style="<%= display %>">
+              <button type="button" class="close">&times;</button>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <span><%= alert %></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div class="notice"><%#= notice %></div> -->
+            <%= yield %>
+          </div>
+        </div>
+        <!--content-->
+
+        <div class="footer_primary">
+          <div class="footer_container">
+            <div class="footer_content">
+              <ul>
+                <li class="copy_right">Copyright © 2013 by <a href="#">vteams</a>. All rights reserved.</li>
+                <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
+                <li class="contact_us"><a href="#" class="no_links">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--footer_primary-->
+      </div>
+      <!--white_container-->
+    </div>
+    <!--main_container-->
+    <div id="progress_indicator" style="display: none;"></div>
+  </body>
+</html>
+

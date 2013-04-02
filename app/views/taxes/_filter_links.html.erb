@@ -1,0 +1,17 @@
+<div class="grid_control_right">
+  <ul>
+    <li class="grid_control_sep sep_right">
+      <%= link_to "Active", "taxes/filter_taxes?status=active&per=#{params[:per]}", :remote => true, :class => "get_actives active" %>
+      <span class="item_counts" id="actives">(<%= Tax.unarchived.size %>)</span>
+    </li>
+    <li class="grid_control_sep sep_right">
+      <%= link_to "Archived", "taxes/filter_taxes?status=archived&per=#{params[:per]}", :remote => true, :class => "get_archived" %>
+      <span class="item_counts" id="archives">(<%= Tax.archived.size %>)</span>
+    </li>
+    <li>
+      <%= link_to "Deleted", "taxes/filter_taxes?status=deleted&per=#{params[:per]}", :remote => true, :class => "get_deleted" %>
+      <span class="item_counts" id="deletes">(<%= Tax.only_deleted.size %>)</span>
+    </li>
+  </ul>
+</div>
+

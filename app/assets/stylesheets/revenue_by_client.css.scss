@@ -1,0 +1,22 @@
+.revenue_by_client {
+  .grid_table table{
+    col.one{width:  150px}
+    col.two{width:      55px}
+    col.three{width:    55px}
+    col.four{width:     55px}
+    col.five{width:     55px}
+    col.six{width:      55px}
+    col.seven{width:    55px}
+    col.eight{width:    55px}
+    col.nine{width:     55px}
+    col.ten{width:      55px}
+    col.eleven{width:   55px}
+    col.twelve{width:   55px}
+    col.thirteen{width: 55px}
+    col.fourteen{width: 100px}
+    .col_hover, .row_hover{background-color: #F7F7F7;}
+    th, td{padding: 0 5px;}
+    th, td{font-size: 12px}
+    tfoot{border-bottom: medium double #dadada; font-weight: bold;}
+  }
+}

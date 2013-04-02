@@ -1,0 +1,60 @@
+<div class="log_page">
+  <div class="log_container">
+
+    <div class="log_content">
+      <div class="log_top">
+        <h1>Sign in to Open<span>Source</span>Billing</h1>
+      </div>
+      <!--log_top-->
+
+      <div class="notice"><%= flash[:alert] %></div>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+          <div class="log_fields">
+
+            <div class="field_row">
+              <div class="label_field"><%= f.label :email %></div>
+              <div class="medium_field">
+                <%= f.email_field :email, :autofocus => true, :id => "login_email", :title => "Enter your username" %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field"><%= f.label :password %></div>
+              <div class="medium_field">
+                <%= f.password_field :password, :id => "login_pswd", :title => "Enter your password" %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <% if devise_mapping.rememberable? -%>
+
+                <div class="field_row checkbox">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label (:remember_me) {"Keep me signed-in <span style='color:#ababab'> (in #{browser.name} on this machine)</span>".html_safe} %>
+                </div>
+                <!--field_row-->
+            <% end %>
+
+          </div>
+          <!--log_fields-->
+
+          <div class="log_btm">
+            <%= f.submit "Sign in", :class => "btn_large submit" %>
+          </div>
+          <!--log_btm-->
+
+          </div><!--log_content-->
+      <% end %>
+
+      <div class="log_footer">
+        <a class="site_link" href="#">www.opensourcebilling.org</a>
+
+        <p class="team_link">powered by: <a href="http://vteams.com">vteams.com</a></p>
+      </div>
+
+
+      </div>
+  <!--log_container-->
+</div><!--log_page-->

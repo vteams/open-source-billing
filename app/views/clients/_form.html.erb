@@ -1,0 +1,199 @@
+<%= nested_form_for @client, :html => {:id => 'newClient', :novalidate => ""} do |f| %>
+    <% @parent_f = f %>
+    <div class="content_middle">
+
+      <div class="fields_content">
+        <div class="fields_content_container">
+          <div class="fields_content_heading">
+            <h2>Organization</h2>
+          </div>
+
+          <div class="fields_content_data">
+
+            <div class="field_row">
+              <div class="label_field left single">Organization Name</div>
+              <div class="large_field">
+                <%= f.text_field :organization_name %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single"><span>Email</span></div>
+              <div class="medium_field">
+                <%= f.text_field :email, :required => "" %>
+              </div>
+              <div class="label_field right">Business Phone</div>
+              <div class="small_field"><%= f.text_field :business_phone %></div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description">
+              <div class="label_field left single">Contact Name</div>
+              <div class="small_field">
+                <%= f.text_field :first_name %>
+                <ul class="field_description">
+                  <li>First name</li>
+                </ul>
+              </div>
+              <div class="small_field right">
+                <%= f.text_field :last_name %>
+                <ul class="field_description">
+                  <li>Last name</li>
+                </ul>
+              </div>
+              <div class="label_field right single">Mobile</div>
+              <div class="small_field"><%= f.text_field :mobile_number %></div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single">Available Credit</div>
+              <div class="medium_field">
+                <% @readonly = is_client_credit_payments @client%>
+                <%= text_field_tag :available_credit,@client.client_credit ,:readonly=>@readonly%>
+                <ul class="field_description">
+                  <li>This credit can be applied to invoice for this client.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
+      </div>
+      <!--fields_content-->
+
+      <div class="fields_content">
+        <div class="fields_content_container">
+          <div id="contact" class="fields_content_heading">
+            <h2>Additional Contacts <span>(click to expand)</span></h2>
+          </div>
+          <div id="adCntcts" class="fields_content_data" style="display:none;">
+            <div class="client_contacts_container">
+              <%= f.fields_for :client_contacts, :wrapper => false %>
+            </div>
+            <!--client_contacts_container-->
+            <div class="options_row">
+              <div class="options_content">
+                <div class="options_content_row">
+                  <%= f.link_to_add "Add new contact", :client_contacts, :class => 'add' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
+      </div>
+      <!--fields_content-->
+
+      <div class="fields_content">
+        <div class="fields_content_container">
+          <div id="detail" class="fields_content_heading">
+            <h2>Details <span>(click to expand)</span></h2>
+          </div>
+
+          <div id="add_Detail" class="fields_content_data" style="display:none;">
+
+            <div class="field_row">
+              <div class="label_field left single">Country</div>
+              <div class="medium_field">
+                <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => "Select a country...", :class => "medium chzn-select"} %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description">
+              <div class="label_field left single">Address</div>
+              <div class="large_field">
+                <%= f.text_field :address_street1 %>
+                <ul class="field_description">
+                  <li>Street#1</li>
+                </ul>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description">
+              <div class="label_field left single">&nbsp;</div>
+              <div class="large_field">
+                <%= f.text_field :address_street2 %>
+                <ul class="field_description">
+                  <li>Street#2</li>
+                </ul>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description">
+              <div class="label_field left single">&nbsp;</div>
+              <div class="small_field">
+                <%= f.text_field :city %>
+                <ul class="field_description">
+                  <li>City</li>
+                </ul>
+              </div>
+              <div class="small_field right">
+                <%= f.text_field :province_state %>
+                <ul class="field_description">
+                  <li>Provice / State</li>
+                </ul>
+              </div>
+              <div class="small_field right">
+                <%= f.text_field :postal_zip_code %>
+                <ul class="field_description">
+                  <li>Postal / Zip Code</li>
+                </ul>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single">Industry</div>
+              <div class="medium_field">
+                <%= f.select :industry, INDUSTRY_LIST, {:prompt => ""}, {"data-placeholder" => "Select an industry...", :class => "medium chzn-select"} %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single">Company Size</div>
+              <div class="medium_field">
+                <%= f.select :company_size, COMPANY_SIZE, {:prompt => ""}, {"data-placeholder" => "Select company size...", :class => "medium chzn-select"} %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single">Fax</div>
+              <div class="small_field">
+                <%= f.text_field :fax %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description">
+              <div class="label_field left single">Internal Notes</div>
+              <div class="large_field">
+                <%= f.text_area :internal_notes %>
+              </div>
+            </div>
+            <!--field_row-->
+
+          </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
+      </div>
+      <!--fields_content-->
+      <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+      <script>$(".fields_content").last().css('padding-bottom', '0px');</script>
+
+    </div><!--content_middle-->
+
+    <div class="content_bottom">
+      <%= f.submit :class => "btn_large submit" %>
+    </div><!--content_bottom-->
+<% end %>

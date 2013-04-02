@@ -1,0 +1,10 @@
+<%- model_class = Client -%>
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>
+      <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                    :default => "Edit #{model_class.model_name.human}") %>
+    </h1>
+  </div>
+</div><!--content_top-->
+<%= render :partial => 'form' %>

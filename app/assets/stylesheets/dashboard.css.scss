@@ -1,0 +1,216 @@
+.dashboard_style{
+  h1{
+    font-size: 24px;
+  }
+  .dashboart_menu{
+    text-align: center;
+    width: 100%;
+    padding: 0 0 40px 0;
+    overflow: hidden;
+    ul li{
+      float: left;
+      margin: 0 10px 0 0;
+      &:last-child{
+        margin: 0px;
+      }
+      a{
+        display: block;
+        min-width: 201px;
+        height: 28px;
+        border: 1px solid #d7d7d7;
+        border-radius: 4px;
+        text-align: center;
+        font-family: 'Dosis Medium' , sans-serif;
+        font-style: normal;
+        font-size: 18px;
+        color: #464646;
+        padding: 8px 0 0 0;
+        &.small{
+          min-width: 200px;
+        }
+        &:hover{
+          background: #00bde5;
+          color: #ffffff;
+          text-decoration: none;
+          border-color: #00bde5;
+        }
+      }
+    }
+  }
+  .graph_wrapper, .amount_wrapper, .activity_wrapper {
+    float: left;
+    width: 100%;
+    padding: 0 0 30px 0;
+  }
+  .activity_wrapper{
+    padding-top: 30px ;
+  }
+  .dashboard_box{
+    float: left;
+    width: 92.9%;
+    padding: 29px;
+    border: 1px solid #d7d7d7;
+    border-radius: 3px;
+    &.small{
+      width: 85.5%;
+      height: 243px;
+      overflow: hidden;
+      position: relative;
+      &.right{
+        width: 92.5%;
+        padding-right: 0px;
+      }
+      p{
+        float: left;
+        width: 92.5%;
+        padding: 5px 29px 0 0;
+      }
+
+
+    }
+    .heading{
+      float: left;
+      width: 100%;
+    }
+  }
+  .graph_wrapper{
+    .graph_content{
+      float: left;
+      width: 100%;
+      margin-top: 25px;
+    }
+  }
+  .amount_wrapper{
+    .amount_box{
+      float: left;
+      width: 172px;
+      margin: 0 30px 0 0;
+      &:last-child{
+        margin: 0px;
+        width: 174px;
+      }
+      h1{
+        float: left;
+        width: 100%;
+        &.black{
+          float: left;
+          font-size: 30px;
+          color: #464646;
+          padding: 7px 0 12px 0;
+        }
+      }
+      p{
+        float: left;
+        width: 100%;
+        line-height: normal;
+        padding: 0 0 2px 0;
+        span{
+          font-size: 10px;
+        }
+      }
+      .days_summary{
+        float: left;
+        width: 100%;
+        padding: 11px 0 0 0;
+      }
+      .amount_row{
+        float: left;
+        width: 100%;
+        margin: 0 0 1px 0;
+        .days{
+          float: left;
+          width: 106px;
+          span{
+            float: right;
+          }
+        }
+        .value{
+          float: left;
+          width: 60px;
+          padding: 0 0 0 7px;
+          text-align: right;
+        }
+      }
+    }
+  }
+  .grid_table{
+    &.current_invoices{
+      &.top{
+        padding-right: 29px;
+        width: 92.5%;
+        table{
+          table-layout: auto;
+        }
+      }
+      &.btm{
+        padding-top: 0px;
+        width: 92.5%;
+      }
+      table{
+        col.one {/*invoice*/
+          width: 71px;
+        }
+        col.two { /*client pvt*/
+          width: 131px;
+        }
+        col.three { /*date*/
+          width: 83px;
+        }
+        col.four { /*amounts*/
+          width: 70px;
+        }
+        th{
+          font-weight: bold;
+          color: #464646;
+          border-right: none !important;
+        }
+        td{
+          border-bottom: none !important;
+        }
+        tr{
+          th, td{
+            border-top: 1px solid #d7d7d7;
+            background: #ffffff;
+            padding-right: 0px;
+            padding-left: 0px;
+            text-align: center;
+          }
+        }
+      }
+    }
+    &.activity{
+      table{
+        col.one {/*invoice*/
+          width: 70px;
+        }
+        col.two { /*usd value*/
+          width: 110px;
+        }
+        col.three { /*description*/
+          width: 240px;
+        }
+        col.four { /*amounts*/
+          width: 360px;
+        }
+        td{
+          border-bottom: none !important;
+          border-top: 1px solid #d7d7d7;
+          span{
+            font-size: 10px;
+          }
+        }
+        tr{
+          &:nth-child(odd), &:nth-child(odd) td{
+          background: #f7f7f7;
+          }
+          &:hover{
+            background: none !important;
+          }
+        }
+      }
+    }
+  }
+  div.jqplot-table-legend-swatch-outline{
+    margin-right: 8px;
+  }
+}

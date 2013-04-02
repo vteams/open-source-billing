@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>Dear <%= @client.first_name %>,</p>
+
+<p>
+  We have received your payment in the amount of <%= @client.invoices.first.currency_symbol %><%= @amount %> for
+  invoice <%= @invoice %>.
+</p>
+
+<p>Thanks,<br>
+  vteams
+</p>
+</body>
+</html>
+
+

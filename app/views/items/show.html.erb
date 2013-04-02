@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Item name:</b>
+  <%= @item.item_name %>
+</p>
+
+<p>
+  <b>Item description:</b>
+  <%= @item.item_description %>
+</p>
+
+<p>
+  <b>Unit cost:</b>
+  <%= @item.unit_cost %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @item.quantity %>
+</p>
+
+<p>
+  <b>Tax 1:</b>
+  <%= @item.tax_1 %>
+</p>
+
+<p>
+  <b>Tax 2:</b>
+  <%= @item.tax_2 %>
+</p>
+
+<!--<p>-->
+<!--<b>Track invetory:</b>-->
+<!--<%#= @item.track_invetory %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<b>Inventory:</b>-->
+<!--<%#= @item.inventory %>-->
+<!--</p>-->
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>

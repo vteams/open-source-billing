@@ -1,0 +1,93 @@
+<%= form_for(@recurring_profile) do |f| %>
+    <% if @recurring_profile.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@recurring_profile.errors.count, "error") %> prohibited this recurring_profile from being
+            saved:</h2>
+
+          <ul>
+            <% @recurring_profile.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :first_invoice_date %>
+      <br/>
+      <%= f.datetime_select :first_invoice_date %>
+    </div>
+    <div class="field">
+      <%= f.label :po_number %>
+      <br/>
+      <%= f.text_field :po_number %>
+    </div>
+    <div class="field">
+      <%= f.label :discount_percentage %>
+      <br/>
+      <%= f.text_field :discount_percentage %>
+    </div>
+    <div class="field">
+      <%= f.label :frequency %>
+      <br/>
+      <%= f.text_field :frequency %>
+    </div>
+    <div class="field">
+      <%= f.label :occurrences %>
+      <br/>
+      <%= f.number_field :occurrences %>
+    </div>
+    <div class="field">
+      <%= f.label :prorate %>
+      <br/>
+      <%= f.check_box :prorate %>
+    </div>
+    <div class="field">
+      <%= f.label :prorate_for %>
+      <br/>
+      <%= f.text_field :prorate_for %>
+    </div>
+    <div class="field">
+      <%= f.label :gateway_id %>
+      <br/>
+      <%= f.number_field :gateway_id %>
+    </div>
+    <div class="field">
+      <%= f.label :client_id %>
+      <br/>
+      <%= f.number_field :client_id %>
+    </div>
+    <div class="field">
+      <%= f.label :terms %>
+      <br/>
+      <%= f.text_area :terms %>
+    </div>
+    <div class="field">
+      <%= f.label :notes %>
+      <br/>
+      <%= f.text_area :notes %>
+    </div>
+    <div class="field">
+      <%= f.label :status %>
+      <br/>
+      <%= f.text_field :status %>
+    </div>
+    <div class="field">
+      <%= f.label :sub_total %>
+      <br/>
+      <%= f.text_field :sub_total %>
+    </div>
+    <div class="field">
+      <%= f.label :discount_amount %>
+      <br/>
+      <%= f.text_field :discount_amount %>
+    </div>
+    <div class="field">
+      <%= f.label :tax_amount %>
+      <br/>
+      <%= f.text_field :tax_amount %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

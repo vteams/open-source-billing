@@ -1,0 +1,75 @@
+.tiny_form_container{
+    .tiny_create_form{
+        float:left;
+        width: 100%;
+    }
+    .tiny_form_inner{
+        padding: 0 10px;
+        overflow: hidden;
+    }
+    .tiny_form_top{
+        float:left;
+        width: 100%;
+        padding: 13px 0 10px 0;
+    }
+    .tiny_form_heading{
+        float:left;
+    }
+    .close_btn{
+        float: right;
+        position: relative;
+    }
+    .close_btn a{
+        margin: -2px 8px 0 0;
+        float: left;
+    }
+    .close_btn a:hover{
+        text-decoration: none;
+        color: #00bde5;
+    }
+    .tiny_form_middle{
+        float: left;
+        width: 100%;
+        overflow: hidden;
+    }
+    .fields_content_data{
+        width: 260px;
+        padding: 0px;
+    }
+    .field_row{
+        min-height: 34px;
+    }
+    .label_field.left{
+        width: 66px;
+        font-size: 11px;
+        font-weight: normal;
+    }
+    .label_field span{
+        background: url("/assets/sterik_small.png") no-repeat scroll right top transparent;
+        padding-right: 7px;
+    }
+    .small_field input,
+    .small_field input[type="number"]{
+        width: 174px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 11px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    .small_field input[type="number"]{
+        width: 180px;
+    }
+    .tiny_form_btm{
+        float: left;
+        width: 100%;
+        text-align: center;
+        padding: 0 0 16px 0;
+    }
+    .tiny_btn{
+        min-width: 62px;
+        height: 26px;
+        font-size: 14px;
+        padding: 0px 10px 0px;
+    }
+}

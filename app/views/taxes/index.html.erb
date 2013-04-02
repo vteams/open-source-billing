@@ -1,0 +1,63 @@
+<div class="taxes">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        Taxes<span>&nbsp;/&nbsp;Active</span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, "NEW Tax")),
+                  new_taxis_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+  <%= form_tag "taxes/bulk_actions", :remote => true do -%>
+      <div class="content_middle">
+        <div class="grid_control">
+          <div class="grid_control_left">
+            <ul value='tax' id="bulk_actions">
+              <%= render "bulk_actions" %>
+            </ul>
+          </div>
+          <div class="grid_control_right" id="active_links">
+            <%= render 'filter_links' %>
+          </div>
+        </div>
+        <!--grid_control-->
+        <div class="grid_table">
+          <table cellpadding="0" cellspacing="0" class="table table_listing tax_listing">
+            <colgroup>
+              <col class="one"/>
+              <col class="two"/>
+              <col class="three"/>
+              <col class="four"/>
+            </colgroup>
+            <thead>
+            <tr>
+              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+              <th class="align_center">Name</th>
+              <th class="align_center">Percentage</th>
+              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+            </thead>
+            <tbody id="tax_body">
+            <%= render 'taxes' %>
+            <tfoot id="paging_links">
+            <%= render "paging" %>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+        <!--grid_table-->
+      </div>
+      <!--content_middle-->
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, "NEW Taxes")),
+                    new_taxis_path,
+                    :class => 'btn_large' %>
+      </div>
+      <!--content_bottom-->
+  <% end %>
+</div><!--taxes-->
+

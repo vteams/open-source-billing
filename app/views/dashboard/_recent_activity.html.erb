@@ -1,0 +1,32 @@
+<div class="activity_wrapper">
+  <div class="dashboard_box">
+    <h1 class="small">Recent Activity</h1>
+
+    <div class="grid_table activity">
+      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+        </colgroup>
+        <% if @recent_activity.blank? %>
+            <tr>
+              <td colspan="4">No recent activity</td>
+            </tr>
+        <% else %>
+            <%- @recent_activity.each do |activity| %>
+                <tr>
+                  <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path] %></a></td>
+                  <td class="align_left"><%= number_to_currency(activity[:amount]) %> <span>(USD)</span></td>
+                  <td class="align_left"><%= "#{activity[:activity_action]} #{activity[:client]} on" %> </td>
+                  <td class="align_left"><%= "#{activity[:activity_date].to_date}" %> </td>
+                </tr>
+            <% end %>
+        <% end %>
+      </table>
+    </div>
+    <!--grid_table-->
+  </div>
+  <!--overview_box-->
+</div>

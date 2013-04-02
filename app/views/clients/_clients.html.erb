@@ -1,0 +1,34 @@
+<%
+   no_record_message = "You haven't created any client yet. Please click on New Client button to create new client."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived client."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted client."
+   end
+%>
+<% if @clients.length > 0 %>
+    <% @clients.each do |client| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}" %></td>
+          <td class="align_left"><%= link_to client.organization_name, edit_client_path(client) %></td>
+          <td class="align_left"><%= client.contact_name %></td>
+          <td class="align_left"><%= client.email %></td>
+          <td class="align_left"><%= client.business_phone %></td>
+          <td class="align_right"><%=  number_to_currency(client.client_credit) %></td>
+          <td class="align_center">
+            <% if client.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_client_path(client), :class => 'edit_action' %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="6">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

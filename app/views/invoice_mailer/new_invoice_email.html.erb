@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<%
+   sender_business_name ||= "OSB LLC"
+%>
+<p>Dear <%= @client.first_name %>,</p>
+
+<p>
+  To view your invoice from <%= "#{sender_business_name}" %>
+  for <%= @client.invoices.first.currency_symbol %><%= @invoice.invoice_total %>, or to download a PDF copy for
+  your records, click the link below:
+</p>
+
+<p>
+  <a href="<%= Osb::Application.config.address %>invoices/preview?inv_id=<%= @e_id %>"><%= Osb::Application.config.address %>
+    view?inv_id=<%= @e_id %></a>
+</p>
+
+<p>
+  Best regards, <br/>
+  <%= "#{sender_business_name}" %>
+  
+</p>
+
+</body>
+</html>
+
+

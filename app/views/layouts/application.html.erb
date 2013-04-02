@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Source Billing</title>
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= include_gon %>
+</head>
+<body>
+<div class="main_container">
+  <div class="white_container">
+
+    <div class="primary_header">
+      <div class="logo">
+        <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard" %>
+      </div>
+      <div class="primary_menu">
+        <ul>
+          <li><%= link_to "My Account", new_company_path %></li>
+          <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+        </ul>
+      </div>
+    </div>
+    <!--header-->
+
+    <div class="navigation">
+      <div class="nav_container">
+        <div id="nav">
+          <ul class="select">
+            <li><%= active_link_to "Dashboard", "/dashboard" %></li>
+            <li><%= active_link_to "Invoices", invoices_path %></li>
+            <li><%= active_link_to "Clients", clients_path %>
+              <ul class="sub">
+                <li><%= active_link_to "Clients", clients_path %></li>
+                <li><%= active_link_to "Sent Emails", sent_emails_path %></li>
+              </ul>
+            </li>
+            <li><%= active_link_to "Items", items_path %>
+              <ul class="sub">
+                <li><%= active_link_to "Items", items_path %></li>
+                <li><%= active_link_to "Taxes", taxes_path %></li>
+              </ul>
+            </li>
+            <li><%= active_link_to "Payments", payments_path %></li>
+            <li><%= active_link_to "Reports", "/reports" %></li>
+            <li><%= active_link_to "Help", "/help" %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- NAVIGATION END -->
+
+
+    <!-- CONTENT AREA START-->
+    <div class="content <%= controller.controller_name %>-main">
+      <div class="content_container">
+        <div class="alert alert-success" style="display:<%= notice.blank? ? 'none' : 'block' %>">
+          <button type="button" class="close">&times;</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span><%= notice %></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-error" style="display:<%= alert.blank? ? 'none' : 'block' %>">
+          <button type="button" class="close">&times;</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span><%= alert %></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <%= yield %>
+      </div>
+    </div>
+    <!--content-->
+
+    <div class="footer_primary">
+      <div class="footer_container">
+        <div class="footer_content">
+          <ul>
+            <li class="copy_right">Copyright © 2013 by <a href="#">vteams</a>. All rights reserved.</li>
+            <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
+            <li class="contact_us"><a href="#" class="no_links">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer_primary-->
+  </div>
+  <!--white_container-->
+</div>
+<!--main_container-->
+<div id="progress_indicator" style="display: none;"></div>
+</body>
+</html>
+

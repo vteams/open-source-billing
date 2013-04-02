@@ -1,0 +1,220 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (3.2.9)
+      actionpack (= 3.2.9)
+      mail (~> 2.4.4)
+    actionpack (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      journey (~> 1.0.4)
+      rack (~> 1.4.0)
+      rack-cache (~> 1.2)
+      rack-test (~> 0.6.1)
+      sprockets (~> 2.2.1)
+    active_link_to (1.0.0)
+    active_utils (1.0.5)
+      activesupport (>= 2.3.11)
+      i18n
+    activemerchant (1.31.1)
+      active_utils (>= 1.0.2)
+      activesupport (>= 2.3.14)
+      builder (>= 2.0.0)
+      i18n
+      json (>= 1.5.1)
+      money
+      nokogiri
+    activemodel (3.2.9)
+      activesupport (= 3.2.9)
+      builder (~> 3.0.0)
+    activerecord (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
+      arel (~> 3.0.2)
+      tzinfo (~> 0.3.29)
+    activerecord-mysql-adapter (0.0.1)
+      activerecord (>= 3.2.9)
+      activesupport (>= 3.2.9)
+      mysql (>= 2.9.0)
+    activeresource (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
+    activesupport (3.2.9)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    acts_as_archival (0.4.2)
+      activerecord
+    acts_as_paranoid (0.4.1)
+      activerecord (~> 3.2)
+    arel (3.0.2)
+    bcrypt-ruby (3.0.1)
+    bcrypt-ruby (3.0.1-x86-mingw32)
+    better_errors (0.3.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
+    browser (0.1.5)
+    builder (3.0.4)
+    coderay (1.0.8)
+    coffee-rails (3.2.2)
+      coffee-script (>= 2.2.0)
+      railties (~> 3.2.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.4.0)
+    copyright-header (1.0.8)
+    daemons (1.1.9)
+    delayed_job (3.0.4)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
+    devise (2.2.0.rc)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 3.1)
+      warden (~> 1.2.1)
+    devise-encryptable (0.1.1)
+      devise (>= 2.1.0.rc)
+    erubis (2.7.0)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    gon (4.0.2)
+      actionpack (>= 2.3.0)
+      json
+    hike (1.2.1)
+    i18n (0.6.1)
+    journey (1.0.4)
+    jquery-rails (2.1.4)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    json (1.7.6)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+    mail (2.4.4)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime-types (1.19)
+    money (5.1.1)
+      i18n (~> 0.6.0)
+    multi_json (1.5.0)
+    mysql (2.9.0)
+    mysql (2.9.0-x86-mingw32)
+    mysql2 (0.3.11)
+    mysql2 (0.3.11-x86-mingw32)
+    nested_form (0.3.1)
+    nokogiri (1.5.8)
+    nokogiri (1.5.8-x86-mingw32)
+    orm_adapter (0.4.0)
+    paper_trail (2.7.1)
+      activerecord (~> 3.0)
+      railties (~> 3.0)
+    paypal-sdk-core (0.2.0)
+      multi_json (~> 1.0)
+      xml-simple
+    paypal-sdk-rest (0.5.1)
+      paypal-sdk-core (~> 0.2.0)
+      uuidtools (~> 2.1)
+    pdfkit (0.5.2)
+    polyglot (0.3.3)
+    rack (1.4.1)
+    rack-cache (1.2)
+      rack (>= 0.4)
+    rack-ssl (1.3.2)
+      rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rails (3.2.9)
+      actionmailer (= 3.2.9)
+      actionpack (= 3.2.9)
+      activerecord (= 3.2.9)
+      activeresource (= 3.2.9)
+      activesupport (= 3.2.9)
+      bundler (~> 1.0)
+      railties (= 3.2.9)
+    railties (3.2.9)
+      actionpack (= 3.2.9)
+      activesupport (= 3.2.9)
+      rack-ssl (~> 1.3.2)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (>= 0.14.6, < 2.0)
+    rake (10.0.3)
+    rdoc (3.12)
+      json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    sass (3.2.4)
+    sass-rails (3.2.5)
+      railties (~> 3.2.0)
+      sass (>= 3.1.10)
+      tilt (~> 1.3)
+    slim (1.3.6)
+      temple (~> 0.5.5)
+      tilt (~> 1.3.3)
+    sprockets (2.2.2)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    temple (0.5.5)
+    thor (0.16.0)
+    tilt (1.3.3)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.3.6)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
+    twitter-bootstrap-rails (2.1.9)
+      actionpack (>= 3.1)
+      execjs
+      railties (>= 3.1)
+    tzinfo (0.3.35)
+    uglifier (1.3.0)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+    uuidtools (2.1.3)
+    warden (1.2.1)
+      rack (>= 1.0)
+    xml-simple (1.1.2)
+
+PLATFORMS
+  ruby
+  x86-mingw32
+
+DEPENDENCIES
+  active_link_to
+  activemerchant
+  activerecord-mysql-adapter
+  acts_as_archival
+  acts_as_paranoid (~> 0.4.0)
+  better_errors
+  binding_of_caller
+  browser
+  coffee-rails (~> 3.2.1)
+  copyright-header
+  daemons
+  delayed_job_active_record
+  devise
+  devise-encryptable
+  gon
+  jquery-rails
+  kaminari
+  mysql2
+  nested_form
+  paper_trail
+  paypal-sdk-rest
+  pdfkit
+  rails (= 3.2.9)
+  rest-client
+  sass-rails (~> 3.2.3)
+  slim
+  turbo-sprockets-rails3
+  twitter-bootstrap-rails
+  uglifier (>= 1.0.3)

@@ -1,0 +1,57 @@
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+    });
+</script>
+<div class="unpaid_invoice">
+  <div class="grid_table">
+    <table cellpadding="0" cellspacing="0" class="table_listing">
+      <colgroup>
+        <col class="one"/>
+        <col class="two"/>
+        <col class="three"/>
+        <col class="four"/>
+        <col class="five"/>
+        <col class="six"/>
+        <col class="seven"/>
+      </colgroup>
+      <thead>
+      <tr>
+        <th class="align_center"><%= check_box_tag 'select_all' %></th>
+        <th class="align_center">Invoice#</th>
+        <th class="align_left">Invoice Description</th>
+        <th class="align_left">Client</th>
+        <th class="align_center">Total</th>
+        <th class="align_center">Date</th>
+        <th class="align_center">Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% unless @invoices.blank? %>
+          <% @invoices.each do |inv| %>
+              <tr>
+                <td class="align_center"><%= check_box_tag "invoice_ids[]", inv.id %>
+                <td class="align_center"><%= inv.invoice_number %></td>
+                <td class="align_left"><%= inv.notes %></td>
+                <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
+                <td class="align_center currency"><%= number_to_currency(inv.invoice_total) %>
+                <td class="align_center"><%= inv.invoice_date.to_date.strftime("%m/%d/%Y") rescue "" %></td>
+                <td class="align_center <%= inv.status %>" title="<%= inv.tooltip %>">
+            <span class="invoice-status invoice-sent">
+              <%= inv.status.downcase %>
+            </span>
+                </td>
+              </tr>
+          <% end %>
+      <% else %>
+          <tr class="no-invoices">
+            <td colspan="7">There are no unpaid invoices.</td>
+          </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+
+  </div>
+  <!--grid_table-->
+</div><!--unpaid_invoices-->

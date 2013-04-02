@@ -1,0 +1,8 @@
+jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>');
+jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+jQuery(".text-overflow-class").ellipsis({row:1})
+//jQuery('.paginator').html('<%#= escape_javascript(paginate(@invoices, :remote => true).to_s) %>' +
+       // '<div class="paging_info"><%#= page_entries_info @invoices %><%#= custom_per_page %></div>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery("table.table_listing").trigger('update');

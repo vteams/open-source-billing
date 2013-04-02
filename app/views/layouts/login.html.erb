@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="<%= "ie#{browser.version}" if browser.ie? %>">
+<head>
+  <title>Open Source Billing</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<!-- MAIN CONTAINER START-->
+<div id="main-container" style="background: transparent;">
+  <!-- HEADER START -->
+  <div class="header">
+    <div class="logo">
+      <!--<%= image_tag "logo.png", :size => "185x30" %>-->
+    </div>
+  </div>
+  <!-- HEADER END -->
+  <!-- CONTENT AREA START-->
+  <div class="content">
+    <!-- <div class="notice"><%#= notice %></div> -->
+    <%= yield %>
+  </div>
+  <!-- CONTENT AREA END-->
+
+</div>
+<!-- MAIN CONTAINER END -->
+</body>
+</html>

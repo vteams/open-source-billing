@@ -1,0 +1,34 @@
+<%
+   no_record_message = "You haven't created any item yet. Please click on New Item button to create new item."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived item."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted item."
+   end
+%>
+<% if @items.length > 0 %>
+    <% @items.each do |item| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}" %></td>
+          <td class="align_left"><%= item.item_name %></td>
+          <td class="align_left"><%= item.item_description %></td>
+          <td class="align_right"><%= number_to_currency(item.unit_cost) %></td>
+          <td class="align_right"><%= item.quantity %></td>
+          <td class="align_center"><%= item.tax1.name rescue "" %></td>
+          <td class="align_center"><%= item.tax2.name rescue "" %></td>
+          <td class="align_center">
+            <% if item.deleted_at.nil? %>
+                <%= link_to 'Edit', edit_item_path(item), :class => "edit_action" %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="9">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

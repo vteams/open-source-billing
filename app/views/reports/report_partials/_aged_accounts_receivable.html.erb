@@ -1,0 +1,111 @@
+<div class="reports">
+  <div class="content_middle">
+
+    <div class="report_content_header">
+      <div class="report_content_heading">
+        <h1>Aged Accounts Receivable</h1>
+      </div>
+
+      <div class="content_header_data">
+        <div class="header_data_left">
+          <div class="header_data_detail">
+            <ul>
+              <li class="header_name"><%= @report.client_name %></li>
+              <li class="header_duration"><%= @report.period %></li>
+              <li class="header_description">
+                This report shows summary of outstanding amount against unpaid and/or partially paid invoices for each
+                client.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- content_header_data -->
+    </div>
+    <!-- report_content_header -->
+
+    <div class="header_data_right">
+      <ul class="download_report">
+        <li class="download_report_title">Export to:</li>
+        <li class="download_sep">CSV</li>
+        <li>Excel</li>
+      </ul>
+      <ul class="print_report">
+        <li><a href="#">Print Report</a></li>
+      </ul>
+      <div class="report_duration">
+        <!--<ul>-->
+          <!--<li><%= @report.period %></li>-->
+        <!--</ul>-->
+      </div>
+      <!-- report_duration -->
+    </div>
+
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table_listing aged_accounts_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+          <col class="five"/>
+          <col class="six"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="align_left">Client Name</th>
+          <th class="align_center {sorter:'thousands'}">0-30 days</th>
+          <th class="align_center {sorter:'thousands'}">31-60 days</th>
+          <th class="align_center {sorter:'thousands'}">61-90 days</th>
+          <th class="align_center {sorter:'thousands'}">90+ days</th>
+          <th class="align_center {sorter:'thousands'}">Client Total AR</th>
+        </tr>
+        </thead>
+        <body>
+        <% unless @report.report_data.blank? %>
+            <% @report.report_data.each do |aged| %>
+                <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
+                <tr>
+                  <td class="align_left"><%= aged.attributes["client_name"] %></td>
+                  <td class="align_right"><%= number_to_currency(aged.attributes["zero_to_thirty"]).gsub("$", "") %></td>
+                  <td class="align_right"><%= number_to_currency(aged.attributes["thirty_one_to_sixty"]).gsub("$", "") %></td>
+                  <td class="align_right"><%= number_to_currency(aged.attributes["sixty_one_to_ninety"]).gsub("$", "") %></td>
+                  <td class="align_right"><%= number_to_currency(aged.attributes["ninety_one_and_above"]).gsub("$", "") %></td>
+                  <td class="align_right"><%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"]) %></td>
+                </tr>
+            <% end %>
+        <% else %>
+            <tr>
+              <td colspan="6" class="report_no_data">No data found against the selected criteria. Please change criteria
+                and try again.
+              </td>
+            </tr>
+        <% end %>
+        <% unless @report.report_data.blank? %>
+            <tfoot>
+            <td class="align_left"><%= "Total" %></td>
+            <td class="align_right"><%= number_to_currency(@report.report_total["zero_to_thirty"]) %></td>
+            <td class="align_right"><%= number_to_currency(@report.report_total["thirty_one_to_sixty"]) %></td>
+            <td class="align_right"><%= number_to_currency(@report.report_total["sixty_one_to_ninety"]) %></td>
+            <td class="align_right"><%= number_to_currency(@report.report_total["ninety_one_and_above"]) %></td>
+            <td class="align_right"><%= number_to_currency(@report.report_total["zero_to_thirty"] + @report.report_total["thirty_one_to_sixty"] + @report.report_total["sixty_one_to_ninety"] + @report.report_total["ninety_one_and_above"]) %></td>
+            </tfoot>
+        <% end %>
+        </body>
+      </table>
+    </div>
+    <!--grid_table-->
+
+  </div>
+  <!--content_middle-->
+
+  <div class="content_bottom">
+    <div class="report_footer">
+      <!--</div>-->
+      <div class="footer_note">
+      </div>
+    </div>
+    <!-- report_footer -->
+  </div>
+  <!--content_bottom-->
+</div><!--reports-->

@@ -1,0 +1,43 @@
+<%- model_class = Payment -%>
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Payments History</h1>
+  </div>
+  <div class="primary_btn">
+    <%= link_to "Back to invoice", invoice_path(@invoice), :class => "btn_large" %>
+    <!--<a class="btn_large big" href="#">Back to invoice</a>-->
+  </div>
+</div><!--content_top-->
+
+<div class="payment_history">
+  <div class="content_middle">
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table table_listing payment_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+          <col class="five"/>
+          <col class="six"/>
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="align_center">Invoice</th>
+            <th class="align_left">Client</th>
+            <th class="align_center">Type</th>
+            <th class="align_center">Notes</th>
+            <th class="align_center">Date</th>
+            <th class="align_right {sorter:'thousands'}" style="padding-right: 20px;">Amount</th>
+          </tr>
+        </thead>
+        <tbody id="payment_body">
+          <%= render 'payments_history' %>
+        <tfoot id="paging_links">
+          <%= render "paging" %>
+        </tfoot>
+        </tbody>
+      </table>
+    </div><!--grid_table-->
+  </div><!--content_middle-->
+</div><!--payment_history-->

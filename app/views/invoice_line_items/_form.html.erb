@@ -1,0 +1,53 @@
+<%= form_for(@invoice_line_item) do |f| %>
+    <% if @invoice_line_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@invoice_line_item.errors.count, "error") %> prohibited this invoice_line_item from being
+            saved:</h2>
+
+          <ul>
+            <% @invoice_line_item.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :item_id %>
+      <br/>
+      <%= f.number_field :item_id %>
+      <%= collection_select :invoice_line_item, :item_id, Item.all, :id, :item_name, :prompt => "Select an item" %>
+    </div>
+    <div class="field">
+      <%= f.label :item_name %>
+      <br/>
+      <%= f.text_field :item_name %>
+    </div>
+    <div class="field">
+      <%= f.label :item_description %>
+      <br/>
+      <%= f.text_field :item_description %>
+    </div>
+    <div class="field">
+      <%= f.label :item_unit_cost %>
+      <br/>
+      <%= f.text_field :item_unit_cost %>
+    </div>
+    <div class="field">
+      <%= f.label :item_quantity %>
+      <br/>
+      <%= f.text_field :item_quantity %>
+    </div>
+    <div class="field">
+      <%= f.label :tax_1 %>
+      <br/>
+      <%= f.number_field :tax_1 %>
+    </div>
+    <div class="field">
+      <%= f.label :tax_2 %>
+      <br/>
+      <%= f.number_field :tax_2 %>
+    </div>
+    <%= f.link_to_remove "x" %>
+    <%= f.link_to_add "+", :invoice_line_items %>
+<% end %>

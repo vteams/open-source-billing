@@ -1,0 +1,36 @@
+<%
+   no_record_message = "You haven't created any invoice yet. Please click on New Invoice button to create new invoice."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived invoice."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted invoice."
+   end
+%>
+<% if  @invoices.length > 0 %>
+    <% @invoices.each do |invoice| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}" %></td>
+          <td class="align_center"><%= link_to invoice.invoice_number, invoice_path(invoice), :class => "invoices_link" %></td>
+          <td class="align_left text-overflow-class" value="<%= invoice.client.organization_name rescue "" %>"><%= invoice.client.organization_name rescue "" %></td>
+          <td class="align_left text-overflow-class" value="<%= invoice.notes %>"><%= invoice.notes %></td>
+          <td class="align_right"><%= "#{number_to_currency(invoice.invoice_total)}" %></td>
+          <td class="align_center"><%= link_to invoice.invoice_date.to_time.strftime("%m/%d/%Y"), "/invoices/preview?inv_id=#{invoice.encrypted_id}", :target => "_blank" rescue "" %></td>
+          <td class="align_center"><%= invoice.due_date.to_time.strftime("%m/%d/%Y") rescue "" %></td>
+          <td class="align_center <%= invoice.status %>" title="<%= invoice.tooltip %>">
+            <span><%= invoice.status %></span></td>
+          <td class="align_center">
+            <% if invoice.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_invoice_path(invoice) %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+
+<% else %>
+    <tr>
+      <td colspan="8">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>

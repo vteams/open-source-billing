@@ -1,0 +1,28 @@
+tr.fields, .invoice_top_section, #add_Detail, .items_wrapper, .companies_wrapper {
+  .chzn-container-single {
+    .chzn-single, .chzn-results,
+    .chzn-search input[type=text] {
+      text-align: left;
+    }
+    .chzn-single {
+      height: 28px;
+      border: 1px solid #D7D7D7;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      line-height: 28px;
+      margin: 0;
+      div b {
+        /*background-position: 0 2px;*/
+      }
+      abbr {
+        right: 20px;
+      }
+    }
+  }
+  .tax1, .tax2, .field {
+    .chzn-container-single .chzn-single abbr {
+      /*right: 16px;*/
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<div class="reports payments_collected">
+  <div class="content_middle">
+
+    <div class="report_content_header">
+      <div class="report_content_heading">
+        <h1>Payments Collected</h1>
+      </div>
+
+      <div class="content_header_data">
+        <div class="header_data_left">
+          <div class="header_data_detail">
+            <ul>
+              <li class="header_name"><%= @report.client_name %></li>
+              <li class="header_duration"><%= @report.period %></li>
+              <li class="header_description">This report shows a history of all payments made for every invoice
+                selectable by client and by date.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- content_header_data -->
+    </div>
+    <!-- report_content_header -->
+
+    <div class="header_data_right">
+      <ul class="download_report">
+        <li class="download_report_title">Export to:</li>
+        <li class="download_sep">CSV</li>
+        <li>Excel</li>
+      </ul>
+      <ul class="print_report">
+        <li><a href="#">Print Report</a></li>
+      </ul>
+      <div class="report_duration">
+        <!--<ul>-->
+          <!--<li>01/01/2013</li>-->
+          <!--<li><span>to</span></li>-->
+          <!--<li>01/01/2013</li>-->
+        <!--</ul>-->
+      </div>
+      <!-- report_duration -->
+    </div>
+
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+          <col class="five"/>
+          <col class="six"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="align_left">Invoice</th>
+          <th class="align_left">Client Name</th>
+          <th class="align_left">Type</th>
+          <th class="align_left">Note</th>
+          <th class="align_center">Date</th>
+          <th class="align_center {sorter:'thousands'}">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% unless @report.report_data.blank? %>
+            <% @report.report_data.each do |payment| %>
+                <tr>
+                  <td class="align_center"><%= payment.invoice.invoice_number %></td>
+                  <td class="align_left"><%= payment.client_name %></td>
+                  <td class="align_left"><%= payment.payment_type || payment.payment_method %></td>
+                  <td class="align_left"><%= payment.notes %></td>
+                  <td class="align_center"><%= payment.created_at.to_date %></td>
+                  <td class="align_right currency"><%= number_to_currency(payment.payment_amount) %></td>
+                </tr>
+            <% end %>
+            <tfoot>
+                <tr>
+                  <td class="align_center" >Total</td>
+                  <td class="align_left"></td>
+                  <td class="align_left"></td>
+                  <td class="align_left"></td>
+                  <td class="align_left"></td>
+                  <td class="align_right currency"><%= number_to_currency(@report.report_total) %></td>
+                </tr>
+            </tfoot>
+        <% else %>
+            <tr>
+              <td colspan="6">No data found against the selected criteria. Please change criteria and try again.
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!--grid_table-->
+
+  </div>
+  <!--content_middle-->
+
+  <div class="content_bottom">
+    <div class="report_footer">
+    </div>
+    <!-- report_footer -->
+  </div>
+  <!--content_bottom-->
+</div><!--reports-->

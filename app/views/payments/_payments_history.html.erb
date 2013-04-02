@@ -1,0 +1,20 @@
+<% unless @payments.blank? %>
+    <% @payments.each do |payment| %>
+        <tr>
+          <td class="align_center"><%= payment.invoice.invoice_number %></td>
+          <td class="align_left text-overflow-class" value="<%= payment.client_name %>"><%= payment.client_name %></td>
+          <td class="align_center"><%= payment.payment_method || payment.payment_type %></td>
+          <td class="align_center"><%= payment.notes %></td>
+          <td class="align_center"><%= payment.payment_date %></td>
+          <td class="align_right"><%= "#{number_to_currency(payment.payment_amount)}" %></td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="6">
+        <div class="no_record_container">
+          "You haven't entered any payment yet."
+        </div>
+      </td>
+    </tr>
+<% end %>

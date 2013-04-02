@@ -1,0 +1,51 @@
+<h1>Listing recurring_profiles</h1>
+
+<table>
+  <tr>
+    <th>First invoice date</th>
+    <th>Po number</th>
+    <th>Discount percentage</th>
+    <th>Frequency</th>
+    <th>Occurrences</th>
+    <th>Prorate</th>
+    <th>Prorate for</th>
+    <th>Gateway</th>
+    <th>Client</th>
+    <th>Terms</th>
+    <th>Notes</th>
+    <th>Status</th>
+    <th>Sub total</th>
+    <th>Discount amount</th>
+    <th>Tax amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @recurring_profiles.each do |recurring_profile| %>
+      <tr>
+        <td><%= recurring_profile.first_invoice_date %></td>
+        <td><%= recurring_profile.po_number %></td>
+        <td><%= recurring_profile.discount_percentage %></td>
+        <td><%= recurring_profile.frequency %></td>
+        <td><%= recurring_profile.occurrences %></td>
+        <td><%= recurring_profile.prorate %></td>
+        <td><%= recurring_profile.prorate_for %></td>
+        <td><%= recurring_profile.gateway_id %></td>
+        <td><%= recurring_profile.client_id %></td>
+        <td><%= recurring_profile.terms %></td>
+        <td><%= recurring_profile.notes %></td>
+        <td><%= recurring_profile.status %></td>
+        <td><%= recurring_profile.sub_total %></td>
+        <td><%= recurring_profile.discount_amount %></td>
+        <td><%= recurring_profile.tax_amount %></td>
+        <td><%= link_to 'Show', recurring_profile %></td>
+        <td><%= link_to 'Edit', edit_recurring_profile_path(recurring_profile) %></td>
+        <td><%= link_to 'Destroy', recurring_profile, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Recurring profile', new_recurring_profile_path %>

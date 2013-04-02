@@ -1,0 +1,52 @@
+<%= form_for(@payment) do |f| %>
+    <% if @payment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+
+          <ul>
+            <% @payment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :invoice_id %>
+      <br/>
+      <%= f.number_field :invoice_id, :class => "text_field" %>
+    </div>
+    <div class="field">
+      <%= f.label :payment_amount %>
+      <br/>
+      <%= f.text_field :payment_amount, :class => "text_field" %>
+    </div>
+    <div class="field">
+      <%= f.label :payment_method %>
+      <br/>
+      <%= f.text_field :payment_method, :class => "text_field" %>
+    </div>
+    <div class="field">
+      <%= f.label :payment_date %>
+      <br/>
+      <%= f.text_field :payment_date, :class => "text_field" %>
+    </div>
+    <div class="field">
+      <%= f.label :notes %>
+      <br/>
+      <%= f.text_area :notes, :class => "text_area" %>
+    </div>
+    <div class="field">
+      <%= f.label :send_payment_notification %>
+      <br/>
+      <%= f.check_box :send_payment_notification %>
+    </div>
+    <div class="field">
+      <%= f.label :paid_full %>
+      <br/>
+      <%= f.check_box :paid_full %>
+    </div>
+    <div class="actions">
+      <%= f.submit nil, :class => "btn btn-primary" %>
+    </div>
+<% end %>

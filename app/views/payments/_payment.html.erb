@@ -1,0 +1,44 @@
+<%
+   no_record_message = "You haven't entered any payment yet. Please click on New Payment button to enter new payment."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived payment."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted payment."
+   end
+%>
+<% if @payments.length > 0 %>
+    <% @payments.each do |payment| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}" %></td>
+          <% if payment.payment_type == "credit" %>
+              <td class="align_center"><%= payment.payment_reference %></td>
+          <% else %>
+              <td class="align_center"><%= link_to payment.payment_reference, invoice_path(payment.invoice), :class => "invoices_link" rescue "" %></td>
+          <% end %>
+          <td class="align_left text-overflow-class" value="<%= payment.client.organization_name rescue payment.client_name  %>"><%= payment.client.organization_name rescue payment.client_name %></td>
+          <td class="align_center"><%= (payment.payment_method || payment.payment_type || "").capitalize %></td>
+          <td class="align_left"><%= payment.notes %></td>
+          <td class="align_center"><%= payment.payment_date %></td>
+          <td class="align_right payment_amount"><%= content_tag(:span,'* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
+          <td class="align_center">
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_payment_path(payment), :class => 'edit_action' %>
+            <% unless params[:status] == "deleted" %>
+                <%#= link_to t('.destroy', :default => "Delete"),
+                            payment_path(payment),
+                            :method => :delete,
+                            :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
+                            :class => 'del_action' %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="9">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

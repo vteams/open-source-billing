@@ -1,0 +1,33 @@
+<h1>Listing client_contacts</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Email</th>
+    <th>Phone1</th>
+    <th>Phone2</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @client_contacts.each do |client_contact| %>
+      <tr>
+        <td><%= client_contact.client_id %></td>
+        <td><%= client_contact.first_name %></td>
+        <td><%= client_contact.last_name %></td>
+        <td><%= client_contact.email %></td>
+        <td><%= client_contact.phone1 %></td>
+        <td><%= client_contact.phone2 %></td>
+        <td><%= link_to 'Show', client_contact %></td>
+        <td><%= link_to 'Edit', edit_client_contact_path(client_contact) %></td>
+        <td><%= link_to 'Destroy', client_contact, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Client contact', new_client_contact_path %>

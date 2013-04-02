@@ -1,0 +1,94 @@
+.dispute_history{
+    .dispute_wrapper{
+        float: left;
+        width: 100%;
+        padding: 30px 0 0 0;
+      &.pdf_preview{
+        padding: 0 0 30px 0;
+      }
+    }
+    .dispute_container{
+        width: 500px;
+        margin: auto;
+    }
+    .dispute_heading, .dispute_content{
+        float: left;
+        width: 100%;
+        border-bottom: 1px solid #d7d7d7;
+        padding: 0 0 11px 0;
+        overflow: hidden;
+        h1{
+            font-size: 20px;
+            color: #9e0512;
+            text-transform: uppercase;
+        }
+    }
+    .dispute_content p{
+        float: left;
+        width: 100%;
+        padding: 20px 0 0 0;
+        text-align: left;
+    }
+    .dispute_content_btm{
+        float: left;
+        width: 100%;
+        text-align: right;
+        font-size: 10px;
+        span.response_by_client{
+            color: #00a8d8;
+        }
+        span.response_by_us{
+            color: #9e0512;
+        }
+    }
+    .dispute_contorl{
+        float: left;
+        width: 100%;
+        min-height: 60px;
+        border-top: 1px solid #d7d7d7;
+        ul{
+            float:right;
+            padding: 20px 0 0 0;
+            li{ 
+                float: left;
+                font-weight: bold;
+                a{
+                    display: block;
+                    color: #7b7b7b;
+                    &.less{
+                    background: url(/assets/less.png) no-repeat left;
+                    padding: 0 9px 0 14px;
+                    }
+                    &.more{
+                        background: url(/assets/more.png) no-repeat right;
+                        padding: 0 14px 0 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .dispute_input{
+        float: left;
+        width: 100%;
+        h4{
+            color: #464646;
+            padding: 0 0 10px 0;
+        }
+        textarea{
+            width: 488px;
+            min-height: 60px;
+            overflow: auto;
+            resize: none;
+            line-height: normal;
+            padding-bottom: 9px;
+            padding-top: 9px;
+        }
+        p{
+            padding: 10px 0 0 0;
+        }
+
+    }
+    .collapse{display: none;}
+   
+}

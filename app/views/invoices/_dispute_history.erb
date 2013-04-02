@@ -1,0 +1,33 @@
+<div class="dispute_history">
+  <div class="dispute_wrapper pdf_preview">
+    <div class="dispute_container">
+      <div class="dispute_heading">
+        <h1>Dispute History</h1>
+      </div>
+      <% @invoice.dispute_history.each_with_index do |email_detail, i| %>
+        <div class="dispute_content <%= i + 1 > 2 ? "toggleable collapse" : "" %>">
+          <p><%= email_detail.content %></p>
+          <div class="dispute_content_btm respone_by_client">
+            <span class="<%= email_detail.subject == "Response to client" ? "response_by_client" : "response_by_us" %>">
+              <%= email_detail.subject == "Response to client" ? "You" : email_detail.sender %>:
+              <%= email_detail.date %>
+            </span>
+          </div>
+        </div>
+      <% end %>
+      <script>$(".dispute_content").last().css('border-bottom', 'none');</script>
+      <% if @invoice.dispute_history.length > 2 %>
+        <div class="dispute_contorl">
+          <ul>
+            <li><a class="less" href="#">less</a></li>
+            <li><a class="more" href="#">more</a></li>
+          </ul>
+        </div>
+      <% end %>
+    </div><!--dispute_container-->
+  </div><!--dispute_wrapper-->
+</div><!--dispute_history-->
+
+
+
+
