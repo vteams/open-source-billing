@@ -35,6 +35,7 @@ Clone the repository and run
 	
 	# create database
 	rake db:create
+	rake db:schema:load
 	
 	# precompile assets
 	RAILS_ENV=production bundle exec rake assets:precompile
