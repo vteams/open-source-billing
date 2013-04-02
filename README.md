@@ -30,10 +30,14 @@ Installation
 
 Clone the repository and run
 
+	# install gems
     bundle install
-
-It will automatically install the required `gems` and other dependencies.
-
+	
+	# create database
+	rake db:create
+	
+	# precompile assets
+	RAILS_ENV=production bundle exec rake assets:precompile
 
 Contributing
 ------------
