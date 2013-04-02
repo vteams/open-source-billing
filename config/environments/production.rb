@@ -27,8 +27,8 @@ Osb::Application.configure do
       :port => 587,
       :authentication => :plain,
       :enable_starttls_auto => true,
-      :user_name => "info@hyperconversion.com",
-      :password => "P@ssword99"
+      :user_name => "EMAIL",
+      :password => "PASSWORD"
   }
 
   # Defaults to nil and saved in location specified by config.assets.prefix
