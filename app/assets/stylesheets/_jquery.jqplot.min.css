@@ -10,10 +10,7 @@
 }
 
 .jqplot-xaxis {
-    margin-top: -1px;
-    color: #464646;
-    font-family: arial;
-    font-size: 10px;
+    margin-top: 10px;
 }
 
 .jqplot-x2axis {
@@ -21,10 +18,7 @@
 }
 
 .jqplot-yaxis {
-    margin-right: 11px;
-    color: #464646;
-    font-family: arial;
-    font-size: 13px;
+    margin-right: 10px;
 }
 
 .jqplot-y2axis, .jqplot-y3axis, .jqplot-y4axis, .jqplot-y5axis, .jqplot-y6axis, .jqplot-y7axis, .jqplot-y8axis, .jqplot-y9axis, .jqplot-yMidAxis {
@@ -122,11 +116,8 @@ table.jqplot-table-legend, table.jqplot-cursor-legend {
     /*border: 1px solid #ccc;*/
     position: absolute;
     font-size: .75em;
-    right: -1px !important;
-    top: -54px !important;
-    font-family: arial;
-    font-size: 11px;
-    color: #464646;
+    right: 9px !important;
+    top: -40px !important;
 }
 
 td.jqplot-table-legend {
@@ -144,21 +135,19 @@ td.jqplot-seriesToggle:hover, td.jqplot-seriesToggle:active {
 div.jqplot-table-legend-swatch-outline {
     /*border: 1px solid #ccc;*/
     /*padding: 1px;*/
-    margin-right: 9px;
 }
 
 div.jqplot-table-legend-swatch {
     width: 0;
     height: 0;
-    border-top-width: 4px;
-    border-bottom-width: 4px;
-    border-left-width: 8px;
-    border-right-width: 8px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 6px;
+    border-right-width: 6px;
     border-top-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
     border-right-style: solid;
-    border-radius: 2px;
 }
 
 .jqplot-title {
