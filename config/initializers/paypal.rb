@@ -10,9 +10,9 @@ module OSB
 
     def self.gateway
       ActiveMerchant::Billing::PaypalGateway.new(
-          :login => 'PAYPAL_USER',
-          :password => 'PAYPAL_PASSWORD',
-          :signature => 'PAYPAL_SIGNATURE'
+          :login => 'onlyfo_1362543783_biz_api1.hotmail.com',
+          :password => '1362543819',
+          :signature => 'AFcWxV21C7fd0v3bYYYRCpSSRl31AucyRi52AmgxkjuibxAj2C81hceh'
       )
     end
   end
