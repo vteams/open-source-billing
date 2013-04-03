@@ -25,7 +25,7 @@ class Invoice < ActiveRecord::Base
   default_scope order("#{self.table_name}.created_at DESC")
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today)
-  scope :past_invoices, where("IFNULL(due_date, invoice_date) <= ?", Date.today)
+  scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today)
 
   # constants
   STATUS_DESCRIPTION = {
