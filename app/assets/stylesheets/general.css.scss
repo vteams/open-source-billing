@@ -844,7 +844,7 @@ input[disabled]{
   padding: 8px 0 0 0;
   min-width: 176px;
   text-align: center;
-  text-transform: uppercase;
+  text-transform: capitalize;
   border: none;
   font-weight: normal;
   margin-right: 6px;
@@ -861,11 +861,6 @@ input[disabled]{
 
 .btn_large.grey {
   background-color: #acacac; /*grey*/
-}
-
-.btn_large span {
-  background: url(/assets/btn_plus.png) no-repeat left;
-  padding: 0 0 0 19px;
 }
 
 .btn_large:hover, .btn_large.submit:hover {

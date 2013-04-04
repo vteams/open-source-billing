@@ -22,7 +22,7 @@
         text-align: center;
         font-family: 'Dosis Medium' , sans-serif;
         font-style: normal;
-        font-size: 18px;
+        font-size: 20px;
         color: #464646;
         padding: 8px 0 0 0;
         &.small{
@@ -48,12 +48,13 @@
   .dashboard_box{
     float: left;
     width: 92.9%;
-    padding: 29px;
+    padding: 22px 29px 29px 28px;
     border: 1px solid #d7d7d7;
-    border-radius: 3px;
+    border-radius: 4px;
     &.small{
       width: 85.5%;
-      height: 243px;
+      max-height: 305px;
+      min-height: 264px;
       overflow: hidden;
       position: relative;
       &.right{
@@ -63,9 +64,9 @@
       p{
         float: left;
         width: 92.5%;
-        padding: 5px 29px 0 0;
+        line-height: 1.4;
+        padding: 10px 29px 17px 0;
       }
-
 
     }
     .heading{
@@ -78,6 +79,7 @@
       float: left;
       width: 100%;
       margin-top: 25px;
+      margin-bottom: -6px;
     }
   }
   .amount_wrapper{
@@ -96,14 +98,13 @@
           float: left;
           font-size: 30px;
           color: #464646;
-          padding: 7px 0 12px 0;
+          padding: 7px 0 11px 0;
         }
       }
       p{
         float: left;
         width: 100%;
-        line-height: normal;
-        padding: 0 0 2px 0;
+        line-height: 1.4;
         span{
           font-size: 10px;
         }
@@ -111,7 +112,7 @@
       .days_summary{
         float: left;
         width: 100%;
-        padding: 11px 0 0 0;
+        padding: 9px 0 0 0;
       }
       .amount_row{
         float: left;
@@ -128,7 +129,7 @@
           float: left;
           width: 60px;
           padding: 0 0 0 7px;
-          text-align: right;
+          text-align: left;
         }
       }
     }
@@ -137,6 +138,7 @@
     &.current_invoices{
       &.top{
         padding-right: 29px;
+        padding-top: 0px;
         width: 92.5%;
         table{
           table-layout: auto;
@@ -209,8 +211,5 @@
         }
       }
     }
-  }
-  div.jqplot-table-legend-swatch-outline{
-    margin-right: 8px;
   }
 }

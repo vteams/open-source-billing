@@ -20,8 +20,8 @@ Osb::Application.configure do
       :port => 587,
       :authentication => :plain,
       :enable_starttls_auto => true,
-      :user_name => "EMAIL",
-      :password => "PASSWORD"
+      :user_name => "info@hyperconversion.com",
+      :password => "P@ssword99"
   }
 
   # Don't care if the mailer can't send
