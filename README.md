@@ -18,7 +18,7 @@ Features
 Demo
 ---
 
-Please check out the [demo]{http://demo.opensourcebilling.org} to see above features in action.
+Please check out the [demo](http://demo.opensourcebilling.org) to see above features in action.
 
 
 Caveats
