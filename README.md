@@ -1,11 +1,12 @@
 Open Source Billing
-===
+===================
 
-A super simple way to create and send invoices and receive payments online.
+A beautiful and super simple software to create and send invoices and receive payments online.
 
 Features
 --------
 
+* A nice looking Dashboard with graph and your key metrics
 * Create and send invoices to your clients
 * Enter payments against sent invoices
 * Partial payments tracking
@@ -13,6 +14,12 @@ Features
 * Invoice dispute management
 * Export invoices to PDF
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client` and more to come
+
+Demo
+---
+
+Please check out the [demo]{http://demo.opensourcebilling.org} to see above features in action.
+
 
 Caveats
 -------
