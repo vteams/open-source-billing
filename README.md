@@ -18,7 +18,7 @@ Features
 Demo
 ---
 
-Please check out the [demo]{http://demo.opensourcebilling.org} to see above features in action.
+Please check out the [demo](http://demo.opensourcebilling.org) to see above features in action.
 
 
 Caveats
@@ -37,7 +37,7 @@ Installation
 
 Clone the repository and run
 
-    # install gems
+	# install gems
     bundle install
 	
 	# create database
