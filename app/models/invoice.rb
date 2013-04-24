@@ -25,7 +25,7 @@ class Invoice < ActiveRecord::Base
   default_scope order("#{self.table_name}.created_at DESC")
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today)
-  scope :past_invoices, where("IFNULL(due_date, invoice_date) <= ?", Date.today)
+  scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today)
 
   # constants
   STATUS_DESCRIPTION = {
@@ -144,8 +144,6 @@ class Invoice < ActiveRecord::Base
     # self.company.currency_code
     "USD"
   end
-
-
 
   def self.get_next_invoice_number user_id
     ((Invoice.with_deleted.maximum("id") || 0) + 1).to_s.rjust(5, "0")
@@ -317,11 +315,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def change_status_after_recover
-    case status
-      when "paid","partial","viewed" then sent!
-      when "draft-partial" then draft!
-      else
-    end
+    sent!  if %w(paid partial viewed).include?(status)
+    draft! if status == 'draft-partial'
   end
 
   def destroy_credit_payments

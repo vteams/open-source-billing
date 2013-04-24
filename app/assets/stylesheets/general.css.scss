@@ -100,6 +100,10 @@ a:hover, input[type="submit"]:hover {
   color: #00ace5;
 }
 
+.primary_menu .dropdown-toggle:hover + .dropdown-menu, .dropdown-menu:hover{
+  display: block;
+}
+
 :-moz-any-link:focus {
   outline: none;
 }
@@ -203,19 +207,25 @@ h4 {
 
 .primary_menu {
   float: right;
+  min-width: 145px;
   padding: 31px 23px 0 0;
-}
+  text-align: right;
 
-.primary_menu ul li {
-  float: left;
-}
-
-.primary_menu ul li a {
-  display: block;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 13px;
-  color: #7d7d7d; /*light grey*/
-  padding: 0 6px 0 6px;
+  .dropdown-menu{
+    min-width: 147px;
+    left: auto;
+    right: 0;
+  }
+  ul li a{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: #7d7d7d;
+    text-align: left;
+    &:hover{
+      background-color: #00BDE5;
+      background-image: none;
+    }
+  }
 }
 
 /*Header CSS Ends*/
@@ -228,7 +238,7 @@ h4 {
   &.pdf_preview{
     background: #00BDE5;
     min-height: 38px;
-   }
+  }
 }
 .nav_container {
   min-height: 86px;
@@ -307,7 +317,7 @@ h4 {
 #nav .select li:hover .sub li a:hover, #nav .select li .sub li a.active {
   display: block;
   color: #00ace5;
-/*background: url(/assets/sub_hover.png) no-repeat bottom center;*/
+  /*background: url(/assets/sub_hover.png) no-repeat bottom center;*/
 }
 #nav .select li .sub li a.active {
   background: url(/assets/sub_hover.png) no-repeat bottom center;
@@ -346,7 +356,7 @@ h4 {
   &.pdf_preview{
     overflow: hidden;
     margin: 40px 0;
-   }
+  }
 }
 
 /*----top----*/
@@ -452,7 +462,7 @@ h4 {
   margin: 1px 0 0 0;
 }
 .table{
-    margin: 0px;
+  margin: 0px;
 }
 .table th, .table td{
   padding: 0px;
@@ -463,7 +473,7 @@ h4 {
   padding: 14px 0 0 0;
 }
 x:-o-prefocus, .grid_table table{
-    border-collapse: separate;
+  border-collapse: separate;
 }
 .grid_table table{
   table-layout:fixed;
@@ -486,7 +496,7 @@ x:-o-prefocus, .grid_table table{
 }
 
 tfoot tr:hover{
-    background: none !important;
+  background: none !important;
 }
 
 .grid_table table th {
@@ -717,7 +727,7 @@ textarea,
   border-radius: 4px;
   background-color: #ffffff;
 }
- select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
+select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
   background-color: #EEEEEE;
   cursor: not-allowed;
 }
@@ -833,8 +843,8 @@ input[disabled]{
   display: block;
   background-color: #00BDE5;
   border-radius: 4px;
-/*-moz-border-radius: 4px;
--webkit-border-radius: 4px;*/
+  /*-moz-border-radius: 4px;
+ -webkit-border-radius: 4px;*/
 
   color: #FFFFFF;
   display: inline-block;
@@ -844,13 +854,13 @@ input[disabled]{
   padding: 8px 0 0 0;
   min-width: 176px;
   text-align: center;
-  text-transform: uppercase;
+  text-transform: capitalize;
   border: none;
   font-weight: normal;
   margin-right: 6px;
 }
 .btn_large:last-child{
-    margin-right: 0px !important;
+  margin-right: 0px !important;
 }
 
 .btn_large.submit {
@@ -861,11 +871,6 @@ input[disabled]{
 
 .btn_large.grey {
   background-color: #acacac; /*grey*/
-}
-
-.btn_large span {
-  background: url(/assets/btn_plus.png) no-repeat left;
-  padding: 0 0 0 19px;
 }
 
 .btn_large:hover, .btn_large.submit:hover {
@@ -929,7 +934,7 @@ table.table_listing, table.report-data-table {
     }
   }
   #paging_links td{
-      border-top: none !important;
+    border-top: none !important;
   }
 }
 
@@ -954,9 +959,9 @@ table.table_listing, table.report-data-table {
   }
 }
 .ui-widget-content{
-    color: #00BDE5 !important;
-    font-size: 13px;
-    font-weight: bold;
+  color: #00BDE5 !important;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 /*-------------------------Calendar CSS Ends-------------------------*/
@@ -991,9 +996,9 @@ table.table_listing, table.report-data-table {
   table{
     width: 96%;
     tr td{
-        vertical-align: middle;
-        min-height: 40px;
-        height: 40px;
+      vertical-align: middle;
+      min-height: 40px;
+      height: 40px;
     }
   }
   &.popup{
@@ -1003,7 +1008,7 @@ table.table_listing, table.report-data-table {
     padding-bottom: 10px;
     background-position: 19px 11px;
     .close{
-        top: -5px;
+      top: -5px;
     }
   }
   /*span {
@@ -1067,13 +1072,13 @@ table.table_listing, table.report-data-table {
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    select.per_page
+  select.per_page
     {
-        line-height: 20px;
-    }
+    line-height: 20px;
+  }
 }
 select.discount_select
-{
+  {
   line-height: 20px;
   width: 42px;
   margin: 0 5px 3px 0;
@@ -1085,8 +1090,8 @@ select.discount_select
 /*Model Popup*/
 .modal{
   .modal-body{
-  float: left;
-  min-height: 0px;
+    float: left;
+    min-height: 0px;
   }
   .footer{
     clear: both;
@@ -1096,4 +1101,46 @@ select.discount_select
 
 #paging_links tr td{
   padding: 8px 0 0 0;
+}
+
+.dropdown .caret {
+  margin-left: 5px;
+  margin-top: 8px;
+}
+.caret {
+  border-top: 4px solid #909090;
+}
+.dropdown-menu{
+  border: none;
+  box-shadow: none;
+  margin: 5px 0 0 0;
+  padding: 0;
+  min-width: auto !important;
+  .top_arrow{
+    min-width: 147px;
+    float: left;
+    height: 8px;
+    margin-top: -7px;
+  }
+  img{
+    float: left;
+    margin: 0px 0 0 117px;
+  }
+  ul{
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    border: 1px solid #D7D7D7;
+    border-radius: 5px;
+    background: #ffffff;
+    padding: 14px 18px 10px 18px;
+    li a{
+      color: #7d7d7d;
+      padding: 0px;
+      margin-bottom: 4px;
+      &:hover, &:focus{
+        background: none !important;
+        color: #00ace5;
+      }
+    }
+  }
+
 }

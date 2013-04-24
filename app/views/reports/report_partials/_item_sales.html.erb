@@ -1,0 +1,112 @@
+<div class="reports">
+  <div class="content_middle">
+
+    <div class="report_content_header">
+      <div class="report_content_heading">
+        <h1>Item Sales</h1>
+      </div>
+
+      <div class="content_header_data">
+        <div class="header_data_left">
+          <div class="header_data_detail">
+            <ul>
+              <li class="header_name"><%= @report.item_name %></li>
+              <li class="header_duration"><%= @report.period %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- content_header_data -->
+    </div>
+    <!-- report_content_header -->
+
+    <div class="header_data_right">
+      <ul class="download_report">
+        <li class="download_report_title">Export to:</li>
+        <li class="download_sep">CSV</li>
+        <li>Excel</li>
+      </ul>
+      <ul class="print_report">
+        <li><a href="#">Print Report</a></li>
+      </ul>
+      <div class="report_duration">
+        <!--<ul>-->
+        <!--<li>01/01/2013</li>-->
+        <!--<li><span>to</span></li>-->
+        <!--<li>01/01/2013</li>-->
+        <!--</ul>-->
+      </div>
+      <!-- report_duration -->
+    </div>
+
+    <div class="item_sales">
+      <div class="grid_table">
+        <%# unless @report.report_data.blank? %>
+        <%# @report.report_data.each do |item| %>
+        <!--<h2><%#= item.item_name || '' %></h2>-->
+        <table cellpadding="0" cellspacing="0" class="table_listing client_report_listing">
+          <colgroup>
+            <col class="one"/>
+            <col class="two"/>
+            <col class="three"/>
+            <col class="four"/>
+            <col class="five"/>
+           </colgroup>
+
+          <thead>
+          <tr>
+            <th class="align_left">Item Name</th>
+            <th class="align_left">Total Qty Sold</th>
+            <th class="align_center {sorter:'thousands'}">Total Amount</th>
+            <th class="align_center {sorter:'thousands'}">Total Discount</th>
+            <th class="align_center {sorter:'thousands'}">Net Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% unless @report.report_data.blank? %>
+              <% @report.report_data.each do |item| %>
+                  <tr>
+                    <td class="align_left"><%= item.item_name %></td>
+                    <td class="align_center"><%= item.attributes["item_quantity"].to_i %></td>
+                    <td class="align_right currency"><%= number_to_currency(item.attributes["total_amount"]) %></td>
+                    <td class="align_right currency"><%= number_to_currency(item.attributes["discount_amount"]) %></td>
+                    <td class="align_right currency"><%= number_to_currency(item.attributes["net_total"]) %></td>
+                  </tr>
+              <% end %>
+              <tfoot>
+              <tr>
+                <td class="align_left"><b>Total</b></td>
+                <td class="align_center"><b><%= @report.report_total["item_quantity"].to_i %></b></td>
+                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["total_amount"]) %></b></td>
+                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["discount_amount"]) %></b></td>
+                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["net_total"]) %></b></td>
+              </tr>
+              </tfoot>
+          <% else %>
+              <tr>
+                <td colspan="6">No data found against the selected criteria. Please change criteria and try
+                  again.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%# end %>
+        <%# end %>
+      </div>
+      <!--grid_table-->
+    </div>
+    <!--revnue_by_client-->
+
+
+    <div class="content_bottom">
+      <div class="report_footer">
+
+      </div>
+      <!-- report_footer -->
+    </div>
+    <!--content_bottom-->
+
+  </div>
+  <!--content_middle-->
+</div><!--reports-->

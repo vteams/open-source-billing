@@ -27,6 +27,11 @@ module Reporting
     def client_name
       @report_criteria.client_id == 0 ? "All Clients" : Client.where(:id => @report_criteria.client_id).first.organization_name
     end
+
+    def item_name
+      @report_criteria.item_id == 0 ? "All Items" : Item.where(:id => @report_criteria.item_id).first.item_name
+    end
+
   end
 
   #class AgedAccountsReceivable < Reporting::Report

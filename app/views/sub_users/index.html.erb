@@ -1,0 +1,50 @@
+<div class="sub_user">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        Users
+        <!--<span>&nbsp;/&nbsp;Active</span>-->
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to "New User", new_sub_user_path, :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+  <div class="content_middle">
+
+    <!--grid_control-->
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="align_left ">Full Name</th>
+          <th class="align_left ">Email</th>
+          <th class="align_left">Date</th>
+          <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+        </thead>
+        <tbody id="invoice_body">
+            <%= render "sub_users" %>
+        </tbody>
+        <tfoot id="paging_links">
+
+        </tfoot>
+
+      </table>
+    </div>
+    <!--grid_table-->
+  </div>
+  <!--content_middle-->
+  <div class="content_bottom">
+    <%= link_to "New User", new_sub_user_path, :class => 'btn_large' %>
+  </div>
+  <!--content_bottom-->
+
+</div><!--invoice-->

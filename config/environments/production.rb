@@ -22,14 +22,7 @@ Osb::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
-  config.action_mailer.smtp_settings = {
-      :address => "smtp.gmail.com",
-      :port => 587,
-      :authentication => :plain,
-      :enable_starttls_auto => true,
-      :user_name => "EMAIL",
-      :password => "PASSWORD"
-  }
+  config.action_mailer.smtp_settings = OSB::CONFIG::SMTP_SETTINGS_PROD
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
@@ -75,6 +68,6 @@ Osb::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  config.action_mailer.default_url_options = {:host => 'osb.vteamslabs.com'}
-  config.address = "http://osb.vteamslabs.com/"
+  config.action_mailer.default_url_options = {:host => OSB::CONFIG::APP_HOST}
+  config.address = "#{OSB::CONFIG::APP_PROTOCOL.to_s}://#{OSB::CONFIG::APP_HOST}"
 end

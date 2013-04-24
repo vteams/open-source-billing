@@ -1,0 +1,42 @@
+.sub_users_form{
+  .fields_content_container{
+    width: 500px;
+  }
+  .fields_content_data{
+    padding: 0px;
+  }
+  .label_field.left{
+    width: 112px;
+  }
+  .large_field input, .large_field textarea, input[type="password"]{
+    width: 350px;
+  }
+  input[type="password"]{
+    padding: 0 9px;
+    margin: 0px;
+    height: 28px;
+    line-height: 28px;
+  }
+  .field_check{
+    p{
+      label{
+        font-weight: normal;
+        margin: -1px 0 0 0;
+      }
+    }
+  }
+  .small_field input{
+    width: 107px;
+  }
+  .label_field.right{
+    width: 102px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .small_field select.extra_small{
+    width: 180px;
+  }
+  .field_row:last-child{
+    min-height: auto;
+  }
+}

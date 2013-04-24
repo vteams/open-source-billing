@@ -120,7 +120,7 @@ class PaymentsController < ApplicationController
     if Payment.is_credit_entry? ids
       @action = "credit entry"
       @payments_with_credit = Payment.payments_with_credit ids
-      @non_credit_payments = ids - @payments_with_credit.collect { |p| p.id.to_s }
+      @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
     else
       Payment.delete_multiple(ids)
       @payments = Payment.unarchived.page(params[:page]).per(params[:per])

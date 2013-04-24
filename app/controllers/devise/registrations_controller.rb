@@ -68,7 +68,10 @@ class Devise::RegistrationsController < DeviseController
         set_flash_message :notice, flash_key || :updated
       end
       sign_in resource_name, resource, :bypass => true
-      respond_with resource, :location => after_update_path_for(resource)
+
+      # After password is updated its redirected to change password screen
+      #respond_with resource, :location => after_update_path_for(resource)
+      respond_with resource, :location => edit_user_registration_path(resource)
     else
       clean_up_passwords resource
       respond_with resource

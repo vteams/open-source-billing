@@ -244,6 +244,8 @@ INDUSTRY_LIST = ["Accommodation & Hospitality",
 
 DISCOUNT_TYPE = %w(% $)
 
+INVOICE_STATUS = [["Draft","draft"], ["Sent","sent"], ["Viewed","viewed"],["Paid","paid"], ["Partial","partial"], ["Draft partial","draft_partial"],["Disputed","disputed"]]
+
 CREDIT_CARD_TYPE = ["Visa" ,"Master Card" ,"Discover", "American Express"]
 
 COMPANY_SIZE = ["1-10 employees",

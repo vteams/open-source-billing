@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
   default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
-  attr_accessible :client_id,:invoice_id, :notes, :paid_full,:payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied
+  attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied
 
   # associations
   belongs_to :invoice
@@ -42,8 +42,12 @@ class Payment < ActiveRecord::Base
 
 
   def client_name
-    invoice = Invoice.with_deleted.find(self.invoice_id)
-    invoice.client.organization_name rescue 'no client'
+    invoice = Invoice.with_deleted.find_by_id(self.invoice_id)
+    if invoice.present?
+      invoice.client.organization_name rescue 'no client'
+    else
+      client.organization_name rescue 'no client'
+    end
   end
 
   def client_full_name
@@ -78,7 +82,7 @@ class Payment < ActiveRecord::Base
   def self.update_invoice_status_credit(inv_id, c_pay)
     invoice = Invoice.find(inv_id)
     diff = (self.invoice_paid_amount(invoice.id) + c_pay) - invoice.invoice_total
-    if invoice.client.client_credit < c_pay ||  diff < 0
+    if invoice.client.client_credit < c_pay || diff < 0
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
       return_v = diff < 0 ? c_pay : invoice.client.client_credit
     else
@@ -109,7 +113,7 @@ class Payment < ActiveRecord::Base
 
   def self.invoice_remaining_amount(inv_id)
     invoice = Invoice.find(inv_id)
-    invoice.invoice_total -  self.invoice_paid_amount(inv_id)
+    invoice.invoice_total - self.invoice_paid_amount(inv_id)
   end
 
   def self.invoice_paid_amount(inv_id)
@@ -152,7 +156,7 @@ class Payment < ActiveRecord::Base
   end
 
   def self.payments_history(client)
-    ids = client.invoices.collect { |invoice| invoice.id }
+    ids = client.invoices.map(&:id) #{ |invoice| invoice.id }
     where('invoice_id IN(?)', ids)
   end
 

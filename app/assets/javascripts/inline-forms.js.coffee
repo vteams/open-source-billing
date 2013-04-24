@@ -33,7 +33,6 @@ class window.InlineForms
       @appendToAllDropdowns(new_record)
       @showForm()
 
-
   # append newly added record to all dropdowns
   appendToAllDropdowns: (new_record) ->
     dropdown_class = @dropdown.attr('class').split(' ')[0]

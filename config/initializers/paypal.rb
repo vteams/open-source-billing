@@ -1,6 +1,6 @@
 module OSB
   module Paypal
-    URL = "https://www.sandbox.paypal.com/cgi-bin/webscr?"
+    URL = OSB::CONFIG::PAYPAL_URL
     module TransStatus
       SUCCESS = :SUCCESS
       FAILED = :FAILED
@@ -10,9 +10,9 @@ module OSB
 
     def self.gateway
       ActiveMerchant::Billing::PaypalGateway.new(
-          :login => 'PAYPAL_USER',
-          :password => 'PAYPAL_PASSWORD',
-          :signature => 'PAYPAL_SIGNATURE'
+          :login => OSB::CONFIG::PAYPAL_LOGIN,
+          :password => OSB::CONFIG::PAYPAL_PASSWORD,
+          :signature => OSB::CONFIG::PAYPAL_SIGNATURE
       )
     end
   end

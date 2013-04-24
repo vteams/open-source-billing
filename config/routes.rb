@@ -1,12 +1,13 @@
 Osb::Application.routes.draw do
+
+
+  resources :sub_users
+
+  #resources :users
+
   resources :payment_terms
 
-
-  resources :companies do
-    collection do
-      get 'new_user'
-    end
-  end
+  resources :companies
 
   match "help" => "help#index"
   match "reports/:report_name" => "reports#reports"

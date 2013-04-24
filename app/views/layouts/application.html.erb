@@ -17,10 +17,20 @@
         <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard" %>
       </div>
       <div class="primary_menu">
-        <ul>
-          <li><%= link_to "My Account", new_company_path %></li>
-          <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
-        </ul>
+        <div class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.user_name || current_user.email %>
+            <b class="caret"></b></a>
+
+          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <div class="top_arrow"><img src="/assets/dd_top.png" alt=""/></div>
+            <ul>
+              <li><%= link_to "Edit Profile", new_company_path, tabindex: "-1" %></li>
+              <li><%= link_to "Change password", edit_user_registration_path, tabindex: "-1" %></li>
+              <li><%= link_to "Logout", destroy_user_session_path, :method => :delete, tabindex: "-1" %></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </div>
     <!--header-->
@@ -44,6 +54,7 @@
               </ul>
             </li>
             <li><%= active_link_to "Payments", payments_path %></li>
+            <li><%= active_link_to "Users", sub_users_path %></li>
             <li><%= active_link_to "Reports", "/reports" %></li>
             <li><%= active_link_to "Help", "/help" %></li>
           </ul>
