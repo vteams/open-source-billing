@@ -65,9 +65,11 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(params[:client])
-    #Add available credit
+
+    #Add initial available credit
     available_credit = params[:available_credit]
     @client.add_available_credit(available_credit) if available_credit.present? && available_credit.to_i > 0
+
     respond_to do |format|
       if @client.save
         format.js

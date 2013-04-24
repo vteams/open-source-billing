@@ -42,8 +42,8 @@ module Services
           credit_applied += current[:amount]
           remaining = payment_amount - collected
 
-          credit_payment.update_attribute('credit_applied', credit_applied)
-          CreditPayment.create({:payment_id => credit_payment.id, :invoice_id => credit_payment.invoice_id, :amount => current[:amount], :credit_id => new_credit_payment.id})
+          credit_payment.update_attributes(credit_applied: credit_applied)
+          CreditPayment.create({payment_id: credit_payment.id, invoice_id: credit_payment.invoice_id, amount: current[:amount], credit_id: new_credit_payment.id})
 
           break if remaining == 0
         end unless client.credit_payments.blank?

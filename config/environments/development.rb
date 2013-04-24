@@ -15,14 +15,7 @@ Osb::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
-  config.action_mailer.smtp_settings = {
-      :address => "smtp.gmail.com",
-      :port => 587,
-      :authentication => :plain,
-      :enable_starttls_auto => true,
-      :user_name => "EMAIL",
-      :password => "PASSWORD"
-  }
+  config.action_mailer.smtp_settings = OSB::CONFIG::SMTP_SETTINGS_DEV
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true

@@ -41,7 +41,7 @@ class Item < ActiveRecord::Base
     where("id IN(?)", ids)
   end
 
-  def self.is_exits? item_name
+  def self.is_exists? item_name
     where(:item_name => item_name).present?
   end
 

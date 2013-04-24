@@ -16,11 +16,13 @@ window.applyChosen = (single_row) =>
   dropdowns.chosen({allow_single_deselect: true, disable_search_threshold: 10}).trigger("liszt:ready", this)
 
   # Add New click handler to show form inside the list
-  jQuery(".add-new").live "click", ->
+  jQuery(".add-new").live "click",(event) ->
     new InlineForms(jQuery(this).attr("data-dropdown-id")).showForm()
-
+    event.stopImmediatePropagation()
 
 jQuery ->
+
+#  jQuery(".cost").spinner()
 
   window.applyChosen()
 
@@ -144,10 +146,10 @@ jQuery ->
   addLineItemRow = (elem) ->
    if elem.parents('tr.fields').next('tr.fields:visible').length is 0
     jQuery(".add_nested_fields").click()
-    applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
+    #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
   jQuery(".add_nested_fields").live "click", ->
-    setTimeout "applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
+    setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
  # Re calculate the total invoice balance if an item is removed
   jQuery(".remove_nested_fields").live "click", ->

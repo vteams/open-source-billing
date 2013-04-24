@@ -41,5 +41,14 @@ module DeviseHelper
     #HTML
     #
     #html.html_safe
+
+    html = <<-HTML
+    <div id="error_explanation">
+      <ul>#{messages}</ul>
+    </div>
+    HTML
+
+    html.html_safe
+
   end
 end

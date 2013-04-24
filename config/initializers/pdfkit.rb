@@ -1,3 +1,3 @@
 PDFKit.configure do |config|
-  config.wkhtmltopdf = 'tmp/wkhtmltopdf/wkhtmltopdf.exe'
+  config.wkhtmltopdf = OSB::CONFIG::WKHTMTTOPDF_PATH
 end

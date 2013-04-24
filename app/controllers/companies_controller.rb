@@ -83,7 +83,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to edit_company_url(@company), notice: 'Company was successfully updated.' }
+        format.html { redirect_to edit_company_url(@company), notice: 'Your company profile has been updated successfully.'}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -97,12 +97,10 @@ class CompaniesController < ApplicationController
   def destroy
     @company = Company.find(params[:id])
     current_user.companies.destroy(@company)
-    #@company.destroy
 
     respond_to do |format|
       format.html { redirect_to companies_url }
       format.json { head :no_content }
     end
   end
-
 end

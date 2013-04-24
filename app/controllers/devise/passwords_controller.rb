@@ -23,6 +23,7 @@ class Devise::PasswordsController < DeviseController
   # Render the #edit only if coming from a reset password email link
   append_before_filter :assert_reset_token_passed, :only => :edit
 
+  layout 'login'
   # GET /resource/password/new
   def new
     build_resource({})

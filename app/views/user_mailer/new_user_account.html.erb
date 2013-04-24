@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p><%= @sub_user.user_name %>,</p>
+<p>
+<%= @creator %> has setup your Open Source Billing account. Please find your access information below:
+</p>
+<p>URL: <a href="<%= Osb::Application.config.address %>"><%= Osb::Application.config.address %></a> </p>
+<p>Login: <%= @sub_user.email%> </p>
+<p>Password: <%= @sub_user.password%></p>
+<p>Happy invoicing with Open Source Billing.</p>
+<p>
+Thanks, <br/>
+<%= @company%>
+</p>
+</body>
+</html>
+
+

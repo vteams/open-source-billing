@@ -110,9 +110,10 @@ class Client < ActiveRecord::Base
   end
 
   def credit_payments
-    payments = []
-    invoices.with_deleted.each { |invoice| payments << invoice.payments.where("payment_type = 'credit'").order("created_at ASC") }
-    payments.flatten
+    credit = []
+    invoices.with_deleted.each { |invoice| credit << invoice.payments.where("payment_type = 'credit'").order("created_at ASC") }
+    credit << payments.first if payments.present? #include the client's initial credit
+    credit.flatten
   end
 
   def client_credit
@@ -127,10 +128,12 @@ class Client < ActiveRecord::Base
     # Total available credit of client
     client_total_credit - client_avail_credit
   end
-  def add_available_credit available_credit
-    self.payments.build({:payment_amount=>available_credit,:payment_type=>"credit",:payment_date => Date.today})
+
+  def add_available_credit(available_credit)
+    payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today})
   end
-  def update_available_credit available_credit
-    self.payments.first.update_attribute('payment_amount',available_credit)
+
+  def update_available_credit(available_credit)
+    payments.first.update_attributes({payment_amount: available_credit})
   end
 end

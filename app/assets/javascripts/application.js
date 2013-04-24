@@ -18,6 +18,7 @@
 //= require jqplot.barRenderer.min.js
 //= require jqplot.categoryAxisRenderer.min.js
 //= require jqplot.pointLabels.min.js
+//= require jqplot.highlighter.js
 //= require jquery_nested_form
 //= require nav.js
 //= require chosen.jquery
@@ -54,6 +55,8 @@
 //= require credit-payment.js.coffee
 //= require cc-validation.js.coffee
 //= require jquery.customScrollbar.min.js
+//= require users.js.coffee
+//= require validate-forms.js.coffee
 
 
 jQuery(function () {
@@ -67,12 +70,20 @@ jQuery(function () {
             return $contact_container.append(content)
         }
     }
+
     jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
-    jQuery("#nav ul.select > li").mouseover(function () {
+
+    jQuery("#nav ul.select > li").mouseenter(function () {
         jQuery(".sub").hide();
         jQuery(".sub", jQuery(this)).show();
     });
-    jQuery("#nav").mouseout(function (event) {
+
+    jQuery("#nav").on("mouseleave",function (event) {
+        if (event.pageY - $(window).scrollTop() <= 1)
+        {
+            jQuery(".sub").hide();
+            jQuery("li a.active", jQuery(this)).next(".sub").show();
+        }
         try {
             var e = event.toElement || event.relatedTarget;
             if (e.parentNode == jQuery(this).find('ul.select') || e == this)

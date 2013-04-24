@@ -64,7 +64,7 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    if Item.is_exits?(params[:item][:item_name])
+    if Item.is_exists?(params[:item][:item_name])
       @item_exists = true
       redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
       return

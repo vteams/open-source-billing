@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require File.expand_path('../initializers/config', __FILE__)
+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -61,7 +63,7 @@ module Osb
     config.assets.version = '1.0'
     require 'pdfkit'
     config.middleware.use "PDFKit::Middleware", :print_media_type => true
-    ActiveMerchant::Billing::Base.mode = :test
+    ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
   end
 
 end

@@ -1,5 +1,11 @@
 .payments_collected {
   .grid_table table{
+    col.one  {width: 81px;}
+    col.two  {width: 201px;}
+    col.three{width: 71px;}
+    col.four {width: 286px;}
+    col.five {width: 92px;}
+    col.six  {width: 110px;}
     .col_hover, .row_hover, tfoot tr:hover{background-color: #F7F7F7;}
     tfoot{border-bottom: medium double #dadada; font-weight: bold;}
   }

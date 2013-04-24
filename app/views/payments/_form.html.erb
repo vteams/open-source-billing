@@ -1,63 +1,67 @@
-<div class="content_middle">
+<div class="edit_payment">
+  <%= form_for(@payment) do |f| %>
+      <div class="content_middle">
 
-  <div class="fields_content">
-    <div class="fields_content_container invoice">
+        <div class="fields_content">
+          <div class="fields_content_container">
 
-      <div class="fields_content_data">
+            <div class="fields_content_data">
 
-        <div class="field_row">
-          <div class="label_field left single"><%= f.label :invoice_id %></div>
-          <div class="medium_field">
-            <%= f.number_field :invoice_id %>
-          </div>
-          <div class="label_field right single"><%= f.label :payment_method %></div>
-          <div class="medium_field">
-            <%= f.text_field :payment_method %>
-          </div>
-        </div>
-        <!--field_row-->
+              <div class="field_row">
+                <div class="label_field left single"><%= f.label :invoice_id %></div>
+                <div class="medium_field">
+                  <%= f.number_field :invoice_id %>
+                </div>
+                <div class="label_field right single"><%= f.label :payment_method %></div>
+                <div class="small_field">
+                  <%= f.text_field :payment_method %>
+                </div>
+              </div> <!--field_row-->
 
-        <div class="field_row">
-          <div class="label_field left single"><%= f.label :payment_amount %></div>
-          <div class="medium_field">
-            <%= f.text_field :payment_amount %>
-          </div>
-          <div class="label_field right single"><%= f.label :payment_date %></div>
-          <div class="medium_field">
-            <%= f.text_field :payment_date %>
-          </div>
-        </div>
-        <!--field_row-->
 
-        <div class="field_row textarea">
-          <div class="label_field left single"><%= f.label :notes %></div>
-          <div class="large_field">
-            <%= f.text_area :notes %>
-          </div>
-        </div>
-        <!--field_row-->
+              <div class="field_row">
+                <div class="label_field left single"><%= f.label :payment_amount %></div>
+                <div class="medium_field">
+                  <%= f.text_field :payment_amount %>
+                </div>
+                <div class="label_field right single"><%= f.label :payment_date %></div>
+                <div class="small_field">
+                  <%= f.text_field :payment_date %>
+                </div>
+              </div><!--field_row-->
 
-        <div class="options_row">
-          <div class="options_content">
-            <div class="options_content_row">
-              <ul>
-                <li><%= f.check_box :send_payment_notification %><%= f.label :send_payment_notification, :class => "checkbox" %></li>
-                <li><%= f.check_box :paid_full %><%= f.label :paid_full, :class => "checkbox" %></li>
-              </ul>
+
+              <div class="field_row textarea">
+                <div class="label_field left single"><%= f.label :notes %></div>
+                <div class="large_field">
+                  <%= f.text_area :notes %>
+                </div>
+              </div>
+              <!--field_row-->
+
+              <div class="options_row">
+                <div class="options_content">
+                  <div class="options_content_row">
+                    <ul>
+                      <li><%= f.check_box :send_payment_notification %><%= f.label :send_payment_notification, :class => "checkbox" %></li>
+                      <li><%= f.check_box :paid_full %><%= f.label :paid_full, :class => "checkbox" %></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--field_row-->
+
             </div>
+            <!--fields_content_data-->
           </div>
+          <!--fields_content_container-->
         </div>
-        <!--field_row-->
+        <!--fields_content-->
 
-      </div>
-      <!--fields_content_data-->
-    </div>
-    <!--fields_content_container-->
-  </div>
-  <!--fields_content-->
+      </div><!--content_middle-->
 
-</div><!--content_middle-->
-
-<div class="content_bottom">
-  <%= f.submit nil, :class => "btn_large submit" %>
-</div><!--content_bottom-->
+      <div class="content_bottom">
+        <%= f.submit nil, :class => "btn_large submit" %>
+      </div><!--content_bottom-->
+  <% end %>
+</div><!--edit_payment-->

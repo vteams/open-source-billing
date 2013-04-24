@@ -49,16 +49,18 @@
   .report_date input {
     width: 62px;
   }
-  .client_select {
+  .client_select, .report_select {
     float: left;
     padding: 0 5px;
   }
-  .report_clients {
+  .report_clients, .report_items {
     float: left;
     padding: 0 0 0 5px;
   }
-  .report_clients select {
-    width: 180px;
+  .report_clients, .report_items {
+    select {
+      width: 180px;
+    }
   }
   .report_update {
     float: left;
@@ -71,7 +73,7 @@
     border-radius: 3px;
     color: #ffffff;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: capitalize;
     height: 30px;
     font-family: 'Dosis', sans-serif;
     font-weight: 300;
@@ -170,24 +172,7 @@
   .report_duration ul li span {
     font-weight: normal;
   }
-  .grid_table table col.one {
-    width: 81px;
-  }
-  .grid_table table col.two {
-    width: 201px;
-  }
-  .grid_table table col.three {
-    width: 71px;
-  }
-  .grid_table table col.four {
-    width: 286px;
-  }
-  .grid_table table col.five {
-    width: 92px;
-  }
-  .grid_table table col.six {
-    width: 110px;
-  }
+
   .grid_table table th {
     border-right: 1px solid #c2c2c2 !important;
   }

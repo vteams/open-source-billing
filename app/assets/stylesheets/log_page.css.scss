@@ -9,6 +9,9 @@
     background-color: #ffffff;
     padding: 0 36px 16px;
     width: 342px;
+    &.change_password{
+      width: 363px;
+    }
   }
   .log_top {
     float: left;
@@ -25,6 +28,9 @@
   }
   .field_row {
     min-height: 50px;
+    &.forgot{
+      min-height: auto;
+    }
   }
   .field_row.sign_up {
     min-height: 33px;
@@ -80,6 +86,9 @@
     margin-bottom: 0;
     padding: 0 9px;
     width: 247px;
+    &.confirm_field{
+      width: 259px;
+    }
   }
   .medium_field input.sign_up {
     width: 234px !important;
@@ -92,17 +101,38 @@
     float: left;
     margin: 0;
   }
-  .field_row.checkbox label {
-    float: left;
-    margin: 0;
-    padding: 0 0 0 7px;
-    line-height: 13px;
-    font-weight: normal;
-    width: 90%;
+  .field_row.checkbox{
+    label{
+      float: left;
+      margin: 0;
+      padding: 0 0 0 7px;
+      line-height: 13px;
+      font-weight: normal;
+      width: 90%;
+    }
+    &.login{
+      label{
+        width: 180px;
+        p{
+          float: left;
+          width: 100%;
+        }
+        span{
+          font-size: 11px;
+        }
+      }
+      a{
+        float: right;
+        line-height: 13px;
+        padding: 0 1px 0 0;
+      }
+    }
+
   }
   .field_row.checkbox label {
     .ie7 &, .ie8 &, .ie9 &, .ie10 {
-      line-height: 1.5;
+      line-height: 1;
+      padding-top: 2px;
     }
   }
   .field_row.checkbox label {
@@ -118,7 +148,17 @@
     width: 100%;
     text-align: center;
     padding: 30px 0;
+    input[type="submit"]{
+      text-transform: capitalize;
+      padding: 0 18px;
+    }
+    .btn_large.grey.forgot{
+      min-width: 84px;
+      text-transform: capitalize;
+      color: #ffffff;
+    }
   }
+
   .log_footer {
     width: 392px;
     margin: auto;
@@ -145,4 +185,35 @@
     text-align: center;
     padding: 0 0 11px 0;
   }
+  .log_para{
+    float: left;
+    width: 100%;
+    padding: 7px 0 1px 0;
+    p{
+      line-height: 1.3;
+      font-size: 12px;
+    }
+  }
+}
+.change_password_form{
+  .fields_content_container{
+    width: 500px;
+  }
+  .fields_content_data{
+    padding: 0px;
+  }
+  .large_field input, .large_field textarea, input[type="password"]{
+    width: 350px;
+  }
+  input[type="password"]{
+    padding: 0 9px;
+    margin: 0px;
+    height: 28px;
+    line-height: 28px;
+  }
+  .btn_large.submit{
+    text-transform: capitalize;
+  }
+
+
 }

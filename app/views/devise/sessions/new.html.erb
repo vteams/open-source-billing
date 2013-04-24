@@ -8,14 +8,14 @@
       <!--log_top-->
 
       <div class="notice"><%= flash[:alert] %></div>
-      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login'}) do |f| %>
 
           <div class="log_fields">
 
             <div class="field_row">
               <div class="label_field"><%= f.label :email %></div>
               <div class="medium_field">
-                <%= f.email_field :email, :autofocus => true, :id => "login_email", :title => "Enter your username" %>
+                <%= f.email_field :email, :autofocus => true, :id => "login_email", :title => "Enter your username", :class => 'user_email', required: '' %>
               </div>
             </div>
             <!--field_row-->
@@ -29,10 +29,10 @@
             <!--field_row-->
 
             <% if devise_mapping.rememberable? -%>
-
-                <div class="field_row checkbox">
+                <div class="field_row checkbox login">
                   <%= f.check_box :remember_me %>
-                  <%= f.label (:remember_me) {"Keep me signed-in <span style='color:#ababab'> (in #{browser.name} on this machine)</span>".html_safe} %>
+                  <%= f.label (:remember_me) {"<p>Keep me signed-in</p> <span style='color:#ababab'> (in #{browser.name} on this machine)</span>".html_safe} %>
+                  <%= link_to "Forgot your password?", new_password_path(resource_name) %>
                 </div>
                 <!--field_row-->
             <% end %>

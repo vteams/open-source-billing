@@ -11,7 +11,7 @@ jQuery ->
     rendererOptions:
       fillToZero: true
       barWidth: 10
-      barPadding: 0
+      barPadding: 5
 
   chart_series =  [
     label: "Invoices"
@@ -55,6 +55,14 @@ jQuery ->
     axesDefaults:
       rendererOptions:
         drawBaseline: false
+    highlighter:
+      show:true
+      showMarker:  false
+#      sizeAdjust: 10
+#      tooltipLocation: 'n'
+#      tooltipAxes: 'x'
+#      useAxesFormatters: true
+
 
   if gon?
     invoices = gon.chart_data["invoices"]
