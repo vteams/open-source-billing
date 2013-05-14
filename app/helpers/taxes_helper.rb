@@ -27,24 +27,24 @@ module TaxesHelper
         <!-- <li><a href="/taxes/new?id=#{id}">Create another by duplicating this tax</a></li> -->
        </ul>
     HTML
-    notice = notice.html_safe
+    notice.html_safe
   end
 
   def taxes_archived ids
     notice = <<-HTML
      <p>#{ids.size} tax(es) have been archived. You can find them under
      <a href="taxes/filter_taxes?status=archived" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='taxes/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move archived taxes back to active.</p>
+     <p><a href='taxes/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived taxes back to active.</p>
     HTML
-    notice = notice.html_safe
+    notice.html_safe
   end
 
   def taxes_deleted ids
     notice = <<-HTML
      <p>#{ids.size} tax(es) have been deleted. You can find them under
      <a href="taxes/filter_items?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='taxes/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move deleted taxes back to active.</p>
+     <p><a href='taxes/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted taxes back to active.</p>
     HTML
-    notice = notice.html_safe
+    notice.html_safe
   end
 end

@@ -19,12 +19,14 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class TaxesController < ApplicationController
+  before_filter :set_per_page_session
+  helper_method :sort_column, :sort_direction
   # GET /taxes
   # GET /taxes.json
   include TaxesHelper
 
   def index
-    @taxes = Tax.unarchived.page(params[:page]).per(params[:per])
+    @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -117,34 +119,47 @@ class TaxesController < ApplicationController
     ids = params[:tax_ids]
     if params[:archive]
       Tax.archive_multiple(ids)
-      @taxes = Tax.unarchived.page(params[:page]).per(params[:per])
+      @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "archived"
       @message = taxes_archived(ids) unless ids.blank?
     elsif params[:destroy]
       Tax.delete_multiple(ids)
-      @taxes = Tax.unarchived.page(params[:page]).per(params[:per])
+      @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "deleted"
       @message = taxes_deleted(ids) unless ids.blank?
     elsif params[:recover_archived]
       Tax.recover_archived(ids)
-      @taxes = Tax.archived.page(params[:page]).per(params[:per])
+      @taxes = Tax.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from archived"
     elsif params[:recover_deleted]
       Tax.recover_deleted(ids)
-      @taxes = Tax.only_deleted.page(params[:page]).per(params[:per])
+      @taxes = Tax.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from deleted"
     end
     respond_to { |format| format.js }
   end
 
   def filter_taxes
-    @taxes = Tax.filter(params)
+    @taxes = Tax.filter(params,session["#{controller_name}-per_page"])
   end
 
   def undo_actions
     params[:archived] ? Tax.recover_archived(params[:ids]) : Tax.recover_deleted(params[:ids])
-    @taxes = Tax.unarchived.page(params[:page]).per(params[:per])
+    @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
+  end
+
+  private
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    Tax.column_names.include?(params[:sort]) ? params[:sort] : 'name'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
 end

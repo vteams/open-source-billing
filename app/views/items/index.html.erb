@@ -1,3 +1,7 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="items">
   <div class="content_top">
     <div class="primary_heading">
@@ -40,12 +44,12 @@
           <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left">Item name</th>
-              <th class="align_left">Item description</th>
-              <th class="align_right sorting {sorter:'thousands'}">Unit cost</th>
-              <th class="align_right sorting">Quantity</th>
-              <th class="align_center">Tax 1</th>
-              <th class="align_center">Tax 2</th>
+              <th class="align_left header"><%= sortable('item_name','Item name') %></th>
+              <th class="align_left header"><%= sortable('item_description','Item description') %></th>
+              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('unit_cost','Unit cost') %></th>
+              <th class="align_right header sorting"><%= sortable('quantity','Quantity') %></th>
+              <th class="align_center header"><%= sortable('tax1.name','Tax 1') %></th>
+              <th class="align_center header"><%= sortable('tax2.name','Tax 2') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>

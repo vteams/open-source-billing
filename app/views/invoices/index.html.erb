@@ -1,4 +1,9 @@
 <%- model_class = Invoice -%>
+<% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="invoice">
   <div class="content_top">
     <div class="primary_heading">
@@ -44,13 +49,13 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center sorting">Invoice #</th>
-              <th class="align_left ">Client</th>
-              <th class="align_left">Description</th>
-              <th class="align_right sorting {sorter:'thousands'}">Total</th>
-              <th class="align_center">Date</th>
-              <th class="align_left">Due Date</th>
-              <th class="align_center">Status</th>
+              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number','Invoice #') %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name','Client') %></th>
+              <th class="align_left header"><%= sortable('notes','Notes') %></th>
+              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total','Total') %></th>
+              <th class="align_center header"><%= sortable('invoice_date','Date') %></th>
+              <th class="align_left header"><%= sortable('due_date','Due Date') %></th>
+              <th class="align_center header"><%= sortable('status','Status') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>

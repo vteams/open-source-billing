@@ -512,7 +512,8 @@ tfoot tr:hover{
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   color: #464646;
-  border-bottom: 1px solid #D7D7D7
+  border-bottom: 1px solid #D7D7D7;
+  word-break: break-all;
 }
 
 .grid_table table tfoot td {
@@ -541,11 +542,11 @@ tfoot tr:hover{
 }
 
 .grid_table table th:first-child {
-  border-radius: 5px 0 0 5px;
+  border-radius: 4px 0 0 4px;
 }
 
 .grid_table table th:last-child {
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 4px 4px 0;
   -o-border-radius-topleft: 10px;
   border-right: none !important;
 }
@@ -901,11 +902,34 @@ input[type="radio"], input[type="checkbox"] {
 table.table_listing, table.report-data-table {
   thead {
     tr {
+      .align_right, .align_center{
+        a{
+          padding-right: 15px;
+          width: 80%;
+        }
+      }
+      .align_right{
+         &.big a{
+           width: 85%;
+         }
+       }
+      .align_center{
+        &.big a{
+          width: 89%;
+        }
+      }
       .header {
         background-image: url(/assets/bg.png);
         background-repeat: no-repeat;
         background-position: center right;
         cursor: pointer;
+        padding: 0px 5px 0 10px;
+        &.sortup{
+          background-image: url(/assets/sorting_up.png);
+        }
+        &.sortdown{
+          background-image: url(/assets/sorting_dn.png);
+        }
       }
       .headerSortUp {
         background-image: url(/assets/asc.png);
@@ -913,6 +937,13 @@ table.table_listing, table.report-data-table {
       .headerSortDown {
         background-image: url(/assets/desc.png);
       }
+    }
+    a.sortable{
+      color: #FFFFFF;
+      text-decoration: none;
+      float: left;
+      width: 100%;
+      display: block;
     }
   }
   tbody {
@@ -948,10 +979,11 @@ table.table_listing, table.report-data-table {
   .pagination{
     float: left;
     padding: 0 10px 0 0;
+    margin: 20px 0 0 0;
   }
   .paging_info{
     float: right;
-    margin: 20px 0;
+    margin: 20px 0 0 0;
     select.per_page{
       width: auto;
       margin: 0 10px;
@@ -1073,7 +1105,7 @@ table.table_listing, table.report-data-table {
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   select.per_page
-    {
+  {
     line-height: 20px;
   }
 }
@@ -1129,7 +1161,7 @@ select.discount_select
   ul{
     box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
     border: 1px solid #D7D7D7;
-    border-radius: 5px;
+    border-radius: 4px;
     background: #ffffff;
     padding: 14px 18px 10px 18px;
     li a{
@@ -1142,5 +1174,12 @@ select.discount_select
       }
     }
   }
-
 }
+.sortup{
+  background: url(/assets/sorting_up.png);
+  background-position: right center;
+}
+.sortdown{
+  background: url(/assets/sorting_dn.png);
+}
+

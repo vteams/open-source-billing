@@ -19,15 +19,16 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]
+  before_filter [:authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]], :set_per_page_session
   protect_from_forgery :except => [:paypal_payments]
+  helper_method :sort_column, :sort_direction
 
   layout :choose_layout
   include InvoicesHelper
 
   def index
-    @invoices = Invoice.unarchived.page(params[:page]).per(params[:per])
-
+    @invoices = Invoice.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @invoices = @invoices.joins(:client) if sort_column == 'clients.organization_name'
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -95,14 +96,19 @@ class InvoicesController < ApplicationController
 
   def update
     @invoice = Invoice.find(params[:id])
-    response_to_client = params[:response_to_client]
-    unless response_to_client.blank?
-      @invoice.update_dispute_invoice(current_user, @invoice.id, response_to_client)
-      #InvoiceMailer.response_to_client(current_user, @invoice, response_to_client).deliver
-    end
+    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client]) unless params[:response_to_client].blank?
+
     respond_to do |format|
-      if @invoice.update_attributes(params[:invoice])
-        #format.html { redirect_to @invoice, :notice => 'Invoice was successfully updated.' }
+      # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
+      if %w(paid partial draft-partial).include?(@invoice.status)
+        if Services::InvoiceService.paid_amount_on_update(@invoice, params)
+          redirect_to(edit_invoice_url(@invoice), notice: 'Your Invoice has been updated successfully.')
+          return
+        else
+          redirect_to(edit_invoice_url(@invoice), alert: invoice_not_updated)
+          return
+        end
+      elsif @invoice.update_attributes(params[:invoice])
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
         return
@@ -117,7 +123,7 @@ class InvoicesController < ApplicationController
   def send_note_only
     @invoice = Invoice.find(params[:inv_id])
     @invoice.send_note_only params[:response_to_client], current_user
-    render :text=>''
+    render :text => ''
   end
 
   def destroy
@@ -131,7 +137,8 @@ class InvoicesController < ApplicationController
   end
 
   def unpaid_invoices
-    @invoices = Invoice.where("status != 'paid' or status is null").all
+    for_client = params[:for_client].present? ? "and client_id = #{params[:for_client]}" : ''
+    @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}")
     respond_to { |format| format.js }
   end
 
@@ -148,12 +155,12 @@ class InvoicesController < ApplicationController
 
   def undo_actions
     params[:archived] ? Invoice.recover_archived(params[:ids]) : Invoice.recover_deleted(params[:ids])
-    @invoices = Invoice.unarchived.page(params[:page]).per(params[:per])
+    @invoices = Invoice.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 
   def filter_invoices
-    @invoices = Invoice.filter(params)
+    @invoices = Invoice.filter(params,session["#{controller_name}-per_page"])
   end
 
   def delete_invoices_with_payments
@@ -201,15 +208,37 @@ class InvoicesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def send_invoice
+    invoice = Invoice.find(params[:id])
+    invoice.send_invoice(current_user,params[:id])
+    redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.' )
+  end
 
-private
 
-def get_intimation_message(action_key, invoice_ids)
-  helper_methods = {archive: 'invoices_archived', destroy: 'invoices_deleted'}
-  helper_method = helper_methods[action_key.to_sym]
-  message = helper_method.present? ? send(helper_method, invoice_ids) : nil
-  Rails.logger.debug "==> helper_method: #{helper_method}, action_key: #{action_key}, invoice_ids: #{invoice_ids}, message: #{message}"
-  message
-end
+  private
+
+  def get_intimation_message(action_key, invoice_ids)
+    helper_methods = {archive: 'invoices_archived', destroy: 'invoices_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    message = helper_method.present? ? send(helper_method, invoice_ids) : nil
+    Rails.logger.debug "==> helper_method: #{helper_method}, action_key: #{action_key}, invoice_ids: #{invoice_ids}, message: #{message}"
+    message
+  end
+
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    sort_col = "case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end" if sort_col == 'clients.organization_name'
+    sort_col
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
 
 end

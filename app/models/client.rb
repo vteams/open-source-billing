@@ -20,7 +20,7 @@
 #
 class Client < ActiveRecord::Base
   # default scope
-  default_scope order("#{self.table_name}.created_at DESC")
+  #default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
   attr_accessible :address_street1, :address_street2, :business_phone, :city, :company_size, :country, :fax, :industry, :internal_notes, :organization_name, :postal_zip_code, :province_state, :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number, :client_contacts_attributes, :archive_number, :archived_at, :deleted_at
@@ -36,6 +36,9 @@ class Client < ActiveRecord::Base
 
   paginates_per 10
 
+  def organization_name
+    self[:organization_name].blank? ? self.contact_name : self[:organization_name]
+  end
 
   def contact_name
     "#{self.first_name} #{self.last_name}"
@@ -96,16 +99,16 @@ class Client < ActiveRecord::Base
     end
   end
 
-  def self.filter params
+  def self.filter(params,per_page)
     case params[:status]
       when 'active' then
-        self.unarchived.page(params[:page]).per(params[:per])
+        self.unarchived.page(params[:page]).per(per_page)
       when 'archived' then
-        self.archived.page(params[:page]).per(params[:per])
+        self.archived.page(params[:page]).per(per_page)
       when 'deleted' then
-        self.only_deleted.page(params[:page]).per(params[:per])
+        self.only_deleted.page(params[:page]).per(per_page)
       else
-        self.unarchived.page(params[:page]).per(params[:per])
+        self.unarchived.page(params[:page]).per(per_page)
     end
   end
 
@@ -135,5 +138,9 @@ class Client < ActiveRecord::Base
 
   def update_available_credit(available_credit)
     payments.first.update_attributes({payment_amount: available_credit})
+  end
+
+  def due_amount
+
   end
 end

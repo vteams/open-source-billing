@@ -48,7 +48,7 @@ module Reporting
             0 AS client_total
           FROM (
             SELECT
-              clients.organization_name AS client_name,
+              case when clients.organization_name = '' then CONCAT(clients.first_name,' ',clients.last_name) else clients.organization_name  end AS client_name,
               invoices.invoice_total,
               IFNULL(SUM(payments.payment_amount), 0) payment_received,
               DATEDIFF('#{@report_criteria.to_date}', DATE(IFNULL(invoices.due_date, invoices.invoice_date))) age,

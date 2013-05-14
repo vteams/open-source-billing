@@ -43,13 +43,13 @@ module Reporting
         month_wise_payment = month_wise_payment.join(", \n")
         client_filter = @report_criteria.client_id == 0 ? "" : " AND i.client_id = #{@report_criteria.client_id}"
         revenue_by_client = Payment.find_by_sql("
-                SELECT c.organization_name, #{month_wise_payment}, SUM(i.invoice_total) AS client_total
+                SELECT case when c.organization_name = '' then CONCAT(c.first_name,' ',c.last_name) else c.organization_name end as organization_name, #{month_wise_payment}, SUM(i.invoice_total) AS client_total
                 FROM invoices i INNER JOIN clients c ON i.client_id = c.id
                 WHERE YEAR(IFNULL(i.due_date, i.invoice_date)) = #{@report_criteria.year}
                       AND i.status <> 'draft'
                       AND i.deleted_at IS NULL
                       #{client_filter}
-					      GROUP BY c.organization_name
+					      GROUP BY c.organization_name, c.id
               ")
         revenue_by_client
       end

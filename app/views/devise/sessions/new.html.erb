@@ -8,6 +8,7 @@
       <!--log_top-->
 
       <div class="notice"><%= flash[:alert] %></div>
+
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login'}) do |f| %>
 
           <div class="log_fields">

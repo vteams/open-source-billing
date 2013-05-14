@@ -47,6 +47,9 @@
     border-radius: 0px;
     background-color: #ffffff;
   }
+  .grid_table table th:last-child {
+    border-radius: 0 5px 5px 0 !important;
+  }
   .grid_table table th:nth-child(2) {
     border-radius: 5px 0 0 5px;
   }

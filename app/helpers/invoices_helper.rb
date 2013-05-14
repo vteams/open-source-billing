@@ -37,7 +37,7 @@ module InvoicesHelper
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been archived. You can find them under
      <a href="invoices/filter_invoices?status=archived" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
+     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
     HTML
     notice.html_safe
   end
@@ -46,7 +46,7 @@ module InvoicesHelper
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been deleted. You can find them under
      <a href="invoices/filter_invoices?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
+     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
     HTML
     notice.html_safe
   end
@@ -55,6 +55,13 @@ module InvoicesHelper
     notice = <<-HTML
      <p>Payments of ${amount} against <a>N invoices</a> have been recorded successfully.
      <a href="invoices/filter_invoices?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
+    HTML
+    notice.html_safe
+  end
+
+  def send_invoice _message
+    notice = <<-HTML
+     <p>Invoice sent successfully.</p>
     HTML
     notice.html_safe
   end
@@ -75,6 +82,16 @@ module InvoicesHelper
       HTML
     end
     tax_list.html_safe
+  end
+
+  def invoice_not_updated
+    notice = <<-HTML
+       <ul>
+         <li>You cannot reduce the invoice total below the amount paid.</li>
+         <li>If you entered a payment by mistake, you can edit it in your payment history.</li>
+       </ul>
+    HTML
+    notice.html_safe
   end
 
 end

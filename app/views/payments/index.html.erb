@@ -1,4 +1,8 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
 <%- model_class = Payment -%>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="payment">
   <div class="content_top">
     <div class="primary_heading">
@@ -42,12 +46,12 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center">Invoice #</th>
-              <th class="align_left">Client</th>
-              <th class="align_center">Type</th>
-              <th class="align_center">Notes</th>
-              <th class="align_center">Date</th>
-              <th class="align_right sorting {sorter:'thousands'}">Amount</th>
+              <th class="align_center header"><%= sortable('invoices.invoice_number', 'Invoice #') %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
+              <th class="align_center header"><%= sortable('IFNULL(payment_method,payment_type)', 'Type') %></th>
+              <th class="align_center big header"><%= sortable('notes', 'Notes') %></th>
+              <th class="align_center header"><%= sortable('payment_date', 'Date') %></th>
+              <th class="align_right big header sorting {sorter:'thousands'}"><%= sortable('payment_amount', 'Amount') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -71,43 +75,7 @@
   <% end %>
 
   <!-- START: Unpaid invoices popup -->
-  <%= form_tag "/payments/enter_payment", :id => "invoice_selection" do %>
-      <div id="myModal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="model_grey_container">
-          <div class="modal-header">
-
-            <h1>Which Invoices have you received payment for?</h1>
-
-            <p>Select one or more Invoices from the list below to apply payment.</p>
-
-            <div class="cross_btn">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
-              </button>
-            </div>
-          </div>
-          <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
-            <button class="close" type="button" style="margin:0px;">×</button>
-            <table>
-              <tbody>
-              <tr>
-                <td>
-                  <span></span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-body">
-
-          </div>
-          <div class="footer ">
-            <%= submit_tag "Enter Payment", :class => "btn_large submit" %>
-            <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
-          </div>
-        </div>
-      </div>
-  <% end %>
+  <%= render 'unpaid_invoices' %>
   <!-- END: Unpaid invoices popup -->
 
   <!-- START: Credit entries -->
@@ -116,6 +84,7 @@
         <div class="model_grey_container">
           <div class="modal-header">
             <h1>Following credit payments are applied to invoices and can't be deleted.</h1>
+
             <div class="cross_btn" style="margin:-50px -1px 0 0">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
@@ -125,7 +94,9 @@
           <div class="modal-body">
 
           </div>
-          <p class="continue_delete_msg">To continue deleting other payments please press the Delete Payments button below.</p>
+          <p class="continue_delete_msg">To continue deleting other payments please press the Delete Payments button
+            below.</p>
+
           <div class="footer ">
             <%= hidden_field_tag :non_credit_payments %>
             <%= submit_tag "Delete Payments", :class => "btn_large submit" %>

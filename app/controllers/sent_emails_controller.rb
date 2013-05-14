@@ -19,8 +19,10 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class SentEmailsController < ApplicationController
+  helper_method :sort_column, :sort_direction
+  before_filter :set_per_page_session
   def index
-    @sent_emails = SentEmail.page(params[:page]).per(params[:per]).order('created_at DESC')
+    @sent_emails = SentEmail.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
   end
 
   def show
@@ -28,5 +30,18 @@ class SentEmailsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
     end
+  end
+
+  private
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    SentEmail.column_names.include?(params[:sort]) ? params[:sort] : 'subject'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end

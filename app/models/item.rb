@@ -20,7 +20,7 @@
 #
 class Item < ActiveRecord::Base
   # default scop
-  default_scope order("#{self.table_name}.created_at DESC")
+  #default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
   attr_accessible :inventory, :item_description, :item_name, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at
@@ -65,14 +65,14 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def self.filter params
+  def self.filter(params,per_page)
     case params[:status]
       when "active" then
-        self.unarchived.page(params[:page]).per(params[:per])
+        self.unarchived.page(params[:page]).per(per_page)
       when "archived" then
-        self.archived.page(params[:page]).per(params[:per])
+        self.archived.page(params[:page]).per(per_page)
       when "deleted" then
-        self.only_deleted.page(params[:page]).per(params[:per])
+        self.only_deleted.page(params[:page]).per(per_page)
     end
   end
 end

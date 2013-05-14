@@ -150,4 +150,16 @@ class window.InlineForms
         jQuery(elem).qtip().show()
         jQuery(elem).focus()
         valid_form = false
+    fname = @chznContainer.find(".tiny_create_form #client_first_name")
+    lname = @chznContainer.find(".tiny_create_form #client_last_name")
+    if valid_form and fname.length
+       if !jQuery(fname).val()  and  !jQuery(lname).val()
+         jQuery(fname).qtip({content:
+           text: "First Name or Last Name is required",
+           show:
+             event: false, hide:
+               event: false})
+         jQuery(fname).qtip().show()
+         jQuery(fname).focus()
+         valid_form = false
     valid_form

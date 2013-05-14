@@ -20,7 +20,7 @@
 #
 class Payment < ActiveRecord::Base
   # default scope
-  default_scope order("#{self.table_name}.created_at DESC")
+  #default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
   attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied
@@ -32,7 +32,7 @@ class Payment < ActiveRecord::Base
   has_many :credit_payments
 
   # validation
-  validates :payment_amount, :numericality => {:greater_than => 0}
+  #validates :payment_amount, :numericality => {:greater_than => 0}
 
   paginates_per 10
 

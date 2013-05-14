@@ -37,7 +37,7 @@ Installation
 
 Clone the repository and run
 
-	# install gems
+    # install gems
     bundle install
 	
 	# create database
@@ -88,8 +88,8 @@ Contributing
 Contact Information
 -------------------
 
-Author: Imran Malik
+Tomara Armstrong
 
-E-mail: <imran@nxvt.com>
+E-mail: <tomara@vteams.com>
 
-Homepage: <http://www.vteams.com/>
+Homepage: <http://www.opensourcebilling.org/>

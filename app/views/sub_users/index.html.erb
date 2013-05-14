@@ -1,3 +1,7 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="sub_user">
   <div class="content_top">
     <div class="primary_heading">
@@ -24,17 +28,16 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left ">Full Name</th>
-          <th class="align_left ">Email</th>
-          <th class="align_left">Date</th>
+          <th class="align_left header"><%= sortable('user_name','Full Name') %></th>
+          <th class="align_left header"><%= sortable('email','Email') %></th>
+          <th class="align_left header"><%= sortable('created_at','Date') %></th>
           <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
         </tr>
         </thead>
-        <tbody id="invoice_body">
+        <tbody id="user_body">
             <%= render "sub_users" %>
         </tbody>
         <tfoot id="paging_links">
-
         </tfoot>
 
       </table>

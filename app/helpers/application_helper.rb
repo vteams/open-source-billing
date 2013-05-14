@@ -35,7 +35,7 @@ module ApplicationHelper
 
   def custom_per_page
     content_tag(:select,
-                options_for_select([10, 5, 20, 50, 100], params[:per].to_i),
+                options_for_select([10, 5, 20, 50, 100], session["#{controller_name}-per_page"]),
                 :data => {
                     :remote => true,
                     :url => url_for(:action => action_name, :params => params.except(:page), :flag => "per_page")},
@@ -48,4 +48,12 @@ module ApplicationHelper
   def link_to_submit(*args, &block)
     link_to_function (block_given? ? capture(&block) : args[0]), "jQuery(this).closest('form').submit();", args.extract_options!
   end
+
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    css_class = column == sort_column ? "current #{sort_direction}" : nil
+    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+    link_to title, params.merge(:sort => column, :direction => direction, :page => 1), {:class => "#{css_class} sortable", :remote => true}
+  end
+
 end

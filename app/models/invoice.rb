@@ -22,7 +22,7 @@ class Invoice < ActiveRecord::Base
   include ::OSB
 
   # default scope
-  default_scope order("#{self.table_name}.created_at DESC")
+  #default_scope order("#{self.table_name}.created_at DESC")
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today)
   scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today)
@@ -182,10 +182,11 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def self.filter params
+  def self.filter(params,per_page)
+    Rails.logger.debug "!!!!!!!!!!!!!!!! #{per_page}"
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(params[:per])
+    self.send(method).page(params[:page]).per(per_page)
   end
 
   def self.paid_full ids

@@ -35,7 +35,7 @@ module ClientsHelper
     notice = <<-HTML
      <p>#{ids.size} client(s) have been archived. You can find them under
      <a href="clients/filter_clients?status=archived" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='clients/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move archived clients back to active.</p>
+     <p><a href='clients/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived clients back to active.</p>
     HTML
     notice = notice.html_safe
   end
@@ -44,7 +44,7 @@ module ClientsHelper
     notice = <<-HTML
      <p>#{ids.size} client(s) have been deleted. You can find them under
      <a href="clients/filter_clients?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='clients/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move deleted clients back to active.</p>
+     <p><a href='clients/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted clients back to active.</p>
     HTML
     notice = notice.html_safe
   end

@@ -33,4 +33,10 @@ class DashboardController < ApplicationController
     @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices
     @ytd_income = Reporting::Dashboard.get_ytd_income
   end
+
+  def chart_details
+    @chart_details = Reporting::Dashboard.get_chart_details(params)
+    @chart_total = params[:chart_for] == 'invoices' ? @chart_details.sum(:invoice_total) : @chart_details.sum(:payment_amount)
+    render partial: "#{params[:chart_for]}_detail"
+  end
 end

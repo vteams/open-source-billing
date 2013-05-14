@@ -15,14 +15,14 @@
           <% else %>
               <td class="align_center"><%= link_to payment.payment_reference, invoice_path(payment.invoice), :class => "invoices_link" rescue "" %></td>
           <% end %>
-          <td class="align_left text-overflow-class" value="<%= payment.client.organization_name rescue payment.client_name  %>"><%= payment.client.organization_name rescue payment.client_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.client.organization_name rescue  payment.client_name %></td>
           <td class="align_center"><%= (payment.payment_method || payment.payment_type || "").capitalize %></td>
-          <td class="align_left"><%= payment.notes %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
           <td class="align_center"><%= payment.payment_date %></td>
           <td class="align_right payment_amount"><%= content_tag(:span,'* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
           <td class="align_center">
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_payment_path(payment), :class => 'edit_action' %>
+            <%= link_to 'Edit',
+                        edit_payment_path(payment), :class => 'edit_action',:value=>payment.payment_type %>
             <% unless params[:status] == "deleted" %>
                 <%#= link_to t('.destroy', :default => "Delete"),
                             payment_path(payment),

@@ -19,13 +19,15 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:payments_history]
+  before_filter [:authenticate_user!, :except => [:payments_history]], :set_per_page_session
   layout :choose_layout
   include PaymentsHelper
+  helper_method :sort_column, :sort_direction
 
   def index
-    @payments = Payment.unarchived.page(params[:page]).per(params[:per])
-
+    @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
+    @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -70,7 +72,7 @@ class PaymentsController < ApplicationController
 
   def update
     @payment = Payment.find(params[:id])
-    latest_amount = Payment.update_invoice_status params[:payment][:invoice_id], params[:payment][:payment_amount].to_i, @payment.payment_amount.to_i
+    latest_amount = Payment.update_invoice_status params[:payment][:invoice_id], params[:payment][:payment_amount].to_f, @payment.payment_amount.to_f
     params[:payment][:payment_amount] = latest_amount
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
@@ -104,7 +106,7 @@ class PaymentsController < ApplicationController
 
   def update_individual_payment
     # dont save the payment if payment amount is not provided or it's zero
-    params[:payments].delete_if { |payment| payment["payment_amount"].blank? || payment["payment_amount"].to_i == 0 }.each do |pay|
+    params[:payments].delete_if { |payment| payment["payment_amount"].blank? || payment["payment_amount"].to_f == 0 }.each do |pay|
       next if Payment.check_client_credit(pay[:invoice_id]) && pay[:payment_method] == "Credit" #Ignore payment if credit is not enough
       pay[:payment_amount] = pay[:payment_method] == "Credit" ? Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
       pay[:payment_date] ||= Date.today
@@ -123,7 +125,7 @@ class PaymentsController < ApplicationController
       @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
     else
       Payment.delete_multiple(ids)
-      @payments = Payment.unarchived.page(params[:page]).per(params[:per])
+      @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "deleted"
       @message = payments_deleted(ids) unless ids.blank?
     end
@@ -143,8 +145,35 @@ class PaymentsController < ApplicationController
 
   def delete_non_credit_payments
     Payment.delete_multiple(params[:non_credit_payments])
-    @payments = Payment.unarchived.page(params[:page]).per(params[:per])
+    @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
+  end
+
+  private
+
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    sort_col = get_org_name if sort_col == 'clients.organization_name'
+    sort_col
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def get_org_name
+    "case when payments.invoice_id is null then
+       case when ifnull(payments_clients.organization_name, '') = '' then concat(payments_clients.first_name, '', payments_clients.last_name) else payments_clients.organization_name end
+     else
+       case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end
+     end
+    "
   end
 
 end

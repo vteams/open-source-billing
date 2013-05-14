@@ -1,6 +1,29 @@
 jQuery('tbody#item_body').html('<%= escape_javascript render("items") %>');
-//jQuery('.paginator').html('<%#= escape_javascript(paginate(@items, :remote => true).to_s) %>' +
-//        '<div class="paging_info"><%#= page_entries_info @items %></div>');
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 jQuery("table.table_listing").trigger('update');
+jQuery(".item_listing .text-overflow-class").ellipsis({row:2});
+
+jQuery('#sort_direction').html('<%= params[:direction]%>');
+jQuery(".sortable").each(function () {
+
+    var href = jQuery(this).attr('href');
+    var qs = href.split('?')[1];
+    var qsa = [];
+
+    jQuery(qs.split('&')).each(function () {
+        var key = this.split('=')[0];
+        var value = this.split('=')[1];
+        if (key == 'page')
+            value = <%= params[:page] || 1%>;
+        if(key == 'direction' && value == 'asc')
+            value = 'desc';
+        else if(key == 'direction' && value == 'desc')
+            value = 'asc';
+        qsa.push(key + "=" + value);
+    });
+
+    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
+    jQuery(this).attr('href', new_qs);
+});

@@ -42,10 +42,16 @@ module Reporting
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}
+      chart_years = []
+      chart_ticks = []
       start_date = (number_of_months * -1).months.from_now.to_date.at_beginning_of_month
       end_date = Date.today.at_end_of_month
       # build a hash of months with nil amounts
-      number_of_months.times { |i| chart_months[(start_date + (i+1).month).month] = nil }
+      number_of_months.times do |i|
+        chart_months[(start_date + (i+1).month).month] = nil
+        chart_years << (start_date + (i+1).month).year
+      end
+
 
       # invoices amount group by month for last *number_of_months* months
       invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).sum("invoice_total")
@@ -56,7 +62,9 @@ module Reporting
       chart_data = {}
       chart_data[:invoices] = chart_months.merge(invoices).map { |month, amount| amount.to_f }
       chart_data[:payments] = chart_months.merge(payments).map { |month, amount| amount.to_f }
-      chart_data[:ticks] = chart_months.map { |month, amount| Date::ABBR_MONTHNAMES[month] }
+      chart_months = chart_months.map { |month, amount| Date::ABBR_MONTHNAMES[month] }
+      chart_months.length.times {|i| chart_ticks << "#{chart_months[i]}, #{chart_years[i]}"}
+      chart_data[:ticks] = chart_ticks #chart_months.map { |month, amount| Date::ABBR_MONTHNAMES[month] }
       chart_data
     end
 
@@ -102,6 +110,16 @@ module Reporting
           ) total_aged
       eos
       ).first
+    end
+
+    def self.get_chart_details(options)
+      chart_date = Date.parse options[:chart_date]
+
+      if options[:chart_for] == 'invoices'
+        Invoice.where(:invoice_date => chart_date..chart_date.at_end_of_month)
+      else
+        Payment.where(:payment_date => chart_date..chart_date.at_end_of_month).where("payment_type is null or payment_type != ?",'credit')
+      end
     end
 
   end

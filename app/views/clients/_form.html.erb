@@ -29,7 +29,7 @@
             <!--field_row-->
 
             <div class="field_row description">
-              <div class="label_field left single">Contact Name</div>
+              <div class="label_field left single"><span>Contact Name</span></div>
               <div class="small_field">
                 <%= f.text_field :first_name %>
                 <ul class="field_description">
@@ -51,7 +51,7 @@
               <div class="label_field left single">Available Credit</div>
               <div class="medium_field">
                 <% @readonly = is_client_credit_payments @client%>
-                <%= text_field_tag :available_credit,@client.client_credit ,:readonly=>@readonly%>
+                <%= text_field_tag :available_credit,number_with_precision(@client.client_credit, precision: 2) ,:readonly=>@readonly%>
                 <ul class="field_description">
                   <li>This credit can be applied to invoice for this client.</li>
                 </ul>

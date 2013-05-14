@@ -241,7 +241,7 @@
       <% button_text = action_name == "new" ? "Save As Draft" : "Save" %>
       <%= f.submit "Send Invoice", :class => 'btn_large submit' %>
       <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
-      <%= link_to 'Cancel', invoices_path, :class => 'btn_large grey' %>
+      <%= link_to 'Cancel', params[:invoice_for_client] ? clients_path : invoices_path, :class => 'btn_large grey' %>
     </div>
     <!--content_bottom-->
 

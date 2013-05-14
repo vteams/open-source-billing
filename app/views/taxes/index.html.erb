@@ -1,3 +1,7 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="taxes">
   <div class="content_top">
     <div class="primary_heading">
@@ -36,8 +40,8 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center">Name</th>
-              <th class="align_center">Percentage</th>
+              <th class="align_left header"><%= sortable('name','Name') %></th>
+              <th class="align_left header"><%= sortable('percentage','Percentage') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>

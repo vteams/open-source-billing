@@ -19,6 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ApplicationController < ActionController::Base
+  #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
+  #Time::DATE_FORMATS.merge!(:short=> "%d")
+  #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
   protect_from_forgery
   before_filter :authenticate_user!
   before_filter :_reload_libs #reload libs on every request for dev environment only

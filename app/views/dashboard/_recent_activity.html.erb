@@ -19,7 +19,7 @@
                 <tr>
                   <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path] %></a></td>
                   <td class="align_left"><%= number_to_currency(activity[:amount]) %> <span>(USD)</span></td>
-                  <td class="align_left"><%= "#{activity[:activity_action]} #{activity[:client]} on" %> </td>
+                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= "#{activity[:activity_action]} #{activity[:client]} on" %> </td>
                   <td class="align_left"><%= "#{activity[:activity_date].to_date}" %> </td>
                 </tr>
             <% end %>

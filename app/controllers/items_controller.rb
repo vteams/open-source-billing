@@ -20,12 +20,16 @@
 #
 class ItemsController < ApplicationController
   #before_filter :authenticate_user!
+  before_filter :set_per_page_session
+  helper_method :sort_column, :sort_direction
   # GET /items
   # GET /items.json
   include ItemsHelper
 
   def index
-    @items = Item.unarchived.page(params[:page]).per(params[:per])
+    @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
+    @items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
 
     respond_to do |format|
       format.js
@@ -127,33 +131,48 @@ class ItemsController < ApplicationController
     ids = params[:item_ids]
     if params[:archive]
       Item.archive_multiple(ids)
-      @items = Item.unarchived.page(params[:page]).per(params[:per])
+      @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "archived"
       @message = items_archived(ids) unless ids.blank?
     elsif params[:destroy]
       Item.delete_multiple(ids)
-      @items = Item.unarchived.page(params[:page]).per(params[:per])
+      @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "deleted"
       @message = items_deleted(ids) unless ids.blank?
     elsif params[:recover_archived]
       Item.recover_archived(ids)
-      @items = Item.archived.page(params[:page]).per(params[:per])
+      @items = Item.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from archived"
     elsif params[:recover_deleted]
       Item.recover_deleted(ids)
-      @items = Item.only_deleted.page(params[:page]).per(params[:per])
+      @items = Item.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from deleted"
     end
     respond_to { |format| format.js }
   end
 
   def filter_items
-    @items = Item.filter(params)
+    @items = Item.filter(params,session["#{controller_name}-per_page"])
   end
 
   def undo_actions
     params[:archived] ? Item.recover_archived(params[:ids]) : Item.recover_deleted(params[:ids])
-    @items = Item.unarchived.page(params[:page]).per(params[:per])
+    @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
+  end
+
+  private
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    #Item.column_names.include?(params[:sort]) ? params[:sort] : 'item_name'
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end

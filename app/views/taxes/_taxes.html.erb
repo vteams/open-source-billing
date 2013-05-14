@@ -10,8 +10,8 @@
     <% @taxes.each do |taxis| %>
         <tr>
           <td class="align_center" width=10> <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "tax_#{taxis.id}" %></td>
-          <td class="align_center"><%= taxis.name %></td>
-          <td class="align_center"><%= taxis.percentage %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= taxis.name %></td>
+          <td class="align_left"><%= taxis.percentage %></td>
           <td class="align_center">
             <% if taxis.deleted_at.nil? %>
                 <%= link_to 'Edit', edit_taxis_path(taxis), :class => "edit_action" %>

@@ -4,8 +4,9 @@
 en:
   date:
     formats:
-      default: "%Y/%m/%d"
-      short: "%b %d"
+      default: "%Y-%m-%d"
+      #short: "%b %d"
+      short: "%{SHORT_DATE}"
       long: "%B %d, %Y"
   views:
     pagination:

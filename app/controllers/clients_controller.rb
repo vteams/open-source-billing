@@ -19,12 +19,15 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientsController < ApplicationController
+  helper_method :sort_column, :sort_direction
+  before_filter :set_per_page_session
+
   # GET /clients
   # GET /clients.json
   include ClientsHelper
 
   def index
-    @clients = Client.unarchived.page(params[:page]).per(params[:per])
+    @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -58,7 +61,7 @@ class ClientsController < ApplicationController
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
-    @client.payments.build({:payment_type=>"credit",:payment_date => Date.today})
+    @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
   end
 
   # POST /clients
@@ -119,33 +122,33 @@ class ClientsController < ApplicationController
     ids = params[:client_ids]
     if params[:archive]
       Client.archive_multiple(ids)
-      @clients = Client.unarchived.page(params[:page]).per(params[:per])
+      @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "archived"
       @message = clients_archived(ids) unless ids.blank?
     elsif params[:destroy]
       Client.delete_multiple(ids)
-      @clients = Client.unarchived.page(params[:page]).per(params[:per])
+      @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "deleted"
       @message = clients_deleted(ids) unless ids.blank?
     elsif params[:recover_archived]
       Client.recover_archived(ids)
-      @clients = Client.archived.page(params[:page]).per(params[:per])
+      @clients = Client.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from archived"
     elsif params[:recover_deleted]
       Client.recover_deleted(ids)
-      @clients = Client.only_deleted.page(params[:page]).per(params[:per])
+      @clients = Client.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
       @action = "recovered from deleted"
     end
     respond_to { |format| format.js }
   end
 
   def filter_clients
-    @clients = Client.filter(params)
+    @clients = Client.filter(params, session["#{controller_name}-per_page"])
   end
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
-    @clients = Client.unarchived.page(params[:page]).per(params[:per])
+    @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 
@@ -153,4 +156,30 @@ class ClientsController < ApplicationController
     client = Client.find(params[:id])
     render :text => [client.last_invoice || "no invoice", client.organization_name || ""]
   end
+
+  def client_detail
+    client = Client.find(params[:id])
+    @invoices = client.invoices
+    @payments = Payment.payments_history(client)
+    @detail = Services::ClientDetail.new(client).get_detail #client.outstanding_amount
+    render partial: 'client_detail'
+  end
+
+  private
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = params[:sort] #Client.column_names.include?(params[:sort]) ? params[:sort] : 'organization_name'
+    sort_col = "case when ifnull(organization_name, '') = '' then concat(first_name, '', last_name) else organization_name end" if sort_col == 'organization_name'
+    sort_col
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
 end

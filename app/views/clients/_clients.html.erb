@@ -10,10 +10,10 @@
     <% @clients.each do |client| %>
         <tr>
           <td class="align_center"> <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}" %></td>
-          <td class="align_left"><%= link_to client.organization_name, edit_client_path(client) %></td>
-          <td class="align_left"><%= client.contact_name %></td>
-          <td class="align_left"><%= client.email %></td>
-          <td class="align_left"><%= client.business_phone %></td>
+          <td class="align_left"><%= link_to client.organization_name, 'javascript:', class: 'client_name text-overflow-class', value: client.id %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.contact_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.email %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.business_phone %></td>
           <td class="align_right"><%=  number_to_currency(client.client_credit) %></td>
           <td class="align_center">
             <% if client.deleted_at.nil? %>

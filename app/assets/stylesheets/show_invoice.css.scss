@@ -105,7 +105,7 @@
     .top_right_row{
         float: left;
         width: 235px;
-        height: 22px;
+        min-height: 22px;
         padding: 0 10px 0 9px
     }
     .top_right_row:last-child{

@@ -1,3 +1,7 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
 <div class="sent_email">
   <div class="content_top">
     <div class="primary_heading">
@@ -16,10 +20,10 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left">Subject</th>
-          <th class="align_left">Recipient</th>
-          <th class="align_center">Type</th>
-          <th class="align_center">Date</th>
+          <th class="align_left header"><%= sortable('subject','Subject') %></th>
+          <th class="align_left header"><%= sortable('recipient','Recipient') %></th>
+          <th class="align_center header"><%= sortable('type','Type') %></th>
+          <th class="align_center header"><%= sortable('date','Date') %></th>
         </tr>
         </thead>
         <tbody id="email_body">

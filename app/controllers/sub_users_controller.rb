@@ -1,6 +1,12 @@
 class SubUsersController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
   def index
-    @sub_users = User.all
+    @sub_users = User.order(sort_column + " " + sort_direction)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -62,5 +68,16 @@ class SubUsersController < ApplicationController
   def destroy
     sub_user = User.find_by_id(params[:id]).destroy
     respond_to { |format| format.js }
+  end
+
+  private
+  def sort_column
+    params[:sort] ||= 'created_at'
+    User.column_names.include?(params[:sort]) ? params[:sort] : 'user_name'
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end

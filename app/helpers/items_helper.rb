@@ -34,7 +34,7 @@ module ItemsHelper
     notice = <<-HTML
      <p>#{ids.size} item(s) have been archived. You can find them under
      <a href="items/filter_items?status=archived" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='items/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move archived items back to active.</p>
+     <p><a href='items/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived items back to active.</p>
     HTML
     notice = notice.html_safe
   end
@@ -43,7 +43,7 @@ module ItemsHelper
     notice = <<-HTML
      <p>#{ids.size} item(s) have been deleted. You can find them under
      <a href="items/filter_items?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='items/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{params[:per]}'  data-remote="true">Undo this action</a> to move deleted items back to active.</p>
+     <p><a href='items/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted items back to active.</p>
     HTML
     notice = notice.html_safe
   end

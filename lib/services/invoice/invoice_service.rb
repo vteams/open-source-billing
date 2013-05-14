@@ -25,13 +25,13 @@ module Services
     # build a new invoice object
     def self.build_new_invoice(params)
       if params[:invoice_for_client]
-        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client]})
+        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
         invoice = Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
       else
-        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today})
+        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }
       end
       invoice
@@ -70,5 +70,38 @@ module Services
         invoice.destroy
       end
     end
+
+    def self.paid_amount_on_update(invoice, params)
+      invoice_amount = params[:invoice][:invoice_total].to_f
+      paid_amount = invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount).to_f
+
+      # if invoice amount is less then paid amount then don't update invoice.
+      response = if invoice.status == 'paid'
+                   if invoice_amount < paid_amount
+                     false
+                   elsif invoice_amount > paid_amount
+                     invoice.update_attributes(params[:invoice])
+                     %w(draft draft-partial).include?(invoice.last_invoice_status) ? invoice.draft_partial! : invoice.partial!
+                     true
+                   else
+                     invoice.update_attributes(params[:invoice])
+                     true
+                   end
+                 elsif %w(partial draft-partial).include?(invoice.status)
+                   if invoice_amount < paid_amount
+                     false
+                   elsif invoice_amount == paid_amount
+                     invoice.update_attributes(params[:invoice])
+                     invoice.update_attributes(last_invoice_status: invoice.status, status: 'paid')
+                     true
+                   else
+                     invoice.update_attributes(params[:invoice])
+                     true
+                   end
+                 end
+      Rails.logger.debug "\e[1;31m Response: #{response} \e[0m"
+      response
+    end
+
   end
 end

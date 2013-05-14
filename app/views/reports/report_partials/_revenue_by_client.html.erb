@@ -71,7 +71,7 @@
               <% @report.report_data.each do |revenue| %>
                   <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
                   <tr>
-                    <td class="align_left text-overflow-class" value="<%= revenue.organization_name %>"><%= revenue.organization_name %></td>
+                    <td class="align_left text-overflow-class"><%= revenue.organization_name %></td>
                     <% 12.times do |month| %>
                         <td class="align_right"><%= number_to_currency(revenue["#{Date::MONTHNAMES[month+1]}"]).to_s.gsub("$", "").gsub(".00", "") %></td>
                     <% end %>

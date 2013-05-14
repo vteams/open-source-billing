@@ -1,0 +1,48 @@
+<div class="dashboard_style">
+  <div class="dashboard_box small right">
+    <h1 class="g_green">Paid Invoices for <%= params[:chart_date]%></h1>
+    <div class="grid_table current_invoices paid_invoices top">
+      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+        </colgroup>
+        <th class="align_left">Invoice#</th>
+        <th class="align_left">Client</th>
+        <th class="align_left">Due date</th>
+        <th class="align_right">Amount</th>
+      </table>
+    </div>
+    <!--grid_table-->
+    <div class="scrollContainer content_scroll mCustomScrollbar">
+      <div class="grid_table current_invoices paid_invoices btm mCustomScrollBox mCS-light">
+        <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing mCSB_container">
+          <colgroup>
+            <col class="one"/>
+            <col class="two"/>
+            <col class="three"/>
+            <col class="four"/>
+          </colgroup>
+          <tbody>
+          <% @chart_details.each do |payment| %>
+              <tr>
+                <td class="align_left"><%= link_to payment.payment_reference, invoice_path(payment.invoice), target: '_blank', :class => "invoices_link g_green" rescue "" %></td>
+                <td class="align_left text-overflow-class" value="<%= payment.client.organization_name rescue payment.client_name %>"><%= payment.client.organization_name rescue payment.client_name %></td>
+                <td class="align_left"><%= payment.payment_date %></td>
+                <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
+              </tr>
+          <% end %>
+          <tr>
+            <td class="align_left"><b>Total</b></td>
+            <td></td><td></td>
+            <td class="align_right"><b><%= number_to_currency(@chart_total) %></b></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--grid_table-->
+  </div>
+</div>

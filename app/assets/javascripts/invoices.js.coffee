@@ -365,6 +365,9 @@ jQuery ->
    new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
    new_date += separator + ("0" + elem.getDate()).slice(-2)
 
+  #set due date on page load
+  setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
+
   # Hide placeholder text on focus
   jQuery("input[type=text],input[type=number]",".quick_create_wrapper").live("focus",->
     @dataPlaceholder = @placeholder

@@ -26,19 +26,24 @@ jQuery ->
     flag = true
     pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
     client_email = jQuery("#client_email").val()
+    client_fname = jQuery("#client_first_name").val()
+    client_lname = jQuery("#client_last_name").val()
     if client_email is ""
-      applyQtip(jQuery("#client_email"),"Email is required")
+      applyQtip(jQuery("#client_email"), "Email is required")
       flag = false
     else unless pattern.test(client_email)
-      applyQtip(jQuery("#client_email"),"Invalid email")
+      applyQtip(jQuery("#client_email"), "Invalid email")
+      flag = false
+    else if client_fname is "" and client_lname is ""
+      applyQtip(jQuery("#client_first_name"), "First or Last Name is required")
       flag = false
     else if jQuery("#client_organization_name").val() is ""
-      jQuery("#client_organization_name").val(client_email)
+      #jQuery("#client_organization_name").val(client_email)
     else
       hideQtip(jQuery("#client_email"))
     flag
 
-  applyQtip = (elem,message) ->
+  applyQtip = (elem, message) ->
     elem.qtip
       content:
         text: message
@@ -57,5 +62,30 @@ jQuery ->
   hideQtip = (elem) ->
     elem.qtip("hide")
 
-  jQuery("#client_email").click ->
+  jQuery("#client_email, #client_first_name, #client_last_name").click ->
     hideQtip(jQuery(this))
+
+  # show details when client name is clicked.
+  jQuery('table.client_listing .client_name').live 'click', ->
+    row = jQuery(this).parents('tr')
+    detail_row = row.next('tr.client_detail_row')
+
+    # check if detail is already opened
+    if detail_row.length
+      detail_row.remove()
+      row.removeAttr('style').find('td').removeAttr('style')
+    else
+      jQuery.ajax '/clients/client_detail',
+                  type: 'POST'
+                  data: "id=" + jQuery(this).attr 'value'
+                  dataType: 'html'
+                  error: (jqXHR, textStatus, errorThrown) ->
+                    alert "Error: #{textStatus}"
+                  success: (data) ->
+                    row.css("background-color", "#f3f3f3").find('td').css("border-bottom", "none")
+                    jQuery(data).insertAfter(row)
+                    row.next().find(".scrollContainer").mCustomScrollbar scrollInertia: 150
+
+  # remove client detail row by clicking cross
+  jQuery('.client_container_top .cross_btn').live 'click', ->
+    jQuery(this).parents('tr').prev('tr').find('.client_name').click()

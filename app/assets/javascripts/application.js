@@ -50,13 +50,13 @@
 //= require jquery.tablehover.min.js
 //= require tax-calculations.js.coffee
 //= require jquery.formatCurrency-1.4.0.js
-//= require jquery.ellipsis.min.js
 //= require table-listing.js.coffee
 //= require credit-payment.js.coffee
 //= require cc-validation.js.coffee
 //= require jquery.customScrollbar.min.js
 //= require users.js.coffee
 //= require validate-forms.js.coffee
+//= require jquery.ellipsis.js
 
 
 jQuery(function () {

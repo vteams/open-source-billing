@@ -7,6 +7,7 @@
           <li><%= link_to "New Item", new_item_path, :class => "small" %></li>
           <li><%= link_to "New Client", new_client_path, :class => "small" %></li>
           <li><%= link_to "New Payment", '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
+          <script>$("li").last().css('margin-right', '0px');</script>
         </ul>
       </div>
     </div>
@@ -67,7 +68,7 @@
                 </div>
               </div>
             </div>
-
+            <script>$(".amount_box").last().css('margin-right', '0px');</script>
           </div>
         </div>
       </div>
@@ -112,7 +113,7 @@
                     <% @current_invoices.each do |current_invoice| %>
                         <tr>
                           <td class="align_left"><%= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></td>
-                          <td class="align_left"><%= current_invoice.client.organization_name rescue "" %></td>
+                          <td class="align_left text-overflow-class"  data-overflow-rows="2"><%= current_invoice.client.organization_name rescue "" %></td>
                           <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
                           <td class="align_right"><%= number_to_currency(current_invoice.invoice_total) %></td>
                         </tr>
@@ -163,7 +164,11 @@
                     <% @past_invoices.each do |past_invoice| %>
                         <tr>
                           <td class="align_left"><%= link_to past_invoice.invoice_number, invoice_path(past_invoice) %></td>
-                          <td class="align_left"><%= past_invoice.client.organization_name rescue "" %></td>
+<<<<<<< HEAD
+                          <td class="align_left text-overflow-class"><%= past_invoice.client.organization_name rescue "" %></td>
+=======
+                          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= past_invoice.client.organization_name rescue "" %></td>
+>>>>>>> dev
                           <td class="align_left"><%= (past_invoice.due_date || past_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
                           <td class="align_right"><%= number_to_currency(past_invoice.invoice_total) %></td>
                         </tr>
@@ -229,4 +234,13 @@
 <% end %>
 <!-- END: Unpaid invoices popup -->
 
+<div class="graph_popup">
+  <div id="chart_details" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="popup_close_container">
+      <div class="popup_close"></div>
+    </div>
+    <div class="modal-body">
+    </div>
+  </div>
+</div><!--graph_popup-->
 
