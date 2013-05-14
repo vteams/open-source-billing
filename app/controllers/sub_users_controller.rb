@@ -72,7 +72,7 @@ class SubUsersController < ApplicationController
 
   private
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'user_name'
     User.column_names.include?(params[:sort]) ? params[:sort] : 'user_name'
   end
 

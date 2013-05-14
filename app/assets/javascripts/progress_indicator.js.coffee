@@ -33,7 +33,7 @@ $ ->
 
   $(document).ajaxComplete ->
     jQuery(".text-overflow-class").each ->
-      rows = jQuery(this).attr('data-overflow-rows') || 1
+      rows = jQuery(this).attr('data-overflow-rows') || 2
       jQuery(this).ellipsis row:rows
     setTimeout (->
       $("#progress_indicator").hide()

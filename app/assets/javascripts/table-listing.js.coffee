@@ -57,7 +57,7 @@ window.tableListing = ->
 
   # Test-overflow and ellipses and Display full content on mouse over
   jQuery(".text-overflow-class").each ->
-    rows = jQuery(this).attr('data-overflow-rows') || 1
+    rows = jQuery(this).attr('data-overflow-rows') || 2
     jQuery(this).ellipsis row:rows
 
 #  jQuery(".text-overflow-class").live "mouseenter", ->
@@ -112,6 +112,6 @@ window.tableListing = ->
     direction = jQuery('#sort_direction').html()
 
     headers.removeClass('sortup sortdown')
-    if direction == 'desc' then header.addClass('sortdown') else header.addClass('sortup')
+    if direction == 'desc' then header.addClass('sortup') else header.addClass('sortdown')
 
 

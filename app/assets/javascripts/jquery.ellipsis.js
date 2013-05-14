@@ -18,7 +18,7 @@
             full_text = text
             // 1行分の高さを取得
             $this.text('a');
-            var rowHeight = getHeight($this); //$this.height();
+            var rowHeight = getHeight($this,options); //$this.height();
 //            console.log(rowHeight)
             // 一旦すべて空にする
             $this.text('');
@@ -88,7 +88,7 @@
         return this;
     };
 
-    function getHeight(elem) {
+    function getHeight(elem,options) {
         var $sourceRow = elem.parents("tr").first();
         var height = 0;
 
