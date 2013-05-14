@@ -79,10 +79,7 @@
                     if (height < rowHeight) {
                         break;
                     }
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
                 }
             }
 
@@ -93,11 +90,7 @@
 
     function getHeight(elem) {
         var $sourceRow = elem.parents("tr").first();
-<<<<<<< HEAD
-        var height;
-=======
         var height = 0;
->>>>>>> dev
 
         if ($sourceRow.length > 0) {
             var $rowCopy = $sourceRow.clone();
