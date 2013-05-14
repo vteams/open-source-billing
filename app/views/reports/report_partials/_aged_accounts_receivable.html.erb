@@ -66,7 +66,7 @@
             <% @report.report_data.each do |aged| %>
                 <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
                 <tr>
-                  <td class="align_left text-overflow-class"><%= aged.attributes["client_name"] %></td>
+                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= aged.attributes["client_name"] %></td>
                   <td class="align_right"><%= number_to_currency(aged.attributes["zero_to_thirty"]).gsub("$", "") %></td>
                   <td class="align_right"><%= number_to_currency(aged.attributes["thirty_one_to_sixty"]).gsub("$", "") %></td>
                   <td class="align_right"><%= number_to_currency(aged.attributes["sixty_one_to_ninety"]).gsub("$", "") %></td>

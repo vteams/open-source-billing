@@ -67,9 +67,9 @@
             <% @report.report_data.each do |payment| %>
                 <tr>
                   <td class="align_center"><%= payment.invoice.invoice_number %></td>
-                  <td class="align_left text-overflow-class"><%= payment.client_name %></td>
+                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.client_name %></td>
                   <td class="align_left"><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
-                  <td class="align_left text-overflow-class"><%= payment.notes %></td>
+                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
                   <td class="align_center"><%= payment.created_at.to_date %></td>
                   <td class="align_right currency"><%= number_to_currency(payment.payment_amount) %></td>
                 </tr>

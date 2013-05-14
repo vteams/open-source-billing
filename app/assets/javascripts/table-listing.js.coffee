@@ -112,6 +112,6 @@ window.tableListing = ->
     direction = jQuery('#sort_direction').html()
 
     headers.removeClass('sortup sortdown')
-    if direction == 'desc' then header.addClass('sortup') else header.addClass('sortdown')
+    if direction == 'desc' then header.addClass('sortdown') else header.addClass('sortup')
 
 
