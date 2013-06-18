@@ -1,0 +1,7 @@
+<%= hidden_field_tag :page, params[:page] %>
+<li class="grid_control_sep"><%= submit_tag "Recover", :name => "recover_archived", :class => "top_links recover_archived", :style => "display:none;" %></li>
+<li class="grid_control_sep"><%= submit_tag "Recover", :name => "recover_deleted", :class => "top_links recover_deleted", :style => "display:none;" %></li>
+<li><%= submit_tag "Archive", :name => "archive", :class => "top_links archive" %></li>
+<li><%= submit_tag "Delete", :name => "destroy", :class => "top_links destroy" %></li>
+
+

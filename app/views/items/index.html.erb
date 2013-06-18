@@ -18,12 +18,14 @@
   <!--content_top-->
   <%= form_tag "items/bulk_actions", :remote => true do -%>
     <div class="content_middle">
+
       <div class="grid_control">
         <div class="grid_control_left">
           <ul value='item' id="bulk_actions">
             <%= render "bulk_actions" %>
           </ul>
         </div>
+
         <div class="grid_control_right" id="active_links">
           <%= render 'items/filter_links' %>
         </div>

@@ -160,13 +160,15 @@ module Reporting
   #end
 
   class Reminder
-    def self.due_date_reminder
-      invoices = Invoice.where(:due_date => Date.today+1 )
+    def self.late_payment_reminder
+      invoices = Invoice.where(:due_date => Date.today)
       invoices.each do |invoice|
-      InvoiceMailer.delay.due_date_reminder_email(invoice)  if invoice.sent_emails.where("type = 'Reminder'").blank?
-
+        ["First", "Second", "Third"].each do |reminder_number|
+          email_reminder = EmailTemplate.late_payment_reminder_template(invoice, "#{reminder_number} Late Payment Reminder")
+          InvoiceMailer.delay(:run_at => email_reminder.no_of_days.days.from_now).late_payment_reminder_email(invoice, "#{reminder_number} Late Payment Reminder")  if invoice.late_payment_reminder(reminder_number).blank? and  email_reminder.send_email
+        end
       end
-      Reporting::Reminder.delay(:run_at => 1.day.from_now).due_date_reminder
+      Reporting::Reminder.delay(:run_at => 1.day.from_now).late_payment_reminder
     end
   end
 end

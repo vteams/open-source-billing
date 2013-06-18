@@ -5,11 +5,13 @@
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
      no_record_message = "You haven't any deleted client."
    end
+   test = @clients.first
 %>
+
 <% if @clients.length > 0 %>
     <% @clients.each do |client| %>
         <tr>
-          <td class="align_center"> <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}" %></td>
+          <td class="align_center"><%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}" %></td>
           <td class="align_left"><%= link_to client.organization_name, 'javascript:', class: 'client_name text-overflow-class', value: client.id %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.contact_name %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.email %></td>

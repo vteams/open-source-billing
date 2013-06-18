@@ -1,8 +1,6 @@
 <%- model_class = Invoice -%>
 <% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
 <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
 
 <div class="invoice">
   <div class="content_top">
@@ -21,18 +19,24 @@
   <!--content_top-->
   <%= form_tag "invoices/bulk_actions", :remote => true do -%>
       <div class="content_middle">
+
+        <!--<div class="company_select">-->
+          <!--<p>Select a Company</p>-->
+          <!--<%#= filter_by_companies() %>-->
+        <!--</div>-->
+
         <div class="grid_control">
           <div class="grid_control_left">
             <ul value='<%= model_class.model_name %>' id="bulk_actions">
               <%= render "bulk_actions" %>
             </ul>
-
           </div>
           <div class="grid_control_right" id="active_links">
             <%= render "filter_links" %>
           </div>
         </div>
         <!--grid_control-->
+
         <div class="grid_table">
           <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
             <colgroup>
@@ -49,17 +53,18 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number','Invoice #') %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name','Client') %></th>
-              <th class="align_left header"><%= sortable('notes','Notes') %></th>
-              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total','Total') %></th>
-              <th class="align_center header"><%= sortable('invoice_date','Date') %></th>
-              <th class="align_left header"><%= sortable('due_date','Due Date') %></th>
-              <th class="align_center header"><%= sortable('status','Status') %></th>
+              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', 'Invoice #') %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
+              <th class="align_left header"><%= sortable('invoices.company', 'Company') %></th>
+              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', 'Total') %></th>
+              <th class="align_center header"><%= sortable('invoice_date', 'Date') %></th>
+              <th class="align_left header"><%= sortable('due_date', 'Due Date') %></th>
+              <th class="align_center header"><%= sortable('status', 'Status') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
             <tbody id="invoice_body">
+
             <%= render 'invoice' %>
             <tfoot id="paging_links">
             <%= render "paging" %>

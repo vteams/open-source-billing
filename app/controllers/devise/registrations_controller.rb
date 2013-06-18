@@ -32,7 +32,8 @@ class Devise::RegistrationsController < DeviseController
   def create
     build_resource
     resource.skip_confirmation!
-    resource.companies.build({org_name: params[:user][:company]})
+    resource.accounts.build({org_name: params[:user][:account]})
+    resource.current_account.companies.build({company_name: params[:user][:account] })
     if resource.save
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?

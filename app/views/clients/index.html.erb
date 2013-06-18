@@ -19,6 +19,7 @@
   <!--content_top-->
   <%= form_tag "clients/bulk_actions", :remote => true do -%>
       <div class="content_middle">
+
         <div class="grid_control">
           <div class="grid_control_left">
             <ul value='<%= model_class.model_name %>' id="bulk_actions">
@@ -28,6 +29,7 @@
           <div class="grid_control_right" id="active_links">
             <%= render 'clients/filter_links' %>
           </div>
+
         </div>
         <!--grid_control-->
         <div class="grid_table">

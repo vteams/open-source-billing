@@ -1,0 +1,128 @@
+<%= form_for(@account, :html => {:novalidate => ""}) do |f| %>
+  <div class="content_middle">
+    <div class="fields_content">
+      <div class="fields_content_container">
+
+        <div class="fields_content_data">
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%#= f.label "company_name" %>
+              <label for="company_org_name"><span>Company Name</span></label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :org_name, :required => 'required' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%#= f.label "first_name" %>
+              <label for="company_admin_first_name"><span>First Name</span></label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :admin_first_name, :required => 'required' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%#= f.label "last_name" %>
+              <label for="company_admin_last_name"><span>Last Name</span></label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :admin_last_name, :required => 'required' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%= f.label :country %>
+            </div>
+            <div class="middle_field">
+              <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => "Select a country...", :class => "chzn-select"} %>
+              <%#= f.text_field :country %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <label for="company_street_address_1">Street Address</label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :street_address_1 %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%= f.label " " %>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :street_address_2 %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <%= f.label :city %>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :city %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <label for="company_province_or_state">Province/State</label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :province_or_state %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <label for="company_postal_or_zip_code">Postal/Zip code</label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :postal_or_zip_code %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">
+              <label for="company_phone_business">Phone Number</label>
+            </div>
+            <div class="middle_field">
+              <%= f.text_field :phone_business %>
+            </div>
+          </div>
+          <!--field_row-->
+
+        </div><!--fields_content_data-->
+        <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+
+      </div>
+      <!--fields_content_container-->
+    </div>
+    <!--fields_content-->
+  </div>
+  <!--content_middle-->
+<%#= render 'location_setting',:f=>f %>
+
+  <div class="content_bottom">
+    <%= f.submit :class => "btn_large submit" %>
+  </div><!--content_bottom-->
+
+<% end %>
+

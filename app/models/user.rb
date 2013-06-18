@@ -27,10 +27,10 @@ class User < ActiveRecord::Base
          :encryptable, :encryptor => :restful_authentication_sha1
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :company, :email, :password, :password_confirmation, :remember_me, :user_name
-  attr_accessor :company
+  attr_accessible :account, :email, :password, :password_confirmation, :remember_me, :user_name, :current_company
+  attr_accessor :account
 
-  has_and_belongs_to_many :companies, :join_table => "company_users"
+  has_and_belongs_to_many :accounts, :join_table => "account_users"
 
   def currency_symbol
     "$"
@@ -41,7 +41,25 @@ class User < ActiveRecord::Base
   end
 
   def already_exists?(email)
-    User.where('email = ?',email)
+    User.where('email = ?',email).present?
+  end
+
+  def current_account
+    accounts.first
+  end
+
+  def first_company_id
+    accounts.first.companies.first.id
+  end
+
+  def companies_email_templates
+    templates = []
+    accounts.first.companies.each do |company|
+       company.email_templates.each do |template|
+         templates << template
+       end
+    end
+    templates
   end
 
 end

@@ -63,4 +63,44 @@ class ApplicationController < ActionController::Base
     %w(preview payments_history).include?(action_name) ? 'preview_mode' : 'application'
   end
 
+  def associate_entity(params, entity)
+    ids, controller = params[:company_ids], params[:controller]
+
+    ActiveRecord::Base.transaction do
+      # delete existing associations
+      if action_name == 'update'
+        entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id)
+        entities.map(&:destroy) if entities.present?
+      end
+
+      # associate item with whole account or selected companies
+      if params[:association] == 'account'
+        current_user.accounts.first.send(controller) << entity
+      else
+        Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
+      end
+
+    end
+  end
+
+  def filter_by_company(elem)
+    # set company dropdown session and save in database if company is changed
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
+    end
+    elem.where("#{params[:controller]}.company_id IN(?)", get_company_id())
+  end
+
+  def new_selected_company_name
+    session['current_company'] = params[:company_id]
+    current_user.update_attributes(current_company: params[:company_id])
+    company =  Company.find(params[:company_id])
+    render :text => company.company_name
+  end
+
+  def get_company_id
+    session['current_company'] || current_user.current_company || current_user.first_company_id
+  end
+
 end

@@ -20,10 +20,11 @@
 #
 class SentEmail < ActiveRecord::Base
   # attr
-  attr_accessible :date, :recipient, :sender, :type, :subject, :content
+  attr_accessible :date, :recipient, :sender, :type, :subject, :content, :company_id
 
   # associations
   belongs_to :notification, :polymorphic => true
+  belongs_to :company
   self.inheritance_column = :_type_disabled
 
   paginates_per 10

@@ -18,13 +18,23 @@
       </div>
       <div class="primary_menu">
         <div class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span id="current_selected_company"><%= get_company_name %></span>
+            <b class="caret"></b>
+          </a>
+          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <div class="top_arrow"><img src="/assets/dd_top.png" alt=""/></div>
+            <%= filter_by_companies() %>
+          </div>
+        </div>
+        <div class="dropdown_sep"></div>
+        <div class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.user_name || current_user.email %>
             <b class="caret"></b></a>
-
           <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
             <div class="top_arrow"><img src="/assets/dd_top.png" alt=""/></div>
             <ul>
-              <li><%= link_to "Edit Profile", new_company_path, tabindex: "-1" %></li>
+              <li><%= link_to "Edit Profile", new_account_path, tabindex: "-1" %></li>
               <li><%= link_to "Change password", edit_user_registration_path, tabindex: "-1" %></li>
               <li><%= link_to "Logout", destroy_user_session_path, :method => :delete, tabindex: "-1" %></li>
             </ul>
@@ -40,22 +50,86 @@
         <div id="nav">
           <ul class="select">
             <li><%= active_link_to "Dashboard", "/dashboard" %></li>
-            <li><%= active_link_to "Invoices", invoices_path %></li>
-            <li><%= active_link_to "Clients", clients_path %>
+
+            <li class="dropdown">
+                <%= active_link_to "Invoices", invoices_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
+                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <ul>
+                    <li><%= active_link_to "Invoice Listing", invoices_path %></li>
+                    <li><%= active_link_to "New Invoice", new_invoice_path %></li>
+                  </ul>
+                </div>
+            </li>
+
+            <li class="dropdown">
+              <%= active_link_to "Clients", clients_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <ul class="sub">
                 <li><%= active_link_to "Clients", clients_path %></li>
                 <li><%= active_link_to "Sent Emails", sent_emails_path %></li>
               </ul>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to "Clients Listing", clients_path %></li>
+                  <li><%= active_link_to "New Client", new_client_path %></li>
+                  <li><%= active_link_to "Sent Emails", sent_emails_path %></li>
+                </ul>
+              </div>
             </li>
-            <li><%= active_link_to "Items", items_path %>
+
+            <li class="dropdown">
+              <%= active_link_to "Items", items_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <ul class="sub">
                 <li><%= active_link_to "Items", items_path %></li>
                 <li><%= active_link_to "Taxes", taxes_path %></li>
               </ul>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to "Items Listing", items_path %></li>
+                  <li><%= active_link_to "New Item", new_item_path %></li>
+                  <li><%= active_link_to "Taxes", taxes_path %></li>
+                </ul>
+              </div>
             </li>
-            <li><%= active_link_to "Payments", payments_path %></li>
-            <li><%= active_link_to "Users", sub_users_path %></li>
-            <li><%= active_link_to "Reports", "/reports" %></li>
+
+            <li class="dropdown">
+              <%= active_link_to "Payments", payments_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to "Payments Listing", payments_path %></li>
+                  <li><%= active_link_to "New Payment", '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal", :remote => true  %></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="dropdown">
+              <%= active_link_to "Reports", "/reports", :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to "Payments Collected", '/reports/payments_collected' %></li>
+                  <li><%= active_link_to "Revenue by Client", '/reports/revenue_by_client' %></li>
+                  <li><%= active_link_to "Aged Account Receivable", '/reports/aged_accounts_receivable' %></li>
+                  <li><%= active_link_to "Item Sales", '/reports/item_sales' %></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="dropdown">
+              <%= active_link_to "Setting", companies_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+
+              <ul class="sub">
+                <li><%= active_link_to "Companies", companies_path %></li>
+                <li class="secondary"><%= active_link_to "Email Templates", email_templates_path %></li>
+                <li class="secondary_02"><%= active_link_to "Users", sub_users_path %></li>
+              </ul>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to "Companies", companies_path %></li>
+                  <li><%= active_link_to "Email Templates", email_templates_path %></li>
+                  <li><%= active_link_to "Users", sub_users_path %></li>
+                </ul>
+              </div>
+            </li>
+
             <li><%= active_link_to "Help", "/help" %></li>
           </ul>
         </div>
@@ -92,6 +166,7 @@
           </table>
         </div>
         <%= yield %>
+        <%= render 'payments/unpaid_invoices' %>
       </div>
     </div>
     <!--content-->

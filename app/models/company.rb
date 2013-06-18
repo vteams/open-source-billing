@@ -1,34 +1,37 @@
-#
-# Open Source Billing - A super simple software to create & send invoices to your customers and
-# collect payments.
-# Copyright (C) 2013 Mark Mian <mark.mian@opensourcebilling.org>
-#
-# This file is part of Open Source Billing.
-#
-# Open Source Billing is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Open Source Billing is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
-#
 class Company < ActiveRecord::Base
-  # attr
-  attr_accessible :admin_billing_rate_per_hour, :admin_email, :admin_first_name, :admin_last_name, :admin_password, :admin_user_name, :auto_dst_adjustment, :city, :country, :currency_symbol, :currency_code, :email, :fax, :org_name, :phone_business, :phone_mobile, :postal_or_zip_code, :profession, :province_or_state, :street_address_1, :street_address_2, :time_zone, :created_at, :updated_at
+  #scope :multiple, lambda { |ids_list| where("id in (?)", ids_list) }
+  attr_accessible :account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2
+  scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
-  # associations
-  has_and_belongs_to_many :users, :join_table => 'company_users'
+  mount_uploader :logo, ImageUploader
 
-  # callbacks
-  before_save :change_currency_symbol
+  has_many :company_entities, :as => :parent
+  has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'
+  has_many :clients, :through => :company_entities, :source => :entity, :source_type => 'Client'
+  has_many :company_email_templates, :as => :parent
+  has_many :email_templates, :through => :company_email_templates, :foreign_key => 'template_id'
+  has_many :invoices
+  has_many :payments
+  has_many :sent_emails
+  belongs_to :account
 
-  def change_currency_symbol
-    self.currency_symbol = CURRENCY_SYMBOL[self.currency_code]
+  # archive and delete
+  acts_as_archival
+  acts_as_paranoid
+
+  # filter companies i.e active, archive, deleted
+  def self.filter(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    params[:account].companies.send(method).page(params[:page]).per(params[:per])
   end
+
+  def self.recover_archived(ids)
+    multiple(ids).map(&:unarchive)
+  end
+
+  def self.recover_deleted(ids)
+    multiple(ids).only_deleted.each { |company| company.recover; company.unarchive }
+  end
+
 end

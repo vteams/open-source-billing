@@ -5,7 +5,7 @@
 window.applyChosen = (single_row) =>
   # listen to Chosen liszt:ready even
   # add a Add New button at the bottom of every chosen list
-  jQuery(".invoices-main .chzn-select").on "liszt:ready", ->
+  jQuery(".invoices-main .chzn-select:not('.invoice_company, .company_filter')").on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
       chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
@@ -213,8 +213,12 @@ jQuery ->
   jQuery("form.form-horizontal").submit ->
     item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
     flag = true
+    # Check if company is selected
+    if jQuery("#invoice_company_id").val() is ""
+      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+      flag = false
     # Check if client is selected
-    if jQuery("#invoice_client_id").val() is ""
+    else if jQuery("#invoice_client_id").val() is ""
       applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
     # check if invoice date is selected

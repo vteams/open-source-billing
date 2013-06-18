@@ -1,3 +1,4 @@
+<div class="clients">
 <%= nested_form_for @client, :html => {:id => 'newClient', :novalidate => ""} do |f| %>
     <% @parent_f = f %>
     <div class="content_middle">
@@ -50,12 +51,17 @@
             <div class="field_row">
               <div class="label_field left single">Available Credit</div>
               <div class="medium_field">
-                <% @readonly = is_client_credit_payments @client%>
-                <%= text_field_tag :available_credit,number_with_precision(@client.client_credit, precision: 2) ,:readonly=>@readonly%>
+                <% @readonly = is_client_credit_payments @client %>
+                <%= text_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly %>
                 <ul class="field_description">
                   <li>This credit can be applied to invoice for this client.</li>
                 </ul>
               </div>
+            </div>
+            <div class="options_row">
+              <div class="label_field left single options template">Make this Client available to:</div>
+              <div class="options_content">
+                <%= associate_account(controller_name, action_name, @client) %>  </div>
             </div>
 
           </div>
@@ -197,3 +203,4 @@
       <%= f.submit :class => "btn_large submit" %>
     </div><!--content_bottom-->
 <% end %>
+</div><!--clients-->

@@ -27,9 +27,10 @@ class ItemsController < ApplicationController
   include ItemsHelper
 
   def index
-    @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
-    @items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
-    @items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
+    #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @items = Item.get_items(params.merge(get_args('unarchived')))
+    #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
+    #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
 
     respond_to do |format|
       format.js
@@ -74,6 +75,7 @@ class ItemsController < ApplicationController
       return
     end
     @item = Item.new(params[:item])
+    associate_entity(params, @item)
     respond_to do |format|
       if @item.save
         format.js
@@ -97,7 +99,7 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
-
+    associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(params[:item])
         format.html { redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => 'Your item has been updated successfully.') }
@@ -131,33 +133,35 @@ class ItemsController < ApplicationController
     ids = params[:item_ids]
     if params[:archive]
       Item.archive_multiple(ids)
-      @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @items = Item.get_items(get_args('unarchived'))
       @action = "archived"
       @message = items_archived(ids) unless ids.blank?
     elsif params[:destroy]
       Item.delete_multiple(ids)
-      @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @items = Item.get_items(get_args('unarchived'))
       @action = "deleted"
       @message = items_deleted(ids) unless ids.blank?
     elsif params[:recover_archived]
       Item.recover_archived(ids)
-      @items = Item.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @items = Item.get_items(get_args('archived'))
       @action = "recovered from archived"
     elsif params[:recover_deleted]
       Item.recover_deleted(ids)
-      @items = Item.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @items = Item.get_items(get_args('only_deleted'))
       @action = "recovered from deleted"
     end
     respond_to { |format| format.js }
   end
 
   def filter_items
-    @items = Item.filter(params,session["#{controller_name}-per_page"])
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @items = Item.get_items(get_args(method).merge(company_id: params[:company_id])) #.filter(params, session["#{controller_name}-per_page"])
   end
 
   def undo_actions
     params[:archived] ? Item.recover_archived(params[:ids]) : Item.recover_deleted(params[:ids])
-    @items = Item.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @items = Item.get_items(get_args('unarchived'))
     respond_to { |format| format.js }
   end
 
@@ -175,4 +179,14 @@ class ItemsController < ApplicationController
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
+
+  def get_args(status)
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
+    end
+    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company']}
+  end
+
+
 end

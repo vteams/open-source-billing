@@ -51,7 +51,13 @@
                 </div>
                 <div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => "Select a tax...", :class => "extra_small tax2 small chzn-select"}) %></div>
               </div>
-              <!--field_row-->
+              <div class="options_row clients">
+                <div class="label_field left single options template">Make this Item available to:</div>
+                <div class="options_content">
+                  <%= associate_account(controller_name, action_name, @item) %>
+                </div>
+              </div>
+
 
             </div>
             <!--fields_content_data-->

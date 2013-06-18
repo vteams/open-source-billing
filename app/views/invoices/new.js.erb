@@ -1,0 +1,10 @@
+//if ("<%#= @parent_class %>" == 'Company') {
+//    jQuery('select#invoice_client_id').append("<%#= @get_clients.html_safe %>").trigger("liszt:updated");
+//    jQuery('select.items_list').append("<%#= @get_items.html_safe %>").trigger("liszt:updated");
+//} else {
+    jQuery("select#invoice_client_id option, select.items_list option").filter(function() {
+        return jQuery(this).attr('type') == 'company_level';
+    }).remove();
+    jQuery('select#invoice_client_id').append("<%= @get_clients.html_safe %>").trigger("liszt:updated");
+    jQuery('select.items_list').append("<%= @get_items.html_safe %>").trigger("liszt:updated");
+//}

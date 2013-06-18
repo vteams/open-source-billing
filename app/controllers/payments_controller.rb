@@ -27,7 +27,12 @@ class PaymentsController < ApplicationController
   def index
     @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
     @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
+    @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
     @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
+
+    #filter invoices by company
+    @payments = filter_by_company(@payments)
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -101,7 +106,9 @@ class PaymentsController < ApplicationController
     ids = params[:invoice_ids]
     @payments = []
     ids = ids.split(",") if ids and ids.is_a?(String)
-    ids.each { |inv_id| @payments << Payment.new({:invoice_id => inv_id, :payment_date => Date.today}) }
+    ids.each do |inv_id|
+      company_id = Invoice.find(inv_id).company_id
+      @payments << Payment.new({:invoice_id => inv_id, :payment_date => Date.today, :company_id  => company_id }) end
   end
 
   def update_individual_payment
@@ -111,7 +118,8 @@ class PaymentsController < ApplicationController
       pay[:payment_amount] = pay[:payment_method] == "Credit" ? Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
       pay[:payment_date] ||= Date.today
       pay[:credit_applied] ||= 0.00
-      pay[:payment_method] == "Credit" ? Services::PaymentService.distribute_credit_payment(pay, current_user.email) : Payment.create!(pay).notify_client(current_user.email)
+      pay[:company_id] = Invoice.find(pay[:invoice_id]).company.id
+      pay[:payment_method] == "Credit" ? Services::PaymentService.distribute_credit_payment(pay, current_user.email) : Payment.create!(pay).notify_client(current_user)
     end
     where_to_redirect = params[:from_invoices] ? invoices_url : payments_url
     redirect_to(where_to_redirect, :notice => 'Payments against selected invoices have been recorded successfully.')

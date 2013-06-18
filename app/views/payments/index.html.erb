@@ -20,12 +20,14 @@
   <!--content_top-->
   <%= form_tag "payments/bulk_actions", :remote => true do -%>
       <div class="content_middle">
+
         <div class="grid_control">
           <div class="grid_control_left">
             <ul value='<%= model_class.model_name %>' id="bulk_actions">
               <%= render "bulk_actions" %>
             </ul>
           </div>
+
           <div class="grid_control_right" id="active_links">
             <%#= render 'filter_links' %>
           </div>
@@ -42,14 +44,15 @@
               <col class="six"/>
               <col class="seven"/>
               <col class="eight"/>
+              <col class="nine"/>
             </colgroup>
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
               <th class="align_center header"><%= sortable('invoices.invoice_number', 'Invoice #') %></th>
               <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
+              <th class="align_left header"><%= sortable('companies.company_name', 'Company') %></th>
               <th class="align_center header"><%= sortable('IFNULL(payment_method,payment_type)', 'Type') %></th>
-              <th class="align_center big header"><%= sortable('notes', 'Notes') %></th>
               <th class="align_center header"><%= sortable('payment_date', 'Date') %></th>
               <th class="align_right big header sorting {sorter:'thousands'}"><%= sortable('payment_amount', 'Amount') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
@@ -75,7 +78,7 @@
   <% end %>
 
   <!-- START: Unpaid invoices popup -->
-  <%= render 'unpaid_invoices' %>
+
   <!-- END: Unpaid invoices popup -->
 
   <!-- START: Credit entries -->

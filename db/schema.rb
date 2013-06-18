@@ -11,7 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404111204) do
+ActiveRecord::Schema.define(:version => 20130618044331) do
+
+  create_table "account_users", :force => true do |t|
+    t.integer "user_id"
+    t.integer "account_id"
+  end
+
+  create_table "accounts", :force => true do |t|
+    t.string   "org_name"
+    t.string   "country"
+    t.string   "street_address_1"
+    t.string   "street_address_2"
+    t.string   "city"
+    t.string   "province_or_state"
+    t.string   "postal_or_zip_code"
+    t.string   "profession"
+    t.string   "phone_business"
+    t.string   "phone_mobile"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "time_zone"
+    t.boolean  "auto_dst_adjustment"
+    t.string   "currency_code"
+    t.string   "currency_symbol"
+    t.string   "admin_first_name"
+    t.string   "admin_last_name"
+    t.string   "admin_email"
+    t.decimal  "admin_billing_rate_per_hour", :precision => 10, :scale => 0
+    t.string   "admin_user_name"
+    t.string   "admin_password"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "category"
@@ -55,67 +87,50 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
+    t.decimal  "available_credit",  :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "companies", :force => true do |t|
-    t.string   "org_name"
+    t.integer  "account_id"
+    t.string   "company_name"
+    t.string   "contact_name"
+    t.string   "contact_title"
     t.string   "country"
+    t.string   "city"
     t.string   "street_address_1"
     t.string   "street_address_2"
-    t.string   "city"
     t.string   "province_or_state"
-    t.string   "postal_or_zip_code"
-    t.string   "profession"
-    t.string   "phone_business"
-    t.string   "phone_mobile"
-    t.string   "fax"
+    t.string   "postal_or_zipcode"
+    t.string   "phone_number"
+    t.string   "fax_number"
     t.string   "email"
-    t.string   "time_zone"
-    t.boolean  "auto_dst_adjustment"
-    t.string   "currency_code"
-    t.string   "currency_symbol"
-    t.string   "admin_first_name"
-    t.string   "admin_last_name"
-    t.string   "admin_email"
-    t.decimal  "admin_billing_rate_per_hour", :precision => 10, :scale => 0
-    t.string   "admin_user_name"
-    t.string   "admin_password"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.string   "logo"
+    t.string   "company_tag_line"
+    t.string   "memo"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
   end
 
-  create_table "company_profiles", :force => true do |t|
-    t.string   "org_name"
-    t.string   "country"
-    t.string   "street_address_1"
-    t.string   "street_address_2"
-    t.string   "city"
-    t.string   "province_or_state"
-    t.string   "postal_or_zip_code"
-    t.string   "profession"
-    t.string   "phone_business"
-    t.string   "phone_mobile"
-    t.string   "fax"
-    t.string   "email"
-    t.string   "time_zone"
-    t.boolean  "auto_dst_adjustment"
-    t.string   "currency_code"
-    t.string   "currecy_symbol"
-    t.string   "admin_first_name"
-    t.string   "admin_last_name"
-    t.string   "admin_email"
-    t.decimal  "admin_billing_rate_per_hour", :precision => 10, :scale => 0
-    t.string   "admin_user_name"
-    t.string   "admin_password"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+  create_table "company_email_templates", :force => true do |t|
+    t.integer  "template_id"
+    t.integer  "parent_id"
+    t.string   "parent_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
-  create_table "company_users", :force => true do |t|
-    t.integer "user_id"
-    t.integer "company_id"
+  create_table "company_entities", :force => true do |t|
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.integer  "parent_id"
+    t.string   "parent_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "credit_payments", :force => true do |t|
@@ -142,6 +157,20 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "email_templates", :force => true do |t|
+    t.string   "template_type"
+    t.string   "email_from"
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "status"
+    t.integer  "torder"
+    t.boolean  "send_email",               :default => true
+    t.integer  "no_of_days"
+    t.boolean  "is_late_payment_reminder", :default => false
+  end
 
   create_table "invoice_line_items", :force => true do |t|
     t.integer  "invoice_id"
@@ -181,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
     t.date     "due_date"
     t.string   "last_invoice_status"
     t.string   "discount_type"
+    t.integer  "company_id"
   end
 
   create_table "items", :force => true do |t|
@@ -222,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
     t.datetime "updated_at",                                               :null => false
     t.decimal  "credit_applied",            :precision => 10, :scale => 2
     t.integer  "client_id"
+    t.integer  "company_id"
   end
 
   create_table "recurring_profile_line_items", :force => true do |t|
@@ -268,7 +299,19 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
     t.datetime "updated_at",        :null => false
     t.integer  "notification_id"
     t.string   "notification_type"
+    t.integer  "company_id"
   end
+
+  create_table "settings", :force => true do |t|
+    t.string   "var",                      :null => false
+    t.text     "value"
+    t.integer  "thing_id"
+    t.string   "thing_type", :limit => 30
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "settings", ["thing_type", "thing_id", "var"], :name => "index_settings_on_thing_type_and_thing_id_and_var", :unique => true
 
   create_table "taxes", :force => true do |t|
     t.string   "name"
@@ -299,6 +342,7 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
     t.datetime "updated_at",                             :null => false
     t.string   "password_salt"
     t.string   "user_name"
+    t.integer  "current_company"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
@@ -306,9 +350,9 @@ ActiveRecord::Schema.define(:version => 20130404111204) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "versions", :force => true do |t|
-    t.string   "item_type",  :default => "", :null => false
-    t.integer  "item_id",                    :null => false
-    t.string   "event",      :default => "", :null => false
+    t.string   "item_type",  :null => false
+    t.integer  "item_id",    :null => false
+    t.string   "event",      :null => false
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"

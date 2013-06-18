@@ -1,13 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Org name:</b>
-  <%= @company.org_name %>
+  <b>Account:</b>
+  <%= @company.account_id %>
+</p>
+
+<p>
+  <b>Company name:</b>
+  <%= @company.company_name %>
+</p>
+
+<p>
+  <b>Contact name:</b>
+  <%= @company.contact_name %>
+</p>
+
+<p>
+  <b>Contact title:</b>
+  <%= @company.contact_title %>
 </p>
 
 <p>
   <b>Country:</b>
   <%= @company.country %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @company.city %>
 </p>
 
 <p>
@@ -21,38 +41,23 @@
 </p>
 
 <p>
-  <b>City:</b>
-  <%= @company.city %>
-</p>
-
-<p>
   <b>Province or state:</b>
   <%= @company.province_or_state %>
 </p>
 
 <p>
-  <b>Postal or zip code:</b>
-  <%= @company.postal_or_zip_code %>
+  <b>Postal or zipcode:</b>
+  <%= @company.postal_or_zipcode %>
 </p>
 
 <p>
-  <b>Profession:</b>
-  <%= @company.profession %>
+  <b>Phone number:</b>
+  <%= @company.phone_number %>
 </p>
 
 <p>
-  <b>Phone business:</b>
-  <%= @company.phone_business %>
-</p>
-
-<p>
-  <b>Phone mobile:</b>
-  <%= @company.phone_mobile %>
-</p>
-
-<p>
-  <b>Fax:</b>
-  <%= @company.fax %>
+  <b>Fax number:</b>
+  <%= @company.fax_number %>
 </p>
 
 <p>
@@ -61,56 +66,20 @@
 </p>
 
 <p>
-  <b>Time zone:</b>
-  <%= @company.time_zone %>
+  <b>Logo:</b>
+  <%= @company.logo %>
 </p>
 
 <p>
-  <b>Auto dst adjustment:</b>
-  <%= @company.auto_dst_adjustment %>
+  <b>Company tag line:</b>
+  <%= @company.company_tag_line %>
 </p>
 
 <p>
-  <b>Currency code:</b>
-  <%= @company.currency_code %>
-</p>
-
-<p>
-  <b>Currecy symbol:</b>
-  <%= @company.currency_symbol %>
-</p>
-
-<p>
-  <b>Admin first name:</b>
-  <%= @company.admin_first_name %>
-</p>
-
-<p>
-  <b>Admin last name:</b>
-  <%= @company.admin_last_name %>
-</p>
-
-<p>
-  <b>Admin email:</b>
-  <%= @company.admin_email %>
-</p>
-
-<p>
-  <b>Admin billing rate per hour:</b>
-  <%= @company.admin_billing_rate_per_hour %>
-</p>
-
-<p>
-  <b>Admin user name:</b>
-  <%= @company.admin_user_name %>
-</p>
-
-<p>
-  <b>Admin password:</b>
-  <%= @company.admin_password %>
+  <b>Memo:</b>
+  <%= @company.memo %>
 </p>
 
 
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
-

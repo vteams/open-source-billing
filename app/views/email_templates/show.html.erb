@@ -1,0 +1,56 @@
+<div class="show_email">
+  <div class="email_container">
+
+    <div class="email_row">
+      <p id="notice"><%= notice %></p>
+    </div>
+
+    <div class="email_row">
+      <div class="email_heading">
+        Template type <span>:</span>
+      </div>
+      <div class="email_detail">
+        <%= @email_template.template_type %>
+      </div>
+    </div>
+
+    <div class="email_row">
+      <div class="email_heading">
+        Email from <span>:</span>
+      </div>
+      <div class="email_detail">
+        <%= @email_template.email_from %>
+      </div>
+    </div>
+
+    <div class="email_row">
+      <div class="email_heading">
+        Subject <span>:</span>
+      </div>
+      <div class="email_detail">
+        <%= @email_template.subject %>
+      </div>
+    </div>
+
+    <div class="email_row">
+      <div class="email_heading">
+        Body <span>:</span>
+      </div>
+      <div class="email_detail">
+        <%= @email_template.body %>
+      </div>
+    </div>
+
+    <div class="email_row">
+      <div class="email_heading">
+        &nbsp
+      </div>
+      <div class="email_detail btm_list">
+        <%= link_to 'Edit', edit_email_template_path(@email_template) %> <span>|</span>
+        <%= link_to 'Back', email_templates_path %>
+      </div>
+    </div>
+
+  </div><!--email_container-->
+
+</div><!--show_email-->

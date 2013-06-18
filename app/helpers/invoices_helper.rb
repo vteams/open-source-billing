@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 module InvoicesHelper
+  include ApplicationHelper
   def new_invoice id, is_draft
     message = is_draft ? "The invoice has been saved as draft." : "Invoice has been created and sent to #{@invoice.client.organization_name}."
     notice = <<-HTML
@@ -36,8 +37,8 @@ module InvoicesHelper
   def invoices_archived ids
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been archived. You can find them under
-     <a href="invoices/filter_invoices?status=archived" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
+     <a href="invoices/filter_invoices?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
+     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
     HTML
     notice.html_safe
   end
@@ -46,7 +47,7 @@ module InvoicesHelper
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been deleted. You can find them under
      <a href="invoices/filter_invoices?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
+     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
     HTML
     notice.html_safe
   end
@@ -54,7 +55,7 @@ module InvoicesHelper
   def payment_for_invoices ids
     notice = <<-HTML
      <p>Payments of ${amount} against <a>N invoices</a> have been recorded successfully.
-     <a href="invoices/filter_invoices?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
+     <a href="invoices/filter_invoices?status=deleted#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Deleted</a> section on this page.</p>
     HTML
     notice.html_safe
   end
@@ -92,6 +93,20 @@ module InvoicesHelper
        </ul>
     HTML
     notice.html_safe
+  end
+
+  def load_clients(action,company_id)
+    account_level = current_user.current_account.clients
+    id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    clients = Company.find_by_id(id).clients
+    action == 'new' && company_id.blank? ? account_level.map{|c| [c.organization_name, c.id, {type: 'account_level'}]} + clients.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}  : Company.find_by_id(company_id).clients.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
+  end
+
+  def load_items(action,company_id)
+    account_level = current_user.current_account.items
+    id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    items = Company.find_by_id(id).items
+    action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
   end
 
 end

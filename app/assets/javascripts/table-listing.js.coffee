@@ -58,23 +58,7 @@ window.tableListing = ->
   # Test-overflow and ellipses and Display full content on mouse over
   jQuery(".text-overflow-class").each ->
     rows = jQuery(this).attr('data-overflow-rows') || 2
-    jQuery(this).ellipsis row:rows
-
-#  jQuery(".text-overflow-class").live "mouseenter", ->
-#    field_class = "single_line"
-#    left_position = jQuery(this).offset().left  + "px";
-#    top_position = jQuery(this).offset().top + -1+ "px";
-#    full_content = jQuery(this).attr "value"
-#    contains = (jQuery(this).text().indexOf("...") > -1)
-#    jQuery(this).attr('title',full_content) if contains
-#    field_class = "multi_line" if jQuery(this).height() > 20
-#    html_text =  "<span class='mouseover_full_content #{field_class}' style='left:#{left_position};top:#{top_position}'>#{full_content}<span>"
-#    jQuery(this).append html_text
-#    jQuery(".mouseover_full_content").width(jQuery(this).width());
-#    jQuery(".mouseover_full_content").show() if contains
-#
-#  jQuery('.text-overflow-class').live "mouseleave", ->
-#    jQuery('.mouseover_full_content').remove()
+    jQuery(this).ellipsis row: rows
 
   # add a space if td is empty in table listing
   jQuery("table.table_listing tbody td:empty").html("&nbsp;")
@@ -93,7 +77,7 @@ window.tableListing = ->
       flag = false
     else if selected_rows is 0
       jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{title}s and try again."
+      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{if title is 'company' then 'companie' else title}s and try again."
       flag = false
     else if jQuery(this).hasClass('new_invoice') and selected_rows > 1
       jQuery('.alert').hide();
@@ -114,4 +98,18 @@ window.tableListing = ->
     headers.removeClass('sortup sortdown')
     if direction == 'desc' then header.addClass('sortup') else header.addClass('sortdown')
 
+  # handle association checkboxes and redio buttons
+  jQuery('.association').click ->
+    type = jQuery(this).attr('value')
+    parent = jQuery(this).parents('.options_content')
+    checkbox = parent.find('input[type=checkbox]')
+    # uncheck all checkboxes if account is selected
+    checkbox.prop('checked', false) if type is 'account'
 
+  jQuery('#pdffile').change ->
+    jQuery('#subfile').val(jQuery(this).val())
+
+  #
+  jQuery('.options_content :checkbox').live "click", ->
+    status = jQuery('.options_content input[type=checkbox]:not(:checked)').length
+    jQuery('#company_association').attr('checked', status)

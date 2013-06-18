@@ -1,0 +1,14 @@
+<%
+   company_level = false
+   company_level = true if(params[:company_id].present? && params[:company_id] != "Account")%>
+<% @email_templates.each do |email_template| %>
+        <tr>
+          <td class="align_left" ><%= email_template.template_type %></td>
+          <td class="align_left" ><%= email_template.subject %></td>
+          <td class="align_center" ><%= email_template.status %></td>
+          <td class="align_center">
+                <a href="email_templates/<%= email_template.id%>/edit?company=<%= company_level %>">Edit</a>
+            <%#= link_to 'Use default', email_template, method: :delete, data: {confirm: 'Are you sure?'} if company_email_template(email_template.id) %>
+          </td>
+        </tr>
+    <% end %>

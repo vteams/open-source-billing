@@ -35,7 +35,7 @@ jQuery('#select_all').attr('checked', false);
     jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
     jQuery("table.table_listing").trigger('update');
     jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
-    jQuery(".text-overflow-class").ellipsis({row: 1});
+//    jQuery(".text-overflow-class").ellipsis({row: 1});
 <%end%>
 
 jQuery('.top_links').hide();

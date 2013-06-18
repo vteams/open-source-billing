@@ -27,8 +27,11 @@ class InvoicesController < ApplicationController
   include InvoicesHelper
 
   def index
-    @invoices = Invoice.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
-    @invoices = @invoices.joins(:client) if sort_column == 'clients.organization_name'
+    @invoices = Invoice.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+
+    #filter invoices by company
+    @invoices = filter_by_company(@invoices)
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -60,10 +63,11 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Services::InvoiceService.build_new_invoice(params)
-
+    get_clients_and_items
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @invoice }
+      format.js
+      #format.json { render :json => @invoice }
     end
   end
 
@@ -76,6 +80,7 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(params[:invoice])
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.company_id = get_company_id()
     respond_to do |format|
       if @invoice.save
         @invoice.notify(current_user, @invoice.id)
@@ -138,14 +143,14 @@ class InvoicesController < ApplicationController
 
   def unpaid_invoices
     for_client = params[:for_client].present? ? "and client_id = #{params[:for_client]}" : ''
-    @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}")
+    @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
     respond_to { |format| format.js }
   end
 
   def bulk_actions
     result = Services::InvoiceService.perform_bulk_action(params.merge({current_user: current_user}))
 
-    @invoices = result[:invoices]
+    @invoices = filter_by_company(result[:invoices]).order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
     @action = result[:action]
     @invoices_with_payments = result[:invoices_with_payments]
@@ -156,11 +161,13 @@ class InvoicesController < ApplicationController
   def undo_actions
     params[:archived] ? Invoice.recover_archived(params[:ids]) : Invoice.recover_deleted(params[:ids])
     @invoices = Invoice.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #filter invoices by company
+    @invoices = filter_by_company(@invoices).order("#{sort_column} #{sort_direction}")
     respond_to { |format| format.js }
   end
 
   def filter_invoices
-    @invoices = Invoice.filter(params,session["#{controller_name}-per_page"])
+    @invoices = filter_by_company(Invoice.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
   end
 
   def delete_invoices_with_payments
@@ -177,7 +184,7 @@ class InvoicesController < ApplicationController
 
   def dispute_invoice
     @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], current_user)
-    org_name = current_user.companies.first.org_name rescue or_name = ''
+    org_name = current_user.accounts.first.org_name rescue or_name = ''
     @message = dispute_invoice_message(org_name)
 
     respond_to { |format| format.js }
@@ -210,8 +217,8 @@ class InvoicesController < ApplicationController
 
   def send_invoice
     invoice = Invoice.find(params[:id])
-    invoice.send_invoice(current_user,params[:id])
-    redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.' )
+    invoice.send_invoice(current_user, params[:id])
+    redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.')
   end
 
 
@@ -220,9 +227,7 @@ class InvoicesController < ApplicationController
   def get_intimation_message(action_key, invoice_ids)
     helper_methods = {archive: 'invoices_archived', destroy: 'invoices_deleted'}
     helper_method = helper_methods[action_key.to_sym]
-    message = helper_method.present? ? send(helper_method, invoice_ids) : nil
-    Rails.logger.debug "==> helper_method: #{helper_method}, action_key: #{action_key}, invoice_ids: #{invoice_ids}, message: #{message}"
-    message
+    helper_method.present? ? send(helper_method, invoice_ids) : nil
   end
 
   def set_per_page_session
@@ -239,6 +244,27 @@ class InvoicesController < ApplicationController
   def sort_direction
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def get_clients_and_items
+    parent = params[:company_id].blank? ? current_user.current_account : Company.find(params[:company_id])
+    @get_clients = get_clients(parent)
+    @get_items = get_items(parent)
+    @parent_class = parent.class.to_s
+  end
+
+  # generate clients options associated with company
+  def get_clients(parent)
+    options = ''
+    parent.clients.each { |client| options += "<option value=#{client.id} type='company_level'>#{client.organization_name}</option>" } if parent.clients.present?
+    options
+  end
+
+  # generate items options associated with company
+  def get_items(parent)
+    options = ''
+    parent.items.each { |item| options += "<option value=#{item.id} type='company_level'>#{item.item_name}</option>" } if parent.items.present?
+    options
   end
 
 end

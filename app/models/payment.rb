@@ -23,11 +23,12 @@ class Payment < ActiveRecord::Base
   #default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
-  attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied
+  attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id
 
   # associations
   belongs_to :invoice
   belongs_to :client
+  belongs_to :company
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
@@ -44,9 +45,9 @@ class Payment < ActiveRecord::Base
   def client_name
     invoice = Invoice.with_deleted.find_by_id(self.invoice_id)
     if invoice.present?
-      invoice.client.organization_name rescue 'no client'
+      invoice.client.organization_name rescue '-'
     else
-      client.organization_name rescue 'no client'
+      client.organization_name rescue '-'
     end
   end
 
@@ -108,6 +109,7 @@ class Payment < ActiveRecord::Base
     credit_pay.notes = "Overpayment against invoice# #{invoice.invoice_number}"
     credit_pay.payment_amount = amount
     credit_pay.credit_applied = 0.00
+    credit_pay.company_id = invoice.company.id
     credit_pay.save
   end
 
@@ -151,8 +153,8 @@ class Payment < ActiveRecord::Base
     CreditPayment.where('credit_id = ?', payment_id).map(&:destroy)
   end
 
-  def notify_client current_user_email
-    PaymentMailer.payment_notification_email(current_user_email, self.invoice.client, self.invoice.invoice_number, self).deliver if self.send_payment_notification
+  def notify_client current_user
+    PaymentMailer.payment_notification_email(current_user, self).deliver if self.send_payment_notification
   end
 
   def self.payments_history(client)

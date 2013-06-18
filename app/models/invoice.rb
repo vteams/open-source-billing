@@ -24,8 +24,8 @@ class Invoice < ActiveRecord::Base
   # default scope
   #default_scope order("#{self.table_name}.created_at DESC")
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
-  scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today)
-  scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today)
+  scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('created_at DESC')
+  scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today).order('created_at DESC')
 
   # constants
   STATUS_DESCRIPTION = {
@@ -39,12 +39,13 @@ class Invoice < ActiveRecord::Base
   }
 
   # attr
-  attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status
+  attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status, :company_id
 
   # associations
   belongs_to :client
   belongs_to :invoice
   belongs_to :payment_term
+  belongs_to :company
   has_many :invoice_line_items, :dependent => :destroy
   has_many :payments
   has_many :sent_emails, :as => :notification
@@ -183,7 +184,6 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.filter(params,per_page)
-    Rails.logger.debug "!!!!!!!!!!!!!!!! #{per_page}"
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     self.send(method).page(params[:page]).per(per_page)
@@ -328,4 +328,9 @@ class Invoice < ActiveRecord::Base
      self.update_attribute('status', 'sent')
      InvoiceMailer.delay.send_note_email(response_to_client, self,self.client, current_user)
    end
+
+  def late_payment_reminder(reminder_number)
+    self.sent_emails.where("type = '#{reminder_number} Late Payment Reminder'").first
+  end
+
 end

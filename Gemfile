@@ -46,6 +46,9 @@ gem "copyright-header"
 gem 'paypal-sdk-rest'
 gem 'activemerchant'
 gem 'paper_trail'
+gem 'carrierwave'
+gem "rmagick"
+gem 'tinymce-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

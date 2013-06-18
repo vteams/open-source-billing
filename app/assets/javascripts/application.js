@@ -34,7 +34,7 @@
 //= require clients.js.coffee
 //= require client_additional_contacts.js.coffee
 //= require client_contacts.js.coffee
-//= require companies.js.coffee
+//= require accounts.js.coffee
 //= require dashboard.js.coffee
 //= require invoice_line_items.js.coffee
 //= require items.js.coffee
@@ -57,9 +57,14 @@
 //= require users.js.coffee
 //= require validate-forms.js.coffee
 //= require jquery.ellipsis.js
+//= require companies.js.coffee
+//= require email_templates.js.coffee
+//= require tinymce
+//= require email_template.js
 
 
 jQuery(function () {
+
     //override default behavior of inserting new subforms into form    
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
         if (document.location.pathname.search(/\/invoices\//) != -1) {
@@ -73,14 +78,27 @@ jQuery(function () {
 
     jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
 
-    jQuery("#nav ul.select > li").mouseenter(function () {
+//    jQuery("#nav ul.select > li").mouseenter(function () {
+//        jQuery(".sub").hide();
+//        jQuery(".sub", jQuery(this)).show();
+//    });
+
+    // Show sub menu on mouseover
+    jQuery('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
+        jQuery(this).parents('li.dropdown').find('.dropdown-menu').show();
         jQuery(".sub").hide();
-        jQuery(".sub", jQuery(this)).show();
+        jQuery('#nav .dropup, #nav .dropdown').css('position','relative');
+    }).mouseout(function () {
+            jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
+            jQuery('#nav .dropup, #nav .dropdown').css('position','static');
+        });
+    // Hide other open header menu on mouseover
+    jQuery('.primary_menu .dropdown').mouseover(function () {
+       jQuery(this).siblings().removeClass('open');
     });
 
-    jQuery("#nav").on("mouseleave",function (event) {
-        if (event.pageY - $(window).scrollTop() <= 1)
-        {
+    jQuery("#nav").on("mouseleave", function (event) {
+        if (event.pageY - $(window).scrollTop() <= 1) {
             jQuery(".sub").hide();
             jQuery("li a.active", jQuery(this)).next(".sub").show();
         }
@@ -105,7 +123,7 @@ jQuery(function () {
     (function ($) {
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
-                scrollInertia:150
+                scrollInertia: 150
             });
         });
     })(jQuery);

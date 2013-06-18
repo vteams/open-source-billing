@@ -1,15 +1,56 @@
-.companies-main{
+.company {
+  .content_middle{
+    /*padding-top: 56px;*/
+    &.form{
+      padding-top: 0px;
+    }
+  }
+
+  .grid_table table {
+    col.one {
+      /*check box*/
+      width: 33px;
+    }
+    col.two {
+      /*invoice*/
+      width: 150px;
+    }
+    col.three {
+      /*clients*/
+      width: 150px;
+    }
+    col.four {
+      /*description*/
+      width: 280px;
+    }
+    col.five {
+      /*total*/
+      width: 130px;
+    }
+    col.six {
+      /*total*/
+      width: 90px;
+    }
+  }
+  .fields_content{
+    padding-top: 34px;
+  }
   .label_field.left{
-        width: 150px;
+    width: 130px !important;
+  }
+
+  .input-xlarge{
+    width: 419px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .input-append{
+    .btn{
+      border-radius: 0 4px 4px 0;
     }
-  .label_field label{
-        width:130px;
-        text-align: left;
-    }
-    #company_time_zone_chzn.chzn-container .chzn-results{
-        max-height: 120px;
-    }
-    select{
-        width: 226px;
-    }
+  }
+
+  .field_description.select li{
+    margin-top: -4px;
+  }
 }

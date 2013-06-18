@@ -21,14 +21,15 @@ class SubUsersController < ApplicationController
     # skip email confirmation for login
     sub_user.skip_confirmation!
 
-    # assign current user's company to newly created user
-    current_user.companies.first.users << sub_user
+
 
     respond_to do |format|
       if sub_user.already_exists?(params[:email])
         redirect_to(new_sub_user_path, alert: 'User with same email already exists.')
         return
       elsif sub_user.save
+        # assign current user's company to newly created user
+        current_user.accounts.first.users << sub_user
         UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
         redirect_to(edit_sub_user_url(sub_user), notice: 'User has been saved successfully')
         return

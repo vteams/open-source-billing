@@ -68,14 +68,14 @@
                     {position: {adjust: {x: xpos, y: ypos}}}
                 );
                 //End changes for qtip
-
+                var breaker = 0;
                 while (true) {
 
                     // 1文字ずつ減らしながら行数を見ていく
                     text = text.substring(0, text.length - 1);
                     $this.text(text + options.char);
                     height = $this.height();
-
+//                    console.log("Height: " + height + " Row Height: " +rowHeight + " Text: " + $this.text() + "");
                     if (height < rowHeight) {
                         break;
                     }

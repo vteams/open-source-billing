@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CompanyUsersTest < ActiveSupport::TestCase
+class EmailTemplateTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

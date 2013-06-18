@@ -30,6 +30,8 @@ class Client < ActiveRecord::Base
   has_many :payments
   has_many :client_contacts, :dependent => :destroy
   accepts_nested_attributes_for :client_contacts, :allow_destroy => true
+  belongs_to :company
+  has_many :company_entities, :as => :entity
 
   acts_as_archival
   acts_as_paranoid
@@ -99,17 +101,20 @@ class Client < ActiveRecord::Base
     end
   end
 
-  def self.filter(params,per_page)
-    case params[:status]
-      when 'active' then
-        self.unarchived.page(params[:page]).per(per_page)
-      when 'archived' then
-        self.archived.page(params[:page]).per(per_page)
-      when 'deleted' then
-        self.only_deleted.page(params[:page]).per(per_page)
-      else
-        self.unarchived.page(params[:page]).per(per_page)
-    end
+  def self.filter(params)
+    #case params[:status]
+    #  when 'active' then
+    #    self.unarchived.page(params[:page]).per(per_page)
+    #  when 'archived' then
+    #    self.archived.page(params[:page]).per(per_page)
+    #  when 'deleted' then
+    #    self.only_deleted.page(params[:page]).per(per_page)
+    #  else
+    #    self.unarchived.page(params[:page]).per(per_page)
+    #end
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    self.send(method).page(params[:page]).per(params[:per])
   end
 
   def credit_payments
@@ -132,15 +137,32 @@ class Client < ActiveRecord::Base
     client_total_credit - client_avail_credit
   end
 
-  def add_available_credit(available_credit)
-    payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today})
+  def add_available_credit(available_credit, company_id)
+    payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
   end
 
   def update_available_credit(available_credit)
     payments.first.update_attributes({payment_amount: available_credit})
   end
 
-  def due_amount
+  def self.get_clients(params)
+    account = params[:user].current_account
+
+    # get the clients associated with companies
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company_clients = Company.find(company_id).clients.send(params[:status])
+
+    # get the unique clients associated with companies and accounts
+    clients = (account.clients.send(params[:status]) + company_clients).uniq
+
+    # sort clients in ascending or descending order
+    clients.sort! do |a, b|
+      b, a = a, b if params[:sort_direction] == 'desc'
+      params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
+      a.send(params[:sort_column]) <=> b.send(params[:sort_column])
+    end if params[:sort_column] && params[:sort_direction]
+
+    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 
   end
 end

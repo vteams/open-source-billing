@@ -1,13 +1,24 @@
 Osb::Application.routes.draw do
 
 
+  resources :email_templates
+
+
+  resources :companies do
+    collection do
+      post 'get_clients_and_items'
+      get 'filter_companies'
+      get 'undo_actions'
+    end
+  end
+
   resources :sub_users
 
   #resources :users
 
   resources :payment_terms
 
-  resources :companies
+  resources :accounts
 
   match "help" => "help#index"
   match "reports/:report_name" => "reports#reports"

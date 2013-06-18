@@ -42,5 +42,12 @@ module OSB
     ensure
       Socket.do_not_reverse_lookup = orig
     end
+
+    def self.filter(params)
+      model = params[:controller].classify.constantize
+      mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+
+      model.send(mappings[params[:status].to_sym]).page(params[:page]).per(params[:per])
+    end
   end
 end

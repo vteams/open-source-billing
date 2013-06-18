@@ -29,21 +29,25 @@ jQuery ->
     client_fname = jQuery("#client_first_name").val()
     client_lname = jQuery("#client_last_name").val()
     if client_email is ""
-      applyQtip(jQuery("#client_email"), "Email is required")
+      applyQtip(jQuery("#client_email"), "Email is required", 'topRight')
       flag = false
     else unless pattern.test(client_email)
-      applyQtip(jQuery("#client_email"), "Invalid email")
+      applyQtip(jQuery("#client_email"), "Invalid email", 'topRight')
       flag = false
     else if client_fname is "" and client_lname is ""
-      applyQtip(jQuery("#client_first_name"), "First or Last Name is required")
+      applyQtip(jQuery("#client_first_name"), "First or Last Name is required", 'topRight')
       flag = false
-    else if jQuery("#client_organization_name").val() is ""
+#    else if jQuery("#client_organization_name").val() is ""
       #jQuery("#client_organization_name").val(client_email)
+    else if jQuery('#company_association').is(':checked')
+      if jQuery('.options_content input[type=checkbox]:checked').length is 0
+        applyQtip(jQuery("#company_association").next(),"Select a company", 'topRight')
+        flag = false
     else
       hideQtip(jQuery("#client_email"))
     flag
 
-  applyQtip = (elem, message) ->
+  applyQtip = (elem, message, direction) ->
     elem.qtip
       content:
         text: message
@@ -52,7 +56,7 @@ jQuery ->
       hide:
         event: false
       position:
-        at: "topRight"
+        at: direction
       style:
         tip:
           corner: "leftMiddle"
@@ -89,3 +93,6 @@ jQuery ->
   # remove client detail row by clicking cross
   jQuery('.client_container_top .cross_btn').live 'click', ->
     jQuery(this).parents('tr').prev('tr').find('.client_name').click()
+
+
+

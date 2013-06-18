@@ -8,7 +8,7 @@
 <%= @invoice.client.organization_name %>,
 </p>
  <p>
-   Invoice <%= @invoice.invoice_number%>  has been undisputed by <%= @user.companies.first.org_name %> for the following response:
+   Invoice <%= @invoice.invoice_number%>  has been undisputed by <%= @user.accounts.first.org_name %> for the following response:
  </p>
 <p>
  <%= @response%>

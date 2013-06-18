@@ -27,12 +27,13 @@ class ClientsController < ApplicationController
   include ClientsHelper
 
   def index
-    @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+    #args = {status: 'unarchived', per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction}
+    @clients = Client.get_clients(params.merge(get_args('unarchived')))
 
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      #format.json { render json: @clients }
+      format.json { render json: @clients }
     end
   end
 
@@ -68,10 +69,11 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(params[:client])
-
+    associate_entity(params, @client)
     #Add initial available credit
     available_credit = params[:available_credit]
-    @client.add_available_credit(available_credit) if available_credit.present? && available_credit.to_i > 0
+    company_id = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id
+    @client.add_available_credit(available_credit, company_id) if available_credit.present? && available_credit.to_i > 0
 
     respond_to do |format|
       if @client.save
@@ -91,8 +93,9 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
+    associate_entity(params, @client)
     #add/update available credit
-    @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit]) : @client.update_available_credit(params[:available_credit])
+    @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], current_user.current_company.id) : @client.update_available_credit(params[:available_credit])
     respond_to do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
@@ -122,33 +125,35 @@ class ClientsController < ApplicationController
     ids = params[:client_ids]
     if params[:archive]
       Client.archive_multiple(ids)
-      @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @clients = Client.get_clients(get_args('unarchived'))
       @action = "archived"
       @message = clients_archived(ids) unless ids.blank?
     elsif params[:destroy]
       Client.delete_multiple(ids)
-      @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @clients = Client.get_clients(get_args('unarchived'))
       @action = "deleted"
       @message = clients_deleted(ids) unless ids.blank?
     elsif params[:recover_archived]
       Client.recover_archived(ids)
-      @clients = Client.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @clients = Client.get_clients(get_args('archived'))
       @action = "recovered from archived"
     elsif params[:recover_deleted]
       Client.recover_deleted(ids)
-      @clients = Client.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @clients = Client.get_clients(get_args('only_delete'))
       @action = "recovered from deleted"
     end
     respond_to { |format| format.js }
   end
 
   def filter_clients
-    @clients = Client.filter(params, session["#{controller_name}-per_page"])
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @clients = Client.get_clients(get_args(method).merge(company_id: params[:company_id]))#.filter(params.merge(per: session["#{controller_name}-per_page"]))
   end
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
-    @clients = Client.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @clients = Client.get_clients(get_args('unarchived'))
     respond_to { |format| format.js }
   end
 
@@ -173,13 +178,21 @@ class ClientsController < ApplicationController
   def sort_column
     params[:sort] ||= 'created_at'
     sort_col = params[:sort] #Client.column_names.include?(params[:sort]) ? params[:sort] : 'organization_name'
-    sort_col = "case when ifnull(organization_name, '') = '' then concat(first_name, '', last_name) else organization_name end" if sort_col == 'organization_name'
-    sort_col
+                             #sort_col = "case when ifnull(organization_name, '') = '' then concat(first_name, '', last_name) else organization_name end" if sort_col == 'organization_name'
+                             #sort_col
   end
 
   def sort_direction
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def get_args(status)
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
+    end
+    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company']}
   end
 
 end

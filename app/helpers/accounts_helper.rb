@@ -18,11 +18,5 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class CompanyUsers < ActiveRecord::Base
-  # attr
-  attr_accessible :company_id, :user_id
-
-  # associations
-  belongs_to :user
-  belongs_to :company
+module AccountsHelper
 end

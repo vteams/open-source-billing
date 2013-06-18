@@ -8,6 +8,10 @@ jQuery ->
     if jQuery.trim(jQuery("#item_item_name").val()) is ""
       applyPopover(jQuery("#item_item_name"),"Item name is required")
       flag = false
+    else if jQuery('#company_association').is(':checked')
+      if jQuery('.options_content input[type=checkbox]:checked').length is 0
+       applyPopover(jQuery("#company_association"),"Select a company")
+       flag = false
     flag
 
   applyPopover = (elem,message) ->

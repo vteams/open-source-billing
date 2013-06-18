@@ -24,12 +24,42 @@
     width: 70px;
   }
 }
-
 .items_wrapper {
   .fields_content {
     overflow: visible;
   }
   .chzn-container .chzn-results {
      max-height: 129px;
+  }
+
+  .label_field.single{
+    &.template{
+      padding-top: 19px;
+    }
+  }
+  .label_field.left{
+    &.options{
+      width: 100%;
+    }
+  }
+  .options_content{
+    margin: 0px;
+    padding-left: 130px;
+  }
+  .options_content_row{
+    padding-top: 12px;
+    input[type="radio"], input[type="checkbox"], label{
+      float: left;
+    }
+    input[type="checkbox"]{
+      margin-left: 22px;
+    }
+    label{
+      line-height: normal;
+      padding: 0 0 0 10px;
+      margin: 0px;
+      font-weight: normal;
+      cursor: pointer;
+    }
   }
 }

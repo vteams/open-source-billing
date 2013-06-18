@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  template_type: MyString
+  email_from: MyString
+  subject: MyString
+  body: MyText
+
+two:
+  template_type: MyString
+  email_from: MyString
+  subject: MyString
+  body: MyText

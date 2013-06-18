@@ -16,4 +16,6 @@
 /config/database.yml
 /nbproject/
 /.idea/
+/public/assets/
+/public/uploads/
 

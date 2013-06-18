@@ -1,32 +1,16 @@
-#
-# Open Source Billing - A super simple software to create & send invoices to your customers and
-# collect payments.
-# Copyright (C) 2013 Mark Mian <mark.mian@opensourcebilling.org>
-#
-# This file is part of Open Source Billing.
-#
-# Open Source Billing is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Open Source Billing is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
-#
 class CompaniesController < ApplicationController
+  before_filter :set_per_page_session
+  helper_method :sort_column, :sort_direction
+  include CompaniesHelper
   # GET /companies
   # GET /companies.json
   def index
-    @companies = current_user.companies
+    @companies = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @companies }
+      format.js
     end
   end
 
@@ -44,13 +28,11 @@ class CompaniesController < ApplicationController
   # GET /companies/new
   # GET /companies/new.json
   def new
-    user_company = current_user.companies
-    if user_company.present?
-      @company = user_company.first
-      redirect_to edit_company_url(@company)
-    else
-      @company = user_company.build
-      respond_to { |format| format.html }
+    @company = Company.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @company }
     end
   end
 
@@ -62,17 +44,16 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = current_user.companies.build(params[:company])
+    @company = current_user.current_account.companies.new(params[:company])
 
     respond_to do |format|
-      if current_user.save
-        format.html { redirect_to edit_company_url(@company), notice: 'Company was successfully created.' }
+      if @company.save
+        format.html { redirect_to edit_company_path(@company), notice: 'Company was successfully created.' }
         format.json { render json: @company, status: :created, location: @company }
       else
         format.html { render action: "new" }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
-
     end
   end
 
@@ -83,7 +64,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to edit_company_url(@company), notice: 'Your company profile has been updated successfully.'}
+        format.html { redirect_to edit_company_path(@company), notice: 'Company was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -96,11 +77,54 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1.json
   def destroy
     @company = Company.find(params[:id])
-    current_user.companies.destroy(@company)
+    @company.destroy
 
     respond_to do |format|
       format.html { redirect_to companies_url }
       format.json { head :no_content }
     end
   end
+
+  def filter_companies
+    @companies = Company.filter(params.merge(per: session["#{controller_name}-per_page"], account: current_user.current_account))
+    respond_to { |format| format.js }
+  end
+
+  def bulk_actions
+    result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
+
+    @companies = result[:companies]
+    @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
+    @action = result[:action]
+    respond_to { |format| format.js }
+  end
+
+  def undo_actions
+    params[:archived] ? Company.recover_archived(params[:ids]) : Company.recover_deleted(params[:ids])
+    @companies = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+
+    respond_to { |format| format.js }
+  end
+
+  private
+
+  def get_intimation_message(action_key, company_ids)
+    helper_methods = {archive: 'companies_archived', destroy: 'companies_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    helper_method.present? ? send(helper_method, company_ids) : nil
+  end
+
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
 end

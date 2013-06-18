@@ -7,49 +7,78 @@
 
         <div class="preview_content_top">
 
-          <div class="preview_left">
-            <div class="invoice_name"><%= Company.first.org_name %></div>
-            <div class="invoice_address">
-              <p><%= "#{Company.first.street_address_1} #{Company.first.street_address_2}" %></p>
+          <div class="preview_top">
 
-              <p><%= Company.first.province_or_state %></p>
+            <div class="preview_top_left">
+              <div class="invoice_date">
+                <h2>Inovice<!--#00159, <span>Friday, June 07, 2013</span>--></h2>
+              </div>
+              <div class="invoice_name"><%= Account.first.org_name %></div>
+
+              <div class="invoice_organization">
+                <p><%= @invoice.client.organization_name %></p>
+                <p><%= @invoice.client.first_name.to_s + " " +@invoice.client.last_name.to_s %></p>
+              </div>
+
             </div>
-            <div class="invoice_organization">
-              <p class="preview_heading"><%= @invoice.client.organization_name %></p>
 
-              <p><%= @invoice.client.first_name.to_s + " " +@invoice.client.last_name.to_s %></p>
-
-              <p><%= @invoice.client.city %>&nbsp;&nbsp;<%= @invoice.client.postal_zip_code %></p>
-
-              <p><%= @invoice.client.address_street1.to_s+ " " +@invoice.client.address_street2.to_s %></p>
+            <div class="preview_top_right">
+              <% unless @invoice.company.logo_url.blank? %>
+                  <div class="company_logo"><%= image_tag @invoice.company.logo_url(:thumb) %></div>
+              <% end %>
+              <div class="company_logo"><%= @invoice.company.company_tag_line %></div>
             </div>
-          </div>
-          <!--preview_top_left-->
+
+          </div><!--preview_top-->
+
+
+          <div class="preview_btm">
+
+            <div class="preview_top_left">
+
+              <div class="invoice_address">
+                <p><%= "#{Account.first.street_address_1} #{Account.first.street_address_2}" %></p>
+                <p><%= Account.first.province_or_state %></p>
+              </div>
+
+            </div>
+
+            <div class="preview_top_right">
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Invoice # <span>:</span></div>
+                <div class="preview_right_description"><%= @invoice.invoice_number %></div>
+              </div>
+              <!--top_right_row-->
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Invoice Date <span>:</span></div>
+                <div class="preview_right_description"><%= @invoice.invoice_date.strftime('%B %d , %Y') rescue "" %></div>
+              </div>
+              <!--top_right_row-->
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Amount <span>:</span></div>
+                <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
+              </div>
+              <!--top_right_row-->
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Due Date <span>:</span></div>
+                <div class="preview_right_description"><%= @invoice.due_date.strftime('%B %d , %Y') rescue "" %></div>
+              </div>
+              <!--top_right_row-->
+
+            </div>
+
+
+          </div> <!--preview_btm-->
 
           <div class="preview_right">
-            <div class="top_right_row">
-              <div class="preview_right_label">Invoice #</div>
-              <div class="preview_right_description"><%= @invoice.invoice_number %></div>
-            </div>
-            <!--top_right_row-->
 
-            <div class="top_right_row">
-              <div class="preview_right_label">Invoice Date</div>
-              <div class="preview_right_description"><%= @invoice.invoice_date.strftime('%B %d , %Y') rescue "" %></div>
-            </div>
-            <!--top_right_row-->
 
-            <div class="top_right_row">
-              <div class="preview_right_label">Amount</div>
-              <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
-            </div>
-            <!--top_right_row-->
 
-            <div class="top_right_row">
-              <div class="preview_right_label">Due Date</div>
-              <div class="preview_right_description"><%= @invoice.due_date.strftime('%B %d , %Y') rescue "" %></div>
-            </div>
-            <!--top_right_row-->
+
           </div>
           <!--preview_top_right-->
 
@@ -97,7 +126,6 @@
             <div class="preview_left btm">
               <div class="preview_notes">
                 <p class="preview_heading">Notes</p>
-
                 <p><%= @invoice.notes %></p>
               </div>
             </div>
@@ -111,7 +139,7 @@
               <!--top_right_row-->
 
               <div class="top_right_row">
-                <div class="preview_right_label">Discount <%= @invoice.discount_percentage %></div>
+                <div class="preview_right_label">Discount <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
                 <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount) %></div>
               </div>
               <!--top_right_row-->

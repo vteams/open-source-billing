@@ -104,6 +104,10 @@ a:hover, input[type="submit"]:hover {
   display: block;
 }
 
+//#nav .select li.dropdown .dropdown-toggle:hover + .dropdown-menu, .dropdown-menu:hover{
+//  display: block;
+//}
+
 :-moz-any-link:focus {
   outline: none;
 }
@@ -210,7 +214,23 @@ h4 {
   min-width: 145px;
   padding: 31px 23px 0 0;
   text-align: right;
-
+  .dropdown{
+    a:hover{
+      color: #464646;
+      text-decoration: none;
+      > .caret{
+        border-top: 4px solid #909090;
+      }
+    }
+  }
+  .dropdown_sep{
+    float: left;
+    background: url("/assets/grid_control_sep.png") right center;
+    display: block;
+    width: 1px;
+    height: 13px;
+    margin: 4px 14px 0 14px;
+  }
   .dropdown-menu{
     min-width: 147px;
     left: auto;
@@ -222,7 +242,9 @@ h4 {
     color: #7d7d7d;
     text-align: left;
     &:hover{
-      background-color: #00BDE5;
+      background-color: #EBEBEB !important;
+      color: #7d7d7d;
+      border-radius: 2px;
       background-image: none;
     }
   }
@@ -322,6 +344,53 @@ h4 {
 #nav .select li .sub li a.active {
   background: url(/assets/sub_hover.png) no-repeat bottom center;
 }
+#nav .select li .sub li.secondary a.active {
+  background: url(/assets/sub_secondary.png) no-repeat bottom center;
+}
+#nav .select li .sub li.secondary_02 a.active {
+  background: url(/assets/sub_secondary_02.png) no-repeat bottom center;
+}
+
+
+#nav .select li.dropdown{
+  position: static;
+  .dropdown-menu{
+    margin-top: -5px;
+    img{
+      margin: 1px 0 0 8px;
+    }
+    ul{
+      overflow: hidden;
+      padding-left: 4px;
+      padding-right: 4px;
+      min-width: 145px;
+      /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+      border-radius: 0px 0px 4px 4px;
+      border-top: 0px;
+      li{
+        height: auto;
+        width: 100%;
+      }
+      li a{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        color: #464646;
+        padding: 0px 7px 0 7px;
+        background: none !important;
+        line-height: 25px;
+        display: block;
+        text-align: left;
+        height: auto;
+        &:hover, &:focus{
+          background: #EBEBEB !important;
+          color: #464646;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+}
 /*Navigation CSS Ends*/
 
 /*-------------------------Content CSS Starts-------------------------*/
@@ -340,7 +409,8 @@ h4 {
 
 .invoices-main, .sent_emails-main,
 .payments-main, .reports-main, .help-main,
-.clients-main, .items-main, .taxes-main {
+.clients-main, .items-main, .taxes-main,
+.companies-main, .email_templates-main {
   padding: 23px 0 0 0;
 }
 
@@ -394,6 +464,21 @@ h4 {
 .content_middle {
   float: left;
   width: 100%;
+}
+
+.company_select{
+  float: left;
+  width: 100%;
+  padding: 20px 0 7px;
+  margin-bottom: -5px;
+  p{
+    float: left;
+    padding: 5px 15px 0 0;
+    font-weight: bold;
+  }
+  select{
+    margin-bottom: 0px;
+  }
 }
 
 .grid_control {
@@ -480,7 +565,7 @@ x:-o-prefocus, .grid_table table{
 }
 
 .grid_table table tr:first-child {
- // height: 30px;
+  // height: 30px;
 }
 
 .grid_table table tr {
@@ -669,8 +754,13 @@ tfoot tr:hover{
   float: left;
 }
 
-.large_field input {
-  width: 490px;
+.large_field{
+  input{
+    width: 490px;
+  }
+  img{
+    padding: 0 0 20px 0;
+  }
 }
 
 .large_field textarea {
@@ -909,10 +999,10 @@ table.table_listing, table.report-data-table {
         }
       }
       .align_right{
-         &.big a{
-           width: 85%;
-         }
-       }
+        &.big a{
+          width: 85%;
+        }
+      }
       .align_center{
         &.big a{
           width: 89%;
@@ -1110,7 +1200,7 @@ table.table_listing, table.report-data-table {
   }
 }
 select.discount_select
-  {
+{
   line-height: 20px;
   width: 42px;
   margin: 0 5px 3px 0;
@@ -1136,11 +1226,11 @@ select.discount_select
 }
 
 .dropdown .caret {
-  margin-left: 5px;
+  margin-left: 0px;
   margin-top: 8px;
 }
 .caret {
-  border-top: 4px solid #909090;
+  border-top: 4px solid #D0CDCD;
 }
 .dropdown-menu{
   border: none;
@@ -1163,15 +1253,31 @@ select.discount_select
     border: 1px solid #D7D7D7;
     border-radius: 4px;
     background: #ffffff;
-    padding: 14px 18px 10px 18px;
+    padding: 10px 4px 10px 4px;
     li a{
-      color: #7d7d7d;
-      padding: 0px;
-      margin-bottom: 4px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      color: #464646;
+      padding: 0px 7px 0 7px;
+      background: none !important;
+      line-height: 25px;
+      display: block;
+      text-align: left;
+      height: auto;
       &:hover, &:focus{
-        background: none !important;
-        color: #00ace5;
+        background: #EBEBEB !important;
+        color: #464646;
+        border-radius: 2px;
+
+
+        /*color: #7d7d7d;
+        padding: 0px;
+        margin-bottom: 4px;
+        &:hover, &:focus{
+          background: none !important;
+          color: #00ace5;   */
       }
+
     }
   }
 }
@@ -1183,3 +1289,22 @@ select.discount_select
   background: url(/assets/sorting_dn.png);
 }
 
+.company_filter {
+  padding: 0px;
+}
+
+.dropup, .dropdown {
+  &:first-child{
+    /* margin: 0 13px 0 0;*/
+  }
+  float: left;
+  position: relative;
+}
+
+/*Header Choozen DropDown*/
+
+.header_chzn{
+  float: left;
+}
+
+/*Header Choozen DropDown*/

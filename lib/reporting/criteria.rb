@@ -25,7 +25,7 @@ module Reporting
     attr_accessor :from_date, :to_date, :client_id, :payment_method
 
     # attributes for *Revenue by Clients* report
-    attr_accessor :year
+    attr_accessor :year, :from_month, :to_month, :quarter
 
     # attributes for *Item sales* report
     attr_accessor :item_id, :invoice_status
@@ -39,6 +39,8 @@ module Reporting
       @payment_method = (options[:payment_method] || "") # default to all i.e. ""
       @item_id = (options[:item_id] || 0).to_i # default for all items i.e 0
       @invoice_status = (options[:invoice_status] || "") # default for all status i.e ""
+      @from_month = (options[:quarter].split('-')[0] rescue 1).to_i
+      @to_month = (options[:quarter].split('-')[1] rescue 3).to_i
 
       @year = (options[:year] || Date.today.year).to_i # default to current year
       Rails.logger.debug "--> Criteria init... #{self.to_yaml}"

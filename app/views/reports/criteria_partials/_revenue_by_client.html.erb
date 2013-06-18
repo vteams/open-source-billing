@@ -5,6 +5,11 @@
 
           <div class="report_clients">
             <div class="control_name">
+              <p>Quarter</p>
+            </div>
+            <div class="client_select">
+              <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS), {:class => "payment-method chzn-select"} %></div>
+            <div class="control_name">
               <p>Year</p>
             </div>
             <div class="client_select">

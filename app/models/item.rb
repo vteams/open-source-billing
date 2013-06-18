@@ -29,6 +29,8 @@ class Item < ActiveRecord::Base
   has_many :invoice_line_items, :dependent => :destroy
   belongs_to :tax1, :foreign_key => "tax_1", :class_name => "Tax"
   belongs_to :tax2, :foreign_key => "tax_2", :class_name => "Tax"
+  belongs_to :company
+  has_many :company_entities, :as => :entity
 
   # archive and delete
   acts_as_archival
@@ -65,14 +67,47 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def self.filter(params,per_page)
-    case params[:status]
-      when "active" then
-        self.unarchived.page(params[:page]).per(per_page)
-      when "archived" then
-        self.archived.page(params[:page]).per(per_page)
-      when "deleted" then
-        self.only_deleted.page(params[:page]).per(per_page)
-    end
+  def self.filter(params, per_page)
+    #case params[:status]
+    #  when "active" then
+    #    self.unarchived.page(params[:page]).per(per_page)
+    #  when "archived" then
+    #    self.archived.page(params[:page]).per(per_page)
+    #  when "deleted" then
+    #    self.only_deleted.page(params[:page]).per(per_page)
+    #end
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    self.send(method).page(params[:page]).per(per_page)
+  end
+
+  def self.get_items(params)
+    account = params[:user].current_account
+
+    # get the items associated with companies
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company_items = Company.find(company_id).items.send(params[:status])
+    # get the unique items associated with companies and accounts
+    items = (account.items.send(params[:status]) + company_items).uniq
+
+    # sort items in ascending or descending order
+    items.sort! do |a, b|
+      b, a = a, b if params[:sort_direction] == 'desc'
+
+      if %w(tax1.name tax2.name).include?(params[:sort_column])
+        item1 = a.send(params[:sort_column].split('.')[0]).send(params[:sort_column].split('.')[1]) rescue ''
+        item2 = b.send(params[:sort_column].split('.')[0]).send(params[:sort_column].split('.')[1]) rescue ''
+
+        #TODO change the above logic to eval
+        #item1 = eval("a.#{params[:sort_column]}") rescue ''
+        #item2 = eval("b.#{params[:sort_column]}") rescue ''
+        item1 <=> item2
+      else
+        a.send(params[:sort_column]) <=> b.send(params[:sort_column])
+      end
+    end if params[:sort_column] && params[:sort_direction]
+
+    Kaminari.paginate_array(items).page(params[:page]).per(params[:per])
+
   end
 end

@@ -25,7 +25,8 @@ module Services
     # build a new invoice object
     def self.build_new_invoice(params)
       if params[:invoice_for_client]
-        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
+        company_id = get_company_id(params[:invoice_for_client])
+        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
         invoice = Invoice.find(params[:id]).use_as_template
@@ -99,8 +100,16 @@ module Services
                      true
                    end
                  end
-      Rails.logger.debug "\e[1;31m Response: #{response} \e[0m"
+      #Rails.logger.debug "\e[1;31m Response: #{response} \e[0m"
       response
+    end
+
+    def self.get_company_id(client_id)
+      entities = Client.select('company_entities.parent_id').
+          joins(:company_entities).
+          where("company_entities.entity_id=? AND company_entities.entity_type = 'Client' AND company_entities.parent_type = 'Company'", client_id).
+          group(:entity_id)
+      entities.first.parent_id if entities.present?
     end
 
   end
