@@ -27,6 +27,7 @@ class ClientsController < ApplicationController
   include ClientsHelper
 
   def index
+    set_company_session
     #args = {status: 'unarchived', per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction}
     @clients = Client.get_clients(params.merge(get_args('unarchived')))
 
@@ -69,11 +70,12 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(params[:client])
-    associate_entity(params, @client)
-    #Add initial available credit
-    available_credit = params[:available_credit]
-    company_id = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id
-    @client.add_available_credit(available_credit, company_id) if available_credit.present? && available_credit.to_i > 0
+    company_id = get_company_id()
+    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+
+    associate_entity(options, @client)
+
+    @client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
 
     respond_to do |format|
       if @client.save
@@ -94,8 +96,10 @@ class ClientsController < ApplicationController
   def update
     @client = Client.find(params[:id])
     associate_entity(params, @client)
+
     #add/update available credit
-    @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], current_user.current_company.id) : @client.update_available_credit(params[:available_credit])
+    @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], get_company_id()) : @client.update_available_credit(params[:available_credit])
+
     respond_to do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
@@ -122,38 +126,47 @@ class ClientsController < ApplicationController
   end
 
   def bulk_actions
-    ids = params[:client_ids]
-    if params[:archive]
-      Client.archive_multiple(ids)
-      @clients = Client.get_clients(get_args('unarchived'))
-      @action = "archived"
-      @message = clients_archived(ids) unless ids.blank?
-    elsif params[:destroy]
-      Client.delete_multiple(ids)
-      @clients = Client.get_clients(get_args('unarchived'))
-      @action = "deleted"
-      @message = clients_deleted(ids) unless ids.blank?
-    elsif params[:recover_archived]
-      Client.recover_archived(ids)
-      @clients = Client.get_clients(get_args('archived'))
-      @action = "recovered from archived"
-    elsif params[:recover_deleted]
-      Client.recover_deleted(ids)
-      @clients = Client.get_clients(get_args('only_delete'))
-      @action = "recovered from deleted"
-    end
+    #ids = params[:client_ids]
+    #if params[:archive]
+    #  Client.archive_multiple(ids)
+    #  @clients = Client.get_clients(params.merge(get_args('unarchived')))
+    #  @action = "archived"
+    #  @message = clients_archived(ids) unless ids.blank?
+    #elsif params[:destroy]
+    #  Client.delete_multiple(ids)
+    #  @clients = Client.get_clients(params.merge(get_args('unarchived')))
+    #  @action = "deleted"
+    #  @message = clients_deleted(ids) unless ids.blank?
+    #elsif params[:recover_archived]
+    #  Client.recover_archived(ids)
+    #  @clients = Client.get_clients(params.merge(get_args('archived')))
+    #  @action = "recovered from archived"
+    #elsif params[:recover_deleted]
+    #  Client.recover_deleted(ids)
+    #  @clients = Client.get_clients(params.merge(get_args('only_deleted')))
+    #  @action = "recovered from deleted"
+    #end
+    #respond_to { |format| format.js }
+
+    options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
+    result = Services::ClientBulkActionsService.new(options).perform
+
+    @clients = result[:clients]#.order("#{sort_column} #{sort_direction}")
+    @message = get_intimation_message(result[:action_to_perform], result[:client_ids])
+    @action = result[:action]
+
     respond_to { |format| format.js }
   end
 
   def filter_clients
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(get_args(method).merge(company_id: params[:company_id]))#.filter(params.merge(per: session["#{controller_name}-per_page"]))
+    @clients = Client.get_clients(params.merge(get_args(method)))
   end
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
-    @clients = Client.get_clients(get_args('unarchived'))
+    @clients = Client.get_clients(params.merge(get_args('unarchived')))
     respond_to { |format| format.js }
   end
 
@@ -171,6 +184,13 @@ class ClientsController < ApplicationController
   end
 
   private
+
+  def get_intimation_message(action_key, invoice_ids)
+    helper_methods = {archive: 'clients_archived', destroy: 'clients_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    helper_method.present? ? send(helper_method, invoice_ids) : nil
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
@@ -188,11 +208,7 @@ class ClientsController < ApplicationController
   end
 
   def get_args(status)
-    unless params[:company_id].blank?
-      session['current_company'] = params[:company_id]
-      current_user.update_attributes(current_company: params[:company_id])
-    end
-    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company']}
+    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
 
 end

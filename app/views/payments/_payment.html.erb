@@ -16,7 +16,6 @@
               <td class="align_center"><%= link_to payment.payment_reference, invoice_path(payment.invoice), :class => "invoices_link" rescue "" %></td>
           <% end %>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.client.organization_name rescue payment.client_name %></td>
-          <td class="align_left  text-overflow-class"><%= payment.company.company_name rescue '' %></td>
           <td class="align_center"><%= (payment.payment_method || payment.payment_type || "").capitalize %></td>
           <td class="align_center"><%= payment.payment_date %></td>
           <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
@@ -35,7 +34,7 @@
     <% end %>
 <% else %>
     <tr>
-      <td colspan="10">
+      <td colspan="7">
         <div class="no_record_container">
           <%= no_record_message %>
         </div>

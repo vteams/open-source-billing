@@ -1,0 +1,21 @@
+<h1>Listing recurring_profile_line_items</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @recurring_profile_line_items.each do |recurring_profile_line_item| %>
+  <tr>
+    <td><%= link_to 'Show', recurring_profile_line_item %></td>
+    <td><%= link_to 'Edit', edit_recurring_profile_line_item_path(recurring_profile_line_item) %></td>
+    <td><%= link_to 'Destroy', recurring_profile_line_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Recurring profile line item', new_recurring_profile_line_item_path %>

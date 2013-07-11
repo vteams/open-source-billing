@@ -1,7 +1,7 @@
 //jQuery(".alert").show().find('span').html("Invoice(s) are <%#= @action %> successfully");
 //jQuery('tbody#payment_body').hide(200, function(){jQuery(this).html('<%#= escape_javascript render("payment") %>').show(500);});
 jQuery('tbody#payment_body').html('<%= escape_javascript render("payment") %>').hide(300).show(300);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 
 <% status = params[:status]%>

@@ -5,7 +5,7 @@
 window.applyChosen = (single_row) =>
   # listen to Chosen liszt:ready even
   # add a Add New button at the bottom of every chosen list
-  jQuery(".invoices-main .chzn-select:not('.invoice_company, .company_filter')").on "liszt:ready", ->
+  jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select')",'.invoices-main,.recurring_profiles-main').on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
       chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
@@ -48,13 +48,12 @@ jQuery ->
     jQuery("table.invoice_grid_fields tr:visible .line_total").each ->
       line_total = parseFloat(jQuery(this).text())
       total += line_total
-
       #update invoice sub total lable and hidden field
-      jQuery("#invoice_sub_total").val(total.toFixed(2))
+      jQuery("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
       jQuery("#invoice_sub_total_lbl").text(total.toFixed(2))
 
       #update invoice total lable and hidden field
-      jQuery("#invoice_invoice_total").val(total.toFixed(2))
+      jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2))
       jQuery("#invoice_total_lbl").text(total.toFixed(2))
 
       tax_amount += applyTax(line_total,jQuery(this))
@@ -63,15 +62,14 @@ jQuery ->
 
     #update tax amount label and tax amount hidden field
     jQuery("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2))
-    jQuery("#invoice_tax_amount").val(tax_amount.toFixed(2))
+    jQuery("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
 
     #update discount amount lable and discount hidden field
 #    jQuery("#invoice_discount_amount_lbl").text(discount_amount.toFixed(2))
-    jQuery("#invoice_discount_amount").val((discount_amount * -1).toFixed(2))
+    jQuery("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
 
     total_balance = (parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount)
-
-    jQuery("#invoice_invoice_total").val(total_balance.toFixed(2))
+    jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").formatCurrency()
 
@@ -89,7 +87,7 @@ jQuery ->
 
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->
-    discount_percentage = jQuery("#invoice_discount_percentage").val()
+    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
     discount_type = jQuery("select#discount_type").val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
@@ -158,7 +156,7 @@ jQuery ->
     ), 100
 
   # Subtract discount percentage from subtotal
-  jQuery("#invoice_discount_percentage").on "blur keyup", ->
+  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
      updateInvoiceTotal()
 
   # Subtract discount percentage from subtotal
@@ -166,13 +164,13 @@ jQuery ->
     updateInvoiceTotal()
 
   # Don't allow nagetive value for discount
-  jQuery("#invoice_discount_percentage,.qty").keydown (e) ->
+  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
      if e.keyCode is 109 or e.keyCode is 13
        e.preventDefault()
        false
 
   # Don't allow paste and right click in discount field
-  jQuery("#invoice_discount_percentage,.qty").bind "paste contextmenu", (e) ->
+  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
      e.preventDefault()
 
   # Add date picker to invoice date , invoice due date and payment date.
@@ -225,6 +223,10 @@ jQuery ->
     else if jQuery("#invoice_invoice_date").val() is ""
       applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
       flag =false
+      # Check if payment term is selected
+    else if jQuery("#invoice_payment_terms_id").val() is ""
+      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+      flag = false
     # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()

@@ -11,19 +11,14 @@
   .grid_table table.aged_accounts_listing {
     width: 100%;
     col.one {width: 120px;}
-    col.two, col.three, col.four, col.five {width: 70px;}
+    col.two, col.three, col.four, col.five {width: 70px; font-weight: normal;}
     col.six {width: 92px;}
-    tfoot{
-      font-weight: bold;
-      border-bottom: 1px solid #D7D7D7;
-    }
-    td:last-child{
-      font-weight: bold;
-    }
-    td:last-child.report_no_data{
-      font-weight: normal;
-    }
     .col_hover, .row_hover, tfoot tr:hover{background-color: #F7F7F7;}
-    tfoot{border-bottom: medium double #dadada; font-weight: bold;}
+    tfoot tr td{
+      /*border-bottom: medium double #dadada;*/
+      &:first-child, &:last-child{
+        font-weight: bold;
+      }
+    }
   }
 }

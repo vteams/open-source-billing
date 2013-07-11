@@ -8,6 +8,7 @@ class window.validateForms
     @current_password = @form.find("#user_current_password")
     @confirm_password = @form.find("input[name=password_confirmation][required]")
     @user_name = @form.find('#user_name')
+    @org = @form.find('#login_company')
     @email = @form.find('#email')
     @password_update = @form.find("input[name=password]")
     @confirm_update = @form.find("input[name=password_confirmation]")
@@ -24,6 +25,9 @@ class window.validateForms
 
     if jQuery.trim(@user_name.val()) is ''
       @showQtip(@user_name, @getMessage('required'))
+      false
+    else if @org.val() is ''
+      @showQtip(@org, @getMessage('required'))
       false
     else if @email.val() is ''
       @showQtip(@email, @getMessage('required'))

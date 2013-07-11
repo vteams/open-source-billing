@@ -1,4 +1,7 @@
 .invoice_form {
+  .fields_content{
+    padding: 40px 0 23px 0;
+  }
   .fields_content_container {
     width: 100%;
   }
@@ -6,10 +9,20 @@
     width: 780px;
     margin: auto;
     float: none;
+    padding-top: 0px;
   }
   .fields_content_left {
     float: left;
     width: 490px;
+    .chzn-container-single .chzn-single abbr{
+      top: 7px;
+      right: 18px;
+    }
+    .medium_field{
+      input[type="text"]{
+        width: 280px;
+      }
+    }
   }
   .fields_content_right {
     float: right;
@@ -48,10 +61,10 @@
     background-color: #ffffff;
   }
   .grid_table table th:last-child {
-    border-radius: 0 5px 5px 0 !important;
+    border-radius: 0 4px 4px 0 !important;
   }
   .grid_table table th:nth-child(2) {
-    border-radius: 5px 0 0 5px;
+    border-radius: 4px 0 0 4px;
   }
   .grid_table table tr:nth-child(2) td {
     padding-top: 11px;
@@ -137,6 +150,9 @@
     ul li{
       min-height: 31px;
     }
+    &.discount{
+      min-height: 43px;
+    }
   }
   .grid_summary_row.last {
     min-height: 23px;
@@ -145,6 +161,15 @@
     float: left;
     width: 110px;
     padding: 0 0 0 10px;
+    .chzn-container{
+      vertical-align: middle;
+      .chzn-single span{
+        margin-right: 0px;
+      }
+    }
+    ul.chzn-results li{
+      min-height: 15px;
+    }
   }
   .grid_summary_description {
     float: right;
@@ -153,6 +178,7 @@
     text-align: right;
     label {
       float: right;
+      margin-bottom: 0px;
     }
   }
   .grid_summary_row.net_total {
@@ -175,12 +201,12 @@
     height: 28px;
     margin: 0 5px 3px;
     padding: 4px 3px 4px 2px;
-    width: 45px;
+    width: 51px;
   }
   input.invoice_discount{
-    height: 26px;
+    height: 28px;
     line-height: 28px;
-    padding: 0 2px 0 9px;
+    padding: 0 9px 0 9px;
     text-align: right;
     width: 42px;
   }

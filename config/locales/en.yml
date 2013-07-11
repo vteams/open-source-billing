@@ -27,3 +27,9 @@ en:
       page_entries_info:
         more_pages:
           display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+#  activerecord:
+#    errors:
+#      messages:
+#        taken: "User with same email already exists. Please try with another email address."
+#  errors:
+#      format: "%{message}"

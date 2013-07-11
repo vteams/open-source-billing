@@ -1,5 +1,5 @@
 jQuery('tbody#client_body').html('<%= escape_javascript render("clients") %>').hide(300).show(300);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 
@@ -21,4 +21,4 @@ jQuery('.destroy').parent('li').removeClass('grid_control_sep');
 jQuery('#active_links a.get_deleted').addClass('active');
 <%end%>
 jQuery('#select_all').attr('checked', false);
-jQuery("table.table_listing").trigger('update');
+//jQuery("table.table_listing").trigger('update');

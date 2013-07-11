@@ -19,8 +19,11 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Tax < ActiveRecord::Base
-  # default scope
-  #default_scope order("#{self.table_name}.created_at DESC")
+
+  # scope
+  scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
+  scope :archive_multiple, lambda {|ids| multiple(ids).map(&:archive)}
+  scope :delete_multiple, lambda {|ids| multiple(ids).map(&:destroy)}
 
   # attr
   attr_accessible :name, :percentage
@@ -37,51 +40,22 @@ class Tax < ActiveRecord::Base
 
   paginates_per 10
 
-  def self.multiple_taxes ids
-    ids = ids.split(',') if ids and ids.class == String
-    where('id IN(?)', ids)
+  def self.recover_archived(ids)
+    multiple(ids).each {|tax| tax.archive_number = nil; tax.archived_at = nil; tax.save}
   end
 
-  def self.archive_multiple ids
-    self.multiple_taxes(ids).each { |tax| tax.archive }
+  def self.recover_deleted(ids)
+    multiple(ids).only_deleted.each { |tax| tax.archive_number = nil; tax.archived_at = nil; tax.deleted_at = nil; tax.save }
   end
 
-  def self.delete_multiple ids
-    self.multiple_taxes(ids).each { |tax| tax.destroy }
-  end
-
-  def self.recover_archived ids
-    self.multiple_taxes(ids).each do |tax|
-      tax.archive_number = nil
-      tax.archived_at = nil
-      tax.deleted_at = nil
-      tax.save
-    end
-  end
-
-  def self.recover_deleted ids
-    ids = ids.split(',') if ids and ids.class == String
-    where('id IN(?)', ids).only_deleted.each do |tax|
-      tax.archive_number = nil
-      tax.archived_at = nil
-      tax.deleted_at = nil
-      tax.save
-    end
-  end
-
-  def self.filter(params,per_page)
-    case params[:status]
-      when 'active' then
-        self.unarchived.page(params[:page]).per(per_page)
-      when 'archived' then
-        self.archived.page(params[:page]).per(per_page)
-      when 'deleted' then
-        self.only_deleted.page(params[:page]).per(per_page)
-    end
+  def self.filter(params, per_page)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    self.send(method).page(params[:page]).per(per_page)
   end
 
   def self.is_exits? tax_name
-    where(:name => tax_name).present?
+    where(name: tax_name).present?
   end
 
 end

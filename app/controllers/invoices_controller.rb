@@ -75,6 +75,8 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @invoice.invoice_date = @invoice.invoice_date.to_date
     @invoice.invoice_line_items.build()
+    get_clients_and_items
+    respond_to {|format| format.js; format.html}
   end
 
   def create
@@ -101,6 +103,7 @@ class InvoicesController < ApplicationController
 
   def update
     @invoice = Invoice.find(params[:id])
+    @invoice.company_id = get_company_id()
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client]) unless params[:response_to_client].blank?
 
     respond_to do |format|
@@ -244,27 +247,6 @@ class InvoicesController < ApplicationController
   def sort_direction
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-  def get_clients_and_items
-    parent = params[:company_id].blank? ? current_user.current_account : Company.find(params[:company_id])
-    @get_clients = get_clients(parent)
-    @get_items = get_items(parent)
-    @parent_class = parent.class.to_s
-  end
-
-  # generate clients options associated with company
-  def get_clients(parent)
-    options = ''
-    parent.clients.each { |client| options += "<option value=#{client.id} type='company_level'>#{client.organization_name}</option>" } if parent.clients.present?
-    options
-  end
-
-  # generate items options associated with company
-  def get_items(parent)
-    options = ''
-    parent.items.each { |item| options += "<option value=#{item.id} type='company_level'>#{item.item_name}</option>" } if parent.items.present?
-    options
   end
 
 end

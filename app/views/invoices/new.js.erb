@@ -1,10 +1,15 @@
-//if ("<%#= @parent_class %>" == 'Company') {
+if (confirm('Your changes will be discarded by switching company. Are you sure you want to switch company?')) {
+    // Set the session and reload the new invoices page
+    jQuery.get("/application/new_selected_company_name?company_id=" + "<%= params[:company_id] %>", function(response) {
+        jQuery("#current_selected_company").text(response);
+    });
+    setTimeout(function(){location.reload();},1000);
+}
+
+//    jQuery("select#invoice_client_id option, select.items_list option").filter(function () {
+//        return jQuery(this).attr('type') == 'company_level';
+//    }).remove();
 //    jQuery('select#invoice_client_id').append("<%#= @get_clients.html_safe %>").trigger("liszt:updated");
 //    jQuery('select.items_list').append("<%#= @get_items.html_safe %>").trigger("liszt:updated");
-//} else {
-    jQuery("select#invoice_client_id option, select.items_list option").filter(function() {
-        return jQuery(this).attr('type') == 'company_level';
-    }).remove();
-    jQuery('select#invoice_client_id').append("<%= @get_clients.html_safe %>").trigger("liszt:updated");
-    jQuery('select.items_list').append("<%= @get_items.html_safe %>").trigger("liszt:updated");
-//}
+
+

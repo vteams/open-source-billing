@@ -116,31 +116,37 @@ class TaxesController < ApplicationController
   end
 
   def bulk_actions
-    ids = params[:tax_ids]
-    if params[:archive]
-      Tax.archive_multiple(ids)
-      @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
-      @action = "archived"
-      @message = taxes_archived(ids) unless ids.blank?
-    elsif params[:destroy]
-      Tax.delete_multiple(ids)
-      @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
-      @action = "deleted"
-      @message = taxes_deleted(ids) unless ids.blank?
-    elsif params[:recover_archived]
-      Tax.recover_archived(ids)
-      @taxes = Tax.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
-      @action = "recovered from archived"
-    elsif params[:recover_deleted]
-      Tax.recover_deleted(ids)
-      @taxes = Tax.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
-      @action = "recovered from deleted"
-    end
+    #ids = params[:tax_ids]
+    #if params[:archive]
+    #  Tax.archive_multiple(ids)
+    #  @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #  @action = "archived"
+    #  @message = taxes_archived(ids) unless ids.blank?
+    #elsif params[:destroy]
+    #  Tax.delete_multiple(ids)
+    #  @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #  @action = "deleted"
+    #  @message = taxes_deleted(ids) unless ids.blank?
+    #elsif params[:recover_archived]
+    #  Tax.recover_archived(ids)
+    #  @taxes = Tax.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #  @action = "recovered from archived"
+    #elsif params[:recover_deleted]
+    #  Tax.recover_deleted(ids)
+    #  @taxes = Tax.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #  @action = "recovered from deleted"
+    #end
+
+    result = Services::TaxBulkActionsService.new(params.merge({current_user: current_user})).perform
+
+    @taxes = result[:taxes].order("#{sort_column} #{sort_direction}")
+    @message = get_intimation_message(result[:action_to_perform], result[:tax_ids])
+    @action = result[:action]
     respond_to { |format| format.js }
   end
 
   def filter_taxes
-    @taxes = Tax.filter(params,session["#{controller_name}-per_page"])
+    @taxes = Tax.filter(params,session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
   end
 
   def undo_actions
@@ -150,6 +156,13 @@ class TaxesController < ApplicationController
   end
 
   private
+
+  def get_intimation_message(action_key, tax_ids)
+    helper_methods = {archive: 'taxes_archived', destroy: 'taxes_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    helper_method.present? ? send(helper_method, tax_ids) : nil
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end

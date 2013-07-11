@@ -40,7 +40,7 @@ module ApplicationHelper
                     :remote => true,
                     :url => url_for(:action => action_name, :params => params.except(:page), :flag => "per_page")},
                 :name => "per",
-                :class => "per_page"
+                :class => "per_page chzn-select"
     )
   end
 
@@ -96,7 +96,7 @@ module ApplicationHelper
   # generate drop down to filter listings by company
   def filter_by_companies
     ##selected_option = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id
-   ## company_options = options_from_collection_for_select(current_user.current_account.companies, 'id', 'company_name', selected_option)
+    ## company_options = options_from_collection_for_select(current_user.current_account.companies, 'id', 'company_name', selected_option)
     #all_option = content_tag(:option, "All #{controller_name.titleize}", value: '')
     #extra_option = content_tag(:option, 'Account', value: 'Account')
 
@@ -111,19 +111,20 @@ module ApplicationHelper
     companies = current_user.current_account.companies
     content_tag(:ul) do
       companies.each do |company|
-      params[:company_id] = company.id
-      if params[:controller] == "dashboard"
-      url_param = "javascript:"
-      remote_status = false
-      else
-       url_param = url_for(params: params)
-      remote_status = true
-      end
-      link_options = {:remote => remote_status, :class => 'header_company_link', :company_id => company.id}
-       concat(content_tag(:li){ link_to(company.company_name, url_param, link_options) })
+        params[:company_id] = company.id
+        if params[:controller] == "dashboard"
+          url_param = "javascript:"
+          remote_status = false
+        else
+          url_param = url_for(params: params)
+          remote_status = true
+        end
+        link_options = {:remote => remote_status, :class => 'header_company_link', :company_id => company.id, :controller => params[:controller], :action => params[:action]}
+        concat(content_tag(:li) { link_to(company.company_name, url_param, link_options) })
       end
     end
   end
+
   # generate drop down to filter listings by company
   def email_template_companies
     selected_option = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id

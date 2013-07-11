@@ -79,7 +79,7 @@ templates = EmailTemplate.create(
             :subject => '{{client_company}}: {{company_name}} Invoice: {{invoice_number}}',
             :body => '<p>Dear {{client_contact}},</p>
             <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your records, click the link below:</p>
-            <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+            <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
             <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
             <p>Thanks,</p>
@@ -93,7 +93,7 @@ templates = EmailTemplate.create(
             :subject => '{{company_name}} has received your payment for invoice {{invoice_number}}',
             :body => '<p>We have received your payment in the amount of {{currency_symbol}}{{payment_amount}}  for invoice {{invoice_number}}.
                 <p>To view the paid invoice or download a PDF copy for your records, click the link below:</p>
-                <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+                <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
                 <p>Thank you. </p>
                 <p>{{company_signature}}</p>'
         },
@@ -108,7 +108,7 @@ templates = EmailTemplate.create(
            <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
            <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
            <p>To access your invoice go to: </p>
-           <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
         },
@@ -123,7 +123,7 @@ templates = EmailTemplate.create(
            <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
            <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
            <p>To access your invoice go to: </p>
-           <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
         },
@@ -138,7 +138,7 @@ templates = EmailTemplate.create(
            <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
            <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
            <p>To access your invoice go to: </p>
-           <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a></p>
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
         },
@@ -165,7 +165,7 @@ templates = EmailTemplate.create(
            <p>We have carefully reviewed your request regarding invoice number {{invoice_number}}. This is our response:</p>
            <p> {{dispute_response}}
            <p>URL for Invoice Preview:</p>
-           <p><a href="{{invoice_url}}">{{invoice_url}}</a> </p>
+           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a></p>
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
         },
@@ -188,7 +188,7 @@ templates = EmailTemplate.create(
     ])
 templates.each do |template|
   CompanyEmailTemplate.create(
-      :parent_id => 19, #Account.first.id,
+      :parent_id => (Account.first.id rescue nil),
       :parent_type => 'Account',
       :template_id => template.id
   )

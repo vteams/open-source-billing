@@ -32,9 +32,16 @@ class Devise::RegistrationsController < DeviseController
   def create
     build_resource
     resource.skip_confirmation!
+
+    # create a default account and company
     resource.accounts.build({org_name: params[:user][:account]})
     resource.current_account.companies.build({company_name: params[:user][:account] })
+
     if resource.save
+
+      #update email templates for first user
+      CompanyEmailTemplate.update_all(parent_id: resource.id) if User.count == 1
+
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130618044331) do
+ActiveRecord::Schema.define(:version => 20130624113413) do
 
   create_table "account_users", :force => true do |t|
     t.integer "user_id"
@@ -143,8 +143,8 @@ ActiveRecord::Schema.define(:version => 20130618044331) do
   end
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
+    t.integer  "priority",             :default => 0
+    t.integer  "attempts",             :default => 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
@@ -152,8 +152,9 @@ ActiveRecord::Schema.define(:version => 20130618044331) do
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "recurring_profile_id"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
@@ -256,16 +257,19 @@ ActiveRecord::Schema.define(:version => 20130618044331) do
   end
 
   create_table "recurring_profile_line_items", :force => true do |t|
-    t.integer  "invoice_id"
+    t.integer  "recurring_profile_id"
     t.integer  "item_id"
     t.string   "item_name"
     t.string   "item_description"
-    t.decimal  "item_unit_cost",   :precision => 10, :scale => 2
-    t.decimal  "item_quantity",    :precision => 10, :scale => 2
+    t.decimal  "item_unit_cost",       :precision => 10, :scale => 2
+    t.decimal  "item_quantity",        :precision => 10, :scale => 2
     t.integer  "tax_1"
     t.integer  "tax_2"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
   end
 
   create_table "recurring_profiles", :force => true do |t|
@@ -278,7 +282,6 @@ ActiveRecord::Schema.define(:version => 20130618044331) do
     t.decimal  "prorate_for",         :precision => 10, :scale => 2
     t.integer  "gateway_id"
     t.integer  "client_id"
-    t.text     "tems"
     t.text     "notes"
     t.string   "status"
     t.decimal  "sub_total",           :precision => 10, :scale => 2
@@ -286,6 +289,17 @@ ActiveRecord::Schema.define(:version => 20130618044331) do
     t.decimal  "tax_amount",          :precision => 10, :scale => 2
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
+    t.string   "invoice_number"
+    t.string   "discount_type"
+    t.decimal  "invoice_total",       :precision => 10, :scale => 2
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.integer  "payment_terms_id"
+    t.integer  "company_id"
+    t.string   "last_invoice_status"
+    t.datetime "last_sent_date"
+    t.integer  "sent_invoices"
   end
 
   create_table "sent_emails", :force => true do |t|

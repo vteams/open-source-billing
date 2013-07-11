@@ -43,7 +43,6 @@
               <col class="one"/>
               <col class="two"/>
               <col class="three"/>
-              <col class="four"/>
               <col class="five"/>
               <col class="six"/>
               <col class="seven"/>
@@ -55,7 +54,6 @@
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
               <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', 'Invoice #') %></th>
               <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
-              <th class="align_left header"><%= sortable('invoices.company', 'Company') %></th>
               <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', 'Total') %></th>
               <th class="align_center header"><%= sortable('invoice_date', 'Date') %></th>
               <th class="align_left header"><%= sortable('due_date', 'Due Date') %></th>

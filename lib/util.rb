@@ -49,5 +49,6 @@ module OSB
 
       model.send(mappings[params[:status].to_sym]).page(params[:page]).per(params[:per])
     end
+
   end
 end

@@ -3,4 +3,5 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
+  jQuery(".reports table.table_listing").tablesorter()
   jQuery(".reports #from_date, .reports #to_date").datepicker dateFormat: 'yy-mm-dd'

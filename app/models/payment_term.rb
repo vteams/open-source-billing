@@ -24,4 +24,5 @@ class PaymentTerm < ActiveRecord::Base
 
   # associations
   has_many :invoices
+  has_many :recurring_profiles
 end

@@ -1,6 +1,20 @@
 Osb::Application.routes.draw do
 
 
+  get "recurring_profile_line_item/index"
+
+  get "recurring_profile_line_item/show"
+
+  get "recurring_profile_line_item/new"
+
+  get "recurring_profile_line_item/edit"
+
+  get "recurring_profile_line_item/create"
+
+  get "recurring_profile_line_item/update"
+
+  get "recurring_profile_line_item/destroy"
+
   resources :email_templates
 
 
@@ -94,6 +108,17 @@ Osb::Application.routes.draw do
       post 'paypal_payments'
       get 'preview'
       get 'credit_card_info'
+    end
+  end
+
+  resources :recurring_profile_line_items
+
+  resources :recurring_profiles do
+    resources :recurring_profile_line_items
+    collection do
+      get 'filter_recurring_profiles'
+      get 'bulk_actions'
+      get 'undo_actions'
     end
   end
 

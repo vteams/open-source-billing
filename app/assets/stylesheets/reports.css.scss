@@ -1,4 +1,11 @@
 .reports {
+  .chzn-search{
+    width: auto !important;
+    input[type="text"]{
+      width: 142px !important;
+      margin: 0 5px 0 4px !important;
+    }
+  }
   .content_top {
     border: none;
   }
@@ -217,6 +224,11 @@
   .footer_note p {
     text-align: right;
     font-size: 10px;
+  }
+  .table_listing{
+    .align_right.header {
+      padding-right: 25px;
+    }
   }
 
 }

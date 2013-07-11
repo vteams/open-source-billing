@@ -81,6 +81,7 @@ body {
   font-size: 13px;
   color: #464646;
   padding: 0px;
+  font-weight: normal;
 }
 
 p {
@@ -160,7 +161,7 @@ h2 {
 }
 
 h2 span {
-  font-family: Tahoma;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   letter-spacing: 0.5px;
   text-transform: lowercase;
@@ -212,26 +213,27 @@ h4 {
 .primary_menu {
   float: right;
   min-width: 145px;
-  padding: 31px 23px 0 0;
+  padding: 31px 31px 0 0;
   text-align: right;
   .dropdown{
     a:hover{
       color: #464646;
       text-decoration: none;
       > .caret{
-        border-top: 4px solid #909090;
+        background: url("/assets/top_arrow.png") no-repeat 0px -4px;
       }
     }
   }
   .dropdown_sep{
-    float: left;
-    background: url("/assets/grid_control_sep.png") right center;
+    float: right;
+    background: url("/assets/grid_control_sep2.png") no-repeat 0px -15px;
     display: block;
     width: 1px;
-    height: 13px;
-    margin: 4px 14px 0 14px;
+    height: 15px;
+    margin: 2px 14px 0 14px;
   }
-  .dropdown-menu{
+  .dropdown-menu
+    {
     min-width: 147px;
     left: auto;
     right: 0;
@@ -363,7 +365,7 @@ h4 {
       overflow: hidden;
       padding-left: 4px;
       padding-right: 4px;
-      min-width: 145px;
+      width: 170px;
       /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
       box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
       border-radius: 0px 0px 4px 4px;
@@ -410,7 +412,8 @@ h4 {
 .invoices-main, .sent_emails-main,
 .payments-main, .reports-main, .help-main,
 .clients-main, .items-main, .taxes-main,
-.companies-main, .email_templates-main {
+.companies-main, .email_templates-main,
+.recurring_profiles-main, .sub_users-main {
   padding: 23px 0 0 0;
 }
 
@@ -425,7 +428,7 @@ h4 {
   padding: 0 30px 0 30px;
   &.pdf_preview{
     overflow: hidden;
-    margin: 40px 0;
+    margin: 48px 0;
   }
 }
 
@@ -678,7 +681,7 @@ tfoot tr:hover{
 .fields_content {
   float: left;
   width: 100%;
-  padding: 30px 0 30px 0;
+  padding: 40px 0 30px 0;
   border-bottom: 1px solid #99E5F5;
 }
 
@@ -905,7 +908,7 @@ input[disabled]{
 }
 
 .copy_right {
-  padding: 0 9px 0 0;
+  padding: 0 9px 0 1px;
 }
 
 .copy_right a {
@@ -915,12 +918,12 @@ input[disabled]{
 
 .privacy_policy {
   background: url(/assets/footer_sep.png) no-repeat 0px 6px;
-  padding: 0 7px;
+  padding: 0 9px 0 11px;
 }
 
 .contact_us {
   background: url(/assets/footer_sep.png) no-repeat left;
-  padding: 0 0 0 7px;
+  padding: 0 0 0 11px;
 }
 
 .privacy_policy a, .contact_us a {
@@ -1044,8 +1047,8 @@ table.table_listing, table.report-data-table {
     }
     td {
       color: #3D3D3D;
-      padding-top: 5px;
-      padding-bottom: 6px;
+      padding-top: 7px;
+      padding-bottom: 7px;
       //background-color: #FFF;
       vertical-align: middle;
       line-height: normal;
@@ -1074,6 +1077,10 @@ table.table_listing, table.report-data-table {
   .paging_info{
     float: right;
     margin: 20px 0 0 0;
+    .chzn-container{
+      vertical-align: middle;
+      margin: 0 8px;
+    }
     select.per_page{
       width: auto;
       margin: 0 10px;
@@ -1093,24 +1100,25 @@ table.table_listing, table.report-data-table {
   min-height: 42px;
   margin: auto;
   border: 1px solid #99e5f5;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 19px 19px 19px 79px;
   overflow: hidden;
-  margin-bottom: 40px;
-  background-color: #FFFFFF;
+  margin-bottom: 34px;
+  margin-top: 12px;
+  background-color: none;
   &.alert-success {
-    background: url(/assets/success.png) no-repeat 19px 19px #ffffff;
-    border-color: #85BD1E;
+    background: url(/assets/success.png) no-repeat 19px 19px;
+    border-color: #97c93c;
     color: #85BD1E;
   }
   &.alert-warning {
-    background: url(/assets/warning.png) no-repeat 19px 19px #ffffff;
+    background: url(/assets/warning.png) no-repeat 19px 19px;
     border-color: #F57300;
     color: #F57300;
   }
   &.alert-error {
-    background: url(/assets/invalid.png) no-repeat 19px 19px #ffffff;
-    border-color: #CD0011;
+    background: url(/assets/invalid.png) no-repeat 19px 19px;
+    border-color: #d73442;
     span {
       color: #CD0011 !important;
     }
@@ -1148,7 +1156,7 @@ table.table_listing, table.report-data-table {
     width: 100%;
     li {
       margin: 8px 0 0 0;
-      background: url(/assets/intimation_bullet.png) no-repeat 0px 5px;
+      background: url(/assets/intimation_bullet.png) no-repeat 0px 6px;
       padding-left: 12px;
     }
   }
@@ -1162,8 +1170,8 @@ table.table_listing, table.report-data-table {
   .close {
     line-height: 20px;
     position: relative;
-    right: -9px;
-    top: -13px;
+    right: -13px;
+    top: -17px;
   }
 }
 
@@ -1230,7 +1238,13 @@ select.discount_select
   margin-top: 8px;
 }
 .caret {
-  border-top: 4px solid #D0CDCD;
+  /*border-top: 4px solid #D0CDCD;*/
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  background:  url(/assets/top_arrow.png) no-repeat;
+  width: 8px;
+  height: 4px;
 }
 .dropdown-menu{
   border: none;
@@ -1297,7 +1311,7 @@ select.discount_select
   &:first-child{
     /* margin: 0 13px 0 0;*/
   }
-  float: left;
+  float: right;
   position: relative;
 }
 
@@ -1308,3 +1322,34 @@ select.discount_select
 }
 
 /*Header Choozen DropDown*/
+
+
+/*Graph Bars Tooltip*/
+.jqplot-highlighter-tooltip, .jqplot-canvasOverlay-tooltip{
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid #D7D7D7 !important;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px !important;
+  color: #464646;
+  padding: 4px 8px !important;
+  font-weight: normal !important;
+}
+
+/*all input focus border*/
+textarea:focus, input[type="text"]:focus,
+input[type="password"]:focus, input[type="datetime"]:focus,
+input[type="datetime-local"]:focus, input[type="date"]:focus,
+input[type="month"]:focus, input[type="time"]:focus,
+input[type="week"]:focus, input[type="number"]:focus,
+input[type="email"]:focus, input[type="url"]:focus,
+input[type="search"]:focus, input[type="tel"]:focus,
+input[type="color"]:focus, .uneditable-input:focus{
+  border-color: rgba(0, 189, 229, 0.8);
+}
+
+.chzn-search{
+  input[type="text"]:focus{
+    border-color: #CCCCCC !important;
+  }
+}

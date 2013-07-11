@@ -7,6 +7,11 @@
     col.five {width: 92px;}
     col.six  {width: 110px;}
     .col_hover, .row_hover, tfoot tr:hover{background-color: #F7F7F7;}
-    tfoot{border-bottom: medium double #dadada; font-weight: bold;}
+    tfoot tr td{
+      /*border-bottom: medium double #dadada;*/
+      &:first-child, &:last-child{
+        font-weight: bold;
+      }
+    }
   }
 }

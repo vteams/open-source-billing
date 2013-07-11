@@ -17,7 +17,7 @@ jQuery('#active_links a').removeClass('active');
 
 jQuery('#select_all').attr('checked', false);
 
-    jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "paging", :page => params[:page] %>');
+    jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
     jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
     jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
 

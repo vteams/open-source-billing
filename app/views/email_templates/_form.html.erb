@@ -1,5 +1,5 @@
 <%= tinymce_assets %>
-<%= tinymce  :theme_advanced_buttons1 => "bold,italic,underline,separator,strikethrough,undo,redo,link" %>
+<%= tinymce  :theme_advanced_buttons1 => "bold,italic,underline,separator,strikethrough,undo,redo,link", :content_css => '/assets/email_template_editor.css' %>
 <%= form_for(@email_template,:html=>{:class=>'email_template_class'}) do |f| %>
     <% if @email_template.errors.any? %>
         <div id="error_explanation">
@@ -15,99 +15,103 @@
 
     <div class="fields_content_container">
 
-      <div class="fields_content_data">
+      <table>
+        <tr>
+          <td style="width: 500px;">
+            <div class="field_row">
+              <div class="label_field left single"><%= f.label :template_type, 'Template Type' %></div>
+              <div class="medium_field">
+                <%= f.hidden_field :template_type %>
+                <%= f.hidden_field :torder %>
+                <%= f.hidden_field :is_late_payment_reminder %>
+                <%#= f.select :template_type, options_for_select(EmailTemplate.order(:torder).group(:template_type).map { |et| [et.template_type,{'value_id' => et.id}]}, :selected => f.object.template_type), {}, {:class => 'medium chzn-select'}%>
 
-        <div class="field_row">
-          <div class="label_field left single"><%= f.label :template_type, 'Template Type' %></div>
-          <div class="medium_field">
-            <%= f.hidden_field :template_type %>
-            <%= f.hidden_field :torder %>
-            <%= f.hidden_field :is_late_payment_reminder %>
-            <%#= f.select :template_type, options_for_select(EmailTemplate.order(:torder).group(:template_type).map { |et| [et.template_type,{'value_id' => et.id}]}, :selected => f.object.template_type), {}, {:class => 'medium chzn-select'}%>
-
-            <label id="template_type_label"><%= f.object.template_type %></label>
-          </div>
-        </div>
-        <!--field_row-->
-
-        <div class="field_row">
-          <div class="label_field left single"> <%= f.label :email_from, 'Email From' %></div>
-          <div class="medium_field">
-            <%= f.text_field :email_from %>
-          </div>
-        </div>
-        <!--field_row-->
-
-        <div class="field_row">
-          <div class="label_field left single"> <%= f.label :subject %></div>
-          <div class="medium_field">
-            <%= f.text_field :subject %>
-          </div>
-        </div>
-        <!--field_row-->
-
-        <div class="field_row">
-          <div class="large_field">
-            <%= f.text_area :body, :class => "tinymce" %>
-          </div>
-        </div>
-        <!--field_row-->
-
-        <% if @email_template.is_late_payment_reminder %>
-
-        <div class="field_row">
-          <div class="label_field left single"> <%= f.label :send_email %></div>
-          <div class="medium_field send_email">
-            <%= f.radio_button :send_email, true%>
-            <label for="email_template_send_email_true">Enable</label>
-          </div>
-          <div class="medium_field send_email">
-            <%= f.radio_button :send_email, false%>
-            <label for="email_template_send_email_false">Disable</label>
-          </div>
-        </div>
-
-        <div class="field_row">
-          <div class="label_field left single"> <%= f.label :no_of_days %></div>
-          <div class="medium_field">
-            <%= f.text_field :no_of_days %>
-          </div>
-        </div>
-        <% end%>
-        <!--field_row-->
-        <div class="options_row clients">
-          <div class="label_field left single options template">Use this Template for:</div>
-          <div class="options_content">
-            <%= associate_account(controller_name,action_name,@email_template) %>
-          </div>
-        </div>
-
-      </div>
-      <!--fields_content_data-->
-
-      <div class="custom_fields">
-        <ul id="email_template_custom_fields">
-          <h4>Custom fields:</h4>
-
-          <div class="scrollContainer content_scroll mCustomScrollbar">
-            <div class="mCustomScrollBox mCS-light">
-              <div class="mCSB_container">
-                <% template_type = @email_template.is_late_payment_reminder ? "Late Payment Reminder" : @email_template.template_type%>
-                <% CUSTOM_FIELDS[template_type].each do |cf|%>
-                    <li>
-                      <p><%= cf[:label] %></p>
-                      <span class="custom_field_token"> <%= cf[:token] %> </span>
-                    </li>
-                <%end rescue ""%>
+                <label id="template_type_label"><%= f.object.template_type %></label>
               </div>
             </div>
-          </div>
+            <!--field_row-->
 
-        </ul>
+            <% if @email_template.is_late_payment_reminder %>
+                <div class="field_row">
+                  <div class="label_field left single"> <%= f.label :Send_Reminder? %></div>
+                  <div class="medium_field">
+                    <%= f.radio_button :send_email, true%>
+                    <label for="Yes">Yes</label>
+                  </div>
+                  <div class="medium_field">
+                    <%= f.radio_button :send_email, false%>
+                    <label for="No">No</label>
+                  </div>
+                </div>
+                <!--field_row-->
+
+
+                <div class="field_row">
+                  <div class="label_field left single"> <%= f.label :Send_After %></div>
+                  <div class="medium_field">
+                    <%= f.text_field :no_of_days, :class => 'after' %>
+                    <label class="after">Days of due date</label>
+                  </div>
+                </div>
+                <!--field_row-->
+            <% end%>
+
+            <div class="field_row">
+              <div class="label_field left single"> <%= f.label :email_from, 'Email From' %></div>
+              <div class="medium_field">
+                <%= f.text_field :email_from %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single"> <%= f.label :subject %></div>
+              <div class="medium_field">
+                <%= f.text_field :subject %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="large_field">
+                <%= f.text_area :body, :class => "tinymce" %>
+              </div>
+            </div>
+            <!--field_row-->
+
+
+          </td>
+          <td class="custom_fields">
+            <ul id="email_template_custom_fields">
+              <h4>Custom fields:</h4>
+
+              <div class="scrollContainer content_scroll mCustomScrollbar">
+                <div class="mCustomScrollBox mCS-light">
+                  <div class="mCSB_container">
+                    <% template_type = @email_template.is_late_payment_reminder ? "Late Payment Reminder" : @email_template.template_type%>
+                    <% CUSTOM_FIELDS[template_type].each do |cf|%>
+                        <li>
+                          <p><%= cf[:label] %></p>
+                          <span class="custom_field_token"> <%= cf[:token] %> </span>
+                        </li>
+                    <%end rescue ""%>
+                  </div>
+                </div>
+              </div>
+
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      <div class="options_row clients">
+        <div class="label_field left single options template">Use this Template for:</div>
+        <div class="options_content">
+          <%= associate_account(controller_name,action_name,@email_template) %>
+        </div>
       </div>
 
     </div>
-
     <!--fields_content_container-->
 
     <div class="content_bottom">

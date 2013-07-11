@@ -19,8 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Client < ActiveRecord::Base
-  # default scope
-  #default_scope order("#{self.table_name}.created_at DESC")
+
+  #scopes
+  scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
   # attr
   attr_accessible :address_street1, :address_street2, :business_phone, :city, :company_size, :country, :fax, :industry, :internal_notes, :organization_name, :postal_zip_code, :province_state, :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number, :client_contacts_attributes, :archive_number, :archived_at, :deleted_at
@@ -43,11 +44,11 @@ class Client < ActiveRecord::Base
   end
 
   def contact_name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def last_invoice
-    self.invoices.unarchived.first.id rescue nil
+    invoices.unarchived.first.id rescue nil
   end
 
   def purchase_options
@@ -76,42 +77,23 @@ class Client < ActiveRecord::Base
     )
   end
 
-  def self.multiple_clients ids
-    ids = ids.split(",") if ids and ids.class == String
-    where("id IN(?)", ids)
-  end
-
   def self.archive_multiple ids
-    self.multiple_clients(ids).each { |client| client.archive }
+    multiple(ids).map(&:archive)
   end
 
   def self.delete_multiple ids
-    self.multiple_clients(ids).each { |client| client.destroy }
+    multiple(ids).map(&:destroy)
   end
 
   def self.recover_archived ids
-    self.multiple_clients(ids).each { |client| client.unarchive }
+    multiple(ids).map(&:unarchive)
   end
 
   def self.recover_deleted ids
-    ids = ids.split(',') if ids and ids.class == String
-    where('id IN(?)', ids).only_deleted.each do |client|
-      client.recover
-      client.unarchive
-    end
+    multiple(ids).only_deleted.each {|client| client.recover; client.unarchive}
   end
 
   def self.filter(params)
-    #case params[:status]
-    #  when 'active' then
-    #    self.unarchived.page(params[:page]).per(per_page)
-    #  when 'archived' then
-    #    self.archived.page(params[:page]).per(per_page)
-    #  when 'deleted' then
-    #    self.only_deleted.page(params[:page]).per(per_page)
-    #  else
-    #    self.unarchived.page(params[:page]).per(per_page)
-    #end
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     self.send(method).page(params[:page]).per(params[:per])
@@ -149,8 +131,9 @@ class Client < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the clients associated with companies
-    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
-    company_clients = Company.find(company_id).clients.send(params[:status])
+    #company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company_clients = Company.find(params[:company_id]).clients.send(params[:status])
+    #company_clients
 
     # get the unique clients associated with companies and accounts
     clients = (account.clients.send(params[:status]) + company_clients).uniq

@@ -69,6 +69,16 @@
             <!--field_row-->
 
             <div class="field_row description">
+              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, 'Company') %></div>
+              <div class="medium_field">
+                <div> <%= text_field_tag 'company', get_company_name, :readonly => '', :class => 'company_read_only' %> </div>
+                <ul class="field_description">
+                  <li>company for this invoice</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="field_row description">
               <div class="label_field left single"><%= f.label :client_id, content_tag(:span, 'Client') %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
@@ -82,7 +92,7 @@
             <!--field_row-->
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :payment_terms_id, "Terms" %></div>
+              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, "Terms") %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :payment_terms_id, PaymentTerm.all, :id, :description, {:prompt => ""}, {"data-placeholder" => "Select a payment term...", :class => "medium chzn-select"} %>
                 <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
@@ -180,10 +190,10 @@
           </div>
         </div>
 
-        <div class="grid_summary_row">
+        <div class="grid_summary_row discount">
           <div class="grid_summary_title">
             <!--Discount <span class="discount_percentage_lbl"></span>%-->
-            Discount <%= f.select :discount_type, DISCOUNT_TYPE, {}, {:class => "discount_select", :id => "discount_type"} %>
+            Discount <%= f.select :discount_type, DISCOUNT_TYPE, {}, {:class => "discount_select chzn-select", :id => "discount_type"} %>
           </div>
 
           <!--<div class="grid_summary_row net_total">-->

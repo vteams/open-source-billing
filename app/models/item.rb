@@ -19,8 +19,11 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Item < ActiveRecord::Base
-  # default scop
-  #default_scope order("#{self.table_name}.created_at DESC")
+
+  #scopes
+  scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
+  scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
 
   # attr
   attr_accessible :inventory, :item_description, :item_name, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at
@@ -38,44 +41,19 @@ class Item < ActiveRecord::Base
 
   paginates_per 10
 
-  def self.multiple_items ids
-    ids = ids.split(",") if ids and ids.class == String
-    where("id IN(?)", ids)
-  end
-
   def self.is_exists? item_name
     where(:item_name => item_name).present?
   end
 
-  def self.archive_multiple ids
-    self.multiple_items(ids).each { |item| item.archive }
+  def self.recover_archived(ids)
+    multiple(ids).map(&:unarchive)
   end
 
-  def self.delete_multiple ids
-    self.multiple_items(ids).each { |item| item.destroy }
-  end
-
-  def self.recover_archived ids
-    self.multiple_items(ids).each { |item| item.unarchive }
-  end
-
-  def self.recover_deleted ids
-    ids = ids.split(",") if ids and ids.class == String
-    where("id IN(?)", ids).only_deleted.each do |item|
-      item.recover
-      item.unarchive
-    end
+  def self.recover_deleted(ids)
+    multiple(ids).only_deleted.each { |item| item.recover; item.unarchive }
   end
 
   def self.filter(params, per_page)
-    #case params[:status]
-    #  when "active" then
-    #    self.unarchived.page(params[:page]).per(per_page)
-    #  when "archived" then
-    #    self.archived.page(params[:page]).per(per_page)
-    #  when "deleted" then
-    #    self.only_deleted.page(params[:page]).per(per_page)
-    #end
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     self.send(method).page(params[:page]).per(per_page)
@@ -87,6 +65,7 @@ class Item < ActiveRecord::Base
     # get the items associated with companies
     company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company_items = Company.find(company_id).items.send(params[:status])
+
     # get the unique items associated with companies and accounts
     items = (account.items.send(params[:status]) + company_items).uniq
 

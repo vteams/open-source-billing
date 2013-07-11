@@ -38,6 +38,9 @@
         &.small {
           min-width: 200px;
         }
+        &.small_last {
+          min-width: 200px;
+        }
         &:hover {
           background: #00bde5;
           color: #ffffff;
@@ -68,7 +71,7 @@
       overflow: hidden;
       position: relative;
       &.right {
-        width: 92.5%;
+        width: 92.6%;
         padding-right: 0px;
       }
       p {
@@ -95,7 +98,7 @@
     .amount_box {
       float: left;
       width: 172px;
-      margin: 0 30px 0 0;
+      margin: 0 25px 0 0;
       &:last-child {
         margin: 0px;
         width: 174px;
@@ -129,7 +132,7 @@
         margin: 0 0 1px 0;
         .days {
           float: left;
-          width: 106px;
+          width: 105px;
           span {
             float: right;
           }
@@ -137,7 +140,7 @@
         .value {
           float: left;
           width: 59px;
-          padding: 0 0 0 7px;
+          padding: 0 0 0 4px;
           text-align: left;
           .ie7 &, .ie8 &, .ie9 &, .ie10 {
             width: 58px;
@@ -229,6 +232,12 @@
           }
         }
       }
+    }
+  }
+  .span6{
+    width: 49.2857%;
+    &.custome{
+      margin-left: 1.4264%;
     }
   }
 }

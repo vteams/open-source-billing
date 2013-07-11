@@ -25,6 +25,7 @@ class CreditPayment < ActiveRecord::Base
   # associations
   belongs_to :invoice
   belongs_to :payment
+  belongs_to :recurring_profile
 
   # callbacks
   after_destroy :update_credit_applied

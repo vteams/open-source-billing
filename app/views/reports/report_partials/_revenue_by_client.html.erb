@@ -48,23 +48,14 @@
             <col class="three"/>
             <col class="four"/>
             <col class="five"/>
-            <!--<col class="six"/>-->
-            <!--<col class="seven"/>-->
-            <!--<col class="eight"/>-->
-            <!--<col class="nine"/>-->
-            <!--<col class="ten"/>-->
-            <!--<col class="eleven"/>-->
-            <!--<col class="twelve"/>-->
-            <!--<col class="thirteen"/>-->
-            <!--<col class="fourteen"/>-->
           </colgroup>
 
           <thead>
             <th class="align_left">Client</th>
             <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each  do |month| %>
-                <th class="align_left"><%= Date::MONTHNAMES[month].to_s[0..2] %></th>
+                <th class="align_right"><%= Date::MONTHNAMES[month].to_s[0..2] %></th>
             <% end %>
-            <th class="align_center">Total</th>
+            <th class="align_right">Total</th>
           </thead>
           <tbody>
           <% unless @report.report_data.blank? %>
@@ -73,7 +64,7 @@
                   <tr>
                     <td class="align_left text-overflow-class"><%= revenue.organization_name %></td>
                     <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-                        <td class="align_right"><%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"]).to_s.gsub("$", "").gsub(".00", "") %></td>
+                        <td class="align_right"><%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"]).to_s.gsub("$", "") %></td>
                     <% end %>
                     <td class="align_right"><%= number_to_currency(revenue.client_total) %></td>
                   </tr>
@@ -81,7 +72,7 @@
               <tfoot>
               <td class="align_left">Total</td>
               <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-                  <td class="align_right"><%= @report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : @report.report_total["#{Date::MONTHNAMES[month]}"]  %></td>
+                  <td class="align_right"><%= @report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : number_to_currency(@report.report_total["#{Date::MONTHNAMES[month]}"])  %></td>
               <% end %>
               <td class="align_right"><%= number_to_currency(@report.report_total["net_total"] || "") %></td>
               </tfoot>

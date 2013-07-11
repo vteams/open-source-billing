@@ -56,10 +56,10 @@
           <thead>
           <tr>
             <th class="align_left">Item Name</th>
-            <th class="align_left">Total Qty Sold</th>
-            <th class="align_center {sorter:'thousands'}">Total Amount</th>
-            <th class="align_center {sorter:'thousands'}">Total Discount</th>
-            <th class="align_center {sorter:'thousands'}">Net Total</th>
+            <th class="align_right">Total Qty Sold</th>
+            <th class="align_right {sorter:'thousands'}">Total Amount</th>
+            <th class="align_right {sorter:'thousands'}">Total Discount</th>
+            <th class="align_right {sorter:'thousands'}">Net Total</th>
           </tr>
           </thead>
           <tbody>
@@ -75,11 +75,11 @@
               <% end %>
               <tfoot>
               <tr>
-                <td class="align_left"><b>Total</b></td>
-                <td class="align_center"><b><%= @report.report_total["item_quantity"].to_i %></b></td>
-                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["total_amount"]) %></b></td>
-                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["discount_amount"]) %></b></td>
-                <td class="align_right currency"><b><%= number_to_currency(@report.report_total["net_total"]) %></b></td>
+                <td class="align_left">Total</td>
+                <td class="align_center"><%= @report.report_total["item_quantity"].to_i %></td>
+                <td class="align_right currency"><%= number_to_currency(@report.report_total["total_amount"]) %></td>
+                <td class="align_right currency"><%= number_to_currency(@report.report_total["discount_amount"]) %></td>
+                <td class="align_right currency"><%= number_to_currency(@report.report_total["net_total"]) %></td>
               </tr>
               </tfoot>
           <% else %>

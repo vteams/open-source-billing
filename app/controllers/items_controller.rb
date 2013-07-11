@@ -27,6 +27,7 @@ class ItemsController < ApplicationController
   include ItemsHelper
 
   def index
+    set_company_session
     #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
     @items = Item.get_items(params.merge(get_args('unarchived')))
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
@@ -75,7 +76,12 @@ class ItemsController < ApplicationController
       return
     end
     @item = Item.new(params[:item])
-    associate_entity(params, @item)
+
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    associate_entity(options, @item)
+
+
     respond_to do |format|
       if @item.save
         format.js
@@ -130,42 +136,56 @@ class ItemsController < ApplicationController
   end
 
   def bulk_actions
-    ids = params[:item_ids]
-    if params[:archive]
-      Item.archive_multiple(ids)
-      @items = Item.get_items(get_args('unarchived'))
-      @action = "archived"
-      @message = items_archived(ids) unless ids.blank?
-    elsif params[:destroy]
-      Item.delete_multiple(ids)
-      @items = Item.get_items(get_args('unarchived'))
-      @action = "deleted"
-      @message = items_deleted(ids) unless ids.blank?
-    elsif params[:recover_archived]
-      Item.recover_archived(ids)
-      @items = Item.get_items(get_args('archived'))
-      @action = "recovered from archived"
-    elsif params[:recover_deleted]
-      Item.recover_deleted(ids)
-      @items = Item.get_items(get_args('only_deleted'))
-      @action = "recovered from deleted"
-    end
+    #ids = params[:item_ids]
+    #if params[:archive]
+    #  Item.archive_multiple(ids)
+    #  @items = Item.get_items(params.merge(get_args('unarchived')))
+    #  @action = "archived"
+    #  @message = items_archived(ids) unless ids.blank?
+    #elsif params[:destroy]
+    #  Item.delete_multiple(ids)
+    #  @items = Item.get_items(params.merge(get_args('unarchived')))
+    #  @action = "deleted"
+    #  @message = items_deleted(ids) unless ids.blank?
+    #elsif params[:recover_archived]
+    #  Item.recover_archived(ids)
+    #  @items = Item.get_items(params.merge(get_args('archived')))
+    #  @action = "recovered from archived"
+    #elsif params[:recover_deleted]
+    #  Item.recover_deleted(ids)
+    #  @items = Item.get_items(params.merge(get_args('only_deleted')))
+    #  @action = "recovered from deleted"
+    #end
+    options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
+    result = Services::ItemBulkActionsService.new(options).perform
+
+    @items = result[:items]
+    @message = get_intimation_message(result[:action_to_perform], result[:item_ids])
+    @action = result[:action]
+
     respond_to { |format| format.js }
   end
 
   def filter_items
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @items = Item.get_items(get_args(method).merge(company_id: params[:company_id])) #.filter(params, session["#{controller_name}-per_page"])
+    @items = Item.get_items(params.merge(get_args(method)))
   end
 
   def undo_actions
     params[:archived] ? Item.recover_archived(params[:ids]) : Item.recover_deleted(params[:ids])
-    @items = Item.get_items(get_args('unarchived'))
+    @items = Item.get_items(params.merge(get_args('unarchived')))
     respond_to { |format| format.js }
   end
 
   private
+
+  def get_intimation_message(action_key, item_ids)
+    helper_methods = {archive: 'items_archived', destroy: 'items_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    helper_method.present? ? send(helper_method, item_ids) : nil
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
@@ -181,11 +201,7 @@ class ItemsController < ApplicationController
   end
 
   def get_args(status)
-    unless params[:company_id].blank?
-      session['current_company'] = params[:company_id]
-      current_user.update_attributes(current_company: params[:company_id])
-    end
-    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company']}
+    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
 
 

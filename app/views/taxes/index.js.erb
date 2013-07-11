@@ -1,6 +1,6 @@
-jQuery('#current_selected_company').html('<%= get_selected_company_name %>');
+//jQuery('#current_selected_company').html('<%#= get_selected_company_name %>');
 jQuery('tbody#tax_body').html('<%= escape_javascript render("taxes") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 jQuery("table.table_listing").trigger('update');

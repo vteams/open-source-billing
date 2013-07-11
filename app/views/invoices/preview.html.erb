@@ -1,5 +1,4 @@
 <%- model_class = Invoice -%>
-
 <div class="show_invoice">
   <div class="content_top">
     <div class="primary_heading">
@@ -24,6 +23,7 @@
 
   <div class="content_bottom top">
     <% if @invoice.status != "paid" %>
+        <!--showing 2 payment options buttons -->
       <%= link_to "Pay with Paypal", @invoice.paypal_url("http://#{request.host_with_port}/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "http://#{request.host_with_port}/invoices/paypal_payments"), :class => "btn_large big" %>
       <%= link_to "Pay by Credit Card", "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
     <% else %>

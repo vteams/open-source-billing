@@ -8,12 +8,14 @@ Features
 
 * A nice looking Dashboard with graph and your key metrics
 * Create and send invoices to your clients
+* Recurring invoices
 * Enter payments against sent invoices
 * Partial payments tracking
 * Receive payments through Paypal and credit card
 * Invoice dispute management
+* Manage billing for your multiple sister companies under one account
 * Export invoices to PDF
-* Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client` and more to come
+* Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
 
 Demo
 ---

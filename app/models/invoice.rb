@@ -21,8 +21,6 @@
 class Invoice < ActiveRecord::Base
   include ::OSB
 
-  # default scope
-  #default_scope order("#{self.table_name}.created_at DESC")
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices, where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('created_at DESC')
   scope :past_invoices, where("IFNULL(due_date, invoice_date) < ?", Date.today).order('created_at DESC')
@@ -62,7 +60,7 @@ class Invoice < ActiveRecord::Base
   # archive and delete
   acts_as_archival
   acts_as_paranoid
-  has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new {|invoice| invoice.last_invoice_status == 'disputed'}
+  has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new { |invoice| invoice.last_invoice_status == 'disputed' }
 
   paginates_per 10
 
@@ -109,15 +107,15 @@ class Invoice < ActiveRecord::Base
   # This doesn't actually dispute the invoice. It just updates the invoice status to dispute.
   # To perform a full 'dispute' process use *Services::InvoiceService.dispute_invoice(invoice_id, dispute_reason)*
   def disputed!
-    self.update_attributes(last_invoice_status: status, status: 'disputed')
+    update_attributes(last_invoice_status: status, status: 'disputed')
   end
 
   def dispute_history
-    self.sent_emails.where("type = 'Disputed'")
+    sent_emails.where("type = 'Disputed'")
   end
 
   def delete_credit_payments
-    self.payments.with_deleted.where("payment_method = 'Credit'").map(&:destroy!)
+    payments.with_deleted.where("payment_method = 'Credit'").map(&:destroy!)
   end
 
   def delete_none_credit_payments
@@ -125,7 +123,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def non_credit_payment_total
-    self.payments.where("payment_type !='credit' or payment_type is null").sum('payment_amount')
+    payments.where("payment_type !='credit' or payment_type is null").sum('payment_amount')
   end
 
   def tooltip
@@ -176,14 +174,14 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.recover_deleted ids
-    multiple_invoices(ids).only_deleted.each  do |invoice|
+    multiple_invoices(ids).only_deleted.each do |invoice|
       invoice.recover
       invoice.unarchive
       invoice.change_status_after_recover
     end
   end
 
-  def self.filter(params,per_page)
+  def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     self.send(method).page(params[:page]).per(per_page)
@@ -200,7 +198,7 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def notify current_user, id = nil
+  def notify(current_user, id = nil)
     InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user)
   end
 
@@ -285,38 +283,40 @@ class Invoice < ActiveRecord::Base
 
   def status_after_payment_deleted
     # update invoice status when a payment is deleted
-      case status
-        when "draft-partial" then draft! unless has_payments?
+    case status
+      when "draft-partial" then
+        draft! unless has_payments?
 
-        when "partial" then
-          if has_payments?
-            partial!
-          else
-            previous_version && previous_version.status == "disputed" ? disputed! : sent!
-          end
-
-        when "paid" then
-          if has_payments?
-            last_invoice_status == "draft-partial" ? draft_partial! : partial!
-          else
-            if previous_version && previous_version.status == "disputed"
-              disputed!
-            elsif last_invoice_status == "draft"
-              draft!
-            else
-              sent!
-            end
-          end
-
-        when "disputed" then (has_payments? ? partial! : disputed!)
+      when "partial" then
+        if has_payments?
+          partial!
         else
-      end if present?
+          previous_version && previous_version.status == "disputed" ? disputed! : sent!
+        end
+
+      when "paid" then
+        if has_payments?
+          last_invoice_status == "draft-partial" ? draft_partial! : partial!
+        else
+          if previous_version && previous_version.status == "disputed"
+            disputed!
+          elsif last_invoice_status == "draft"
+            draft!
+          else
+            sent!
+          end
+        end
+
+      when "disputed" then
+        (has_payments? ? partial! : disputed!)
+      else
+    end if present?
 
     #Rails.logger.debug "\e[1;31m After: #{status} \e[0m"
   end
 
   def change_status_after_recover
-    sent!  if %w(paid partial viewed).include?(status)
+    sent! if %w(paid partial viewed).include?(status)
     draft! if status == 'draft-partial'
   end
 
@@ -324,10 +324,10 @@ class Invoice < ActiveRecord::Base
     credit_payments.map(&:destroy)
   end
 
-   def send_note_only response_to_client, current_user
-     self.update_attribute('status', 'sent')
-     InvoiceMailer.delay.send_note_email(response_to_client, self,self.client, current_user)
-   end
+  def send_note_only response_to_client, current_user
+    self.update_attribute('status', 'sent')
+    InvoiceMailer.delay.send_note_email(response_to_client, self, self.client, current_user)
+  end
 
   def late_payment_reminder(reminder_number)
     self.sent_emails.where("type = '#{reminder_number} Late Payment Reminder'").first

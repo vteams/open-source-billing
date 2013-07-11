@@ -9,7 +9,7 @@ window.taxByCategory = ->
   taxes = []
   jQuery("table.invoice_grid_fields tr:visible").each ->
     # TODO: apply discount on lineTotal
-    discountPct = parseFloat($("#invoice_discount_percentage").val())
+    discountPct = parseFloat($("#invoice_discount_percentage, #recurring_profile_discount_percentage").val())
     discountType = $("select#discount_type").val()
 
     lineTotal = parseFloat $(this).find(".line_total").text()

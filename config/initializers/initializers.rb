@@ -244,6 +244,8 @@ INDUSTRY_LIST = ['Accommodation & Hospitality',
 
 DISCOUNT_TYPE = %w(% $)
 
+RECURRING_FREQUENCY = [['2 minutes', '2.minutes'], ['weekly', '1.week'], ['2 weeks', '2.weeks'], ['4 weeks', '4.weeks'], ['monthly', '1.month'], ['2 months', '2.months'], ['4 months','4.months'], ['6 months', '6.months'], ['yearly', '1.year'], ['2 years', '2.years'], ['3 years', '3.years']]
+
 QUARTER_MONTHS = [['Jan - Mar', '1-3'], ['Apr - Jun', '4-6'], ['Jul - Sep', '7-9'], ['Oct - Dec', '10-12']]
 
 INVOICE_STATUS = [['Draft', 'draft'], ['Sent', 'sent'], ['Viewed', 'viewed'], ['Paid', 'paid'], ['Partial', 'partial'], ['Draft partial', 'draft_partial'], ['Disputed', 'disputed']]

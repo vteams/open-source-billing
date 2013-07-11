@@ -1,5 +1,5 @@
 jQuery('tbody#company_body').html('<%= escape_javascript(render 'company') %>').hide(300).show(300);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 

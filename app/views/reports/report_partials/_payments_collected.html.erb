@@ -54,19 +54,19 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left">Invoice</th>
+          <th class="align_left"><%= sortable('invoice_number', 'Invoice') %></th>
           <th class="align_left">Client Name</th>
           <th class="align_left">Type</th>
           <th class="align_left">Note</th>
           <th class="align_center">Date</th>
-          <th class="align_center {sorter:'thousands'}">Amount</th>
+          <th class="align_right {sorter:'thousands'}">Amount</th>
         </tr>
         </thead>
         <tbody>
         <% unless @report.report_data.blank? %>
             <% @report.report_data.each do |payment| %>
                 <tr>
-                  <td class="align_center"><%= payment.invoice.invoice_number rescue payment.invoice_number %></td>
+                  <td class="align_left"><%= payment.invoice.invoice_number rescue payment.invoice_number %></td>
                   <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.client_name %></td>
                   <td class="align_left"><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
                   <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
@@ -76,7 +76,7 @@
             <% end %>
             <tfoot>
                 <tr>
-                  <td class="align_center" >Total</td>
+                  <td class="align_left" >Total</td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>

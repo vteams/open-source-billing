@@ -96,17 +96,19 @@ module InvoicesHelper
   end
 
   def load_clients(action,company_id)
-    account_level = current_user.current_account.clients
+    account_level = current_user.current_account.clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
     id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    clients = Company.find_by_id(id).clients
-    action == 'new' && company_id.blank? ? account_level.map{|c| [c.organization_name, c.id, {type: 'account_level'}]} + clients.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}  : Company.find_by_id(company_id).clients.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
+
+    clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
+
+    action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
   end
 
   def load_items(action,company_id)
-    account_level = current_user.current_account.items
+    account_level = current_user.current_account.items.unarchived
     id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    items = Company.find_by_id(id).items
-    action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
+    items = Company.find_by_id(id).items.unarchived
+    action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
   end
 
 end

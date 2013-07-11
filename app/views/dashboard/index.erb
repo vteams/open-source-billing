@@ -6,7 +6,7 @@
           <li><%= link_to "New Invoice", new_invoice_path %></li>
           <li><%= link_to "New Item", new_item_path, :class => "small" %></li>
           <li><%= link_to "New Client", new_client_path, :class => "small" %></li>
-          <li><%= link_to "New Payment", '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
+          <li><%= link_to "New Payment", '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
           <script>$("li").last().css('margin-right', '0px');</script>
         </ul>
       </div>
@@ -127,7 +127,7 @@
         </div>
       </div>
 
-      <div class="span6">
+      <div class="span6 custome">
         <div class="dashboard_box small right">
           <h1>Past Invoices</h1>
           <p></p>

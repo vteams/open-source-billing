@@ -1,0 +1,17 @@
+<%= form_for(@recurring_profile_line_item) do |f| %>
+  <% if @recurring_profile_line_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recurring_profile_line_item.errors.count, "error") %> prohibited this recurring_profile_line_item from being saved:</h2>
+
+      <ul>
+      <% @recurring_profile_line_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

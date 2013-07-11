@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ReportsController < ApplicationController
+  helper_method :sort_column, :sort_direction
   include Reporting
 
   def index
@@ -53,5 +54,16 @@ class ReportsController < ApplicationController
   def get_report(options={})
     @criteria = Reporting::Criteria.new(options[:criteria]) # report criteria
     Reporting::Reporter.get_report({:report_name => options[:report_name], :report_criteria => @criteria})
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = params[:sort]
+    sort_col
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 end

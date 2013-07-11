@@ -23,7 +23,7 @@ module Services
   class PaymentService
 
     # how much credit is applied from which credit payment
-    def self.distribute_credit_payment(payment,client_email)
+    def self.distribute_credit_payment(payment, client_email)
       payment_amount = payment[:payment_amount]
       invoice = Invoice.find(payment[:invoice_id])
       client = invoice.client
@@ -33,20 +33,33 @@ module Services
       new_credit_payment.notify_client(client_email)
 
       # loop through all the credit payments of client
-        client.credit_payments.each do |credit_payment|
+      client.credit_payments.each do |credit_payment|
 
-          credit_amount, credit_applied = credit_payment.payment_amount.to_f, credit_payment.credit_applied.to_f
-          credit_amount -= credit_applied
-          current = remaining >= credit_amount ? {:amount => credit_amount, :still_remaining => true} : {:amount => remaining, :still_remaining => false}
-          collected += current[:still_remaining] ? current[:amount] : remaining
-          credit_applied += current[:amount]
-          remaining = payment_amount - collected
+        credit_amount, credit_applied = credit_payment.payment_amount.to_f, credit_payment.credit_applied.to_f
+        credit_amount -= credit_applied
+        current = remaining >= credit_amount ? {:amount => credit_amount, :still_remaining => true} : {:amount => remaining, :still_remaining => false}
+        collected += current[:still_remaining] ? current[:amount] : remaining
+        credit_applied += current[:amount]
+        remaining = payment_amount - collected
 
-          credit_payment.update_attributes(credit_applied: credit_applied)
-          CreditPayment.create({payment_id: credit_payment.id, invoice_id: credit_payment.invoice_id, amount: current[:amount], credit_id: new_credit_payment.id})
+        credit_payment.update_attributes(credit_applied: credit_applied)
+        CreditPayment.create({payment_id: credit_payment.id, invoice_id: credit_payment.invoice_id, amount: current[:amount], credit_id: new_credit_payment.id})
 
-          break if remaining == 0
-        end unless client.credit_payments.blank?
+        break if remaining == 0
+      end unless client.credit_payments.blank?
+    end
+
+    # update payments
+    def self.update_payments(params)
+      #dont save the payment if payment amount is not provided or it's zero
+      params[:payments].delete_if { |payment| payment["payment_amount"].blank? || payment["payment_amount"].to_f == 0 }.each do |pay|
+        next if Payment.check_client_credit(pay[:invoice_id]) && pay[:payment_method] == "Credit" #Ignore payment if credit is not enough
+        pay[:payment_amount] = pay[:payment_method] == "Credit" ? ::Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (::Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
+        pay[:payment_date] ||= Date.today
+        pay[:credit_applied] ||= 0.00
+        pay[:company_id] = ::Invoice.find(pay[:invoice_id]).company.id
+        pay[:payment_method] == "Credit" ? distribute_credit_payment(pay, params[:user].email) : ::Payment.create!(pay).notify_client(params[:user])
+      end
     end
 
   end

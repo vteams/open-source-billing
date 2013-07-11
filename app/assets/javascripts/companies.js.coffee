@@ -1,9 +1,15 @@
 jQuery ->
   #/ Change selected company in companies list in header
   jQuery("a.header_company_link").live "click", ->
-     company_id = jQuery(this).attr("company_id")
-     jQuery.get "/application/new_selected_company_name?company_id=" + company_id, (response) ->
-       jQuery("#current_selected_company").text(response)
+     link = jQuery(this)
+     company_id = link.attr('company_id')
+     controller = link.attr('controller')
+     action = link.attr('action')
+
+     unless (action is 'new' or action is 'edit') and (controller is 'invoices' or controller is 'recurring_profiles')
+        jQuery.get "/application/new_selected_company_name?company_id=" + company_id, (response) ->
+          jQuery("#current_selected_company").text(response)
+          jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
 
   #update clients and items on company change
   #  jQuery('#invoice_company_id').change ->

@@ -1,5 +1,5 @@
 jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>').hide(300).show(300);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 
@@ -23,13 +23,13 @@ jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
     jQuery('#active_links a.get_deleted').addClass('active');
 <%end%>
     jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
-setTimeout(function(){
- jQuery(".invoice_listing .text-overflow-class").ellipsis({row:1});
-},100);
+//setTimeout(function(){
+// jQuery(".invoice_listing .text-overflow-class").ellipsis({row:1});
+//},100);
 
 jQuery('#select_all').attr('checked', false);
 
-jQuery("table.invoice_listing").trigger('update');
+//jQuery("table.invoice_listing").trigger('update');
 
 
 

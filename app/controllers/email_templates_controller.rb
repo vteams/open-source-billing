@@ -62,13 +62,16 @@ class EmailTemplatesController < ApplicationController
   def update
     @email_template = EmailTemplate.find(params[:id])
     company_template = CompanyEmailTemplate.where("template_id = ? and parent_type = 'Company'",params[:id]).present?
+
     if company_template   #Only do it if editing a custom email template
      @email_template.delete_account_template if params[:association] == "account"
     elsif params[:association] == "company"
      @email_template =  EmailTemplate.new(params[:email_template])
     end
+
     @email_template.status = params[:association] == "company" ? "Custom" : "Default"
     associate_entity(params,@email_template)
+
     respond_to do |format|
       if @email_template.update_attributes(params[:email_template]) or @email_template.save
         format.html { redirect_to @email_template, notice: 'Email template was successfully updated.' }

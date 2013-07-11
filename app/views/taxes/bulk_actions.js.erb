@@ -30,5 +30,5 @@ jQuery('.top_links').hide();
 <%end%>
 
 jQuery('#select_all').attr('checked', false);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "paging", :page => params[:page] %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
 jQuery("table.table_listing").trigger('update');

@@ -48,8 +48,8 @@
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
               <th class="align_left header"><%= sortable('item_name','Item name') %></th>
               <th class="align_left header"><%= sortable('item_description','Item description') %></th>
-              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('unit_cost','Unit cost') %></th>
-              <th class="align_right header sorting"><%= sortable('quantity','Quantity') %></th>
+              <th class="align_right header"><%= sortable('unit_cost','Unit cost') %></th>
+              <th class="align_right header"><%= sortable('quantity','Quantity') %></th>
               <th class="align_center header"><%= sortable('tax1.name','Tax 1') %></th>
               <th class="align_center header"><%= sortable('tax2.name','Tax 2') %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
