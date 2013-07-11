@@ -1,5 +1,5 @@
 jQuery('tbody#email_body').html('<%= escape_javascript render("sent_emails") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("paging") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 
 jQuery('#sort_direction').html('<%= params[:direction]%>');
 jQuery(".sortable").each(function () {

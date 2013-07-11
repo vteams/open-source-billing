@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to edit_company_path(@company), notice: 'Your company has been created successfully.' }
+        format.html { redirect_to edit_company_path(@company), notice: 'Company has been created successfully.' }
         format.json { render json: @company, status: :created, location: @company }
       else
         format.html { render action: "new" }

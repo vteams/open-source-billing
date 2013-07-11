@@ -1,5 +1,9 @@
 <%= nested_form_for @recurring_profile, :html => {:class => 'form-recurring-profile', :novalidate => ""} do |f| %>
-    <% @parent_f = f %>
+    <% @parent_f = f
+       start_date = ''
+       start_date =  @recurring_profile.first_invoice_date.to_date.strftime("%Y-%m-%d") unless  @recurring_profile.first_invoice_date.blank?
+
+    %>
 
     <div class="invoice_form recurring_profile_form">
     <div class="content_middle">
@@ -14,7 +18,7 @@
               <div class="label_field left single"><%= f.label :first_invoice_date, content_tag(:span, 'Schedule') %></div>
               <div class="small_field">
                 <%= hidden_field_tag :recurring_profile_current_date, Date.today %>
-                <%= f.text_field :first_invoice_date, :required => "" %>
+                <%= f.text_field :first_invoice_date, :required => "", :value => start_date, :ignore_time => true %>
                 <ul class="field_description">
                   <li>Start date</li>
                 </ul>

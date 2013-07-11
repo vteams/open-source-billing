@@ -18,7 +18,9 @@
       <div class="invoice_organization">
         <p><%= @invoice.company.contact_name %></p>
 
-        <p><%= "#{@invoice.company.street_address_1}, #{@invoice.company.street_address_2}" %></p>
+        <p><%= @invoice.company.street_address_1 %></p>
+
+        <p><%= @invoice.company.street_address_2 %></p>
 
         <p><%= "#{@invoice.company.city}, #{@invoice.company.province_or_state } #{@invoice.company.postal_or_zipcode}" if @invoice.company.city %></p>
 
@@ -55,7 +57,9 @@
           <div class="invoice_organization">
             <p><%= @invoice.client.first_name.to_s + " " +@invoice.client.last_name.to_s %></p>
 
-            <p><%= "#{@invoice.client.address_street1}, #{@invoice.client.address_street2}" %></p>
+            <p><%= @invoice.client.address_street1 %></p>
+
+            <p><%= @invoice.client.address_street2 %></p>
 
             <p><%= "#{@invoice.client.city}, #{@invoice.client.province_state } #{@invoice.client.postal_zip_code}" if @invoice.client.city %></p>
 

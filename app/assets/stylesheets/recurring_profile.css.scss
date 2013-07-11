@@ -183,7 +183,8 @@ table.invoice_grid_fields {
   position: absolute;
 }
 
-#new_recurring_profile .chzn-container .chzn-results{
+
+#frequency_chzn.chzn-container .chzn-results{
  overflow: hidden;
   max-height: none;
 }

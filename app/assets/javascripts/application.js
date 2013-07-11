@@ -68,12 +68,12 @@ jQuery(function () {
 
     //override default behavior of inserting new subforms into form    
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 ) {
+        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1) {
             var $tr = $(link).closest('tr');
             return $(content).insertBefore($tr);
         } else if (document.location.pathname.search(/\/clients\//) != -1) {
             var $contact_container = $(link).parents('#adCntcts').find(".client_contacts_container");
-            return $contact_container.append(content)
+            return $contact_container.append(content);
         }
     };
 
@@ -88,14 +88,14 @@ jQuery(function () {
     jQuery('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
         jQuery(this).parents('li.dropdown').find('.dropdown-menu').show();
         jQuery(".sub").hide();
-        jQuery('#nav .dropup, #nav .dropdown').css('position','relative');
+        jQuery('#nav .dropup, #nav .dropdown').css('position', 'relative');
     }).mouseout(function () {
             jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
-            jQuery('#nav .dropup, #nav .dropdown').css('position','static');
+            jQuery('#nav .dropup, #nav .dropdown').css('position', 'static');
         });
     // Hide other open header menu on mouseover
     jQuery('.primary_menu .dropdown').mouseover(function () {
-       jQuery(this).siblings().removeClass('open');
+        jQuery(this).siblings().removeClass('open');
     });
 
     jQuery("#nav").on("mouseleave", function (event) {
