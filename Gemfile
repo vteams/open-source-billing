@@ -63,7 +63,7 @@ end # of group :default }}}
 # Gems only using during development phase
 group :development do # {{{
   gem 'better_errors'
-  gem "binding_of_caller", :platform => [ :ruby19 ]
+  gem "binding_of_caller", :platform => [ :ruby_19 ]
 end # }}}
 
 # Test gems used only during development and testing
