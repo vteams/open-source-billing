@@ -42,7 +42,7 @@ jQuery ->
     yaxis: chart_yaxis
 
   chart_grid =
-    background: '#FFFFFF'
+    background: '#1F45FC'
     drawBorder: false
     shadow: false
     borderWidth: 0.5
