@@ -6,12 +6,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;Active</span>
+        <%= t '.title', :default => t("clients") %>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Client")),
+      <%= link_to (content_tag(:span, t("header.links.clients.new"))),
                   new_client_path,
                   :class => 'btn_large' %>
     </div>
@@ -46,11 +46,11 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left header"><%= sortable('organization_name','Organization')%></th>
-              <th class="align_left header"><%= sortable('concat(first_name,last_name)','Contact')%></th>
-              <th class="align_left header"><%= sortable('email','Email')%></th>
-              <th class="align_left header"><%= sortable('business_phone','Phone')%></th>
-              <th class="align_left header"><%= sortable('client_credit','Available Credit')%></th>
+              <th class="align_left header"><%= sortable('organization_name',t('views.clients.organization'))%></th>
+              <th class="align_left header"><%= sortable('concat(first_name,last_name)',t('views.clients.contact'))%></th>
+              <th class="align_left header"><%= sortable('email',t('views.common.email'))%></th>
+              <th class="align_left header"><%= sortable('business_phone',t('views.common.phone'))%></th>
+              <th class="align_left header"><%= sortable('client_credit',t('views.clients.available_credit'))%></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -66,7 +66,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Client")),
+        <%= link_to (content_tag(:span, t("header.links.clients.new"))),
                     new_client_path,
                     :class => 'btn_large' %>
       </div>

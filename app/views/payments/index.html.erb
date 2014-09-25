@@ -12,7 +12,7 @@
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Payment")),
+      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                   '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
                   :class => 'btn_large', :remote => true %>
     </div>

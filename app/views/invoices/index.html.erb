@@ -7,11 +7,11 @@
     <div class="primary_heading">
       <h1>
         <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;Active</span>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Invoice")),
+      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                   new_invoice_path,
                   :class => 'btn_large' %>
     </div>
@@ -52,12 +52,12 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', 'Invoice #') %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
-              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', 'Total') %></th>
-              <th class="align_center header"><%= sortable('invoice_date', 'Date') %></th>
-              <th class="align_left header"><%= sortable('due_date', 'Due Date') %></th>
-              <th class="align_center header"><%= sortable('status', 'Status') %></th>
+              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', "#{t('invoice')} #") %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
+              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', t('views.common.total')) %></th>
+              <th class="align_center header"><%= sortable('invoice_date', t('views.common.date')) %></th>
+              <th class="align_left header"><%= sortable('due_date', t('views.invoices.due_date')) %></th>
+              <th class="align_center header"><%= sortable('status', t('views.common.status')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -74,7 +74,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Invoice")),
+        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                     new_invoice_path,
                     :class => 'btn_large' %>
       </div>

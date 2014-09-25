@@ -3,10 +3,10 @@
     <div class="span12">
       <div class="dashboart_menu">
         <ul>
-          <li><%= link_to "New Invoice", new_invoice_path %></li>
-          <li><%= link_to "New Item", new_item_path, :class => "small" %></li>
-          <li><%= link_to "New Client", new_client_path, :class => "small" %></li>
-          <li><%= link_to "New Payment", '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
+          <li><%= link_to t("header.links.invoices.new"), new_invoice_path %></li>
+          <li><%= link_to t("header.links.items.new"), new_item_path, :class => "small" %></li>
+          <li><%= link_to t("header.links.clients.new"), new_client_path, :class => "small" %></li>
+          <li><%= link_to t("header.links.payments.new"), '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
           <script>$("li").last().css('margin-right', '0px');</script>
         </ul>
       </div>
@@ -23,48 +23,48 @@
           <div class="dashboard_box">
 
             <div class="amount_box">
-              <h1>YTD Income</h1>
+              <h1><%= t("views.dashboard.ytd_income") %></h1>
 
               <h1 class="black"><%= number_to_currency(@ytd_income) %></h1>
 
-              <p>Total amount received against invoices sent during this year</p>
+              <p><%= t("views.dashboard.ytd_income_detail") %></p>
             </div>
 
             <div class="amount_box">
-              <h1>Amount Billed</h1>
+              <h1><%= t("views.dashboard.amount_billed") %></h1>
 
               <h1 class="black"><%= number_to_currency(@amount_billed) %></h1>
 
-              <p>Sum of the invoices total you sent to clients so far</p>
+              <p><%= t("views.dashboard.amount_billed_detail") %></p>
             </div>
 
             <div class="amount_box">
-              <h1>Total Outstanding</h1>
+              <h1><%= t("views.dashboard.total_outstanding") %></h1>
 
               <h1 class="black"><%= number_to_currency(@outstanding_invoices) %></h1>
 
-              <p>Total amount clients owe you</p>
+              <p><%= t("views.dashboard.total_outstanding_detail") %></p>
             </div>
 
             <div class="amount_box">
-              <h1>Aged AR</h1>
+              <h1><%= t("views.dashboard.aged_ar") %></h1>
 
               <div class="days_summary">
                 <div class="amount_row">
-                  <div class="days">0 - 30 days old <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["zero_to_thirty"]) || '$0.00' %></div>
+                  <div class="days">0 - 30 <%= t("views.dashboard.days_old") %> <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["zero_to_thirty"]) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
-                  <div class="days">30 - 60 days old <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["thirty_one_to_sixty"]) || '$0.00' %></div>
+                  <div class="days">30 - 60 <%= t("views.dashboard.days_old") %> <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["thirty_one_to_sixty"]) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
-                  <div class="days">60 - 90 days old <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["sixty_one_to_ninety"]) || '$0.00' %></div>
+                  <div class="days">60 - 90 <%= t("views.dashboard.days_old") %> <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["sixty_one_to_ninety"]) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
-                  <div class="days">Over 90 days old <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["ninety_one_and_above"]) || '$0.00' %></div>
+                  <div class="days">Over 90 <%= t("views.dashboard.days_old") %> <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["ninety_one_and_above"]) || "#{t('currency_unit')}0.00" %></div>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@
 
       <div class="span6">
         <div class="dashboard_box small right">
-          <h1>Current Invoices</h1>
+          <h1><%= "#{t('current')} #{t('invoices')}" %></h1>
           <p></p>
           <div class="grid_table current_invoices top">
             <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
@@ -88,10 +88,10 @@
                 <col class="three"/>
                 <col class="four"/>
               </colgroup>
-              <th class="align_left">Invoice#</th>
-              <th class="align_left">Client</th>
-              <th class="align_left">Due date</th>
-              <th class="align_right">Amount</th>
+              <th class="align_left"><%= t('invoice') %>#</th>
+              <th class="align_left"><%= t('client') %></th>
+              <th class="align_left"><%= t('views.dashboard.due_date') %></th>
+              <th class="align_right"><%= t('views.dashboard.amount') %></th>
             </table>
           </div>
           <!--grid_table-->
@@ -107,7 +107,7 @@
                 <tbody>
                 <% if @current_invoices.blank? %>
                     <tr>
-                      <td colspan="4">No current invoices</td>
+                      <td colspan="4"><%= t('views.dashboard.no_previous_invoices') %></td>
                     </tr>
                 <% else %>
                     <% @current_invoices.each do |current_invoice| %>
@@ -129,7 +129,7 @@
 
       <div class="span6 custome">
         <div class="dashboard_box small right">
-          <h1>Past Invoices</h1>
+          <h1><%= "#{t('past')} #{t('invoices')}" %></h1>
           <p></p>
           <div class="grid_table current_invoices top">
             <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
@@ -139,10 +139,10 @@
                 <col class="three"/>
                 <col class="four"/>
               </colgroup>
-              <th class="align_left">Invoice#</th>
-              <th class="align_left">Client</th>
-              <th class="align_left">Due date</th>
-              <th class="align_right">Amount</th>
+              <th class="align_left"><%= t('invoice') %>#</th>
+              <th class="align_left"><%= t('client') %></th>
+              <th class="align_left"><%= t('views.dashboard.due_date') %></th>
+              <th class="align_right"><%= t('views.dashboard.amount') %></th>
             </table>
           </div>
           <!--grid_table-->
@@ -158,7 +158,7 @@
                 <tbody>
                 <% if @past_invoices.blank? %>
                     <tr>
-                      <td colspan="4">No past invoices</td>
+                      <td colspan="4"><%= t('views.dashboard.no_previous_invoices') %></td>
                     </tr>
                 <% else %>
                     <% @past_invoices.each do |past_invoice| %>
@@ -197,9 +197,9 @@
       <div class="model_grey_container">
         <div class="modal-header">
 
-          <h1>Which Invoices have you received payment for?</h1>
+          <h1><%= t('views.dashboard.received_payment_detail') %></h1>
 
-          <p>Select one or more Invoices from the list below to apply payment.</p>
+          <p><%= t('views.dashboard.apply_payment_detail') %></p>
 
           <div class="cross_btn">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -213,7 +213,7 @@
             <tbody>
             <tr>
               <td>
-                <span>You haven't selected any invoice. Please select one or more invoices and try again.</span>
+                <span><%= t('views.dashboard.selected_amount_detail') %></span>
               </td>
             </tr>
             </tbody>
@@ -223,7 +223,7 @@
         </div>
         <div class="footer ">
           <%= submit_tag "Enter Payment", :class => "btn_large submit" %>
-          <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+          <a class="btn_large grey" href="#" data-dismiss="modal"><%= t('views.common.cancel') %></a>
         </div>
       </div>
     </div>

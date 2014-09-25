@@ -19,6 +19,12 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 module ApplicationHelper
+
+  def number_to_currency number,options = {}
+    options[:unit] ||= t("currency_unit")
+    super number,options
+  end
+
   # to add a active class to current link on main menu
   def nav_link(text, link)
     recognized = Rails.application.routes.recognize_path(link)

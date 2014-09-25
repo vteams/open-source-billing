@@ -1,9 +1,9 @@
 <%
-   no_record_message = "You haven't created any recurring profile yet. Please click on New Recurring Profile button to create new recurring profile."
+   no_record_message = t("views.invoices.recurring.no_record_msg")
    if params[:status] == "archived" || @action == "recovered from archived"
-     no_record_message = "You haven't any archived recurring profile."
+     no_record_message = t("views.invoices.recurring.no_record_msg_archived")
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = "You haven't any deleted recurring profile."
+     no_record_message = t("views.invoices.recurring.no_record_msg_deleted")
    end
 %>
 <%= hidden_field_tag :direction, params[:direction] %>

@@ -5,7 +5,7 @@
 <div class="sent_email">
   <div class="content_top">
     <div class="primary_heading">
-      <h1>Listing sent emails</h1>
+      <h1><%= t('views.clients.listing_sent_emails') %></h1>
     </div>
   </div>
   <!--content_top-->
@@ -20,10 +20,10 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left header"><%= sortable('subject','Subject') %></th>
-          <th class="align_left header"><%= sortable('recipient','Recipient') %></th>
-          <th class="align_center header"><%= sortable('type','Type') %></th>
-          <th class="align_center header"><%= sortable('date','Date') %></th>
+          <th class="align_left header"><%= sortable('subject',t('views.clients.subject')) %></th>
+          <th class="align_left header"><%= sortable('recipient',t('views.clients.recipient')) %></th>
+          <th class="align_center header"><%= sortable('type',t('views.clients.type')) %></th>
+          <th class="align_center header"><%= sortable('date',t('views.clients.date')) %></th>
         </tr>
         </thead>
         <tbody id="email_body">
