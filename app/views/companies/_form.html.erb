@@ -15,14 +15,14 @@
           <% end %>
 
           <div class="fields_content_heading">
-            <h2>Organization</h2>
+            <h2><%= t('views.clients.organization') %></h2>
           </div>
 
 
           <div class="fields_content_data">
 
             <div class="field_row">
-              <div class="label_field left single"><span>Company Name</span></div>
+              <div class="label_field left single"><span><%= t('views.companies.name') %></span></div>
               <div class="large_field">
                 <%= f.text_field :company_name, :required => "required"  %>
               </div>
@@ -30,27 +30,27 @@
             <!--field_row-->
 
             <div class="field_row">
-              <div class="label_field left single"><span>Contact Name</span></div>
+              <div class="label_field left single"><span><%= t('views.clients.contact_name') %></span></div>
               <div class="medium_field">
                 <%= f.text_field :contact_name, :required => "required" %>
               </div>
-              <div class="label_field right single">Contact Title</div>
+              <div class="label_field right single"><%= t('views.clients.contact_title') %></div>
               <div class="small_field"><%= f.text_field :contact_title %></div>
             </div>
             <!--field_row-->
 
             <div class="field_row">
-              <div class="label_field left single"><span>Email</span></div>
+              <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
               <div class="medium_field">
                 <%= f.text_field :email, :required => "required" %>
               </div>
-              <div class="label_field right single">Phone</div>
+              <div class="label_field right single"><%= t('views.common.phone') %></div>
               <div class="small_field"><%= f.text_field :phone_number %></div>
             </div>
             <!--field_row-->
 
             <div class="field_row">
-              <div class="label_field left single">Fax</div>
+              <div class="label_field left single"><%= t('views.common.fax') %></div>
               <div class="small_field">
                 <%= f.text_field :fax_number %>
               </div>
@@ -68,17 +68,17 @@
       <div class="fields_content">
         <div class="fields_content_container">
           <div id="contact" class="fields_content_heading">
-            <h2>Address <span>(click to expand)</span></h2>
+            <h2><%= t('views.common.address') %> <span>(<%= t('views.common.click_to_expand') %>)</span></h2>
           </div>
 
           <div id="adCntcts" class="fields_content_data" style="display:none;">
 
             <div class="field_row description">
-              <div class="label_field left single">Address</div>
+              <div class="label_field left single"><%= t('views.common.address') %></div>
               <div class="large_field">
-                <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => "Select a country...", :class => "medium chzn-select"} %>
+                <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => t("views.common.select_a_country"), :class => "medium chzn-select"} %>
                 <ul class="field_description select">
-                  <li>Country</li>
+                  <li><%= t('views.common.country') %></li>
                 </ul>
               </div>
             </div>
@@ -89,7 +89,7 @@
               <div class="large_field">
                 <%= f.text_field :street_address_1 %>
                 <ul class="field_description">
-                  <li>Street#1</li>
+                  <li><%= t('views.common.street') %>#1</li>
                 </ul>
               </div>
             </div>
@@ -100,7 +100,7 @@
               <div class="large_field">
                 <%= f.text_field :street_address_2 %>
                 <ul class="field_description">
-                  <li>Street#2</li>
+                  <li><%= t('views.common.street') %>>#2</li>
                 </ul>
               </div>
             </div>
@@ -111,19 +111,19 @@
               <div class="small_field">
                 <%= f.text_field :city %>
                 <ul class="field_description">
-                  <li>City</li>
+                  <li><%= t('views.common.city') %></li>
                 </ul>
               </div>
               <div class="small_field right">
                 <%= f.text_field :province_or_state %>
                 <ul class="field_description">
-                  <li>Provice / State</li>
+                  <li><%= t('views.common.province') %></li>
                 </ul>
               </div>
               <div class="small_field right">
                 <%= f.text_field :postal_or_zipcode %>
                 <ul class="field_description">
-                  <li>Postal / Zip Code</li>
+                  <li><%= t('views.common.zip_code') %></li>
                 </ul>
               </div>
             </div>
@@ -141,20 +141,20 @@
       <div class="fields_content">
         <div class="fields_content_container">
           <div id="detail" class="fields_content_heading">
-            <h2>Branding <span>(click to expand)</span></h2>
+            <h2><%= t('views.companies.branding') %> <span>(<%= t('views.common.click_to_expand') %>)</span></h2>
           </div>
 
           <div id="add_Detail" class="fields_content_data" style="display:none;">
 
 
             <div class="field_row">
-              <div class="label_field left single">Logo</div>
+              <div class="label_field left single"><%= t('views.companies.logo') %></div>
               <div class="large_field">
                 <input type="file" name="company[logo]" style="display:none;" id="pdffile"/>
 
                 <div class="input-append">
                   <input type="text" name="subfile" id="subfile" class="input-xlarge"/>
-                  <a class="btn" onclick="$('#pdffile').click();">Browse</a>
+                  <a class="btn" onclick="$('#pdffile').click();"><%= t('views.companies.browse') %></a>
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@
             <% end %>
 
             <div class="field_row">
-              <div class="label_field left single">Company Tag Line</div>
+              <div class="label_field left single"><%= t('views.companies.tag_line') %></div>
               <div class="large_field">
                 <%= f.text_field :company_tag_line %>
               </div>
@@ -178,7 +178,7 @@
             <!--field_row-->
 
             <div class="field_row description">
-              <div class="label_field left single">Memo</div>
+              <div class="label_field left single"><%= t('views.companies.memo') %>></div>
               <div class="large_field">
                 <%= f.text_area :memo %>
               </div>

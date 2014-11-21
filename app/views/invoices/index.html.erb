@@ -98,16 +98,15 @@
                 <tbody>
                 <tr>
                   <td>
-                    <span>You haven't selected any invoice. Please select one or more invoices and try again.</span>
+                    <span><%= t('views.invoices.no_invoice_selected') %></span>
                   </td>
                 </tr>
                 </tbody>
               </table>
             </div>
-            <h1>How to handle invoice payments ?</h1>
+            <h1><%= t('views.invoices.how_to_handle_invoice_payments') %></h1>
 
-            <p>The invoice you are trying to delete has payments associated with it. You must decide what
-              to do with payments before the invoice can be deleted.</p>
+            <p><%= t('views.invoices.handle_associated_payments') %></p>
 
             <div class="cross_btn">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -118,9 +117,9 @@
           <div class="modal-body">
           </div>
           <div class="footer ">
-            <%= submit_tag "Convert Payment to Credit", :name => "convert_to_credit", :class => "btn_large submit small_case" %>
-            <%= submit_tag "Permanently Delete Payment", :name => "destroy", :class => "btn_large submit small_case" %>
-            <a href="#" data-dismiss="modal" class="btn_large grey">cancel</a>
+            <%= submit_tag t("views.invoices.convert_payment_to_credit"), :name => "convert_to_credit", :class => "btn_large submit small_case" %>
+            <%= submit_tag t("views.invoices.permanently_delete_payment"), :name => "destroy", :class => "btn_large submit small_case" %>
+            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancel') %></a>
           </div>
         </div>
       </div>

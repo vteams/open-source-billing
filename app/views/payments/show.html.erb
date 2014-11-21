@@ -1,40 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Invoice:</b>
+  <b><%= t('invoice') %>:</b>
   <%= @payment.invoice_id %>
 </p>
 
 <p>
-  <b>Payment amount:</b>
+  <b><%= t('views.dashboard.amount') %>:</b>
   <%= @payment.payment_amount %>
 </p>
 
 <p>
-  <b>Payment method:</b>
+  <b><%= t('views.common.method') %>:</b>
   <%= @payment.payment_method %>
 </p>
 
 <p>
-  <b>Payment date:</b>
+  <b><%= t('views.common.date') %>:</b>
   <%= @payment.payment_date %>
 </p>
 
 <p>
-  <b>Notes:</b>
+  <b><%= t('views.common.notes') %>:</b>
   <%= @payment.notes %>
 </p>
 
 <p>
-  <b>Send payment notification:</b>
+  <b><%= t('views.payments.send_payment_notification') %>:</b>
   <%= @payment.send_payment_notification %>
 </p>
 
 <p>
-  <b>Paid full:</b>
+  <b><%= t('views.payments.paid_full') %>:</b>
   <%= @payment.paid_full %>
 </p>
 
 
-<%= link_to 'Edit', edit_payment_path(@payment) %> |
-<%= link_to 'Back', payments_path %>
+<%= link_to t('helpers.links.edit'), edit_payment_path(@payment) %> |
+<%= link_to t('views.common.back'), payments_path %>

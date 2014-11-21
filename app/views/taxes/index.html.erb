@@ -6,11 +6,11 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        Taxes<span>&nbsp;/&nbsp;Active</span>
+        <%= t('views.taxes.taxes') %><span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Tax")),
+      <%= link_to (content_tag(:span, t('views.taxes.new'))),
                   new_taxis_path,
                   :class => 'btn_large' %>
     </div>
@@ -40,8 +40,8 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left header"><%= sortable('name','Name') %></th>
-              <th class="align_left header"><%= sortable('percentage','Percentage') %></th>
+              <th class="align_left header"><%= sortable('name',t('views.common.name')) %></th>
+              <th class="align_left header"><%= sortable('percentage',t('views.common.percentage')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -57,7 +57,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Tax")),
+        <%= link_to (content_tag(:span, t('views.taxes.new'))),
                     new_taxis_path,
                     :class => 'btn_large' %>
       </div>

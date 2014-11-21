@@ -2,7 +2,7 @@
   <div class="dispute_wrapper pdf_preview">
     <div class="dispute_container">
       <div class="dispute_heading">
-        <h1>Dispute History</h1>
+        <h1><%= t('views.invoices.dispute_history') %></h1>
       </div>
       <% @invoice.dispute_history.each_with_index do |email_detail, i| %>
         <div class="dispute_content <%= i + 1 > 2 ? "toggleable collapse" : "" %>">
@@ -19,8 +19,8 @@
       <% if @invoice.dispute_history.length > 2 %>
         <div class="dispute_contorl">
           <ul>
-            <li><a class="less" href="#">less</a></li>
-            <li><a class="more" href="#">more</a></li>
+            <li><a class="less" href="#"><%= t('views.common.less') %></a></li>
+            <li><a class="more" href="#"><%= t('views.common.more') %></a></li>
           </ul>
         </div>
       <% end %>

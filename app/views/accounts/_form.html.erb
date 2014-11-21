@@ -8,7 +8,7 @@
           <div class="field_row">
             <div class="label_field left single">
               <%#= f.label "company_name" %>
-              <label for="company_org_name"><span>Company Name</span></label>
+              <label for="company_org_name"><span><%= t('views.companies.name') %></span></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :org_name, :required => 'required' %>
@@ -19,7 +19,7 @@
           <div class="field_row">
             <div class="label_field left single">
               <%#= f.label "first_name" %>
-              <label for="company_admin_first_name"><span>First Name</span></label>
+              <label for="company_admin_first_name"><span><%= t('views.clients.first_name') %></span></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :admin_first_name, :required => 'required' %>
@@ -30,7 +30,7 @@
           <div class="field_row">
             <div class="label_field left single">
               <%#= f.label "last_name" %>
-              <label for="company_admin_last_name"><span>Last Name</span></label>
+              <label for="company_admin_last_name"><span><%= t('views.clients.last_name') %></span></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :admin_last_name, :required => 'required' %>
@@ -40,10 +40,10 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <%= f.label :country %>
+              <%= f.label :country, t('views.common.country') %>
             </div>
             <div class="middle_field">
-              <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => "Select a country...", :class => "chzn-select"} %>
+              <%= f.select :country, COUNTRY_LIST, {:prompt => ""}, {"data-placeholder" => t("views.common.select_a_country"), :class => "chzn-select"} %>
               <%#= f.text_field :country %>
             </div>
           </div>
@@ -51,7 +51,7 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <label for="company_street_address_1">Street Address</label>
+              <label for="company_street_address_1"><%= t('views.common.street_address') %></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :street_address_1 %>
@@ -71,7 +71,7 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <%= f.label :city %>
+              <%= f.label :city, t('views.common.city') %>
             </div>
             <div class="middle_field">
               <%= f.text_field :city %>
@@ -81,7 +81,7 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <label for="company_province_or_state">Province/State</label>
+              <label for="company_province_or_state"><%= t('views.common.province') %></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :province_or_state %>
@@ -91,7 +91,7 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <label for="company_postal_or_zip_code">Postal/Zip code</label>
+              <label for="company_postal_or_zip_code"><%= t('views.common.zip_code') %></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :postal_or_zip_code %>
@@ -101,7 +101,7 @@
 
           <div class="field_row">
             <div class="label_field left single">
-              <label for="company_phone_business">Phone Number</label>
+              <label for="company_phone_business"><%= t('views.common.phone') %></label>
             </div>
             <div class="middle_field">
               <%= f.text_field :phone_business %>

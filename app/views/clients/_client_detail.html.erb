@@ -11,17 +11,17 @@
           <div class="bal_box">
             <h2 class="orange"><%= number_to_currency(@detail[:outstanding_amount]) %></h2>
 
-            <p>Outstanding Amount</p>
+            <p><%= t('views.clients.outstanding_amount') %></p>
           </div>
           <div class="bal_box center">
             <h2 class="blue"><%= number_to_currency(@detail[:amount_billed]) %></h2>
 
-            <p>Total amount billed</p>
+            <p><%= t('views.clients.total_amount_billed') %></p>
           </div>
           <div class="bal_box">
             <h2><%= number_to_currency(@detail[:payments]) %></h2>
 
-            <p>Total payments received</p>
+            <p><%= t('views.clients.total_payments_received') %></p>
           </div>
         </div>
 
@@ -36,10 +36,10 @@
                 <col class="three"/>
                 <col class="four"/>
               </colgroup>
-              <th class="align_left">Inv. #</th>
-              <th class="align_left">Due date</th>
-              <th class="align_left">Company</th>
-              <th class="align_right">Amount</th>
+              <th class="align_left"><%= t('invoice') %>. #</th>
+              <th class="align_left"><%= t('views.invoices.due_date') %></th>
+              <th class="align_left"><%= t('company') %></th>
+              <th class="align_right"><%= t('amount') %></th>
             </table>
           </div>
           <!--grid_table-->
@@ -56,7 +56,7 @@
                 <tbody>
                 <% if @invoices.blank? %>
                     <tr>
-                      <td class="align_left" colspan="4">No invoices found</td>
+                      <td class="align_left" colspan="4"><%= t('views.invoices.no_invoice_found') %></td>
                     </tr>
                 <% else %>
                     <% @invoices.each do |invoice| %>
@@ -88,10 +88,10 @@
                 <col class="three"/>
                 <col class="four"/>
               </colgroup>
-              <th class="align_left">Inv. #</th>
-              <th class="align_left">Date</th>
-              <th class="align_left">Company</th>
-              <th class="align_right">Amount</th>
+              <th class="align_left"><%= t('invoice') %>. #</th>
+              <th class="align_left"><%= t('views.invoices.due_date') %></th>
+              <th class="align_left"><%= t('company') %></th>
+              <th class="align_right"><%= t('amount') %></th>
             </table>
           </div>
           <!--grid_table-->
@@ -108,7 +108,7 @@
                 <tbody>
                 <% if @payments.blank? %>
                     <tr>
-                      <td class="align_left" colspan="4">No payments found</td>
+                      <td class="align_left" colspan="4"><%= t('views.payments.no_payment_found') %></td>
                     </tr>
                 <% else %>
                     <% @payments.each do |payment| %>

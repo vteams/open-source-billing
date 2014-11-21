@@ -1,9 +1,9 @@
 <%
-   no_record_message = "You haven't created any client yet. Please click on New Client button to create new client."
+   no_record_message = t('views.clients.no_record_msg')
    if params[:status] == "archived" || @action == "recovered from archived"
-     no_record_message = "You haven't any archived client."
+     no_record_message = t('views.clients.no_archived_client')
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = "You haven't any deleted client."
+     no_record_message = t('views.clients.no_deleted_clients')
    end
    test = @clients.first
 %>

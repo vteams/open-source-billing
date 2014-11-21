@@ -1,80 +1,80 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>First invoice date:</b>
+  <b><%= t('views.invoices.recurring.first_invoice_date') %>:</b>
   <%= @recurring_profile.first_invoice_date %>
 </p>
 
 <p>
-  <b>Po number:</b>
+  <b><%= t('views.invoices.recurring.po_number') %>:</b>
   <%= @recurring_profile.po_number %>
 </p>
 
 <p>
-  <b>Discount percentage:</b>
+  <b><%= t('views.invoices.recurring.discount_percentage') %>:</b>
   <%= @recurring_profile.discount_percentage %>
 </p>
 
 <p>
-  <b>Frequency:</b>
+  <b><%= t('views.invoices.recurring.frequency') %>:</b>
   <%= @recurring_profile.frequency %>
 </p>
 
 <p>
-  <b>Occurrences:</b>
+  <b><%= t('views.invoices.recurring.occurances') %>:</b>
   <%= @recurring_profile.occurrences %>
 </p>
 
 <p>
-  <b>Prorate:</b>
+  <b><%= t('views.invoices.recurring.prorate') %>:</b>
   <%= @recurring_profile.prorate %>
 </p>
 
 <p>
-  <b>Prorate for:</b>
+  <b><%= t('views.invoices.recurring.prorate_for') %>:</b>
   <%= @recurring_profile.prorate_for %>
 </p>
 
 <p>
-  <b>Gateway:</b>
+  <b><%= t('views.invoices.recurring.gateway') %>:</b>
   <%= @recurring_profile.gateway_id %>
 </p>
 
 <p>
-  <b>Client:</b>
+  <b><%= t('client') %>:</b>
   <%= @recurring_profile.client_id %>
 </p>
 
 <p>
-  <b>Terms:</b>
+  <b><%= t('views.common.terms') %>:</b>
   <%= @recurring_profile.terms %>
 </p>
 
 <p>
-  <b>Notes:</b>
+  <b><%= t('views.common.notes') %>:</b>
   <%= @recurring_profile.notes %>
 </p>
 
 <p>
-  <b>Status:</b>
+  <b><%= t('views.common.status') %>:</b>
   <%= @recurring_profile.status %>
 </p>
 
 <p>
-  <b>Sub total:</b>
+  <b><%= t('views.invoices.subtotal') %>:</b>
   <%= @recurring_profile.sub_total %>
 </p>
 
 <p>
-  <b>Discount amount:</b>
+  <b><%= t('views.common.discount') %>:</b>
   <%= @recurring_profile.discount_amount %>
 </p>
 
 <p>
-  <b>Tax amount:</b>
+  <b><%= t('views.common.tax') %>:</b>
   <%= @recurring_profile.tax_amount %>
 </p>
 
 
-<%= link_to 'Edit', edit_recurring_profile_path(@recurring_profile) %> |
-<%= link_to 'Back', recurring_profiles_path %>
+<%= link_to t('helpers.links.edit'), edit_recurring_profile_path(@recurring_profile) %> |
+<%= link_to t('views.common.back'), recurring_profiles_path %>

@@ -3,7 +3,7 @@
 
     <div class="report_content_header">
       <div class="report_content_heading">
-        <h1>Revenue By Client</h1>
+        <h1><%= t('views.reports.revenue_by_client') %></h1>
       </div>
 
       <div class="content_header_data">
@@ -22,12 +22,12 @@
 
     <div class="header_data_right">
       <ul class="download_report">
-        <li class="download_report_title">Export to:</li>
-        <li class="download_sep">CSV</li>
-        <li>Excel</li>
+        <li class="download_report_title"><%= t('views.reports.export_to') %>:</li>
+        <li class="download_sep"><%= t('views.common.csv') %></li>
+        <li><%= t('views.common.excel') %></li>
       </ul>
       <ul class="print_report">
-        <li><a href="#">Print Report</a></li>
+        <li><a href="#"><%= t('views.reports.print_report') %></a></li>
       </ul>
       <div class="report_duration">
         <!--<ul>-->
@@ -51,11 +51,11 @@
           </colgroup>
 
           <thead>
-            <th class="align_left">Client</th>
+            <th class="align_left"><%= t('views.clients.client') %></th>
             <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each  do |month| %>
                 <th class="align_right"><%= Date::MONTHNAMES[month].to_s[0..2] %></th>
             <% end %>
-            <th class="align_right">Total</th>
+            <th class="align_right"><%= t('views.common.total') %></th>
           </thead>
           <tbody>
           <% unless @report.report_data.blank? %>
@@ -78,8 +78,7 @@
               </tfoot>
           <% else %>
               <tr>
-                <td colspan="14">No data found against the selected criteria. Please change criteria and try again.
-                </td>
+                <td colspan="14"><%= t('views.reports.report_no_data') %></td>
               </tr>
           <% end %>
           </tbody>

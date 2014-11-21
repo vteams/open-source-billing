@@ -20,7 +20,7 @@
           <td class="align_center"><%= payment.payment_date %></td>
           <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
           <td class="align_center">
-            <%= link_to 'Edit',
+            <%= link_to t('edit'),
                         edit_payment_path(payment), :class => 'edit_action', :value => payment.payment_type %>
             <% unless params[:status] == "deleted" %>
                 <%#= link_to t('.destroy', :default => "Delete"),

@@ -1,32 +1,32 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Item name:</b>
+  <b><%= t('views.items.item_name') %>:</b>
   <%= @item.item_name %>
 </p>
 
 <p>
-  <b>Item description:</b>
+  <b><%= t('views.items.description') %>:</b>
   <%= @item.item_description %>
 </p>
 
 <p>
-  <b>Unit cost:</b>
+  <b><%= t('views.invoice_line_item.unit_cost') %>:</b>
   <%= @item.unit_cost %>
 </p>
 
 <p>
-  <b>Quantity:</b>
+  <b><%= t('views.items.quantity') %>:</b>
   <%= @item.quantity %>
 </p>
 
 <p>
-  <b>Tax 1:</b>
+  <b><%= t('views.items.tax') %> 1:</b>
   <%= @item.tax_1 %>
 </p>
 
 <p>
-  <b>Tax 2:</b>
+  <b><%= t('views.items.tax') %> 2:</b>
   <%= @item.tax_2 %>
 </p>
 
@@ -41,5 +41,5 @@
 <!--</p>-->
 
 
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
+<%= link_to t('helpers.links.edit'), edit_item_path(@item) %> |
+<%= link_to t('views.common.back'), items_path %>

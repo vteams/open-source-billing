@@ -11,7 +11,7 @@
 
     <div class="preview_top_left">
       <div class="invoice_date">
-        <h2>Invoice</h2>
+        <h2><%= t('invoice') %></h2>
       </div>
       <div class="invoice_name"><%= @invoice.company.company_name || '' %></div>
 
@@ -72,25 +72,25 @@
     <div class="preview_top_right">
 
       <div class="top_right_row">
-        <div class="preview_right_label">Invoice # <span>:</span></div>
+        <div class="preview_right_label"><%= t('invoice') %> # <span>:</span></div>
         <div class="preview_right_description"><%= @invoice.invoice_number %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row">
-        <div class="preview_right_label">Invoice Date <span>:</span></div>
+        <div class="preview_right_label"><%= t('views.invoices.invoice_date') %> <span>:</span></div>
         <div class="preview_right_description"><%= @invoice.invoice_date.strftime('%B %d , %Y') rescue "" %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row">
-        <div class="preview_right_label">Amount <span>:</span></div>
+        <div class="preview_right_label"><%= t('amount') %> <span>:</span></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row">
-        <div class="preview_right_label">Due Date <span>:</span></div>
+        <div class="preview_right_label"><%= t('views.invoices.due_date') %> <span>:</span></div>
         <div class="preview_right_description"><%= @invoice.due_date.strftime('%B %d , %Y') rescue "" %></div>
       </div>
       <!--top_right_row-->
@@ -122,11 +122,11 @@
 
       </colgroup>
       <tr>
-        <th class="align_left">Item</th>
-        <th class="align_left">Description</th>
-        <th class="align_right">Unit Cost</th>
-        <th class="align_right">Quantity</th>
-        <th class="align_right">Line Total</th>
+        <th class="align_left"><%= t('views.common.item') %></th>
+        <th class="align_left"><%= t('views.common.description') %></th>
+        <th class="align_right"><%= t('views.common.unit_cost') %></th>
+        <th class="align_right"><%= t('views.items.quantity') %></th>
+        <th class="align_right"><%= t('views.invoices.line_total') %></th>
       </tr>
       <% @invoice.invoice_line_items.each do |item|
         item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
@@ -151,7 +151,7 @@
     <% unless @invoice.notes.blank? %>
         <div class="preview_left btm">
           <div class="preview_notes">
-            <p class="preview_heading">Notes</p>
+            <p class="preview_heading"><%= t('views.common.notes') %></p>
 
             <p><%= @invoice.notes %></p>
           </div>
@@ -161,13 +161,13 @@
 
     <div class="preview_right btm">
       <div class="top_right_row preview_heading">
-        <div class="preview_right_label">Subtotal</div>
+        <div class="preview_right_label"><%= t('views.invoices.subtotal') %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.sub_total) %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row">
-        <div class="preview_right_label">Discount <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
+        <div class="preview_right_label"><%= t('views.common.discount') %> <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount) %></div>
       </div>
       <!--top_right_row-->
@@ -177,19 +177,19 @@
       <!--top_right_row-->
 
       <div class="top_right_row preview_heading border-row">
-        <div class="preview_right_label">Total</div>
+        <div class="preview_right_label"><%= t('views.common.total') %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total) %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row border amt_paid">
-        <div class="preview_right_label">Amount Paid</div>
+        <div class="preview_right_label"><%= t('views.invoices.amount_payed') %></div>
         <div class="preview_right_description">-<%= number_to_currency(Payment.invoice_paid_amount(@invoice.id)) %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row border preview_heading">
-        <div class="preview_right_label">Amount Due</div>
+        <div class="preview_right_label"><%= t('views.invoices.amount_due') %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
       </div>
       <!--top_right_row-->
@@ -200,7 +200,7 @@
   <!--preview_btm_top-->
   <div class="preview_btm_footer">
     <ul>
-      <li class="footer_txt">This invoice was sent using</li>
+      <li class="footer_txt"><%= t('views.invoices.this_invoice_was_sent_using') %></li>
       <li><%= image_tag "payment_logo.png", :size => "74x13", :alt => "" %></li>
     </ul>
   </div>

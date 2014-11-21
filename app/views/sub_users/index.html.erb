@@ -6,12 +6,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        Users
+        <%= t('views.users.users') %>
         <!--<span>&nbsp;/&nbsp;Active</span>-->
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to "New User", new_sub_user_path, :class => 'btn_large' %>
+      <%= link_to t("views.users.new"), new_sub_user_path, :class => 'btn_large' %>
     </div>
   </div>
   <!--content_top-->
@@ -28,9 +28,9 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left header"><%= sortable('user_name','Full Name') %></th>
-          <th class="align_left header"><%= sortable('email','Email') %></th>
-          <th class="align_left header"><%= sortable('created_at','Date') %></th>
+          <th class="align_left header"><%= sortable('user_name',t('views.users.full_name')) %></th>
+          <th class="align_left header"><%= sortable('email',t('email')) %></th>
+          <th class="align_left header"><%= sortable('created_at',t('views.common.date')) %></th>
           <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
         </tr>
         </thead>
@@ -46,7 +46,7 @@
   </div>
   <!--content_middle-->
   <div class="content_bottom">
-    <%= link_to "New User", new_sub_user_path, :class => 'btn_large' %>
+    <%= link_to t("views.users.new"), new_sub_user_path, :class => 'btn_large' %>
   </div>
   <!--content_bottom-->
 

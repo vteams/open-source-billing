@@ -5,7 +5,7 @@
 
           <div class="report_date">
             <div class="control_name">
-              <p>Date Range</p>
+              <p><%= t('views.reports.date_range') %></p>
             </div>
             <input name="criteria[from_date]" type="text" id="from_date" value="<%= 1.month.ago.to_date %>"/>
 
@@ -15,19 +15,19 @@
 
           <div class="report_items">
             <div class="control_name">
-              <p>Item</p>
+              <p><%= t('views.common.item') %></p>
             </div>
             <div class="report_select">
-              <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => "All"})] + Item.all, :id, :item_name, {:prompt => "All"}, {:class => "item chzn-select"} %>
+              <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + Item.all, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item chzn-select"} %>
             </div>
             <div class="control_name">
-              <p>Invoice Status</p>
+              <p><%= t('views.invoices.invoice_status') %></p>
             </div>
-            <div class="report_select"><%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS), {:prompt => "All", :class => "invoice-status chzn-select"} %></div>
+            <div class="report_select"><%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS), {:prompt => t('views.common.all'), :class => "invoice-status chzn-select"} %></div>
           </div>
 
           <div class="report_update">
-            <%= submit_tag "Go", :class => "report_update" %>
+            <%= submit_tag t('views.common.go'), :class => "report_update" %>
           </div>
       <% end %>
     </div>

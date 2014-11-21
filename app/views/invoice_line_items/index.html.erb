@@ -2,14 +2,14 @@
 
 <table>
   <tr>
-    <th>Invoice</th>
-    <th>Item</th>
-    <th>Item name</th>
-    <th>Item description</th>
-    <th>Item unit cost</th>
-    <th>Item quantity</th>
-    <th>Tax 1</th>
-    <th>Tax 2</th>
+    <th><%= t('invoice') %></th>
+    <th><%= t('views.common.item') %></th>
+    <th><%= t('views.invoice_line_item.name') %></th>
+    <th><%= t('views.invoice_line_item.description') %></th>
+    <th><%= t('views.invoice_line_item.unit_cost') %></th>
+    <th><%= t('views.invoice_line_item.quantity') %></th>
+    <th><%= t('views.invoice_line_item.tax_1') %></th>
+    <th><%= t('views.invoice_line_item.tax_2') %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -25,13 +25,13 @@
         <td><%= invoice_line_item.item_quantity %></td>
         <td><%= invoice_line_item.tax_1 %></td>
         <td><%= invoice_line_item.tax_2 %></td>
-        <td><%= link_to 'Show', invoice_line_item %></td>
-        <td><%= link_to 'Edit', edit_invoice_line_item_path(invoice_line_item) %></td>
-        <td><%= link_to 'Destroy', invoice_line_item, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to t('views.common.show'), invoice_line_item %></td>
+        <td><%= link_to t('helpers.links.edit'), edit_invoice_line_item_path(invoice_line_item) %></td>
+        <td><%= link_to t('views.common.destroy'), invoice_line_item, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
 </table>
 
 <br/>
 
-<%= link_to 'New Invoice line item', new_invoice_line_item_path %>
+<%= link_to t('views.invoice_line_item.new'), new_invoice_line_item_path %>

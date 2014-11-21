@@ -37,13 +37,13 @@ gem "pdfkit"
 group :development do
   gem 'better_errors'
   gem "binding_of_caller"
+  gem "copyright-header"
   gem 'pry'
 end
 gem "browser"
 gem "gon"
 gem "rest-client"
 gem "slim"
-gem "copyright-header"
 gem 'paypal-sdk-rest'
 gem 'activemerchant'
 gem 'paper_trail'

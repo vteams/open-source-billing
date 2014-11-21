@@ -20,7 +20,7 @@
           <div class="fields_content_data">
 
             <div class="field_row">
-              <div class="label_field left single"><span>Tax Name</span></div>
+              <div class="label_field left single"><span><%= t('views.taxes.tax_name') %></span></div>
               <div class="large_field">
                 <%= f.text_field :name, :required => "" %>
               </div>
@@ -28,7 +28,7 @@
             <!--field_row-->
 
             <div class="field_row">
-              <div class="label_field left single"><span>Percentage</span></div>
+              <div class="label_field left single"><span><%= t('views.common.percentage') %></span></div>
               <div class="large_field">
                 <%= f.text_field :percentage, :required => "" %>
               </div>

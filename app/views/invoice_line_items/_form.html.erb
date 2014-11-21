@@ -13,38 +13,38 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :item_id %>
+      <%= f.label :item_id, t('views.invoice_line_item.item') %>
       <br/>
       <%= f.number_field :item_id %>
       <%= collection_select :invoice_line_item, :item_id, Item.all, :id, :item_name, :prompt => "Select an item" %>
     </div>
     <div class="field">
-      <%= f.label :item_name %>
+      <%= f.label :item_name, t('views.invoice_line_item.name') %>
       <br/>
       <%= f.text_field :item_name %>
     </div>
     <div class="field">
-      <%= f.label :item_description %>
+      <%= f.label :item_description, t('views.invoice_line_item.description') %>
       <br/>
       <%= f.text_field :item_description %>
     </div>
     <div class="field">
-      <%= f.label :item_unit_cost %>
+      <%= f.label :item_unit_cost, t('views.invoice_line_item.unit_cost') %>
       <br/>
       <%= f.text_field :item_unit_cost %>
     </div>
     <div class="field">
-      <%= f.label :item_quantity %>
+      <%= f.label :item_quantity, t('views.invoice_line_item.quantity') %>
       <br/>
       <%= f.text_field :item_quantity %>
     </div>
     <div class="field">
-      <%= f.label :tax_1 %>
+      <%= f.label :tax_1, t('views.invoice_line_item.tax_1') %>
       <br/>
       <%= f.number_field :tax_1 %>
     </div>
     <div class="field">
-      <%= f.label :tax_2 %>
+      <%= f.label :tax_2, t('views.invoice_line_item.tax_2') %>
       <br/>
       <%= f.number_field :tax_2 %>
     </div>

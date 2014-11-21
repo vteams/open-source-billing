@@ -4,7 +4,7 @@
 
 <%#= form_tag "/clients/create", :id => "create_client", :remote => true do %>
       <div class="tiny_form_top">
-        <div class="tiny_form_heading"><h4>Add New Client</h4></div>
+        <div class="tiny_form_heading"><h4><%= t('views.clients.add_new_client') %></h4></div>
         <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
       </div>
       <!--tiny_form_top-->
@@ -14,7 +14,7 @@
         <div class="fields_content_data">
 
           <div class="field_row">
-            <div class="label_field left single">Organization</div>
+            <div class="label_field left single"><%= t('views.clients.organization') %></div>
             <div class="small_field">
               <%= text_field_tag "client[organization_name]", '' %>
             </div>
@@ -22,7 +22,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><span>Email</span></div>
+            <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
             <div class="small_field">
               <%= text_field_tag "client[email]", '', :required => '' %>
             </div>
@@ -30,7 +30,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single">First Name</div>
+            <div class="label_field left single"><%= t('views.clients.first_name') %></div>
             <div class="small_field">
               <%= text_field_tag "client[first_name]", '' %>
             </div>
@@ -38,7 +38,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single">Last Name</div>
+            <div class="label_field left single"><%= t('views.clients.last_name') %></div>
             <div class="small_field">
               <%= text_field_tag "client[last_name]", '' %>
             </div>
@@ -46,7 +46,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left">Business Phone</div>
+            <div class="label_field left"><%= t('views.clients.business_phone') %></div>
             <div class="small_field">
               <%= text_field_tag "client[business_phone]", '' %>
               <%= hidden_field_tag :quick_create %>
@@ -71,8 +71,8 @@
       <div class="tiny_form_btm">
 <%#= submit_tag "save",:name => "save", :class => "btn_large", :style => "width:40px;" %>
 <%#= submit_tag "save & ADD MORE",:name => "add_more", :class => "btn_large" %>
-        <%= button_tag "save", :name => "save", :class => "btn_large tiny_btn btn_save" %>
-        <%= button_tag "save & Add More", :name => "add_more", :class => "btn_large tiny_btn btn_save_and_add_more" %>
+        <%= button_tag t('views.common.save'), :name => "save", :class => "btn_large tiny_btn btn_save" %>
+        <%= button_tag t('views.common.save_and_add_more'), :name => "add_more", :class => "btn_large tiny_btn btn_save_and_add_more" %>
       </div>
       <!--tiny_form_btm-->
 

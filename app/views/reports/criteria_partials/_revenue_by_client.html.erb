@@ -5,23 +5,23 @@
 
           <div class="report_clients">
             <div class="control_name">
-              <p>Quarter</p>
+              <p><%= t('views.common.quarter') %></p>
             </div>
             <div class="client_select">
               <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS), {:class => "payment-method chzn-select"} %></div>
             <div class="control_name">
-              <p>Year</p>
+              <p><%= t('views.common.year') %></p>
             </div>
             <div class="client_select">
               <%= select_tag "criteria[year]", options_for_select(((Date.today.year - 1)..(Date.today.year + 5)).each { |y| [y, y] }, Date.today.year), {:class => "payment-method chzn-select"} %>
             </div>
             <div class="control_name">
-              <p>Clients</p>
+              <p><%= t('header.links.clients.clients') %></p>
             </div>
-            <div class="client_select"><%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => "All"})] + Client.all, :id, :organization_name, {:prompt => "All"}, {:class => "client chzn-select"} %></div>
+            <div class="client_select"><%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + Client.all, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client chzn-select"} %></div>
           </div>
           <div class="report_update">
-            <%= submit_tag "Go", :class => "report_update" %>
+            <%= submit_tag t('views.common.go'), :class => "report_update" %>
           </div>
       <% end %>
     </div>
