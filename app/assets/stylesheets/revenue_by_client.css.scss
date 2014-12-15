@@ -1,0 +1,17 @@
+.revenue_by_client {
+  .grid_table table{
+    col.one{width:  220px}
+    col.two{width:      155px}
+    col.three{width:    155px}
+    col.four{width:     155px}
+    col.five{width:     155px}
+    .col_hover, .row_hover{background-color: #F7F7F7;}
+
+    tfoot tr td{
+      /*border-bottom: medium double #dadada;*/
+      &:first-child, &:last-child{
+        font-weight: bold;
+      }
+    }
+  }
+}

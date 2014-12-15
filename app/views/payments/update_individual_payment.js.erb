@@ -1,0 +1,5 @@
+jQuery("button[class=close]").click();
+jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoices/invoice") %>');
+jQuery('.paginator').html('<%= escape_javascript(paginate(@invoices, :remote => true).to_s) %>' +
+        '<div class="paging_info"><%= page_entries_info @invoices %></div>');
+jQuery(".alert.alert-success").show().find('span').html("Payment against selected invoice has been recorded successfully.");

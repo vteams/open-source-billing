@@ -1,0 +1,43 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Location Settings</h1>
+  </div>
+</div>
+<!--content_top-->
+
+<div class="content_middle">
+  <div class="fields_content">
+    <div class="fields_content_container">
+
+      <div class="fields_content_data">
+
+        <div class="field_row">
+          <div class="label_field left single">
+            <%= f.label :currency_code %>
+          </div>
+          <div class="middle_field">
+            <%= f.select :currency_code, CURRENCY_CODE, {:prompt => ""}, {"data-placeholder" => "Select a currency code...", :class => "chzn-select"} %>
+          </div>
+        </div>
+        <!--field_row-->
+
+        <div class="field_row">
+          <div class="label_field left single">
+            <%= f.label :time_zone %>
+          </div>
+          <div class="middle_field">
+            <%= f.select :time_zone, ActiveSupport::TimeZone.all, {:prompt => ""}, {"data-placeholder" => "Select a time zone...", :class => "chzn-select"} %>
+            <%#= f.text_field :time_zone %>
+          </div>
+        </div>
+        <!--field_row-->
+
+      </div>
+      <!--fields_content_data-->
+
+    </div>
+    <!--fields_content_container-->
+  </div><!--fields_content-->
+  <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+</div>
+<!--content_middle-->

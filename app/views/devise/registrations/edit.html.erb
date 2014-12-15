@@ -1,0 +1,74 @@
+<% if devise_error_messages! != "" %>
+    <!--<div class="notice"><%#= devise_error_messages! %></div>-->
+    <div class="alert alert-error">
+      <button type="button" class="close">&times;</button>
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <span><%= devise_error_messages! %><%= notice %></span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+<% end %>
+<div class="change_password_form">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>Change your password</h1>
+    </div>
+  </div>
+  <!--content_top-->
+
+  <div class="items_wrapper">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put, id: 'change_password_form', :novalidate => ""}) do |f| %>
+
+        <div class="new_item_form">
+          <div class="content_middle">
+            <div class="fields_content_container">
+              <div class="fields_content">
+                <div class="fields_content_data">
+
+                  <div class="field_row">
+                    <div class="label_field left single">
+                      <label for="user_current_password"><span>Current password</span></label><%#= f.label :current_password %>
+                    </div>
+                    <div class="large_field">
+                      <%= f.password_field :current_password, autofocus: true, required: '' %>
+                    </div>
+                  </div>
+
+                  <div class="field_row description">
+                    <div class="label_field left single">
+                      <label for="user_password">New password</label> <%#= f.label :password %></div>
+                    <div class="large_field">
+                      <%= f.password_field :password, autofocus: true %>
+                      <ul class="field_description">
+                        <li>leave blank if you don't want to change it</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="field_row">
+                    <div class="label_field left single">
+                      <label for="user_password_confirmation">Confirmation</label><%#= f.label :password_confirmation, "Confirmation" %>
+                    </div>
+                    <div class="large_field">
+                      <%= f.password_field :password_confirmation, autofocus: true %>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content_bottom">
+            <%= f.submit "Change password", :class => "btn_large submit" %>
+          </div>
+          <!--log_btm-->
+        </div>
+    <% end %>
+  </div>
+</div><!--change_password_form-->

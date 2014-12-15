@@ -1,0 +1,80 @@
+<%- model_class = RecurringProfile -%>
+<% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+
+<div class="recurring_profile">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <span>&nbsp;/&nbsp;Active</span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, "New Recurring Profile")),
+                  new_recurring_profile_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+  <%= form_tag "recurring_profiles/bulk_actions", :remote => true do -%>
+      <div class="content_middle">
+        <div class="grid_control">
+          <div class="grid_control_left">
+            <ul value='<%= model_class.model_name %>' id="bulk_actions">
+              <%= render "bulk_actions" %>
+            </ul>
+          </div>
+          <div class="grid_control_right" id="active_links">
+            <%= render 'filter_links' %>
+          </div>
+
+        </div>
+        <!--grid_control-->
+
+        <div class="grid_table">
+          <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+            <colgroup>
+              <col class="one"/>
+              <col class="two"/>
+              <col class="three"/>
+              <!--<col class="four"/>-->
+              <col class="five"/>
+              <col class="six"/>
+              <col class="seven"/>
+              <col class="eight"/>
+              <col class="nine"/>
+            </colgroup>
+            <thead>
+            <tr>
+              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+              <th class="align_center header <%= sort_class %>"><%= sortable('invoice_number', 'Profile ID') %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
+              <th class="align_center header"><%= sortable('last_sent_date', 'Last Sent') %></th>
+              <th class="align_center header"><%= sortable('frequency', 'Frequency') %></th>
+              <th class="align_right header"><%= sortable('invoice_total', 'Amount') %></th>
+              <th class="align_right header"><%= sortable('occurrences', 'Remaining') %></th>
+              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+            </thead>
+            <tbody id="recurring_profile_body">
+            <%= render 'recurring_profile' %>
+            <tfoot id="paging_links">
+            <%= render "application_partials/paging" %>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+        <!--grid_table-->
+      </div>
+      <!--content_middle-->
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, "New Recurring Profile")),
+                    new_recurring_profile_path,
+                    :class => 'btn_large' %>
+      </div>
+      <!--content_bottom-->
+  <% end %>
+</div><!--invoice-->
+
+

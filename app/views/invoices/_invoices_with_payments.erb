@@ -1,0 +1,35 @@
+<div class="invoice_model">
+  <div class="grid_table">
+    <table cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col class="one"/>
+        <col class="two"/>
+        <col class="three"/>
+        <col class="four"/>
+      </colgroup>
+      <thead>
+      <tr>
+        <th class="align_center">Invoice#</th>
+        <th class="align_left">Client</th>
+        <th class="align_center">Date</th>
+        <th class="align_right">Amount</th>
+      </tr>
+      <% @invoices_with_payments.each do |inv| %>
+          <%= hidden_field_tag "invoice_ids[]", inv.id %>
+          <tr>
+            <td class="align_center"><%= inv.invoice_number %></td>
+            <td class="align_left"><%= inv.client.organization_name unless inv.client.organization_name.blank? %></td>
+            <td class="align_center"><%= inv.invoice_date.to_date %></td>
+            <td class="align_right"><%= number_to_currency(inv.invoice_total) %>
+              <!--<span class="tt"> <%#= current_user.currency_code %></span></td>-->
+          </tr>
+          </thead>
+          </table>
+      <% end %>
+      </div>
+  <!--grid_table-->
+</div><!--invoice_model-->
+
+
+
+

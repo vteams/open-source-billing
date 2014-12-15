@@ -1,0 +1,54 @@
+<%= form_for(@taxis, :html => {:novalidate => ""}) do |f| %>
+  <% if @taxis.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@taxis.errors.count, "error") %> prohibited this taxis from being saved:</h2>
+
+      <ul>
+        <% @taxis.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="new_item_form">
+    <div class="content_middle">
+
+      <div class="fields_content">
+        <div class="fields_content_container">
+
+          <div class="fields_content_data">
+
+            <div class="field_row">
+              <div class="label_field left single"><span>Tax Name</span></div>
+              <div class="large_field">
+                <%= f.text_field :name, :required => "" %>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row">
+              <div class="label_field left single"><span>Percentage</span></div>
+              <div class="large_field">
+                <%= f.text_field :percentage, :required => "" %>
+              </div>
+            </div>
+            <!--field_row-->
+
+          </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
+      </div>
+      <!--fields_content-->
+      <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+
+    </div>
+    <!--content_middle-->
+
+    <div class="content_bottom">
+      <%= f.submit(:class => "btn_large submit") %>
+    </div>
+    <!--content_bottom-->
+  </div><!--new_item_form-->
+<% end %>

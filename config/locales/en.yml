@@ -1,0 +1,35 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      #short: "%b %d"
+      short: "%{SHORT_DATE}"
+      long: "%B %d, %Y"
+  views:
+    pagination:
+      previous: "Previous"
+      next: "Next"
+      first: ""
+      last: ""
+  number:
+    currency:
+      format:
+        format: "%u%n"
+        unit: "$"
+        # These three are to override number.format and are optional
+        separator: "."
+        delimiter: ","
+        precision: 2
+  helpers:
+      page_entries_info:
+        more_pages:
+          display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+#  activerecord:
+#    errors:
+#      messages:
+#        taken: "User with same email already exists. Please try with another email address."
+#  errors:
+#      format: "%{message}"

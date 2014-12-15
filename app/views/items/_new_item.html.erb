@@ -1,0 +1,77 @@
+<div class="tiny_form_container">
+  <div id="create_client" class="tiny_create_form">
+    <div class="tiny_form_inner">
+
+<%#= form_tag "/items/create", :id => "create_item", :remote => true do %>
+
+      <div class="tiny_form_top">
+        <div class="tiny_form_heading"><h4>Add New Item</h4></div>
+        <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
+      </div>
+      <!--tiny_form_top-->
+
+      <div class="tiny_form_middle">
+
+        <div class="fields_content_data">
+
+          <div class="field_row">
+            <div class="label_field left"><span>Name</span></div>
+            <div class="small_field">
+              <%= text_field_tag "item[item_name]", '', :required => 'required', "data-unique" => "" %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">Description</div>
+            <div class="small_field">
+              <%= text_field_tag "item[item_description]", '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">Unit cost</div>
+            <div class="small_field">
+              <%= text_field_tag "item[unit_cost]", '' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div class="field_row">
+            <div class="label_field left single">Quantity</div>
+            <div class="small_field">
+              <%= number_field_tag "item[quantity]", '' %>
+              <%= hidden_field_tag :quick_create %>
+              <%#= hidden_field_tag :association, 'account' %>
+            </div>
+          </div>
+          <!--field_row-->
+
+          <div id="clientModal" class="client-modal">
+            <div class="cross_btn">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!--fields_content_data-->
+      </div>
+      <!--tiny_form_middle-->
+
+      <div class="tiny_form_btm">
+<%#= submit_tag "save", :name => "save", :class => "btn_large", :style => "width:40px;" %>
+<%#= submit_tag "save & ADD MORE", :name => "add_more", :class => "btn_large" %>
+        <%= button_tag "save", :name => "save", :class => "btn_large tiny_btn btn_save", :style => "width:40px;" %>
+        <%= button_tag "save & Add More", :name => "add_more", :class => "btn_large tiny_btn btn_save_and_add_more" %>
+      </div>
+      <!--tiny_form_btm-->
+
+    </div>
+    <!--tiny_form_inner-->
+  </div>
+  <!--tiny_create_form-->
+</div><!--tiny_form_container-->
+<%# end %>
+

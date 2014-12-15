@@ -1,0 +1,136 @@
+<tr class="client_detail_row">
+  <td colspan="7" class="client_wrapper">
+    <div class="client_container">
+      <div class="client_container_top">
+        <div class="top_corner"></div>
+        <div class="cross_btn"></div>
+      </div>
+
+      <div class="client_row_content">
+        <div class="client_bal">
+          <div class="bal_box">
+            <h2 class="orange"><%= number_to_currency(@detail[:outstanding_amount]) %></h2>
+
+            <p>Outstanding Amount</p>
+          </div>
+          <div class="bal_box center">
+            <h2 class="blue"><%= number_to_currency(@detail[:amount_billed]) %></h2>
+
+            <p>Total amount billed</p>
+          </div>
+          <div class="bal_box">
+            <h2><%= number_to_currency(@detail[:payments]) %></h2>
+
+            <p>Total payments received</p>
+          </div>
+        </div>
+
+        <div class="client_invoices primary">
+          <h2>Invoices</h2>
+          <%= link_to 'New Invoice', "invoices/new?invoice_for_client=#{params[:id]}", class: 'client_new_invoice' %>
+          <div class="grid_table top">
+            <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+              </colgroup>
+              <th class="align_left">Inv. #</th>
+              <th class="align_left">Due date</th>
+              <th class="align_left">Company</th>
+              <th class="align_right">Amount</th>
+            </table>
+          </div>
+          <!--grid_table-->
+
+          <div class="scrollContainer content_scroll mCustomScrollbar">
+            <div class="grid_table btm mCustomScrollBox mCS-light">
+              <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing mCSB_container">
+                <colgroup>
+                  <col class="one"/>
+                  <col class="two"/>
+                  <col class="three"/>
+                  <col class="four"/>
+                </colgroup>
+                <tbody>
+                <% if @invoices.blank? %>
+                    <tr>
+                      <td class="align_left" colspan="4">No invoices found</td>
+                    </tr>
+                <% else %>
+                    <% @invoices.each do |invoice| %>
+                        <tr>
+                          <td class="align_left"><%= link_to invoice.invoice_number, invoice_path(invoice), target: '_blank' %></td>
+                          <td class="align_left"><%= (invoice.due_date || invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
+                          <td class="align_left"><%= invoice.company.company_name %></td>
+                          <td class="align_right"><%= number_to_currency(invoice.invoice_total) %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--grid_table-->
+        </div>
+
+        <div class="client_invoices">
+          <h2>Payments</h2>
+          <%= link_to "New Payment",
+                      "/invoices/unpaid_invoices?for_client=#{params[:id]}", "data-toggle" => "modal", "data-target" => "#myModal",
+                      :class => 'client_new_payment', :remote => true %>
+          <div class="grid_table top">
+            <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+              </colgroup>
+              <th class="align_left">Inv. #</th>
+              <th class="align_left">Date</th>
+              <th class="align_left">Company</th>
+              <th class="align_right">Amount</th>
+            </table>
+          </div>
+          <!--grid_table-->
+
+          <div class="scrollContainer content_scroll mCustomScrollbar">
+            <div class="grid_table btm mCustomScrollBox mCS-light">
+              <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing mCSB_container">
+                <colgroup>
+                  <col class="one"/>
+                  <col class="two"/>
+                  <col class="three"/>
+                  <col class="four"/>
+                </colgroup>
+                <tbody>
+                <% if @payments.blank? %>
+                    <tr>
+                      <td class="align_left" colspan="4">No payments found</td>
+                    </tr>
+                <% else %>
+                    <% @payments.each do |payment| %>
+                        <tr>
+                          <% if payment.payment_type == "credit" %>
+                              <td class="align_left"><%= payment.payment_reference %></td>
+                          <% else %>
+                              <td class="align_left"><%= link_to payment.payment_reference, invoice_path(payment.invoice), class: 'invoices_link', target: '_blank' rescue "" %></td>
+                          <% end %>
+                          <td class="align_left"><%= payment.payment_date %></td>
+                          <td class="align_left"><%= payment.company.company_name %></td>
+                          <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount)}" %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--grid_table-->
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

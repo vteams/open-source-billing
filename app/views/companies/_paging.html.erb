@@ -1,0 +1,11 @@
+<td colspan="6" style="border-top: 1px solid #DDDDDD; text-align: left; ">
+  <div class="paginator">
+    <%= paginate @companies, :remote => true %>
+    <div class="paging_info">
+      <% unless @companies.blank? %>
+          <%= page_entries_info @companies %>
+          <%= custom_per_page %> per page
+      <% end %>
+    </div>
+  </div>
+</td>

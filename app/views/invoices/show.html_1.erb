@@ -1,0 +1,166 @@
+<%- model_class = Invoice -%>
+<p id="pdf_link"><%= link_to "Download Invoice (PDF)", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %></p>
+<div class="invoice-page-header">
+  <h1><%= t '.title', :default => model_class.model_name.human %>:<%= @invoice.invoice_number %></h1>
+</div>
+<div class="page-contents">
+  <div class="invheader">
+    <div class="invheader-upper">
+      <div class="invheader-address-account">
+        <%= @invoice.client.organization_name %> <br><%= @invoice.client.address_street1 %>
+        <br><%= @invoice.client.city %>
+      </div>
+      <div class="invheader-logo-container">
+        <div class="invheader-logo">
+        </div>
+      </div>
+    </div>
+
+    <div class="invheader-lower">
+      <div class="invheader-address-client">
+        <%= @invoice.client.organization_name %>
+        <br> <%= @invoice.client.first_name.to_s + " " +@invoice.client.last_name.to_s %>
+        <br>
+        <%= @invoice.client.address_street1.to_s+ " " +@invoice.client.address_street2.to_s %>
+        <br>
+        <%= @invoice.client.city %>&nbsp;&nbsp;<%= @invoice.client.postal_zip_code %>
+      </div>
+      <div class="invheader-invoicedetails">
+        <table cellspacing="0">
+          <tbody>
+          <tr>
+            <th> Invoice #
+            </th>
+            <td><%= @invoice.invoice_number %></td>
+          </tr>
+          <tr>
+            <th> Invoice Date
+            </th>
+            <td><%= @invoice.invoice_date.strftime('%B %d , %Y') %></td>
+          </tr>
+          <tr class="invheader-invoicedetails-balance">
+            <th>
+              <div>Amount Due</div>
+            </th>
+            <td>
+              <div><%= current_user.currency_symbol %><%= number_with_precision(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), :precision => 2) %> <%= current_user.currency_code %></div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="invbody">
+    <table cellspacing="0" class="invbody-items">
+      <thead>
+      <tr>
+        <th class="first">
+          <div class="item">Item</div>
+        </th>
+        <th>
+          <div class="description">Description</div>
+        </th>
+        <th>
+          <div class="unitcost" style="padding: 5px 0 5px 10px;">Unit Cost</div>
+        </th>
+        <th>
+          <div class="quantity">Quantity</div>
+        </th>
+        <th class="last">
+          <div class="linetotal">Line Total</div>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @invoice.invoice_line_items.each do |item|
+        item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+      %>
+          <tr>
+            <td style="width: 120px;">
+              <div class="item"><%= item.item.item_name %></div>
+            </td>
+            <td>
+              <div class="description"><%= item.item_description %> </div>
+            </td>
+            <td style="width: 85px; text-align: center;">
+              <div class="unitcost"><%= number_with_precision(item.item_unit_cost, :precision => 2) %></div>
+            </td>
+            <td style="width: 80px; text-align: center;">
+              <div class="quantity"><%= item.item_quantity %></div>
+            </td>
+            <td style="width: 90px;">
+              <div class="linetotal"><%= number_with_precision(item_line_total, :precision => 2) %></div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <table cellspacing="0" class="invbody-summary">
+      <tbody>
+      <tr class="invbody-summary-subtotal">
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th style="width: 150px;"><strong>Subtotal</strong></th>
+        <td style="width: 120px;"><strong><%= number_with_precision(@invoice.sub_total, :precision => 2) %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th style="width: 150px;">Discount - <%= @invoice.discount_percentage.to_s + "%" %></th>
+        <td style="width: 120px;"><%= number_with_precision(@invoice.discount_amount, :precision => 2) %></td>
+      </tr>
+      <tr>
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th style="width: 150px;">VAT - %</th>
+        <td style="width: 120px;"><%= number_with_precision(@invoice.tax_amount, :precision => 2) %></td>
+      </tr>
+      <tr>
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th class="border" style="width: 150px;"><strong>Total</strong></th>
+        <td class="border" style="width: 120px;">
+          <strong><%= number_with_precision(@invoice.invoice_total, :precision => 2) %></strong></td>
+      </tr>
+      <tr class="invbody-summary-paid">
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th style="width: 150px;">Amount Paid</th>
+        <td style="width: 120px;">-<%= number_with_precision(Payment.invoice_paid_amount(@invoice.id), :precision => 2) %></td>
+      </tr>
+      <tr class="invbody-summary-total">
+        <td class="invbody-summary-clean">&nbsp;</td>
+        <th style="width: 150px;">
+          <div><strong>Amount Due</strong></div>
+        </th>
+        <td style="width: 120px;">
+          <div>
+            <strong><%= current_user.currency_symbol %><%= number_with_precision(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), :precision => 2) %>  <%= current_user.currency_code %></strong>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div style="height: 1px; overflow: hidden;" class="clearb"></div>
+
+    <div class="invbody-terms">
+      <h2>Terms</h2>
+      <%= @invoice.terms %>
+    </div>
+    <div class="invbody-notes">
+      <div>
+        <h2>Notes</h2>
+        <%= @invoice.notes %>
+      </div>
+    </div>
+  </div>
+</div>
+<%#*<div class="form-actions">%>
+<%#= link_to t('.back', :default => t("helpers.links.back")),
+invoices_path, :class => 'btn'  %>
+<%#= link_to t('.edit', :default => t("helpers.links.edit")),
+edit_invoice_path(@invoice), :class => 'btn' %>
+<%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
+invoice_path(@invoice),
+:method => 'delete',
+:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+:class => 'btn btn-danger' %>
+<%#*</div>%>

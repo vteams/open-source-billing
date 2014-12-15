@@ -1,0 +1,6 @@
+<%= form_for(@payment) do |f| %>
+    <%= render "edit_fields", :f => f, :payment => @payment, :index => 0 %>
+    <div class="content_bottom">
+      <%= f.submit nil, :class => "btn_large submit",:id=>'submit_payment_edit_form' %>
+    </div><!--content_bottom-->
+<% end %>

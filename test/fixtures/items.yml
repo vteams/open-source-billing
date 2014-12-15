@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  item_name: MyString
+  item_description: MyString
+  unit_cost: 9.99
+  quantity: 1
+  tax_1: 1
+  tax_2: 1
+  track_invetory: false
+  inventory: 1
+
+two:
+  item_name: MyString
+  item_description: MyString
+  unit_cost: 9.99
+  quantity: 1
+  tax_1: 1
+  tax_2: 1
+  track_invetory: false
+  inventory: 1

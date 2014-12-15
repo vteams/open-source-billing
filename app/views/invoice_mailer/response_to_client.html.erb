@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>
+<%= @invoice.client.organization_name %>,
+</p>
+ <p>
+   Invoice <%= @invoice.invoice_number%>  has been undisputed by <%= @user.accounts.first.org_name %> for the following response:
+ </p>
+<p>
+ <%= @response%>
+</p>
+
+</body>
+</html>
+
+

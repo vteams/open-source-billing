@@ -1,0 +1,11 @@
+<td colspan="8" style="border-top: 1px solid #DDDDDD; text-align: left; ">
+  <div class="paginator">
+    <%= paginate @email_templates, :remote => true %>
+    <div class="paging_info">
+      <% unless @email_templates.blank? %>
+          <%= page_entries_info @email_templates %>
+          <%= custom_per_page %> per page
+      <% end %>
+    </div>
+  </div>
+</td>

@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  account_id: 1
+  company_name: MyString
+  contact_name: MyString
+  contact_title: MyString
+  country: MyString
+  city: MyString
+  street_address_1: MyString
+  street_address_2: MyString
+  province_or_state: MyString
+  postal_or_zipcode: MyString
+  phone_number: MyString
+  fax_number: MyString
+  email: MyString
+  logo: MyString
+  company_tag_line: MyString
+  memo: MyString
+
+two:
+  account_id: 1
+  company_name: MyString
+  contact_name: MyString
+  contact_title: MyString
+  country: MyString
+  city: MyString
+  street_address_1: MyString
+  street_address_2: MyString
+  province_or_state: MyString
+  postal_or_zipcode: MyString
+  phone_number: MyString
+  fax_number: MyString
+  email: MyString
+  logo: MyString
+  company_tag_line: MyString
+  memo: MyString

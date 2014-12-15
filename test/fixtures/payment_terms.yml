@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  number_of_days: 1
+  description: MyString
+
+two:
+  number_of_days: 1
+  description: MyString

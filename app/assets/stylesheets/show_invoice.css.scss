@@ -1,0 +1,304 @@
+.show_invoice{
+  .primary_links{
+    float:right;
+    min-height: 15px;
+    padding: 23px 0 0;
+  }
+  .links_dd{
+    background: url(/assets/links_dd.png) no-repeat right;
+    padding: 0 12px 0 0;
+  }
+  .btn_large.big{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .content_bottom.top{
+    padding: 30px 0;
+  }
+  .invoice_preview{
+    float: left;
+    width: 100%;
+    padding: 0 0 60px 0;
+  }
+  .inovice_preview_contianer{
+    margin: auto;
+    width: 100%;
+    border: 1px solid #d7d7d7;
+    overflow: hidden;
+    border-radius: 4px;
+    min-height: 90px;
+  }
+  .invoice_tag{
+    position: absolute;
+    margin: -1px 0 0 -1px;
+    width: 90px;
+    height: 90px;
+    *margin: -1px 0 0 -839px;
+  }
+  .draft{
+    background: url(/assets/draft.png) no-repeat;
+  }
+  .sent{
+    background: url(/assets/sent.png) no-repeat;
+  }
+  .draft-partial{
+    background: url(/assets/draft_partial.png) no-repeat;
+  }
+  .partial{
+    background: url(/assets/partial.png) no-repeat;
+  }
+  .paid{
+    background: url(/assets/paid.png) no-repeat;
+  }
+  .disputed{
+    background: url(/assets/disputed.png) no-repeat;
+  }
+  .viewed{
+    background: url(/assets/viewed.png) no-repeat;
+  }
+  .invoice_preview_content{
+    float: left;
+    position: relative;
+    width: 780px;
+    padding: 65px 29px 0 29px;
+  }
+  .preview_content_top{
+    float: left;
+    width: 100%;
+    padding-bottom: 11px;
+  }
+  .preview_top{
+    padding-bottom: 25px !important;
+  }
+  .preview_top, .preview_btm{
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #d7d7d7;
+    padding: 0 0 30px 0;
+    .preview_top_left{
+      float: left;
+      width: 504px;
+      padding-left: 10px;
+      .invoice_date{
+        float: left;
+        width: 100%;
+        padding: 0 0 21px 0;
+        h2{
+          color: #00BDE5;
+          font-size: 18px;
+          font-family: "Dosis Medium",sans-serif;;
+          text-transform: capitalize;
+          span{
+            text-transform: capitalize;
+            font-size: 18px;
+            font-family: "Dosis Regular",sans-serif;
+          }
+        }
+      }
+      .invoice_name{
+        float: left;
+        width: 100%;
+        font-weight: bold;
+      }
+    }
+    .preview_top_right, pr{
+      float: right;
+      width: 256px;
+      padding: 5px 0 0 0;
+      .company_logo{
+        float: right;
+        position: relative;
+        width: auto;
+        padding-right: 10px;
+        img{
+          padding-bottom: 5px;
+        }
+      }
+      .logo_tagline{
+        width: auto;
+        float: right;
+        padding: 16px 0 0 0;
+        text-align: right;
+      }
+    }
+  }
+
+
+  .preview_btm{
+    float: left;
+    width: 100%;
+    padding: 25px 0 0 0;
+    border: none;
+    .preview_top_right{
+      padding-top: 0px;
+      overflow: hidden;
+      .top_right_row{
+        float: left;
+        margin-bottom: -2px;
+      }
+      .top_right_row:last-child{
+        height: auto;
+      }
+      .preview_right_label{
+        float: left;
+        width: 82px;
+        text-align: left;
+        span{
+          float: right;
+        }
+      }
+      .preview_right_description{
+        float: left;
+        width: 152px;
+        text-align: right;
+      }
+    }
+  }
+
+  .invoice_address{
+    float: left;
+    width: 100%;
+  }
+  .invoice_address p, .invoice_organization p{
+    float: left;
+    width: 100%;
+    line-height: normal;
+    padding: 0 0 2px 0;
+  }
+  .invoice_organization{
+    float: left;
+    width: 100%;
+  }
+  .preview_heading{
+    font-weight: bold;
+  }
+  .preview_right{
+    float: right;
+    width: 256px;
+  }
+
+  .preview_content_middle{
+    float: left;
+    width: 100%;
+    padding: 0 0 25px 0;
+  }
+  .grid_table table col.one{
+    width : 140px;
+  }
+  .grid_table table col.two{
+    width : 400px;
+  }
+  .grid_table table col.three{
+    width: 120px;
+  }
+  .grid_table table col.four{
+    width : 80px;
+  }
+  .grid_table table col.five{
+    width : 100px;
+  }
+  .preview_content_btm{
+    float: left;
+    width: 100%;
+    padding: 0 0 30px 0;
+  }
+  .preview_btm_top{
+    float: left;
+    width: 100%;
+  }
+  .preview_left.btm{
+    padding-left: 0px;
+    width: 500px;
+  }
+  .preview_terms{
+    float: left;
+    width: 100%;
+    padding: 0 0 22px 0;
+  }
+  .preview_terms p, .preview_notes p{
+    float: left;
+    width: 100%;
+    padding: 0 0 6px 0;
+    line-height: normal;
+  }
+  .preview_notes{
+    float: left;
+    width: 75%;
+  }
+  .preview_right.btm{
+    padding-top: 0px;
+    .preview_right_label{
+      float: left;
+      width: 100px;
+      text-align: left;
+    }
+    .preview_right_description{
+      float: right;
+    }
+  }
+  .top_right_row{
+    overflow: hidden;
+    padding: 0 10px;
+  }
+  .top_right_row.border{
+    border-bottom: 1px solid #d7d7d7;
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+    overflow: hidden;
+  }
+  .top_right_row.amt_paid{
+    color: #00ace5;
+  }
+  .preview_btm_footer{
+    float: left;
+    width: 100%;
+    padding: 90px 0 0 0;
+  }
+  .preview_btm_footer ul{
+    float: right;
+  }
+  .preview_btm_footer ul li{
+    float: left;
+    display: block;
+    padding: 0 0 0 4px;
+  }
+  .footer_txt{
+    font-size: 10px;
+    padding: 1px 0 0 0 !important;
+  }
+  .border-row{
+    border-top: 1px solid #D7D7D7;
+    padding-top: 3px;
+    margin-top: 5px;
+    overflow: hidden;
+  }
+}
+
+.dispute_popup{
+  .modal .cross_btn{
+    margin-top: -50px;
+  }
+  .fields_content_data{
+    padding-top: 1px;
+  }
+  label{
+    font-weight: normal;
+    padding-bottom: 2px;
+  }
+  .large_field textarea{
+    width: 690px;
+    min-height: 60px;
+  }
+  .modal .modal-body{
+    min-height: auto;
+  }
+  .modal .footer{
+    padding-top: 11px;
+  }
+  .modal-backdrop, .modal-backdrop.fade.in{
+    opacity: 0.5;
+  }
+  .modal{
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  }
+}

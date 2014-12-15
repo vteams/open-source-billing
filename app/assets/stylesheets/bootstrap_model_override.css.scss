@@ -1,0 +1,103 @@
+/*Custom fonts CSS Starts*/
+@import url(http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800);
+/*Custom fonts CSS Starts*/
+.modal{
+    width:758px;
+    left: 43.5%;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    border: none;
+    padding: 5px;
+
+    .modal-backdrop, .modal-backdrop.fade.in {
+        opacity: 0.4;
+    }
+    .model_grey_container{
+        width: 99.8%;
+        height: 100%;
+        border: 1px solid #d7d7d7;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+    .modal-header{
+        background:#ffffff;
+        padding: 18px 0 10px 23px;
+        border-bottom: none;
+    }
+    .modal-header p{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #464646;
+        font-weight: normal;
+        padding: 3px 0 0 0;
+    }
+    .cross_btn{
+        float: right;
+        background: url(cross_btn.png) no-repeat;
+        margin: -73px -1px 0 0;
+        position: relative;
+        width: 45px;
+        height: 45px;
+        z-index: 500;
+    }
+    .modal-header .close {
+        margin: 5px 13px 0 0;
+    }
+    .close {
+        opacity: 0.4;
+    }
+    .close:hover {
+        opacity: 1;
+    }
+    .modal-body{
+        padding: 0 0 0 24px;
+        margin: 8px 24px 0 0;
+        max-height: 309px;
+        min-height:200px;
+    }
+    
+    .popup_btn{
+        text-align:center;
+        width:100%;
+    }
+    .btn{
+        display:inline-block;
+    }
+    .footer {
+        background: none;
+        border: none;
+        text-align: center;
+        margin: 0px;
+        padding: 25px 0 24px 0;
+    }
+    /*.footer {
+        a, input{
+            display: inline-block;
+            background-color: #acacac;
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            line-height: 34px;
+            padding: 0 21px 0 21px;
+            font-family: 'Dosis', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 19px;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-decoration: none;
+            margin: 0 10px 0 0;
+            vertical-align: middle;
+            border:none;
+            height:34px;
+        }
+        a:hover, input:hover{
+            background-color: #00bde5;
+        }
+    }*/
+}
+.footer input{
+    vertical-align: none !important;
+}
+
+

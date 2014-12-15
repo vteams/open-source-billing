@@ -1,0 +1,8 @@
+td colspan="8" style="border-top: 1px solid #DDDDDD; text-align: left; "
+  div class="paginator"
+    = paginate @invoices, :remote => true
+    div class="paging_info"
+      - unless @invoices.blank?
+        = page_entries_info @invoices
+        = custom_per_page
+        | per page

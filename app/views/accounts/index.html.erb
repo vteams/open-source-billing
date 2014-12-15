@@ -1,0 +1,64 @@
+<h1>Listing companies</h1>
+<table>
+  <tr>
+    <th>Org name</th>
+    <th>Country</th>
+    <th>Street address 1</th>
+    <th>Street address 2</th>
+    <th>City</th>
+    <th>Province or state</th>
+    <th>Postal or zip code</th>
+    <th>Profession</th>
+    <th>Phone business</th>
+    <th>Phone mobile</th>
+    <th>Fax</th>
+    <th>Email</th>
+    <th>Time zone</th>
+    <th>Auto dst adjustment</th>
+    <th>Currency code</th>
+    <th>Currecy symbol</th>
+    <th>Admin first name</th>
+    <th>Admin last name</th>
+    <th>Admin email</th>
+    <th>Admin billing rate per hour</th>
+    <th>Admin user name</th>
+    <th>Admin password</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @accounts.each do |company| %>
+      <tr>
+        <td><%= company.org_name %></td>
+        <td><%= company.country %></td>
+        <td><%= company.street_address_1 %></td>
+        <td><%= company.street_address_2 %></td>
+        <td><%= company.city %></td>
+        <td><%= company.province_or_state %></td>
+        <td><%= company.postal_or_zip_code %></td>
+        <td><%= company.profession %></td>
+        <td><%= company.phone_business %></td>
+        <td><%= company.phone_mobile %></td>
+        <td><%= company.fax %></td>
+        <td><%= company.email %></td>
+        <td><%= company.time_zone %></td>
+        <td><%= company.auto_dst_adjustment %></td>
+        <td><%= company.currency_code %></td>
+        <td><%= company.currency_symbol %></td>
+        <td><%= company.admin_first_name %></td>
+        <td><%= company.admin_last_name %></td>
+        <td><%= company.admin_email %></td>
+        <td><%= company.admin_billing_rate_per_hour %></td>
+        <td><%= company.admin_user_name %></td>
+        <td><%= company.admin_password %></td>
+        <td><%= link_to 'Show', company %></td>
+        <td><%= link_to 'Edit', edit_company_path(company) %></td>
+        <td><%= link_to 'Destroy', company, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Company', new_company_path %>
+

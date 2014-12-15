@@ -1,0 +1,39 @@
+.credit_card{
+  .modal .modal-body{
+    float: none;
+  }
+  .modal .modal-header{
+    p{
+    padding-top: 6px;
+      span{
+        font-size: 10px;
+      }
+    }
+  }
+  .fields_content_container{
+    width: 625px;
+  }
+  .label_field{
+    span{
+    background: url("/assets/sterik_small.png") no-repeat scroll right top transparent;
+    padding-right: 8px;
+    }
+    &.left {
+      width: 140px;
+    }
+  }
+  .large_field select{
+    width: 270px !important;
+  }
+  #cc_popup.modal .cross_btn{
+    margin: -78px -1px 0 0;
+  }
+  .modal .footer{
+    padding-bottom: 40px;
+  }
+  .field_row p{
+    margin-left: 140px;
+  }
+
+
+}

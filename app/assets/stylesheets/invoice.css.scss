@@ -1,0 +1,171 @@
+.invoice {
+
+  .grid_table table {
+    col.one {
+    /*check box*/
+      width: 33px;
+    }
+    col.two {
+    /*invoice*/
+      width: 94px;
+    }
+    col.three {
+    /*clients*/
+      width: 140px;
+    }
+    col.four {
+    /*description*/
+      width: 143px;
+    }
+    col.five {
+    /*total*/
+      width: 98px;
+    }
+    col.six {
+    /*date*/
+      width: 90px;
+    }
+    col.seven {
+    /*due date*/
+      width: 90px;
+    }
+    col.eight {
+    /*status*/
+      width: 90px;
+    }
+    col.nine {
+    /*actions*/
+      width: 62px;
+    }
+  }
+}
+
+.invoice_model {
+  .cross_btn {
+    margin-top: -93px;
+  }
+  .grid_table table {
+    col.one {
+    /*invoice*/
+      width: 82px;
+    }
+    col.two {
+    /*clients*/
+      width: 450px;
+    }
+    col.three {
+    /*date*/
+      width: 90px;
+    }
+    col.four {
+    /*amount*/
+      width: 82px;
+    }
+  }
+  .btn_large.small_case {
+    text-transform: none;
+    padding: 0 15px;
+  }
+}
+
+.chzn-container {
+  .add-new {
+    background-color: #00BDE5;
+    border-radius: 3px 3px 3px 3px;
+    color: white;
+    height: 26px;
+    margin: 10px;
+    padding: 6px 0 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: "Dosis Regular", sans-serif;
+    font-size: 14px;
+    text-transform:capitalize;
+  }
+}
+
+.invoices_with_payments {
+  position: absolute;
+  width: 840px;
+  height: auto;
+  z-index: 1101;
+  display: none;
+  border: 1px solid #ccc;
+  background-color: #FFF;
+}
+
+._form {
+  .grid_table table {
+    tr.no_hover:hover {
+      background-color: #FFFFFF;
+    }
+    td.add_line_item_row {
+      padding: 15px 0 0 32px;
+    }
+  }
+}
+
+table.invoice_grid_fields {
+  .action_links {
+    .remove_item {
+      background: url("/assets/del-move-icons.png") no-repeat scroll 0 0 transparent;
+      float: left;
+      height: 10px;
+      width: 7px;
+    }
+    .remove_item:hover {
+      background-position: 0 -12px;
+    }
+    .sort_icon {
+      background: url("/assets/del-move-icons.png") no-repeat scroll -7px 0 transparent;
+      float: left;
+      height: 12px;
+      margin-left: 4px;
+      width: 9px;
+    }
+    .sort_icon:hover {
+      background-position: -7px -12px;
+    }
+  }
+  tbody {
+    tr td:first-child {
+      vertical-align: middle;
+    }
+  }
+}
+
+.mouseover_full_content {
+  position: absolute;
+  background-color: #FFFBE1;
+  border: 1px solid #E4DFBE;
+  display: none;
+  &.multi_line {
+    padding: 5px 9px 6px 9px;
+  }
+  &.single_line {
+    padding: 7px 9px 8px 9px;
+  }
+}
+
+#cc_popup.modal {
+  .cross_btn {
+    margin: -73px -1px 0 0;
+  }
+  .modal-body {
+    max-height: 340px;
+  }
+  .fields_content:last-child{
+    padding: 0;
+  }
+  .field_row:last-child{
+    margin-bottom: 10px;
+  }
+  select{
+    width: 130px;
+    margin-bottom: 0;
+  }
+}
+
+
+

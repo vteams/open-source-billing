@@ -1,0 +1,60 @@
+<div class="dashboard_style">
+  <div class="row-fluid">
+    <div class="span4">
+      <%= render "getting_started" %>
+      <%= render "recent_activity" %>
+      <%= render "osb_reports" %>
+    </div>
+    <!--span4-->
+    <div class="span8">
+      <div class="overview_box">
+        <%= render "chart_container" %>
+        <%= render "outstanding_invoices" %>
+      </div>
+      <!--overview_box-->
+    </div>
+    <!--span8-->
+  </div>
+  <!--row-fluid-->
+</div>
+
+<!-- START: Unpaid invoices popup -->
+<%= form_tag "/payments/enter_payment", :id => "invoice_selection" do %>
+    <div id="myModal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="model_grey_container">
+        <div class="modal-header">
+
+          <h1>Which Invoices have you received payment for?</h1>
+
+          <p>Select one or more Invoices from the list below to apply payment.</p>
+
+          <div class="cross_btn">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+            </button>
+          </div>
+        </div>
+        <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
+          <button class="close" type="button" style="margin:0px;">×</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span>You haven't selected any invoice. Please select one or more invoices and try again.</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="footer ">
+          <%= submit_tag "Enter Payment", :class => "btn_large submit" %>
+          <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+        </div>
+      </div>
+    </div>
+<% end %>
+<!-- END: Unpaid invoices popup -->
+
+

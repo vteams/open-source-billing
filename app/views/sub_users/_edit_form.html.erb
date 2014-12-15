@@ -1,0 +1,61 @@
+<%#= form_for(@sub_user, :html => {:novalidate => ""}) do |f| %>
+<%= form_tag('/sub_users/update', novalidate: "", id: "update_sub_user_form")  %>
+    <div class="new_item_form">
+      <div class="content_middle">
+
+        <div class="fields_content">
+          <div class="fields_content_container">
+
+            <div class="fields_content_data">
+
+              <div class="field_row">
+                <div class="label_field left single"><span>Full Name</span></div>
+                <div class="large_field">
+                  <%= text_field_tag :user_name,"#{@sub_user.user_name}", :required => "" %>
+                </div>
+              </div>
+              <!--field_row-->
+
+              <div class="field_row">
+                <div class="label_field left single"><span>Email</span></div>
+                <div class="large_field">
+                  <%= text_field_tag :email,"#{@sub_user.email}", :required => "" %>
+                </div>
+              </div>
+              <!--field_row-->
+
+              <div class="field_row">
+                <div class="label_field left single">Password</div>
+                <div class="large_field">
+                  <%= password_field_tag :password %>
+                </div>
+              </div>
+
+              <!--field_row-->
+
+              <div class="field_row">
+                <div class="label_field left single">Confirmation</div>
+                <div class="large_field">
+                  <%= password_field_tag :password_confirmation %>
+                  <%= hidden_field_tag :id,"#{@sub_user.id}" %>
+                </div>
+              </div>
+
+              <!--field_row-->
+
+            </div>
+            <!--fields_content_data-->
+          </div>
+          <!--fields_content_container-->
+        </div>
+        <!--fields_content-->
+
+      </div>
+      <!--content_middle-->
+
+      <div class="content_bottom">
+        <%= submit_tag 'Save', class:  "btn_large submit" %>
+      </div>
+      <!--content_bottom-->
+    </div><!--new_item_form-->
+<%# end %>

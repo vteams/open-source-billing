@@ -1,0 +1,40 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<div class="sent_email">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>Listing sent emails</h1>
+    </div>
+  </div>
+  <!--content_top-->
+  <div class="content_middle">
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table_listing emails_listing">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="align_left header"><%= sortable('subject','Subject') %></th>
+          <th class="align_left header"><%= sortable('recipient','Recipient') %></th>
+          <th class="align_center header"><%= sortable('type','Type') %></th>
+          <th class="align_center header"><%= sortable('date','Date') %></th>
+        </tr>
+        </thead>
+        <tbody id="email_body">
+        <%= render 'sent_emails' %>
+        </tbody>
+        <tfoot id="paging_links">
+        <%= render "application_partials/paging" %>
+        </tfoot>
+      </table>
+    </div>
+    <!--grid_table-->
+  </div>
+  <!--content_middle-->
+</div><!--sent_email-->

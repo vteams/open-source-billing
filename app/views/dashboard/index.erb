@@ -1,0 +1,242 @@
+<div class="dashboard_style">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="dashboart_menu">
+        <ul>
+          <li><%= link_to "New Invoice", new_invoice_path %></li>
+          <li><%= link_to "New Item", new_item_path, :class => "small" %></li>
+          <li><%= link_to "New Client", new_client_path, :class => "small" %></li>
+          <li><%= link_to "New Payment", '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
+          <script>$("li").last().css('margin-right', '0px');</script>
+        </ul>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <%= render "chart_container" %>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="amount_wrapper">
+          <div class="dashboard_box">
+
+            <div class="amount_box">
+              <h1>YTD Income</h1>
+
+              <h1 class="black"><%= number_to_currency(@ytd_income) %></h1>
+
+              <p>Total amount received against invoices sent during this year</p>
+            </div>
+
+            <div class="amount_box">
+              <h1>Amount Billed</h1>
+
+              <h1 class="black"><%= number_to_currency(@amount_billed) %></h1>
+
+              <p>Sum of the invoices total you sent to clients so far</p>
+            </div>
+
+            <div class="amount_box">
+              <h1>Total Outstanding</h1>
+
+              <h1 class="black"><%= number_to_currency(@outstanding_invoices) %></h1>
+
+              <p>Total amount clients owe you</p>
+            </div>
+
+            <div class="amount_box">
+              <h1>Aged AR</h1>
+
+              <div class="days_summary">
+                <div class="amount_row">
+                  <div class="days">0 - 30 days old <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["zero_to_thirty"]) || '$0.00' %></div>
+                </div>
+                <div class="amount_row">
+                  <div class="days">30 - 60 days old <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["thirty_one_to_sixty"]) || '$0.00' %></div>
+                </div>
+                <div class="amount_row">
+                  <div class="days">60 - 90 days old <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["sixty_one_to_ninety"]) || '$0.00' %></div>
+                </div>
+                <div class="amount_row">
+                  <div class="days">Over 90 days old <span>:</span></div>
+                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["ninety_one_and_above"]) || '$0.00' %></div>
+                </div>
+              </div>
+            </div>
+            <script>$(".amount_box").last().css('margin-right', '0px');</script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+
+      <div class="span6">
+        <div class="dashboard_box small right">
+          <h1>Current Invoices</h1>
+          <p></p>
+          <div class="grid_table current_invoices top">
+            <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+              </colgroup>
+              <th class="align_left">Invoice#</th>
+              <th class="align_left">Client</th>
+              <th class="align_left">Due date</th>
+              <th class="align_right">Amount</th>
+            </table>
+          </div>
+          <!--grid_table-->
+          <div class="scrollContainer content_scroll mCustomScrollbar">
+            <div class="grid_table current_invoices btm mCustomScrollBox mCS-light">
+              <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing mCSB_container">
+                <colgroup>
+                  <col class="one"/>
+                  <col class="two"/>
+                  <col class="three"/>
+                  <col class="four"/>
+                </colgroup>
+                <tbody>
+                <% if @current_invoices.blank? %>
+                    <tr>
+                      <td colspan="4">No current invoices</td>
+                    </tr>
+                <% else %>
+                    <% @current_invoices.each do |current_invoice| %>
+                        <tr>
+                          <td class="align_left"><%= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></td>
+                          <td class="align_left text-overflow-class"  data-overflow-rows="2"><%= current_invoice.client.organization_name rescue "" %></td>
+                          <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
+                          <td class="align_right"><%= number_to_currency(current_invoice.invoice_total) %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--grid_table-->
+        </div>
+      </div>
+
+      <div class="span6 custome">
+        <div class="dashboard_box small right">
+          <h1>Past Invoices</h1>
+          <p></p>
+          <div class="grid_table current_invoices top">
+            <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+              </colgroup>
+              <th class="align_left">Invoice#</th>
+              <th class="align_left">Client</th>
+              <th class="align_left">Due date</th>
+              <th class="align_right">Amount</th>
+            </table>
+          </div>
+          <!--grid_table-->
+          <div class="scrollContainer content_scroll mCustomScrollbar">
+            <div class="grid_table current_invoices btm mCustomScrollBox mCS-light">
+              <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing mCSB_container">
+                <colgroup>
+                  <col class="one"/>
+                  <col class="two"/>
+                  <col class="three"/>
+                  <col class="four"/>
+                </colgroup>
+                <tbody>
+                <% if @past_invoices.blank? %>
+                    <tr>
+                      <td colspan="4">No past invoices</td>
+                    </tr>
+                <% else %>
+                    <% @past_invoices.each do |past_invoice| %>
+                        <tr>
+                          <td class="align_left"><%= link_to past_invoice.invoice_number, invoice_path(past_invoice) %></td>
+                          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= past_invoice.client.organization_name rescue "" %></td>
+                          <td class="align_left"><%= (past_invoice.due_date || past_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
+                          <td class="align_right"><%= number_to_currency(past_invoice.invoice_total) %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--grid_table-->
+        </div>
+      </div>
+
+    </div>
+    <!--row-fluid-->
+
+    <div class="row-fluid">
+      <div class="span12">
+
+
+        <%= render "recent_activity" %>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- START: Unpaid invoices popup -->
+<%= form_tag "/payments/enter_payment", :id => "invoice_selection" do %>
+    <div id="myModal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="model_grey_container">
+        <div class="modal-header">
+
+          <h1>Which Invoices have you received payment for?</h1>
+
+          <p>Select one or more Invoices from the list below to apply payment.</p>
+
+          <div class="cross_btn">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+            </button>
+          </div>
+        </div>
+        <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
+          <button class="close" type="button" style="margin:0px;">×</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span>You haven't selected any invoice. Please select one or more invoices and try again.</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="footer ">
+          <%= submit_tag "Enter Payment", :class => "btn_large submit" %>
+          <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+        </div>
+      </div>
+    </div>
+<% end %>
+<!-- END: Unpaid invoices popup -->
+
+<div class="graph_popup">
+  <div id="chart_details" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="popup_close_container">
+      <div class="popup_close"></div>
+    </div>
+    <div class="modal-body">
+    </div>
+  </div>
+</div><!--graph_popup-->
+

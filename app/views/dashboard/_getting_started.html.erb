@@ -1,0 +1,14 @@
+<div class="overview_box">
+
+  <div class="overview_box_heading">
+    <h1 class="small">Getting Started</h1>
+  </div>
+  <div class="getting_start">
+    <ul>
+      <li><%= link_to "Create new invoice", new_invoice_path %></li>
+      <li><%= link_to "Create new item", new_item_path %></li>
+      <li><%= link_to "Create new client", new_client_path %></li>
+      <li><%= link_to "Enter payment", '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
+    </ul>
+  </div>
+</div><!--overview_box-->

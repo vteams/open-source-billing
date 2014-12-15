@@ -1,0 +1,223 @@
+// Place all the styles related to the EmailTemplates controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.email_template_class {
+  .content_middle{
+    padding-top: 56px;
+    &.form{
+      padding-top: 20px;
+      .label_field.left{
+        width: 112px;
+      }
+    }
+  }
+  .grid_table table {
+    col.one {
+      /*check box*/
+      width: 215px;
+    }
+    col.two {
+      /*invoice*/
+      width: 435px;
+    }
+    col.three {
+      /*clients*/
+      width: 90px;
+    }
+    col.four {
+      /*clients*/
+      width: 100px;
+    }
+  }
+
+  .fields_content_container{
+    width: 690px;
+    clear: both;
+    padding-top: 40px;
+    table{
+      border-collapse: separate;
+    }
+  }
+  .fields_content_data{
+    width: 470px;
+  }
+  .label_field.left{
+    width: 120px;
+  }
+  .chzn-select{
+    width: 180px;
+  }
+  .medium_field{
+    input{
+      width: 330px;
+      &.after{
+        width: 70px;
+        float: left;
+      }
+    }
+    input[type="radio"]{
+      float: left;
+      width: 20px;
+      margin: 7px 0 0 0;
+    }
+    label{
+      float: left;
+      margin: 5px 35px 0 0;
+      &.after{
+        font-weight: bold;
+        margin: 6px 0 0 6px;
+      }
+    }
+  }
+
+  .scrollContainer{
+    height: 315px;
+  }
+
+  .medium_field.send_email{
+    width: 100%;
+  }
+  .medium_field label{
+    font-weight: normal;
+    padding: 1px 0 0 6px;
+  }
+
+  .large_field textarea{
+    width: 450px;
+    height: 197px;
+  }
+  .label_field.single{
+    &.template{
+      padding-top: 29px;
+      padding-bottom: 2px;
+    }
+  }
+  .label_field.left{
+    &.options{
+      width: 100% !important;
+    }
+  }
+  .options_content{
+    margin: 0px;
+    padding-left: 30px;
+  }
+  .options_content_row{
+    padding-top: 12px;
+    input[type="radio"], input[type="checkbox"], label{
+      float: left;
+    }
+    input[type="checkbox"]{
+      margin-left: 22px;
+    }
+    label{
+      line-height: normal;
+      padding: 0 0 0 10px;
+      margin: 0px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+  }
+
+  .custom_fields{
+    border: 1px solid #D7D7D7;
+    border-radius: 4px 4px 4px 4px;
+    overflow: hidden;
+    padding: 16px 0 16px 11px;
+    width: 177px;
+    vertical-align: top;
+    h4{
+      padding: 0 0 12px 8px;
+    }
+    /*label{
+      padding-left: 16px;
+    }
+    .custom_fields_data{
+      background-color: #FFFFFF;
+      border: 1px solid #D7D7D7;
+      border-radius: 4px 4px 4px 4px;
+      clear: both;
+      margin: 44px 0 0 16px;
+      min-height: 170px;
+      padding: 10px;
+      width: 180px;
+  }*/
+    ul li{
+      display: block;
+      margin-bottom: 3px;
+      cursor: pointer;
+      padding: 0 8px;
+      overflow: hidden;
+      width: 140px;
+      p{
+        text-decoration: none;
+        color: #464646;
+        float: left;
+        width: 100%;
+      }
+      span{
+        float: left;
+        font-size: 11px;
+        width: 100%;
+        color: #b8b8b8;
+        margin: -4px 0 0 0;
+      }
+      &:hover{
+        background: #ebebeb;
+        border-radius: 2px;
+      }
+    }
+  }
+  .email_template_class .fields_content_container{
+    min-height: 325px;
+  }
+
+
+  .field{clear: both;}
+  #apply_account, #apply_company{
+    float:left;
+  }
+  .btn_large{
+    &.big{
+      min-width: 200px;
+    }
+  }
+}
+.show_email{
+  .alert{
+    margin-bottom: 35px;
+  }
+  .email_container{
+    float: left;
+    width: 100%;
+    .email_row{
+      float: left;
+      width: 100%;
+      padding: 0 0 10px 0;
+      .email_heading{
+        float: left;
+        min-width: 106px;
+        font-weight: bold;
+        span{
+          float: right;
+          padding: 2px 0 0 0;
+          line-height: normal;
+        }
+      }
+      .email_detail{
+        float: left;
+        padding: 0 0 0 10px;
+        width: 86%;
+        &.btm_list{
+          padding-top: 10px;
+        }
+        span{
+          color: #00ACE5;
+          padding: 0 9px;
+        }
+      }
+    }
+
+  }
+
+}
+

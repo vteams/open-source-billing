@@ -1,0 +1,17 @@
+<% if @sent_emails.length > 0 %>
+    <% @sent_emails.each do |sent_email| %>
+        <tr>
+          <td class="align_left"><%= link_to sent_email.subject, {:controller => 'sent_emails', :action => 'show', :id => sent_email.id}, :class => "sent_email_link" %></td>
+          <td class="align_left"><%= sent_email.recipient %></td>
+          <td class="align_center"><%= sent_email.type %></td>
+          <td class="align_center"><%= sent_email.date %></td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="5">
+        <div class="no_record_container">No sent emails.</div>
+      </td>
+    </tr>
+<% end %>
+

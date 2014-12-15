@@ -1,0 +1,25 @@
+.edit_payment{
+  .label_field.left {
+    width: 122px;
+  }
+  .medium_field input {
+    width: 220px;
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+  .label_field.right {
+    padding-left: 25px;
+    width: 122px;
+  }
+
+  input[type="radio"], input[type="checkbox"] {
+    float: left;
+  }
+  .options_content{
+    margin-left: 121px;
+    padding: 0px;
+  }
+  .radio, .checkbox{
+    padding-left: 13px;
+  }
+}

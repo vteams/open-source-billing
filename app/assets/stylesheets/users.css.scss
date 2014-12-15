@@ -1,0 +1,28 @@
+.sub_user {
+  .grid_table{
+    padding-top: 17px;
+  }
+
+  .grid_table table {
+    //col.one {
+    ///*email*/
+    //  width: 33px;
+    //}
+    //col.two {
+    ///*date*/
+    //  width: 100px;
+    //}
+    col.four {
+    /*actions*/
+      width: 120px;
+    }
+
+  }
+}
+#notify_user{
+  float: left;
+  margin: 0 5px 0 0;
+}
+.user_email, .user_email:focus:required:invalid {
+  color: #464646;
+}

@@ -1,0 +1,10 @@
+<%= hidden_field_tag :page, params[:page] %>
+<%= hidden_field_tag :from_invoices %>
+<li class="grid_control_sep"><%= submit_tag "Recover", :name => "recover_archived", :class => "top_links recover_archived", :style => "display:none;" %></li>
+<li class="grid_control_sep"><%= submit_tag "Recover", :name => "recover_deleted", :class => "top_links recover_deleted", :style => "display:none;" %></li>
+<li><%= submit_tag "Archive", :name => "archive", :class => "top_links archive" %></li>
+<li class="grid_control_sep"><%= submit_tag "Delete", :name => "destroy", :class => "top_links destroy" %></li>
+<!--<li><a href="#" class="no_links">Copy</a></li>-->
+<!--<li><a href="#" class="no_links">Print</a></li>-->
+<li class="grid_control_sep"><%= submit_tag "Send", :name => "send", :class => "top_links send" %></li>
+<li><%= submit_tag "Enter payment", :name => "payment", :class => "top_links payment" %></li>

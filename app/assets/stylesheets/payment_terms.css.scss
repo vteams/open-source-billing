@@ -1,0 +1,14 @@
+// Place all the styles related to the PaymentTerms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#create_term {
+  .modal {
+    tr:first-child {
+      background: none;
+    }
+    .modal-body {
+      min-height: 0;
+    }
+  }
+
+}

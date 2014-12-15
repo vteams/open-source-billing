@@ -1,0 +1,2 @@
+module RecurringProfileLineItemsHelper
+end

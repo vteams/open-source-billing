@@ -1,0 +1,2 @@
+<% inlineform_action = params[:add_more] ? "inlineform:save_and_add_more" : "inlineform:save" %>
+<%= "{\"action\": \"#{inlineform_action}\", \"record\": \"<option value='#{@client.id}' selected type='#{params[:association] == "account" ? "account_level" : "company_level"}'>#{@client.organization_name}</option>\"}".html_safe%>

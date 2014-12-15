@@ -1,0 +1,24 @@
+jQuery('tbody#client_body').html('<%= escape_javascript render("clients") %>').hide(300).show(300);
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+
+<% status = params[:status]%>
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+<%if status == "active" %>
+jQuery('.archive,.destroy,.new_invoice').show();
+jQuery('.destroy').parent('li').addClass('grid_control_sep');
+jQuery('#active_links a.get_actives').addClass('active');
+<% elsif status == "archived"%>
+jQuery('.recover_archived,.destroy').show();
+jQuery('.destroy').parent('li').removeClass('grid_control_sep');
+jQuery('#active_links a.get_archived').addClass('active');
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show();
+jQuery('.destroy').parent('li').removeClass('grid_control_sep');
+jQuery('#active_links a.get_deleted').addClass('active');
+<%end%>
+jQuery('#select_all').attr('checked', false);
+//jQuery("table.table_listing").trigger('update');

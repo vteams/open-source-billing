@@ -1,0 +1,157 @@
+.pay_invoice {
+  .fields_content{
+    padding-top:30px;
+  }
+  .fields_content_container{
+    width: 100%;
+  }
+  .fields_content_data{
+    width: 92.80%;
+    padding: 0 30px;
+  }
+  .payment_left {
+    float: left;
+    border: 1px solid #D7D7D7;
+    border-radius: 3px 3px 3px 3px;
+    width: 263px;
+    min-height: 234px;
+  }
+  .payment_serial {
+    position: absolute;
+    width: 69px;
+    height: 69px;
+    margin: -1px 0 0 -1px;
+  }
+  .draft{
+      background: url(/assets/draft_pmt.png) no-repeat;
+  }
+  .sent{
+      background: url(/assets/sent_pmt.png) no-repeat;
+  }
+  .draft-partial{
+      background: url(/assets/draft_partial_pmt.png) no-repeat;
+  }
+  .partial{
+      background: url(/assets/partial_pmt.png) no-repeat;
+  }
+  .paid{
+      background: url(/assets/paid_pmt.png) no-repeat;
+  }
+  .disputed{
+      background: url(/assets/disputed_pmt.png) no-repeat;
+  }
+  .viewed{
+    background: url(/assets/viewed_pmt.png) no-repeat;
+  }
+  .payment_summary {
+    float: left;
+    padding: 36px 39px 15px 39px;
+  }
+  .payment_person {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+  }
+  .payment_person p.organization {
+    font-family: 'Dosis SemiBold';
+    color: #464646;
+    padding: 0 0 2px 0;
+  }
+  .payment_person p.person_name {
+    font-family: 'Dosis Regular';
+  }
+  .invoice_data{
+    float: left;
+    width: 100%;
+    padding: 12px 0 0 0;
+  }
+  .invoice_data_row{
+    float: left;
+    width: 100%;
+    padding: 0 0 7px 0;
+  }
+  .invoice_label{
+    font-family: 'Dosis Regular';
+    float: left;
+    width: 99px;
+    font-size: 16px;
+    color: #464646;
+  }
+  .invoice_label span{
+    float: right;
+  }
+  .inovice_description{
+    width: 86px;
+    font-family: 'Dosis SemiBold';
+    float: right;
+    font-size: 16px;
+    color: #959595;
+    text-align: right;
+  }
+  .inovice_description.amount{
+    color: #7eb813;
+  }
+  .payment_right {
+    float: right;
+    width: 415px;
+  }
+  .label_field.left {
+    width: 106px;
+  }
+  .label_field.right {
+    width: 39px;
+    padding: 5px 0 0 20px;
+  }
+  .small_field input {
+    width: 105px;
+  }
+  .small_field select {
+    width: 125px;
+  }
+  .large_field textarea {
+    width: 289px;
+    min-height: 40px;
+    margin-bottom: 7px;
+  }
+  .field_check {
+    float: left;
+    padding: 5px 0 0 20px;
+  }
+  .field_check.btm {
+    float: left;
+    padding: 10px 0 0 0;
+  }
+  .field_check input {
+    float: left;
+  }
+  .field_check p,
+  .field_check p label {
+    float: left;
+    padding: 0 0 0 5px;
+    font-weight: normal;
+  }
+  .modal .cross_btn {
+    margin-top: -50px;
+  }
+  .grand_total{
+    float: left;
+    width: 100%;
+    clear: both;
+    padding: 16px 0 0 0;
+    .grand_total_box{
+      padding: 0 30px;
+      float: right;
+    }
+    p{
+      padding: 0 0 4px 0;
+      &:last-child{
+        padding: 0px;
+      }
+      span{
+        float: right;
+        font-weight: bold;
+        padding: 0 0 0 8px;
+      }
+    }
+  }
+}

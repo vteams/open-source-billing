@@ -1,0 +1,62 @@
+.payment{
+
+    .grid_table table col.one{ /*check box*/
+        width : 33px;
+    }
+    .grid_table table col.two{ /*invoice*/
+        width : 94px;
+    }
+    .grid_table table col.three{ /*clients*/
+        width: 329px;
+    }
+    .grid_table table col.four{ /*type*/
+        width : 176px;
+    }
+    .grid_table table col.five{ /*notes*/
+        width : 71px;
+    }
+    .grid_table table col.six{ /*date*/
+        width : 90px;
+    }
+    .grid_table table col.seven{ /*amount*/
+        width : 125px;
+    }
+    .grid_table table col.eight{ /*actions*/
+        width : 98px;
+    }
+
+}
+
+td.payment_amount span{
+  font-size: 15px;
+}
+.continue_delete_msg{
+  color: #464646;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 20px 0 0;
+  padding: 3px 0 0;
+  text-align: center;
+}
+.payments_with_credit{
+    .grid_table table col.one{ /*invoices*/
+        width : 94px;
+    }
+    .grid_table table col.two{ /*clients*/
+        width: 202px;
+    }
+    .grid_table table col.three{ /*type*/
+        width : 82px;
+    }
+    .grid_table table col.four{ /*notes*/
+        width : 247px;
+    }
+    .grid_table table col.five{ /*date*/
+        width : 90px;
+    }
+    .grid_table table col.six{ /*amount*/
+        width : 125px;
+    }
+
+}

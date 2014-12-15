@@ -1,0 +1,65 @@
+.items {
+  .grid_table table col.one { /*check box*/
+    width: 33px;
+  }
+  .grid_table table col.two { /*item name*/
+    width: 170px;
+  }
+  .grid_table table col.three { /*item Description*/
+    width: 245px;
+  }
+  .grid_table table col.four { /*unit cost*/
+    width: 92px;
+  }
+  .grid_table table col.five { /*quantity*/
+    width: 90px;
+  }
+  .grid_table table col.six { /*tax 1*/
+    width: 70px;
+  }
+  .grid_table table col.seven { /*tax 2*/
+    width: 70px;
+  }
+  .grid_table table col.eight { /*actions*/
+    width: 70px;
+  }
+}
+.items_wrapper {
+  .fields_content {
+    overflow: visible;
+  }
+  .chzn-container .chzn-results {
+     max-height: 129px;
+  }
+
+  .label_field.single{
+    &.template{
+      padding-top: 19px;
+    }
+  }
+  .label_field.left{
+    &.options{
+      width: 100%;
+    }
+  }
+  .options_content{
+    margin: 0px;
+    padding-left: 130px;
+  }
+  .options_content_row{
+    padding-top: 12px;
+    input[type="radio"], input[type="checkbox"], label{
+      float: left;
+    }
+    input[type="checkbox"]{
+      margin-left: 22px;
+    }
+    label{
+      line-height: normal;
+      padding: 0 0 0 10px;
+      margin: 0px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+  }
+}

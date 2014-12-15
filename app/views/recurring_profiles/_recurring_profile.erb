@@ -1,0 +1,36 @@
+<%
+   no_record_message = "You haven't created any recurring profile yet. Please click on New Recurring Profile button to create new recurring profile."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived recurring profile."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted recurring profile."
+   end
+%>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<% if  @recurring_profiles.length > 0 %>
+    <% @recurring_profiles.each do |profile| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "recurring_profile_ids[]", profile.id, false, :id => "recurring_profile_#{profile.id}" %></td>
+          <td class="align_center"><%= link_to profile.invoice_number, recurring_profile_path(profile), :class => "invoices_link" %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= profile.client.organization_name rescue "" %></td>
+          <td class="align_left"><%= profile.last_sent_date.to_time.strftime("%m/%d/%Y") rescue "" %></td>
+          <td class="align_center"><%= profile.frequency %></td>
+          <td class="align_right"><%= "#{number_to_currency(profile.invoice_total)}" %></td>
+          <td class="align_center"><%=  profile.remaining_occurrences %></td>
+          <td class="align_center">
+            <% if profile.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_recurring_profile_path(profile) %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+
+<% else %>
+    <tr>
+      <td colspan="8">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>

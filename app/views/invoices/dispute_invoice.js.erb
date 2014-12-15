@@ -1,0 +1,4 @@
+jQuery('#dispute_invoice_popup').modal('hide')
+jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+jQuery('.response_to_client').html('<%= escape_javascript render("dispute_history") %>');
+jQuery('#show_invoice_container').html('<%= escape_javascript render("show_invoice") %>');

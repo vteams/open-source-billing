@@ -1,0 +1,31 @@
+jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>');
+jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+//jQuery("table.table_listing").trigger('update');
+
+jQuery('#sort_direction').html('<%= params[:direction]%>');
+// Add page params in table listing headers
+jQuery(".sortable").each(function () {
+
+    var href = jQuery(this).attr('href');
+    var qs = href.split('?')[1];
+    var qsa = [];
+
+    jQuery(qs.split('&')).each(function () {
+        var key = this.split('=')[0];
+        var value = this.split('=')[1];
+        if (key == 'page')
+            value = <%= params[:page] || 1%>;
+        if(key == 'direction' && value == 'asc')
+            value = 'desc';
+        else if(key == 'direction' && value == 'desc')
+            value = 'asc';
+
+        qsa.push(key + "=" + value);
+    });
+
+    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
+    jQuery(this).attr('href', new_qs);
+});

@@ -1,0 +1,46 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ 
+ 
+ *= general.css.scss
+ *= invoice.css.scss
+ *= clients.css.scss
+ *= sent_email.css.scss
+ *= items.css.scss
+ *= taxes.css.scss
+ *= payment.css.scss
+ *= unpaid_invoice.css.scss
+ *= new_item_form.css.scss
+ *= payments_editing.css.scss
+ *= reports.css.scss
+ *= invoice_form.css.scss
+ *= tiny_form_container.css.scss
+ *= pay_invoice.css.scss
+ *= log_page.css.scss
+ *= aged_accounts_receivable.css.scss
+ *= revenue_by_client.css.scss
+ *= show_invoice.css.scss
+ *= payment_history.css.scss
+ *= dispute_history.css.scss
+ *= credit_card.css.scss
+ *= jquery.customScrollbar.css
+ *= edit_payment.css
+ *= item_sales.css
+ *= sub_users_form.css.scss
+ *= companies.css.scss
+ *= recurring_profile.css.scss
+ *= show_email.css.scss
+
+
+
+*/

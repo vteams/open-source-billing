@@ -1,0 +1,53 @@
+<!--<h2>Forgot your password?</h2>-->
+
+<!--<%#= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post}) do |f| %>-->
+<!--<%#= devise_error_messages! %>-->
+
+<!--<div><%#= f.label :email %> -->
+<!--<br/>-->
+<!-- <%#= f.email_field :email, :autofocus => true %></div> -->
+
+<!--<div><%#= f.submit "Send me reset password instructions" %></div>-->
+<!--<%# end %>-->
+
+<%#= render "devise/shared/links" %>
+
+
+<!------------ New design for forgot passowrd --------------->
+
+<div class="log_page">
+  <div class="log_container">
+    <div class="log_content">
+      <div class="log_top">
+        <h1>Open<span>Source</span>Billing</h1>
+      </div>
+      <!--log_top-->
+
+      <div class="log_para">
+        <p>Please enter your email here and we'll send you instructions
+          to reset your password</p>
+      </div>
+
+      <div class="notice"><%= devise_error_messages! %></div>
+
+      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post, novalidate: '', id: 'send_password'}) do |f| %>
+          <div class="log_fields">
+            <div class="field_row forgot">
+              <div class="label_field"><%= f.label :email %></div>
+              <div class="medium_field">
+                <%= f.email_field :email, :autofocus => true, class: 'user_email', required: '' %>
+              </div>
+            </div>
+          </div>
+          <!--log_fields-->
+
+          <div class="log_btm">
+            <%= f.submit "Send Password Instructions", :class => "btn_large submit" %>
+            <%= link_to 'Cancel', invoices_path, :class => 'btn_large grey forgot' %>
+          </div>
+          <!--log_btm-->
+
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<%
+   no_record_message = "You haven't created any tax yet. Please click on New Tax button to create new tax."
+   if params[:status] == "archived" || @action == "recovered from archived"
+     no_record_message = "You haven't any archived tax."
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = "You haven't any deleted tax."
+   end
+%>
+<% if @taxes.length > 0 %>
+    <% @taxes.each do |taxis| %>
+        <tr>
+          <td class="align_center" width=10> <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "tax_#{taxis.id}" %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= taxis.name %></td>
+          <td class="align_left"><%= taxis.percentage %></td>
+          <td class="align_center">
+            <% if taxis.deleted_at.nil? %>
+                <%= link_to 'Edit', edit_tax_path(taxis), :class => "edit_action" %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="4">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>
+

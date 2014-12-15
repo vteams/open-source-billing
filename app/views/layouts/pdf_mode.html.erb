@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Open Source Billing</title>
+    <style type="text/css">
+      /*-----------------General Css Starts-----------------*/
+      body {
+        background: #ffffff !important;
+      }
+      .content {
+        margin: auto;
+        min-height: 950px;
+        width: 840px !important;
+      }
+      /*-----------------General Css Ends-----------------*/
+        <%= stylesheet_link_tag 'general.css.scss' %>
+        <%= stylesheet_link_tag 'show_invoice.css.scss' %>
+        <%= Rails.application.assets.find_asset('general.css.scss').source.html_safe%>
+        <%= Rails.application.assets.find_asset('show_invoice.css.scss').source.html_safe%>
+    </style>
+  </head>
+  <body>
+    <div class="mainContainer">
+
+      <div class="header">
+        <div class="logo">
+          <!--<%= image_tag "logo.png", :size => "185x30" %>-->
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- <div class="notice"><%#= notice %></div> -->
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+jQuery('tbody#client_body').html('<%= escape_javascript render("clients") %>');
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+<% @recovered = params[:archived] ? 'archived' : 'deleted' %>
+jQuery(".alert.alert-success").show().find('span').html("Client(s) are recovered from <%= @recovered %> successfully.");
+jQuery('#active_links a').removeClass('active');
+jQuery('.get_actives').addClass('active');

@@ -1,0 +1,72 @@
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<div class="company">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        Companies
+        <span>&nbsp;/&nbsp;Active</span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, "New Company")),
+                  new_company_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+  <%= form_tag "companies/bulk_actions", :remote => true do -%>
+      <div class="content_middle">
+        <div class="grid_control">
+          <div class="grid_control_left">
+            <ul value='company' id="bulk_actions">
+              <%= render "bulk_actions" %>
+            </ul>
+
+          </div>
+          <div class="grid_control_right" id="active_links">
+            <%= render "filter_links" %>
+          </div>
+        </div>
+        <div class="grid_table">
+          <table cellpadding="0" cellspacing="0" class="table table_listing company_listing">
+            <colgroup>
+              <!--<col class="one"/>-->
+              <col class="one"/>
+              <col class="two"/>
+              <col class="three"/>
+              <col class="four"/>
+              <col class="five"/>
+              <col class="six"/>
+            </colgroup>
+            <thead>
+            <tr>
+              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+              <th class="align_left sorting header"><%= sortable('company_name', 'Company name') %></th>
+              <th class="align_left header"><%= sortable('contact_name', 'Contact name') %></th>
+              <th class="align_left header"><%= sortable('email', 'Email') %></th>
+              <th class="align_left header"><%= sortable('country', 'Country') %></th>
+              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+            </tr>
+            </thead>
+            <tbody id="company_body">
+            <%= render 'company' %>
+            <tfoot id="paging_links">
+            <%= render "application_partials/paging" %>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+        <!--grid_table-->
+      </div>
+      <!--content_middle-->
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, "New Company")),
+                    new_company_path,
+                    :class => 'btn_large' %>
+      </div>
+      <!--content_bottom-->
+  <% end %>
+</div>

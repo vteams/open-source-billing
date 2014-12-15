@@ -1,0 +1,45 @@
+.payments_editing{
+    .fields_content_container.invoice{
+    width: 720px;
+    }
+    .label_field.left{
+        width: 120px;
+    }
+    .label_field.right{
+        width: 120px;
+        padding-left: 30px;
+    }
+    .medium_field input{
+        width: 205px;
+    }
+    .large_field textarea{
+        width: 580px;
+    }
+    .options_content_row ul li{
+        float: left;
+        width: 100%;
+        margin: 0 0 20px 0;
+        line-height: 13px;
+        display: block;
+    }
+    .options_content_row ul li input{
+        float: left;
+        margin: 0 5px 0 0;
+    }
+    .options_content_row ul li:last-child{
+        margin: 0px;
+    }
+    .content_bottom a{
+        margin: 0 6px 0 0;
+    }
+    .content_bottom a:last-child{
+        margin: 0px;
+    }
+    label.checkbox{
+        line-height: normal;
+        font-weight: normal;
+        min-height: auto;
+        margin: 0px;
+        padding: 0px;
+    }
+}

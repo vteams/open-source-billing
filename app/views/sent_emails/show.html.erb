@@ -1,0 +1,33 @@
+<div class="show_email">
+  <p id="notice"><%= notice %></p>
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>Email Contents</h1>
+    </div>
+  </div>
+  <!--content_top-->
+
+  <div class="content_middle">
+    <div class="help_page">
+      <%= @sent_email.content.html_safe unless @sent_email.content.blank? %>
+    </div><!--help_page-->
+  </div><!--content_middle-->
+  <%= link_to 'Back', :controller => "sent_emails" %>
+</div><!--show_email-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

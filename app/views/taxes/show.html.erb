@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @taxis.name %>
+</p>
+
+<p>
+  <b>Percentage:</b>
+  <%= @taxis.percentage %>
+</p>
+
+
+<%= link_to 'Edit', edit_taxis_path(@taxis) %> |
+<%= link_to 'Back', taxes_path %>

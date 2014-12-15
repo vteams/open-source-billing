@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @company.account_id %>
+</p>
+
+<p>
+  <b>Company name:</b>
+  <%= @company.company_name %>
+</p>
+
+<p>
+  <b>Contact name:</b>
+  <%= @company.contact_name %>
+</p>
+
+<p>
+  <b>Contact title:</b>
+  <%= @company.contact_title %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @company.country %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @company.city %>
+</p>
+
+<p>
+  <b>Street address 1:</b>
+  <%= @company.street_address_1 %>
+</p>
+
+<p>
+  <b>Street address 2:</b>
+  <%= @company.street_address_2 %>
+</p>
+
+<p>
+  <b>Province or state:</b>
+  <%= @company.province_or_state %>
+</p>
+
+<p>
+  <b>Postal or zipcode:</b>
+  <%= @company.postal_or_zipcode %>
+</p>
+
+<p>
+  <b>Phone number:</b>
+  <%= @company.phone_number %>
+</p>
+
+<p>
+  <b>Fax number:</b>
+  <%= @company.fax_number %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @company.email %>
+</p>
+
+<p>
+  <b>Logo:</b>
+  <%= @company.logo %>
+</p>
+
+<p>
+  <b>Company tag line:</b>
+  <%= @company.company_tag_line %>
+</p>
+
+<p>
+  <b>Memo:</b>
+  <%= @company.memo %>
+</p>
+
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>

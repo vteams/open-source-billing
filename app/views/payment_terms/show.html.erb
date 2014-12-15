@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Number of days:</b>
+  <%= @payment_term.number_of_days %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @payment_term.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_payment_term_path(@payment_term) %> |
+<%= link_to 'Back', payment_terms_path %>
