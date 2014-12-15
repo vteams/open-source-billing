@@ -1,0 +1,42 @@
+# Ignore bundler config.
+/.bundle
+.idea
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/schema.rb
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+log/*.log
+tmp
+
+*.rbc
+capybara-*.html
+.rspec
+/log
+/public/system
+/public/*
+
+config/initializers/secret_token.rb
+config/environments/*.rb
+config/secrets.yml
+config/database.yml
+
+
+app/controllers/csv_files/*.csv
+app/controllers/csv_files/*.txt
+
+## Environment normalisation:
+/.bundle
+/vendor/bundle
+
+# these should all be checked in to normalise the environment:
+Gemfile.lock
+.ruby-version
+.ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+node_modules/*
