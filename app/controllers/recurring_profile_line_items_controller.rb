@@ -84,7 +84,7 @@ class RecurringProfileLineItemsController < ApplicationController
   private
 
   def recurring_profile_line_items_params
-    params.require(:recurring_profile_line_item).permit(:recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2, :created_at, :updated_at, :archive_number, :archived_at, :deleted_at)
+    params.require(:recurring_profile_line_item).permit(:recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2, :archive_number, :archived_at, :deleted_at)
   end
 
 end

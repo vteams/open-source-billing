@@ -174,11 +174,11 @@ class RecurringProfilesController < ApplicationController
   def recurring_profile_params
     params.require(:recurring_profile).permit(:client_id, :discount_amount, :discount_percentage, :notes, :po_number,
                                               :status, :sub_total, :tax_amount, :terms, :first_invoice_date, :frequency,
-                                              :occurrences, :prorate, :prorate_for, :gateway_id, :created_at, :updated_at,
+                                              :occurrences, :prorate, :prorate_for, :gateway_id,
                                               :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at,
                                               :deleted_at, :payment_terms_id, :company_id, :last_invoice_status,
                                               :last_sent_date, :sent_invoices,
-                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2, :created_at, :updated_at, :archive_number, :archived_at, :deleted_at, :_destroy]
+                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2,:archive_number, :archived_at, :deleted_at, :_destroy]
     )
   end
 

@@ -178,7 +178,7 @@ class TaxesController < ApplicationController
   private
 
   def taxes_params
-    params.require(:tax).permit(:name, :percentage, :created_at, :updated_at, :archived_at, :archive_number, :deleted_at)
+    params.require(:tax).permit(:name, :percentage, :archived_at, :archive_number, :deleted_at)
   end
 
 end

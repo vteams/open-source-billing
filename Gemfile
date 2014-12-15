@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 #ruby '2.1.3'
 
 #gem 'rails', '3.2.9'
-gem 'rails'
+gem 'rails', '~> 4.1.8'
 
 
 gem 'bundler'
@@ -17,7 +17,7 @@ gem 'mysql2'
 gem 'devise', '3.2.3'
 gem 'devise-encryptable'
 gem 'slim-rails'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 1.4.0'
 gem 'grape-doorkeeper', '~> 0.0.2'
 gem 'simple_token_authentication', '~> 1.0'
 
@@ -46,7 +46,7 @@ gem 'activerecord-mysql-adapter'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'pdfkit'
-gem 'grape'
+gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
 gem 'simple_token_authentication', '~> 1.0'
 group :development do
@@ -70,8 +70,8 @@ gem 'rmagick'
 gem 'tinymce-rails'
 
 # testing
-gem 'factory_girl_rails'
-gem 'factory_girl'
+gem 'factory_girl_rails', '~> 4.5.0'
+gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 
 group :test do
