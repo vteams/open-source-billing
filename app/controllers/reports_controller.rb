@@ -32,9 +32,13 @@ class ReportsController < ApplicationController
   def reports
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
     @report = get_report(params)
-
     respond_to do |format|
       format.html # index.html.erb
+      format.pdf do
+        render  pdf: "#{@report.report_name}",
+          layout: 'pdf_mode.html.erb',
+          template: 'reports/reports.html.erb'
+      end
     end
   end
 

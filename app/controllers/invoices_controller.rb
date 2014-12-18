@@ -50,7 +50,13 @@ class InvoicesController < ApplicationController
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
 
     @invoice = Invoice.find(params[:id])
-    render :layout => 'pdf_mode'
+    respond_to do |format|
+      format.pdf do
+        render  pdf: "#{@invoice.invoice_number}",
+          layout: 'pdf_mode.html.erb',
+          template: 'invoices/invoice_pdf.html.erb'
+      end
+    end
   end
 
   def preview

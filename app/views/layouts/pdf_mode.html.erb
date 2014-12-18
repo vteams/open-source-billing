@@ -10,13 +10,15 @@
       .content {
         margin: auto;
         min-height: 950px;
-        width: 840px !important;
+        width: 100% !important;
+      }
+      .grid_table table{
+        width: 100% ;
       }
       /*-----------------General Css Ends-----------------*/
-        <%= stylesheet_link_tag 'general.css.scss' %>
-        <%= stylesheet_link_tag 'show_invoice.css.scss' %>
-        <%= Rails.application.assets.find_asset('general.css.scss').source.html_safe%>
-        <%= Rails.application.assets.find_asset('show_invoice.css.scss').source.html_safe%>
+      <%= Rails.application.assets.find_asset('general.css.scss').source.html_safe%>
+      <%= Rails.application.assets.find_asset('show_invoice.css.scss').source.html_safe%>
+      <%= Rails.application.assets.find_asset('reports.css.scss').source.html_safe%>
     </style>
   </head>
   <body>
@@ -24,7 +26,7 @@
 
       <div class="header">
         <div class="logo">
-          <!--<%= image_tag "logo.png", :size => "185x30" %>-->
+          <%= wicked_pdf_image_tag "logo.png", :size => "185x30" %>
         </div>
       </div>
 

@@ -24,22 +24,7 @@
     </div>
     <!-- report_content_header -->
 
-    <div class="header_data_right">
-      <ul class="download_report">
-        <li class="download_report_title">Export to:</li>
-        <li class="download_sep">CSV</li>
-        <li>Excel</li>
-      </ul>
-      <ul class="print_report">
-        <li><a href="#">Print Report</a></li>
-      </ul>
-      <div class="report_duration">
-        <!--<ul>-->
-          <!--<li><%= @report.period %></li>-->
-        <!--</ul>-->
-      </div>
-      <!-- report_duration -->
-    </div>
+    <%= render 'reports/report_partials/format_links'%>
 
     <div class="grid_table">
       <table cellpadding="0" cellspacing="0" class="table_listing aged_accounts_listing">
