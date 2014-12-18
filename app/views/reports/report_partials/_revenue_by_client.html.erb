@@ -61,7 +61,7 @@
               </tfoot>
           <% else %>
               <tr>
-                <td colspan="14">No data found against the selected criteria. Please change criteria and try again.
+                <td colspan="<%= 2+(@report.report_criteria.from_month..@report.report_criteria.to_month).size %>">No data found against the selected criteria. Please change criteria and try again.
                 </td>
               </tr>
           <% end %>

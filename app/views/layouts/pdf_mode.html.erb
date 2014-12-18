@@ -13,12 +13,16 @@
         width: 100% !important;
       }
       .grid_table table{
-        width: 100% ;
+        width: 97% !important;
+      }
+      .sent{
+        background-image:url('<%= "file://#{Rails.root.join('app','assets','images','sent.png')}"%>') !important;
       }
       /*-----------------General Css Ends-----------------*/
-      <%= Rails.application.assets.find_asset('general.css.scss').source.html_safe%>
-      <%= Rails.application.assets.find_asset('show_invoice.css.scss').source.html_safe%>
-      <%= Rails.application.assets.find_asset('reports.css.scss').source.html_safe%>
+      <%= wicked_pdf_stylesheet_link_tag 'general' %>
+      <%= wicked_pdf_stylesheet_link_tag 'show_invoice' %>
+      <%= wicked_pdf_stylesheet_link_tag 'reports' %>
+
     </style>
   </head>
   <body>
