@@ -62,6 +62,59 @@ module Reporting
           @report_total["discount_amount"] += item.attributes["discount_amount"] || 0
         end
       end
+
+      def to_csv
+        item_sales_csv self
+      end
+
+      def item_sales_csv report
+        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+        CSV.generate do |csv|
+          csv << headers
+          report.report_data.each do |item|
+            temp_row=[
+                item.item_name.to_s,
+                item.item_quantity.to_i,
+                item.total_amount.to_f,
+                item.discount_amount.to_f,
+                item.net_total.to_f
+            ]
+            csv << temp_row
+          end
+          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f, report.report_total["discount_amount"].to_f, report.report_total["net_total"].to_f]
+          csv << row_total
+        end
+      end
+
+      def to_xlsx
+        item_sales_xlsx self
+      end
+
+      def item_sales_xlsx report
+        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+        doc = XlsxWriter.new
+        doc.quiet_booleans!
+        sheet1 = doc.add_sheet("Item Sales")
+
+        unless report.report_data.blank?
+          sheet1.add_row(headers)
+          report.report_data.each do |item|
+            temp_row=[
+                item.item_name.to_s,
+                item.item_quantity.to_i,
+                item.total_amount.to_f,
+                item.discount_amount.to_f,
+                item.net_total.to_f
+            ]
+            sheet1.add_row(temp_row)
+          end
+          sheet1.add_row(['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f, report.report_total["discount_amount"].to_f, report.report_total["net_total"].to_f])
+        else
+          sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
+        end
+        doc
+      end
+
     end
   end
 end

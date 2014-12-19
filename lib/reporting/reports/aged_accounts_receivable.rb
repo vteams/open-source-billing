@@ -78,6 +78,72 @@ module Reporting
           @report_total["ninety_one_and_above"] += row.attributes["ninety_one_and_above"]
         end
       end
+
+      def to_csv
+        aged_accounts_receivable_csv self
+      end
+
+      def aged_accounts_receivable_csv report
+        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
+        CSV.generate do |csv|
+          csv << headers
+          report.report_data.each do |item|
+            temp_row=[
+                item.client_name.to_s,
+                item.zero_to_thirty.to_f,
+                item.thirty_one_to_sixty.to_f,
+                item.sixty_one_to_ninety.to_f,
+                item.ninety_one_and_above.to_f,
+                item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f,
+
+            ]
+            csv << temp_row
+          end
+          row_total = ['Total',
+                       report.report_total["zero_to_thirty"].to_i,
+                       report.report_total["thirty_one_to_sixty"].to_f,
+                       report.report_total["sixty_one_to_ninety"].to_f,
+                       report.report_total["ninety_one_and_above"].to_f,
+                       report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f  ]
+          csv << row_total
+        end
+      end
+
+      def to_xlsx
+        aged_accounts_receivable_xlsx self
+      end
+
+      def aged_accounts_receivable_xlsx report
+        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
+        doc = XlsxWriter.new
+        doc.quiet_booleans!
+        sheet1 = doc.add_sheet("Aged Accounts Receivable")
+
+        unless report.report_data.blank?
+          sheet1.add_row(headers)
+          report.report_data.each do |item|
+            temp_row=[
+                item.client_name.to_s,
+                item.zero_to_thirty.to_f,
+                item.thirty_one_to_sixty.to_f,
+                item.sixty_one_to_ninety.to_f,
+                item.ninety_one_and_above.to_f,
+                item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f,
+
+            ]
+            sheet1.add_row(temp_row)
+          end
+          sheet1.add_row(['Total',
+                          report.report_total["zero_to_thirty"].to_i,
+                          report.report_total["thirty_one_to_sixty"].to_f,
+                          report.report_total["sixty_one_to_ninety"].to_f,
+                          report.report_total["ninety_one_and_above"].to_f,
+                          report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f  ])
+        else
+          sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
+        end
+        doc
+      end
     end
   end
 end

@@ -68,6 +68,62 @@ module Reporting
 
         payments + credit_payments
       end
+
+      def to_csv
+       payments_collected_csv self
+      end
+
+      def payments_collected_csv report
+        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+        CSV.generate do |csv|
+          csv << headers
+          report.report_data.each do |payment|
+            temp_row=[
+                payment.invoice_number.to_s,
+                payment.client_name.to_s,
+                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
+                payment.notes.to_s,
+                payment.created_at.to_date.to_s,
+                payment.payment_amount.to_f
+            ]
+            csv << temp_row
+          end
+          csv << ['Total', '', '', '', '',  report.report_total]
+        end
+      end
+
+      def to_xlsx
+        payments_collected_xlsx self
+      end
+
+      def payments_collected_xlsx report
+        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+        doc = XlsxWriter.new
+        doc.quiet_booleans!
+        sheet1 = doc.add_sheet("Payments Collected")
+
+        unless report.report_data.blank?
+          #binding.pry
+
+          sheet1.add_row(headers)
+          report.report_data.each do |payment|
+            temp_row=[
+                payment.invoice_number.to_s,
+                payment.client_name.to_s,
+                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
+                payment.notes.to_s,
+                payment.created_at.to_date.to_s,
+                payment.payment_amount.to_f
+            ]
+            sheet1.add_row(temp_row)
+          end
+          sheet1.add_row(['Total', '', '', '', '',  report.report_total])
+        else
+          sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
+        end
+        doc
+      end
+
     end
   end
 end
