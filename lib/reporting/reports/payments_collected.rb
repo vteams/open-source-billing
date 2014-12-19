@@ -84,11 +84,11 @@ module Reporting
                 (payment.payment_type || payment.payment_method || "").capitalize.to_s,
                 payment.notes.to_s,
                 payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f
+                payment.payment_amount.to_f.round(2)
             ]
             csv << temp_row
           end
-          csv << ['Total', '', '', '', '',  report.report_total]
+          csv << ['Total', '', '', '', '',  report.report_total.round(2)]
         end
       end
 
@@ -113,11 +113,11 @@ module Reporting
                 (payment.payment_type || payment.payment_method || "").capitalize.to_s,
                 payment.notes.to_s,
                 payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f
+                payment.payment_amount.to_f.round(2)
             ]
             sheet1.add_row(temp_row)
           end
-          sheet1.add_row(['Total', '', '', '', '',  report.report_total])
+          sheet1.add_row(['Total', '', '', '', '',  report.report_total.round(2)])
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end

@@ -81,14 +81,14 @@ module Reporting
             (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
               temp_row << rpt["#{Date::MONTHNAMES[month]}"]
             end
-            temp_row << rpt.client_total.to_f
+            temp_row << rpt.client_total.to_f.round(2)
             csv << temp_row
           end
           total_row = ['Total']
           (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
             total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
           end
-          total_row << report.report_total["net_total"].to_f
+          total_row << report.report_total["net_total"].to_f.round(2)
           csv << total_row
         end
       end
@@ -114,14 +114,14 @@ module Reporting
             (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
               temp_row << rpt["#{Date::MONTHNAMES[month]}"]
             end
-            temp_row << rpt.client_total.to_f
+            temp_row << rpt.client_total.to_f.round(2)
             sheet1.add_row(temp_row)
           end
           total_row = ['Total']
           (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
             total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
           end
-          total_row << report.report_total["net_total"].to_f
+          total_row << report.report_total["net_total"].to_f.round(2)
           sheet1.add_row(total_row)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])

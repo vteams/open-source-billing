@@ -75,13 +75,13 @@ module Reporting
             temp_row=[
                 item.item_name.to_s,
                 item.item_quantity.to_i,
-                item.total_amount.to_f,
-                item.discount_amount.to_f,
-                item.net_total.to_f
+                item.total_amount.to_f.round(2),
+                item.discount_amount.to_f.round(2),
+                item.net_total.to_f.round(2)
             ]
             csv << temp_row
           end
-          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f, report.report_total["discount_amount"].to_f, report.report_total["net_total"].to_f]
+          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)]
           csv << row_total
         end
       end
@@ -102,13 +102,13 @@ module Reporting
             temp_row=[
                 item.item_name.to_s,
                 item.item_quantity.to_i,
-                item.total_amount.to_f,
-                item.discount_amount.to_f,
-                item.net_total.to_f
+                item.total_amount.to_f.round(2),
+                item.discount_amount.to_f.round(2),
+                item.net_total.to_f.round(2)
             ]
             sheet1.add_row(temp_row)
           end
-          sheet1.add_row(['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f, report.report_total["discount_amount"].to_f, report.report_total["net_total"].to_f])
+          sheet1.add_row(['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)])
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
