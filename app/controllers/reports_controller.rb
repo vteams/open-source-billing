@@ -44,9 +44,7 @@ class ReportsController < ApplicationController
   # AJAX request to fetch report data after
   # reports/data/:report_name
   def reports_data
-
     @report = get_report(params)
-
     respond_to do |format|
       format.js
     end
