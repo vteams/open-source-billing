@@ -2,27 +2,18 @@
 <html>
   <head>
     <title>Open Source Billing</title>
+    <%= wicked_pdf_stylesheet_link_tag 'general' %>
+    <%= wicked_pdf_stylesheet_link_tag 'reports' %>
+    <%= wicked_pdf_stylesheet_link_tag 'pdf' %>
     <style type="text/css">
       /*-----------------General Css Starts-----------------*/
-      body {
-        background: #ffffff !important;
-      }
-      .content {
-        margin: auto;
-        min-height: 950px;
-        width: 100% !important;
+      .sent{
+        background:url('<%= "file://#{Rails.root.join('app','assets','images','sent.png')}"%>') !important;
       }
       .grid_table table{
-        width: 97% !important;
-      }
-      .sent{
-        background-image:url('<%= "file://#{Rails.root.join('app','assets','images','sent.png')}"%>') !important;
+        width: 100%;
       }
       /*-----------------General Css Ends-----------------*/
-      <%= wicked_pdf_stylesheet_link_tag 'general' %>
-      <%= wicked_pdf_stylesheet_link_tag 'show_invoice' %>
-      <%= wicked_pdf_stylesheet_link_tag 'reports' %>
-
     </style>
   </head>
   <body>

@@ -54,8 +54,7 @@ class InvoicesController < ApplicationController
       format.pdf do
         render  pdf: "#{@invoice.invoice_number}",
           layout: 'pdf_mode.html.erb',
-          template: 'invoices/invoice_pdf.html.erb',
-          show_as_html: false
+          template: 'invoices/invoice_pdf.html.erb'
       end
     end
   end
