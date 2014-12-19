@@ -26,7 +26,7 @@
     <div class="header_data_right">
       <ul class="download_report">
         <li class="download_report_title">Export to:</li>
-        <li class="download_sep">CSV</li>
+        <li><%= link_to "CSV", params.except('format','action').merge({format: :csv,action: 'reports'}) %></li>
         <li><%= link_to "Excel", params.except('format','action').merge({format: :xlsx,action: 'reports'}) %></li>
       </ul>
       <ul class="print_report">

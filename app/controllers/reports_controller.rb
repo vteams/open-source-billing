@@ -33,9 +33,9 @@ class ReportsController < ApplicationController
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
     @report = get_report(params)
 
-    if request.format.xlsx?
-      doc=self.send(params[:report_name], @report)
-      send_file(doc.path, :filename => "#{params[:report_name]}.xlsx", :type => "application/xlsx", :disposition => "inline")
+    if request.format.xlsx? or request.format.csv?
+      doc=self.send(params[:report_name], @report, request.format)
+      request.format.csv? ? send_data(doc) : send_file(doc.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline")
     else
       respond_to do |format|
         format.html # index.html.erb
@@ -55,13 +55,29 @@ class ReportsController < ApplicationController
     end
   end
 
-  def aged_accounts_receivable(report)
+  def payments_collected(report, format)
+    self.send("#{__method__}_#{format.symbol}",report)
+  end
+
+  def aged_accounts_receivable(report, format)
+    self.send("#{__method__}_#{format.symbol}",report)
+  end
+
+  def revenue_by_client(report, format)
+    self.send("#{__method__}_#{format.symbol}",report)
+  end
+
+  def item_sales(report, format)
+    self.send("#{__method__}_#{format.symbol}",report)
+  end
+
+  def aged_accounts_receivable_xlsx report
+    headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
     doc = XlsxWriter.new
     doc.quiet_booleans!
     sheet1 = doc.add_sheet("Aged Accounts Receivable")
 
     unless report.report_data.blank?
-      headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
       sheet1.add_row(headers)
       report.report_data.each do |item|
         temp_row=[
@@ -87,14 +103,40 @@ class ReportsController < ApplicationController
     doc
   end
 
-  def item_sales(report)
+  def aged_accounts_receivable_csv report
+    headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
+    CSV.generate do |csv|
+      csv << headers
+        report.report_data.each do |item|
+          temp_row=[
+              item.client_name.to_s,
+              item.zero_to_thirty.to_f,
+              item.thirty_one_to_sixty.to_f,
+              item.sixty_one_to_ninety.to_f,
+              item.ninety_one_and_above.to_f,
+              item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f,
+
+          ]
+          csv << temp_row
+        end
+        row_total = ['Total',
+                        report.report_total["zero_to_thirty"].to_i,
+                        report.report_total["thirty_one_to_sixty"].to_f,
+                        report.report_total["sixty_one_to_ninety"].to_f,
+                        report.report_total["ninety_one_and_above"].to_f,
+                        report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f  ]
+        csv << row_total
+      end
+    end
+
+
+  def item_sales_xlsx report
+    headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
     doc = XlsxWriter.new
     doc.quiet_booleans!
     sheet1 = doc.add_sheet("Item Sales")
 
     unless report.report_data.blank?
-      #binding.pry
-      headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
       sheet1.add_row(headers)
       report.report_data.each do |item|
         temp_row=[
@@ -113,14 +155,54 @@ class ReportsController < ApplicationController
     doc
   end
 
-  def payments_collected(report)
+  def item_sales_csv report
+    headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+    CSV.generate do |csv|
+      csv << headers
+      report.report_data.each do |item|
+        temp_row=[
+            item.item_name.to_s,
+            item.item_quantity.to_i,
+            item.total_amount.to_f,
+            item.discount_amount.to_f,
+            item.net_total.to_f
+        ]
+        csv << temp_row
+      end
+      row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f, report.report_total["discount_amount"].to_f, report.report_total["net_total"].to_f]
+      csv << row_total
+    end
+  end
+
+
+  def payments_collected_csv report
+    headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+    CSV.generate do |csv|
+      csv << headers
+      report.report_data.each do |payment|
+        temp_row=[
+            payment.invoice_number.to_s,
+            payment.client_name.to_s,
+            (payment.payment_type || payment.payment_method || "").capitalize.to_s,
+            payment.notes.to_s,
+            payment.created_at.to_date.to_s,
+            payment.payment_amount.to_f
+        ]
+        csv << temp_row
+      end
+      csv << ['Total', '', '', '', '',  report.report_total]
+    end
+  end
+
+  def payments_collected_xlsx report
+    headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
     doc = XlsxWriter.new
     doc.quiet_booleans!
     sheet1 = doc.add_sheet("Payments Collected")
 
     unless report.report_data.blank?
       #binding.pry
-      headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+
       sheet1.add_row(headers)
       report.report_data.each do |payment|
         temp_row=[
@@ -140,45 +222,61 @@ class ReportsController < ApplicationController
     doc
   end
 
-  def revenue_by_client(report)
+  def revenue_by_client_xlsx report
+    headers =['Client']
+    (report.report_criteria.from_month..report.report_criteria.to_month).each  do |month|
+      headers << Date::MONTHNAMES[month].to_s[0..2]
+    end
+    headers << "Total"
     doc = XlsxWriter.new
     doc.quiet_booleans!
     sheet1 = doc.add_sheet("Revenur By Client")
-
     unless report.report_data.blank?
       #binding.pry
-      headers =['Client']
-
-      (report.report_criteria.from_month..report.report_criteria.to_month).each  do |month|
-        headers << Date::MONTHNAMES[month].to_s[0..2]
-      end
-
-      headers << "Total"
-
       sheet1.add_row(headers)
       report.report_data.each do |rpt|
         temp_row=[rpt.organization_name]
-
         (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
           temp_row << rpt["#{Date::MONTHNAMES[month]}"]
         end
-
         temp_row << rpt.client_total.to_f
-
         sheet1.add_row(temp_row)
       end
-
       total_row = ['Total']
       (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
         total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
       end
       total_row << report.report_total["net_total"].to_f
-
       sheet1.add_row(total_row)
     else
       sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
     end
     doc
+  end
+
+  def revenue_by_client_csv report
+    headers =['Client']
+    (report.report_criteria.from_month..report.report_criteria.to_month).each  do |month|
+      headers << Date::MONTHNAMES[month].to_s[0..2]
+    end
+    headers << "Total"
+    CSV.generate do |csv|
+      csv << headers
+      report.report_data.each do |rpt|
+        temp_row=[rpt.organization_name]
+        (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+          temp_row << rpt["#{Date::MONTHNAMES[month]}"]
+        end
+        temp_row << rpt.client_total.to_f
+        csv << temp_row
+      end
+      total_row = ['Total']
+      (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+        total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
+      end
+      total_row << report.report_total["net_total"].to_f
+      csv << total_row
+    end
   end
 
 
