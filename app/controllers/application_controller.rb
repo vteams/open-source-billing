@@ -20,7 +20,6 @@
 #
 class ApplicationController < ActionController::Base
 
-  acts_as_token_authentication_handler_for User
   #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
   #Time::DATE_FORMATS.merge!(:short=> "%d")
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")

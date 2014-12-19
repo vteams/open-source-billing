@@ -12,14 +12,13 @@ gem 'sprockets-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'xlsx_writer'
 gem 'mysql2'
 gem 'devise', '3.2.3'
 gem 'devise-encryptable'
 gem 'slim-rails'
 gem 'doorkeeper', '~> 1.4.0'
 gem 'grape-doorkeeper', '~> 0.0.2'
-gem 'simple_token_authentication', '~> 1.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,7 +47,6 @@ gem 'daemons'
 gem 'pdfkit'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
-gem 'simple_token_authentication', '~> 1.0'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
