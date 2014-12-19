@@ -35,9 +35,15 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.pdf do
-        render  pdf: "#{@report.report_name}",
+        file_name = "#{@report.report_name}_#{Date.today}"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
           layout: 'pdf_mode.html.erb',
-          template: 'reports/reports.html.erb'
+          template: 'reports/reports.html.erb',
+          encoding: "UTF-8",
+          footer:{
+            right: 'Page [page] of [topage]'
+          }
+        send_data pdf,filename: file_name
       end
     end
   end

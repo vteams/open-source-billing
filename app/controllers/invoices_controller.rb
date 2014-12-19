@@ -52,9 +52,14 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     respond_to do |format|
       format.pdf do
-        render  pdf: "#{@invoice.invoice_number}",
+        pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
           layout: 'pdf_mode.html.erb',
-          template: 'invoices/invoice_pdf.html.erb'
+          encoding: "UTF-8",
+          template: 'invoices/invoice_pdf.html.erb',
+          footer:{
+            right: 'Page [page] of [topage]'
+          }
+        send_data pdf
       end
     end
   end
