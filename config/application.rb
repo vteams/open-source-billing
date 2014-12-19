@@ -63,8 +63,8 @@ module Osb
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    require 'pdfkit'
-    config.middleware.use "PDFKit::Middleware", :print_media_type => true
+    # require 'pdfkit'
+    # config.middleware.use "PDFKit::Middleware", :print_media_type => true
     ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
 
     config.paths.add File.join('app','api'), glob: File.join('**', '*.rb')

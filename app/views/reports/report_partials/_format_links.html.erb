@@ -1,0 +1,15 @@
+<% unless request.format.pdf? %>
+  <div class="header_data_right">
+    <ul class="download_report">
+      <li class="download_report_title">Export to:</li>
+      <li><%= link_to "CSV", params.except('format','action').merge({format: :csv,action: 'reports'}) %></li>
+      <li><%= link_to "Excel", params.except('format','action').merge({format: :xlsx,action: 'reports'}) %></li>
+    </ul>
+    <ul class="print_report">
+      <li><%= link_to 'Print Report', params.except('action','format').merge({format: 'pdf', action: 'reports'}) %></li>
+    </ul>
+    <div class="report_duration">
+    </div>
+    <!-- report_duration -->
+  </div>
+<% end %>

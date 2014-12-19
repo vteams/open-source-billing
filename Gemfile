@@ -44,7 +44,6 @@ gem 'paranoia'
 gem 'activerecord-mysql-adapter'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'pdfkit'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
 group :development do
@@ -66,7 +65,8 @@ gem 'paper_trail'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'tinymce-rails'
-
+gem 'wicked_pdf', '~> 0.11.0'
+gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
 # testing
 gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
