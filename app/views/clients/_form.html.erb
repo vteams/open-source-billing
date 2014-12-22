@@ -111,6 +111,14 @@
             </div>
             <!--field_row-->
 
+            <div class="field_row">
+              <div class="label_field left single"><%= t('views.common.currency') %></div>
+              <div class="medium_field">
+                <%= f.select :currency_id, Currency.all.collect{|c| [ c.code,c.id ]}, {:prompt => ""}, {"data-placeholder" => t("views.common.select_default_currency"), :class => "medium chzn-select"} %>
+              </div>
+            </div>
+            <!--field_row-->
+
             <div class="field_row description">
               <div class="label_field left single"><%= t('views.common.address') %></div>
               <div class="large_field">

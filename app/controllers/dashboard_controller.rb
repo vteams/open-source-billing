@@ -21,8 +21,9 @@
 class DashboardController < ApplicationController
   def index
     @recent_activity = Reporting::Dashboard.get_recent_activity
-    gon.chart_data = Reporting::Dashboard.get_chart_data
-    @aged_invoices = Reporting::Dashboard.get_aging_data
+    currency = params[:currency].present? ? Currency.find_by_code(params[:currency]) : nil
+    gon.chart_data = Reporting::Dashboard.get_chart_data(currency)
+    @aged_invoices = Reporting::Dashboard.get_aging_data(currency)
     @outstanding_invoices = (@aged_invoices.attributes["zero_to_thirty"] || 0) +
         (@aged_invoices.attributes["thirty_one_to_sixty"] || 0) +
         (@aged_invoices.attributes["sixty_one_to_ninety"] || 0) +

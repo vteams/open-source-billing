@@ -85,14 +85,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def filter_by_company(elem)
+  def filter_by_company(elem, tbl=params[:controller])
     # set company dropdown session and save in database if company is changed
     unless params[:company_id].blank?
       session['current_company'] = params[:company_id]
       current_user.update_attributes(current_company: params[:company_id])
     end
-    elem.where("#{params[:controller]}.company_id IN(?)", get_company_id())
+    elem.where("#{tbl}.company_id IN(?)", get_company_id())
   end
+
+  helper_method :filter_by_company
 
   def new_selected_company_name
     session['current_company'] = params[:company_id]

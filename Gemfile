@@ -36,7 +36,7 @@ gem "daemons"
 gem "pdfkit"
 group :development do
   gem 'better_errors'
-  gem "binding_of_caller"
+  gem "binding_of_caller", ">= 0.6.9"
   gem "copyright-header"
   gem 'pry'
 end

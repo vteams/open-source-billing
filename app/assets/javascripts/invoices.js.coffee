@@ -42,6 +42,7 @@ jQuery ->
 
   # Calculate grand total from line totals
   updateInvoiceTotal = ->
+
     total = 0
     tax_amount = 0
     discount_amount = 0
@@ -71,7 +72,7 @@ jQuery ->
     total_balance = (parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount)
     jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
-    jQuery("#invoice_total_lbl").formatCurrency()
+    jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
 
     window.taxByCategory()
 
@@ -329,6 +330,9 @@ jQuery ->
     hidePopover(jQuery("#invoice_client_id_chzn")) if client_id is ""
     jQuery("#last_invoice").hide()
     if not client_id? or client_id isnt ""
+
+      jQuery.get('/clients/'+ client_id + '/default_currency')
+
       jQuery.ajax '/clients/get_last_invoice',
       type: 'POST'
       data: "id=" + client_id
@@ -343,6 +347,13 @@ jQuery ->
           useAsTemplatePopover(jQuery("#invoice_client_id_chzn"),id,client_name)
         else
           hidePopover(jQuery(".hint_text:eq(0)"))
+
+  # Change currency of invoice
+  jQuery("#invoice_currency_id").change ->
+    currency_id = jQuery(this).val()
+    hidePopover(jQuery("#invoice_currency_id_chzn")) if currency_id is ""
+    if not currency_id? or currency_id isnt ""
+      jQuery.get('/invoices/selected_currency?currency_id='+ currency_id)
 
  # Autofill due date
   jQuery("#invoice_payment_terms_id").change ->

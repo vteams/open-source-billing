@@ -2,6 +2,10 @@
 
 # report data
 jQuery ->
+
+  $("#currency").change ->
+    window.location = '/dashboard?currency=' + $(this).val()
+
   # chart options
   if gon?
     chart_ticks = gon.chart_data["ticks"]

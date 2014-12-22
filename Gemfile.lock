@@ -54,7 +54,8 @@ GEM
     better_errors (0.3.2)
       coderay (>= 1.0.0)
       erubis (>= 2.7.0)
-    binding_of_caller (0.6.8)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     browser (0.1.5)
     builder (3.0.4)
     carrierwave (0.8.0)
@@ -70,6 +71,7 @@ GEM
     coffee-script-source (1.4.0)
     copyright-header (1.0.8)
     daemons (1.1.9)
+    debug_inspector (0.0.2)
     delayed_job (3.0.4)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.3)
@@ -213,7 +215,7 @@ DEPENDENCIES
   acts_as_archival
   acts_as_paranoid (~> 0.4.0)
   better_errors
-  binding_of_caller
+  binding_of_caller (>= 0.6.9)
   browser
   carrierwave
   coffee-rails (~> 3.2.1)

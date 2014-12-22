@@ -107,7 +107,7 @@
                 <tbody>
                 <% if @current_invoices.blank? %>
                     <tr>
-                      <td colspan="4"><%= t('views.dashboard.no_previous_invoices') %></td>
+                      <td colspan="4"><%= t('views.dashboard.no_current_invoices') %></td>
                     </tr>
                 <% else %>
                     <% @current_invoices.each do |current_invoice| %>
@@ -115,7 +115,7 @@
                           <td class="align_left"><%= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></td>
                           <td class="align_left text-overflow-class"  data-overflow-rows="2"><%= current_invoice.client.organization_name rescue "" %></td>
                           <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
-                          <td class="align_right"><%= number_to_currency(current_invoice.invoice_total) %></td>
+                          <td class="align_right"><%= number_to_currency(current_invoice.invoice_total, unit: current_invoice.currency.present? ? current_invoice.currency.unit : "$") %></td>
                         </tr>
                     <% end %>
                 <% end %>
@@ -166,7 +166,7 @@
                           <td class="align_left"><%= link_to past_invoice.invoice_number, invoice_path(past_invoice) %></td>
                           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= past_invoice.client.organization_name rescue "" %></td>
                           <td class="align_left"><%= (past_invoice.due_date || past_invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
-                          <td class="align_right"><%= number_to_currency(past_invoice.invoice_total) %></td>
+                          <td class="align_right"><%= number_to_currency(past_invoice.invoice_total, unit: past_invoice.currency.present? ? past_invoice.currency.unit : "$") %></td>
                         </tr>
                     <% end %>
                 <% end %>

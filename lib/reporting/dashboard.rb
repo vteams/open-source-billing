@@ -23,22 +23,22 @@ module Reporting
 
     # get the recent activity - 10 most recent items
     def self.get_recent_activity
-      # columns returned: activity type, client, amount, activity date
+      # columns returned: activity type, client, amount, activity date, currency unit, currency code
       # fetch last 10 invoices and payments
-      invoices = Invoice.select("id, client_id, invoice_total, created_at").order("created_at DESC").limit(5)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at").includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
+      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").order("created_at DESC").limit(5)
+      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
 
       # merge invoices and payments in activity array
       recent_activity = []
-      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.client.organization_name rescue ''), :amount => inv.invoice_total, :activity_date => inv.created_at, :activity_path => "/invoices/#{inv.id}/edit"} }
-      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.client.organization_name rescue ''), :amount => pay.payment_amount, :activity_date => pay.created_at, :activity_path => "/payments/#{pay.id}/edit"} }
+      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.client.organization_name rescue ''), :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "$"), :code => (inv.currency.present? ? inv.currency.code : "USD"), :activity_date => inv.created_at, :activity_path => "/invoices/#{inv.id}/edit"} }
+      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "$"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "USD"), :activity_date => pay.created_at, :activity_path => "/payments/#{pay.id}/edit"} }
 
       # sort them by created_at in descending order
       recent_activity.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
     end
 
     # get chart data
-    def self.get_chart_data
+    def self.get_chart_data(currency=nil)
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}
@@ -81,7 +81,7 @@ module Reporting
       ytd
     end
 
-    def self.get_aging_data
+    def self.get_aging_data(currency=nil)
       aged_invoices = Invoice.find_by_sql(<<-eos
           SELECT zero_to_thirty, thirty_one_to_sixty, sixty_one_to_ninety, ninety_one_and_above
           FROM (

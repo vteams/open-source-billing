@@ -2,8 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  currency_unit: "€"
-  currency_code: "EUR"
+  currency_unit: "$"
+  currency_code: "USD"
 
   company: "Company"
   invoice: "Invoice"
@@ -62,6 +62,7 @@ en:
 
   views:
     common:
+      currency: "Currency"
       cancel: "Cancel"
       type: "Type"
       date: "Date"
@@ -131,6 +132,8 @@ en:
       show: "Show"
       destroy: "Destroy"
       select_a_country: "Select a country..."
+      select_default_currency: "Select default currency..."
+      select_invoice_currency: "Select currency..."
       yes: "Yes"
       no: "No"
       pdf: "PDF"

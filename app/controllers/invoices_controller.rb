@@ -193,6 +193,10 @@ class InvoicesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def selected_currency
+    @currency = Currency.find params[:currency_id]
+  end
+
   def paypal_payments
     # send a post request to paypal to verify payment data
     response = RestClient.post("https://www.sandbox.paypal.com/cgi-bin/webscr", params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")

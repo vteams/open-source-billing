@@ -29,20 +29,26 @@ module Services
 
     #get outstanding amount, total amount billed and total payments received
     def get_detail
-      payments = 0
-      @client.invoices.each { |invoice| payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount) }
-      {outstanding_amount: outstanding_amount, amount_billed: @client.invoices.sum(:invoice_total).to_f, payments: payments.to_f}
+      #@client.invoices.group(:currency_id).each
+      {outstanding_amount: outstanding_amount(@client.invoices), amount_billed: amount_billed(@client.invoices), payments: total_payments(invoices) }
     end
 
-    def outstanding_amount
+    def outstanding_amount invoices
       amount = 0
-      @client.invoices.each do |invoice|
+      invoices.each do |invoice|
         amount += Payment.invoice_remaining_amount(invoice.id)
-      end unless @client.invoices.blank?
+      end unless invoices.blank?
       amount
     end
 
+    def total_payments invoices
+      payments = 0
+      invoices.each { |invoice| payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount) }.to_f
+    end
 
+    def amount_billed invoices
+      invoices.sum(:invoice_total).to_f
+    end
 
   end
 end

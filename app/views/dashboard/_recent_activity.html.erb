@@ -18,7 +18,7 @@
             <%- @recent_activity.each do |activity| %>
                 <tr>
                   <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path] %></a></td>
-                  <td class="align_left"><%= number_to_currency(activity[:amount]) %> <span>(<%= t("currency_code") %>)</span></td>
+                  <td class="align_left"><%= number_to_currency(activity[:amount], unit: activity[:unit]) %> <span>(<%= activity[:code] %>)</span></td>
                   <td class="align_left text-overflow-class" data-overflow-rows="2"><%= "#{activity[:activity_action]} #{activity[:client]} on" %> </td>
                   <td class="align_left"><%= "#{activity[:activity_date].to_date}" %> </td>
                 </tr>

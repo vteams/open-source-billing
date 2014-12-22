@@ -175,6 +175,10 @@ class ClientsController < ApplicationController
     render :text => [client.last_invoice || "no invoice", client.organization_name || ""]
   end
 
+  def default_currency
+    @client = Client.find params[:id]
+  end
+
   def client_detail
     client = Client.find(params[:id])
     @invoices = client.invoices
