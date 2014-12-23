@@ -20,7 +20,7 @@
 #
 class AccountUsers < ActiveRecord::Base
   # attr
-  attr_accessible :company_id, :user_id
+  #attr_accessible :company_id, :user_id
 
   # associations
   belongs_to :user

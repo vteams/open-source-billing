@@ -20,7 +20,7 @@
 #
 class SentEmail < ActiveRecord::Base
   # attr
-  attr_accessible :date, :recipient, :sender, :type, :subject, :content, :company_id
+  #attr_accessible :date, :recipient, :sender, :type, :subject, :content, :company_id
 
   # associations
   belongs_to :notification, :polymorphic => true

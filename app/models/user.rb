@@ -19,18 +19,15 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :account, :email, :password, :password_confirmation, :remember_me, :user_name, :current_company
-  attr_accessor :account
+  #attr_accessible :account, :email, :password, :password_confirmation, :remember_me, :user_name, :current_company
+  validates_uniqueness_of :email, :uniqueness => :true
+  attr_accessor :account,:login
 
-  has_and_belongs_to_many :accounts, :join_table => "account_users"
+  has_and_belongs_to_many :accounts, :join_table => 'account_users'
 
   def currency_symbol
     "$"
@@ -61,5 +58,4 @@ class User < ActiveRecord::Base
     end
     templates
   end
-
 end

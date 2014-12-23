@@ -41,7 +41,7 @@ class EmailTemplatesController < ApplicationController
   # POST /email_templates
   # POST /email_templates.json
   def create
-    @email_template = EmailTemplate.new(params[:email_template])
+    @email_template = EmailTemplate.new(email_template_params)
     @email_template.status = "Custom"
     associate_entity(params,@email_template)
     respond_to do |format|
@@ -66,14 +66,14 @@ class EmailTemplatesController < ApplicationController
     if company_template   #Only do it if editing a custom email template
      @email_template.delete_account_template if params[:association] == "account"
     elsif params[:association] == "company"
-     @email_template =  EmailTemplate.new(params[:email_template])
+     @email_template =  EmailTemplate.new(email_template_params)
     end
 
     @email_template.status = params[:association] == "company" ? "Custom" : "Default"
     associate_entity(params,@email_template)
 
     respond_to do |format|
-      if @email_template.update_attributes(params[:email_template]) or @email_template.save
+      if @email_template.update_attributes(email_template_params) or @email_template.save
         format.html { redirect_to @email_template, notice: 'Email template was successfully updated.' }
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "email_templates", :id => @email_template.id}, :notice => 'Your Email Template has been updated successfully.')
@@ -108,6 +108,12 @@ class EmailTemplatesController < ApplicationController
     template_params = {}
     template_params = {torder: t.torder, template_type: t.template_type, subject: t.subject, email_from: t.email_from, body: t.body} if t
     EmailTemplate.new(template_params)
+  end
+
+  private
+
+  def email_template_params
+    params.require(:email_template).permit(:body, :email_from, :subject, :template_type, :status, :torder, :no_of_days, :is_late_payment_reminder, :send_email)
   end
 
 end

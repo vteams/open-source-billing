@@ -20,24 +20,7 @@
     </div>
     <!-- report_content_header -->
 
-    <div class="header_data_right">
-      <ul class="download_report">
-        <li class="download_report_title">Export to:</li>
-        <li class="download_sep">CSV</li>
-        <li>Excel</li>
-      </ul>
-      <ul class="print_report">
-        <li><a href="#">Print Report</a></li>
-      </ul>
-      <div class="report_duration">
-        <!--<ul>-->
-          <!--<li>01/01/2013</li>-->
-          <!--<li><span>to</span></li>-->
-          <!--<li>01/01/2013</li>-->
-        <!--</ul>-->
-      </div>
-      <!-- report_duration -->
-    </div>
+    <%= render 'reports/report_partials/format_links'%>
 
     <div class="revenue_by_client">
       <div class="grid_table">
@@ -78,7 +61,11 @@
               </tfoot>
           <% else %>
               <tr>
+<<<<<<< HEAD
                 <td colspan="14">No data found against the selected criteria. Please change criteria and try again.
+=======
+                <td colspan="<%= 2+(@report.report_criteria.from_month..@report.report_criteria.to_month).size %>">No data found against the selected criteria. Please change criteria and try again.
+>>>>>>> 23c2f7f5d689b6b99f5536699064a4ae10763894
                 </td>
               </tr>
           <% end %>

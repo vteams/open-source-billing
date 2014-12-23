@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
       redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
       return
     end
-    @item = Item.new(params[:item])
+    @item = Item.new(item_params)
 
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
@@ -107,7 +107,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     associate_entity(params, @item)
     respond_to do |format|
-      if @item.update_attributes(params[:item])
+      if @item.update_attributes(item_params)
         format.html { redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => 'Your item has been updated successfully.') }
         format.json { head :no_content }
       else
@@ -204,5 +204,10 @@ class ItemsController < ApplicationController
     {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
 
+  private
+
+  def item_params
+    params.require(:item).permit(:inventory, :item_description, :item_name, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at)
+  end
 
 end

@@ -70,7 +70,7 @@ class TaxesController < ApplicationController
       redirect_to(new_taxis_path, :alert => "Tax with same name already exists") unless params[:quick_create]
       return
     end
-    @taxis = Tax.new(params[:tax])
+    @taxis = Tax.new(taxes_params)
 
     respond_to do |format|
       if @taxis.save
@@ -93,7 +93,7 @@ class TaxesController < ApplicationController
     @taxis = Tax.find(params[:id])
 
     respond_to do |format|
-      if @taxis.update_attributes(params[:tax])
+      if @taxis.update_attributes(taxes_params)
         format.html { redirect_to taxes_url, notice: 'Tax was successfully updated.' }
         format.json { head :no_content }
       else
@@ -173,6 +173,12 @@ class TaxesController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  private
+
+  def taxes_params
+    params.require(:tax).permit(:name, :percentage, :archived_at, :archive_number, :deleted_at)
   end
 
 end

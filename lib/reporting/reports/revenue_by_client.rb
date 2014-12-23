@@ -63,6 +63,72 @@ module Reporting
         end
         @report_total["net_total"] = @report_data.inject(0){|total, payment| total + (payment.attributes["client_total"] || 0)}
       end
+
+      def to_csv
+        revenue_by_client_csv self
+      end
+
+      def revenue_by_client_csv report
+        headers =['Client']
+        (report.report_criteria.from_month..report.report_criteria.to_month).each  do |month|
+          headers << Date::MONTHNAMES[month].to_s[0..2]
+        end
+        headers << "Total"
+        CSV.generate do |csv|
+          csv << headers
+          report.report_data.each do |rpt|
+            temp_row=[rpt.organization_name]
+            (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+              temp_row << rpt["#{Date::MONTHNAMES[month]}"]
+            end
+            temp_row << rpt.client_total.to_f.round(2)
+            csv << temp_row
+          end
+          total_row = ['Total']
+          (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+            total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
+          end
+          total_row << report.report_total["net_total"].to_f.round(2)
+          csv << total_row
+        end
+      end
+
+      def to_xlsx
+        revenue_by_client_xlsx self
+      end
+
+      def revenue_by_client_xlsx report
+        headers =['Client']
+        (report.report_criteria.from_month..report.report_criteria.to_month).each  do |month|
+          headers << Date::MONTHNAMES[month].to_s[0..2]
+        end
+        headers << "Total"
+        doc = XlsxWriter.new
+        doc.quiet_booleans!
+        sheet1 = doc.add_sheet("Revenur By Client")
+        unless report.report_data.blank?
+          #binding.pry
+          sheet1.add_row(headers)
+          report.report_data.each do |rpt|
+            temp_row=[rpt.organization_name]
+            (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+              temp_row << rpt["#{Date::MONTHNAMES[month]}"]
+            end
+            temp_row << rpt.client_total.to_f.round(2)
+            sheet1.add_row(temp_row)
+          end
+          total_row = ['Total']
+          (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+            total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
+          end
+          total_row << report.report_total["net_total"].to_f.round(2)
+          sheet1.add_row(total_row)
+        else
+          sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
+        end
+        doc
+      end
+
     end
   end
 end

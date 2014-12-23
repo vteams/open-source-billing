@@ -1,6 +1,6 @@
 class Company < ActiveRecord::Base
   #scope :multiple, lambda { |ids_list| where("id in (?)", ids_list) }
-  attr_accessible :account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2
+  #attr_accessible :account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
   mount_uploader :logo, ImageUploader

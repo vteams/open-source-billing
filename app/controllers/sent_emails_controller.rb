@@ -50,4 +50,11 @@ class SentEmailsController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
+
+  private
+
+  def sent_email_params
+    params.require(:sent_email).permit(:date, :recipient, :sender, :type, :subject, :content, :company_id, :notification_id, :notification_type)
+  end
+
 end

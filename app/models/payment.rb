@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
   #default_scope order("#{self.table_name}.created_at DESC")
 
   # attr
-  attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id
+  #attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id
 
   # associations
   belongs_to :invoice

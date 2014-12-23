@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  before_filter [:authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]], :set_per_page_session
+  before_filter :authenticate_user!, :set_per_page_session, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]
   protect_from_forgery :except => [:paypal_payments]
   helper_method :sort_column, :sort_direction
 
@@ -50,7 +50,18 @@ class InvoicesController < ApplicationController
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
 
     @invoice = Invoice.find(params[:id])
-    render :layout => 'pdf_mode'
+    respond_to do |format|
+      format.pdf do
+        pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
+          layout: 'pdf_mode.html.erb',
+          encoding: "UTF-8",
+          template: 'invoices/invoice_pdf.html.erb',
+          footer:{
+            right: 'Page [page] of [topage]'
+          }
+        send_data pdf
+      end
+    end
   end
 
   def preview
@@ -80,7 +91,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(params[:invoice])
+    @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
     @invoice.company_id = get_company_id()
     respond_to do |format|
@@ -116,7 +127,7 @@ class InvoicesController < ApplicationController
           redirect_to(edit_invoice_url(@invoice), alert: invoice_not_updated)
           return
         end
-      elsif @invoice.update_attributes(params[:invoice])
+      elsif @invoice.update_attributes(invoice_params)
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
         return
@@ -196,7 +207,7 @@ class InvoicesController < ApplicationController
   def paypal_payments
     # send a post request to paypal to verify payment data
     response = RestClient.post("https://www.sandbox.paypal.com/cgi-bin/webscr", params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
-    invoice = Invoice.find(params[:invoice])
+    invoice = Invoice.find(invoice_params)
     # if status is verified make an entry in payments and update the status on invoice
     if response == "VERIFIED"
       invoice.payments.create({
@@ -247,6 +258,19 @@ class InvoicesController < ApplicationController
   def sort_direction
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  private
+
+  def invoice_params
+    params.require(:invoice).permit(:client_id, :discount_amount, :discount_type,
+                                    :discount_percentage, :invoice_date, :invoice_number,
+                                    :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
+                                    :invoice_total, :invoice_line_items_attributes, :archive_number,
+                                    :archived_at, :deleted_at, :payment_terms_id, :due_date,
+                                    :last_invoice_status, :company_id,
+                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy]
+    )
   end
 
 end

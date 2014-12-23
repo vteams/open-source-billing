@@ -72,7 +72,7 @@ class RecurringProfilesController < ApplicationController
   # POST /recurring_profiles
   # POST /recurring_profiles.json
   def create
-    @recurring_profile = RecurringProfile.new(params[:recurring_profile])
+    @recurring_profile = RecurringProfile.new(recurring_profile_params)
     @recurring_profile.sent_invoices = 0
     @recurring_profile.company_id = get_company_id()
 
@@ -101,7 +101,7 @@ class RecurringProfilesController < ApplicationController
 
     respond_to do |format|
       @recurring_profile.company_id = get_company_id()
-      if @recurring_profile.update_attributes(params[:recurring_profile])
+      if @recurring_profile.update_attributes(recurring_profile_params)
         redirect_to(edit_recurring_profile_url(@recurring_profile), notice: 'Recurring profile has been updated successfully.')
         return
       else
@@ -168,4 +168,17 @@ class RecurringProfilesController < ApplicationController
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
+  private
+
+  def recurring_profile_params
+    params.require(:recurring_profile).permit(:client_id, :discount_amount, :discount_percentage, :notes, :po_number,
+                                              :status, :sub_total, :tax_amount, :terms, :first_invoice_date, :frequency,
+                                              :occurrences, :prorate, :prorate_for, :gateway_id,
+                                              :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at,
+                                              :deleted_at, :payment_terms_id, :company_id, :last_invoice_status,
+                                              :last_sent_date, :sent_invoices,
+                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2,:archive_number, :archived_at, :deleted_at, :_destroy]
+    )
+  end
+
 end

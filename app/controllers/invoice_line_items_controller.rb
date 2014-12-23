@@ -61,7 +61,7 @@ class InvoiceLineItemsController < ApplicationController
   # POST /invoice_line_items
   # POST /invoice_line_items.json
   def create
-    @invoice_line_item = InvoiceLineItem.new(params[:invoice_line_item])
+    @invoice_line_item = InvoiceLineItem.new(invoice_line_item_params)
 
     respond_to do |format|
       if @invoice_line_item.save
@@ -80,7 +80,7 @@ class InvoiceLineItemsController < ApplicationController
     @invoice_line_item = InvoiceLineItem.find(params[:id])
 
     respond_to do |format|
-      if @invoice_line_item.update_attributes(params[:invoice_line_item])
+      if @invoice_line_item.update_attributes(invoice_line_item_params)
         format.html { redirect_to @invoice_line_item, notice: 'Invoice line item was successfully updated.' }
         format.json { head :no_content }
       else
@@ -100,6 +100,12 @@ class InvoiceLineItemsController < ApplicationController
       format.html { redirect_to invoice_line_items_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def invoice_line_item_params
+    params.require(:invoice_line_item).permit(:invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2)
   end
 
 end

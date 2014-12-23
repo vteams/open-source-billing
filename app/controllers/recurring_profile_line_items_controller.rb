@@ -40,7 +40,7 @@ class RecurringProfileLineItemsController < ApplicationController
   # POST /recurring_profile_line_items
   # POST /recurring_profile_line_items.json
   def create
-    @recurring_profile_line_item = RecurringProfileLineItem.new(params[:recurring_profile_line_item])
+    @recurring_profile_line_item = RecurringProfileLineItem.new(recurring_profile_line_items_params)
 
     respond_to do |format|
       if @recurring_profile_line_item.save
@@ -59,7 +59,7 @@ class RecurringProfileLineItemsController < ApplicationController
     @recurring_profile_line_item = RecurringProfileLineItem.find(params[:id])
 
     respond_to do |format|
-      if @recurring_profile_line_item.update_attributes(params[:recurring_profile_line_item])
+      if @recurring_profile_line_item.update_attributes(recurring_profile_line_items_params)
         format.html { redirect_to @recurring_profile_line_item, notice: 'Recurring profile line item was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,4 +80,11 @@ class RecurringProfileLineItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def recurring_profile_line_items_params
+    params.require(:recurring_profile_line_item).permit(:recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2, :archive_number, :archived_at, :deleted_at)
+  end
+
 end

@@ -62,7 +62,7 @@ class AccountsController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @account = current_user.accounts.build(params[:account])
+    @account = current_user.accounts.build(account_params)
 
     respond_to do |format|
       if current_user.save
@@ -82,7 +82,7 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
 
     respond_to do |format|
-      if @account.update_attributes(params[:account])
+      if @account.update_attributes(account_params)
         format.html { redirect_to edit_account_url(@account), notice: 'Your account has been updated successfully.'}
         format.json { head :no_content }
       else
@@ -103,4 +103,10 @@ class AccountsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+
+  def account_params
+    params.require(:account).permit(:admin_billing_rate_per_hour, :admin_email, :admin_first_name, :admin_last_name, :admin_password, :admin_user_name, :auto_dst_adjustment, :city, :country, :currency_symbol, :currency_code, :email, :fax, :org_name, :phone_business, :phone_mobile, :postal_or_zip_code, :profession, :province_or_state, :street_address_1, :street_address_2, :time_zone)
+  end
+
 end
