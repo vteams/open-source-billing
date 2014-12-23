@@ -1,15 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
+  <b><%= t('views.common.name') %>:</b>
   <%= @taxis.name %>
 </p>
 
 <p>
-  <b>Percentage:</b>
+  <b><%= t('views.common.percentage') %>:</b>
   <%= @taxis.percentage %>
 </p>
 
 
-<%= link_to 'Edit', edit_taxis_path(@taxis) %> |
-<%= link_to 'Back', taxes_path %>
+<%= link_to t('helpers.links.edit'), edit_taxis_path(@taxis) %> |
+<%= link_to t('views.common.back'), taxes_path %>

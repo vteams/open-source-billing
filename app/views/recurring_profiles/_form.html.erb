@@ -15,46 +15,46 @@
           <div class="fields_content_left">
 
             <div class="field_row description recurring">
-              <div class="label_field left single"><%= f.label :first_invoice_date, content_tag(:span, 'Schedule') %></div>
+              <div class="label_field left single"><%= f.label :first_invoice_date, content_tag(:span, t('views.invoices.recurring.schedule')) %></div>
               <div class="small_field">
                 <%= hidden_field_tag :recurring_profile_current_date, Date.today %>
                 <%= f.text_field :first_invoice_date, :required => "", :value => start_date, :ignore_time => true %>
                 <ul class="field_description">
-                  <li>Start date</li>
+                  <li><%= t('views.invoices.recurring.start_date') %></li>
                 </ul>
               </div>
               <div class="small_field fre_select">
                 <%= f.select :frequency, RECURRING_FREQUENCY, {}, {:class => "frequency_select chzn-select", :id => "frequency"} %>
                 <ul class="field_description select">
-                  <li>How often</li>
+                  <li><%= t('views.invoices.recurring.how_often') %></li>
                 </ul>
               </div>
               <div class="small_field">
-                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? 'infinite' :  @recurring_profile.occurrences %>
+                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? t('views.common.infinite') :  @recurring_profile.occurrences %>
                 <span id="how_many_symbol">#</span>
                 <ul class="field_description">
-                  <li>How many</li>
+                  <li><%= t('views.invoices.recurring.how_many') %></li>
                 </ul>
               </div>
             </div>
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, 'Company') %></div>
+              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
                 <%= text_field_tag 'company', get_company_name, :readonly => '', :class => 'company_read_only' %>
                 <ul class="field_description">
-                  <li>company for this profile</li>
+                  <li><%= t('views.invoices.recurring.company_hint') %></li>
                 </ul>
               </div>
             </div>
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :client_id, content_tag(:span, 'Client') %></div>
+              <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :client_id, load_clients(action_name, @recurring_profile.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
                 <%= f.select :client_id, options_for_select(load_clients(action_name, @recurring_profile.company_id), selected: f.object.client_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
                 <ul class="field_description select">
-                  <li>client you want to send invoice</li>
+                  <li><%= t('views.invoices.recurring.client_hint') %></li>
                   <span id="last_invoice" style="display: none;"></span>
                 </ul>
               </div>
@@ -62,12 +62,12 @@
             <!--field_row-->
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, "Terms") %></div>
+              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t("views.common.terms")) %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :payment_terms_id, PaymentTerm.all, :id, :description, {:prompt => ""}, {"data-placeholder" => "Select a payment term...", :class => "medium chzn-select"} %>
                 <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
                 <ul class="field_description select">
-                  <li>Payment terms for this invoice</li>
+                  <li><%= t('views.invoices.recurring.payment_hint') %></li>
                 </ul>
               </div>
             </div>
@@ -78,11 +78,11 @@
           <div class="fields_content_right">
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, 'Profile ID') %></div>
+              <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, t('views.invoices.recurring.profile_id')) %></div>
               <div class="small_field">
                 <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
                 <ul class="field_description">
-                  <li>Auto generated</li>
+                  <li><%= t('views.invoices.recurring.auto_generated') %></li>
                 </ul>
               </div>
             </div>
@@ -131,18 +131,18 @@
         </colgroup>
         <tr>
           <th class="align_center">&nbsp;</th>
-          <th class="align_left">Item</th>
-          <th class="align_left">Description</th>
-          <th class="align_center">Unit Cost</th>
-          <th class="align_right">Qty</th>
-          <th class="align_center">Tax1</th>
-          <th class="align_center">Tax2</th>
-          <th class="align_center">Line Total</th>
+          <th class="align_left"><%= t('views.common.item') %></th>
+          <th class="align_left"><%= t('views.common.description') %></th>
+          <th class="align_center"><%= t('views.common.unit_cost') %></th>
+          <th class="align_right"><%= t('views.common.qty') %></th>
+          <th class="align_center"><%= t('views.common.tax') %>1</th>
+          <th class="align_center"><%= t('views.common.tax') %>2</th>
+          <th class="align_center"><%= t('views.invoices.line_total') %></th>
         </tr>
         <%= f.fields_for :recurring_profile_line_items, :wrapper => false %>
         <tr style="border:none;" class="no_hover">
           <td>&nbsp</td>
-          <td class="add_line_item_row" colspan="2"><%= f.link_to_add "Add Line Item", :recurring_profile_line_items, :class => "btn btn-mini" %></td>
+          <td class="add_line_item_row" colspan="2"><%= f.link_to_add t("views.invoices.add_line_item"), :recurring_profile_line_items, :class => "btn btn-mini" %></td>
         </tr>
       </table>
 

@@ -1,28 +1,28 @@
 <h1>Listing companies</h1>
 <table>
   <tr>
-    <th>Org name</th>
-    <th>Country</th>
-    <th>Street address 1</th>
-    <th>Street address 2</th>
-    <th>City</th>
-    <th>Province or state</th>
-    <th>Postal or zip code</th>
-    <th>Profession</th>
-    <th>Phone business</th>
-    <th>Phone mobile</th>
-    <th>Fax</th>
-    <th>Email</th>
-    <th>Time zone</th>
-    <th>Auto dst adjustment</th>
-    <th>Currency code</th>
-    <th>Currecy symbol</th>
-    <th>Admin first name</th>
-    <th>Admin last name</th>
-    <th>Admin email</th>
-    <th>Admin billing rate per hour</th>
-    <th>Admin user name</th>
-    <th>Admin password</th>
+    <th><%= t('views.accounts.org_name') %></th>
+    <th><%= t('views.common.country') %></th>
+    <th><%= t('views.common.street_address') %> 1</th>
+    <th><%= t('views.common.street_address') %> 2</th>
+    <th><%= t('views.common.city') %></th>
+    <th><%= t('views.common.province') %></th>
+    <th><%= t('views.common.zip_code') %></th>
+    <th><%= t('views.accounts.profession') %></th>
+    <th><%= t('views.accounts.phone_business') %></th>
+    <th><%= t('views.accounts.phone_mobile') %></th>
+    <th><%= t('views.common.fax') %></th>
+    <th><%= t('views.common.email') %></th>
+    <th><%= t('views.common.time_zone') %></th>
+    <th><%= t('views.accounts.auto_dst_adjustment') %></th>
+    <th><%= t('views.accounts.currency_code') %></th>
+    <th><%= t('views.accounts.currency_symbol') %></th>
+    <th><%= t('views.accounts.admin_first_name') %></th>
+    <th><%= t('views.accounts.admin_last_name') %></th>
+    <th><%= t('views.accounts.admin_email') %></th>
+    <th><%= t('views.accounts.admin_billing_rate_per_hour') %></th>
+    <th><%= t('views.accounts.admin_username') %></th>
+    <th><%= t('views.accounts.admin_password') %>></th>
     <th></th>
     <th></th>
     <th></th>
@@ -51,14 +51,14 @@
         <td><%= company.admin_billing_rate_per_hour %></td>
         <td><%= company.admin_user_name %></td>
         <td><%= company.admin_password %></td>
-        <td><%= link_to 'Show', company %></td>
-        <td><%= link_to 'Edit', edit_company_path(company) %></td>
-        <td><%= link_to 'Destroy', company, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to t('views.common.show'), company %></td>
+        <td><%= link_to t('helpers.links.edit'), edit_company_path(company) %></td>
+        <td><%= link_to t('views.common.destroy'), company, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
 </table>
 
 <br/>
 
-<%= link_to 'New Company', new_company_path %>
+<%= link_to t('views.companies.new'), new_company_path %>
 

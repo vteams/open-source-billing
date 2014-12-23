@@ -3,7 +3,7 @@
 
     <div class="report_content_header">
       <div class="report_content_heading">
-        <h1>Aged Accounts Receivable</h1>
+        <h1><%= t('views.reports.aged_accounts_receivable') %></h1>
       </div>
 
       <div class="content_header_data">
@@ -13,8 +13,7 @@
               <li class="header_name "><%= @report.client_name %></li>
               <li class="header_duration"><%= @report.period %></li>
               <li class="header_description">
-                This report shows summary of outstanding amount against unpaid and/or partially paid invoices for each
-                client.
+                <%= t('views.reports.aged_accounts_receivable_dtl') %>
               </li>
             </ul>
           </div>
@@ -38,12 +37,12 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left">Client Name</th>
-          <th class="align_right {sorter:'thousands'}">0-30 days</th>
-          <th class="align_right {sorter:'thousands'}">31-60 days</th>
-          <th class="align_right {sorter:'thousands'}">61-90 days</th>
-          <th class="align_right {sorter:'thousands'}">90+ days</th>
-          <th class="align_right {sorter:'thousands'}">Client Total AR</th>
+          <th class="align_left"><%= t('views.clients.client_name') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_0_30') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_31_60') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_61_90') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_above_90') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.client_total_ar') %></th>
         </tr>
         </thead>
         <body>
@@ -61,14 +60,12 @@
             <% end %>
         <% else %>
             <tr>
-              <td colspan="6" class="report_no_data">No data found against the selected criteria. Please change criteria
-                and try again.
-              </td>
+              <td colspan="6" class="report_no_data"><%= t('views.reports.report_no_data') %></td>
             </tr>
         <% end %>
         <% unless @report.report_data.blank? %>
             <tfoot>
-            <td class="align_left"><%= "Total" %></td>
+            <td class="align_left"><%= t("views.common.total") %></td>
             <td class="align_right"><%= number_to_currency(@report.report_total["zero_to_thirty"]) %></td>
             <td class="align_right"><%= number_to_currency(@report.report_total["thirty_one_to_sixty"]) %></td>
             <td class="align_right"><%= number_to_currency(@report.report_total["sixty_one_to_ninety"]) %></td>

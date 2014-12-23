@@ -3,7 +3,7 @@
 
     <div class="report_content_header">
       <div class="report_content_heading">
-        <h1>Item Sales</h1>
+        <h1><%= t('views.reports.item_sales') %></h1>
       </div>
 
       <div class="content_header_data">
@@ -35,14 +35,13 @@
             <col class="four"/>
             <col class="five"/>
            </colgroup>
-
           <thead>
           <tr>
-            <th class="align_left">Item Name</th>
-            <th class="align_right">Total Qty Sold</th>
-            <th class="align_right {sorter:'thousands'}">Total Amount</th>
-            <th class="align_right {sorter:'thousands'}">Total Discount</th>
-            <th class="align_right {sorter:'thousands'}">Net Total</th>
+            <th class="align_left"><%= t('views.items.item_name') %></th>
+            <th class="align_right"><%= t('views.reports.total_qty_sold') %></th>
+            <th class="align_right {sorter:'thousands'}"><%= t('views.reports.total_amount') %></th>
+            <th class="align_right {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
+            <th class="align_right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
           </tr>
           </thead>
           <tbody>
@@ -58,7 +57,7 @@
               <% end %>
               <tfoot>
               <tr>
-                <td class="align_left">Total</td>
+                <td class="align_left"><%= t('views.common.total') %></td>
                 <td class="align_center"><%= @report.report_total["item_quantity"].to_i %></td>
                 <td class="align_right currency"><%= number_to_currency(@report.report_total["total_amount"]) %></td>
                 <td class="align_right currency"><%= number_to_currency(@report.report_total["discount_amount"]) %></td>
@@ -67,13 +66,7 @@
               </tfoot>
           <% else %>
               <tr>
-<<<<<<< HEAD
-                <td colspan="6">No data found against the selected criteria. Please change criteria and try
-=======
-                <td colspan="5">No data found against the selected criteria. Please change criteria and try
->>>>>>> 23c2f7f5d689b6b99f5536699064a4ae10763894
-                  again.
-                </td>
+                <td colspan="6"><%= t('views.reports.report_no_data') %></td>
               </tr>
           <% end %>
           </tbody>

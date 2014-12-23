@@ -2,7 +2,6 @@
 
 # report data
 jQuery ->
-
   # chart options
   if gon?
     chart_ticks = gon.chart_data["ticks"]
@@ -34,7 +33,7 @@ jQuery ->
 
 
   chart_yaxis = pad: 0, tickOptions:
-    formatString: "$%'i"
+    formatString: $("body").attr("currency-unit") + "%'i"
     showMark: false
 
   chart_axis =

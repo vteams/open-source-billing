@@ -7,7 +7,7 @@
           <td class="align_left" ><%= email_template.subject %></td>
           <td class="align_center" ><%= email_template.status %></td>
           <td class="align_center">
-                <a href="email_templates/<%= email_template.id%>/edit?company=<%= company_level %>">Edit</a>
+                <a href="email_templates/<%= email_template.id%>/edit?company=<%= company_level %>"><%= t('helpers.links.edit') %></a>
             <%#= link_to 'Use default', email_template, method: :delete, data: {confirm: 'Are you sure?'} if company_email_template(email_template.id) %>
           </td>
         </tr>

@@ -1,85 +1,85 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Account:</b>
+  <b><%= t('views.accounts.account') %>:</b>
   <%= @company.account_id %>
 </p>
 
 <p>
-  <b>Company name:</b>
+  <b><%= t('views.companies.name') %>:</b>
   <%= @company.company_name %>
 </p>
 
 <p>
-  <b>Contact name:</b>
+  <b><%= t('views.clients.contact_name') %>:</b>
   <%= @company.contact_name %>
 </p>
 
 <p>
-  <b>Contact title:</b>
+  <b><%= t('views.clients.contact_title') %>:</b>
   <%= @company.contact_title %>
 </p>
 
 <p>
-  <b>Country:</b>
+  <b><%= t('views.common.country') %>:</b>
   <%= @company.country %>
 </p>
 
 <p>
-  <b>City:</b>
+  <b><%= t('views.common.city') %>:</b>
   <%= @company.city %>
 </p>
 
 <p>
-  <b>Street address 1:</b>
+  <b><%= t('views.common.street_address') %> 1:</b>
   <%= @company.street_address_1 %>
 </p>
 
 <p>
-  <b>Street address 2:</b>
+  <b><%= t('views.common.street_address') %> 2:</b>
   <%= @company.street_address_2 %>
 </p>
 
 <p>
-  <b>Province or state:</b>
+  <b><%= t('views.common.province') %>:</b>
   <%= @company.province_or_state %>
 </p>
 
 <p>
-  <b>Postal or zipcode:</b>
+  <b><%= t('views.common.zip_code') %>:</b>
   <%= @company.postal_or_zipcode %>
 </p>
 
 <p>
-  <b>Phone number:</b>
+  <b><%= t('views.common.phone') %>:</b>
   <%= @company.phone_number %>
 </p>
 
 <p>
-  <b>Fax number:</b>
+  <b><%= t('views.common.fax') %>:</b>
   <%= @company.fax_number %>
 </p>
 
 <p>
-  <b>Email:</b>
+  <b><%= t('views.common.email') %>:</b>
   <%= @company.email %>
 </p>
 
 <p>
-  <b>Logo:</b>
+  <b><%= t('views.companies.logo') %>:</b>
   <%= @company.logo %>
 </p>
 
 <p>
-  <b>Company tag line:</b>
+  <b><%= t('views.companies.tag_line') %>:</b>
   <%= @company.company_tag_line %>
 </p>
 
 <p>
-  <b>Memo:</b>
+  <b><%= t('views.companies.memo') %>:</b>
   <%= @company.memo %>
 </p>
 
 
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<%= link_to t('helpers.links.edit'), edit_company_path(@company) %> |
+<%= link_to t('views.common.back'), companies_path %>

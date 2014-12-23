@@ -4,7 +4,7 @@
     <h1>Payments History</h1>
   </div>
   <div class="primary_btn">
-    <%= link_to "Back to invoice", {:controller => 'invoices', :action => 'preview', :inv_id => params[:encrypted_id]}, :class => "btn_large" %>
+    <%= link_to t('views.payments.back_to_invoice'), {:controller => 'invoices', :action => 'preview', :inv_id => params[:encrypted_id]}, :class => "btn_large" %>
     <!--<a class="btn_large big" href="#">Back to invoice</a>-->
   </div>
 </div><!--content_top-->
@@ -23,12 +23,12 @@
         </colgroup>
         <thead>
           <tr>
-            <th class="align_center">Invoice</th>
-            <th class="align_left">Client</th>
-            <th class="align_center">Type</th>
-            <th class="align_center">Notes</th>
-            <th class="align_center">Date</th>
-            <th class="align_right {sorter:'thousands'}" style="padding-right: 20px;">Amount</th>
+            <th class="align_center"><%= t('invoice') %></th>
+            <th class="align_left"><%= t('client') %></th>
+            <th class="align_center"><%= t('views.common.type') %></th>
+            <th class="align_center"><%= t('views.common.notes') %></th>
+            <th class="align_center"><%= t('views.common.notes') %></th>
+            <th class="align_right {sorter:'thousands'}" style="padding-right: 20px;"><%= t('views.dashboard.amount') %></th>
           </tr>
         </thead>
         <tbody id="payment_body">

@@ -36,11 +36,11 @@
                   <div class="label_field left single"> <%= f.label :Send_Reminder? %></div>
                   <div class="medium_field">
                     <%= f.radio_button :send_email, true%>
-                    <label for="Yes">Yes</label>
+                    <label for="Yes"><%= t('views.common.yes') %></label>
                   </div>
                   <div class="medium_field">
                     <%= f.radio_button :send_email, false%>
-                    <label for="No">No</label>
+                    <label for="No"><%= t('views.common.no') %></label>
                   </div>
                 </div>
                 <!--field_row-->
@@ -50,14 +50,14 @@
                   <div class="label_field left single"> <%= f.label :Send_After %></div>
                   <div class="medium_field">
                     <%= f.text_field :no_of_days, :class => 'after' %>
-                    <label class="after">Days of due date</label>
+                    <label class="after"><%= t('views.email_templates.days_of_due_date') %></label>
                   </div>
                 </div>
                 <!--field_row-->
             <% end%>
 
             <div class="field_row">
-              <div class="label_field left single"> <%= f.label :email_from, 'Email From' %></div>
+              <div class="label_field left single"> <%= f.label :email_from, t('views.email_templates.email_from') %></div>
               <div class="medium_field">
                 <%= f.text_field :email_from %>
               </div>
@@ -65,7 +65,7 @@
             <!--field_row-->
 
             <div class="field_row">
-              <div class="label_field left single"> <%= f.label :subject %></div>
+              <div class="label_field left single"> <%= f.label :subject, t('views.clients.subject') %></div>
               <div class="medium_field">
                 <%= f.text_field :subject %>
               </div>
@@ -83,7 +83,7 @@
           </td>
           <td class="custom_fields">
             <ul id="email_template_custom_fields">
-              <h4>Custom fields:</h4>
+              <h4><%= t('views.email_templates.custom_fields') %>:</h4>
 
               <div class="scrollContainer content_scroll mCustomScrollbar">
                 <div class="mCustomScrollBox mCS-light">
@@ -105,7 +105,7 @@
       </table>
 
       <div class="options_row clients">
-        <div class="label_field left single options template">Use this Template for:</div>
+        <div class="label_field left single options template"><%= t('views.email_templates.use_this_template_for') %>:</div>
         <div class="options_content">
           <%= associate_account(controller_name,action_name,@email_template) %>
         </div>
@@ -116,7 +116,7 @@
 
     <div class="content_bottom">
       <%= f.submit :class => 'btn_large big submit' %>
-      <%= link_to 'Back', email_templates_path, :class => 'btn_large grey' %>
+      <%= link_to t('views.common.back'), email_templates_path, :class => 'btn_large grey' %>
     </div>
     <!--content_bottom-->
 <% end %>

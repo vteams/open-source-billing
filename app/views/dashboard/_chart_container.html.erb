@@ -1,8 +1,8 @@
 <div class="graph_wrapper">
   <div class="dashboard_box">
     <div class="heading">
-      <h1>Invoices <span>(USD)</span></h1>
-      <p class="bar_details">click on a bar to see details</p>
+      <h1><%= t('invoices') %> <span>(<%= t("currency_code") %>)</span></h1>
+      <p class="bar_details"><%= t('views.dashboard.view_chart_detail') %></p>
     </div>
     <div class="graph_content">
       <div id="dashboard-chart" style="height: 191px; width: 100%;"></div>

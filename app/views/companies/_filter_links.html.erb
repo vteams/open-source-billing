@@ -1,15 +1,15 @@
 <div class="grid_control_right">
   <ul>
     <li class="grid_control_sep sep_right">
-      <%= link_to "Active", "companies/filter_companies?status=active#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_actives active", :remote => true %>
+      <%= link_to t("views.common.active"), "companies/filter_companies?status=active#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_actives active", :remote => true %>
       <span id="actives">(<%= get_companies_count('unarchived') %>)</span>
     </li>
     <li class="grid_control_sep sep_right">
-      <%= link_to "Archived", "companies/filter_companies?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_archived", :remote => true %>
+      <%= link_to t("views.common.archived"), "companies/filter_companies?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_archived", :remote => true %>
       <span id="archives">(<%= get_companies_count('archived') %>)</span>
     </li>
     <li>
-      <%= link_to "Deleted", "companies/filter_companies?status=deleted#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_deleted", :remote => true %>
+      <%= link_to t('views.common.deleted'), "companies/filter_companies?status=deleted#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}", :class => "get_deleted", :remote => true %>
       <span id="deletes">(<%= get_companies_count('only_deleted') %>)</span>
     </li>
   </ul>

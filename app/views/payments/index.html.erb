@@ -7,12 +7,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <%= t '.title', :default => t("views.payments.payments") %>
         <span></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Payment")),
+      <%= link_to (content_tag(:span, t('header.links.payments.new'))),
                   '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
                   :class => 'btn_large', :remote => true %>
     </div>
@@ -48,11 +48,11 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center header"><%= sortable('invoices.invoice_number', 'Invoice #') %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
-              <th class="align_center header"><%= sortable('IFNULL(payment_method,payment_type)', 'Type') %></th>
-              <th class="align_center header"><%= sortable('payment_date', 'Date') %></th>
-              <th class="align_right big header sorting {sorter:'thousands'}"><%= sortable('payment_amount', 'Amount') %></th>
+              <th class="align_center header"><%= sortable('invoices.invoice_number', t('views.invoices.invoice_number')) %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
+              <th class="align_center header"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
+              <th class="align_center header"><%= sortable('payment_date', t('views.common.date')) %></th>
+              <th class="align_right big header sorting {sorter:'thousands'}"><%= sortable('payment_amount', t('amount')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -68,7 +68,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Payment")),
+        <%= link_to (content_tag(:span, t("views.payments.new"))),
                     '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
                     :class => 'btn_large', :remote => true %>
       </div>

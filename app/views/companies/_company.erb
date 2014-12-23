@@ -1,9 +1,9 @@
 <%
-   no_record_message = "You haven't created any company yet. Please click on New Company button to create new company."
+   no_record_message = t('views.companies.no_record_msg')
    if params[:status] == "archived" || @action == "recovered from archived"
-     no_record_message = "You haven't any archived companies."
+     no_record_message = t('views.companies.no_archived_msg')
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = "You haven't any deleted companies."
+     no_record_message = t('views.companies.no_deleted_msg')
    end
 %>
 <% if  @companies.blank? %>

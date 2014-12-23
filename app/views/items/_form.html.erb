@@ -20,7 +20,7 @@
             <div class="fields_content_data">
 
               <div class="field_row">
-                <div class="label_field left single"><span>Item Name</span></div>
+                <div class="label_field left single"><span><%= t('views.items.item_name') %></span></div>
                 <div class="large_field">
                   <%= f.text_field :item_name, :required => "" %>
                 </div>
@@ -28,7 +28,7 @@
               <!--field_row-->
 
               <div class="field_row textarea">
-                <div class="label_field left single">Description</div>
+                <div class="label_field left single"><%= t('views.items.description') %></div>
                 <div class="large_field">
                   <%= f.text_area :item_description %>
                 </div>
@@ -46,13 +46,13 @@
               <div class="field_row">
                 <div class="label_field left single">Taxes</div>
                 <div class="small_field">
-                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => "Select a tax...", :class => "extra_small tax1 small chzn-select"}) %>
+                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
                   <%#= f.select(:tax_1, options_for_select(Tax.all.map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => ""}, {"data-placeholder" => "",:class => "tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
                 </div>
-                <div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => "Select a tax...", :class => "extra_small tax2 small chzn-select"}) %></div>
+                <div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %></div>
               </div>
               <div class="options_row clients">
-                <div class="label_field left single options template">Make this Item available to:</div>
+                <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
                 <div class="options_content">
                   <%= associate_account(controller_name, action_name, @item) %>
                 </div>

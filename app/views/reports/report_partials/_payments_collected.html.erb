@@ -3,7 +3,7 @@
 
     <div class="report_content_header">
       <div class="report_content_heading">
-        <h1>Payments Collected</h1>
+        <h1><%= t('views.reports.payments_collected') %></h1>
       </div>
 
       <div class="content_header_data">
@@ -12,9 +12,7 @@
             <ul>
               <li class="header_name"><%= @report.client_name %></li>
               <li class="header_duration"><%= @report.period %></li>
-              <li class="header_description">This report shows a history of all payments made for every invoice
-                selectable by client and by date.
-              </li>
+              <li class="header_description"><%= t('views.reports.payments_collected_dtl') %></li>
             </ul>
           </div>
         </div>
@@ -38,11 +36,11 @@
         <thead>
         <tr>
           <th class="align_left"><%= sortable('invoice_number', 'Invoice') %></th>
-          <th class="align_left">Client Name</th>
-          <th class="align_left">Type</th>
-          <th class="align_left">Note</th>
-          <th class="align_center">Date</th>
-          <th class="align_right {sorter:'thousands'}">Amount</th>
+          <th class="align_left"><%= t('views.clients.client_name') %></th>
+          <th class="align_left"><%= t('views.common.type') %></th>
+          <th class="align_left"><%= t('views.common.note') %></th>
+          <th class="align_center"><%= t('views.common.date') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.dashboard.amount') %></th>
         </tr>
         </thead>
         <tbody>
@@ -59,7 +57,7 @@
             <% end %>
             <tfoot>
                 <tr>
-                  <td class="align_left" >Total</td>
+                  <td class="align_left" ><%= t('views.common.total') %></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
@@ -69,8 +67,7 @@
             </tfoot>
         <% else %>
             <tr>
-              <td colspan="6">No data found against the selected criteria. Please change criteria and try again.
-              </td>
+              <td colspan="6"><%= t('views.reports.report_no_data') %></td>
             </tr>
         <% end %>
         </tbody>

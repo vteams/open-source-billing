@@ -9,10 +9,10 @@
       </colgroup>
       <thead>
       <tr>
-        <th class="align_center">Invoice#</th>
-        <th class="align_left">Client</th>
-        <th class="align_center">Date</th>
-        <th class="align_right">Amount</th>
+        <th class="align_center"><%= t('invoice') %>#</th>
+        <th class="align_left"><%= t('client') %></th>
+        <th class="align_center"><%= t('views.common.date') %></th>
+        <th class="align_right"><%= t('views.dashboard.amount') %></th>
       </tr>
       <% @invoices_with_payments.each do |inv| %>
           <%= hidden_field_tag "invoice_ids[]", inv.id %>

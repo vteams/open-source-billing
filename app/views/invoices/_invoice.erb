@@ -1,9 +1,9 @@
 <%
-   no_record_message = "You haven't created any invoice yet. Please click on New Invoice button to create new invoice."
+   no_record_message = t('views.invoices.no_invoice_msg')
    if params[:status] == "archived" || @action == "recovered from archived"
-     no_record_message = "You haven't any archived invoice."
+     no_record_message = t('views.invoices.no_archived_msg')
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = "You haven't any deleted invoice."
+     no_record_message = t('views.invoices.no_deleted_msg')
    end
 %>
 <%= hidden_field_tag :direction, params[:direction] %>

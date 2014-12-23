@@ -7,11 +7,11 @@
     <div class="primary_heading">
       <h1>
         <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;Active</span>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Invoice")),
+      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                   new_invoice_path,
                   :class => 'btn_large' %>
     </div>
@@ -52,12 +52,12 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', 'Invoice #') %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
-              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', 'Total') %></th>
-              <th class="align_center header"><%= sortable('invoice_date', 'Date') %></th>
-              <th class="align_left header"><%= sortable('due_date', 'Due Date') %></th>
-              <th class="align_center header"><%= sortable('status', 'Status') %></th>
+              <th class="align_center sorting header <%= sort_class %>"><%= sortable('invoice_number', "#{t('invoice')} #") %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
+              <th class="align_right header sorting {sorter:'thousands'}"><%= sortable('invoice_total', t('views.common.total')) %></th>
+              <th class="align_center header"><%= sortable('invoice_date', t('views.common.date')) %></th>
+              <th class="align_left header"><%= sortable('due_date', t('views.invoices.due_date')) %></th>
+              <th class="align_center header"><%= sortable('status', t('views.common.status')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -74,7 +74,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Invoice")),
+        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                     new_invoice_path,
                     :class => 'btn_large' %>
       </div>
@@ -98,16 +98,15 @@
                 <tbody>
                 <tr>
                   <td>
-                    <span>You haven't selected any invoice. Please select one or more invoices and try again.</span>
+                    <span><%= t('views.invoices.no_invoice_selected') %></span>
                   </td>
                 </tr>
                 </tbody>
               </table>
             </div>
-            <h1>How to handle invoice payments ?</h1>
+            <h1><%= t('views.invoices.how_to_handle_invoice_payments') %></h1>
 
-            <p>The invoice you are trying to delete has payments associated with it. You must decide what
-              to do with payments before the invoice can be deleted.</p>
+            <p><%= t('views.invoices.handle_associated_payments') %></p>
 
             <div class="cross_btn">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -118,9 +117,9 @@
           <div class="modal-body">
           </div>
           <div class="footer ">
-            <%= submit_tag "Convert Payment to Credit", :name => "convert_to_credit", :class => "btn_large submit small_case" %>
-            <%= submit_tag "Permanently Delete Payment", :name => "destroy", :class => "btn_large submit small_case" %>
-            <a href="#" data-dismiss="modal" class="btn_large grey">cancel</a>
+            <%= submit_tag t("views.invoices.convert_payment_to_credit"), :name => "convert_to_credit", :class => "btn_large submit small_case" %>
+            <%= submit_tag t("views.invoices.permanently_delete_payment"), :name => "destroy", :class => "btn_large submit small_case" %>
+            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancel') %></a>
           </div>
         </div>
       </div>

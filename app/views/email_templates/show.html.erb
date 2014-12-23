@@ -7,7 +7,7 @@
 
     <div class="email_row">
       <div class="email_heading">
-        Template type <span>:</span>
+        <%= t('views.email_templates.template_type') %> <span>:</span>
       </div>
       <div class="email_detail">
         <%= @email_template.template_type %>
@@ -16,7 +16,7 @@
 
     <div class="email_row">
       <div class="email_heading">
-        Email from <span>:</span>
+        <%= t('views.email_templates.email_from') %> <span>:</span>
       </div>
       <div class="email_detail">
         <%= @email_template.email_from %>
@@ -25,7 +25,7 @@
 
     <div class="email_row">
       <div class="email_heading">
-        Subject <span>:</span>
+        <%= t('views.clients.subject') %> <span>:</span>
       </div>
       <div class="email_detail">
         <%= @email_template.subject %>
@@ -34,7 +34,7 @@
 
     <div class="email_row">
       <div class="email_heading">
-        Body <span>:</span>
+        <%= t('views.email_templates.body') %> <span>:</span>
       </div>
       <div class="email_detail">
         <%= @email_template.body %>
@@ -46,8 +46,8 @@
         &nbsp
       </div>
       <div class="email_detail btm_list">
-        <%= link_to 'Edit', edit_email_template_path(@email_template) %> <span>|</span>
-        <%= link_to 'Back', email_templates_path %>
+        <%= link_to t('helpers.links.edit'), edit_email_template_path(@email_template) %> <span>|</span>
+        <%= link_to t('views.common.back'), email_templates_path %>
       </div>
     </div>
 

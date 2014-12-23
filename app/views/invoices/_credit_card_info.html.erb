@@ -4,10 +4,10 @@
         <div class="model_grey_container">
           <div class="modal-header">
 
-            <h1>Pay Invoice by Credit Card</h1>
+            <h1><%= t('views.credit_card.pay_by_credit_card') %></h1>
 
-            <p>Please enter you credit card details to pay invoice (<%= @invoice.invoice_number %>)
-              of <%= number_to_currency(@invoice.unpaid_amount) %> <span>(USD)</span></p>
+            <p><%= t('views.credit_card.cc_prompt') %> (<%= @invoice.invoice_number %>)
+              of <%= number_to_currency(@invoice.unpaid_amount) %> <span>(<%= t('currency_code') %>)</span></p>
 
             <div class="cross_btn">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -39,7 +39,7 @@
                   <div class="fields_content_data">
 
                     <div class="field_row">
-                      <div class="label_field left single"><span>Type</span></div>
+                      <div class="label_field left single"><span><%= t('views.common.type') %></span></div>
                       <div class="large_field">
                         <%= select_tag "cc_type", options_for_select(CREDIT_CARD_TYPE), {:class => "cc_type large", :id => "cc_type"} %>
                       </div>
@@ -47,24 +47,24 @@
                     <!--field_row-->
 
                     <div class="field_row description">
-                      <div class="label_field left single"><span>Card Holder Name</span></div>
+                      <div class="label_field left single"><span><%= t('views.credit_card.card_holder_name') %></span></div>
                       <div class="small_field">
                         <%= text_field_tag :first_name, '', :required => "" %>
                         <ul class="field_description">
-                          <li>First name</li>
+                          <li><%= t('views.clients.first_name') %></li>
                         </ul>
                       </div>
                       <div class="small_field right">
                         <%= text_field_tag :last_name, '', :required => "" %>
                         <ul class="field_description">
-                          <li>Last name</li>
+                          <li><%= t('views.clients.last_name') %></li>
                         </ul>
                       </div>
                     </div>
                     <!--field_row-->
 
                     <div class="field_row">
-                      <div class="label_field left single"><span>CC Number</span></div>
+                      <div class="label_field left single"><span><%= t('views.credit_card.cc_number') %></span></div>
                       <div class="medium_field">
                         <%= text_field_tag :cc_number, '', :required => "" %>
                       </div>
@@ -72,26 +72,26 @@
                     <!--field_row-->
 
                     <div class="field_row description">
-                      <div class="label_field left single"><span>Expiry Date</span></div>
+                      <div class="label_field left single"><span><%= t('views.credit_card.expiry_date') %></span></div>
                       <div class="small_field">
                         <%#= text_field_tag :cc_month %>
                         <%= select_month 1, {:use_short_month => true, :include_blank => false, :prompt => false}, {:name => 'cc_month'} %>
                         <ul class="field_description">
-                          <li>Month</li>
+                          <li><%= t('views.common.month') %></li>
                         </ul>
                       </div>
                       <div class="small_field right">
                         <%#= text_field_tag :cc_year %>
                         <%= select_year Date.today, {:start_year => Time.now.year, :end_year => Time.now.year + 10, :include_blank => false}, {:id => 'cc_year', :name => 'cc_year'} %>
                         <ul class="field_description">
-                          <li>Year</li>
+                          <li><%= t('views.common.year') %></li>
                         </ul>
                       </div>
                     </div>
                     <!--field_row-->
 
                     <div class="field_row">
-                      <div class="label_field left single"><span>Verification Code</span></div>
+                      <div class="label_field left single"><span><%= t('views.credit_card.verification_code') %></span></div>
                       <div class="medium_field">
                         <%= text_field_tag :cc_verification, '', :required => "" %>
                         <%= hidden_field_tag :invoice_id, params[:inv_id] %>
@@ -99,7 +99,7 @@
                     </div><!--field_row-->
 
                     <div class="field_row">
-                      <p><b>Note:</b> We do not store your credit card information.</p>
+                      <p><b><%= t('views.common.note') %>:</b> <%= t('views.credit_card.privacy') %>.</p>
                     </div>
                     <script>$(".field_row").last().css('min-height', '0px');</script>
                     <script>$(".field_row").last().css('margin-bottom', '0px');</script>
@@ -116,8 +116,8 @@
 
           </div>
           <div class="footer ">
-            <%= submit_tag "Pay Invoice", :class => "btn_large submit" %>
-            <a href="#" data-dismiss="modal" class="btn_large grey">cancel</a>
+            <%= submit_tag t('views.credit_card.pay_invoice'), :class => "btn_large submit" %>
+            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancal') %></a>
           </div>
         </div>
       </div>

@@ -71,10 +71,12 @@ class ApplicationController < ActionController::Base
   def associate_entity(params, entity)
     ids, controller = params[:company_ids], params[:controller]
 
+
+
     ActiveRecord::Base.transaction do
       # delete existing associations
       if action_name == 'update'
-        entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id)
+        entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id, entity_type: entity.class.to_s)
         entities.map(&:destroy) if entities.present?
       end
 
@@ -110,6 +112,7 @@ class ApplicationController < ActionController::Base
 
   def get_clients_and_items
     #parent = params[:company_id].blank? ? current_user.current_account : Company.find(params[:company_id])
+
     parent = Company.find(params[:company_id] || get_company_id)
     @get_clients = get_clients(parent)
     @get_items = get_items(parent)

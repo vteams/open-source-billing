@@ -10,7 +10,7 @@
             <div class="fields_content_data">
 
               <div class="field_row">
-                <div class="label_field left single"><span>Full Name</span></div>
+                <div class="label_field left single"><span><%= t('views.users.full_name') %></span></div>
                 <div class="large_field">
                   <%= text_field_tag :user_name,'', required: '', autofocus: true %>
                 </div>
@@ -18,7 +18,7 @@
               <!--field_row-->
 
               <div class="field_row">
-                <div class="label_field left single"><span>Email</span></div>
+                <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
                 <div class="large_field">
                   <%= text_field_tag :email,'', :required => "" %>
                 </div>
@@ -26,7 +26,7 @@
               <!--field_row-->
 
               <div class="field_row">
-                <div class="label_field left single"><span>Password</span></div>
+                <div class="label_field left single"><span><%= t('views.users.password') %></span></div>
                 <div class="large_field">
                   <%= password_field_tag :password,'', :required => "" %>
                 </div>
@@ -35,7 +35,7 @@
               <!--field_row-->
 
               <div class="field_row">
-                <div class="label_field left single"><span>Confirmation</span></div>
+                <div class="label_field left single"><span><%= t('views.users.confirmation') %></span></div>
                 <div class="large_field">
                   <%= password_field_tag :password_confirmation,'', :required => "" %>
                 </div>
@@ -44,7 +44,7 @@
               <div class="field_row">
                 <div class="label_field left single"></div>
                 <div class="field_check">
-                  <%= check_box_tag :notify_user %> <p><label for="notify_user">Notify user</label></p>
+                  <%= check_box_tag :notify_user %> <p><label for="notify_user"><%= t('views.users.notify_user') %></label></p>
                 </div>
               </div>
 
@@ -61,7 +61,7 @@
       <!--content_middle-->
 
       <div class="content_bottom">
-        <%= submit_tag 'Save', class:  "btn_large submit" %>
+        <%= submit_tag t('views.common.save'), class:  "btn_large submit" %>
       </div>
       <!--content_bottom-->
     </div><!--new_item_form-->

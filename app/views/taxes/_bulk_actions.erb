@@ -1,7 +1,7 @@
 <%= hidden_field_tag :page, params[:page] %>
-<li><%= submit_tag "Recover", :name => "recover_archived", :class => "top_links recover_archived", :style => "display:none;" %></li>
-<li><%= submit_tag "Recover", :name => "recover_deleted", :class => "top_links recover_deleted", :style => "display:none;" %></li>
-<li><%= submit_tag "Archive", :name => "archive", :class => "top_links archive" %></li>
-<li><%= submit_tag "Delete", :name => "destroy", :class => "top_links destroy" %></li>
+<li><%= submit_tag t('views.common.recover'), :name => "recover_archived", :class => "top_links recover_archived", :style => "display:none;" %></li>
+<li><%= submit_tag t('views.common.recover'), :name => "recover_deleted", :class => "top_links recover_deleted", :style => "display:none;" %></li>
+<li><%= submit_tag t('views.common.archive'), :name => "archive", :class => "top_links archive" %></li>
+<li><%= submit_tag t('views.common.delete'), :name => "destroy", :class => "top_links destroy" %></li>
 <!--<li><a href="#" class="no_links">Copy</a></li>-->
 <!--<li><a href="#" class="no_links">Print</a></li>-->

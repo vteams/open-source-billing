@@ -6,12 +6,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;Active</span>
+        <%= t '.title', :default => t("views.invoices.recurring.heading") %>
+        <span>&nbsp;/&nbsp;<%= t('views.invoices.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Recurring Profile")),
+      <%= link_to (content_tag(:span, t('views.invoices.recurring.new'))),
                   new_recurring_profile_path,
                   :class => 'btn_large' %>
     </div>
@@ -48,12 +48,12 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center header <%= sort_class %>"><%= sortable('invoice_number', 'Profile ID') %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', 'Client') %></th>
-              <th class="align_center header"><%= sortable('last_sent_date', 'Last Sent') %></th>
-              <th class="align_center header"><%= sortable('frequency', 'Frequency') %></th>
-              <th class="align_right header"><%= sortable('invoice_total', 'Amount') %></th>
-              <th class="align_right header"><%= sortable('occurrences', 'Remaining') %></th>
+              <th class="align_center header <%= sort_class %>"><%= sortable('invoice_number', t('views.invoices.recurring.profile_id')) %></th>
+              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
+              <th class="align_center header"><%= sortable('last_sent_date', t('views.invoices.recurring.last_sent')) %></th>
+              <th class="align_center header"><%= sortable('frequency', t('views.invoices.recurring.frequency')) %></th>
+              <th class="align_right header"><%= sortable('invoice_total', t('amount')) %></th>
+              <th class="align_right header"><%= sortable('occurrences', t('views.common.remaining')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -69,7 +69,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Recurring Profile")),
+        <%= link_to (content_tag(:span, t("views.invoices.recurring.heading"))),
                     new_recurring_profile_path,
                     :class => 'btn_large' %>
       </div>

@@ -6,12 +6,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        Companies
-        <span>&nbsp;/&nbsp;Active</span>
+        <%= t('views.companies.companies') %>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Company")),
+      <%= link_to (content_tag(:span, t("views.companies.new"))),
                   new_company_path,
                   :class => 'btn_large' %>
     </div>
@@ -44,10 +44,10 @@
             <thead>
             <tr>
               <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left sorting header"><%= sortable('company_name', 'Company name') %></th>
-              <th class="align_left header"><%= sortable('contact_name', 'Contact name') %></th>
-              <th class="align_left header"><%= sortable('email', 'Email') %></th>
-              <th class="align_left header"><%= sortable('country', 'Country') %></th>
+              <th class="align_left sorting header"><%= sortable('company_name', t('views.companies.name')) %></th>
+              <th class="align_left header"><%= sortable('contact_name', t('views.clients.contact_name')) %></th>
+              <th class="align_left header"><%= sortable('email', t('views.common.email')) %></th>
+              <th class="align_left header"><%= sortable('country', t('views.common.country')) %></th>
               <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
             </tr>
             </thead>
@@ -63,7 +63,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, "New Company")),
+        <%= link_to (content_tag(:span, t("views.companies.new"))),
                     new_company_path,
                     :class => 'btn_large' %>
       </div>
