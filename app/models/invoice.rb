@@ -35,7 +35,8 @@ class Invoice < ActiveRecord::Base
       draft_partial: 'Payment received against the draft invoice.',
       disputed: 'Client has disputed this invoice.',
   }
-  attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status, :company_id, :currency_id
+
+  #attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status, :company_id, :currency_id
 
   # associations
   belongs_to :client

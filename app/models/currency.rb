@@ -1,3 +1,3 @@
 class Currency < ActiveRecord::Base
-  attr_accessible :code, :title, :unit
+  #attr_accessible :code, :title, :unit
 end

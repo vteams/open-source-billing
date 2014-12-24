@@ -22,7 +22,7 @@ class Client < ActiveRecord::Base
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
-  attr_accessible :address_street1, :address_street2, :business_phone, :city, :company_size, :country, :fax, :industry, :internal_notes, :organization_name, :postal_zip_code, :province_state, :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number, :client_contacts_attributes, :archive_number, :archived_at, :deleted_at, :currency_id
+  #attr_accessible :address_street1, :address_street2, :business_phone, :city, :company_size, :country, :fax, :industry, :internal_notes, :organization_name, :postal_zip_code, :province_state, :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number, :client_contacts_attributes, :archive_number, :archived_at, :deleted_at, :currency_id
 
   # associations
   has_many :invoices
