@@ -52,10 +52,10 @@ module ClientsHelper
 
   def is_client_credit_payments client
     flag = false
-    invoice_ids = Invoice.with_deleted.where("client_id = ?", client.id).all
+    invoice_ids = Invoice.with_deleted.where("client_id = ?", client.id).all.pluck(:id)
     # total credit
     client_payments = Payment.where("payment_type = 'credit' AND invoice_id in (?)", invoice_ids).all
-    client_total_credit = client_payments.sum { |f| f.payment_amount }
+    client_total_credit = client_payments.sum(:payment_amount)
     flag = true if client_total_credit > 0
     flag
   end

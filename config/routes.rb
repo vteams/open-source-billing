@@ -1,5 +1,11 @@
 Osb::Application.routes.draw do
 
+  use_doorkeeper
+  #namespace :OpenSourceBilling do
+  #  resources :people
+  #end
+  #get '/auth/:provider/callback', to: 'sessions#create'
+  mount V1::OSB => '/'
 
   get "recurring_profile_line_item/index"
 
@@ -34,13 +40,13 @@ Osb::Application.routes.draw do
 
   resources :accounts
 
-  match "help" => "help#index"
-  match "reports/:report_name" => "reports#reports"
-  match "reports/data/:report_name" => "reports#reports_data"
-  match "reports" => "reports#index"
+  get "help" => "help#index"
+  get "reports/:report_name" => "reports#reports"
+  get "reports/data/:report_name" => "reports#reports_data"
+  get "reports" => "reports#index"
 
 
-  match "dashboard" => "dashboard#index"
+  get "dashboard" => "dashboard#index"
   resources :payments do
     collection do
       get 'enter_payment'
@@ -60,8 +66,8 @@ Osb::Application.routes.draw do
     end
   end
 
-  match "invoices/unpaid_invoices" => "invoices#unpaid_invoices"
-
+  get "invoices/unpaid_invoices" => "invoices#unpaid_invoices"
+  post '/payments/enter_payment'
   resources :clients do
     collection do
       get 'filter_clients'
@@ -126,7 +132,7 @@ Osb::Application.routes.draw do
     end
   end
 
-
+  post '/clients/client_detail'
   resources :company_profiles
 
 
@@ -188,11 +194,12 @@ Osb::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => redirect("/dashboard")
+  #root :to => 'dashboard#index'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id))(.:format)'
+
+  get ':controller(/:action(/:id))(.:format)'
 end

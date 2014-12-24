@@ -97,7 +97,7 @@ class window.InlineForms
       form_data = @chznContainer.find(".tiny_create_form :input").serialize()
       # add an extra parameter "add_more" if save & add more button is clicked
       form_data += '&add_more=' if jQuery(event.target).hasClass('btn_save_and_add_more')
-      jQuery.ajax "/#{@resource}/create",
+      jQuery.ajax "/#{@resource}",
         type: 'POST'
         data: form_data
         dataType: 'html'

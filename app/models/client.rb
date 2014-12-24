@@ -1,4 +1,3 @@
-#
 # Open Source Billing - A super simple software to create & send invoices to your customers and
 # collect payments.
 # Copyright (C) 2013 Mark Mian <mark.mian@opensourcebilling.org>
@@ -23,7 +22,6 @@ class Client < ActiveRecord::Base
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
-  # attr
   attr_accessible :address_street1, :address_street2, :business_phone, :city, :company_size, :country, :fax, :industry, :internal_notes, :organization_name, :postal_zip_code, :province_state, :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number, :client_contacts_attributes, :archive_number, :archived_at, :deleted_at, :currency_id
 
   # associations
@@ -110,14 +108,18 @@ class Client < ActiveRecord::Base
   end
 
   def client_credit
-    invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all
+    #binding.pry
+    invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
+
     client_payments = Payment.where("payment_type = 'credit' AND invoice_id in (?)", invoice_ids).all
-    client_total_credit = client_payments.sum { |f| f.payment_amount }
+
+    client_total_credit = client_payments.sum(:payment_amount)
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
-    # avail credit
+    # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
+
     client_payments = Payment.where("payment_method = 'credit' AND invoice_id in (?)", invoice_ids).all
-    client_avail_credit = client_payments.sum { |f| f.payment_amount }
+    client_avail_credit = client_payments.sum(:payment_amount)
     # Total available credit of client
     client_total_credit - client_avail_credit
   end

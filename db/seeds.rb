@@ -194,4 +194,11 @@ templates.each do |template|
   )
 end
 
+#creating default currencies
+Currency.create([
+          {title: 'USD',code: '$'},
+          {title: 'Euro',code: '€'},
+          {title: 'PKR',code: 'Rs.'}
+        ])
+
 

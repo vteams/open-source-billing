@@ -20,24 +20,7 @@
     </div>
     <!-- report_content_header -->
 
-    <div class="header_data_right">
-      <ul class="download_report">
-        <li class="download_report_title"><%= t('views.reports.export_to') %>:</li>
-        <li class="download_sep"><%= t('views.common.csv') %></li>
-        <li><%= t('views.common.excel') %></li>
-      </ul>
-      <ul class="print_report">
-        <li><a href="#"><%= t('views.reports.print_report') %></a></li>
-      </ul>
-      <div class="report_duration">
-        <!--<ul>-->
-          <!--<li>01/01/2013</li>-->
-          <!--<li><span>to</span></li>-->
-          <!--<li>01/01/2013</li>-->
-        <!--</ul>-->
-      </div>
-      <!-- report_duration -->
-    </div>
+    <%= render 'reports/report_partials/format_links'%>
 
     <div class="revenue_by_client">
       <div class="grid_table">
@@ -78,7 +61,9 @@
               </tfoot>
           <% else %>
               <tr>
-                <td colspan="14"><%= t('views.reports.report_no_data') %></td>
+                <td colspan="<%= 2+(@report.report_criteria.from_month..@report.report_criteria.to_month).size %>">
+                  <%= t('views.reports.report_no_data') %>
+                </td>
               </tr>
           <% end %>
           </tbody>

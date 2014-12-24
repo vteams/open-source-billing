@@ -20,24 +20,7 @@
     </div>
     <!-- report_content_header -->
 
-    <div class="header_data_right">
-      <ul class="download_report">
-        <li class="download_report_title"><%= t('views.reports.export_to') %>:</li>
-        <li class="download_sep"><%= t('views.common.csv') %></li>
-        <li><%= t('views.common.excel') %></li>
-      </ul>
-      <ul class="print_report">
-        <li><a href="#"><%= t('views.reports.print_report') %></a></li>
-      </ul>
-      <div class="report_duration">
-        <!--<ul>-->
-        <!--<li>01/01/2013</li>-->
-        <!--<li><span>to</span></li>-->
-        <!--<li>01/01/2013</li>-->
-        <!--</ul>-->
-      </div>
-      <!-- report_duration -->
-    </div>
+    <%= render 'reports/report_partials/format_links'%>
 
     <div class="item_sales">
       <div class="grid_table">

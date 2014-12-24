@@ -30,7 +30,7 @@ class Devise::RegistrationsController < DeviseController
 
   # POST /resource
   def create
-    build_resource
+    build_resource(sign_up_params)
     resource.skip_confirmation!
 
     # create a default account and company
@@ -107,7 +107,7 @@ class Devise::RegistrationsController < DeviseController
   protected
 
   # Build a devise resource passing in the session. Useful to move
-  # temporary session data to the newly created user.
+  # temporary session data to the newly created user.=
   def build_resource(hash=nil)
     hash ||= resource_params || {}
     self.resource = resource_class.new_with_session(hash, session)
@@ -136,4 +136,18 @@ class Devise::RegistrationsController < DeviseController
     send(:"authenticate_#{resource_name}!", :force => true)
     self.resource = send(:"current_#{resource_name}")
   end
+
+  def sign_up_params
+    devise_parameter_sanitizer.sanitize(:sign_up)
+  end
+
+  def account_update_params
+    devise_parameter_sanitizer.sanitize(:account_update)
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:username, :account, :email, :password, :password_confirmation)
+  end
+
 end

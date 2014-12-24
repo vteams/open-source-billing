@@ -43,7 +43,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = current_user.current_account.companies.new(params[:company])
+    @company = current_user.current_account.companies.new(company_params)
 
     respond_to do |format|
       if @company.save
@@ -62,7 +62,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
 
     respond_to do |format|
-      if @company.update_attributes(params[:company])
+      if @company.update_attributes(company_params)
         format.html { redirect_to edit_company_path(@company), notice: 'Your company has been updated successfully.' }
         format.json { head :no_content }
       else
@@ -124,6 +124,12 @@ class CompaniesController < ApplicationController
   def sort_direction
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  private
+
+  def company_params
+    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2)
   end
 
 end

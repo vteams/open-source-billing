@@ -6,7 +6,7 @@ class RecurringProfile < ActiveRecord::Base
   scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
 
   #attr
-  attr_accessible :client_id, :discount_amount, :discount_percentage, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :first_invoice_date, :frequency, :occurrences, :prorate, :prorate_for, :gateway_id, :created_at, :updated_at, :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :company_id, :last_invoice_status, :recurring_profile_line_items_attributes, :last_sent_date, :sent_invoices
+  #attr_accessible :client_id, :discount_amount, :discount_percentage, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :first_invoice_date, :frequency, :occurrences, :prorate, :prorate_for, :gateway_id, :created_at, :updated_at, :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :company_id, :last_invoice_status, :recurring_profile_line_items_attributes, :last_sent_date, :sent_invoices
 
   #associations
   belongs_to :client

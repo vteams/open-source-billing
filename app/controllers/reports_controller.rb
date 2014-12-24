@@ -32,16 +32,27 @@ class ReportsController < ApplicationController
   def reports
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
     @report = get_report(params)
-
     respond_to do |format|
       format.html # index.html.erb
+      format.csv { send_data @report.to_csv }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        file_name = "#{@report.report_name}_#{Date.today}"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
+          layout: 'pdf_mode.html.erb',
+          template: 'reports/reports.html.erb',
+          encoding: "UTF-8",
+          footer:{
+            right: 'Page [page] of [topage]'
+          }
+        send_data pdf,filename: file_name
+      end
     end
   end
 
   # AJAX request to fetch report data after
   # reports/data/:report_name
   def reports_data
-
     @report = get_report(params)
 
     respond_to do |format|

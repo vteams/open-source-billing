@@ -60,7 +60,7 @@ class PaymentTermsController < ApplicationController
   # POST /payment_terms
   # POST /payment_terms.json
   def create
-    @payment_term = PaymentTerm.new(params[:payment_term])
+    @payment_term = PaymentTerm.new(payment_term_params)
 
     respond_to do |format|
       if @payment_term.save
@@ -79,7 +79,7 @@ class PaymentTermsController < ApplicationController
     @payment_term = PaymentTerm.find(params[:id])
 
     respond_to do |format|
-      if @payment_term.update_attributes(params[:payment_term])
+      if @payment_term.update_attributes(payment_term_params)
         format.html { redirect_to @payment_term, notice: 'Payment term was successfully updated.' }
         format.json { head :no_content }
       else
@@ -100,4 +100,10 @@ class PaymentTermsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+
+  def payment_term_params
+    params.require(:payment_term).permit(:description, :number_of_days)
+  end
+
 end

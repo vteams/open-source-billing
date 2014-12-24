@@ -60,7 +60,7 @@ class ClientContactsController < ApplicationController
   # POST /client_contacts
   # POST /client_contacts.json
   def create
-    @client_contact = ClientContact.new(params[:client_contact])
+    @client_contact = ClientContact.new(client_contact_params)
 
     respond_to do |format|
       if @client_contact.save
@@ -79,7 +79,7 @@ class ClientContactsController < ApplicationController
     @client_contact = ClientContact.find(params[:id])
 
     respond_to do |format|
-      if @client_contact.update_attributes(params[:client_contact])
+      if @client_contact.update_attributes(client_contact_params)
         format.html { redirect_to @client_contact, notice: 'Client contact was successfully updated.' }
         format.json { head :no_content }
       else
@@ -100,4 +100,10 @@ class ClientContactsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+
+  def client_contact_params
+    params.require(:client_contact).permit(:client_id, :email, :first_name, :last_name, :home_phone, :mobile_number)
+  end
+
 end

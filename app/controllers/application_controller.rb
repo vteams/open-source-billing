@@ -22,11 +22,16 @@ class ApplicationController < ActionController::Base
   #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
   #Time::DATE_FORMATS.merge!(:short=> "%d")
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
+  #before_filter :authenticate_user_from_token!
+  # This is Devise's authentication
+
+  before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
   before_filter :authenticate_user!
   before_filter :_reload_libs #reload libs on every request for dev environment only
                               #layout :choose_layout
                               #reload libs on every request for dev environment only
+
   def _reload_libs
     if defined? RELOAD_LIBS
       RELOAD_LIBS.each do |lib|
@@ -137,5 +142,14 @@ class ApplicationController < ActionController::Base
     current_user.update_attributes(current_company: params[:company_id])
    end
   end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :account ,:email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :account, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :account, :email, :password, :password_confirmation, :current_password) }
+  end
+
 
 end

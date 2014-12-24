@@ -54,11 +54,11 @@ module Services
     end
 
     def self.dispute_invoice(invoice_id, dispute_reason, current_user)
-      invoice = Invoice.find_by_id(invoice_id)
+      invoice = ::Invoice.find_by_id(invoice_id)
       return nil if invoice.blank?
       invoice.disputed!
       InvoiceMailer.dispute_invoice_email(current_user, invoice, dispute_reason).deliver
-      invoice = Invoice.find_by_id(invoice_id)
+      invoice = ::Invoice.find_by_id(invoice_id)
     end
 
     def self.delete_invoices_with_payments(invoices_ids, convert_to_credit)

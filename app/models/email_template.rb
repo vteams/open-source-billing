@@ -1,13 +1,14 @@
 class EmailTemplate < ActiveRecord::Base
 
-  attr_accessible :body, :email_from, :subject, :template_type, :status, :torder, :no_of_days, :is_late_payment_reminder, :send_email
+  #attr_accessible :body, :email_from, :subject, :template_type, :status, :torder, :no_of_days, :is_late_payment_reminder, :send_email
 
   paginates_per 10
 
   has_many :company_email_templates, :foreign_key => "template_id", :dependent => :destroy
   #belongs_to :company_email_template,:foreign_key => 'template_id' ,:dependent => :destroy
   #has_many :accounts, :through => :company_email_templates, :foreign_key => 'template_id'
-  default_scope order("#{self.table_name}.torder")
+
+  default_scope{order("#{self.table_name}.torder")}
 
   def self.get_email_templates(params)
     company_default_custom_templates(params)

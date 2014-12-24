@@ -69,7 +69,7 @@ class ClientsController < ApplicationController
   # POST /clients
   # POST /clients.json
   def create
-    @client = Client.new(params[:client])
+    @client = Client.new(client_params)
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
@@ -101,7 +101,7 @@ class ClientsController < ApplicationController
     @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], get_company_id()) : @client.update_available_credit(params[:available_credit])
 
     respond_to do |format|
-      if @client.update_attributes(params[:client])
+      if @client.update_attributes(client_params)
         format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => 'Your client has been updated successfully.')
@@ -214,5 +214,18 @@ class ClientsController < ApplicationController
   def get_args(status)
     {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
+  private
+
+  def client_params
+    params.require(:client).permit(:address_street1, :address_street2, :business_phone, :city,
+                                   :company_size, :country, :fax, :industry, :internal_notes,
+                                   :organization_name, :postal_zip_code, :province_state,
+                                   :send_invoice_by, :email, :home_phone, :first_name, :last_name,
+                                   :mobile_number, :client_contacts_attributes, :archive_number,
+                                   :archived_at, :deleted_at,
+                                   client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
+    )
+  end
+
 
 end

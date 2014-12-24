@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentsController < ApplicationController
-  before_filter [:authenticate_user!, :except => [:payments_history]], :set_per_page_session
+  before_filter :authenticate_user!, :set_per_page_session , :except => [:payments_history]
   layout :choose_layout
   include PaymentsHelper
   helper_method :sort_column, :sort_direction
@@ -62,7 +62,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = Payment.new(params[:payment])
+    @payment = Payment.new(payment_params)
 
     respond_to do |format|
       if @payment.save
@@ -80,7 +80,7 @@ class PaymentsController < ApplicationController
     latest_amount = Payment.update_invoice_status params[:payment][:invoice_id], params[:payment][:payment_amount].to_f, @payment.payment_amount.to_f
     params[:payment][:payment_amount] = latest_amount
     respond_to do |format|
-      if @payment.update_attributes(params[:payment])
+      if @payment.update_attributes(payment_params)
         format.html { redirect_to(edit_payment_url(@payment), :notice => 'Your Payment has been updated successfully.') }
         format.json { head :no_content }
       else
@@ -184,6 +184,12 @@ class PaymentsController < ApplicationController
        case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end
      end
     "
+  end
+
+  private
+
+  def payment_params
+    params.require(:payment).permit(:client_id, :user,  :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id)
   end
 
 end

@@ -51,7 +51,7 @@ class DeviseController < Devise.parent_controller.constantize
   end
 
   def resource_params
-    params[resource_name]
+    params.fetch(resource_name, {})
   end
 
   # Returns a signed in resource from session (if one exists)
@@ -210,5 +210,10 @@ This may happen for two reasons:
 
   def is_navigational_format?
     Devise.navigational_formats.include?(request.format.try(:ref))
+  end
+  private
+
+  def user_params
+    params.require(:user).permit(:username, :account, :email, :password, :password_confirmation)
   end
 end
