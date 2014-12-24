@@ -196,9 +196,9 @@ end
 
 #creating default currencies
 Currency.create([
-          {title: 'USD',code: '$'},
-          {title: 'Euro',code: '€'},
-          {title: 'PKR',code: 'Rs.'}
+          {title: 'US DOllar',unit: 'USD',code: '$'},
+          {title: 'Euro',unit:'Euro',code: '€'},
+          {title: 'Pakistan Rupee',unit:'PKR',code: 'Rs.'}
         ])
 
 

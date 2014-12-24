@@ -137,13 +137,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def currency_symbol
-    # self.company.currency_symbol
-    "$"
+    self.currency.present? ? self.currency.code : '$'
   end
 
   def currency_code
-    # self.company.currency_code
-    "USD"
+    self.currency.present? ? self.currency.unit : 'USD'
   end
 
   def self.get_next_invoice_number user_id

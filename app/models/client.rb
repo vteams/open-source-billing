@@ -132,6 +132,14 @@ class Client < ActiveRecord::Base
     payments.first.update_attributes({payment_amount: available_credit})
   end
 
+  def currency_symbol
+    self.currency.present? ? self.currency.code : '$'
+  end
+
+  def currency_code
+    self.currency.present? ? self.currency.unit : 'USD'
+  end
+
   def self.get_clients(params)
     account = params[:user].current_account
 
