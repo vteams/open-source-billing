@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 #ruby '2.1.3'
-
 #gem 'rails', '3.2.9'
 gem 'rails', '~> 4.1.8'
-
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'bundler'
 gem 'railties'

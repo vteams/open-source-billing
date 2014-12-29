@@ -1,6 +1,7 @@
 Osb::Application.routes.draw do
 
   use_doorkeeper
+
   #namespace :OpenSourceBilling do
   #  resources :people
   #end
@@ -22,7 +23,6 @@ Osb::Application.routes.draw do
   get "recurring_profile_line_item/destroy"
 
   resources :email_templates
-
 
   resources :companies do
     collection do
