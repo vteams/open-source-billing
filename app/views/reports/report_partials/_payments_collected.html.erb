@@ -52,18 +52,22 @@
                   <td class="align_left"><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
                   <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
                   <td class="align_center"><%= payment.created_at.to_date %></td>
-                  <td class="align_right currency"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount) %></td>
+                  <td class="align_right currency"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %></td>
                 </tr>
             <% end %>
             <tfoot>
+              <% is_first = true %>
+              <% @report.report_total.each do |total| %>
                 <tr>
-                  <td class="align_left" ><%= t('views.common.total') %></td>
+                  <td class="align_left" ><%= is_first ? t('views.common.total') : '' %></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
                   <td class="align_left"></td>
-                  <td class="align_right currency"><%= number_to_currency(@report.report_total) %></td>
+                  <td class="align_right currency"><%= number_to_currency(total[:total],unit: total[:currency_code]) %></td>
                 </tr>
+                <% is_first = false %>
+              <% end %>
             </tfoot>
         <% else %>
             <tr>

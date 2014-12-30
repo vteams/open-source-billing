@@ -26,7 +26,7 @@ module Reporting
         @report_name = options[:report_name] || "no report"
         @report_criteria = options[:report_criteria]
         @report_data = get_report_data
-        @report_total = {}
+        @report_total = []
         calculate_report_total
       end
 
@@ -43,8 +43,10 @@ module Reporting
         client_filter = @report_criteria.client_id == 0 ? "" : " AND i.client_id = #{@report_criteria.client_id}"
         Payment.find_by_sql("
                 SELECT case when c.organization_name = '' then CONCAT(c.first_name,' ',c.last_name) else c.organization_name end as organization_name, #{month_wise_payment},
-                SUM(i.invoice_total) AS client_total
-                FROM invoices i INNER JOIN clients c ON i.client_id = c.id
+                SUM(i.invoice_total) AS client_total,
+                IFNULL(cr.code,'$') AS currency_code,
+                IFNULL(i.currency_id,0) AS currency_id
+                FROM invoices i INNER JOIN clients c ON i.client_id = c.id INNER JOIN currencies cr ON i.currency_id = cr.id
                 WHERE YEAR(IFNULL(i.due_date, i.invoice_date)) = #{@report_criteria.year}
                       AND MONTH(IFNULL(i.due_date, i.invoice_date)) >= #{@report_criteria.from_month} AND MONTH(IFNULL(i.due_date, i.invoice_date)) <= #{@report_criteria.to_month}
                       AND i.status <> 'draft'
@@ -55,13 +57,15 @@ module Reporting
       end
 
       def calculate_report_total
-        #net_total = 0
-        @report_data.each do |revenue|
+        @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
+          data = Hash.new(0)
           (@report_criteria.from_month..@report_criteria.to_month).each do |month|
-            @report_total["#{Date::MONTHNAMES[month]}"] = (@report_total["#{Date::MONTHNAMES[month]}"] || 0) + (revenue["#{Date::MONTHNAMES[month]}"] || 0)
+            data["#{Date::MONTHNAMES[month]}"] = (data["#{Date::MONTHNAMES[month]}"] || 0) + (row.map{|x| x["#{Date::MONTHNAMES[month]}"] || 0}.sum)
           end
+          data[:net_total] = row.inject(0){|total, payment| total + (payment.attributes["client_total"] || 0)}
+          data[:currency_code] = row.first[:currency_code]
+          @report_total<<data
         end
-        @report_total["net_total"] = @report_data.inject(0){|total, payment| total + (payment.attributes["client_total"] || 0)}
       end
 
       def to_csv
@@ -84,12 +88,16 @@ module Reporting
             temp_row << rpt.client_total.to_f.round(2)
             csv << temp_row
           end
-          total_row = ['Total']
-          (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
-            total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
+          is_first=true
+          report.report_total.each do |total|
+            total_row = is_first ? ['Total'] : ['']
+            is_first=false
+            (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+              total_row << total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : total["#{Date::MONTHNAMES[month]}"]
+            end
+            total_row << total[:net_total].to_f.round(2)
+            csv << total_row
           end
-          total_row << report.report_total["net_total"].to_f.round(2)
-          csv << total_row
         end
       end
 
@@ -117,12 +125,16 @@ module Reporting
             temp_row << rpt.client_total.to_f.round(2)
             sheet1.add_row(temp_row)
           end
-          total_row = ['Total']
-          (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
-            total_row << report.report_total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : report.report_total["#{Date::MONTHNAMES[month]}"]
+          is_first=true
+          report.report_total.each do |total|
+            total_row = is_first ? ['Total'] : ['']
+            is_first=false
+            (report.report_criteria.from_month..report.report_criteria.to_month).each do |month|
+              total_row << total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : total["#{Date::MONTHNAMES[month]}"]
+            end
+            total_row << total[:net_total].to_f.round(2)
+            sheet1.add_row(total_row)
           end
-          total_row << report.report_total["net_total"].to_f.round(2)
-          sheet1.add_row(total_row)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
