@@ -37,7 +37,7 @@ jQuery ->
 
 
   chart_yaxis = pad: 0, tickOptions:
-    formatString: $("body").attr("currency-unit") + "%'i"
+    formatString: gon.currency_code + "%'i" #$("body").attr("currency-unit") + "%'i"
     showMark: false
 
   chart_axis =
