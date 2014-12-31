@@ -5,8 +5,7 @@
         <%= t('invoices') %>
         <span>
          (
-          <%#= t("currency_code") %>
-          <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :code) %>
+          <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :code,@currency.try(:id)) ,class: 'currency' %>
           )
         </span>
       </h1>

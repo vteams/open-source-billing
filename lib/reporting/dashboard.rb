@@ -20,7 +20,6 @@
 #
 module Reporting
   module Dashboard
-
     # get the recent activity - 10 most recent items
     def self.get_recent_activity
       # columns returned: activity type, client, amount, activity date, currency unit, currency code
@@ -54,7 +53,8 @@ module Reporting
 
 
       # invoices amount group by month for last *number_of_months* months
-      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).sum("invoice_total")
+      currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
+      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
       payments = Payment.where(:payment_date => start_date..end_date).where("payment_type is null or payment_type != ?",'credit').group("month(payment_date)").sum("payment_amount")
