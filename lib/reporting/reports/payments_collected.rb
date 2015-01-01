@@ -92,6 +92,29 @@ module Reporting
         end
       end
 
+      def to_xls
+        payments_collected_xls self
+      end
+
+      def payments_collected_xls report
+        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+        CSV.generate(:col_sep => "\t") do |csv|
+          csv << headers
+          report.report_data.each do |payment|
+            temp_row=[
+                payment.invoice_number.to_s,
+                payment.client_name.to_s,
+                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
+                payment.notes.to_s,
+                payment.created_at.to_date.to_s,
+                payment.payment_amount.to_f.round(2)
+            ]
+            csv << temp_row
+          end
+          csv << ['Total', '', '', '', '',  report.report_total.round(2)]
+        end
+      end
+
       def to_xlsx
         payments_collected_xlsx self
       end

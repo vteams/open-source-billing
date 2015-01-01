@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
   #before_filter :authenticate_user_from_token!
   # This is Devise's authentication
-
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
   before_filter :authenticate_user!

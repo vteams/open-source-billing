@@ -110,6 +110,37 @@ module Reporting
         end
       end
 
+      def to_xls
+        aged_accounts_receivable_xls self
+      end
+
+      def aged_accounts_receivable_xls report
+        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
+        CSV.generate(:col_sep => "\t") do |csv|
+          csv << headers
+          report.report_data.each do |item|
+            temp_row=[
+                item.client_name.to_s,
+                item.zero_to_thirty.to_f.round(2),
+                item.thirty_one_to_sixty.to_f.round(2),
+                item.sixty_one_to_ninety.to_f.round(2),
+                item.ninety_one_and_above.to_f.round(2),
+                (item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f).round(2),
+
+            ]
+            csv << temp_row
+          end
+          row_total = ['Total',
+                       report.report_total["zero_to_thirty"].to_i,
+                       report.report_total["thirty_one_to_sixty"].to_f.round(2),
+                       report.report_total["sixty_one_to_ninety"].to_f.round(2),
+                       report.report_total["ninety_one_and_above"].to_f.round(2),
+                       (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
+          ]
+          csv << row_total
+        end
+      end
+
       def to_xlsx
         aged_accounts_receivable_xlsx self
       end

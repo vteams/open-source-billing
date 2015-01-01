@@ -15,6 +15,14 @@ module V1
           error!('Unauthorized. Invalid or expired token.', 401)
         end
       end
+
+      def per_page
+        params[:per] || 25
+      end
+
+      def current_page
+        params[:page] || 1
+      end
     end
 
     mount V1::OSB::ClientApi => '/'

@@ -86,6 +86,29 @@ module Reporting
         end
       end
 
+      def to_xls
+        item_sales_xls self
+      end
+
+      def item_sales_xls report
+        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+        CSV.generate(:col_sep => "\t") do |csv|
+          csv << headers
+          report.report_data.each do |item|
+            temp_row=[
+                item.item_name.to_s,
+                item.item_quantity.to_i,
+                item.total_amount.to_f.round(2),
+                item.discount_amount.to_f.round(2),
+                item.net_total.to_f.round(2)
+            ]
+            csv << temp_row
+          end
+          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)]
+          csv << row_total
+        end
+      end
+
       def to_xlsx
         item_sales_xlsx self
       end

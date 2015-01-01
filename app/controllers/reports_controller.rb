@@ -35,6 +35,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
         file_name = "#{@report.report_name}_#{Date.today}"

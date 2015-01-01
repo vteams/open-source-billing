@@ -14,7 +14,7 @@ Osb::Application.configure do
   config.action_controller.perform_caching = false
 
   config.action_mailer.delivery_method = :smtp
-
+  config.eager_load = false
   config.action_mailer.smtp_settings = OSB::CONFIG::SMTP_SETTINGS_DEV
 
   # Don't care if the mailer can't send

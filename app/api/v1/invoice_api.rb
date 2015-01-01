@@ -14,6 +14,9 @@ module V1
     resource :invoices do
       before {current_user}
 
+      get do
+        Invoice.joins(:client).select("invoices.*,clients.organization_name").page(current_page).per(per_page)
+      end
       desc 'previews the selected invoice'
 
       params do
