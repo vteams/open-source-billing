@@ -72,7 +72,7 @@ module Reporting
     # get outstanding invoices
     def self.get_outstanding_invoices(currency=nil)
       currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
-      Invoice.total_invoices_amount(currency_filter) - Payment.total_payments_amount
+      Invoice.total_invoices_amount - Payment.total_payments_amount
     end
 
     def self.get_ytd_income(currency=nil)
