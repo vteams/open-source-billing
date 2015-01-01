@@ -84,6 +84,19 @@
     .heading {
       float: left;
       width: 100%;
+      .chzn-container, p, select{
+        float: left;
+      }
+      .chzn-container{
+        margin: 3px 0 0 6px;
+      }
+      select{
+        width: 80px;
+        float: left;
+      }
+      p.bar_details{
+        width: 430px;
+      }
     }
   }
   .graph_wrapper {
@@ -356,6 +369,4 @@
     }
   }
 }
-.currency{
-  width: 80px;
-}
+

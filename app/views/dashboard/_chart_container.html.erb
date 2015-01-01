@@ -3,8 +3,8 @@
     <div class="heading">
       <h1>
         <%= t('invoices') %>
-        <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :unit,@currency.try(:id)),class: "currency" %>
       </h1>
+      <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :unit,@currency.try(:id)),class: "currency" %>
       <p class="bar_details"><%= t('views.dashboard.view_chart_detail') %></p>
     </div>
     <div class="graph_content">

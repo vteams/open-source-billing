@@ -2,7 +2,8 @@
 
 # report data
 jQuery ->
-  $('#currency').chosen()
+  $('#currency').chosen
+    disable_search: true
   $("#currency").change ->
     window.location = '/dashboard?currency=' + $(this).val()
 
