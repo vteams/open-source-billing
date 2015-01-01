@@ -24,7 +24,6 @@ class Payment < ActiveRecord::Base
 
   # attr
   #attr_accessible :client_id, :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id
-
   # associations
   belongs_to :invoice
   belongs_to :client
@@ -32,6 +31,8 @@ class Payment < ActiveRecord::Base
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
+  # border used in reports
+  attr_accessor :border
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
 

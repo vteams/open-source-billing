@@ -2,7 +2,7 @@
 
 # report data
 jQuery ->
-
+  $('#currency').chosen()
   $("#currency").change ->
     window.location = '/dashboard?currency=' + $(this).val()
 

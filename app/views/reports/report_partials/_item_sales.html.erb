@@ -47,23 +47,25 @@
           <tbody>
           <% unless @report.report_data.blank? %>
               <% @report.report_data.each do |item| %>
-                  <tr>
-                    <td class="align_left"><%= item.item_name %></td>
-                    <td class="align_center"><%= item.attributes["item_quantity"].to_i %></td>
-                    <td class="align_right currency"><%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %></td>
-                    <td class="align_right currency"><%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %></td>
-                    <td class="align_right currency"><%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %></td>
-                  </tr>
+                <% border_class= @report.report_data.last==item ? 'dark-border' : (item.border==1 ? 'normal-border' : 'no-border') %>
+                <tr>
+                  <td class="align_left <%= border_class %>"><%= item.item_name %></td>
+                  <td class="align_center <%= border_class %>"><%= item.attributes["item_quantity"].to_i %></td>
+                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %></td>
+                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %></td>
+                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %></td>
+                </tr>
               <% end %>
               <tfoot>
                 <% is_first = true %>
                 <% @report.report_total.each do |total| %>
+                  <% border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
                   <tr>
-                    <td class="align_left"><%= is_first ? t("views.common.total") : '' %></td>
-                    <td class="align_center"><%= total["item_quantity"].to_i %></td>
-                    <td class="align_right currency"><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></td>
-                    <td class="align_right currency"><%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %></td>
-                    <td class="align_right currency"><%= number_to_currency(total["net_total"],unit:total["currency_code"]) %></td>
+                    <td class="align_left <%= border_class %>" ><%= is_first ? t("views.common.total") : '' %></td>
+                    <td class="align_center <%= border_class %>"><%= total["item_quantity"].to_i %></td>
+                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></td>
+                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %></td>
+                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["net_total"],unit:total["currency_code"]) %></td>
                   </tr>
                   <%is_first = false %>
                 <% end %>

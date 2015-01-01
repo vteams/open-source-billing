@@ -46,25 +46,27 @@
         <tbody>
         <% unless @report.report_data.blank? %>
             <% @report.report_data.each do |payment| %>
-                <tr>
-                  <td class="align_left"><%= payment.invoice.invoice_number rescue payment.invoice_number %></td>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment[:client_name] %></td>
-                  <td class="align_left"><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
-                  <td class="align_center"><%= payment.created_at.to_date %></td>
-                  <td class="align_right currency"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %></td>
-                </tr>
+              <% border_class= @report.report_data.last==payment ? 'dark-border' : (payment.border==1 ? 'normal-border' : 'no-border') %>
+              <tr>
+                <td class="align_left <%= border_class %>" ><%= payment.invoice.invoice_number rescue payment.invoice_number %></td>
+                <td class="align_left text-overflow-class <%= border_class %>" data-overflow-rows="2" ><%= payment[:client_name] %></td>
+                <td class="align_left <%= border_class %>" ><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
+                <td class="align_left text-overflow-class <%= border_class %>" data-overflow-rows="2" ><%= payment.notes %></td>
+                <td class="align_center <%= border_class %>" ><%= payment.created_at.to_date %></td>
+                <td class="align_right currency <%= border_class %>" ><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %></td>
+              </tr>
             <% end %>
             <tfoot>
               <% is_first = true %>
               <% @report.report_total.each do |total| %>
+                <% border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
                 <tr>
-                  <td class="align_left" ><%= is_first ? t('views.common.total') : '' %></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_right currency"><%= number_to_currency(total[:total],unit: total[:currency_code]) %></td>
+                  <td class="align_left <%= border_class %>" ><%= is_first ? t('views.common.total') : '' %></td>
+                  <td class="align_left <%= border_class %>"></td>
+                  <td class="align_left <%= border_class %>"></td>
+                  <td class="align_left <%= border_class %>"></td>
+                  <td class="align_left <%= border_class %>"></td>
+                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(total[:total],unit: total[:currency_code]) %></td>
                 </tr>
                 <% is_first = false %>
               <% end %>

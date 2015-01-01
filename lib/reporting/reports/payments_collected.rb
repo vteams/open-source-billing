@@ -77,6 +77,8 @@ module Reporting
         # display client name in only first row
         @report_data.group_by{|x| x[:client_name]}.values.each do |row|
           index=0
+          row.map{|x| x.border=0}
+          row.last.border=1
           row.map{|x| index==0 ? index=1 : x[:client_name]=''}
         end
 

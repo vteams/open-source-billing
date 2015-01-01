@@ -230,6 +230,16 @@
       padding-right: 25px;
     }
   }
-
+  td {
+    &.no-border{
+      border: none;
+    }
+    &.normal-border {
+      border-bottom: 1px solid #e5e5e5;
+    }
+    &.dark-border{
+      border-bottom: 1px solid #808080;
+    }
+  }
 }
 

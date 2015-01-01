@@ -44,23 +44,25 @@
           <% unless @report.report_data.blank? %>
               <% @report.report_data.each do |revenue| %>
                   <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
-                  <tr>
-                    <td class="align_left text-overflow-class"><%= revenue.organization_name %></td>
-                    <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-                        <td class="align_right"><%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"],unit: revenue['currency_code']) %></td>
-                    <% end %>
-                    <td class="align_right"><%= number_to_currency(revenue.client_total,unit: revenue['currency_code']) %></td>
-                  </tr>
+                <% border_class= @report.report_data.last==revenue ? 'dark-border' : (revenue.border==1 ? 'normal-border' : 'no-border') %>
+                <tr>
+                  <td class="align_left text-overflow-class <%= border_class %>" ><%= revenue.organization_name %></td>
+                  <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
+                      <td class="align_right <%= border_class %>" ><%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"],unit: revenue['currency_code']) %></td>
+                  <% end %>
+                  <td class="align_right <%= border_class %>" ><%= number_to_currency(revenue.client_total,unit: revenue['currency_code']) %></td>
+                </tr>
               <% end %>
               <tfoot>
                 <% is_first = true %>
                 <% @report.report_total.each do |total| %>
+                  <% border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
                   <tr>
-                    <td class="align_left"><%= is_first ? t("views.common.total") : ''%></td>
+                    <td class="align_left <%= border_class %>"><%= is_first ? t("views.common.total") : ''%></td>
                     <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-                        <td class="align_right"><%= total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : number_to_currency(total["#{Date::MONTHNAMES[month]}"],unit: total[:currency_code])  %></td>
+                        <td class="align_right <%= border_class %>"><%= total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : number_to_currency(total["#{Date::MONTHNAMES[month]}"],unit: total[:currency_code])  %></td>
                     <% end %>
-                    <td class="align_right"><%= number_to_currency(total[:net_total] || 0 , unit: total[:currency_code]) %></td>
+                    <td class="align_right <%= border_class %>"><%= number_to_currency(total[:net_total] || 0 , unit: total[:currency_code]) %></td>
                   </tr>
                   <% is_first = false %>
                 <% end %>

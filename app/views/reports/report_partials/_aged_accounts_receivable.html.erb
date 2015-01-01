@@ -49,14 +49,15 @@
         <% unless @report.report_data.blank? %>
             <% @report.report_data.each do |aged| %>
                 <!--tr><td colspan="6"><%#= payment.inspect %></td> </tr-->
-                <tr>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= aged.attributes["client_name"] %></td>
-                  <td class="align_right"><%= number_to_currency(aged.attributes["zero_to_thirty"],unit: aged.attributes['currency_code']) %></td>
-                  <td class="align_right"><%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: aged.attributes['currency_code']) %></td>
-                  <td class="align_right"><%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: aged.attributes['currency_code']) %></td>
-                  <td class="align_right"><%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %></td>
-                  <td class="align_right"><%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %></td>
-                </tr>
+              <% border_class= @report.report_data.last==aged ? 'dark-border' : (aged.border==1 ? 'normal-border' : 'no-border') %>
+              <tr>
+                <td class="align_left text-overflow-class <%= border_class %>" data-overflow-rows="2" ><%= aged.attributes["client_name"] %></td>
+                <td class="align_right <%= border_class %>" ><%= number_to_currency(aged.attributes["zero_to_thirty"],unit: aged.attributes['currency_code']) %></td>
+                <td class="align_right <%= border_class %>" ><%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: aged.attributes['currency_code']) %></td>
+                <td class="align_right <%= border_class %>" ><%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: aged.attributes['currency_code']) %></td>
+                <td class="align_right <%= border_class %>" ><%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %></td>
+                <td class="align_right <%= border_class %>" ><%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %></td>
+              </tr>
             <% end %>
         <% else %>
             <tr>
@@ -67,13 +68,14 @@
           <tfoot>
             <% is_first = true %>
             <% @report.report_total.each do |total| %>
+              <% border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
               <tr>
-                <td class="align_left"><%= is_first ? t("views.common.total") : '' %></td>
-                <td class="align_right"><%= number_to_currency(total["zero_to_thirty"],unit:total["currency_code"]) %></td>
-                <td class="align_right"><%= number_to_currency(total["thirty_one_to_sixty"],unit:total["currency_code"]) %></td>
-                <td class="align_right"><%= number_to_currency(total["sixty_one_to_ninety"],unit:total["currency_code"]) %></td>
-                <td class="align_right"><%= number_to_currency(total["ninety_one_and_above"],unit:total["currency_code"]) %></td>
-                <td class="align_right"><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></td>
+                <td class="align_left <%= border_class %>"><%= is_first ? t("views.common.total") : '' %></td>
+                <td class="align_right <%= border_class %>"><%= number_to_currency(total["zero_to_thirty"],unit:total["currency_code"]) %></td>
+                <td class="align_right <%= border_class %>"><%= number_to_currency(total["thirty_one_to_sixty"],unit:total["currency_code"]) %></td>
+                <td class="align_right <%= border_class %>"><%= number_to_currency(total["sixty_one_to_ninety"],unit:total["currency_code"]) %></td>
+                <td class="align_right <%= border_class %>"><%= number_to_currency(total["ninety_one_and_above"],unit:total["currency_code"]) %></td>
+                <td class="align_right <%= border_class %>"><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></td>
               </tr>
               <%is_first = false %>
             <% end %>
