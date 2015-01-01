@@ -21,6 +21,7 @@
 module Reporting
   module Reports
     class ItemSales < Reporting::Report
+
       def initialize(options={})
         @report_name = options[:report_name] || "no report"
         @report_criteria = options[:report_criteria]
@@ -30,6 +31,7 @@ module Reporting
       end
 
       attr_accessor :item_quantity, :total_amount, :discount_pct, :net_total, :discount_amount
+      HEADER_COLUMNS = ['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
 
       def period
         "Between #{@report_criteria.from_date} and #{@report_criteria.to_date}"
@@ -67,45 +69,18 @@ module Reporting
         item_sales_csv self
       end
 
-      def item_sales_csv report
-        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
-        CSV.generate do |csv|
-          csv << headers
-          report.report_data.each do |item|
-            temp_row=[
-                item.item_name.to_s,
-                item.item_quantity.to_i,
-                item.total_amount.to_f.round(2),
-                item.discount_amount.to_f.round(2),
-                item.net_total.to_f.round(2)
-            ]
-            csv << temp_row
-          end
-          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)]
-          csv << row_total
-        end
-      end
-
       def to_xls
-        item_sales_xls self
+        item_sales_csv self, :col_sep => "\t"
       end
 
-      def item_sales_xls report
-        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
-        CSV.generate(:col_sep => "\t") do |csv|
-          csv << headers
+      def item_sales_csv report, options = {}
+        CSV.generate(options) do |csv|
+          csv << HEADER_COLUMNS
           report.report_data.each do |item|
-            temp_row=[
-                item.item_name.to_s,
-                item.item_quantity.to_i,
-                item.total_amount.to_f.round(2),
-                item.discount_amount.to_f.round(2),
-                item.net_total.to_f.round(2)
-            ]
-            csv << temp_row
+            csv << get_data_row(item)
           end
-          row_total = ['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)]
-          csv << row_total
+
+          csv << get_total_row(report)
         end
       end
 
@@ -114,29 +89,46 @@ module Reporting
       end
 
       def item_sales_xlsx report
-        headers =['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
         doc = XlsxWriter.new
         doc.quiet_booleans!
         sheet1 = doc.add_sheet("Item Sales")
 
         unless report.report_data.blank?
-          sheet1.add_row(headers)
+          sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each do |item|
-            temp_row=[
-                item.item_name.to_s,
-                item.item_quantity.to_i,
-                item.total_amount.to_f.round(2),
-                item.discount_amount.to_f.round(2),
-                item.net_total.to_f.round(2)
-            ]
-            sheet1.add_row(temp_row)
+            sheet1.add_row(get_data_row(item))
           end
-          sheet1.add_row(['Total',report.report_total["item_quantity"].to_i, report.report_total["total_amount"].to_f.round(2), report.report_total["discount_amount"].to_f.round(2), report.report_total["net_total"].to_f.round(2)])
+          sheet1.add_row(get_total_row(report))
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
         doc
       end
+
+      private
+
+      def get_data_row object
+        [
+            object.item_name.to_s,
+            object.item_quantity.to_i,
+            object.total_amount.to_f.round(2),
+            object.discount_amount.to_f.round(2),
+            object.net_total.to_f.round(2)
+        ]
+      end
+
+      def get_total_row report
+        [
+            'Total',
+            report.report_total["item_quantity"].to_i,
+            report.report_total["total_amount"].to_f.round(2),
+            report.report_total["discount_amount"].to_f.round(2),
+            report.report_total["net_total"].to_f.round(2)
+        ]
+      end
+
+
+
     end
   end
 end

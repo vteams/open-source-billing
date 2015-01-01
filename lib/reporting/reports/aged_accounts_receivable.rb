@@ -21,6 +21,9 @@
 module Reporting
   module Reports
     class AgedAccountsReceivable < Reporting::Report
+
+      HEADER_COLUMNS = ['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
+
       def initialize(options={})
         #raise "debugging...#{options[:report_criteria].to_date}"
         @report_name = options[:report_name] || "no report"
@@ -83,61 +86,15 @@ module Reporting
         aged_accounts_receivable_csv self
       end
 
-      def aged_accounts_receivable_csv report
-        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
-        CSV.generate do |csv|
-          csv << headers
-          report.report_data.each do |item|
-            temp_row=[
-                item.client_name.to_s,
-                item.zero_to_thirty.to_f.round(2),
-                item.thirty_one_to_sixty.to_f.round(2),
-                item.sixty_one_to_ninety.to_f.round(2),
-                item.ninety_one_and_above.to_f.round(2),
-                (item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f).round(2),
-
-            ]
-            csv << temp_row
-          end
-          row_total = ['Total',
-                       report.report_total["zero_to_thirty"].to_i,
-                       report.report_total["thirty_one_to_sixty"].to_f.round(2),
-                       report.report_total["sixty_one_to_ninety"].to_f.round(2),
-                       report.report_total["ninety_one_and_above"].to_f.round(2),
-                       (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
-                       ]
-          csv << row_total
-        end
-      end
-
       def to_xls
-        aged_accounts_receivable_xls self
+        aged_accounts_receivable_csv self,  :col_sep => "\t"
       end
 
-      def aged_accounts_receivable_xls report
-        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
-        CSV.generate(:col_sep => "\t") do |csv|
-          csv << headers
-          report.report_data.each do |item|
-            temp_row=[
-                item.client_name.to_s,
-                item.zero_to_thirty.to_f.round(2),
-                item.thirty_one_to_sixty.to_f.round(2),
-                item.sixty_one_to_ninety.to_f.round(2),
-                item.ninety_one_and_above.to_f.round(2),
-                (item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f).round(2),
-
-            ]
-            csv << temp_row
-          end
-          row_total = ['Total',
-                       report.report_total["zero_to_thirty"].to_i,
-                       report.report_total["thirty_one_to_sixty"].to_f.round(2),
-                       report.report_total["sixty_one_to_ninety"].to_f.round(2),
-                       report.report_total["ninety_one_and_above"].to_f.round(2),
-                       (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
-          ]
-          csv << row_total
+      def aged_accounts_receivable_csv report, options = {}
+        CSV.generate(options) do |csv|
+          csv << HEADER_COLUMNS
+          report.report_data.each { |item| csv << get_data_row(item) }
+          csv << get_total_row(report)
         end
       end
 
@@ -146,37 +103,43 @@ module Reporting
       end
 
       def aged_accounts_receivable_xlsx report
-        headers =['Client Name', '0-30 days', '31-60 days', '61-90 days', '90+ days', 'Client Total AR']
         doc = XlsxWriter.new
         doc.quiet_booleans!
         sheet1 = doc.add_sheet("Aged Accounts Receivable")
-
         unless report.report_data.blank?
-          sheet1.add_row(headers)
-          report.report_data.each do |item|
-            temp_row=[
-                item.client_name.to_s,
-                item.zero_to_thirty.to_f.round(2),
-                item.thirty_one_to_sixty.to_f.round(2),
-                item.sixty_one_to_ninety.to_f.round(2),
-                item.ninety_one_and_above.to_f.round(2),
-                (item.zero_to_thirty.to_f + item.thirty_one_to_sixty.to_f + item.sixty_one_to_ninety.to_f +  item.ninety_one_and_above.to_f).round(2),
-
-            ]
-            sheet1.add_row(temp_row)
-          end
-          sheet1.add_row(['Total',
-                          report.report_total["zero_to_thirty"].to_f.round(2),
-                          report.report_total["thirty_one_to_sixty"].to_f.round(2),
-                          report.report_total["sixty_one_to_ninety"].to_f.round(2),
-                          report.report_total["ninety_one_and_above"].to_f.round(2),
-                          (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
-                         ])
+          sheet1.add_row(HEADER_COLUMNS)
+          report.report_data.each { |item| sheet1.get_data_row(item) }
+          sheet1.add_row(get_total_row(report))
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
         doc
       end
+
+      private
+
+      def get_data_row object
+        [
+            object.client_name.to_s,
+            object.zero_to_thirty.to_f.round(2),
+            object.thirty_one_to_sixty.to_f.round(2),
+            object.sixty_one_to_ninety.to_f.round(2),
+            object.ninety_one_and_above.to_f.round(2),
+            (object.zero_to_thirty.to_f + object.thirty_one_to_sixty.to_f + object.sixty_one_to_ninety.to_f +  object.ninety_one_and_above.to_f).round(2),
+        ]
+      end
+
+      def get_total_row report
+        [
+            'Total',
+             report.report_total["zero_to_thirty"].to_i,
+             report.report_total["thirty_one_to_sixty"].to_f.round(2),
+             report.report_total["sixty_one_to_ninety"].to_f.round(2),
+             report.report_total["ninety_one_and_above"].to_f.round(2),
+             (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
+        ]
+      end
+
     end
   end
 end

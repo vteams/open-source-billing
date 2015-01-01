@@ -21,6 +21,9 @@
 module Reporting
   module Reports
     class PaymentsCollected < Reporting::Report
+
+      HEADER_COLUMNS =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
+
       def initialize(options={})
         #raise "debugging..."
         @report_name = options[:report_name] || "no report"
@@ -73,45 +76,15 @@ module Reporting
        payments_collected_csv self
       end
 
-      def payments_collected_csv report
-        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
-        CSV.generate do |csv|
-          csv << headers
-          report.report_data.each do |payment|
-            temp_row=[
-                payment.invoice_number.to_s,
-                payment.client_name.to_s,
-                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
-                payment.notes.to_s,
-                payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f.round(2)
-            ]
-            csv << temp_row
-          end
-          csv << ['Total', '', '', '', '',  report.report_total.round(2)]
-        end
-      end
-
       def to_xls
-        payments_collected_xls self
+        payments_collected_csv self, :col_sep => "\t"
       end
 
-      def payments_collected_xls report
-        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
-        CSV.generate(:col_sep => "\t") do |csv|
-          csv << headers
-          report.report_data.each do |payment|
-            temp_row=[
-                payment.invoice_number.to_s,
-                payment.client_name.to_s,
-                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
-                payment.notes.to_s,
-                payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f.round(2)
-            ]
-            csv << temp_row
-          end
-          csv << ['Total', '', '', '', '',  report.report_total.round(2)]
+      def payments_collected_csv report, options ={}
+        CSV.generate(options) do |csv|
+          csv << HEADER_COLUMNS
+          report.report_data.each { |payment| csv << get_data_row(payment) }
+          csv << get_total_row(report)
         end
       end
 
@@ -120,31 +93,42 @@ module Reporting
       end
 
       def payments_collected_xlsx report
-        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
         doc = XlsxWriter.new
         doc.quiet_booleans!
         sheet1 = doc.add_sheet("Payments Collected")
 
         unless report.report_data.blank?
-          #binding.pry
-
-          sheet1.add_row(headers)
-          report.report_data.each do |payment|
-            temp_row=[
-                payment.invoice_number.to_s,
-                payment.client_name.to_s,
-                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
-                payment.notes.to_s,
-                payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f.round(2)
-            ]
-            sheet1.add_row(temp_row)
-          end
-          sheet1.add_row(['Total', '', '', '', '',  report.report_total.round(2)])
+          sheet1.add_row(HEADER_COLUMNS)
+          report.report_data.each { |payment| sheet1.add_row(get_data_row(payment)) }
+          sheet1.add_row(get_total_row(report))
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
         doc
+      end
+
+      private
+
+      def get_data_row object
+        [
+            object.invoice_number.to_s,
+            object.client_name.to_s,
+            (object.payment_type || object.payment_method || "").capitalize.to_s,
+            object.notes.to_s,
+            object.created_at.to_date.to_s,
+            object.payment_amount.to_f.round(2)
+        ]
+      end
+
+      def get_total_row report
+        [
+            'Total',
+            '',
+            '',
+            '',
+            '',
+            report.report_total.round(2)
+        ]
       end
 
     end
