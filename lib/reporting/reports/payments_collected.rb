@@ -74,6 +74,12 @@ module Reporting
 
       def calculate_report_totals
         @report_total = []
+        # display client name in only first row
+        @report_data.group_by{|x| x[:client_name]}.values.each do |row|
+          index=0
+          row.map{|x| index==0 ? index=1 : x[:client_name]=''}
+        end
+
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
           data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total+p[:payment_amount]  }

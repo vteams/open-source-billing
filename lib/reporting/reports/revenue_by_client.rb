@@ -57,6 +57,11 @@ module Reporting
       end
 
       def calculate_report_total
+        # display organization name in only first row
+        @report_data.group_by{|x| x[:organization_name]}.values.each do |row|
+          index = 0
+          row.map{|x| index==0 ? index=1 : x[:organization_name] = ''}
+        end
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
           (@report_criteria.from_month..@report_criteria.to_month).each do |month|
