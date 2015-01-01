@@ -15,7 +15,7 @@ module V1
       before {current_user}
 
       get do
-        Invoice.joins(:client).select("invoices.*,clients.organization_name")
+        Invoice.joins(:client).select("invoices.*,clients.organization_name").page(current_page).per(per_page)
       end
       desc 'previews the selected invoice'
 
