@@ -56,13 +56,6 @@ module Reporting
 
       def calculate_report_total
         @report_total = []
-        # display item name in only first row
-        @report_data.group_by{|x| x['item_name']}.values.each do |row|
-          index =0
-          row.map{|x| x.border=0}
-          row.last.border=1
-          row.map{|x| index==0 ? index=1 : x['item_name']=''}
-        end
         @report_data.group_by{|x| x['currency_id']}.values.each do |row|
           total = Hash.new(0)
           total["item_quantity"] += row.map{|x| x["item_quantity"]}.sum

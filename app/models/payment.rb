@@ -31,8 +31,6 @@ class Payment < ActiveRecord::Base
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
-  # border used in reports
-  attr_accessor :border
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
 

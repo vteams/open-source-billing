@@ -230,15 +230,25 @@
       padding-right: 25px;
     }
   }
-  td {
-    &.no-border{
-      border: none;
+  table{
+    td{
+      vertical-align: top;
     }
-    &.normal-border {
-      border-bottom: 1px solid #e5e5e5;
+    tbody{
+      td{
+        vertical-align: top;
+      }
+      tr:last-child{
+        td{
+          border-bottom: 1px solid #808080;
+        }
+      }
     }
-    &.dark-border{
-      border-bottom: 1px solid #808080;
+    tfoot{
+      td{
+        font-weight: bold;
+        border-bottom: 1px solid #808080;
+      }
     }
   }
 }

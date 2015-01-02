@@ -53,9 +53,6 @@ class Invoice < ActiveRecord::Base
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 
-
-  # border used in reports
-  attr_accessor :border
   # validation
 
   # callbacks

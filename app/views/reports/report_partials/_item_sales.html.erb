@@ -46,29 +46,65 @@
           </thead>
           <tbody>
           <% unless @report.report_data.blank? %>
-              <% @report.report_data.each do |item| %>
-                <% border_class= @report.report_data.last==item ? 'dark-border' : (item.border==1 ? 'normal-border' : 'no-border') %>
+              <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
                 <tr>
-                  <td class="align_left <%= border_class %>"><%= item.item_name %></td>
-                  <td class="align_center <%= border_class %>"><%= item.attributes["item_quantity"].to_i %></td>
-                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %></td>
-                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %></td>
-                  <td class="align_right currency <%= border_class %>"><%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %></td>
+                  <td class="align_left"><%= items.first.item_name %></td>
+                  <td class="align_center ">
+                    <%  items.each do |item| %>
+                      <%= item.attributes["item_quantity"].to_i %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <%  items.each do |item| %>
+                      <%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <%  items.each do |item| %>
+                      <%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <%  items.each do |item| %>
+                      <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
               <tfoot>
-                <% is_first = true %>
-                <% @report.report_total.each do |total| %>
-                  <% border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
-                  <tr>
-                    <td class="align_left <%= border_class %>" ><%= is_first ? t("views.common.total") : '' %></td>
-                    <td class="align_center <%= border_class %>"><%= total["item_quantity"].to_i %></td>
-                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></td>
-                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %></td>
-                    <td class="align_right currency <%= border_class %>"><%= number_to_currency(total["net_total"],unit:total["currency_code"]) %></td>
-                  </tr>
-                  <%is_first = false %>
-                <% end %>
+                <% border_class='test'%>
+                  <%# border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
+                <tr>
+                  <td class="align_left " ><%= t("views.common.total") %></td>
+                  <td class="align_center ">
+                    <% @report.report_total.each do |total| %>
+                      <%= total["item_quantity"].to_i %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <% @report.report_total.each do |total| %>
+                      <%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <% @report.report_total.each do |total| %>
+                      <%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
+                  <td class="align_right currency ">
+                    <% @report.report_total.each do |total| %>
+                      <%= number_to_currency(total["net_total"],unit:total["currency_code"]) %>
+                      <br>
+                    <% end %>
+                  </td>
+                </tr>
               </tfoot>
           <% else %>
               <tr>
