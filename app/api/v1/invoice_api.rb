@@ -5,10 +5,38 @@ module V1
     prefix :api
 
     helpers do
+
+      def taxes_list list
+        tax_list = ""
+        for tax, amount in list
+          tax_list += <<-HTML
+      <div class="top_right_row"><div class="preview_right_label">#{tax}</div><div class="preview_right_description">#{(amount)}</div></div>
+          HTML
+        end
+        tax_list.html_safe
+      end
+      def tax_details
+        taxes = []
+        tlist = Hash.new(0)
+        self.invoice_line_items.each do |li|
+          next unless [li.item_unit_cost, li.item_quantity].all?
+          line_total = li.item_unit_cost * li.item_quantity
+          # calculate tax1 and tax2
+          taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
+          taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+        end
+
+        taxes.each do |tax|
+          tlist["#{tax[:name]} #{tax[:pct]}"] += tax[:amount]
+        end
+        tlist
+      end
+
       def get_company_id
         current_user = @current_user
         current_user.current_company || current_user.accounts.map {|a| a.companies.pluck(:id)}.first
       end
+
       def filter_by_company(elem)
         if params[:company_id].blank?
           company_id = get_company_id
@@ -17,14 +45,16 @@ module V1
         end
         elem.where("company_id IN(?)", company_id)
       end
+
     end
 
     resource :invoices do
       before {current_user}
 
       get do
-        @invoices = Invoice.joins(:client).select("invoices.*,clients.organization_name")
+        @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
         #filter invoices by company
+        puts 'invoices size = ',@invoices.size
         @invoices = filter_by_company(@invoices)
       end
       desc 'previews the selected invoice'
@@ -100,7 +130,15 @@ module V1
         end
       end
 
-
+      desc 'Return all invoice line items'
+      params do
+        requires :invoice_id
+      end
+      get :invoice_line_items do
+        @invoice = Invoice.find_by_id(params[:invoice_id])
+        {tax: taxes_list(@invoice.tax_details),
+        invoices: Invoice.find_by_id(params[:invoice_id]).invoice_line_items.joins(:item).select("invoice_line_items.* , items.item_name")}
+      end
 
       desc 'Return all invoices'
       get do
