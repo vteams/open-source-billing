@@ -25,7 +25,7 @@ module Services
     # build a new invoice object
     def self.build_new_invoice(params)
       if params[:invoice_for_client]
-        company_id = get_company_id(params[:invoice_for_client])
+        company_id = get_company_id(params[:invoice_for_client].permit!)
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
@@ -81,22 +81,22 @@ module Services
                    if invoice_amount < paid_amount
                      false
                    elsif invoice_amount > paid_amount
-                     invoice.update_attributes(params[:invoice])
+                     invoice.update_attributes(params[:invoice].permit!)
                      %w(draft draft-partial).include?(invoice.last_invoice_status) ? invoice.draft_partial! : invoice.partial!
                      true
                    else
-                     invoice.update_attributes(params[:invoice])
+                     invoice.update_attributes(params[:invoice].permit!)
                      true
                    end
                  elsif %w(partial draft-partial).include?(invoice.status)
                    if invoice_amount < paid_amount
                      false
                    elsif invoice_amount == paid_amount
-                     invoice.update_attributes(params[:invoice])
+                     invoice.update_attributes(params[:invoice].permit!)
                      invoice.update_attributes(last_invoice_status: invoice.status, status: 'paid')
                      true
                    else
-                     invoice.update_attributes(params[:invoice])
+                     invoice.update_attributes(params[:invoice].permit!)
                      true
                    end
                  end

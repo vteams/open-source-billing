@@ -7,7 +7,15 @@ module V1
     helpers do
       def get_company_id
         current_user = @current_user
-        current_user.current_company || current_user.accounts.map {|a| a.companies.pluck(:id)}
+        current_user.current_company || current_user.accounts.map {|a| a.companies.pluck(:id)}.first
+      end
+      def filter_by_company(elem)
+        if params[:company_id].blank?
+          company_id = get_company_id
+        else
+          company_id = params[:company_id]
+        end
+        elem.where("company_id IN(?)", company_id)
       end
     end
 
@@ -15,7 +23,9 @@ module V1
       before {current_user}
 
       get do
-        Invoice.joins(:client).select("invoices.*,clients.organization_name").page(current_page).per(per_page)
+        @invoices = Invoice.joins(:client).select("invoices.*,clients.organization_name")
+        #filter invoices by company
+        @invoices = filter_by_company(@invoices)
       end
       desc 'previews the selected invoice'
 
