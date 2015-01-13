@@ -7,13 +7,11 @@ module V1
     helpers do
 
       def taxes_list list
-        tax_list = ""
+        tax_list = Hash.new("TaxList")
         for tax, amount in list
-          tax_list += <<-HTML
-      <div class="top_right_row"><div class="preview_right_label">#{tax}</div><div class="preview_right_description">#{(amount)}</div></div>
-          HTML
+          tax_list[tax] = amount
         end
-        tax_list.html_safe
+        tax_list
       end
       def tax_details
         taxes = []
@@ -25,7 +23,6 @@ module V1
           taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
           taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
         end
-
         taxes.each do |tax|
           tlist["#{tax[:name]} #{tax[:pct]}"] += tax[:amount]
         end
@@ -45,7 +42,6 @@ module V1
         end
         elem.where("company_id IN(?)", company_id)
       end
-
     end
 
     resource :invoices do
@@ -53,12 +49,10 @@ module V1
 
       get do
         @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
-        #filter invoices by company
-        puts 'invoices size = ',@invoices.size
         @invoices = filter_by_company(@invoices)
       end
-      desc 'previews the selected invoice'
 
+      desc 'previews the selected invoice'
       params do
         requires :invoice_id
       end

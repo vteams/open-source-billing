@@ -14,11 +14,12 @@ module V1
     resource :clients do
       before {current_user}
 
-      get :get_clients do
-        @accounts = @current_user.accounts
-        @accounts.each do |account|
-          @clients = account.clients
-        end
+      desc 'Fetch a single client'
+      params do
+        requires :id, type: String
+      end
+      get ':id' do
+        Client.find(params[:id])
       end
 
       desc 'Return clients'
@@ -30,19 +31,10 @@ module V1
             company_id: get_company_id,
             sort_direction: 'desc',
             sort_column: 'contact_name',
-            per: 50
+            per: params[:per]
         }
 
         @clients = Client.get_clients(criteria)
-      end
-
-      desc 'Fetch a single client'
-      params do
-        requires :id, type: String
-      end
-
-      get ':id' do
-        Client.find params[:id]
       end
 
       desc 'Create Client'
@@ -72,6 +64,7 @@ module V1
           optional :available_credit, type: Integer
         end
       end
+
       post do
         Services::Apis::ClientApiService.create(params)
       end
@@ -107,7 +100,6 @@ module V1
       patch ':id' do
         Services::Apis::ClientApiService.update(params)
       end
-
 
       desc 'Delete client'
       params do

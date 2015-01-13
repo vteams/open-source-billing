@@ -41,8 +41,6 @@ module Services
       end unless @client.invoices.blank?
       amount
     end
-
-
-
   end
+
 end
