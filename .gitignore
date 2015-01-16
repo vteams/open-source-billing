@@ -17,7 +17,6 @@ capybara-*.html
 /log
 /public/system
 /public/*
-
 config/initializers/secret_token.rb
 config/environments/*.rb
 config/secrets.yml

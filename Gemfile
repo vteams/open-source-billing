@@ -45,7 +45,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
-group :development do
+group :'development.rb.copy' do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry'
@@ -71,7 +71,7 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 
-group :test do
+group :'test.rb.copy' do
   gem 'shoulda-matchers'
   gem 'shoulda', '~> 3.5.0'
   gem 'faker', '~> 1.4.3'

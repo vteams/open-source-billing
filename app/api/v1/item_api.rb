@@ -29,7 +29,7 @@ module V1
       end
 
       get ':id' do
-        Item.find params[:id]
+        {item: Item.find(params[:id]), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
       end
 
       desc 'Create Item'

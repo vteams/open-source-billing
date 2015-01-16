@@ -19,7 +19,7 @@ module V1
         requires :id, type: String
       end
       get ':id' do
-        Client.find(params[:id])
+        {client: Client.find(params[:id]), client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id])}
       end
 
       desc 'Return clients'
