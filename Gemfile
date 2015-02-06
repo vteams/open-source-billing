@@ -43,7 +43,8 @@ gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem "binding_of_caller", ">= 0.6.9"
+  gem "copyright-header"
   gem 'pry'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'awesome_print'

@@ -43,9 +43,11 @@ module Reporting
                       sum(invoice_line_items.item_quantity) as item_quantity,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity) as total_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0)) as discount_amount,
-                      sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity -  (invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0))) as net_total
-                       ").joins(:invoice_line_items => :item).
-            group("items.item_name").
+                      sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity -  (invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0))) as net_total,
+                      IFNULL(invoices.currency_id,0) as currency_id,
+                      IFNULL(currencies.code,'$') as currency_code
+                       ").joins(:currency).joins(:invoice_line_items => :item).
+            group("items.item_name,currency_id").
             where("invoice_line_items.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day,
                   "invoice_line_items.deleted_at" => nil, "items.deleted_at" => nil)
 
@@ -55,13 +57,15 @@ module Reporting
       end
 
       def calculate_report_total
-        @report_total = Hash.new(0)
-        @report_data.each do |item|
-          @report_total["item_quantity"] += item.attributes["item_quantity"]
-          @report_total["total_amount"] += item.attributes["total_amount"]
-          #@report_total["discount_pct"] += item.attributes["discount_pct"]
-          @report_total["net_total"] += item.attributes["net_total"]
-          @report_total["discount_amount"] += item.attributes["discount_amount"] || 0
+        @report_total = []
+        @report_data.group_by{|x| x['currency_id']}.values.each do |row|
+          total = Hash.new(0)
+          total["item_quantity"] += row.map{|x| x["item_quantity"]}.sum
+          total["total_amount"] += row.map{|x| x["total_amount"]}.sum
+          total["net_total"] += row.map{|x| x["net_total"]}.sum
+          total["discount_amount"] += row.map{|x| x["discount_amount"] || 0 }.sum
+          total["currency_code"] = row.first["currency_code"]
+          @report_total << total
         end
       end
 
@@ -79,7 +83,6 @@ module Reporting
           report.report_data.each do |item|
             csv << get_data_row(item)
           end
-
           csv << get_total_row(report)
         end
       end

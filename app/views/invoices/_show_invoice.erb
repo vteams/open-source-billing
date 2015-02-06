@@ -85,7 +85,7 @@
 
       <div class="top_right_row">
         <div class="preview_right_label"><%= t('amount') %> <span>:</span></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
 
@@ -134,9 +134,9 @@
           <tr>
             <td class="align_left"><%= item.item.item_name rescue "" %></td>
             <td class="align_left"><%= item.item_description %></td>
-            <td class="align_right"><%= number_to_currency(item.item_unit_cost) %></td>
+            <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
             <td class="align_right"><%= item.item_quantity.to_i %></td>
-            <td class="align_right"><%= number_to_currency(item_line_total) %></td>
+            <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
           </tr>
       <% end %>
     </table>
@@ -162,13 +162,13 @@
     <div class="preview_right btm">
       <div class="top_right_row preview_heading">
         <div class="preview_right_label"><%= t('views.invoices.subtotal') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.sub_total) %></div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.sub_total, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row">
         <div class="preview_right_label"><%= t('views.common.discount') %> <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount) %></div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
       <% unless @invoice.tax_details.blank? %>
@@ -178,19 +178,19 @@
 
       <div class="top_right_row preview_heading border-row">
         <div class="preview_right_label"><%= t('views.common.total') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total) %></div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row border amt_paid">
         <div class="preview_right_label"><%= t('views.invoices.amount_payed') %></div>
-        <div class="preview_right_description">-<%= number_to_currency(Payment.invoice_paid_amount(@invoice.id)) %></div>
+        <div class="preview_right_description">-<%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
 
       <div class="top_right_row border preview_heading">
         <div class="preview_right_label"><%= t('views.invoices.amount_due') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id)) %></div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
     </div>

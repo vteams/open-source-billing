@@ -49,6 +49,7 @@
         <!--dispute_history-->
     <% end %>
 
+    <script>window.currency_symbol = "<%= @invoice.currency.present? ? @invoice.currency.unit : "$" %>"</script>
     <div class="fields_content">
       <div class="fields_content_container">
         <div class="fields_content_data new_invoice_fields">
@@ -86,6 +87,15 @@
                   <li><%= t('views.invoices.client_hint') %></li>
                   <span id="last_invoice" style="display: none;"></span>
                 </ul>
+              </div>
+            </div>
+            <!--field_row-->
+
+            <div class="field_row description <%= 'hide' if params[:action].eql?('new') %>" id="invoice_currency">
+              <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
+              <div class="small_field">
+                <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
+                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: f.object.currency_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_invoice_currency"), :class => "invoice_currency medium chzn-select", "data-dropdown-width" => "300"} %>
               </div>
             </div>
             <!--field_row-->
