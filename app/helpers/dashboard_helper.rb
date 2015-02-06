@@ -24,7 +24,8 @@ module DashboardHelper
   end
 
   def currencies
-    Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
+    #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
+    Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )
   end
 
 end
