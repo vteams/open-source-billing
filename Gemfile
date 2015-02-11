@@ -45,6 +45,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
+gem 'grape-rabl', '~> 0.3.0'
 group :'development.rb.copy' do
   gem 'better_errors'
   gem 'binding_of_caller'

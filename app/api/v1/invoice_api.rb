@@ -79,7 +79,7 @@ module V1
       end
       get :dispute_invoice do
           @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], @current_user)
-          org_name = @current_user.accounts.first.org_name rescue or_name = ''
+          org_name = @current_user.accounts.first.org_name rescue org_name = ''
           @message = dispute_invoice_message(org_name)
       end
 
@@ -93,7 +93,6 @@ module V1
           @result = paypal.process_payment
         end
       end
-
 
       params do
         requires :invoice_id
@@ -223,7 +222,6 @@ module V1
       get :get_invoices do
         @invoices = @current_user.invoices
       end
-
     end
   end
 end
