@@ -90,7 +90,6 @@ module Reporting
        payments_collected_csv self
       end
 
-<<<<<<< HEAD
       def to_xls
         payments_collected_csv self, :col_sep => "\t"
       end
@@ -99,29 +98,9 @@ module Reporting
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |payment| csv << get_data_row(payment) }
-          csv << get_total_row(report)
-=======
-      def payments_collected_csv report
-        headers =['Invoice', 'Client Name', 'Type', 'Note', 'Date', 'Amount']
-        CSV.generate do |csv|
-          csv << headers
-          report.report_data.each do |payment|
-            temp_row=[
-                payment.invoice_number.to_s,
-                payment.client_name.to_s,
-                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
-                payment.notes.to_s,
-                payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f.round(2)
-            ]
-            csv << temp_row
+          report.report_total.each_with_index do |total, index|
+            csv << get_total_row(total, index)
           end
-          is_first=true
-          report.report_total.each do |total|
-            csv << ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2)]
-            is_first=false
-          end
->>>>>>> 76c4f2256d877b7dc44522ca33bd378e8d77bda5
         end
       end
 
@@ -135,32 +114,11 @@ module Reporting
         sheet1 = doc.add_sheet("Payments Collected")
 
         unless report.report_data.blank?
-<<<<<<< HEAD
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |payment| sheet1.add_row(get_data_row(payment)) }
-          sheet1.add_row(get_total_row(report))
-=======
-          #binding.pry
-
-          sheet1.add_row(headers)
-          report.report_data.each do |payment|
-            temp_row=[
-                payment.invoice_number.to_s,
-                payment.client_name.to_s,
-                (payment.payment_type || payment.payment_method || "").capitalize.to_s,
-                payment.notes.to_s,
-                payment.created_at.to_date.to_s,
-                payment.payment_amount.to_f.round(2)
-            ]
-            sheet1.add_row(temp_row)
+          report.report_total.each_with_index do |total, index|
+            get_total_row(total, index)
           end
-          is_first=true
-          report.report_total.each do |total|
-            temp_row= ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2)]
-            is_first=false
-            sheet1.add_row(temp_row)
-          end
->>>>>>> 76c4f2256d877b7dc44522ca33bd378e8d77bda5
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -180,14 +138,14 @@ module Reporting
         ]
       end
 
-      def get_total_row report
+      def get_total_row total, index
         [
-            'Total',
+            index==0 ? 'Total' : 0,
             '',
             '',
             '',
             '',
-            report.report_total.round(2)
+            total.round(2)
         ]
       end
 
