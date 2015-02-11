@@ -75,6 +75,9 @@ Osb::Application.routes.draw do
       post 'get_last_invoice'
       get 'undo_actions'
     end
+    member do
+      get 'default_currency'
+    end
   end
 
 
@@ -114,6 +117,7 @@ Osb::Application.routes.draw do
       post 'paypal_payments'
       get 'preview'
       get 'credit_card_info'
+      get 'selected_currency'
     end
   end
 

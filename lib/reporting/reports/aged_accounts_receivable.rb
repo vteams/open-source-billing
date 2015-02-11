@@ -43,7 +43,7 @@ module Reporting
       def get_report_data
         # Report columns: Client, 0_30, 31_60, 61_90, Over_90
         aged_invoices = Invoice.find_by_sql(<<-eos
-          SELECT aged.client_name,
+          SELECT aged.client_name,aged.currency_id,aged.currency_code,
             SUM(CASE WHEN aged.age BETWEEN 0 AND 30 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS zero_to_thirty,
             SUM(CASE WHEN aged.age BETWEEN 31 AND 60 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS thirty_one_to_sixty,
             SUM(CASE WHEN aged.age BETWEEN 61 AND 90 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS sixty_one_to_ninety,
@@ -55,8 +55,12 @@ module Reporting
               invoices.invoice_total,
               IFNULL(SUM(payments.payment_amount), 0) payment_received,
               DATEDIFF('#{@report_criteria.to_date}', DATE(IFNULL(invoices.due_date, invoices.invoice_date))) age,
-              invoices.`status`
+              invoices.`status`,
+              IFNULL(currencies.code,'$') as currency_code,
+              IFNULL(invoices.currency_id,0) as currency_id,
+              invoices.id as id
             FROM `invoices`
+              LEFT JOIN `currencies` ON `currencies`.`id` = `invoices`.`currency_id`
               INNER JOIN `clients` ON `clients`.`id` = `invoices`.`client_id`
               LEFT JOIN `payments` ON `invoices`.`id` = `payments`.`invoice_id` AND (payments.payment_date <= '#{@report_criteria.to_date}') AND (`payments`.`deleted_at` IS NULL)
             WHERE
@@ -66,19 +70,23 @@ module Reporting
               #{@report_criteria.client_id == 0 ? "" : "AND invoices.client_id = #{@report_criteria.client_id}"}
             GROUP BY clients.organization_name,  invoices.invoice_total, invoices.`status`, invoices.invoice_number
           ) AS aged
-          GROUP BY aged.client_name
+          GROUP BY aged.client_name,aged.currency_id
         eos
         )
         aged_invoices
       end
 
       def calculate_report_totals
-        @report_total = Hash.new(0)
-        @report_data.each do |row|
-          @report_total["zero_to_thirty"] += row.attributes["zero_to_thirty"]
-          @report_total["thirty_one_to_sixty"] += row.attributes["thirty_one_to_sixty"]
-          @report_total["sixty_one_to_ninety"] += row.attributes["sixty_one_to_ninety"]
-          @report_total["ninety_one_and_above"] += row.attributes["ninety_one_and_above"]
+        @report_total = []
+        @report_data.group_by{|x| x['currency_id']}.values.each do |row|
+          total = Hash.new(0)
+          total["zero_to_thirty"] += row.map{|x| x["zero_to_thirty"]}.sum
+          total["thirty_one_to_sixty"] += row.map{|x| x["thirty_one_to_sixty"]}.sum
+          total["sixty_one_to_ninety"] += row.map{|x| x["sixty_one_to_ninety"]}.sum
+          total["ninety_one_and_above"] += row.map{|x| x["ninety_one_and_above"]}.sum
+          total["total_amount"] =  total["zero_to_thirty"] + total["thirty_one_to_sixty"] + total["sixty_one_to_ninety"] + total["ninety_one_and_above"]
+          total["currency_code"] = row.first["currency_code"]
+          @report_total << total
         end
       end
 
@@ -94,7 +102,9 @@ module Reporting
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |item| csv << get_data_row(item) }
-          csv << get_total_row(report)
+          report.report_total.each do |total, index|
+            csv << get_total_row(total, index)
+          end
         end
       end
 
@@ -109,7 +119,9 @@ module Reporting
         unless report.report_data.blank?
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |item| sheet1.get_data_row(item) }
-          sheet1.add_row(get_total_row(report))
+          report.report_total.each do |total, index|
+            sheet1.add_row(get_total_row(total, index))
+          end
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -129,14 +141,14 @@ module Reporting
         ]
       end
 
-      def get_total_row report
+      def get_total_row total, index
         [
-            'Total',
-             report.report_total["zero_to_thirty"].to_i,
-             report.report_total["thirty_one_to_sixty"].to_f.round(2),
-             report.report_total["sixty_one_to_ninety"].to_f.round(2),
-             report.report_total["ninety_one_and_above"].to_f.round(2),
-             (report.report_total["zero_to_thirty"].to_f + report.report_total["thirty_one_to_sixty"].to_f + report.report_total["sixty_one_to_ninety"].to_f + report.report_total["ninety_one_and_above"].to_f).round(2)
+            index == 0 ? 'Total' : '',
+             total["zero_to_thirty"].to_i,
+             total["thirty_one_to_sixty"].to_f.round(2),
+             total["sixty_one_to_ninety"].to_f.round(2),
+             total["ninety_one_and_above"].to_f.round(2),
+             (total["zero_to_thirty"].to_f + total["thirty_one_to_sixty"].to_f + total["sixty_one_to_ninety"].to_f + total["ninety_one_and_above"].to_f).round(2)
         ]
       end
 

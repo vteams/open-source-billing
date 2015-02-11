@@ -29,7 +29,7 @@ module Reporting
         @report_name = options[:report_name] || "no report"
         @report_criteria = options[:report_criteria]
         @report_data = get_report_data
-        @report_total= @report_data.inject(0) { |total, p| p[:payment_method] == 'Credit' ? total : total + p[:payment_amount] }
+        calculate_report_totals
       end
 
       def period
@@ -42,13 +42,15 @@ module Reporting
             "payments.id as payment_id,
         invoices.invoice_number,
         invoices.id as invoice_id,
+        IFNULL(invoices.currency_id,0) as currency_id,
+        IFNULL(currencies.code,'$') as currency_code,
         clients.organization_name as client_name,
         clients.id as client_id,
         payments.payment_type,
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.created_at").joins(:company).joins(:invoice => :client).
+        payments.created_at").joins(:company).joins(invoice: [:client,:currency]).
             where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
 
         payments = payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
@@ -61,15 +63,27 @@ module Reporting
         '-' as invoice_id,
         clients.organization_name as client_name,
         clients.id as client_id,
+        IFNULL(invoices.currency_id,0) as currency_id,
+        IFNULL(currencies.code,'$') as currency_code,
         payments.payment_type,
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.created_at").where("payments.payment_type = 'credit'").joins(:company).joins(:client).
+        payments.created_at").where("payments.payment_type = 'credit'").joins(:company).joins(:client).joins(invoice: :currency).
             where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         credit_payments = credit_payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
-
         payments + credit_payments
+      end
+
+      def calculate_report_totals
+        @report_total = []
+        @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
+          data = Hash.new(0)
+          data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total+p[:payment_amount]  }
+          data[:currency_code] = row.first[:currency_code]
+          @report_total<<data
+        end
+        #@report_total= @report_data.inject(0) { |total, p| p[:payment_method] == 'Credit' ? total : total + p[:payment_amount] }
       end
 
       def to_csv
@@ -84,7 +98,9 @@ module Reporting
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |payment| csv << get_data_row(payment) }
-          csv << get_total_row(report)
+          report.report_total.each_with_index do |total, index|
+            csv << get_total_row(total, index)
+          end
         end
       end
 
@@ -100,7 +116,9 @@ module Reporting
         unless report.report_data.blank?
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |payment| sheet1.add_row(get_data_row(payment)) }
-          sheet1.add_row(get_total_row(report))
+          report.report_total.each_with_index do |total, index|
+            get_total_row(total, index)
+          end
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -120,14 +138,14 @@ module Reporting
         ]
       end
 
-      def get_total_row report
+      def get_total_row total, index
         [
-            'Total',
+            index==0 ? 'Total' : 0,
             '',
             '',
             '',
             '',
-            report.report_total.round(2)
+            total.round(2)
         ]
       end
 

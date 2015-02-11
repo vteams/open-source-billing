@@ -1,0 +1,6 @@
+$("#invoice_currency").removeClass('hide')
+$('.invoice_currency').val("<%= @client.currency_id %>")
+$('.invoice_currency').trigger("liszt:updated");
+
+window.currency_symbol = "<%= @client.currency.unit %>"
+$("#invoice_sub_total_lbl, #invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})

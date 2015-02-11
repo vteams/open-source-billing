@@ -20,25 +20,25 @@
 #
 module Reporting
   module Dashboard
-
     # get the recent activity - 10 most recent items
-    def self.get_recent_activity
-      # columns returned: activity type, client, amount, activity date
+    def self.get_recent_activity(currency=nil)
+      # columns returned: activity type, client, amount, activity date, currency unit, currency code
       # fetch last 10 invoices and payments
-      invoices = Invoice.select("id, client_id, invoice_total, created_at").order("created_at DESC").limit(5)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at").includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
+      currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
+      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).order("created_at DESC").limit(5)
+      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
 
       # merge invoices and payments in activity array
       recent_activity = []
-      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.client.organization_name rescue ''), :amount => inv.invoice_total, :activity_date => inv.created_at, :activity_path => "/invoices/#{inv.id}/edit"} }
-      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.client.organization_name rescue ''), :amount => pay.payment_amount, :activity_date => pay.created_at, :activity_path => "/payments/#{pay.id}/edit"} }
+      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.client.organization_name rescue ''), :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "USD"), :code => (inv.currency.present? ? inv.currency.code : "$"), :activity_date => inv.created_at, :activity_path => "/invoices/#{inv.id}/edit"} }
+      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "USD"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "$"), :activity_date => pay.created_at, :activity_path => "/payments/#{pay.id}/edit"} }
 
       # sort them by created_at in descending order
       recent_activity.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
     end
 
     # get chart data
-    def self.get_chart_data
+    def self.get_chart_data(currency=nil)
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}
@@ -54,7 +54,8 @@ module Reporting
 
 
       # invoices amount group by month for last *number_of_months* months
-      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).sum("invoice_total")
+      currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
+      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
       payments = Payment.where(:payment_date => start_date..end_date).where("payment_type is null or payment_type != ?",'credit').group("month(payment_date)").sum("payment_amount")
@@ -69,19 +70,22 @@ module Reporting
     end
 
     # get outstanding invoices
-    def self.get_outstanding_invoices
+    def self.get_outstanding_invoices(currency=nil)
+      currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
       Invoice.total_invoices_amount - Payment.total_payments_amount
     end
 
-    def self.get_ytd_income
+    def self.get_ytd_income(currency=nil)
       ytd = 0
-       Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).each do |invoice|
+      currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
+      Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).each do |invoice|
         ytd += invoice.payments.sum(:payment_amount).to_f
-       end
+      end
       ytd
     end
 
-    def self.get_aging_data
+    def self.get_aging_data(currency=nil)
+      currency_filter = currency.nil? ? "" : " AND invoices.currency_id=#{currency.id} "
       aged_invoices = Invoice.find_by_sql(<<-eos
           SELECT zero_to_thirty, thirty_one_to_sixty, sixty_one_to_ninety, ninety_one_and_above
           FROM (
@@ -105,6 +109,7 @@ module Reporting
                 (`invoices`.`deleted_at` IS NULL)
                 AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{Date.today}')
                 AND (invoices.`status` != "paid")
+                #{currency_filter}
               GROUP BY clients.organization_name,  invoices.invoice_total, invoices.`status`, invoices.invoice_number
             ) AS aged
           ) total_aged

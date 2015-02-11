@@ -46,4 +46,4 @@ window.taxByCategory = ->
   for tax, amount of tlist
     lis += "<li><span class='grid_summary_title'>#{tax}</span> <span class='grid_summary_description tax_amount'>#{amount}</span></li>\n"
 
-  jQuery(".grid_summary_row.taxes_total").html("<ul>#{lis}</ul>").parents(".grid_summary").find("#invoice_sub_total_lbl, #invoice_discount_amount_lbl, .tax_amount").formatCurrency();
+  jQuery(".grid_summary_row.taxes_total").html("<ul>#{lis}</ul>").parents(".grid_summary").find("#invoice_sub_total_lbl, #invoice_discount_amount_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});

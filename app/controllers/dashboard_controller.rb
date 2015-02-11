@@ -20,8 +20,10 @@
 #
 class DashboardController < ApplicationController
   def index
+    @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.first
+    gon.currency_code=@currency_code = @currency.present? ? @currency.code : '$'
+    gon.chart_data = Reporting::Dashboard.get_chart_data(@currency)
     @recent_activity = Reporting::Dashboard.get_recent_activity
-    gon.chart_data = Reporting::Dashboard.get_chart_data
     @aged_invoices = Reporting::Dashboard.get_aging_data
     @outstanding_invoices = (@aged_invoices.attributes["zero_to_thirty"] || 0) +
         (@aged_invoices.attributes["thirty_one_to_sixty"] || 0) +

@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20141212053728) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "available_credit",  precision: 8, scale: 2, default: 0.0
+    t.integer  "currency_id"
   end
 
   create_table "companies", force: true do |t|
@@ -152,6 +153,14 @@ ActiveRecord::Schema.define(version: 20141212053728) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "credit_id"
+  end
+
+  create_table "currencies", force: true do |t|
+    t.string   "title"
+    t.string   "code"
+    t.string   "unit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "delayed_jobs", force: true do |t|
@@ -225,6 +234,7 @@ ActiveRecord::Schema.define(version: 20141212053728) do
     t.string   "last_invoice_status"
     t.string   "discount_type"
     t.integer  "company_id"
+    t.integer  "currency_id"
   end
 
   create_table "items", force: true do |t|

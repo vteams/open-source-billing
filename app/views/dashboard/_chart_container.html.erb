@@ -1,7 +1,10 @@
 <div class="graph_wrapper">
   <div class="dashboard_box">
     <div class="heading">
-      <h1><%= t('invoices') %> <span>(<%= t("currency_code") %>)</span></h1>
+      <h1>
+        <%= t('invoices') %>
+      </h1>
+      <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :unit,@currency.try(:id)),class: "currency" %>
       <p class="bar_details"><%= t('views.dashboard.view_chart_detail') %></p>
     </div>
     <div class="graph_content">

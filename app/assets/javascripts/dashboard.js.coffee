@@ -2,6 +2,11 @@
 
 # report data
 jQuery ->
+  $('#currency').chosen
+    disable_search: true
+  $("#currency").change ->
+    window.location = '/dashboard?currency=' + $(this).val()
+
   # chart options
   if gon?
     chart_ticks = gon.chart_data["ticks"]
@@ -33,7 +38,7 @@ jQuery ->
 
 
   chart_yaxis = pad: 0, tickOptions:
-    formatString: $("body").attr("currency-unit") + "%'i"
+    formatString: gon.currency_code + "%'i" #$("body").attr("currency-unit") + "%'i"
     showMark: false
 
   chart_axis =

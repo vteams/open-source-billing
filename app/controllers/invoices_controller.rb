@@ -204,6 +204,10 @@ class InvoicesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def selected_currency
+    @currency = Currency.find params[:currency_id]
+  end
+
   def paypal_payments
     # send a post request to paypal to verify payment data
     response = RestClient.post("https://www.sandbox.paypal.com/cgi-bin/webscr", params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
@@ -268,7 +272,7 @@ class InvoicesController < ApplicationController
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                    :last_invoice_status, :company_id,
+                                    :last_invoice_status, :company_id,:currency_id,
                                     invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy]
     )
   end

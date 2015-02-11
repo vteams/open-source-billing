@@ -230,6 +230,26 @@
       padding-right: 25px;
     }
   }
-
+  table{
+    td{
+      vertical-align: top;
+    }
+    tbody{
+      td{
+        vertical-align: top;
+      }
+      tr:last-child{
+        td{
+          border-bottom: 1px solid #808080;
+        }
+      }
+    }
+    tfoot{
+      td{
+        font-weight: bold;
+        border-bottom: 1px solid #808080;
+      }
+    }
+  }
 }
 

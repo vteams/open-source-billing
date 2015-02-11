@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-
 gem 'rails', '~> 4.1.8'
 gem 'rack-cors', :require => 'rack/cors'
 
@@ -41,9 +39,10 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
-group :development do
+gem 'grape-rabl', '~> 0.3.0'
+group :'development.rb.copy' do
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem "binding_of_caller", ">= 0.6.9"
   gem 'pry'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'awesome_print'
@@ -67,7 +66,7 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 
-group :test do
+group :'test.rb.copy' do
   gem 'shoulda-matchers'
   gem 'shoulda', '~> 3.5.0'
   gem 'faker', '~> 1.4.3'

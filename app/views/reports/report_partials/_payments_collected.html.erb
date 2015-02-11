@@ -35,8 +35,8 @@
         </colgroup>
         <thead>
         <tr>
-          <th class="align_left"><%= sortable('invoice_number', 'Invoice') %></th>
           <th class="align_left"><%= t('views.clients.client_name') %></th>
+          <th class="align_left"><%= sortable('invoice_number', 'Invoice') %></th>
           <th class="align_left"><%= t('views.common.type') %></th>
           <th class="align_left"><%= t('views.common.note') %></th>
           <th class="align_center"><%= t('views.common.date') %></th>
@@ -45,25 +45,55 @@
         </thead>
         <tbody>
         <% unless @report.report_data.blank? %>
-            <% @report.report_data.each do |payment| %>
-                <tr>
-                  <td class="align_left"><%= payment.invoice.invoice_number rescue payment.invoice_number %></td>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.client_name %></td>
-                  <td class="align_left"><%= (payment.payment_type || payment.payment_method || "").capitalize %></td>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= payment.notes %></td>
-                  <td class="align_center"><%= payment.created_at.to_date %></td>
-                  <td class="align_right currency"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount) %></td>
-                </tr>
+            <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
+              <tr>
+                <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= payments.first[:client_name] %></td>
+                <td class="align_left" >
+                  <% payments.each do |payment| %>
+                    <%= payment.invoice.invoice_number rescue payment.invoice_number %>
+                    <br>
+                  <% end %>
+                </td>
+                <td class="align_left" >
+                  <% payments.each do |payment| %>
+                    <%= (payment.payment_type || payment.payment_method || "").capitalize %>
+                    <br>
+                  <% end %>
+                </td>
+                <td class="align_left text-overflow-class" data-overflow-rows="2" >
+                  <% payments.each do |payment| %>
+                    <%= payment.notes %>
+                    <br>
+                  <% end %>
+                </td>
+                <td class="align_center" >
+                  <% payments.each do |payment| %>
+                    <%= payment.created_at.to_date %>
+                    <br>
+                  <% end %>
+                </td>
+                <td class="align_right currency" >
+                  <% payments.each do |payment| %>
+                    <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %>
+                    <br>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
             <tfoot>
-                <tr>
-                  <td class="align_left" ><%= t('views.common.total') %></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_left"></td>
-                  <td class="align_right currency"><%= number_to_currency(@report.report_total) %></td>
-                </tr>
+              <tr>
+                <td class="align_left"><%= t('views.common.total') %></td>
+                <td class="align_left"></td>
+                <td class="align_left"></td>
+                <td class="align_left"></td>
+                <td class="align_left"></td>
+                <td class="align_right currency">
+                  <% @report.report_total.each do |total| %>
+                    <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
+                    <br>
+                  <% end %>
+                </td>
+              </tr>
             </tfoot>
         <% else %>
             <tr>

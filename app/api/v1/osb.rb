@@ -24,7 +24,6 @@ module V1
         params[:page] || 1
       end
     end
-
     mount V1::OSB::ClientApi => '/'
     mount V1::OSB::AccountApi => '/'
     mount V1::OSB::CompanyApi => '/'
@@ -34,7 +33,5 @@ module V1
     mount V1::OSB::TaxApi => '/'
     mount V1::OSB::DashboardApi => '/'
     mount V1::OSB::ReportApi => '/'
-
-
   end
  end

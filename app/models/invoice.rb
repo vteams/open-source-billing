@@ -36,14 +36,16 @@ class Invoice < ActiveRecord::Base
       disputed: 'Client has disputed this invoice.',
   }
 
-  # attr
-  #attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status, :company_id
+  #attr_accessible :client_id, :discount_amount, :discount_type, :discount_percentage, :invoice_date, :invoice_number, :notes, :po_number, :status, :sub_total, :tax_amount, :terms, :invoice_total, :invoice_line_items_attributes, :archive_number, :archived_at, :deleted_at, :payment_terms_id, :due_date, :last_invoice_status, :company_id, :currency_id
 
   # associations
   belongs_to :client
   belongs_to :invoice
   belongs_to :payment_term
   belongs_to :company
+
+  belongs_to :currency
+
   has_many :invoice_line_items, :dependent => :destroy
   has_many :payments
   has_many :sent_emails, :as => :notification
@@ -135,13 +137,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def currency_symbol
-    # self.company.currency_symbol
-    "$"
+    self.currency.present? ? self.currency.code : '$'
   end
 
   def currency_code
-    # self.company.currency_code
-    "USD"
+    self.currency.present? ? self.currency.unit : 'USD'
   end
 
   def self.get_next_invoice_number user_id
