@@ -51,7 +51,7 @@ module V1
       end
 
 
-      desc 'Delete an tax'
+      desc 'Delete tax'
       params do
         requires :id, type: Integer, desc: "Delete tax"
       end

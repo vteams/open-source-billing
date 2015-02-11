@@ -49,6 +49,6 @@ module Services
     def amount_billed invoices
       invoices.sum(:invoice_total).to_f
     end
-
   end
+
 end
