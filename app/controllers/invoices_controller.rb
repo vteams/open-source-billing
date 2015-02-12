@@ -163,7 +163,6 @@ class InvoicesController < ApplicationController
 
   def bulk_actions
     result = Services::InvoiceService.perform_bulk_action(params.merge({current_user: current_user}))
-
     @invoices = filter_by_company(result[:invoices]).order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
     @action = result[:action]

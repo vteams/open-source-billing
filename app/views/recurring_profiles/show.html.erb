@@ -47,7 +47,7 @@
 
 <p>
   <b><%= t('views.common.terms') %>:</b>
-  <%= @recurring_profile.terms %>
+  <%= @recurring_profile.payment_term.try(:description) %>
 </p>
 
 <p>

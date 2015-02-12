@@ -10,6 +10,9 @@ jQuery ->
   # chart options
   if gon?
     chart_ticks = gon.chart_data["ticks"]
+    currency_code = gon.currency_code
+  else
+    currency_code = $("body").attr("currency-unit")
 
   chart_defaults =
     renderer: jQuery.jqplot.BarRenderer
@@ -38,7 +41,7 @@ jQuery ->
 
 
   chart_yaxis = pad: 0, tickOptions:
-    formatString: gon.currency_code + "%'i" #$("body").attr("currency-unit") + "%'i"
+    formatString: currency_code + "%'i"
     showMark: false
 
   chart_axis =
