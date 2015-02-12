@@ -51,7 +51,7 @@ module Services
     end
 
     def recover_deleted
-      @recurring_profiles.only_deleted.each { |profile| profile.recover; profile.unarchive; }
+      @recurring_profiles.only_deleted.each { |profile| profile.restore; profile.unarchive; }
       {action: 'recovered from deleted', recurring_profiles: get_profiles('only_deleted')}
     end
 

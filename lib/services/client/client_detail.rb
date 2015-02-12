@@ -30,6 +30,8 @@ module Services
     #get outstanding amount, total amount billed and total payments received
     def get_detail
       #@client.invoices.group(:currency_id).each
+      #payments = 0
+      #@client.invoices.each { |invoice| payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount) }
       {outstanding_amount: outstanding_amount(@client.invoices), amount_billed: amount_billed(@client.invoices), payments: total_payments(invoices) }
     end
 
@@ -39,11 +41,15 @@ module Services
         amount += Payment.invoice_remaining_amount(invoice.id)
       end unless invoices.blank?
       amount
+      #binding.pry
     end
 
     def total_payments invoices
       payments = 0
-      invoices.each { |invoice| payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount) }.to_f
+      invoices.each do |invoice|
+        payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount).to_f
+      end  unless invoices.blank?
+      payments
     end
 
     def amount_billed invoices

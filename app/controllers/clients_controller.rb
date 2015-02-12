@@ -150,11 +150,9 @@ class ClientsController < ApplicationController
 
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform
-
     @clients = result[:clients]#.order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:client_ids])
     @action = result[:action]
-
     respond_to { |format| format.js }
   end
 
@@ -180,6 +178,7 @@ class ClientsController < ApplicationController
   end
 
   def client_detail
+
     client = Client.find(params[:id])
     @invoices = client.invoices
     @payments = Payment.payments_history(client)

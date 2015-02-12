@@ -52,7 +52,7 @@ module Services
     end
 
     def recover_deleted
-      @companies.only_deleted.map { |company| company.recover; company.unarchive; }
+      @companies.only_deleted.map { |company| company.restore; company.unarchive; }
       #invoices = ::Invoice.only_deleted.page(@options[:page]).per(@options[:per])
       {action: 'recovered from deleted', companies: get_companies('only_deleted')}
     end

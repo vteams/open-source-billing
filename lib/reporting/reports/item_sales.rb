@@ -83,9 +83,7 @@ module Reporting
           report.report_data.each do |item|
             csv << get_data_row(item)
           end
-          report.report_total.each_with_index do |total,index|
-            csv << get_total_row(total, index)
-          end
+          get_total_row(report,csv)
         end
       end
 
@@ -103,10 +101,7 @@ module Reporting
           report.report_data.each do |item|
             sheet1.add_row(get_data_row(item))
           end
-          report.report_total.each_with_index do |total, index|
-            sheet1.add_row(get_total_row(total, index))
-          end
-
+          get_total_row(report,sheet1)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -125,14 +120,13 @@ module Reporting
         ]
       end
 
-      def get_total_row total, index
-        [
-            index== 0 ? 'Total' : '',
-            total["item_quantity"].to_i,
-            total["total_amount"].to_f.round(2),
-            total["discount_amount"].to_f.round(2),
-            total["net_total"].to_f.round(2)
-        ]
+      def get_total_row report,sheet
+        is_first=true
+        report.report_total.each do |total|
+          row_total = ["#{is_first ? 'Total' : ''}",total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
+          sheet.add_row(row_total)
+          is_first=false
+        end
       end
 
 

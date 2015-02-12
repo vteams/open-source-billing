@@ -25,7 +25,7 @@ module Services
     def initialize(options)
       actions_list = %w(archive destroy recover_archived recover_deleted)
       @options = options
-      @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
+      @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first
       @client_ids = @options[:client_ids]
       @clients = ::Client.multiple(@client_ids)
       @current_user = @options[:current_user]
@@ -51,7 +51,7 @@ module Services
     end
 
     def recover_deleted
-      @clients.only_deleted.map { |client| client.recover; client.unarchive }
+      @clients.only_deleted.map { |client| client.restore; client.unarchive }
       {action: 'recovered from deleted', clients: get_clients('only_deleted')}
     end
 

@@ -40,7 +40,7 @@ gem 'daemons'
 gem 'grape', '~> 0.9.0'
 gem 'hashie_rails'
 gem 'grape-rabl', '~> 0.3.0'
-group :'development.rb.copy' do
+group :development do
   gem 'better_errors'
   gem "binding_of_caller", ">= 0.6.9"
   gem 'pry'
@@ -73,6 +73,7 @@ group :'test.rb.copy' do
   gem 'rspec-its'
 end
 
+gem 'money', '~>  6.5.0'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -8,20 +8,6 @@ Osb::Application.routes.draw do
   #get '/auth/:provider/callback', to: 'sessions#create'
   mount V1::OSB => '/'
 
-  get "recurring_profile_line_item/index"
-
-  get "recurring_profile_line_item/show"
-
-  get "recurring_profile_line_item/new"
-
-  get "recurring_profile_line_item/edit"
-
-  get "recurring_profile_line_item/create"
-
-  get "recurring_profile_line_item/update"
-
-  get "recurring_profile_line_item/destroy"
-
   resources :email_templates
 
   resources :companies do
@@ -52,7 +38,7 @@ Osb::Application.routes.draw do
       get 'enter_payment'
       put 'update_individual_payment'
       get 'filter_payments'
-      get 'bulk_actions'
+      post 'bulk_actions'
       get 'undo_actions'
       get 'payments_history'
       get 'invoice_payments_history'
@@ -61,7 +47,7 @@ Osb::Application.routes.draw do
   resources :taxes do
     collection do
       get 'filter_taxes'
-      get 'bulk_actions'
+      post 'bulk_actions'
       get 'undo_actions'
     end
   end
@@ -71,7 +57,7 @@ Osb::Application.routes.draw do
   resources :clients do
     collection do
       get 'filter_clients'
-      get 'bulk_actions'
+      post :bulk_actions
       post 'get_last_invoice'
       get 'undo_actions'
     end
@@ -96,7 +82,7 @@ Osb::Application.routes.draw do
   resources :items do
     collection do
       get 'filter_items'
-      get 'bulk_actions'
+      post 'bulk_actions'
       post 'load_item_data'
       get 'duplicate_item'
       get 'undo_actions'
@@ -109,7 +95,7 @@ Osb::Application.routes.draw do
     resources :invoice_line_items
     collection do
       get 'filter_invoices'
-      get 'bulk_actions'
+      post 'bulk_actions'
       get 'undo_actions'
       post 'duplicate_invoice'
       get 'enter_single_payment'
@@ -127,19 +113,15 @@ Osb::Application.routes.draw do
     resources :recurring_profile_line_items
     collection do
       get 'filter_recurring_profiles'
-      get 'bulk_actions'
+      post 'bulk_actions'
       get 'undo_actions'
     end
   end
-
   post '/clients/client_detail'
   resources :company_profiles
 
 
   resources :client_additional_contacts
-
-
-  resources :clients
 
 
   resources :sent_emails

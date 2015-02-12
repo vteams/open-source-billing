@@ -98,9 +98,7 @@ module Reporting
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |payment| csv << get_data_row(payment) }
-          report.report_total.each_with_index do |total, index|
-            csv << get_total_row(total, index)
-          end
+          get_total_row(report,csv)
         end
       end
 
@@ -116,9 +114,7 @@ module Reporting
         unless report.report_data.blank?
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |payment| sheet1.add_row(get_data_row(payment)) }
-          report.report_total.each_with_index do |total, index|
-            get_total_row(total, index)
-          end
+          get_total_row(report,sheet1)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -138,15 +134,13 @@ module Reporting
         ]
       end
 
-      def get_total_row total, index
-        [
-            index==0 ? 'Total' : 0,
-            '',
-            '',
-            '',
-            '',
-            total.round(2)
-        ]
+      def get_total_row report,sheet
+        is_first=true
+        report.report_total.each do |total|
+          row= ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2)]
+          is_first=false
+          sheet.add_row(row)
+        end
       end
 
     end

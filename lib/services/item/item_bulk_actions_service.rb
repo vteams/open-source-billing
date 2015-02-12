@@ -51,7 +51,7 @@ module Services
     end
 
     def recover_deleted
-      @items.only_deleted.map { |item| item.recover; item.unarchive }
+      @items.only_deleted.map { |item| item.restore; item.unarchive }
       {action: 'recovered from deleted', items: get_items('only_deleted')}
     end
 

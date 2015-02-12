@@ -25,7 +25,7 @@ module Services
     # build a new invoice object
     def self.build_new_invoice(params)
       if params[:invoice_for_client]
-        company_id = get_company_id(params[:invoice_for_client].permit!)
+        company_id = get_company_id(params[:invoice_for_client])
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]

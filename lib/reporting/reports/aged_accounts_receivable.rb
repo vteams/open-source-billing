@@ -102,9 +102,7 @@ module Reporting
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |item| csv << get_data_row(item) }
-          report.report_total.each do |total, index|
-            csv << get_total_row(total, index)
-          end
+          get_total_row(report,csv)
         end
       end
 
@@ -119,9 +117,7 @@ module Reporting
         unless report.report_data.blank?
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |item| sheet1.get_data_row(item) }
-          report.report_total.each do |total, index|
-            sheet1.add_row(get_total_row(total, index))
-          end
+          get_total_row(report,sheet1)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -140,18 +136,20 @@ module Reporting
             (object.zero_to_thirty.to_f + object.thirty_one_to_sixty.to_f + object.sixty_one_to_ninety.to_f +  object.ninety_one_and_above.to_f).round(2),
         ]
       end
-
-      def get_total_row total, index
-        [
-            index == 0 ? 'Total' : '',
-             total["zero_to_thirty"].to_i,
-             total["thirty_one_to_sixty"].to_f.round(2),
-             total["sixty_one_to_ninety"].to_f.round(2),
-             total["ninety_one_and_above"].to_f.round(2),
-             (total["zero_to_thirty"].to_f + total["thirty_one_to_sixty"].to_f + total["sixty_one_to_ninety"].to_f + total["ninety_one_and_above"].to_f).round(2)
-        ]
+      def get_total_row report,sheet
+        is_first = true
+        report.report_total.each do |total|
+          row = ["#{is_first ? 'Total' : '' }",
+                       total["zero_to_thirty"].to_i,
+                       total["thirty_one_to_sixty"].to_f.round(2),
+                       total["sixty_one_to_ninety"].to_f.round(2),
+                       total["ninety_one_and_above"].to_f.round(2),
+                       total["total_amount"].to_f.round(2)
+          ]
+          is_first=false
+          sheet.add_row(row)
+        end
       end
-
     end
   end
 end

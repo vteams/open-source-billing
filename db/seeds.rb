@@ -193,12 +193,8 @@ templates.each do |template|
       :template_id => template.id
   )
 end
-
 #creating default currencies
-Currency.create([
-          {title: 'US DOllar',unit: 'USD',code: '$'},
-          {title: 'Euro',unit:'Euro',code: '€'},
-          {title: 'Pakistan Rupee',unit:'PKR',code: 'Rs.'}
-        ])
-
-
+Currency.delete_all
+ActiveRecord::Base.connection.execute("TRUNCATE currencies")
+sample_currencies = Money::Currency.all.collect{|x| {code: x.symbol,unit: x.iso_code,title: x.name}}
+Currency.create(sample_currencies)

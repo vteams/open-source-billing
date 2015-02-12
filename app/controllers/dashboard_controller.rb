@@ -20,7 +20,7 @@
 #
 class DashboardController < ApplicationController
   def index
-    @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.first
+    @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
     gon.currency_code=@currency_code = @currency.present? ? @currency.code : '$'
     gon.chart_data = Reporting::Dashboard.get_chart_data(@currency)
     @recent_activity = Reporting::Dashboard.get_recent_activity

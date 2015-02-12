@@ -55,7 +55,7 @@ module Services
     end
 
     def recover_deleted
-      @invoices.only_deleted.map { |invoice| invoice.recover; invoice.unarchive; invoice.change_status_after_recover }
+      @invoices.only_deleted.map { |invoice| invoice.restore; invoice.unarchive; invoice.change_status_after_recover }
       invoices = ::Invoice.only_deleted.page(@options[:page]).per(@options[:per])
       {action: 'recovered from deleted', invoices: get_invoices('only_deleted')}
     end

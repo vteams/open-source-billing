@@ -400,6 +400,7 @@ DEPENDENCIES
   hashie_rails
   jquery-rails (~> 2.1.4)
   kaminari
+  money (~> 6.5.0)
   mysql2
   nested_form
   paper_trail
