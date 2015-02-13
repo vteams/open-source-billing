@@ -3,7 +3,6 @@ module Services
     class TaxApiService
 
       def self.create(params)
-        #binding.pry
         tax = ::Tax.new(tax_params_api(params))
         if tax.save
           {message: 'Successfully created'}
@@ -13,7 +12,6 @@ module Services
       end
 
       def self.update(params)
-        #binding.pry
         tax = Tax.find(params[:id])
         if tax.present?
           if tax.update_attributes(tax_params_api(params))

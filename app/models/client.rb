@@ -34,6 +34,7 @@ class Client < ActiveRecord::Base
   belongs_to :currency
 
   has_many :company_entities, :as => :entity
+  after_create :create_default_currency
 
   acts_as_archival
   acts_as_paranoid
@@ -91,7 +92,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.recover_deleted ids
-    multiple(ids).only_deleted.each {|client| client.recover; client.unarchive}
+    multiple(ids).only_deleted.each {|client| client.restore; client.unarchive}
   end
 
   def self.filter(params)
@@ -160,5 +161,12 @@ class Client < ActiveRecord::Base
 
     Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 
+  end
+
+  def create_default_currency
+    return true if self.currency.present?
+    currency = Currency.where(unit: 'USD').first || Currency.first
+    self.currency = currency
+    self.save
   end
 end

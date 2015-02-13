@@ -29,10 +29,10 @@ module Services
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
-        invoice = Invoice.find(params[:id]).use_as_template
+        invoice = ::Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
       else
-        invoice = Invoice.new({:invoice_number => Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }
       end
       invoice
@@ -45,9 +45,9 @@ module Services
 
     def self.get_invoice_for_preview(encrypted_invoice_id)
       invoice_id = OSB::Util::decrypt(encrypted_invoice_id).to_i rescue invoice_id = nil
-      invoice = Invoice.find_by_id(invoice_id)
+      invoice = ::Invoice.find_by_id(invoice_id)
       if invoice.blank?
-        return Invoice.only_deleted.find_by_id(invoice_id).blank? ? nil : "invoice deleted"
+        return ::Invoice.only_deleted.find_by_id(invoice_id).blank? ? nil : "invoice deleted"
       end
       invoice.viewed!
       invoice
@@ -62,7 +62,7 @@ module Services
     end
 
     def self.delete_invoices_with_payments(invoices_ids, convert_to_credit)
-      Invoice.multiple(invoices_ids).each do |invoice|
+      ::Invoice.multiple(invoices_ids).each do |invoice|
         if convert_to_credit
           invoice.delete_credit_payments
           invoice.create_credit(invoice.non_credit_payment_total)
@@ -105,7 +105,7 @@ module Services
     end
 
     def self.get_company_id(client_id)
-      entities = Client.select('company_entities.parent_id').
+      entities = ::Client.select('company_entities.parent_id').
           joins(:company_entities).
           where("company_entities.entity_id=? AND company_entities.entity_type = 'Client' AND company_entities.parent_type = 'Company'", client_id).
           group(:entity_id)

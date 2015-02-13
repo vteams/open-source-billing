@@ -3,7 +3,6 @@ module Services
     class AccountApiService
 
       def self.create(params)
-        #binding.pry
         account = Account.new(account_params_api(params))
         if account.save
           {message: 'Successfully created'}
@@ -13,7 +12,6 @@ module Services
       end
 
       def self.update(params)
-        #binding.pry
         account = Account.find(params[:id])
         if account.present?
           if account.update_attributes(account_params_api(params))

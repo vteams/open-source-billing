@@ -41,7 +41,7 @@ module ApplicationHelper
 
   def custom_per_page
     content_tag(:select,
-                options_for_select([10, 5, 20, 50, 100], session["#{controller_name}-per_page"]),
+                options_for_select([5, 10, 20, 50, 100], session["#{controller_name}-per_page"]),
                 :data => {
                     :remote => true,
                     :url => url_for(:action => action_name, :params => params.except(:page), :flag => "per_page")},
@@ -167,6 +167,13 @@ module ApplicationHelper
   def get_company_name
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     Company.find(company_id).company_name
+  end
+
+  def currencies
+    #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
+    currencies = Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )
+    currencies = Currency.where(unit: 'USD') if currencies.empty?
+    currencies
   end
 
 end

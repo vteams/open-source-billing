@@ -32,8 +32,8 @@ class DashboardController < ApplicationController
     @current_invoices = Invoice.current_invoices
     @past_invoices = Invoice.past_invoices
     @amount_billed = Invoice.total_invoices_amount
-    @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices
-    @ytd_income = Reporting::Dashboard.get_ytd_income
+    @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices(@currency)
+    @ytd_income = Reporting::Dashboard.get_ytd_income(@currency)
   end
 
   def chart_details

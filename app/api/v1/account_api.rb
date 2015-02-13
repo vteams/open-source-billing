@@ -25,7 +25,7 @@ module V1
       end
 
 
-      desc 'Fetch a single account'
+      desc 'Fetch single account'
       params do
         requires :id, type: String
       end

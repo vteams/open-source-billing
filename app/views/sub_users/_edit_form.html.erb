@@ -1,5 +1,5 @@
 <%#= form_for(@sub_user, :html => {:novalidate => ""}) do |f| %>
-<%= form_tag('/sub_users/update', novalidate: "", id: "update_sub_user_form")  %>
+<%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "update_sub_user_form") %>
     <div class="new_item_form">
       <div class="content_middle">
 
@@ -37,7 +37,7 @@
                 <div class="label_field left single">Confirmation</div>
                 <div class="large_field">
                   <%= password_field_tag :password_confirmation %>
-                  <%= hidden_field_tag :id,"#{@sub_user.id}" %>
+                  <%= hidden_field_tag 'user_id',@sub_user.id %>
                 </div>
               </div>
 

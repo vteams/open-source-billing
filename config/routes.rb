@@ -12,6 +12,7 @@ Osb::Application.routes.draw do
 
   resources :companies do
     collection do
+      post 'bulk_actions'
       post 'get_clients_and_items'
       get 'filter_companies'
       get 'undo_actions'
@@ -106,6 +107,9 @@ Osb::Application.routes.draw do
       get 'selected_currency'
     end
   end
+
+  post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
+  post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
 
   resources :recurring_profile_line_items
 

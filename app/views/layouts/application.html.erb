@@ -14,7 +14,7 @@
 
     <div class="primary_header">
       <div class="logo">
-        <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard" %>
+        <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard?currency=#{currencies.first.try(:id)}" %>
       </div>
       <div class="primary_menu">
 
@@ -52,7 +52,7 @@
       <div class="nav_container">
         <div id="nav">
           <ul class="select">
-            <li><%= active_link_to t("header.links.dashboard"), "/dashboard" %></li>
+            <li><%= active_link_to t("header.links.dashboard"), "/dashboard?currency=#{currencies.first.try(:id)}" %></li>
 
             <li class="dropdown">
                 <%= active_link_to t("header.links.invoices.invoices"), invoices_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>

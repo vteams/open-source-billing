@@ -3,7 +3,6 @@ module Services
     class CompanyApiService
 
       def self.create(params)
-        #binding.pry
         company = Company.new(company_params_api(params))
         if company.save
           {message: 'Successfully created'}
@@ -13,7 +12,6 @@ module Services
       end
 
       def self.update(params)
-        #binding.pry
         company = Company.find(params[:id])
         if company.present?
           if company.update_attributes(company_params_api(params))

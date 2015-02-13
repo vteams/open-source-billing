@@ -14,7 +14,7 @@ module V1
     resource :clients do
       before {current_user}
 
-      desc 'Fetch a single client'
+      desc 'Fetch  single client'
       params do
         requires :id, type: String
       end

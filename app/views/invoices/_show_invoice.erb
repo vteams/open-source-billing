@@ -31,7 +31,8 @@
 
     <div class="preview_top_right">
       <% unless @invoice.company.logo_url.blank? %>
-          <div class="company_logo"><%= image_tag @invoice.company.logo_url(:thumb) %></div>
+
+          <div class="company_logo"><%= request.format.pdf? ? (wicked_pdf_image_tag  @invoice.company.logo_url(:thumb)) : (image_tag @invoice.company.logo_url(:thumb)) %></div>
       <% end %>
       <div class="company_logo"><%= @invoice.company.company_tag_line %></div>
     </div>
@@ -172,7 +173,7 @@
       </div>
       <!--top_right_row-->
       <% unless @invoice.tax_details.blank? %>
-          <%= taxes_list(@invoice.tax_details) %>
+          <%= taxes_list(@invoice.tax_details,@invoice) %>
       <% end %>
       <!--top_right_row-->
 

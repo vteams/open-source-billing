@@ -31,7 +31,7 @@ class Company < ActiveRecord::Base
   end
 
   def self.recover_deleted(ids)
-    multiple(ids).only_deleted.each { |company| company.recover; company.unarchive }
+    multiple(ids).only_deleted.each { |company| company.restore; company.unarchive }
   end
 
 end

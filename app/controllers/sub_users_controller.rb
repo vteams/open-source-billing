@@ -44,7 +44,7 @@ class SubUsersController < ApplicationController
   end
 
   def update
-    sub_user = User.find(params[:id])
+    sub_user = User.find(params[:user_id])
     respond_to do |format|
       options = {user_name: params[:user_name], email: params[:email],
                  password: params[:password], password_confirmation: params[:password]}

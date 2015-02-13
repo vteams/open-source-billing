@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.recover_deleted(ids)
-    multiple(ids).only_deleted.each { |item| item.recover; item.unarchive }
+    multiple(ids).only_deleted.each { |item| item.restore; item.unarchive }
   end
 
   def self.filter(params, per_page)

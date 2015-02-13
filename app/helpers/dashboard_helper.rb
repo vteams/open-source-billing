@@ -23,11 +23,4 @@ module DashboardHelper
     Reporting::Dashboard.get_invoices_by_period period
   end
 
-  def currencies
-    #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
-    currencies = Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )
-    currencies = Currency.where(unit: 'USD') if currencies.empty?
-    currencies
-  end
-
 end

@@ -176,7 +176,7 @@ class Invoice < ActiveRecord::Base
 
   def self.recover_deleted ids
     multiple_invoices(ids).only_deleted.each do |invoice|
-      invoice.recover
+      invoice.restore
       invoice.unarchive
       invoice.change_status_after_recover
     end

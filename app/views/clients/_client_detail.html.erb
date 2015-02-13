@@ -9,17 +9,17 @@
       <div class="client_row_content">
         <div class="client_bal">
           <div class="bal_box">
-            <h2 class="orange"><%= number_to_currency(@detail[:outstanding_amount]) %></h2>
+            <h2 class="orange"><%= number_to_currency(@detail[:outstanding_amount], unit: @client.currency.present? ? @client.currency.unit : "$") %></h2>
 
             <p><%= t('views.clients.outstanding_amount') %></p>
           </div>
           <div class="bal_box center">
-            <h2 class="blue"><%= number_to_currency(@detail[:amount_billed]) %></h2>
+            <h2 class="blue"><%= number_to_currency(@detail[:amount_billed], unit: @client.currency.present? ? @client.currency.unit : "$") %></h2>
 
             <p><%= t('views.clients.total_amount_billed') %></p>
           </div>
           <div class="bal_box">
-            <h2><%= number_to_currency(@detail[:payments]) %></h2>
+            <h2><%= number_to_currency(@detail[:payments], unit: @client.currency.present? ? @client.currency.unit : "$") %></h2>
 
             <p><%= t('views.clients.total_payments_received') %></p>
           </div>

@@ -179,10 +179,10 @@ class ClientsController < ApplicationController
 
   def client_detail
 
-    client = Client.find(params[:id])
-    @invoices = client.invoices
-    @payments = Payment.payments_history(client)
-    @detail = Services::ClientDetail.new(client).get_detail #client.outstanding_amount
+    @client = Client.find(params[:id])
+    @invoices = @client.invoices
+    @payments = Payment.payments_history(@client)
+    @detail = Services::ClientDetail.new(@client).get_detail #client.outstanding_amount
     render partial: 'client_detail'
   end
 
