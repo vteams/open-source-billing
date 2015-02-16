@@ -108,6 +108,7 @@ Osb::Application.routes.draw do
     end
   end
 
+  post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
   post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
   post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
 

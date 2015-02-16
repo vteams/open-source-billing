@@ -253,7 +253,7 @@ class InvoicesController < ApplicationController
 
   def sort_column
     params[:sort] ||= 'created_at'
-    sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'invoice_number'
     sort_col = "case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end" if sort_col == 'clients.organization_name'
     sort_col
   end
