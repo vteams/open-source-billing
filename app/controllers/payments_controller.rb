@@ -139,7 +139,8 @@ class PaymentsController < ApplicationController
       @action = "deleted"
       @message = payments_deleted(ids) unless ids.blank?
     end
-    respond_to { |format| format.js }
+    #respond_to { |format| format.js }
+    redirect_to payments_url
   end
 
   def payments_history

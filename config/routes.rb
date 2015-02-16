@@ -57,6 +57,7 @@ Osb::Application.routes.draw do
   post '/payments/enter_payment'
   resources :clients do
     collection do
+      post :client_detail
       get 'filter_clients'
       post :bulk_actions
       post 'get_last_invoice'
@@ -122,7 +123,6 @@ Osb::Application.routes.draw do
       get 'undo_actions'
     end
   end
-  post '/clients/client_detail'
   resources :company_profiles
 
 

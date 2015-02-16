@@ -66,7 +66,7 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 
-group :'test.rb.copy' do
+group :test do
   gem 'shoulda-matchers'
   gem 'shoulda', '~> 3.5.0'
   gem 'faker', '~> 1.4.3'

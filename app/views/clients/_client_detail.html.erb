@@ -119,7 +119,7 @@
                               <td class="align_left"><%= link_to payment.payment_reference, invoice_path(payment.invoice), class: 'invoices_link', target: '_blank' rescue "" %></td>
                           <% end %>
                           <td class="align_left"><%= payment.payment_date %></td>
-                          <td class="align_left"><%= payment.company.company_name %></td>
+                          <td class="align_left"><%= payment.company.try(:company_name) %></td>
                           <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{number_to_currency(payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$")}" %></td>
                         </tr>
                     <% end %>

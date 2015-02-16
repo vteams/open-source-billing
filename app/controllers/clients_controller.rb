@@ -178,7 +178,6 @@ class ClientsController < ApplicationController
   end
 
   def client_detail
-
     @client = Client.find(params[:id])
     @invoices = @client.invoices
     @payments = Payment.payments_history(@client)
