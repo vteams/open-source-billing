@@ -91,6 +91,11 @@ class CompaniesController < ApplicationController
 
   def bulk_actions
     if params[:company_ids].include? session[:current_company]
+      if params[:archive].present?
+        @action_for_company = "archived"
+      else
+        @action_for_company = "deleted"
+      end
       @flag_current_company = true
     else
       result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
