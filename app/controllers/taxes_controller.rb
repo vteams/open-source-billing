@@ -67,7 +67,7 @@ class TaxesController < ApplicationController
   def create
     if Tax.is_exits?(params[:tax][:name])
       @tax_exists = true
-      redirect_to(new_taxis_path, :alert => "Tax with same name already exists") unless params[:quick_create]
+      redirect_to(new_tax_path, :alert => "Tax with same name already exists") unless params[:quick_create]
       return
     end
     @taxis = Tax.new(taxes_params)

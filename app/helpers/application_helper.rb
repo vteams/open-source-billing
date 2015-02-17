@@ -176,4 +176,9 @@ module ApplicationHelper
     currencies
   end
 
+  def get_user_current_company
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    Company.find(company_id)
+  end
+
 end

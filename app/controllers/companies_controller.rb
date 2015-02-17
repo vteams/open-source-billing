@@ -90,7 +90,7 @@ class CompaniesController < ApplicationController
   end
 
   def bulk_actions
-    if params[:company_ids].include? session[:current_company]
+    if params[:company_ids].include? get_user_current_company.id.to_s
       if params[:archive].present?
         @action_for_company = "archived"
       else
