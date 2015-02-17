@@ -13,7 +13,7 @@ module OSB
     APP_PROTOCOL ||= :http
 
 # wkhtmltopdf path
-    WKHTMTTOPDF_PATH ||= '/usr/local/bin/wkhtmltopdf' # the location where wkhtmltopdf is installed
+    WKHTMTTOPDF_PATH ||= '/home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf' # the location where wkhtmltopdf is installed
 
 # SMTP SETTINGS
 # production mode
