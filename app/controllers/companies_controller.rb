@@ -90,11 +90,14 @@ class CompaniesController < ApplicationController
   end
 
   def bulk_actions
-    result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
-
-    @companies = result[:companies]
-    @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
-    @action = result[:action]
+    if params[:company_ids].include? session[:current_company]
+      @flag_current_company = true
+    else
+      result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
+      @companies = result[:companies]
+      @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
+      @action = result[:action]
+    end
     respond_to { |format| format.js }
   end
 
