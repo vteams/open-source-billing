@@ -62,10 +62,17 @@ module ApplicationHelper
     link_to title, params.merge(:sort => column, :direction => direction, :page => 1), {:class => "#{css_class} sortable", :remote => true}
   end
 
+  def sortable_class(column)
+    if column == sort_column
+      sort_direction == "asc" ? "sortup" : "sortdown"
+    else
+      ''
+    end
+  end
+
 
   def associate_account(controller, action, item)
     list, checked, global_status = '', '', ''
-
     # create checkbox for each companies and make it check if already associated with (items, clients)
     current_user.current_account.companies.all.each do |company|
       if action == 'edit'
@@ -79,7 +86,6 @@ module ApplicationHelper
                 </div>"
       checked = ''
     end
-
     # radio buttons for whole account and companies
     generate_radio_buttons(global_status, list)
   end

@@ -1,3 +1,4 @@
+jQuery('thead#invoice_head').html('<%= escape_javascript render("invoice_header") %>')
 jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>').hide(300).show(300);
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
@@ -29,7 +30,7 @@ jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 
 jQuery('#select_all').attr('checked', false);
 
-//jQuery("table.invoice_listing").trigger('update');
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
 
 
 

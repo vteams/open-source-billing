@@ -1,5 +1,4 @@
 <%- model_class = RecurringProfile -%>
-<% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
 <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
 
 <div class="recurring_profile">
@@ -45,17 +44,8 @@
               <col class="eight"/>
               <col class="nine"/>
             </colgroup>
-            <thead>
-            <tr>
-              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center header <%= sort_class %>"><%= sortable('invoice_number', t('views.invoices.recurring.profile_id')) %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
-              <th class="align_center header"><%= sortable('last_sent_date', t('views.invoices.recurring.last_sent')) %></th>
-              <th class="align_center header"><%= sortable('frequency', t('views.invoices.recurring.frequency')) %></th>
-              <th class="align_right header"><%= sortable('invoice_total', t('amount')) %></th>
-              <th class="align_right header"><%= sortable('occurrences', t('views.common.remaining')) %></th>
-              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
+            <thead id="recurring_profile_head">
+                    <%= render 'recurring_profile_header'%>
             </thead>
             <tbody id="recurring_profile_body">
             <%= render 'recurring_profile' %>

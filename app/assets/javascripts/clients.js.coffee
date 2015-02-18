@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
 #  jQuery(".chzn-select").chosen({allow_single_deselect: true})
-
   # Show/hide additional client contact section
   jQuery("#contact").click ->
     jQuery("#adCntcts").toggle 500, ->

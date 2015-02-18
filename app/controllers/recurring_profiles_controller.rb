@@ -25,8 +25,9 @@ class RecurringProfilesController < ApplicationController
   # GET /recurring_profiles
   # GET /recurring_profiles.json
   def index
+    params[:status] = params[:status] || 'active'
     @recurring_profiles = RecurringProfile.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
-    @recurring_profiles =  filter_by_company(@recurring_profiles)
+    @recurring_profiles = filter_by_company(RecurringProfile.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -34,6 +35,9 @@ class RecurringProfilesController < ApplicationController
     end
   end
 
+  def filter_recurring_profiles
+    @recurring_profiles = filter_by_company(RecurringProfile.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
+  end
   # GET /recurring_profiles/1
   # GET /recurring_profiles/1.json
   def show
@@ -141,9 +145,7 @@ class RecurringProfilesController < ApplicationController
     respond_to { |format| format.js }
   end
 
-  def filter_recurring_profiles
-    @recurring_profiles = filter_by_company(RecurringProfile.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
-  end
+
 
   private
 

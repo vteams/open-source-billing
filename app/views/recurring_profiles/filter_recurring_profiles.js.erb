@@ -1,8 +1,9 @@
+jQuery('thead#recurring_profile_head').html('<%= escape_javascript render("recurring_profile_header") %>')
 jQuery('tbody#recurring_profile_body').html('<%= escape_javascript render("recurring_profile") %>').hide(300).show(300);
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
-
+window.preventDeletedNavigation();
 <% status = params[:status]%>
 jQuery('.top_links').hide();
 jQuery('#active_links a').removeClass('active');

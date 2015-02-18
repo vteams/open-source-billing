@@ -1,3 +1,4 @@
+jQuery('thead#item_head').html('<%= escape_javascript render("item_header") %>');
 jQuery('tbody#item_body').html('<%= escape_javascript render("items") %>');
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
@@ -6,24 +7,41 @@ jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 //jQuery(".item_listing .text-overflow-class").ellipsis({row:2});
 
 jQuery('#sort_direction').html('<%= params[:direction]%>');
-jQuery(".sortable").each(function () {
-
-    var href = jQuery(this).attr('href');
-    var qs = href.split('?')[1];
-    var qsa = [];
-
-    jQuery(qs.split('&')).each(function () {
-        var key = this.split('=')[0];
-        var value = this.split('=')[1];
-        if (key == 'page')
-            value = <%= params[:page] || 1%>;
-        if(key == 'direction' && value == 'asc')
-            value = 'desc';
-        else if(key == 'direction' && value == 'desc')
-            value = 'asc';
-        qsa.push(key + "=" + value);
-    });
-
-    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
-    jQuery(this).attr('href', new_qs);
-});
+<% status = params[:status]%>
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+<%if status == "active" %>
+jQuery('.archive,.destroy').show();
+jQuery('#active_links a.get_actives').addClass('active');
+<% elsif status == "archived"%>
+jQuery('.recover_archived,.destroy').show();
+jQuery('#active_links a.get_archived').addClass('active');
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show();
+jQuery('#active_links a.get_deleted').addClass('active');
+<%end%>
+jQuery('#select_all').attr('checked', false);
+jQuery("table.table_listing").trigger('update');
+//jQuery(".sortable").each(function () {
+//
+//    var href = jQuery(this).attr('href');
+//    var qs = href.split('?')[1];
+//    var qsa = [];
+//
+//    jQuery(qs.split('&')).each(function () {
+//        var key = this.split('=')[0];
+//        var value = this.split('=')[1];
+//        if (key == 'page')
+//            value = <%= params[:page] || 1%>;
+//        if(key == 'direction' && value == 'asc')
+//            value = 'desc';
+//        else if(key == 'direction' && value == 'desc')
+//            value = 'asc';
+//        qsa.push(key + "=" + value);
+//    });
+//
+//    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
+//    jQuery(this).attr('href', new_qs);
+//});
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")

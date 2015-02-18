@@ -1,4 +1,5 @@
 //jQuery('tbody#item_body').hide(200, function(){jQuery(this).html('<%#= escape_javascript render("items") %>').show(500);});
+jQuery('thead#item_head').html('<%= escape_javascript render("item_header") %>')
 jQuery('tbody#item_body').html('<%= escape_javascript render("items") %>').hide(300).show(300);
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');

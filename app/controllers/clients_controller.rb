@@ -29,13 +29,22 @@ class ClientsController < ApplicationController
   def index
     set_company_session
     #args = {status: 'unarchived', per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction}
-    @clients = Client.get_clients(params.merge(get_args('unarchived')))
-
+    params[:status] = params[:status] || 'active'
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @clients = Client.get_clients(params.merge(get_args(method)))
+    @status = params[:status]
     respond_to do |format|
       format.html # index.html.erb
       format.js
       format.json { render json: @clients }
     end
+  end
+
+  def filter_clients
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @clients = Client.get_clients(params.merge(get_args(method)))
   end
 
   # GET /clients/1
@@ -156,11 +165,6 @@ class ClientsController < ApplicationController
     respond_to { |format| format.js }
   end
 
-  def filter_clients
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
-  end
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])

@@ -12,7 +12,7 @@
     <% @recurring_profiles.each do |profile| %>
         <tr>
           <td class="align_center"> <%= check_box_tag "recurring_profile_ids[]", profile.id, false, :id => "recurring_profile_#{profile.id}" %></td>
-          <td class="align_center"><%= link_to profile.invoice_number, recurring_profile_path(profile), :class => "invoices_link" %></td>
+          <td class="align_center"><%= link_to profile.invoice_number, recurring_profile_path(profile), :class => "invoices_link #{'deleted_entry' if profile.deleted?}" %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= profile.client.organization_name rescue "" %></td>
           <td class="align_left"><%= profile.last_sent_date.to_time.strftime("%m/%d/%Y") rescue "" %></td>
           <td class="align_center"><%= profile.frequency %></td>

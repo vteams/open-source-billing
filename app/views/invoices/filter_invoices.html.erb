@@ -20,8 +20,8 @@
       <div class="content_middle">
 
         <!--<div class="company_select">-->
-          <!--<p>Select a Company</p>-->
-          <!--<%#= filter_by_companies() %>-->
+        <!--<p>Select a Company</p>-->
+        <!--<%#= filter_by_companies() %>-->
         <!--</div>-->
 
         <div class="grid_control">
@@ -49,14 +49,14 @@
               <col class="nine"/>
             </colgroup>
             <thead id="invoice_head">
-                <%= render partial: 'invoice_header' %>
+            <%= render partial: 'invoice_header' %>
             </thead>
             <tbody id="invoice_body">
 
-                <%= render 'invoice' %>
-                <tfoot id="paging_links">
-                    <%= render "application_partials/paging" %>
-                </tfoot>
+            <%= render 'invoice' %>
+            <tfoot id="paging_links">
+            <%= render "application_partials/paging" %>
+            </tfoot>
             </tbody>
           </table>
         </div>

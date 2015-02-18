@@ -43,16 +43,8 @@
               <col class="six"/>
               <col class="seven"/>
             </colgroup>
-            <thead>
-            <tr>
-              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left header"><%= sortable('organization_name',t('views.clients.organization'))%></th>
-              <th class="align_left header"><%= sortable('concat(first_name,last_name)',t('views.clients.contact'))%></th>
-              <th class="align_left header"><%= sortable('email',t('views.common.email'))%></th>
-              <th class="align_left header"><%= sortable('business_phone',t('views.common.phone'))%></th>
-              <th class="align_left header"><%= sortable('client_credit',t('views.clients.available_credit'))%></th>
-              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
+            <thead  id="client_head">
+            <%= render 'client_header' %>
             </thead>
             <tbody id="client_body">
             <%= render 'clients' %>

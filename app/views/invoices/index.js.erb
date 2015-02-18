@@ -1,3 +1,4 @@
+jQuery('thead#invoice_head').html('<%= escape_javascript render("invoice_header") %>')
 jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>');
 jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
@@ -7,25 +8,50 @@ jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 
 jQuery('#sort_direction').html('<%= params[:direction]%>');
 // Add page params in table listing headers
-jQuery(".sortable").each(function () {
+<% status = params[:status]%>
 
-    var href = jQuery(this).attr('href');
-    var qs = href.split('?')[1];
-    var qsa = [];
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 
-    jQuery(qs.split('&')).each(function () {
-        var key = this.split('=')[0];
-        var value = this.split('=')[1];
-        if (key == 'page')
-            value = <%= params[:page] || 1%>;
-        if(key == 'direction' && value == 'asc')
-            value = 'desc';
-        else if(key == 'direction' && value == 'desc')
-            value = 'asc';
+<%if status == "active" %>
+jQuery('.archive,.destroy,.payment,.send').show();
+jQuery('#active_links a.get_actives').addClass('active');
 
-        qsa.push(key + "=" + value);
-    });
+<% elsif status == "archived"%>
+jQuery('.send').parent("li").removeClass("grid_control_sep");
+jQuery('.recover_archived,.destroy,.send').show();
+jQuery('#active_links a.get_archived').addClass('active');
 
-    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
-    jQuery(this).attr('href', new_qs);
-});
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show().parent('li').removeAttr('class');
+jQuery('#active_links a.get_deleted').addClass('active');
+<%end%>
+
+window.preventDeletedNavigation()
+
+//jQuery(".sortable").each(function () {
+//
+//    var href = jQuery(this).attr('href');
+//    var qs = href.split('?')[1];
+//    var qsa = [];
+//
+//    jQuery(qs.split('&')).each(function () {
+//        var key = this.split('=')[0];
+//        var value = this.split('=')[1];
+//        if (key == 'page')
+//            value = <%#= params[:page] || 1%>;
+//        if(key == 'direction' && value == 'asc')
+//            value = 'desc';
+//        else if(key == 'direction' && value == 'desc')
+//            value = 'asc';
+//
+//        qsa.push(key + "=" + value);
+//    });
+//
+//    var new_qs = href.split('?')[0] + '?' + qsa.join('&');
+//    jQuery(this).attr('href', new_qs);
+//});
+
+
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")

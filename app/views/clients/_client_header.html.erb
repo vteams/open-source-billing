@@ -1,0 +1,9 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('organization_name',t('views.clients.organization'))%></th>
+  <th class="align_left header <%= sortable_class('concat(first_name,last_name)') %>"><%= sortable('concat(first_name,last_name)',t('views.clients.contact'))%></th>
+  <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email',t('views.common.email'))%></th>
+  <th class="align_left header <%= sortable_class('business_phone') %>"><%= sortable('business_phone',t('views.common.phone'))%></th>
+  <th class="align_left header <%= sortable_class('client_credit') %>"><%= sortable('client_credit',t('views.clients.available_credit'))%></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

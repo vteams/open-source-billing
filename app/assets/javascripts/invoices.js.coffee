@@ -24,6 +24,11 @@ jQuery ->
 
 #  jQuery(".cost").spinner()
 
+  $("a.deleted_entry").click (e)->
+    applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
+    e.preventDefault()
+    return false
+
   window.applyChosen()
 
   window.tableListing()

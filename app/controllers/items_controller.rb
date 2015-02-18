@@ -29,7 +29,10 @@ class ItemsController < ApplicationController
   def index
     set_company_session
     #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
-    @items = Item.get_items(params.merge(get_args('unarchived')))
+    params[:status] = params[:status] || 'active'
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @items = Item.get_items(params.merge(get_args(method)))
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
 
@@ -38,6 +41,12 @@ class ItemsController < ApplicationController
       format.html # index.html.erb
       format.json { render :json => @items }
     end
+  end
+
+  def filter_items
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @items = Item.get_items(params.merge(get_args(method)))
   end
 
   # GET /items/1
@@ -164,12 +173,6 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to { |format| format.js }
-  end
-
-  def filter_items
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @items = Item.get_items(params.merge(get_args(method)))
   end
 
   def undo_actions

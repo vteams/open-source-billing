@@ -51,7 +51,7 @@ module Services
     end
 
     def recover_deleted
-      @clients.only_deleted.map { |client| client.restore; client.unarchive }
+      @clients.only_deleted.map { |client| client.restore; client.unarchive; client.client_contacts.unscoped.map(&:restore); }
       {action: 'recovered from deleted', clients: get_clients('only_deleted')}
     end
 

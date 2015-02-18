@@ -27,15 +27,23 @@ class InvoicesController < ApplicationController
   include InvoicesHelper
 
   def index
+=begin
     @invoices = Invoice.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
-
-    #filter invoices by company
+    @invoices = filter_by_company(@invoices)
+=end
+    params[:status] = params[:status] || 'active'
+    @invoices = Invoice.filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
 
     respond_to do |format|
       format.html # index.html.erb
       format.js
     end
+  end
+
+  def filter_invoices
+    @invoices = Invoice.filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+    @invoices = filter_by_company(@invoices)
   end
 
   def show
@@ -179,9 +187,6 @@ class InvoicesController < ApplicationController
     respond_to { |format| format.js }
   end
 
-  def filter_invoices
-    @invoices = filter_by_company(Invoice.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
-  end
 
   def delete_invoices_with_payments
     invoices_ids = params[:invoice_ids]

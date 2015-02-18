@@ -1,0 +1,10 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_center header <%= sortable_class('invoice_number') %>"><%= sortable('invoice_number', t('views.invoices.recurring.profile_id')) %></th>
+  <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
+  <th class="align_center header <%= sortable_class('last_sent_date') %>"><%= sortable('last_sent_date', t('views.invoices.recurring.last_sent')) %></th>
+  <th class="align_center header <%= sortable_class('frequency') %>"><%= sortable('frequency', t('views.invoices.recurring.frequency')) %></th>
+  <th class="align_right header <%= sortable_class('invoice_total') %>"><%= sortable('invoice_total', t('amount')) %></th>
+  <th class="align_right header <%= sortable_class('occurrences') %>"><%= sortable('occurrences', t('views.common.remaining')) %></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

@@ -133,4 +133,38 @@ jQuery(function () {
 
 });
 
+window.preventDeletedNavigation = function(){
+    var applyPopover;
 
+    applyPopover = function(elem, position, corner, message) {
+        elem.qtip({
+            content: {
+                text: message
+            },
+            show: {
+                event: false
+            },
+            hide: {
+                event: false
+            },
+            position: {
+                at: position
+            },
+            style: {
+                tip: {
+                    corner: corner
+                }
+            }
+        });
+        elem.qtip().show();
+        return elem.focus();
+    };
+
+    $("a.deleted_entry").click(function(e){
+        applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
+        e.preventDefault();
+        return false;
+    });
+};
+
+window.preventDeletedNavigation();
