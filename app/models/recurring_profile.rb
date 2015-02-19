@@ -57,7 +57,6 @@ class RecurringProfile < ActiveRecord::Base
       taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
       taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
     end
-
     taxes.each do |tax|
       tax_list["#{tax[:name]} #{tax[:pct]}"] += tax[:amount]
     end

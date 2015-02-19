@@ -79,17 +79,15 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    if Item.is_exists?(params[:item][:item_name])
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    if Item.is_exists?(params[:item][:item_name], company_id)
       @item_exists = true
       redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
       return
     end
     @item = Item.new(item_params)
-
-    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
-
 
     respond_to do |format|
       if @item.save
@@ -141,7 +139,7 @@ class ItemsController < ApplicationController
 #  # Load invoice line items data when an item is selected from drop down list
   def load_item_data
     item = Item.find(params[:id])
-    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0]
+    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || ""]
   end
 
   def bulk_actions

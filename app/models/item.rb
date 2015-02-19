@@ -29,7 +29,7 @@ class Item < ActiveRecord::Base
   #attr_accessor :inventory, :item_description, :item_name, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at
 
   # associations
-  has_many :invoice_line_items, :dependent => :destroy
+  has_many :invoice_line_items
   belongs_to :tax1, :foreign_key => "tax_1", :class_name => "Tax"
   belongs_to :tax2, :foreign_key => "tax_2", :class_name => "Tax"
   belongs_to :company
@@ -41,8 +41,9 @@ class Item < ActiveRecord::Base
 
   paginates_per 10
 
-  def self.is_exists? item_name
-    where(:item_name => item_name).present?
+  def self.is_exists? item_name, company_id = nil
+    company = Company.find company_id if company_id.present?
+    company.present? ? company.items.where(:item_name => item_name).present? : where(:item_name => item_name).present?
   end
 
   def self.recover_archived(ids)

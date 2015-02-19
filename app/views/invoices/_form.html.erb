@@ -225,7 +225,7 @@
           <ul>
             <% @invoice.tax_details.map do |tax, amount| %>
                 <li><span class='grid_summary_title'><%= tax %></span>
-                  <span class='grid_summary_description tax_amount'><%= number_to_currency(amount).gsub("$", "") %></span>
+                  <span class='grid_summary_description tax_amount'></span>
                 </li>
             <% end %>
           </ul>

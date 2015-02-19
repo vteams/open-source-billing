@@ -143,6 +143,7 @@ jQuery ->
           container.find("select.tax1,select.tax2").val('').trigger("liszt:updated")
           container.find("select.tax1").val(item[3]).trigger("liszt:updated") if item[3] isnt 0
           container.find("select.tax2").val(item[4]).trigger("liszt:updated") if item[4] isnt 0
+          container.find("input.item_name").val(item[5])
           updateLineTotal(elem)
           updateInvoiceTotal()
 

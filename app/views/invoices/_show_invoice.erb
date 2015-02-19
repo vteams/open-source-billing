@@ -172,9 +172,10 @@
         <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
-      <% unless @invoice.tax_details.blank? %>
-          <%= taxes_list(@invoice.tax_details,@invoice) %>
+      <% unless @invoice.tax_detail_with_discount.blank? %>
+          <%= taxes_list(@invoice.tax_detail_with_discount,@invoice) %>
       <% end %>
+
       <!--top_right_row-->
 
       <div class="top_right_row preview_heading border-row">

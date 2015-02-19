@@ -282,6 +282,22 @@ class Invoice < ActiveRecord::Base
     tlist
   end
 
+  def tax_detail_with_discount
+    taxes = []
+    tlist = Hash.new(0)
+    self.invoice_line_items.each do |li|
+      next unless [li.item_unit_cost, li.item_quantity].all?
+      line_total = li.item_unit_cost * li.item_quantity
+      # calculate tax1 and tax2
+      taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: discount_percentage.present?? ((line_total  - ((li.invoice.discount_percentage)/100*line_total)) * li.tax1.percentage / 100.0) : (line_total * li.tax1.percentage / 100.0) }) unless li.tax1.blank?
+      taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: discount_percentage.present?? ((line_total  - ((li.invoice.discount_percentage)/100*line_total)) * li.tax2.percentage / 100.0) : (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+    end
+    taxes.each do |tax|
+      tlist["#{tax[:name]} #{tax[:pct]}"] += tax[:amount]
+    end
+    tlist
+  end
+
   def status_after_payment_deleted
     # update invoice status when a payment is deleted
     case status
