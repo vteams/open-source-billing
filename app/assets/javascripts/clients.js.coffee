@@ -93,5 +93,6 @@ jQuery ->
   jQuery('.client_container_top .cross_btn').live 'click', ->
     jQuery(this).parents('tr').prev('tr').find('.client_name').click()
 
-
-
+  jQuery('#account_association').change ->
+    if jQuery(this).is ':checked'
+      $('.company_checkbox').prop('checked',true)
