@@ -81,7 +81,7 @@ module ApplicationHelper
       end
 
       list += "<div class='options_content_row'>
-                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}'/>
+                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' class='company_checkbox'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
       checked = ''
@@ -93,7 +93,7 @@ module ApplicationHelper
   def generate_radio_buttons(status, list)
     radio_buttons = <<-HTML
               <div class="options_content_row">
-                  <input class='association' type = 'radio' value='account' name='association' id='account_association' checked />
+                  <input class='association' type = 'radio' value='company' name='association' id='account_association' />
                   <label for='account_association'> All companies</label>
               </div>
               <div class="options_content_row">

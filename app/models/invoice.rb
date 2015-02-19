@@ -214,8 +214,9 @@ class Invoice < ActiveRecord::Base
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
-  def self.total_invoices_amount
-    sum('invoice_total')
+  def self.total_invoices_amount(currency=nil)
+    currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
+    where(currency_filter).sum('invoice_total')
   end
 
   def create_credit(amount)

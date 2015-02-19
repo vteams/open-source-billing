@@ -22,7 +22,7 @@
             <div class="field_row">
               <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
               <div class="medium_field">
-                <%= f.text_field :email, :required => "" %>
+                <%= f.text_field :email, required: true %>
               </div>
               <div class="label_field right"><%= t('views.clients.business_phone') %></div>
               <div class="small_field"><%= f.text_field :business_phone %></div>
@@ -32,7 +32,7 @@
             <div class="field_row description">
               <div class="label_field left single"><span><%= t('views.clients.contact_name') %></span></div>
               <div class="small_field">
-                <%= f.text_field :first_name %>
+                <%= f.text_field :first_name,required: true %>
                 <ul class="field_description">
                   <li><%= t('views.clients.first_name') %></li>
                 </ul>
