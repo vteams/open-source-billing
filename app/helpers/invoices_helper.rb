@@ -102,7 +102,8 @@ module InvoicesHelper
 
     clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
 
-    action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
+    clients = action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
+    @invoice.present? && action == 'edit' && @invoice.unscoped_client.deleted? ? clients << [@invoice.unscoped_client.organization_name, @invoice.unscoped_client.id, {type: 'company_level'}] : clients
   end
 
   def load_items(action,company_id)

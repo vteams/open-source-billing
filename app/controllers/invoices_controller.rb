@@ -34,7 +34,6 @@ class InvoicesController < ApplicationController
     params[:status] = params[:status] || 'active'
     @invoices = Invoice.filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
-
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -48,6 +47,7 @@ class InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
+    @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -165,7 +165,7 @@ class InvoicesController < ApplicationController
 
   def unpaid_invoices
     for_client = params[:for_client].present? ? "and client_id = #{params[:for_client]}" : ''
-    @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
+    @invoices = Invoice.joins(:client).where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
     respond_to { |format| format.js }
   end
 

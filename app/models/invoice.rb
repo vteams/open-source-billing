@@ -351,4 +351,8 @@ class Invoice < ActiveRecord::Base
     self.sent_emails.where("type = '#{reminder_number} Late Payment Reminder'").first
   end
 
+  def unscoped_client
+    Client.unscoped.find_by_id self.client_id
+  end
+
 end

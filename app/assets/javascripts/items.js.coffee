@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
+  jQuery("#company_association").prop('checked', true)
     # Validate client
   jQuery("form#new_item, form.edit_item,form#create_item").submit ->
     flag = true

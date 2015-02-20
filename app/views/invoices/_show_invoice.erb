@@ -51,20 +51,20 @@
     <!--</div>-->
 
     <!--</div>-->
-    <% if @invoice.client.present? %>
+    <% if @client.present? %>
         <div class="preview_top_left">
-          <div class="invoice_name"><%= @invoice.client.organization_name rescue '' %></div>
+          <div class="invoice_name"><%= @client.organization_name rescue '' %></div>
 
           <div class="invoice_organization">
-            <p><%= @invoice.client.first_name.to_s + " " +@invoice.client.last_name.to_s %></p>
+            <p><%= @client.first_name.to_s + " " +@client.last_name.to_s %></p>
 
-            <p><%= @invoice.client.address_street1 %></p>
+            <p><%= @client.address_street1 %></p>
 
-            <p><%= @invoice.client.address_street2 %></p>
+            <p><%= @client.address_street2 %></p>
 
-            <p><%= "#{@invoice.client.city}, #{@invoice.client.province_state } #{@invoice.client.postal_zip_code}" if @invoice.client.city %></p>
+            <p><%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %></p>
 
-            <p><%= @invoice.client.country %></p>
+            <p><%= @client.country %></p>
           </div>
 
         </div>

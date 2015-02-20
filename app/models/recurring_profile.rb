@@ -77,4 +77,8 @@ class RecurringProfile < ActiveRecord::Base
     multiple(ids).only_deleted.each { |profile| profile.recover; profile.unarchive }
   end
 
+  def recurring_unscoped_client
+    Client.unscoped.find_by_id self.client_id
+  end
+
 end
