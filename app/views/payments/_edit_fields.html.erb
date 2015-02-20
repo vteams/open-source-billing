@@ -1,5 +1,5 @@
 <div class="pay_invoice">
-  <% client_credit = payment.invoice.client.client_credit
+  <% client_credit = payment.invoice.unscoped_client.client_credit
      client_credit += payment.payment_amount if payment.payment_method == "Credit"
   %>
   <div class="fields_content">
@@ -71,7 +71,7 @@
         </div>
         <!--payment_left-->
 
-        <div class="payment_right client_<%= payment.invoice.client.id%>">
+        <div class="payment_right client_<%= payment.invoice.unscoped_client.id%>">
 
           <div class="field_row">
             <%= f.hidden_field :invoice_id %>

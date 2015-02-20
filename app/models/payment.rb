@@ -44,14 +44,14 @@ class Payment < ActiveRecord::Base
   def client_name
     invoice = Invoice.with_deleted.find_by_id(self.invoice_id)
     if invoice.present?
-      invoice.client.organization_name rescue '-'
+      self.unscoped_client.organization_name rescue self.client_full_name
     else
-      client.organization_name rescue '-'
+      self.unscoped_client.organization_name rescue self.client_full_name
     end
   end
 
   def client_full_name
-    "#{self.invoice.client.first_name rescue ''}  #{self.invoice.client.last_name rescue ''}"
+    "#{self.invoice.unscoped_client.first_name rescue ''}  #{self.invoice.unscoped_client.last_name rescue ''}"
   end
 
   # either it's a normal payment, a credit due to overpayment or a converted payment
@@ -176,4 +176,9 @@ class Payment < ActiveRecord::Base
   def self.payments_with_credit(ids)
     where('payments.id IN(?)', ids).joins(:credit_payments).group('payments.id')
   end
+
+  def unscoped_client
+    Client.unscoped.find_by_id self.client_id
+  end
+
 end
