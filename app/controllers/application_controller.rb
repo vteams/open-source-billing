@@ -113,7 +113,6 @@ class ApplicationController < ActionController::Base
 
   def get_clients_and_items
     #parent = params[:company_id].blank? ? current_user.current_account : Company.find(params[:company_id])
-
     parent = Company.find(params[:company_id] || get_company_id)
     @get_clients = get_clients(parent)
     @get_items = get_items(parent)
@@ -149,6 +148,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :account, :email, :password, :remember_me) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :account, :email, :password, :password_confirmation, :current_password) }
   end
-
-
 end

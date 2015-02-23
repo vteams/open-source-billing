@@ -1,0 +1,6 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_left header <%= sortable_class('name') %>"><%= sortable('name',t('views.common.name')) %></th>
+  <th class="align_left header <%= sortable_class('percentage') %>"><%= sortable('percentage',t('views.common.percentage')) %></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

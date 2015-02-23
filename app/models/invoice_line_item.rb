@@ -31,4 +31,8 @@ class InvoiceLineItem < ActiveRecord::Base
   # archive and delete
   acts_as_archival
   acts_as_paranoid
+
+  def unscoped_item
+    Item.unscoped.find_by_id self.item_id
+  end
 end

@@ -37,13 +37,8 @@
               <col class="three"/>
               <col class="four"/>
             </colgroup>
-            <thead>
-            <tr>
-              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left header"><%= sortable('name',t('views.common.name')) %></th>
-              <th class="align_left header"><%= sortable('percentage',t('views.common.percentage')) %></th>
-              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
+            <thead id="tax_head">
+            <%= render partial: 'tax_header' %>
             </thead>
             <tbody id="tax_body">
             <%= render 'taxes' %>

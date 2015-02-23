@@ -113,4 +113,16 @@ module InvoicesHelper
     action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
   end
 
+  #def load_items(action,company_id)
+  #  account_level = current_user.current_account.items.unarchived
+  #  id = session['current_company'] || current_user.current_company || current_user.first_company_id
+  #  items = Company.find_by_id(id).items.unarchived
+  #  if action == 'new' && company_id.blank?
+  #    account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]}
+  #  else
+  #    items = Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
+  #    @invoice.invoice_line_items.select{|invoice_line_item| invoice_line_item.item_id.present? && invoice_line_item.unscoped_item.deleted? }.map{|invoice_line_item| [invoice_line_item.item_name, invoice_line_item.item_id]} + items
+  #  end
+  #end
+
 end

@@ -1,5 +1,6 @@
 //jQuery(".alert").show().find('span').html("Invoice(s) are <%#= @action %> successfully");
 //jQuery('tbody#tax_body').hide(200, function(){jQuery(this).html('<%#= escape_javascript render("taxes") %>').show(500);});
+jQuery('thead#tax_head').html('<%= escape_javascript render("tax_header") %>')
 jQuery('tbody#tax_body').html('<%= escape_javascript render("taxes") %>').hide(300).show(300);
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');

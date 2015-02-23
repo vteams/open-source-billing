@@ -354,5 +354,4 @@ class Invoice < ActiveRecord::Base
   def unscoped_client
     Client.unscoped.find_by_id self.client_id
   end
-
 end

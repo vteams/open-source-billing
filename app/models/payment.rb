@@ -97,7 +97,7 @@ class Payment < ActiveRecord::Base
 
   def self.check_client_credit(invoice_id)
     invoice = Invoice.find(invoice_id)
-    invoice.client.client_credit == 0 ? true : false
+    invoice.client.present?? invoice.client.client_credit == 0 ? true : false :  invoice.unscoped_client.client_credit == 0 ? true : false
   end
 
   def self.add_credit_payment(invoice, amount)
