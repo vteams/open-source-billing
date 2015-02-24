@@ -113,6 +113,11 @@ module InvoicesHelper
     action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
   end
 
+  def load_deleted_item(invoice,company_id)
+    items = Item.unscoped.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{type: 'deleted_item'}]}
+    items + load_items('edit',company_id)
+  end
+
   #def load_items(action,company_id)
   #  account_level = current_user.current_account.items.unarchived
   #  id = session['current_company'] || current_user.current_company || current_user.first_company_id

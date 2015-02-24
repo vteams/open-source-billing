@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211115231) do
+ActiveRecord::Schema.define(version: 20150224123445) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -363,6 +363,7 @@ ActiveRecord::Schema.define(version: 20150211115231) do
     t.string   "last_invoice_status"
     t.datetime "last_sent_date"
     t.integer  "sent_invoices"
+    t.integer  "currency_id"
   end
 
   create_table "sent_emails", force: true do |t|

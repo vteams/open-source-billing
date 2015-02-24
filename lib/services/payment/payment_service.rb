@@ -26,7 +26,7 @@ module Services
     def self.distribute_credit_payment(payment, client_email)
       payment_amount = payment[:payment_amount]
       invoice = Invoice.find(payment[:invoice_id])
-      client = invoice.client
+      client = invoice.client.present?? invoice.client : invoice.unscoped_client
       remaining, collected = payment_amount, 0
 
       new_credit_payment = Payment.create!(payment.permit!)

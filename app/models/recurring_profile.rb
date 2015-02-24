@@ -14,6 +14,8 @@ class RecurringProfile < ActiveRecord::Base
   belongs_to :company
   has_many :recurring_profile_line_items, :dependent => :destroy
 
+  belongs_to :currency
+
   accepts_nested_attributes_for :recurring_profile_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 
   paginates_per 10

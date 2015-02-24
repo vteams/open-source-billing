@@ -121,6 +121,7 @@ Osb::Application.routes.draw do
       get 'filter_recurring_profiles'
       post 'bulk_actions'
       get 'undo_actions'
+      get 'selected_currency'
     end
   end
   resources :company_profiles

@@ -4,3 +4,11 @@ $('.invoice_currency').trigger("liszt:updated");
 
 window.currency_symbol = "<%= @client.currency.unit %>"
 $("#invoice_sub_total_lbl, #invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
+
+
+$("#recurring_profile_currency").removeClass('hide')
+$('.recurring_profile_currency').val("<%= @client.currency_id %>")
+$('.recurring_profile_currency').trigger("liszt:updated");
+
+window.currency_symbol = "<%= @client.currency.unit %>"
+$("#recurring_profile_total_lbl, #recurring_profile_total_lbl").formatCurrency({symbol: window.currency_symbol})

@@ -145,7 +145,9 @@ class RecurringProfilesController < ApplicationController
     respond_to { |format| format.js }
   end
 
-
+  def selected_currency
+    @currency = Currency.find params[:currency_id]
+  end
 
   private
 
@@ -173,7 +175,7 @@ class RecurringProfilesController < ApplicationController
   private
 
   def recurring_profile_params
-    params.require(:recurring_profile).permit(:client_id, :discount_amount, :discount_percentage, :notes, :po_number,
+    params.require(:recurring_profile).permit(:client_id, :currency_id, :discount_amount, :discount_percentage, :notes, :po_number,
                                               :status, :sub_total, :tax_amount, :terms, :first_invoice_date, :frequency,
                                               :occurrences, :prorate, :prorate_for, :gateway_id,
                                               :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at,

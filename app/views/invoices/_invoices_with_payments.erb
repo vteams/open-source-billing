@@ -18,7 +18,8 @@
           <%= hidden_field_tag "invoice_ids[]", inv.id %>
           <tr>
             <td class="align_center"><%= inv.invoice_number %></td>
-            <td class="align_left"><%= inv.client.organization_name unless inv.client.organization_name.blank? %></td>
+            <!--<td class="align_left"><%#= inv.client.organization_name unless inv.client.organization_name.blank? %></td>-->
+            <td class="align_left"><%= inv.client.present?? inv.client.organization_name : inv.unscoped_client.organization_name %></td>
             <td class="align_center"><%= inv.invoice_date.to_date %></td>
             <td class="align_right"><%= number_to_currency(inv.invoice_total) %>
               <!--<span class="tt"> <%#= current_user.currency_code %></span></td>-->

@@ -7,7 +7,11 @@
     </div>
   </td>
   <td class="align_left">
-    <%= f.select :item_id, options_for_select(load_items(action_name, @invoice.company_id), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
+    <% if f.object.item_id.present? and f.object.item.nil? %>
+        <%= f.select :item_id, options_for_select(load_deleted_item(f.object,@invoice.company_id),selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
+    <% else %>
+        <%= f.select :item_id, options_for_select(load_items(action_name, @invoice.company_id), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
+     <% end %>
     <%#= f.collection_select(:item_id, load_items(action_name, @invoice.company_id), :id, :item_name, {:prompt => "",:include_blank => ""}, {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""}) %>
   </td>
 

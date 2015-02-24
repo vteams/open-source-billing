@@ -46,6 +46,87 @@ jQuery ->
     elem.qtip().show()
     elem.focus()
 
+  useAsTemplatePopover = (elem,id,client_name) ->
+    elem.qtip
+      content:
+        text: "<a href='/recurring_profiles/new/#{id}'>To create new recurring profile use the last invoice send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: "rightTop"
+      style:
+        classes: 'use_as_template'
+        tip:
+          corner: "bottomLeft"
+    elem.qtip().show()
+    qtip = jQuery(".qtip.use_as_template")
+    qtip.css("top",qtip.offset().top - qtip.height())
+    qtip.attr('data-top',qtip.offset().top - qtip.height())
+    elem.focus()
+
+  hidePopover = (elem) ->
+    #elem.next(".popover").hide()
+    elem.qtip("hide")
+
+  # Hide use as template qtip
+  jQuery('.use_as_template .close_qtip').live "click", ->
+    hidePopover(jQuery("#recurring_profile_client_id_chzn"))
+
+  jQuery("#recurring_profile_client_id_chzn,.chzn-container").live "click", ->
+    jQuery(this).qtip("hide")
+
+  # Don't send an ajax request if an item is deselected.
+  clearLineTotal = (elem) ->
+    container = elem.parents("tr.fields")
+    container.find("input.description").val('')
+    container.find("input.cost").val('')
+    container.find("input.qty").val('')
+    container.find("select.tax1,select.tax2").val('').trigger("liszt:updated")
+    updateLineTotal(elem)
+    updateInvoiceTotal()
+
+  jQuery('#active_links a').live 'click', ->
+    jQuery('#active_links a').removeClass('active')
+    jQuery(this).addClass('active')
+
+  jQuery(".invoice_action_links input[type=submit]").click ->
+    jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
+
+  ######
+
+  jQuery("#recurring_profile_client_id").change ->
+    client_id = jQuery(this).val()
+    hidePopover(jQuery("#recurring_profile_client_id_chzn")) if client_id is ""
+    jQuery("#last_invoice").hide()
+    if not client_id? or client_id isnt ""
+
+      jQuery.get('/clients/'+ client_id + '/default_currency')
+
+      jQuery.ajax '/clients/get_last_invoice',
+        type: 'POST'
+        data: "id=" + client_id
+        dataType: 'html'
+        error: (jqXHR, textStatus, errorThrown) ->
+          alert "Error: #{textStatus}"
+        success: (data, textStatus, jqXHR) ->
+          data = JSON.parse(data)
+          id = jQuery.trim(data[0])
+          client_name = data[1]
+          unless id is "no invoice"
+            useAsTemplatePopover(jQuery("#recurring_profile_client_id_chzn"),id,client_name)
+          else
+            hidePopover(jQuery(".hint_text:eq(0)"))
+
+  # Change currency of invoice
+  jQuery("#recurring_profile_currency").change ->
+    currency_id = jQuery(this).val()
+    hidePopover(jQuery("#recurring_profile_currency_id_chzn")) if currency_id is ""
+    if not currency_id? or currency_id isnt ""
+      jQuery.get('/recurring_profiles/selected_currency?currency_id='+ currency_id)
+
+
   jQuery("#recurring_profile_first_invoice_date").on "change keyup", ->
     jQuery(this).qtip("hide")
 

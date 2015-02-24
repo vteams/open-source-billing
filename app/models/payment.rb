@@ -82,7 +82,7 @@ class Payment < ActiveRecord::Base
   def self.update_invoice_status_credit(inv_id, c_pay)
     invoice = Invoice.find(inv_id)
     diff = (self.invoice_paid_amount(invoice.id) + c_pay) - invoice.invoice_total
-    if invoice.client.client_credit < c_pay || diff < 0
+    if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
       return_v = diff < 0 ? c_pay : invoice.client.client_credit
     else
