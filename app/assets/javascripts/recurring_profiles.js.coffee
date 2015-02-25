@@ -145,6 +145,57 @@ jQuery ->
   jQuery("#recurring_profile_occurrences").bind "contextmenu", (e) ->
     e.preventDefault()
 
+  applyTax = (line_total,elem) ->
+    tax1 = elem.parents("tr").find("select.tax1 option:selected").attr('data-tax_1')
+    tax2 = elem.parents("tr").find("select.tax2 option:selected").attr('data-tax_2')
+    tax1 = 0 if not tax1? or tax1 is ""
+    tax2 = 0 if not tax2? or tax2 is ""
+    discount_amount = applyDiscount(line_total)
+    total_tax = (parseFloat(tax1) + parseFloat(tax2))
+    (line_total - discount_amount) * (parseFloat(total_tax) / 100.0)
+
+  # Apply discount percentage on subtotals
+  applyDiscount = (subtotal) ->
+    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+    discount_type = jQuery("select#discount_type").val()
+    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
+    if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
+
+  updateInvoiceTotal = ->
+
+    total = 0
+    tax_amount = 0
+    discount_amount = 0
+    jQuery("table.invoice_grid_fields tr:visible .line_total").each ->
+      line_total = parseFloat(jQuery(this).text())
+      total += line_total
+      #update invoice sub total lable and hidden field
+      jQuery("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
+      jQuery("#invoice_sub_total_lbl").text(total.toFixed(2))
+
+      #update invoice total lable and hidden field
+      jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2))
+      jQuery("#invoice_total_lbl").text(total.toFixed(2))
+
+      tax_amount += applyTax(line_total,jQuery(this))
+
+    discount_amount = applyDiscount(total)
+
+    #update tax amount label and tax amount hidden field
+    jQuery("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2))
+    jQuery("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
+
+    #update discount amount lable and discount hidden field
+    #    jQuery("#invoice_discount_amount_lbl").text(discount_amount.toFixed(2))
+    jQuery("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
+
+    total_balance = (parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount)
+    jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
+    jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
+    jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
+    window.taxByCategory()
+  updateInvoiceTotal()
+
   # Date formating function
   formated_date = (elem) ->
     separator = "-"

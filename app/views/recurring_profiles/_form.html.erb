@@ -124,7 +124,7 @@
     </div>
     <!--fields_content-->
     <script>$(".fields_content").last().css('border-bottom', 'none');</script>
-
+    <script>window.currency_symbol = "<%= @recurring_profile.currency.present? ? @recurring_profile.currency.unit : "$" %>"</script>
     <div class="grid_table">
       <table cellpadding="0" cellspacing="0" class="invoice_grid_fields" id="invoice_grid_fields">
         <colgroup>
