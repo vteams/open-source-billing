@@ -173,7 +173,7 @@ class ClientsController < ApplicationController
   end
 
   def get_last_invoice
-    client = Client.find(params[:id])
+    client = Client.find_by_id(params[:id]).present? ? Client.find(params[:id]) : Client.unscoped.find_by_id(params[:id])
     render :text => [client.last_invoice || "no invoice", client.organization_name || ""]
   end
 
