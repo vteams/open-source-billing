@@ -134,6 +134,7 @@ en:
       select_a_country: "Select a country..."
       select_default_currency: "Select default currency..."
       select_invoice_currency: "Select currency..."
+      select_recurring_profile_currency: "Select currency..."
       yes: "Yes"
       no: "No"
       pdf: "PDF"

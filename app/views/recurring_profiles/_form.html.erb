@@ -2,8 +2,7 @@
     <% @parent_f = f
        start_date = ''
        start_date =  @recurring_profile.first_invoice_date.to_date.strftime("%Y-%m-%d") unless  @recurring_profile.first_invoice_date.blank?
-
-    %>
+ %>
 
     <div class="invoice_form recurring_profile_form">
     <div class="content_middle">
@@ -31,7 +30,7 @@
               </div>
               <div class="small_field">
                 <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? t('views.common.infinite') :  @recurring_profile.occurrences %>
-                <span id="how_many_symbol">#</span>
+                <span id="how_many_symbol"></span>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.how_many') %></li>
                 </ul>
@@ -65,7 +64,7 @@
               <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
-                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: f.object.currency_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_recurring_profile_currency"), :class => "recurring_profile_currency medium chzn-select", "data-dropdown-width" => "300"} %>
+                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: f.object.currency_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_recurring_profile_currency"),:id => "recurring_profile_currency_id", :class => "recurring_profile_currency medium chzn-select", "data-dropdown-width" => "300"} %>
               </div>
             </div>
             <!--field_row-->
@@ -196,7 +195,7 @@
           <ul>
             <% @recurring_profile.tax_details.map do |tax, amount| %>
                 <li><span class='grid_summary_title'><%= tax %></span>
-                  <span class='grid_summary_description tax_amount'><%= number_to_currency(amount).gsub("$", "") %></span>
+                  <span class='grid_summary_description tax_amount'></span>
                 </li>
             <% end %>
           </ul>

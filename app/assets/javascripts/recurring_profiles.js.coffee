@@ -94,7 +94,6 @@ jQuery ->
   jQuery(".invoice_action_links input[type=submit]").click ->
     jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
 
-  ######
 
   jQuery("#recurring_profile_client_id").change ->
     client_id = jQuery(this).val()
@@ -120,7 +119,7 @@ jQuery ->
             hidePopover(jQuery(".hint_text:eq(0)"))
 
   # Change currency of invoice
-  jQuery("#recurring_profile_currency").change ->
+  jQuery("#recurring_profile_currency_id").change ->
     currency_id = jQuery(this).val()
     hidePopover(jQuery("#recurring_profile_currency_id_chzn")) if currency_id is ""
     if not currency_id? or currency_id isnt ""

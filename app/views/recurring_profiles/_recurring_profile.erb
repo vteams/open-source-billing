@@ -16,7 +16,7 @@
           <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= profile.client.try(:organization_name).blank??  profile.recurring_unscoped_client.try(:organization_name) : profile.client.organization_name %></td>
           <td class="align_left"><%= profile.last_sent_date.to_time.strftime("%m/%d/%Y") rescue "" %></td>
           <td class="align_center"><%= profile.frequency %></td>
-          <td class="align_right"><%= "#{number_to_currency(profile.invoice_total)}" %></td>
+          <td class="align_right"><%= "#{number_to_currency(profile.invoice_total, unit: profile.currency.present? ? profile.currency.unit : "$")}" %></td>
           <td class="align_center"><%=  profile.remaining_occurrences %></td>
           <td class="align_center">
             <% if profile.deleted_at.nil? %>
