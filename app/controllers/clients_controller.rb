@@ -178,7 +178,7 @@ class ClientsController < ApplicationController
   end
 
   def default_currency
-    @client = Client.find params[:id]
+    @client = Client.find_by_id(params[:id]).present? ? Client.find(params[:id]) : Client.unscoped.find_by_id(params[:id])
   end
 
   def client_detail

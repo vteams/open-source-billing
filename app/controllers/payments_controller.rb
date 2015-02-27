@@ -149,7 +149,7 @@ class PaymentsController < ApplicationController
   end
 
   def invoice_payments_history
-    client = Invoice.find_by_id(params[:id]).client
+    client = Invoice.find_by_id(params[:id]).unscoped_client
     @payments = Payment.payments_history(client).page(params[:page])
     @invoice = Invoice.find(params[:id])
   end

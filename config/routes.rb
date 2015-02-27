@@ -34,6 +34,7 @@ Osb::Application.routes.draw do
 
 
   get "dashboard" => "dashboard#index"
+  post 'dashboard/chart_details' => "dashboard#chart_details"
   resources :payments do
     collection do
       get 'enter_payment'

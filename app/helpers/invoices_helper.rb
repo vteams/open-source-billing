@@ -103,20 +103,87 @@ module InvoicesHelper
     clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
 
     clients = action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
-    @invoice.present? && action == 'edit' && @invoice.unscoped_client.deleted? ? clients << [@invoice.unscoped_client.organization_name, @invoice.unscoped_client.id, {type: 'company_level'}] : clients
+    @recurring_profile.present? && action == 'edit' && (@recurring_profile.unscoped_client.deleted? or @recurring_profile.unscoped_client.archived?.present?) ? clients << [@recurring_profile.unscoped_client.organization_name, @recurring_profile.unscoped_client.id, {type: 'company_level'}] : clients
+    @invoice.present? && action == 'edit' && (@invoice.unscoped_client.deleted? or @invoice.unscoped_client.archived?.present?) ? clients << [@invoice.unscoped_client.organization_name, @invoice.unscoped_client.id, {type: 'company_level'}] : clients
   end
 
-  def load_items(action,company_id)
+  def load_items(action,company_id, line_item = nil)
     account_level = current_user.current_account.items.unarchived
     id = session['current_company'] || current_user.current_company || current_user.first_company_id
     items = Company.find_by_id(id).items.unarchived
-    action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
+    data = action == 'new' && company_id.blank? ? account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
+    if action == 'edit'
+      if item_in_other_company?(company_id, line_item)
+        data = [*Item.find_by_id(line_item.item_id)].map{|c| [c.item_name, c.id, {type: 'company_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
+      else
+        data = company_id.present? ? Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}: []
+      end
+    end
+    data
+  end
+
+  def item_in_other_company?(company_id, line_item)
+    flag = false
+    if company_id.present? and line_item.present?
+      if Company.find_by_id(company_id).items.include?(Item.find_by_id(line_item.item_id))
+        flag = false
+      else
+        flag = true
+      end
+    end
+    flag
   end
 
   def load_deleted_item(invoice,company_id)
     items = Item.unscoped.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{type: 'deleted_item'}]}
     items + load_items('edit',company_id)
   end
+
+  def load_archived_items(invoice, company_id)
+    items = Item.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{type: 'archived_item'}]}
+    items + load_items('edit',company_id)
+  end
+
+  def load_taxes
+    Tax.unarchived
+  end
+
+  def load_deleted_tax1(invoice)
+    taxes = Tax.unscoped
+    tax1 = taxes.where(id: invoice.tax_1)
+    tax1 + load_taxes
+  end
+
+  def load_archived_tax1(invoice)
+    taxes = Tax.where("archived_at < ?", Time.now)
+    tax1 = taxes.where(id: invoice.tax_1)
+    tax1 + load_taxes
+  end
+
+  def load_deleted_tax2(invoice)
+    taxes = Tax.unscoped
+    tax2 = taxes.where(id: invoice.tax_2)
+    tax2 + load_taxes
+  end
+
+  def load_archived_tax2(invoice)
+    taxes = Tax.where("archived_at < ?", Time.now)
+    tax2 = taxes.where(id: invoice.tax_2)
+    tax2 + load_taxes
+  end
+  #
+  #def load_deleted_tax2(invoice)
+  #  taxes = Tax.unscoped
+  #  tax1 = taxes.where(id: invoice.tax_1)
+  #  tax2 = taxes.where(id: invoice.tax_2)
+  #  [tax1,tax2].compact
+  #
+  #end
+  #
+  #def load_archived_tax2
+  #
+  #end
+
 
   #def load_items(action,company_id)
   #  account_level = current_user.current_account.items.unarchived

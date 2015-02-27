@@ -85,7 +85,6 @@ class ApplicationController < ActionController::Base
       else
         Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
       end
-
     end
   end
 

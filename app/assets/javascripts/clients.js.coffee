@@ -42,7 +42,7 @@ jQuery ->
       if jQuery('.options_content input[type=checkbox]:checked').length is 0
         applyQtip(jQuery("#company_association").next(),"Select a company", 'topRight')
         flag = false
-    else if (jQuery('#company_association').is(':checked') is  false and jQuery('#account_association').is(':checked') is  false)
+    else if ((jQuery('#company_association').is(':checked') is  false) and (jQuery('#account_association').is(':checked') is  false))
       jQuery("#company_association").prop('checked', true);
       flag = false
     else
