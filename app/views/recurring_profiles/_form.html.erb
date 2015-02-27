@@ -193,7 +193,7 @@
         <%= f.hidden_field :tax_amount %>
         <div class="grid_summary_row taxes_total">
           <ul>
-            <% @recurring_profile.tax_details.map do |tax, amount| %>
+            <% @recurring_profile.tax_detail_with_discount.map do |tax, amount| %>
                 <li><span class='grid_summary_title'><%= tax %></span>
                   <span class='grid_summary_description tax_amount'></span>
                 </li>
