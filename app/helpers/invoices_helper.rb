@@ -103,8 +103,20 @@ module InvoicesHelper
     clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
 
     clients = action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
-    @recurring_profile.present? && action == 'edit' && (@recurring_profile.unscoped_client.deleted? or @recurring_profile.unscoped_client.archived?.present?) ? clients << [@recurring_profile.unscoped_client.organization_name, @recurring_profile.unscoped_client.id, {type: 'company_level'}] : clients
-    @invoice.present? && action == 'edit' && (@invoice.unscoped_client.deleted? or @invoice.unscoped_client.archived?.present?) ? clients << [@invoice.unscoped_client.organization_name, @invoice.unscoped_client.id, {type: 'company_level'}] : clients
+    if @recurring_profile.present? && action == 'edit'
+      recurring_client = @recurring_profile.unscoped_client
+      clients << [recurring_client.organization_name, recurring_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? recurring_client.id
+      clients
+    else
+      clients
+    end
+    if @invoice.present? && action == 'edit'
+      invoice_client = @invoice.unscoped_client
+      clients << [invoice_client.organization_name, invoice_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? invoice_client.id
+      clients
+    else
+      clients
+    end
   end
 
   def load_items(action,company_id, line_item = nil)
@@ -116,7 +128,7 @@ module InvoicesHelper
       if item_in_other_company?(company_id, line_item)
         data = [*Item.find_by_id(line_item.item_id)].map{|c| [c.item_name, c.id, {type: 'company_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
       else
-        data = company_id.present? ? Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}: []
+        data = company_id.present? ? Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}: account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]}
       end
     end
     data
