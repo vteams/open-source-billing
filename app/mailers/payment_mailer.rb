@@ -24,7 +24,7 @@ class PaymentMailer < ActionMailer::Base
   def payment_notification_email(current_user, payment)
    # @client, @invoice, @amount = client, invoice, payment.payment_amount
     get_user = current_user.is_a?(String)? User.find_by_email(current_user) : current_user
-    client = payment.invoice.client
+    client = payment.invoice.unscoped_client
     template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
     @email_html_body = template.body
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
@@ -53,7 +53,7 @@ class PaymentMailer < ActionMailer::Base
     get_user = user.is_a?(String)? User.find_by_email(user) : user
     template = get_email_template(get_user, invoice, template_type)
     param_values = {
-        'client_name'=> (invoice.client.first_name rescue 'ERROR'),
+        'client_name'=> (invoice.unscoped_client.first_name rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'payment_amount' => (payment.payment_amount  rescue 'ERROR'),
         'invoice_number' => (invoice.invoice_number  rescue 'ERROR'),

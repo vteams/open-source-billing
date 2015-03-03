@@ -27,7 +27,7 @@ class RecurringProfilesController < ApplicationController
   def index
     params[:status] = params[:status] || 'active'
     #@recurring_profiles = RecurringProfile.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
-    @recurring_profiles = filter_by_company(RecurringProfile.joins(:client).filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
+    @recurring_profiles = filter_by_company(RecurringProfile.filter(params, session["#{controller_name}-per_page"])).order("#{sort_column} #{sort_direction}")
     respond_to do |format|
       format.html # index.html.erb
       format.js
