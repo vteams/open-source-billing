@@ -165,6 +165,12 @@ window.preventDeletedNavigation = function(){
         e.preventDefault();
         return false;
     });
+
+    $("a.deleted_entry").mouseleave(function(e){
+          $(this).qtip('hide')
+          return false;
+    });
+
 };
 
 window.preventDeletedNavigation();

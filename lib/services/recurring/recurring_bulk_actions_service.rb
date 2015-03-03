@@ -41,6 +41,7 @@ module Services
     end
 
     def destroy
+      @recurring_profiles.map{|rp|rp.recurring_profile_line_items.only_deleted.map{|li|li.really_destroy!}}
       @recurring_profiles.map(&:destroy)
       {action: 'deleted', recurring_profiles: get_profiles('unarchived')}
     end

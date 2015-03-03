@@ -42,8 +42,12 @@ module Services
 
     def destroy
       invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
+      invoices_for_delete = @invoices - invoices_with_payments
+      invoices_for_delete.each do |invoice|
+        invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
+      end
 
-      (@invoices - invoices_with_payments).map(&:destroy)
+      (invoices_for_delete).map(&:destroy)
 
       action = invoices_with_payments.present? ? 'invoices_with_payments' : 'deleted'
       {action: action, invoices_with_payments: invoices_with_payments, invoices: get_invoices('unarchived')}

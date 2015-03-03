@@ -41,6 +41,7 @@ module Services
     end
 
     def destroy
+      @clients.map{|c|c.client_contacts.only_deleted.map{|cc|cc.really_destroy!}}
       @clients.map(&:destroy)
       {action: 'deleted', clients: get_clients('unarchived')}
     end
