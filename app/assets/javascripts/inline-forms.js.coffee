@@ -19,6 +19,11 @@ class window.InlineForms
     @chznContainerOriginalWidth = parseInt(@chznContainer.css("width"), 10)
     # trigger these event from .js.erb file when record is saved
     @dropdown.on "inlineform:save", (e, new_record) =>
+      if $(@dropdown).hasClass 'tax2'
+        tax_val = $(new_record).data 'tax_1'
+        new_val = $(new_record).attr 'value'
+        txt = $(new_record).text()
+        new_record = "<option value='#{new_val}' data-tax_2='#{tax_val}' selected>#{txt}</option>"
       @dropdown.append(new_record).trigger("liszt:updated")
       @dropdown.trigger("change").trigger("click")
       @appendToAllDropdowns(new_record)
@@ -36,8 +41,26 @@ class window.InlineForms
   # append newly added record to all dropdowns
   appendToAllDropdowns: (new_record) ->
     dropdown_class = @dropdown.attr('class').split(' ')[0]
+    dropdown_class_for_tax = @dropdown.attr('class').split(' ')[1]
     dropdown_id = @dropdown.attr('id')
-    all_dropdowns = jQuery(".#{dropdown_class}:not('##{dropdown_id}')").append(new_record.replace('selected','')).trigger("liszt:updated")
+    if dropdown_class_for_tax == 'tax1'
+      new_record_tax1 = new_record
+      tax_val = $(new_record).data 'tax_1'
+      new_val = $(new_record).attr 'value'
+      text = $(new_record).text()
+      new_record_tax2 = "<option value='#{new_val}' data-tax_2='#{tax_val}' selected>#{text}</option>"
+      all_dropdowns = jQuery(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = jQuery(".tax2:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
+    else if dropdown_class_for_tax == 'tax2'
+      new_record_tax2 = new_record
+      tax_val = $(new_record).data 'tax_2'
+      new_val = $(new_record).attr 'value'
+      text = $(new_record).text()
+      new_record_tax1 = "<option value='#{new_val}' data-tax_1='#{tax_val}' selected>#{text}</option>"
+      all_dropdowns = jQuery(".tax1:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = jQuery(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
+    else
+      all_dropdowns = jQuery(".#{dropdown_class}:not('##{dropdown_id}')").append(new_record.replace('selected','')).trigger("liszt:updated")
 
 
   # show qtip when record is successfully added and selected
