@@ -198,3 +198,9 @@ Currency.delete_all
 ActiveRecord::Base.connection.execute("TRUNCATE currencies")
 sample_currencies = Money::Currency.all.collect{|x| {code: x.symbol,unit: x.iso_code,title: x.name}}
 Currency.create(sample_currencies)
+
+# set default currencies to clients
+default_currency = (Currency.where(unit: 'USD').first || Currency.first)
+Client.where(currency_id: nil).update_all(currency_id: default_currency.id)
+Invoice.where(currency_id: nil).update_all(currency_id: default_currency.id)
+RecurringProfile.where(currency_id: nil).update_all(currency_id: default_currency.id)
