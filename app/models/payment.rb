@@ -161,6 +161,10 @@ class Payment < ActiveRecord::Base
     where('invoice_id IN(?)', ids)
   end
 
+  def self.payments_history_for_invoice(invoice)
+    where('invoice_id = ?', invoice.id)
+  end
+
   def self.total_payments_amount
     where('payment_type is null or payment_type != "credit"').sum('payment_amount')
   end
