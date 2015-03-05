@@ -228,6 +228,10 @@ jQuery ->
     else if jQuery("#invoice_client_id").val() is ""
       applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
+    # if currency is not selected
+    else if jQuery("#invoice_currency_id").val() is ""
+      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+      flag = false
     # check if invoice date is selected
     else if jQuery("#invoice_invoice_date").val() is ""
       applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
