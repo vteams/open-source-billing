@@ -13,12 +13,15 @@ window.taxByCategory = ->
     discountType = $("select#discount_type").val()
 
     lineTotal = parseFloat $(this).find(".line_total").text()
+    lineTotal = 0 if isNaN(lineTotal)
     discountAmount = if discountType == "%" then (lineTotal * discountPct / 100.0 ) else discountPct
     discountAmount = 0 if isNaN(discountAmount)
     discountedLineTotal = lineTotal - discountAmount
 
     tax1Select = $(this).find("select.tax1 option:selected")
     tax2Select = $(this).find("select.tax2 option:selected")
+
+    discountedLineTotal = 0 if lineTotal == 0
 
     # calculate tax1
     tax1Name = tax1Select.text()
