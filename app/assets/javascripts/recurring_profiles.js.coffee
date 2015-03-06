@@ -25,13 +25,45 @@ jQuery ->
     else if jQuery("#recurring_profile_payment_terms_id").val() is ""
       applyPopover(jQuery("#recurring_profile_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
       flag = false
+      # Check if discount is valid
+    else if jQuery("input#recurring_profile_discount_percentage").val()  isnt "" and isNaN(jQuery("input#recurring_profile_discount_percentage").val())
+      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+      flag = false
+    # Check if no item is added
+    else if jQuery("tr.fields:visible").length < 1
+      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+      flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
-    else if first_invoice_date == current_date
-      flag = confirm("This will send out an invoice IMMEDIATELY. Are you sure you want to send the first invoice right now?" )
+      # Item cost and quantity should be greater then 0
+    else
+      jQuery("tr.fields:visible").each ->
+        row = jQuery(this)
+        if row.find("select.items_list").val() isnt ""
+          cost = row.find(".cost")
+          qty =  row.find(".qty")
+          tax1 = row.find("select.tax1")
+          tax2 = row.find("select.tax2")
+          tax1_value = jQuery("option:selected",tax1).val()
+          tax2_value = jQuery("option:selected",tax2).val()
+
+          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
+            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+            flag = false
+          else hidePopover(cost)
+
+          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
+            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+            flag = false
+          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
+            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+            flag = false
+          else hidePopover(qty)
+      if first_invoice_date == current_date and flag
+       flag = confirm("This will send out an invoice IMMEDIATELY. Are you sure you want to send the first invoice right now?" )
     flag
 
   applyPopover = (elem,position,corner,message) ->

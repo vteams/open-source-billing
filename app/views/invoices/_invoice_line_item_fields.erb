@@ -22,10 +22,10 @@
     <%= f.text_field :item_description, :class => 'grid_large description' %>
   </td>
   <td class="align_right">
-    <%= f.text_field :item_unit_cost, :class => 'grid_small align_right cost' %>
+    <%= f.text_field :item_unit_cost, :class => 'grid_small align_right cost line_item_qtip' %>
   </td>
   <td class="align_right">
-    <%= f.text_field :item_quantity, :class => 'grid_small align_right qty' %>
+    <%= f.text_field :item_quantity, :class => 'grid_small align_right qty line_item_qtip' %>
   </td>
   <td class="align_left">
   <% if f.object.tax_1.present? and f.object.tax1.nil?%>

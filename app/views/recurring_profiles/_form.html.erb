@@ -150,7 +150,7 @@
         <%= f.fields_for :recurring_profile_line_items, :wrapper => false %>
         <tr style="border:none;" class="no_hover">
           <td>&nbsp</td>
-          <td class="add_line_item_row" colspan="2"><%= f.link_to_add t("views.invoices.add_line_item"), :recurring_profile_line_items, :class => "btn btn-mini" %></td>
+          <td class="add_line_item_row" colspan="2"><%= f.link_to_add t("views.invoices.add_line_item"), :recurring_profile_line_items, :class => "btn btn-mini", id: 'add_line_item' %></td>
         </tr>
       </table>
 
@@ -186,7 +186,7 @@
           <div class="grid_summary_description">
             <%= f.hidden_field :discount_amount %>
             <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-            <%= f.text_field :discount_percentage, :class => "invoice_discount" %>
+            <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip" %>
           </div>
         </div>
 

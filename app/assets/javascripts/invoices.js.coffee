@@ -240,6 +240,14 @@ jQuery ->
     else if jQuery("#invoice_payment_terms_id").val() is ""
       applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
       flag = false
+    # Check if discount percentage is an integer
+    else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+      flag = false
+    # Check if no item is selected
+    else if jQuery("tr.fields:visible").length < 1
+      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+      flag = false
     # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
@@ -271,6 +279,7 @@ jQuery ->
             flag = false
           else hidePopover(qty)
     flag
+
 
   applyPopover = (elem,position,corner,message) ->
     elem.qtip
@@ -318,6 +327,12 @@ jQuery ->
 
   jQuery("#invoice_client_id_chzn,.chzn-container").live "click", ->
     jQuery(this).qtip("hide")
+
+  jQuery("#add_line_item").live "click",->
+    jQuery(this).qtip('hide')
+
+  jQuery(".line_item_qtip").live "change",->
+    jQuery(this).qtip('hide')
 
   # Don't send an ajax request if an item is deselected.
   clearLineTotal = (elem) ->
