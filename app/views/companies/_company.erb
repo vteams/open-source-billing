@@ -20,7 +20,11 @@
           <td class="align_left"><%= company.contact_name %></td>
           <td class="align_left"><%= company.email %></td>
           <td class="align_left"><%= company.country %></td>
-          <td class="align_center"><%= link_to t('.edit', :default => t("helpers.links.edit")), edit_company_path(company) %> </td>
+          <td class="align_left">
+          <% if company.deleted_at.nil? %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_company_path(company), class: "demo-links" %>
+          <% end %>
+          </td>
         </tr>
     <% end %>
 <% end %>
