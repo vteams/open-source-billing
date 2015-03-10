@@ -218,6 +218,10 @@ jQuery ->
 
   # Validate client, cost and quantity on invoice save
   jQuery("form.form-horizontal").submit ->
+    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+    discount_type = jQuery("select#discount_type").val()
+    sub_total = jQuery('#invoice_sub_total').val()
+    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
     flag = true
     # Check if company is selected
@@ -253,8 +257,14 @@ jQuery ->
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
+    else if discount_type == '%' and discount_percentage > 100
+        applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+        flag = false
+    else if discount_type != '%' and discount_percentage > sub_total
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      flag = false
 
-    # Item cost and quantity should be greater then 0
+      # Item cost and quantity should be greater then 0
     else
       jQuery("tr.fields:visible").each ->
         row = jQuery(this)

@@ -5,6 +5,10 @@ jQuery ->
 
   # Validate recurring profile form
   jQuery("form.form-recurring-profile").submit ->
+    discount_percentage = jQuery("#recurring_profile_discount_percentage").val()
+    discount_type = jQuery("select#discount_type").val()
+    sub_total = jQuery('#recurring_profile_sub_total').val()
+    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
     first_invoice_date = jQuery("#recurring_profile_first_invoice_date").val()
     current_date = jQuery("#recurring_profile_current_date").val()
@@ -37,6 +41,13 @@ jQuery ->
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+      flag = false
+    # check if discount is greater than sub-total
+    else if discount_type == '%' and discount_percentage > 100
+      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      flag = false
+    else if discount_type != '%' and discount_percentage > sub_total
+      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
       # Item cost and quantity should be greater then 0
     else
