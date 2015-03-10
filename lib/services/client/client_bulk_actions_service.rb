@@ -23,7 +23,7 @@ module Services
     attr_reader :clients, :client_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted)
+      actions_list = %w(archive destroy recover_archived recover_deleted new_invoice)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first
       @client_ids = @options[:client_ids]
@@ -33,6 +33,10 @@ module Services
 
     def perform
       method(@action_to_perform).call.merge({client_ids: @client_ids, action_to_perform: @action_to_perform})
+    end
+
+    def new_invoice
+      {action: 'new_invoice', clients: @clients}
     end
 
     def archive

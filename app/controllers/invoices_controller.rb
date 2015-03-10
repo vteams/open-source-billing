@@ -82,6 +82,8 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Services::InvoiceService.build_new_invoice(params)
+    @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+    @client = @invoice.client if params[:id].present?
     get_clients_and_items
     respond_to do |format|
       format.html # new.html.erb
@@ -175,7 +177,6 @@ class InvoicesController < ApplicationController
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
     @action = result[:action]
     @invoices_with_payments = result[:invoices_with_payments]
-
     respond_to { |format| format.js }
   end
 

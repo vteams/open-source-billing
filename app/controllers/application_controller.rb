@@ -116,8 +116,6 @@ class ApplicationController < ActionController::Base
     @get_clients = get_clients(parent)
     @get_items = get_items(parent)
     @parent_class = parent.class.to_s
-    @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
-    @client = @invoice.client if params[:id].present?
   end
 
   # generate clients options associated with company
