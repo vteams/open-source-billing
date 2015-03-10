@@ -452,8 +452,10 @@ jQuery ->
   jQuery("#add_line_item").live "click", ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
-    taxes = $('.tax:first').html()
-    $('.tax1:last, .tax2:last').html(taxes).find('option:selected').removeAttr('selected')
+    tax1 = $('.tax1:first').html()
+    tax2 = $('.tax2:first').html()
+    $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')
+    $('.tax2:last').html(tax2).find('option:selected').removeAttr('selected')
 
 
   jQuery(".less").live "click", ->
