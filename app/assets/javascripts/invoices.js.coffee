@@ -449,6 +449,13 @@ jQuery ->
   jQuery(".more").live "click", ->
     jQuery(".toggleable").removeClass("collapse")
 
+  jQuery("#add_line_item").live "click", ->
+    options = $('.items_list:first').html()
+    $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
+    taxes = $('.tax').html()
+    $('.tax1:last, .tax2:last').html(taxes).find('option:selected').removeAttr('selected')
+
+
   jQuery(".less").live "click", ->
     jQuery(".toggleable").addClass("collapse")
 
