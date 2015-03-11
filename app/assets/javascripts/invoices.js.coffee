@@ -257,10 +257,10 @@ jQuery ->
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
-    else if discount_type == '%' and discount_percentage > 100
+    else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
         applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
         flag = false
-    else if discount_type != '%' and discount_percentage > sub_total
+    else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
       applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
 

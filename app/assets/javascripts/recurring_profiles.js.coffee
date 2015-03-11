@@ -43,10 +43,10 @@ jQuery ->
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
     # check if discount is greater than sub-total
-    else if discount_type == '%' and discount_percentage > 100
+    else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
       applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
       flag = false
-    else if discount_type != '%' and discount_percentage > sub_total
+    else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
       applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
       # Item cost and quantity should be greater then 0
