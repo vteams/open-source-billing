@@ -52,7 +52,7 @@
     <script>window.currency_symbol = "<%= @invoice.currency.present? ? @invoice.currency.unit : "$" %>"</script>
     <div class="fields_content">
       <div class="fields_content_container">
-        <div class="fields_content_data new_invoice_fields">
+        <div class="fields_content_data new_invoice_fields custom_field">
 
           <div class="fields_content_left">
 
@@ -102,7 +102,7 @@
             <!--field_row-->
 
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t("terms")) %></div>
+              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t('views.invoices.terms')) %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :payment_terms_id, PaymentTerm.all, :id, :description, {:prompt => ""}, {"data-placeholder" => "Select a payment term...", :class => "medium chzn-select"} %>
                 <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
@@ -117,7 +117,7 @@
 
           <div class="fields_content_right">
 
-            <div class="field_row description">
+            <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, 'Invoice #') %></div>
               <div class="small_field">
                 <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
@@ -128,15 +128,15 @@
             </div>
             <!--field_row-->
 
-            <div class="field_row description">
-              <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('invoice_date')) %></div>
+            <div class="field_row description right-fields">
+              <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %></div>
               <div class="small_field">
                 <%= f.text_field :invoice_date, :required => "" %>
               </div>
             </div>
             <!--field_row-->
 
-            <div class="field_row description">
+            <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :due_date, t("views.invoices.due_date") %></div>
               <div class="small_field">
                 <%= f.text_field :due_date, :placeholder => "TBD" %>

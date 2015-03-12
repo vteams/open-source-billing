@@ -10,6 +10,10 @@
     margin: auto;
     float: none;
     padding-top: 0px;
+    &.custom_field{
+      width: 807px;
+      padding-left: 33px;
+    }
   }
   .fields_content_left {
     float: left;
