@@ -24,7 +24,7 @@ class window.InlineForms
         new_val = $(new_record).attr 'value'
         txt = $(new_record).text()
         new_record = "<option value='#{new_val}' data-tax_2='#{tax_val}' selected>#{txt}</option>"
-      @dropdown.append(new_record).trigger("liszt:updated")
+      @dropdown.append(new_record).trigger("liszt:updated") if @dropdown.find("option[value=#{$(new_record).val()}]").length == 0
       @dropdown.trigger("change").trigger("click")
       @appendToAllDropdowns(new_record)
       @hideForm()
@@ -33,7 +33,12 @@ class window.InlineForms
 
     # trigger these event from .js.erb file when use press "save & add more"
     @dropdown.on "inlineform:save_and_add_more", (e, new_record) =>
-      @dropdown.append(new_record).trigger("liszt:updated")
+      if $(@dropdown).hasClass 'tax2'
+        tax_val = $(new_record).data 'tax_1'
+        new_val = $(new_record).attr 'value'
+        txt = $(new_record).text()
+        new_record = "<option value='#{new_val}' data-tax_2='#{tax_val}' selected>#{txt}</option>"
+      @dropdown.append(new_record).trigger("liszt:updated") if @dropdown.find("option[value=#{$(new_record).val()}]").length == 0
       @dropdown.trigger("change")
       @appendToAllDropdowns(new_record)
       @showForm()

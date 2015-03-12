@@ -209,7 +209,7 @@ en:
       invoice_number: "Invoice #"
       invoice_amount: "Invoice Amount"
       invoice_status: "Invoice Status"
-      amount_payed: "Amount Payed"
+      amount_paid: "Amount Paid"
       amount_due: "Amount Due"
       this_invoice_was_sent_using: "This invoice was sent using"
       no_unpaid_invoices: "There are no unpaid invoices."

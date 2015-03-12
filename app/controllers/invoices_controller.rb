@@ -84,6 +84,7 @@ class InvoicesController < ApplicationController
     @invoice = Services::InvoiceService.build_new_invoice(params)
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
+    @invoice.currency = @client.currency if @client.present?
     get_clients_and_items
     respond_to do |format|
       format.html # new.html.erb

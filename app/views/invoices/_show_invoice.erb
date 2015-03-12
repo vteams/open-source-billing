@@ -185,7 +185,7 @@
       <!--top_right_row-->
 
       <div class="top_right_row border amt_paid">
-        <div class="preview_right_label"><%= t('views.invoices.amount_payed') %></div>
+        <div class="preview_right_label"><%= t('views.invoices.amount_paid') %></div>
         <div class="preview_right_description">-<%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
