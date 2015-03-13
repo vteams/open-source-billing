@@ -147,12 +147,12 @@ module InvoicesHelper
   end
 
   def load_deleted_item(invoice,company_id)
-    items = Item.unscoped.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{type: 'deleted_item'}]}
+    items = Item.unscoped.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{'data-type' => 'deleted_item', type: 'deleted_item'}]}
     items + load_items('edit',company_id)
   end
 
   def load_archived_items(invoice, company_id)
-    items = Item.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{type: 'archived_item'}]}
+    items = Item.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{'data-type' => 'archived_item', type: 'archived_item'}]}
     items + load_items('edit',company_id)
   end
 
