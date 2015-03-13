@@ -19,6 +19,4 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Category < ActiveRecord::Base
-  # attr
-  #attr_accessible :category
 end

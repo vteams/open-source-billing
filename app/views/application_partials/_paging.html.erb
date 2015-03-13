@@ -2,7 +2,7 @@
 colspan = { 'sent_emails' => '5', 'paymnets' => '7', 'companies' => '6'}
 listing = '@'+ controller_name
 %>
-<td colspan="<%= colspan[controller_name] || 8 %>" style="border-top: 1px solid #DDDDDD; text-align: left; ">
+<td colspan="<%= colspan[controller_name] || 8 %>" class = 'page_styling'>
   <div class="paginator">
     <%= paginate eval(listing), :remote => true %>
     <div class="paging_info">

@@ -10,8 +10,6 @@
  *
  *= require_self
  *= require_tree .
- 
- 
  *= general.css.scss
  *= invoice.css.scss
  *= clients.css.scss
@@ -40,7 +38,4 @@
  *= companies.css.scss
  *= recurring_profile.css.scss
  *= show_email.css.scss
-
-
-
 */

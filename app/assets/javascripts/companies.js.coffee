@@ -11,28 +11,6 @@ jQuery ->
           jQuery("#current_selected_company").text(response)
           jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
 
-  #update clients and items on company change
-  #  jQuery('#invoice_company_id').change ->
-  #    id = jQuery(this).attr('value')
-  #    jQuery.ajax '/companies/get_clients_and_items',
-  #                type: 'POST'
-  #                data: "id=" + id
-  #                dataType: 'html'
-  #                error: (jqXHR, textStatus, errorThrown) ->
-  #                  alert "Error: #{textStatus}"
-  #                success: (data, textStatus, jqXHR) ->
-  #                  data = JSON.parse(data)
-  #                  if data[2] is 'Company'
-  #                    jQuery('select#invoice_client_id').append(data[0]).trigger("liszt:updated")
-  #                    jQuery('select.items_list').append(data[1]).trigger("liszt:updated")
-  #                  else
-  #                    jQuery("select#invoice_client_id option, select.items_list option").filter(->
-  #                      @value or jQuery.trim(@value).length isnt 0
-  #                    ).remove()
-  #                    jQuery('select#invoice_client_id').append(data[0]).trigger("liszt:updated")
-  #                    jQuery('select.items_list').append(data[1]).trigger("liszt:updated")
-
-
   # validate company on save and update
   jQuery("form#new_company,form.edit_company").submit ->
     flag = true

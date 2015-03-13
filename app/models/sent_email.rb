@@ -19,9 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class SentEmail < ActiveRecord::Base
-  # attr
-  #attr_accessible :date, :recipient, :sender, :type, :subject, :content, :company_id
-
   # associations
   belongs_to :notification, :polymorphic => true
   belongs_to :company

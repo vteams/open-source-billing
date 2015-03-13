@@ -107,19 +107,6 @@ module ApplicationHelper
 
   # generate drop down to filter listings by company
   def filter_by_companies
-    ##selected_option = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id
-    ## company_options = options_from_collection_for_select(current_user.current_account.companies, 'id', 'company_name', selected_option)
-    #all_option = content_tag(:option, "All #{controller_name.titleize}", value: '')
-    #extra_option = content_tag(:option, 'Account', value: 'Account')
-
-    # Append an 'All' and 'Account' option in companies drop down for clients and items
-    #options = %(clients items).include?(controller_name) ? all_option + extra_option + company_options : all_option + company_options
-
-    # Append an 'Account' option in companies drop down for email templates
-    #options =  extra_option + company_options if controller_name == "email_templates"
-
-    # generate companies drop down
-    ##content_tag(:select, company_options, data: {remote: true, url: url_for(params: params)}, name: 'company_id', class: 'company_filter chzn-select')
     companies = current_user.current_account.companies
     content_tag(:ul) do
       companies.each do |company|

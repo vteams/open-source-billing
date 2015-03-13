@@ -114,17 +114,7 @@ class PaymentsController < ApplicationController
   end
 
   def update_individual_payment
-    ## dont save the payment if payment amount is not provided or it's zero
-    #params[:payments].delete_if { |payment| payment["payment_amount"].blank? || payment["payment_amount"].to_f == 0 }.each do |pay|
-    #  next if Payment.check_client_credit(pay[:invoice_id]) && pay[:payment_method] == "Credit" #Ignore payment if credit is not enough
-    #  pay[:payment_amount] = pay[:payment_method] == "Credit" ? Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
-    #  pay[:payment_date] ||= Date.today
-    #  pay[:credit_applied] ||= 0.00
-    #  pay[:company_id] = Invoice.find(pay[:invoice_id]).company.id
-    #  pay[:payment_method] == "Credit" ? Services::PaymentService.distribute_credit_payment(pay, current_user.email) : Payment.create!(pay).notify_client(current_user)
-    #end
     Services::PaymentService.update_payments(params.merge(user: current_user))
-
     where_to_redirect = params[:from_invoices] ? invoices_url : payments_url
     redirect_to(where_to_redirect, :notice => 'Payment(s) against selected invoice(s) have been recorded successfully.')
   end
@@ -182,12 +172,14 @@ class PaymentsController < ApplicationController
   end
 
   def get_org_name
-    "case when payments.invoice_id is null then
-       case when ifnull(payments_clients.organization_name, '') = '' then concat(payments_clients.first_name, '', payments_clients.last_name) else payments_clients.organization_name end
-     else
-       case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end
-     end
-    "
+    org_name = <<-SQL
+      case when payments.invoice_id is null then
+        case when ifnull(payments_clients.organization_name, '') = '' then concat(payments_clients.first_name, '', payments_clients.last_name) else payments_clients.organization_name end
+      else
+        case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end
+      end
+    SQL
+    org_name
   end
 
   private

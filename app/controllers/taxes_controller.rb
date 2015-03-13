@@ -116,29 +116,7 @@ class TaxesController < ApplicationController
   end
 
   def bulk_actions
-    #ids = params[:tax_ids]
-    #if params[:archive]
-    #  Tax.archive_multiple(ids)
-    #  @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
-    #  @action = "archived"
-    #  @message = taxes_archived(ids) unless ids.blank?
-    #elsif params[:destroy]
-    #  Tax.delete_multiple(ids)
-    #  @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
-    #  @action = "deleted"
-    #  @message = taxes_deleted(ids) unless ids.blank?
-    #elsif params[:recover_archived]
-    #  Tax.recover_archived(ids)
-    #  @taxes = Tax.archived.page(params[:page]).per(session["#{controller_name}-per_page"])
-    #  @action = "recovered from archived"
-    #elsif params[:recover_deleted]
-    #  Tax.recover_deleted(ids)
-    #  @taxes = Tax.only_deleted.page(params[:page]).per(session["#{controller_name}-per_page"])
-    #  @action = "recovered from deleted"
-    #end
-
     result = Services::TaxBulkActionsService.new(params.merge({current_user: current_user})).perform
-
     @taxes = result[:taxes].order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:tax_ids])
     @action = result[:action]

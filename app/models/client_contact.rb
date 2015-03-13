@@ -19,9 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientContact < ActiveRecord::Base
-  # attr
-  #attr_accessible :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number
-
   # associations
   belongs_to :client
 

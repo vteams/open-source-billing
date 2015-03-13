@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
 
-  #attr_accessible :account, :email, :password, :password_confirmation, :remember_me, :user_name, :current_company
   validates_uniqueness_of :email, :uniqueness => :true
   attr_accessor :account,:login
 

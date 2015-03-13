@@ -25,9 +25,6 @@ class Tax < ActiveRecord::Base
   scope :archive_multiple, lambda {|ids| multiple(ids).map(&:archive)}
   scope :delete_multiple, lambda {|ids| multiple(ids).map(&:destroy)}
 
-  # attr
-  #attr_accessible :name, :percentage
-
   # associations
   has_many :invoice_line_items
   has_many :items

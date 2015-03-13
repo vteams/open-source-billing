@@ -19,9 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class CreditPayment < ActiveRecord::Base
-  # attr
-  #attr_accessible :amount, :invoice_id, :payment_id, :credit_id
-
   # associations
   belongs_to :invoice
   belongs_to :payment

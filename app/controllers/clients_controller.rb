@@ -28,7 +28,6 @@ class ClientsController < ApplicationController
 
   def index
     set_company_session
-    #args = {status: 'unarchived', per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction}
     params[:status] = params[:status] || 'active'
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
@@ -135,28 +134,6 @@ class ClientsController < ApplicationController
   end
 
   def bulk_actions
-    #ids = params[:client_ids]
-    #if params[:archive]
-    #  Client.archive_multiple(ids)
-    #  @clients = Client.get_clients(params.merge(get_args('unarchived')))
-    #  @action = "archived"
-    #  @message = clients_archived(ids) unless ids.blank?
-    #elsif params[:destroy]
-    #  Client.delete_multiple(ids)
-    #  @clients = Client.get_clients(params.merge(get_args('unarchived')))
-    #  @action = "deleted"
-    #  @message = clients_deleted(ids) unless ids.blank?
-    #elsif params[:recover_archived]
-    #  Client.recover_archived(ids)
-    #  @clients = Client.get_clients(params.merge(get_args('archived')))
-    #  @action = "recovered from archived"
-    #elsif params[:recover_deleted]
-    #  Client.recover_deleted(ids)
-    #  @clients = Client.get_clients(params.merge(get_args('only_deleted')))
-    #  @action = "recovered from deleted"
-    #end
-    #respond_to { |format| format.js }
-
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform
     @clients = result[:clients]#.order("#{sort_column} #{sort_direction}")
@@ -203,9 +180,7 @@ class ClientsController < ApplicationController
 
   def sort_column
     params[:sort] ||= 'created_at'
-    sort_col = params[:sort] #Client.column_names.include?(params[:sort]) ? params[:sort] : 'organization_name'
-                             #sort_col = "case when ifnull(organization_name, '') = '' then concat(first_name, '', last_name) else organization_name end" if sort_col == 'organization_name'
-                             #sort_col
+    sort_col = params[:sort]
   end
 
   def sort_direction

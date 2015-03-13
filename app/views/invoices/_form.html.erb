@@ -55,19 +55,6 @@
         <div class="fields_content_data new_invoice_fields custom_field">
 
           <div class="fields_content_left">
-
-
-            <!--<div class="field_row description">-->
-              <!--<div class="label_field left single"><%#= f.label :company_id, content_tag(:span, 'Company') %></div>-->
-              <!--<div class="small_field">-->
-                <!--<#%= collection_select :invoice, :company_id, current_user.current_account.companies.unarchived, :id, :company_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a company...", :class => "invoice_company medium chzn-select", "data-dropdown-width" => "300", :required => ""} %>-->
-                <!--<ul class="field_description select">-->
-                  <!--<li>company for this invoice</li>-->
-                <!--</ul>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--field_row-->
-
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
@@ -206,14 +193,6 @@
             Discount <%= f.select :discount_type, DISCOUNT_TYPE, {}, {:class => "discount_select chzn-select", :id => "discount_type"} %>
           </div>
 
-          <!--<div class="grid_summary_row net_total">-->
-          <!--<div class="grid_summary_title">-->
-          <!--Net Total-->
-          <!--</div>-->
-          <!--<div class="grid_summary_description">-->
-          <!--<%#= f.hidden_field :invoice_total %>-->
-          <!--<%#= label_tag '', '', :id => 'invoice_total_lbl', :class => 'net_total_value' %>-->
-          <!--</div>-->
           <div class="grid_summary_description">
             <%= f.hidden_field :discount_amount %>
             <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
