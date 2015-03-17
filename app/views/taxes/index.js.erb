@@ -8,7 +8,7 @@ jQuery("table.table_listing").trigger('update');
 jQuery(".tax_listing .text-overflow-class").ellipsis({row:2});
 
 jQuery('#sort_direction').html('<%= params[:direction]%>');
-<% status = params[:status]%>
+<% status = params[:status].present? ? params[:status] : 'active'%>
 
 jQuery('.top_links').hide();
 jQuery('#active_links a').removeClass('active');
