@@ -18,6 +18,7 @@ class window.InlineForms
     # will be set later in showForm method below
     @chznContainerOriginalWidth = parseInt(@chznContainer.css("width"), 10)
     # trigger these event from .js.erb file when record is saved
+    @dropdown.unbind 'inlineform:save'
     @dropdown.on "inlineform:save", (e, new_record) =>
       if $(@dropdown).hasClass 'tax2'
         tax_val = $(new_record).data 'tax_1'
@@ -32,6 +33,7 @@ class window.InlineForms
       @showQtip()
 
     # trigger these event from .js.erb file when use press "save & add more"
+    @dropdown.unbind 'inlineform:save_and_add_more'
     @dropdown.on "inlineform:save_and_add_more", (e, new_record) =>
       if $(@dropdown).hasClass 'tax2'
         tax_val = $(new_record).data 'tax_1'
