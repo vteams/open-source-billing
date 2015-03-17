@@ -54,6 +54,9 @@ class RecurringProfilesController < ApplicationController
   def new
     #@recurring_profile = RecurringProfile.new
     @recurring_profile = RecurringProfile.new({:invoice_number => RecurringProfile.get_next_profile_id, :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :first_invoice_date => Date.today,:sent_invoices => 0})
+    @invoice = Invoice.find_by_id params[:id] if params[:id].present?
+    @client = @invoice.client if @invoice.present?
+    @recurring_profile.currency = @client.currency if @client.present?
     3.times { @recurring_profile.recurring_profile_line_items.build() }
 
     get_clients_and_items

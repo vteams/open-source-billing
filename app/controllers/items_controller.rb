@@ -143,26 +143,6 @@ class ItemsController < ApplicationController
   end
 
   def bulk_actions
-    #ids = params[:item_ids]
-    #if params[:archive]
-    #  Item.archive_multiple(ids)
-    #  @items = Item.get_items(params.merge(get_args('unarchived')))
-    #  @action = "archived"
-    #  @message = items_archived(ids) unless ids.blank?
-    #elsif params[:destroy]
-    #  Item.delete_multiple(ids)
-    #  @items = Item.get_items(params.merge(get_args('unarchived')))
-    #  @action = "deleted"
-    #  @message = items_deleted(ids) unless ids.blank?
-    #elsif params[:recover_archived]
-    #  Item.recover_archived(ids)
-    #  @items = Item.get_items(params.merge(get_args('archived')))
-    #  @action = "recovered from archived"
-    #elsif params[:recover_deleted]
-    #  Item.recover_deleted(ids)
-    #  @items = Item.get_items(params.merge(get_args('only_deleted')))
-    #  @action = "recovered from deleted"
-    #end
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ItemBulkActionsService.new(options).perform
 

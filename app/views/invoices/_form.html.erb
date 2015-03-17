@@ -79,7 +79,7 @@
             </div>
             <!--field_row-->
 
-            <div class="field_row description <%= 'hide' unless params[:action].eql?('edit') or @client.present? %>" id="invoice_currency">
+            <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @invoice.currency.nil? %>" id="invoice_currency">
               <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
               <div class="small_field">
                 <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
