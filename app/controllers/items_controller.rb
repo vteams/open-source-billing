@@ -188,7 +188,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:inventory, :item_description, :item_name, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at)
+    params.require(:item).permit(:inventory, :item_description, :item_name, :item_ids, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at)
   end
 
 end

@@ -29,20 +29,20 @@
   </td>
   <td class="align_left">
   <% if f.object.tax_1.present? and f.object.tax1.nil?%>
-        <%= f.select(:tax_1, options_for_select(load_deleted_tax1(f.object).map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+        <%= f.select(:tax_1, options_for_select(load_deleted_tax1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% elsif f.object.tax_1.present? and f.object.tax1.archived?.present?%>
-      <%= f.select(:tax_1, options_for_select(load_archived_tax1(f.object).map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+      <%= f.select(:tax_1, options_for_select(load_archived_tax1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% else %>
-        <%= f.select(:tax_1, options_for_select(load_taxes.map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+        <%= f.select(:tax_1, options_for_select(load_taxes1, :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% end %>
   </td>
   <td class="align_left draf">
   <% if f.object.tax_2.present? and f.object.tax2.nil?%>
-      <%= f.select(:tax_2, options_for_select(load_deleted_tax2(f.object).map { |tax| [tax.name, tax.id, {'data-tax_2' => tax.percentage}] }, :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+      <%= f.select(:tax_2, options_for_select(load_deleted_tax2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% elsif f.object.tax_2.present? and f.object.tax2.archived?.present?%>
-      <%= f.select(:tax_2, options_for_select(load_archived_tax2(f.object).map { |tax| [tax.name, tax.id, {'data-tax_2' => tax.percentage}] }, :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+      <%= f.select(:tax_2, options_for_select(load_archived_tax2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% else%>
-      <%= f.select(:tax_2, options_for_select(load_taxes.map { |tax| [tax.name, tax.id, {'data-tax_2' => tax.percentage}] }, :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+      <%= f.select(:tax_2, options_for_select(load_taxes2, :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   <% end %>
   </td>
   <td class="align_right">

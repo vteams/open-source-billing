@@ -156,57 +156,35 @@ module InvoicesHelper
     items + load_items('edit',company_id)
   end
 
-  def load_taxes
-    Tax.unarchived
+  def load_taxes1
+    Tax.unarchived.map { |tax| [tax.name, tax.id, {'data-type' => 'active_tax', 'data-tax_1' => tax.percentage}] }
+  end
+
+  def load_taxes2
+    Tax.unarchived.map { |tax| [tax.name, tax.id, {'data-type' => 'active_tax', 'data-tax_2' => tax.percentage}] }
   end
 
   def load_deleted_tax1(invoice)
     taxes = Tax.unscoped
-    tax1 = taxes.where(id: invoice.tax_1)
-    tax1 + load_taxes
+    tax1 = taxes.where(id: invoice.tax_1).map { |tax| [tax.name, tax.id, {'data-type' => 'deleted_tax', 'data-tax_1' => tax.percentage}] }
+    tax1 + load_taxes1
   end
 
   def load_archived_tax1(invoice)
     taxes = Tax.where("archived_at < ?", Time.now)
-    tax1 = taxes.where(id: invoice.tax_1)
-    tax1 + load_taxes
+    tax1 = taxes.where(id: invoice.tax_1).map { |tax| [tax.name, tax.id, {'data-type' => 'archived_tax','data-tax_1' => tax.percentage}] }
+    tax1 + load_taxes1
   end
 
   def load_deleted_tax2(invoice)
     taxes = Tax.unscoped
-    tax2 = taxes.where(id: invoice.tax_2)
-    tax2 + load_taxes
+    tax2 = taxes.where(id: invoice.tax_2).map { |tax| [tax.name, tax.id, {'data-type' => 'deleted_tax', 'data-tax_2' => tax.percentage}] }
+    tax2 + load_taxes2
   end
 
   def load_archived_tax2(invoice)
     taxes = Tax.where("archived_at < ?", Time.now)
-    tax2 = taxes.where(id: invoice.tax_2)
-    tax2 + load_taxes
+    tax2 = taxes.where(id: invoice.tax_2).map { |tax| [tax.name, tax.id, {'data-type' => 'archived_tax','data-tax_2' => tax.percentage}] }
+    tax2 + load_taxes2
   end
-  #
-  #def load_deleted_tax2(invoice)
-  #  taxes = Tax.unscoped
-  #  tax1 = taxes.where(id: invoice.tax_1)
-  #  tax2 = taxes.where(id: invoice.tax_2)
-  #  [tax1,tax2].compact
-  #
-  #end
-  #
-  #def load_archived_tax2
-  #
-  #end
-
-
-  #def load_items(action,company_id)
-  #  account_level = current_user.current_account.items.unarchived
-  #  id = session['current_company'] || current_user.current_company || current_user.first_company_id
-  #  items = Company.find_by_id(id).items.unarchived
-  #  if action == 'new' && company_id.blank?
-  #    account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]}
-  #  else
-  #    items = Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
-  #    @invoice.invoice_line_items.select{|invoice_line_item| invoice_line_item.item_id.present? && invoice_line_item.unscoped_item.deleted? }.map{|invoice_line_item| [invoice_line_item.item_name, invoice_line_item.item_id]} + items
-  #  end
-  #end
-
 end
