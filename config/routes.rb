@@ -12,7 +12,7 @@ Osb::Application.routes.draw do
 
   resources :companies do
     collection do
-      post 'bulk_actions'
+      get 'bulk_actions'
       post 'get_clients_and_items'
       get 'filter_companies'
       get 'undo_actions'
@@ -40,7 +40,7 @@ Osb::Application.routes.draw do
       get 'enter_payment'
       put 'update_individual_payment'
       get 'filter_payments'
-      post 'bulk_actions'
+      get 'bulk_actions'
       get 'undo_actions'
       get 'payments_history'
       get 'invoice_payments_history'
@@ -49,7 +49,7 @@ Osb::Application.routes.draw do
   resources :taxes do
     collection do
       get 'filter_taxes'
-      post 'bulk_actions'
+      get 'bulk_actions'
       get 'undo_actions'
     end
   end
@@ -60,7 +60,7 @@ Osb::Application.routes.draw do
     collection do
       post :client_detail
       get 'filter_clients'
-      post :bulk_actions
+      get 'bulk_actions'
       post 'get_last_invoice'
       get 'undo_actions'
     end
@@ -85,7 +85,7 @@ Osb::Application.routes.draw do
   resources :items do
     collection do
       get 'filter_items'
-      post 'bulk_actions'
+      get 'bulk_actions'
       post 'load_item_data'
       get 'duplicate_item'
       get 'undo_actions'
@@ -98,7 +98,7 @@ Osb::Application.routes.draw do
     resources :invoice_line_items
     collection do
       get 'filter_invoices'
-      post 'bulk_actions'
+      get 'bulk_actions'
       get 'undo_actions'
       post 'duplicate_invoice'
       get 'enter_single_payment'
@@ -120,7 +120,7 @@ Osb::Application.routes.draw do
     resources :recurring_profile_line_items
     collection do
       get 'filter_recurring_profiles'
-      post 'bulk_actions'
+      get 'bulk_actions'
       get 'undo_actions'
       get 'selected_currency'
     end
