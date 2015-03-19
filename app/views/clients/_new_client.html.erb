@@ -29,17 +29,17 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><%= t('views.clients.first_name') %></div>
+            <div class="label_field left single"><span><%= t('views.clients.first_name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[first_name]", '' %>
+              <%= text_field_tag "client[first_name]", '', :required => true %>
             </div>
           </div>
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><%= t('views.clients.last_name') %></div>
+            <div class="label_field left single"><span><%= t('views.clients.last_name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[last_name]", '' %>
+              <%= text_field_tag "client[last_name]", '', :required => true %>
             </div>
           </div>
           <!--field_row-->

@@ -24,6 +24,10 @@ jQuery('.top_links').hide();
 <% elsif @action == "recovered from deleted" %>
     jQuery('.recover_deleted').show();
     jQuery('.get_deleted').addClass('active');
+<% elsif @action == "deleted from archived" %>
+    jQuery('.destroy_archived').show();
+    jQuery('.recover_deleted').show();
+    jQuery('.get_archived').addClass('active');
 <%else%>
     jQuery('.archive,.destroy').show();
     jQuery('.get_actives').addClass('active');

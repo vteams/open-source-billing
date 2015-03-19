@@ -13,7 +13,7 @@ jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 jQuery('.archive,.destroy').show();
 jQuery('#active_links a.get_actives').addClass('active');
 <% elsif status == "archived"%>
-jQuery('.recover_archived,.destroy').show();
+jQuery('.recover_archived,.destroy_archived').show();
 jQuery('#active_links a.get_archived').addClass('active');
 <% elsif status == "deleted"%>
 jQuery('.recover_deleted').show();

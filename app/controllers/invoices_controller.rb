@@ -32,7 +32,7 @@ class InvoicesController < ApplicationController
     @invoices = filter_by_company(@invoices)
 =end
     params[:status] = params[:status] || 'active'
-    @invoices = Invoice.filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
     respond_to do |format|
       format.html # index.html.erb
@@ -260,9 +260,10 @@ class InvoicesController < ApplicationController
 
   def sort_column
     params[:sort] ||= 'created_at'
-    sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'invoice_number'
-    sort_col = "case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end" if sort_col == 'clients.organization_name'
-    sort_col
+    Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    #sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    #sort_col = "case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end" if sort_col == 'clients.organization_name'
+    #sort_col
   end
 
   def sort_direction

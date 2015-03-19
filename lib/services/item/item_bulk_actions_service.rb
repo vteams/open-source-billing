@@ -23,7 +23,7 @@ module Services
     attr_reader :items, :item_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted)
+      actions_list = %w(archive destroy recover_archived recover_deleted destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @item_ids = @options[:item_ids]
@@ -33,6 +33,11 @@ module Services
 
     def perform
       method(@action_to_perform).call.merge({item_ids: @item_ids, action_to_perform: @action_to_perform})
+    end
+
+    def destroy_archived
+      @items.map(&:destroy)
+      {action: 'deleted from archived', items: get_items('archived')}
     end
 
     def archive
@@ -58,7 +63,12 @@ module Services
     private
 
     def get_items(filter)
-      ::Item.get_items(@options.merge(status: filter))
+      if ::Item.get_items(@options.merge(status: filter)).present?
+        ::Item.get_items(@options.merge(status: filter))
+      else
+        @options[:page] = @options[:page].to_i > 1 ? (@options[:page].to_i - 1).to_s : @options[:page]
+        ::Item.get_items(@options.merge(status: filter))
+      end
     end
   end
 end

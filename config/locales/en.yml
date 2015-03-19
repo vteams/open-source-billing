@@ -297,6 +297,7 @@ en:
       item_name: "Item Name"
       description: "description"
       item_description: "Item description"
+      item_unit_cost: "Unit Cost"
       unit_code: "Unit cost"
       quantity: "Quantity"
       tax: "Tax"
