@@ -15,6 +15,9 @@ jQuery ->
     else if (jQuery('#company_association').is(':checked') is  false and jQuery('#account_association').is(':checked') is  false)
       jQuery("#company_association").prop('checked', true);
       flag = false
+    else if jQuery("#item_unit_cost").val() isnt "" and  isNaN(jQuery("#item_unit_cost").val())
+      applyPopover(jQuery("#item_unit_cost"),"Must be numeric")
+      flag = false
     else if jQuery('#company_association').is(':checked')
       if jQuery('.options_content input[type=checkbox]:checked').length is 0
        applyPopover(jQuery("#company_association"),"Select a company")

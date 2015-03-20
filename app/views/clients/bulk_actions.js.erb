@@ -14,21 +14,32 @@ jQuery(".alert").hide()
 
 <% unless params[:client_ids].blank? %>
 jQuery('tbody#client_body').html('<%= escape_javascript render("clients") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 <%end%>
 
 
 jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
 jQuery('#active_links a').removeClass('active');
+jQuery('.top_links').hide();
 <% if @action == "recovered from archived"%>
+jQuery('.recover_archived, .destroy').show();
+jQuery('.destroy').parent('li').removeClass('grid_control_sep');
 jQuery('.get_archived').addClass('active');
 <% elsif @action == 'recovered from deleted' %>
-jQuery('.get_deleted').addClass('active');
+jQuery('.recover_deleted').show();
+jQuery('.destroy').parent('li').removeClass('grid_control_sep');
+jQuery('#active_links a.get_deleted').addClass('active');
+<%elsif @action == 'archived' or @action == 'deleted'%>
+jQuery('.archive, .destroy, .new_invoice').show();
+jQuery('.destroy').parent('li').addClass('grid_control_sep');
+jQuery('.get_actives').addClass('active');
 <%else%>
+jQuery('.archive, .destroy, .new_invoice').show();
+jQuery('.destroy').parent('li').removeClass('grid_control_sep');
 jQuery('.get_actives').addClass('active');
 <%end%>
 jQuery('#select_all').attr('checked', false);
 jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
-jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
 jQuery("table.table_listing").trigger('update');
 
 <%end%>

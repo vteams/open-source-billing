@@ -10,6 +10,12 @@ jQuery ->
     else if jQuery.trim(jQuery("#tax_percentage").val()) is ""
       applyPopover(jQuery("#tax_percentage"),"Enter tax percentage")
       false
+    else if isNaN(jQuery("#tax_percentage").val())
+      applyPopover(jQuery("#tax_percentage"),"Percentage must be numeric value")
+      false
+    else if parseFloat(jQuery("#tax_percentage").val()) > 100
+      applyPopover(jQuery("#tax_percentage"),"Percentage must be hundred or less")
+      false
     flag
 
   applyPopover = (elem,message) ->
