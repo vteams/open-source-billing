@@ -7,15 +7,7 @@
     </div>
   </td>
   <td class="align_left">
-    <% if f.object.item_id.present? and f.object.item.nil? %>
-        <%= f.select :item_id, options_for_select(load_deleted_item(f.object,@recurring_profile.company_id),selected: f.object.item_id),  {:prompt => "",:include_blank => ""},  {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
-    <% elsif f.object.item_id.present? and f.object.item.archived?.present? %>
-        <%= f.select :item_id, options_for_select(load_archived_items(f.object, @recurring_profile.company_id), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
-    <% else %>
-        <%= f.select :item_id, options_for_select(load_items(action_name, @recurring_profile.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
-    <% end %>
-    <%#= f.coll
-    <%#= f.collection_select(:item_id, load_items(action_name, @invoice.company_id), :id, :item_name, {:prompt => "",:include_blank => ""}, {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""}) %>
+    <%= f.select :item_id, options_for_select(load_line_items(action_name, @recurring_profile.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => "Select an item...", :class => "items_list medium chzn-select grid_large_medium", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, :class => 'item_name' %>
   <td class="align_left">
@@ -28,22 +20,10 @@
     <%= f.text_field :item_quantity, :class => 'grid_small align_right qty line_item_qtip' %>
   </td>
   <td class="align_left">
-  <% if f.object.tax_1.present? and f.object.tax1.nil?%>
-    <%= f.select(:tax_1, options_for_select(load_deleted_tax1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% elsif f.object.tax_1.present? and f.object.tax1.archived?.present?%>
-    <%= f.select(:tax_1, options_for_select(load_archived_tax1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% else %>
-    <%= f.select(:tax_1, options_for_select(load_taxes1, :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% end %>
+    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   </td>
   <td class="align_left draf">
-  <% if f.object.tax_2.present? and f.object.tax2.nil?%>
-    <%= f.select(:tax_2, options_for_select(load_deleted_tax2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% elsif f.object.tax_2.present? and f.object.tax2.archived?.present?%>
-    <%= f.select(:tax_2, options_for_select(load_archived_tax2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% else%>
-    <%= f.select(:tax_2, options_for_select(load_taxes2, :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-  <% end %>
+    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
   </td>
   <td class="align_right">
     <%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %>

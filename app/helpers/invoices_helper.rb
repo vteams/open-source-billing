@@ -128,7 +128,7 @@ module InvoicesHelper
       if item_in_other_company?(company_id, line_item)
         data = [*Item.find_by_id(line_item.item_id)].map{|c| [c.item_name, c.id, {type: 'company_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}
       else
-        data = company_id.present? ? Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]}: account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]}
+        data = company_id.present? ? Company.find_by_id(company_id).items.unarchived.map{|c| [c.item_name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} : account_level.map{|c| [c.item_name, c.id, {type: 'account_level'}]} + items.map{|c| [c.item_name, c.id, {type: 'company_level'}]}
       end
     end
     data
@@ -154,6 +154,16 @@ module InvoicesHelper
   def load_archived_items(invoice, company_id)
     items = Item.where(id: invoice.item_id).map{|item| [item.item_name,item.id,{'data-type' => 'archived_item', type: 'archived_item'}]}
     items + load_items('edit',company_id)
+  end
+
+  def load_line_items(action , company_id, invoice)
+    if invoice.item_id.present? and invoice.item.nil?
+      load_deleted_item(invoice, company_id)
+    elsif invoice.item_id.present? and invoice.item.archived?.present?
+      load_archived_items(invoice, company_id)
+    else
+      load_items(action, company_id, invoice)
+    end
   end
 
   def load_taxes1
@@ -187,4 +197,25 @@ module InvoicesHelper
     tax2 = taxes.where(id: invoice.tax_2).map { |tax| [tax.name, tax.id, {'data-type' => 'archived_tax','data-tax_2' => tax.percentage}] }
     tax2 + load_taxes2
   end
+
+  def load_line_item_taxes1(line_item)
+    if line_item.tax_1.present? and line_item.tax1.nil?
+      load_deleted_tax1(line_item)
+    elsif line_item.tax_1.present? and line_item.tax1.archived?.present?
+      load_archived_tax1(line_item)
+    else
+      load_taxes1
+    end
+  end
+
+  def load_line_item_taxes2(line_item)
+    if line_item.tax_2.present? and line_item.tax2.nil?
+      load_deleted_tax2(line_item)
+    elsif line_item.tax_2.present? and line_item.tax2.archived?.present?
+      load_archived_tax2(line_item)
+    else
+      load_taxes2
+    end
+  end
+
 end
