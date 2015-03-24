@@ -41,15 +41,8 @@
               <col class="five"/>
               <col class="six"/>
             </colgroup>
-            <thead>
-            <tr>
-              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_left sorting header"><%= sortable('company_name', t('views.companies.name')) %></th>
-              <th class="align_left header"><%= sortable('contact_name', t('views.clients.contact_name')) %></th>
-              <th class="align_left header"><%= sortable('email', t('views.common.email')) %></th>
-              <th class="align_left header"><%= sortable('country', t('views.common.country')) %></th>
-              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
+            <thead id = 'company_head'>
+            <%= render 'companies/companies_header'%>
             </thead>
             <tbody id="company_body">
             <%= render 'company' %>

@@ -23,6 +23,10 @@ jQuery('.top_links').hide();
 <% elsif @action == "recovered from deleted" %>
     jQuery('.recover_deleted').show();
     jQuery('.get_deleted').addClass('active');
+<% elsif @action == "deleted from archived" %>
+    jQuery('.send').parent("li").removeClass("grid_control_sep");
+    jQuery('.recover_archived,.destroy_archived,.send').show();
+    jQuery('#active_links a.get_archived').addClass('active');
 <%else%>
     jQuery('.archive,.destroy').show();
     jQuery('.get_actives').addClass('active');

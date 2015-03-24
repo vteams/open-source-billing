@@ -23,7 +23,7 @@ module Services
     attr_reader :invoices, :invoice_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted send payment)
+      actions_list = %w(archive destroy recover_archived recover_deleted send payment destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @invoice_ids = @options[:invoice_ids]
@@ -53,13 +53,26 @@ module Services
       {action: action, invoices_with_payments: invoices_with_payments, invoices: get_invoices('unarchived')}
     end
 
+    def destroy_archived
+      invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
+      invoices_for_delete = @invoices - invoices_with_payments
+      invoices_for_delete.each do |invoice|
+        invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
+      end
+
+      (invoices_for_delete).map(&:destroy)
+
+      action = invoices_with_payments.present? ? 'invoices_with_payments' : 'deleted from archived'
+      {action: action, invoices_with_payments: invoices_with_payments, invoices: get_invoices('archived')}
+    end
+
     def recover_archived
       @invoices.map(&:unarchive)
       {action: 'recovered from archived', invoices: get_invoices('archived')}
     end
 
     def recover_deleted
-      @invoices.only_deleted.map { |invoice| invoice.restore; invoice.unarchive; invoice.change_status_after_recover; invoice.invoice_line_items.unscoped.map(&:restore); }
+      @invoices.only_deleted.map { |invoice| invoice.restore; invoice.unarchive; invoice.change_status_after_recover; invoice.invoice_line_items.only_deleted.map(&:restore); }
       invoices = ::Invoice.only_deleted.page(@options[:page]).per(@options[:per])
       {action: 'recovered from deleted', invoices: get_invoices('only_deleted')}
     end
@@ -83,7 +96,7 @@ module Services
     private
 
     def get_invoices(invoice_filter)
-      ::Invoice.send(invoice_filter).page(@options[:page]).per(@options[:per])
+      ::Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").send(invoice_filter).page(@options[:page]).per(@options[:per])
     end
   end
 end

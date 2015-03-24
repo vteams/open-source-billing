@@ -15,7 +15,7 @@ jQuery('.archive,.destroy,.new_invoice').show();
 jQuery('.destroy').parent('li').addClass('grid_control_sep');
 jQuery('#active_links a.get_actives').addClass('active');
 <% elsif status == "archived"%>
-jQuery('.recover_archived,.destroy').show();
+jQuery('.recover_archived, .destroy_archived').show();
 jQuery('.destroy').parent('li').removeClass('grid_control_sep');
 jQuery('#active_links a.get_archived').addClass('active');
 <% elsif status == "deleted"%>

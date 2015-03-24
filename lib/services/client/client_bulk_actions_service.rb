@@ -23,7 +23,7 @@ module Services
     attr_reader :clients, :client_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted new_invoice)
+      actions_list = %w(archive destroy recover_archived recover_deleted new_invoice destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first
       @client_ids = @options[:client_ids]
@@ -37,6 +37,11 @@ module Services
 
     def new_invoice
       {action: 'new_invoice', clients: @clients}
+    end
+
+    def destroy_archived
+      @clients.map(&:destroy)
+      {action: 'deleted from archived', clients: get_clients('archived')}
     end
 
     def archive
@@ -56,7 +61,7 @@ module Services
     end
 
     def recover_deleted
-      @clients.only_deleted.map { |client| client.restore; client.unarchive; client.client_contacts.unscoped.map(&:restore); }
+      @clients.only_deleted.map { |client| client.restore; client.unarchive; client.client_contacts.only_deleted.map(&:restore); }
       {action: 'recovered from deleted', clients: get_clients('only_deleted')}
     end
 

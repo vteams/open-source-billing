@@ -80,7 +80,7 @@ class Item < ActiveRecord::Base
         #item2 = eval("b.#{params[:sort_column]}") rescue ''
         item1 <=> item2
       else
-        a.send(params[:sort_column]) <=> b.send(params[:sort_column])
+        a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
       end
     end if params[:sort_column] && params[:sort_direction]
 

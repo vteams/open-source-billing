@@ -1,0 +1,8 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_left sorting header <%= sortable_class('company_name') %>"><%= sortable('company_name', t('views.companies.name')) %></th>
+  <th class="align_left header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', t('views.clients.contact_name')) %></th>
+  <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email', t('views.common.email')) %></th>
+  <th class="align_left header <%= sortable_class('country') %>"><%= sortable('country', t('views.common.country')) %></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

@@ -23,7 +23,7 @@ module Services
     attr_reader :recurring_profiles, :recurring_profile_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted)
+      actions_list = %w(archive destroy recover_archived recover_deleted destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @recurring_profile_ids = @options[:recurring_profile_ids]
@@ -46,20 +46,26 @@ module Services
       {action: 'deleted', recurring_profiles: get_profiles('unarchived')}
     end
 
+    def destroy_archived
+      @recurring_profiles.map{|rp|rp.recurring_profile_line_items.only_deleted.map{|li|li.really_destroy!}}
+      @recurring_profiles.map(&:destroy)
+      {action: 'deleted from archived', recurring_profiles: get_profiles('archived')}
+    end
+
     def recover_archived
       @recurring_profiles.map(&:unarchive)
       {action: 'recovered from archived', recurring_profiles: get_profiles('archived')}
     end
 
     def recover_deleted
-      @recurring_profiles.only_deleted.each { |profile| profile.restore; profile.unarchive; profile.recurring_profile_line_items.unscoped.map(&:restore); }
+      @recurring_profiles.only_deleted.each { |profile| profile.restore; profile.unarchive; profile.recurring_profile_line_items.only_deleted.map(&:restore); }
       {action: 'recovered from deleted', recurring_profiles: get_profiles('only_deleted')}
     end
 
     private
 
     def get_profiles(filter)
-      ::RecurringProfile.send(filter).page(@options[:page]).per(@options[:per])
+      ::RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").send(filter).page(@options[:page]).per(@options[:per])
     end
   end
 end

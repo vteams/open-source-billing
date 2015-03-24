@@ -76,10 +76,9 @@ module ApplicationHelper
     # create checkbox for each companies and make it check if already associated with (items, clients)
     current_user.current_account.companies.all.each do |company|
       if action == 'edit'
-        association = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: item.id, parent_id: company.id) : CompanyEntity.where(entity_id: item.id, parent_id: company.id)
+        association = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: item.id, parent_id: company.id) : CompanyEntity.where(entity_id: item.id, parent_id: company.id, entity_type: controller.classify)
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
-
       list += "<div class='options_content_row'>
                   <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' class='company_checkbox'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
