@@ -391,6 +391,7 @@ jQuery ->
           hidePopover(jQuery(".hint_text:eq(0)"))
 
   # Change currency of invoice
+  jQuery("#invoice_currency_id").unbind 'change'
   jQuery("#invoice_currency_id").change ->
     currency_id = jQuery(this).val()
     hidePopover(jQuery("#invoice_currency_id_chzn")) if currency_id is ""

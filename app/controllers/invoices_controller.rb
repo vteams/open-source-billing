@@ -27,10 +27,6 @@ class InvoicesController < ApplicationController
   include InvoicesHelper
 
   def index
-=begin
-    @invoices = Invoice.unarchived.joins(:client).page(params[:page]).per(session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
-    @invoices = filter_by_company(@invoices)
-=end
     params[:status] = params[:status] || 'active'
     @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)

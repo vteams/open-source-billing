@@ -37,7 +37,7 @@ module InvoicesHelper
   def invoices_archived ids
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been archived. You can find them under
-     <a href="invoices/filter_invoices?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
+     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
      <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
     HTML
     notice.html_safe
@@ -46,7 +46,7 @@ module InvoicesHelper
   def invoices_deleted ids
     notice = <<-HTML
      <p>#{ids.size} invoice(s) have been deleted. You can find them under
-     <a href="invoices/filter_invoices?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
+     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
      <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
     HTML
     notice.html_safe

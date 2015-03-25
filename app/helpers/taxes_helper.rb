@@ -42,7 +42,7 @@ module TaxesHelper
   def taxes_deleted ids
     notice = <<-HTML
      <p>#{ids.size} tax(es) have been deleted. You can find them under
-     <a href="taxes/filter_items?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
+     <a href="taxes/filter_taxes?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
      <p><a href='taxes/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted taxes back to active.</p>
     HTML
     notice.html_safe

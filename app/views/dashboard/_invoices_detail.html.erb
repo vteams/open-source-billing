@@ -36,13 +36,13 @@
                   <td class="align_left text-overflow-class"><%= details.client.organization_name rescue "" %></td>
                   <td class="align_left"><%= (details.due_date || details.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
                   <td class="align_left"><%= details.status %></td>
-                  <td class="align_right"><%= number_to_currency(details.invoice_total) %></td>
+                  <td class="align_right"><%= number_to_currency(details.invoice_total, unit: details.currency.present? ? details.currency.unit : "$") %></td>
                 </tr>
             <% end %>
             <tr>
               <td class="align_left"><b>Total</b></td>
               <td></td><td></td><td></td>
-              <td class="align_right"><b><%= number_to_currency(@chart_total) %></b></td>
+              <td class="align_right"><b><%= number_to_currency(@chart_total, unit: @chart_details.last.currency.present? ? @chart_details.last.currency.unit : "$") %></b></td>
             </tr>
             </tbody>
           </table>

@@ -251,3 +251,7 @@
     </div>
     <!--invoice_form-->
 <% end %>
+
+<% if @invoice.currency.present?%>
+<script>$('#discount_type').find('option:last').val("<%= @invoice.currency_id %>").html("<%= @invoice.currency.unit %>").trigger("liszt:updated");</script>
+<%end%>
