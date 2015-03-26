@@ -27,7 +27,7 @@ jQuery('.alert').hide();
     jQuery('.top_links').hide();
     <% if @action == "recovered from archived"%>
         jQuery('.send').parent("li").removeClass("grid_control_sep");
-        jQuery('.recover_archived,.destroy,.send').show();
+        jQuery('.recover_archived,.destroy_archived,.send').show();
         jQuery('.get_archived').addClass('active');
     <% elsif @action == "recovered from deleted" %>
         jQuery('.recover_deleted').show().parent("li").removeClass("grid_control_sep");

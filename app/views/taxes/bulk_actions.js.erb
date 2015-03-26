@@ -19,7 +19,7 @@ jQuery('#active_links a').removeClass('active');
 jQuery('.top_links').hide();
 
 <% if @action == "recovered from archived"%>
-    jQuery('.recover_archived,.destroy').show();
+    jQuery('.recover_archived,.destroy_archived').show();
     jQuery('.get_archived').addClass('active');
 <% elsif @action == "recovered from deleted" %>
     jQuery('.recover_deleted').show();

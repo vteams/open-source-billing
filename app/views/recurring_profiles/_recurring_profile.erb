@@ -1,6 +1,6 @@
 <%
    no_record_message = t("views.invoices.recurring.no_record_msg")
-   if params[:status] == "archived" || @action == "recovered from archived"
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
      no_record_message = t("views.invoices.recurring.no_record_msg_archived")
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
      no_record_message = t("views.invoices.recurring.no_record_msg_deleted")
