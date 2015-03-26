@@ -11,6 +11,7 @@ jQuery('.alert').hide();
 
     <% unless params[:company_ids].blank?%>
         jQuery('tbody#company_body').html('<%= escape_javascript(render 'company') %>');
+        jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
     <%end%>
 
     // Enable/Disable action links(Archive,Delete,Recover). //
@@ -21,7 +22,6 @@ jQuery('.alert').hide();
     jQuery('#select_all').attr('checked', false);
 
         jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
-        jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
         jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
 
     jQuery('.top_links').hide();
@@ -32,6 +32,9 @@ jQuery('.alert').hide();
     <% elsif @action == "recovered from deleted" %>
         jQuery('.recover_deleted').show().parent("li").removeClass("grid_control_sep");
         jQuery('.get_deleted').addClass('active');
+    <% elsif @action == "deleted from archived" %>
+        jQuery('.recover_archived,.destroy_archived').show();
+        jQuery('#active_links a.get_archived').addClass('active');
     <%else%>
         jQuery('.archive,.destroy,.payment,.send').show();
         jQuery('.get_actives').addClass('active');

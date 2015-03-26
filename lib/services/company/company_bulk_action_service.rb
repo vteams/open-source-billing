@@ -23,7 +23,7 @@ module Services
     attr_reader :companies, :company_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted)
+      actions_list = %w(archive destroy recover_archived recover_deleted destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @company_ids = @options[:company_ids]
@@ -42,8 +42,12 @@ module Services
 
     def destroy
       @companies.map(&:destroy)
-
       {action: 'deleted', companies: get_companies('unarchived')}
+    end
+
+    def destroy_archived
+      @companies.map(&:destroy)
+      {action: 'deleted from archived', companies: get_companies('archived')}
     end
 
     def recover_archived

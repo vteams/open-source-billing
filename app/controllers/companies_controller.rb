@@ -6,7 +6,9 @@ class CompaniesController < ApplicationController
   # GET /companies.json
   def index
     params[:status] = params[:status] || 'active'
-    @companies = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    #@companies = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @companies = Company.filter(params.merge(per: session["#{controller_name}-per_page"], account: current_user.current_account)).order(sort_column + " " + sort_direction)
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @companies }
@@ -127,7 +129,7 @@ class CompaniesController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort].present? ? params[:sort] : 'created_at'
   end
 
   def sort_direction
