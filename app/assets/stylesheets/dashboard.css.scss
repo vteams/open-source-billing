@@ -124,6 +124,11 @@
           font-size: 30px;
           color: #464646;
           padding: 7px 0 11px 0;
+          .medium-unit{
+            font-size: 65%;
+            font-family: "Dosis Medium", sans-serif;
+            display: inline-block;
+          }
         }
       }
       p {
@@ -275,6 +280,7 @@
     &.small {
       min-height: 172px;
     }
+
   }
   h1 {
     font-size: 18px;
@@ -366,6 +372,37 @@
     margin: 5px 0 0 15px;
     &:hover{
       background: url(/assets/btn_x.png) no-repeat 0px -7px;
+    }
+  }
+}
+
+.dashboard_box{
+  &.custom{
+    width: 94.5%;
+    padding-right: 15px;
+    .amount_box{
+      width: 175px;
+      padding-right: 15px;
+      margin-right: 0px;
+      h1.black{
+        font-size: 26px;
+        .medium-unit{
+          font-size: 55%;
+        }
+      }
+      &.custom{
+        width: 220px;
+        padding-right: 0px;
+        .value{
+          width: 110px;
+          .medium-unit{
+            display: inline;
+            font-size: 9px;
+            padding-left: 2px;
+            color: #464646;
+          }
+        }
+      }
     }
   }
 }

@@ -141,7 +141,6 @@ class Client < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the clients associated with companies
-    #company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company_clients = Company.find(params[:company_id]).clients.send(params[:status])
     #company_clients
 

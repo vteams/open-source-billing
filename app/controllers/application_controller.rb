@@ -111,7 +111,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_clients_and_items
-    #parent = params[:company_id].blank? ? current_user.current_account : Company.find(params[:company_id])
     parent = Company.find(params[:company_id] || get_company_id)
     @get_clients = get_clients(parent)
     @get_items = get_items(parent)

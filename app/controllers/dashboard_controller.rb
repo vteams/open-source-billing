@@ -34,6 +34,7 @@ class DashboardController < ApplicationController
     @amount_billed = Invoice.total_invoices_amount(@currency)
     #@outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices(@currency)
     @ytd_income = Reporting::Dashboard.get_ytd_income(@currency)
+    @unit_size='medium-unit'
   end
 
   def chart_details

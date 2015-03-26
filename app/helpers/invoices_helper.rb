@@ -75,6 +75,15 @@ module InvoicesHelper
     notice.html_safe
   end
 
+  def number_to_currency1(number, options={})
+    return nil unless number
+    symbol       = options[:unit] || 'USD'
+    precision    = options[:precision] || 2
+    old_currency = number_to_currency(number, {precision: precision})
+    old_currency.chr=='-' ? old_currency.slice!(1) : old_currency.slice!(0)
+    ("#{old_currency} <div class=#{(options[:unit_size]||'unit-default')}>#{symbol} </div>").html_safe
+  end
+
   def taxes_list list,invoice=nil
     tax_list = ""
     currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')

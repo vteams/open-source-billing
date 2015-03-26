@@ -26,7 +26,11 @@ class TaxesController < ApplicationController
   include TaxesHelper
 
   def index
-    @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    params[:status] = params[:status] || 'active'
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+
+    @taxes = Tax.send(method).page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
       format.html # index.html.erb

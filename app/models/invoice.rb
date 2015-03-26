@@ -21,7 +21,6 @@
 class Invoice < ActiveRecord::Base
   include ::OSB
 
-  #scope :multiple, ->{ lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }}
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->{ where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('created_at DESC')}
   scope :past_invoices, -> {where("IFNULL(due_date, invoice_date) < ?", Date.today).order('created_at DESC')}

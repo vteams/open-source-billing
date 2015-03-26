@@ -20,7 +20,7 @@ jQuery('#active_links a.get_actives').addClass('active');
 
 <% elsif status == "archived"%>
 jQuery('.send').parent("li").removeClass("grid_control_sep");
-jQuery('.recover_archived,.recover_destroy,.send').show();
+jQuery('.recover_archived,.destroy_archived,.send').show();
 jQuery('#active_links a.get_archived').addClass('active');
 
 <% elsif status == "deleted"%>

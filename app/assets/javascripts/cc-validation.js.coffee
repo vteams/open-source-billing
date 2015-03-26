@@ -13,7 +13,7 @@ window.validateCreditCard = ->
     elem.find("input[required]").each (e,field) =>
       unless jQuery(field).val()
         jQuery(field).qtip({content:
-          text: "This field is require",
+          text: "This field is required",
           show:
             event: false, hide:
               event: false})

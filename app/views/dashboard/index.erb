@@ -20,11 +20,11 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="amount_wrapper">
-          <div class="dashboard_box">
+          <div class="dashboard_box custom">
 
             <div class="amount_box">
               <h1><%= t("views.dashboard.ytd_income") %></h1>
-              <h1 class="black"><%= number_to_currency(@ytd_income, unit: @currency.present? ? @currency.unit : "$")  %></h1>
+              <h1 class="black"><%= number_to_currency1(@ytd_income,{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size})  %></h1>
               <!--<h1 class="black"><%#= number_to_currency(@ytd_income) %></h1>-->
 
               <p><%= t("views.dashboard.ytd_income_detail") %></p>
@@ -33,7 +33,7 @@
             <div class="amount_box">
               <h1><%= t("views.dashboard.amount_billed") %></h1>
 
-              <h1 class="black"><%= number_to_currency(@amount_billed, unit: @currency.present? ? @currency.unit : "$") %></h1>
+              <h1 class="black"><%= number_to_currency1(@amount_billed,{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) %></h1>
 
               <p><%= t("views.dashboard.amount_billed_detail") %></p>
             </div>
@@ -41,30 +41,30 @@
             <div class="amount_box">
               <h1><%= t("views.dashboard.total_outstanding") %></h1>
 
-              <h1 class="black"><%= number_to_currency(@outstanding_invoices, unit: @currency.present? ? @currency.unit : "$") %></h1>
+              <h1 class="black"><%= number_to_currency1(@outstanding_invoices, {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) %></h1>
 
               <p><%= t("views.dashboard.total_outstanding_detail") %></p>
             </div>
 
-            <div class="amount_box">
+            <div class="amount_box custom">
               <h1><%= t("views.dashboard.aged_ar") %></h1>
 
               <div class="days_summary">
                 <div class="amount_row">
                   <div class="days">0 - 30 <%= t("views.dashboard.days_old") %> <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["zero_to_thirty"],unit: @currency.present? ? @currency.unit : "$") || "#{t('currency_unit')}0.00" %></div>
+                  <div class="value"><%= number_to_currency1(@aged_invoices.attributes["zero_to_thirty"],{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
                   <div class="days">30 - 60 <%= t("views.dashboard.days_old") %> <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["thirty_one_to_sixty"], unit: @currency.present? ? @currency.unit : "$") || "#{t('currency_unit')}0.00" %></div>
+                  <div class="value"><%= number_to_currency1(@aged_invoices.attributes["thirty_one_to_sixty"], {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
                   <div class="days">60 - 90 <%= t("views.dashboard.days_old") %> <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["sixty_one_to_ninety"], unit: @currency.present? ? @currency.unit : "$") || "#{t('currency_unit')}0.00" %></div>
+                  <div class="value"><%= number_to_currency1(@aged_invoices.attributes["sixty_one_to_ninety"], {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) || "#{t('currency_unit')}0.00" %></div>
                 </div>
                 <div class="amount_row">
                   <div class="days">Over 90 <%= t("views.dashboard.days_old") %> <span>:</span></div>
-                  <div class="value"><%= number_to_currency(@aged_invoices.attributes["ninety_one_and_above"], unit: @currency.present? ? @currency.unit : "$") || "#{t('currency_unit')}0.00" %></div>
+                  <div class="value"><%= number_to_currency1(@aged_invoices.attributes["ninety_one_and_above"], {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size}) || "#{t('currency_unit')}0.00" %></div>
                 </div>
               </div>
             </div>
