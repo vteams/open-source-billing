@@ -1,6 +1,6 @@
 $("#invoice_currency").removeClass('hide')
 $('.invoice_currency').val("<%= @client.currency_id %>")
-$('#discount_type').find('option:last').val("<%= @client.currency_id %>").html("<%= @client.currency.unit %>").trigger("liszt:updated");
+$('#discount_type').find('option:last').val("<%= @client.currency.unit %>").html("<%= @client.currency.unit %>").trigger("liszt:updated");
 $('.invoice_currency').trigger("liszt:updated");
 
 window.currency_symbol = "<%= @client.currency.unit %>"

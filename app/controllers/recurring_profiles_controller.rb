@@ -56,6 +56,7 @@ class RecurringProfilesController < ApplicationController
     @invoice = Invoice.find_by_id params[:id] if params[:id].present?
     @client = @invoice.client if @invoice.present?
     @recurring_profile.currency = @client.currency if @client.present?
+    @discount_types = @recurring_profile.currency.present? ? ['%', @recurring_profile.currency.unit] : DISCOUNT_TYPE
     3.times { @recurring_profile.recurring_profile_line_items.build() }
 
     get_clients_and_items
@@ -71,6 +72,7 @@ class RecurringProfilesController < ApplicationController
   def edit
     @recurring_profile = RecurringProfile.find(params[:id])
     @recurring_profile.first_invoice_date = @recurring_profile.first_invoice_date.to_date
+    @discount_types = @recurring_profile.currency.present? ? ['%', @recurring_profile.currency.unit] : DISCOUNT_TYPE
     get_clients_and_items
     respond_to {|format| format.js; format.html}
   end

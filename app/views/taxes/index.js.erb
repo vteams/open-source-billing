@@ -1,5 +1,4 @@
-//jQuery('#current_selected_company').html('<%#= get_selected_company_name %>');
-jQuery('tbody#tax_head').html('<%= escape_javascript render("tax_header") %>');
+jQuery('thead#tax_head').html('<%= escape_javascript render("tax_header") %>');
 jQuery('tbody#tax_body').html('<%= escape_javascript render("taxes") %>');
 jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');

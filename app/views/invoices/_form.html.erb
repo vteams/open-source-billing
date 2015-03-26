@@ -190,7 +190,7 @@
         <div class="grid_summary_row discount">
           <div class="grid_summary_title">
             <!--Discount <span class="discount_percentage_lbl"></span>%-->
-            Discount <%= f.select :discount_type, DISCOUNT_TYPE, {}, {:class => "discount_select chzn-select", :id => "discount_type"} %>
+            Discount <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select chzn-select", :id => "discount_type"} %>
           </div>
 
           <div class="grid_summary_description custom">
@@ -251,7 +251,3 @@
     </div>
     <!--invoice_form-->
 <% end %>
-
-<% if @invoice.currency.present?%>
-<script>$('#discount_type').find('option:last').val("<%= @invoice.currency_id %>").html("<%= @invoice.currency.unit %>").trigger("liszt:updated");</script>
-<%end%>

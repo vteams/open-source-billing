@@ -8,7 +8,11 @@ Osb::Application.routes.draw do
   #get '/auth/:provider/callback', to: 'sessions#create'
   mount V1::OSB => '/'
 
-  resources :email_templates
+  resources :email_templates do
+    collection do
+      get 'bulk_actions'
+    end
+  end
 
   resources :companies do
     collection do

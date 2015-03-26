@@ -1,6 +1,8 @@
 class EmailTemplatesController < ApplicationController
   # GET /email_templates
   # GET /email_templates.json
+  helper_method :sort_column, :sort_direction
+
   def index
     #@email_templates = EmailTemplate.page(params[:page]).per(params[:per])
     params[:company_id] = get_company_id if params[:company_id].blank?
@@ -108,6 +110,15 @@ class EmailTemplatesController < ApplicationController
     template_params = {}
     template_params = {torder: t.torder, template_type: t.template_type, subject: t.subject, email_from: t.email_from, body: t.body} if t
     EmailTemplate.new(template_params)
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   private

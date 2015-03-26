@@ -82,6 +82,7 @@ class InvoicesController < ApplicationController
     @client = @invoice.client if params[:id].present?
     @invoice.currency = @client.currency if @client.present?
     get_clients_and_items
+    @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -94,6 +95,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_date = @invoice.invoice_date.to_date
     @invoice.invoice_line_items.build()
     get_clients_and_items
+    @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
     respond_to {|format| format.js; format.html}
   end
 

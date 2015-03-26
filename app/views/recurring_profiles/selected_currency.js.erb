@@ -1,3 +1,3 @@
 window.currency_symbol = "<%= @currency.unit %>"
 $("#invoice_sub_total_lbl, #invoice_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol})
-$('#discount_type').find('option:last').val("<%= @currency.id %>").html("<%= @currency.unit %>").trigger("liszt:updated");
+$('#discount_type').find('option:last').val("<%= @currency.unit %>").html("<%= @currency.unit %>").trigger("liszt:updated");
