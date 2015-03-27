@@ -37,7 +37,7 @@
           <tr>
             <td class="align_left"><b>Total</b></td>
             <td></td><td></td>
-            <td class="align_right"><b><%= number_to_currency(@chart_total,unit: @chart_details.last.invoice.currency.present? ? @chart_details.last.invoice.currency.unit : "$") %></b></td>
+            <td class="align_right"><b><%= number_to_currency(@chart_total,unit: "") %></b></td>
           </tr>
           </tbody>
         </table>
