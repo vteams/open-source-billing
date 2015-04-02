@@ -83,6 +83,7 @@ class RecurringProfilesController < ApplicationController
     @recurring_profile = RecurringProfile.new(recurring_profile_params)
     @recurring_profile.sent_invoices = 0
     @recurring_profile.company_id = get_company_id()
+    @recurring_profile.create_line_item_taxes()
 
     respond_to do |format|
       if @recurring_profile.save
@@ -110,6 +111,7 @@ class RecurringProfilesController < ApplicationController
     respond_to do |format|
       @recurring_profile.company_id = get_company_id()
       if @recurring_profile.update_attributes(recurring_profile_params)
+        @recurring_profile.update_line_item_taxes()
         redirect_to(edit_recurring_profile_url(@recurring_profile), notice: 'Recurring profile has been updated successfully.')
         return
       else
@@ -183,7 +185,7 @@ class RecurringProfilesController < ApplicationController
                                               :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at,
                                               :deleted_at, :payment_terms_id, :company_id, :last_invoice_status,
                                               :last_sent_date, :sent_invoices,
-                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2,:archive_number, :archived_at, :deleted_at, :_destroy]
+                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_one, :tax_two,:archive_number, :archived_at, :deleted_at, :_destroy]
     )
   end
 

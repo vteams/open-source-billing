@@ -79,6 +79,8 @@ class Item < ActiveRecord::Base
         #item1 = eval("a.#{params[:sort_column]}") rescue ''
         #item2 = eval("b.#{params[:sort_column]}") rescue ''
         item1 <=> item2
+      elsif a.send(params[:sort_column]).class.to_s == 'BigDecimal' and b.send(params[:sort_column]).class.to_s == 'BigDecimal'
+        a.send(params[:sort_column]).to_i <=> b.send(params[:sort_column]).to_i
       else
         a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
       end

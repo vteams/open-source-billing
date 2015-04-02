@@ -474,8 +474,8 @@ jQuery ->
     tax2 = $('.tax2:first').html()
     $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')
     $('.tax2:last').html(tax2).find('option:selected').removeAttr('selected')
-    $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"]').remove()
-    $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"]').remove()
+    $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
+    $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
 
   jQuery(".less").live "click", ->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150304135920) do
+ActiveRecord::Schema.define(version: 20150331075423) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -249,6 +249,18 @@ ActiveRecord::Schema.define(version: 20150304135920) do
     t.datetime "deleted_at"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+  end
+
+  create_table "line_item_taxes", force: true do |t|
+    t.integer  "invoice_line_item_id"
+    t.decimal  "percentage",           precision: 10, scale: 0
+    t.string   "name"
+    t.integer  "tax_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
   end
 
   create_table "oauth_access_grants", force: true do |t|

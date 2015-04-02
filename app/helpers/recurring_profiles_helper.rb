@@ -33,7 +33,7 @@ module RecurringProfilesHelper
   def recurring_profiles_archived ids
     notice = <<-HTML
      <p>#{ids.size} recurring profile(s) have been archived. You can find them under
-     <a href="recurring_profiles/filter_recurring_profiles?status=archived" data-remote="true">Archived</a> section on this page.</p>
+     <a href="?status=archived" data-remote="true">Archived</a> section on this page.</p>
      <p><a href='recurring_profiles/undo_actions?ids=#{ids.join(",")}&archived=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move archived recurring profiles back to active.</p>
     HTML
     notice = notice.html_safe
@@ -42,16 +42,9 @@ module RecurringProfilesHelper
   def recurring_profiles_deleted ids
     notice = <<-HTML
      <p>#{ids.size} recurring profile(s) have been deleted. You can find them under
-     <a href="recurring_profiles/filter_recurring_profile?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
+     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
      <p><a href='recurring_profiles/undo_actions?ids=#{ids.join(",")}&deleted=true&page=#{params[:page]}&per=#{session["#{controller_name}-per_page"]}'  data-remote="true">Undo this action</a> to move deleted recurring profiles back to active.</p>
     HTML
     notice = notice.html_safe
   end
 end
-
-#<ul>
-#<li><a href="/recurring_profiles/enter_single_payment?ids=#{id}">Enter payment against this invoice</a></li>
-#<li><a href="/recurring_profiles/new">Create another invoice</a></li>
-#<li><a href="/recurring_profiles/new?id=#{id}">Create another by duplicating this invoice</a></li>
-#<li><a href="/recurring_profiles/invoice_pdf/#{id}.pdf" target="_blank">Download this invoice as PDF</a></li>
-#</ul>

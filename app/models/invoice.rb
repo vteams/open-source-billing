@@ -311,6 +311,34 @@ class Invoice < ActiveRecord::Base
     tlist
   end
 
+  def create_line_item_taxes
+    self.invoice_line_items.each do |invoice_line_item|
+      if invoice_line_item.tax_one.present? and invoice_line_item.tax_one != invoice_line_item.tax1.try(:tax_id)
+        tax_1 = Tax.find invoice_line_item.tax_one
+        invoice_line_item.tax1 = LineItemTax.create(name: tax_1.name, percentage: tax_1.percentage, tax_id: tax_1.id)
+      end
+      if invoice_line_item.tax_two.present? and invoice_line_item.tax_two != invoice_line_item.tax2.try(:tax_id)
+        tax_2 = Tax.find invoice_line_item.tax_two
+        invoice_line_item.tax2 = LineItemTax.create(name: tax_2.name, percentage: tax_2.percentage, tax_id: tax_2.id)
+      end
+    end
+    self.save
+  end
+
+  def update_line_item_taxes
+    self.invoice_line_items.each do |invoice_line_item|
+      if invoice_line_item.tax_one.present? and invoice_line_item.tax_one != invoice_line_item.tax1.try(:tax_id)
+        tax_1 = LineItemTax.find_by_id(invoice_line_item.tax_one).present? ? LineItemTax.find(invoice_line_item.tax_one)  : Tax.find(invoice_line_item.tax_one)
+        invoice_line_item.tax1 = tax_1.class.to_s == 'Tax' ? LineItemTax.create(name: tax_1.name, percentage: tax_1.percentage, tax_id: tax_1.id) : tax_1
+      end
+      if invoice_line_item.tax_two.present? and invoice_line_item.tax_two != invoice_line_item.tax2.try(:tax_id)
+        tax_2 = LineItemTax.find_by_id(invoice_line_item.tax_two).present? ? LineItemTax.find(invoice_line_item.tax_two)  : Tax.find(invoice_line_item.tax_two)
+        invoice_line_item.tax2 = tax_2.class.to_s == 'Tax' ? LineItemTax.create(name: tax_2.name, percentage: tax_2.percentage, tax_id: tax_2.id) : tax_2
+      end
+    end
+    self.save
+  end
+
   def load_deleted_tax1(line_item)
     Tax.unscoped.find_by_id(line_item.tax_1)
   end

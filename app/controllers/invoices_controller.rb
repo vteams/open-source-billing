@@ -103,6 +103,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
     @invoice.company_id = get_company_id()
+    @invoice.create_line_item_taxes()
     respond_to do |format|
       if @invoice.save
         @invoice.notify(current_user, @invoice.id)
@@ -125,7 +126,6 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client]) unless params[:response_to_client].blank?
-
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
@@ -137,6 +137,7 @@ class InvoicesController < ApplicationController
           return
         end
       elsif @invoice.update_attributes(invoice_params)
+        @invoice.update_line_item_taxes()
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
         return
@@ -278,7 +279,7 @@ class InvoicesController < ApplicationController
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
                                     :last_invoice_status, :company_id,:currency_id,
-                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy]
+                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_one, :tax_two, :_destroy]
     )
   end
 
