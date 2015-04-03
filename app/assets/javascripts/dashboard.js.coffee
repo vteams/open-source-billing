@@ -11,6 +11,7 @@ jQuery ->
   if gon?
     chart_ticks = gon.chart_data["ticks"]
     currency_code = gon.currency_code
+    currency_id = gon.currency_id
   else
     currency_code = $("body").attr("currency-unit")
 
@@ -90,7 +91,7 @@ jQuery ->
     chart_for =  if seriesIndex == 0 then 'invoices' else 'payments'
     jQuery.ajax '/dashboard/chart_details',
                 type: 'POST'
-                data: "chart_date=#{chart_ticks[pointIndex]}&chart_for=#{chart_for}"
+                data: "chart_date=#{chart_ticks[pointIndex]}&chart_for=#{chart_for}&currency=#{gon.currency_id}"
                 dataType: 'html'
                 error: (jqXHR, textStatus, errorThrown) ->
                   alert "Error: #{textStatus}"

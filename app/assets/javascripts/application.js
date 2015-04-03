@@ -62,6 +62,10 @@
 //= require tinymce
 //= require email_template.js
 //= require recurring_profiles.js.coffee
+//= require bootstrap-switch
+//= require bootstrap-checkbox.min.js
+//= require bootstrap-checkbox.js
+//= require settings
 
 
 jQuery(function () {

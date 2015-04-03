@@ -58,6 +58,7 @@ en:
         companies: "Companies"
         email_templates: "Email Templates"
         users: "Users"
+        basic_settings: "Basic Settings"
       help: "Help"
 
   views:
@@ -359,6 +360,7 @@ en:
 
     settings:
       settings: "Settings"
+      multi_currency: "Multi Currency"
 
     companies:
       companies: "Companies"

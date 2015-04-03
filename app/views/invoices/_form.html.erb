@@ -58,7 +58,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
-                <div> <%= text_field_tag 'company', get_company_name, :readonly => '', :class => 'company_read_only' %> </div>
+                <div> <%= text_field_tag 'company', get_invoice_company_name(@invoice), :readonly => '', :class => 'company_read_only' %> </div>
                 <ul class="field_description">
                   <li><%= t('views.invoices.company_hint') %></li>
                 </ul>
@@ -78,8 +78,7 @@
               </div>
             </div>
             <!--field_row-->
-
-            <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @invoice.currency.nil? %>" id="invoice_currency">
+            <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @invoice.currency.nil? or current_user.settings.currency.nil? or current_user.settings.currency == "Off" %>" id="invoice_currency">
               <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
               <div class="small_field">
                 <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>

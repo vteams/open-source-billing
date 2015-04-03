@@ -38,7 +38,7 @@ module Reporting
     end
 
     # get chart data
-    def self.get_chart_data(currency=nil)
+    def self.get_chart_data(currency=nil, company_id=nil)
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}
@@ -54,12 +54,13 @@ module Reporting
 
 
       # invoices amount group by month for last *number_of_months* months
+      company_filter = company_id.nil? ? "" : "company_id=#{company_id}"
       currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
-      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).sum("invoice_total")
+      payment_currency_filter = currency.nil? ? "" : "invoice_id IN ('#{Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",")}')"
+      invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).where(company_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
-      payments = Payment.where(:payment_date => start_date..end_date).where("payment_type is null or payment_type != ?",'credit').group("month(payment_date)").sum("payment_amount")
-
+      payments = Payment.where(:payment_date => start_date..end_date).where("payment_type is null or payment_type != ?",'credit').where(payment_currency_filter).where(company_filter).group("month(payment_date)").sum("payment_amount")
       chart_data = {}
       chart_data[:invoices] = chart_months.merge(invoices).map { |month, amount| amount.to_f }
       chart_data[:payments] = chart_months.merge(payments).map { |month, amount| amount.to_f }
@@ -119,11 +120,13 @@ module Reporting
 
     def self.get_chart_details(options)
       chart_date = Date.parse options[:chart_date]
-
+      company_filter = options[:current_company_id].nil? ? "" : "company_id=#{options[:current_company_id]}"
+      currency_filter = options[:currency].nil? ? "" : "currency_id=#{options[:currency]}"
+      payment_currency_filter = options[:currency].nil? ? "" : "invoice_id IN ('#{Invoice.where(currency_id: options[:currency]).pluck(:id).map(&:to_s).join(",")}')"
       if options[:chart_for] == 'invoices'
-        Invoice.where(:invoice_date => chart_date..chart_date.at_end_of_month).order('created_at DESC')
+        Invoice.where(:invoice_date => chart_date..chart_date.at_end_of_month).where(currency_filter).where(company_filter).order('created_at DESC')
       else
-        Payment.where(:payment_date => chart_date..chart_date.at_end_of_month).where("payment_type is null or payment_type != ?",'credit').order('created_at DESC')
+        Payment.where(:payment_date => chart_date..chart_date.at_end_of_month).where(payment_currency_filter).where(company_filter).where("payment_type is null or payment_type != ?",'credit').order('created_at DESC')
       end
     end
 

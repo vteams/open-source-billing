@@ -16,6 +16,7 @@ gem 'slim-rails'
 gem 'doorkeeper', '~> 1.4.0'
 gem 'grape-doorkeeper', '~> 0.0.2'
 gem 'twitter-bootstrap-rails', '~> 2.1.9'
+gem 'rails-settings-cached', '0.4.1'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

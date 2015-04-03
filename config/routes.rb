@@ -23,9 +23,13 @@ Osb::Application.routes.draw do
     end
   end
 
-  resources :sub_users
+  resources :sub_users do
+    collection do
+      get 'user_settings'
+    end
+  end
 
-  #resources :users
+  resources :settings
 
   resources :payment_terms
 

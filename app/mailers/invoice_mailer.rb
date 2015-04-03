@@ -78,7 +78,7 @@ class InvoiceMailer < ActionMailer::Base
     mail(:to => user.email, :subject => template.subject)
     invoice.sent_emails.create({
                                    :content => reason,
-                                   :sender => invoice.client.email, #User email
+                                   :sender => invoice.client.try(:email), #User email
                                    :recipient => user.email, #client email
                                    :subject => 'Reason from client',
                                    :type => 'Disputed',
@@ -92,7 +92,7 @@ class InvoiceMailer < ActionMailer::Base
     invoice.sent_emails.create({
                                    :content => response,
                                    :sender => user.email, #User email
-                                   :recipient => invoice.client.email, #client email
+                                   :recipient => invoice.client.try(:email), #client email
                                    :subject => 'Response to client',
                                    :type => 'Disputed',
                                    :company_id => invoice.company_id,

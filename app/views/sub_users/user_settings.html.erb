@@ -1,0 +1,38 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Basic Settings</h1>
+  </div>
+</div>
+<div class = "items_wrapper">
+  <%= form_for(:settings, url: '/settings', remote: true ,novalidate: "", id: "sub_user_form") do %>
+  <div class="new_item_form">
+    <div class="content_middle">
+      <div class="fields_content">
+        <div class="fields_content_container">
+          <div class="fields_content_data">
+
+            <div class="field_row">
+              <div class="label_field left single"><%= t('views.settings.multi_currency')  %></div>
+              <div class="large_field">
+                <input type="checkbox" name="currency_select" data-off-title="Off" data-on-title="On"  class="currency_select"  <%= "checked" if current_user.settings.currency.present? and current_user.settings.currency == "On" %>  >
+              </div>
+            </div>
+
+            <div class="field_row">
+              <div class="label_field left single"></div>
+              <div class="large_field">
+                <%= submit_tag t('views.common.save'), class:  "btn_large submit submit_currency" %>
+              </div>
+            </div>
+           </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
+      </div>
+    </div>
+  </div><!--new_item_form-->
+  <% end %>
+</div>
+<script>
+    $(':checkbox').checkboxpicker();
+</script>

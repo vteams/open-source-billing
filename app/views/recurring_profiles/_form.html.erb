@@ -40,7 +40,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
-                <%= text_field_tag 'company', get_company_name, :readonly => '', :class => 'company_read_only' %>
+                <%= text_field_tag 'company', get_invoice_company_name(@recurring_profile), :readonly => '', :class => 'company_read_only' %>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.company_hint') %></li>
                 </ul>

@@ -242,6 +242,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.8)
       sprockets-rails (~> 2.0)
+    rails-settings-cached (0.4.1)
+      rails (>= 4.0.0)
     railties (4.1.8)
       actionpack (= 4.1.8)
       activesupport (= 4.1.8)
@@ -410,6 +412,7 @@ DEPENDENCIES
   quiet_assets
   rack-cors
   rails (~> 4.1.8)
+  rails-settings-cached (= 0.4.1)
   railties
   rest-client
   rmagick

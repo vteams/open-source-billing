@@ -7,6 +7,9 @@
   }
   .large_field input, .large_field textarea,{
     width: 350px;
+    &.submit_currency{
+      width: 176px;
+    }
   }
   .large_field input[type="password"]{
     padding: 4px 9px ;

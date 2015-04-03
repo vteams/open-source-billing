@@ -71,6 +71,10 @@ class SubUsersController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def user_settings
+
+  end
+
   private
   def sort_column
     params[:sort] ||= 'user_name'

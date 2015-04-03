@@ -182,6 +182,8 @@ class window.InlineForms
         valid_form = false
     fname = @chznContainer.find(".tiny_create_form #client_first_name")
     lname = @chznContainer.find(".tiny_create_form #client_last_name")
+    pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+    email = @chznContainer.find(".tiny_create_form #client_email")
     if valid_form and fname.length
        if !jQuery(fname).val()  and  !jQuery(lname).val()
          jQuery(fname).qtip({content:
@@ -191,5 +193,10 @@ class window.InlineForms
                event: false})
          jQuery(fname).qtip().show()
          jQuery(fname).focus()
+         valid_form = false
+       if !pattern.test(email.val())
+         jQuery(email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+         jQuery(email).qtip().show()
+         jQuery(email).focus()
          valid_form = false
     valid_form

@@ -20,9 +20,11 @@
 #
 class DashboardController < ApplicationController
   def index
+    @current_company_id = get_company_id
     @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
     gon.currency_code=@currency_code = @currency.present? ? @currency.code : '$'
-    gon.chart_data = Reporting::Dashboard.get_chart_data(@currency)
+    gon.currency_id = @currency.id
+    gon.chart_data = Reporting::Dashboard.get_chart_data(@currency, @current_company_id)
     @recent_activity = Reporting::Dashboard.get_recent_activity
     @aged_invoices = Reporting::Dashboard.get_aging_data(@currency)
     @outstanding_invoices = (@aged_invoices.attributes["zero_to_thirty"] || 0) +
@@ -38,7 +40,9 @@ class DashboardController < ApplicationController
   end
 
   def chart_details
-    @chart_details = Reporting::Dashboard.get_chart_details(params)
+    current_company_id = get_company_id
+    @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
+    @chart_details = Reporting::Dashboard.get_chart_details(params.merge(current_company_id: current_company_id))
     @chart_total = params[:chart_for] == 'invoices' ? @chart_details.sum(:invoice_total) : @chart_details.sum(:payment_amount)
     render partial: "#{params[:chart_for]}_detail"
   end
