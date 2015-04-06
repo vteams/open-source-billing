@@ -186,6 +186,7 @@ en:
       enter_payment: "Enter payment"
 
     invoices:
+      invoice: "Invoices"
       due_date: "Due date"
       enter_payment: "Enter payment"
       enter_payment_on_invoice: "Enter payment on invoice"
