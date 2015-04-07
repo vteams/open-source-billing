@@ -4,7 +4,7 @@ listing = '@'+ controller_name
 %>
 <td colspan="<%= colspan[controller_name] || 8 %>" class = 'page_styling'>
   <div class="paginator">
-    <%= paginate eval(listing), :remote => true %>
+    <%= paginate eval(listing), :window => 9 , :remote => true %>
     <div class="paging_info">
       <% unless eval(listing).blank? %>
           <%= page_entries_info eval(listing) %>

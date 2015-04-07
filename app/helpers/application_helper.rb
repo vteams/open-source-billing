@@ -172,6 +172,11 @@ module ApplicationHelper
     end
   end
 
+  def get_date_format
+    user_format = current_user.settings.date_format
+    user_format.present? ?  user_format : "%m/%d/%Y"
+  end
+
   def currencies
     #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
     currencies = Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )

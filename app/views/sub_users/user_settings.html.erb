@@ -19,6 +19,20 @@
             </div>
 
             <div class="field_row">
+              <div class="label_field left single"><%= t('views.settings.date_format')  %></div>
+              <div class="large_field">
+                <%= select_tag "date_format", options_for_select(DATE_FORMATS, :selected => current_user.settings.date_format) %>
+              </div>
+            </div>
+
+            <div class="field_row">
+              <div class="label_field left single"><%= t('views.settings.lines_per_page')  %></div>
+              <div class="large_field">
+                <%= select_tag "lines_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.lines_per_page) %>
+              </div>
+            </div>
+
+            <div class="field_row">
               <div class="label_field left single"></div>
               <div class="large_field">
                 <%= submit_tag t('views.common.save'), class:  "btn_large submit submit_currency" %>

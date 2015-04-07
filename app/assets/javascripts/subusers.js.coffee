@@ -13,7 +13,9 @@ jQuery ->
     else if password.val() isnt "" or password_confirmation.val() isnt ""
         if password.val() != password_confirmation.val()
           applyPopover(jQuery(password),"bottomMiddle","topLeft","Passwords doesn't matched")
-        flag = false
+          flag = false
+        else
+          flag = true
     else
       flag = true
     flag
