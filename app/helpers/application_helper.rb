@@ -41,7 +41,7 @@ module ApplicationHelper
 
   def custom_per_page
     content_tag(:select,
-                options_for_select([5, 10, 20, 50, 100], session["#{controller_name}-per_page"]),
+                options_for_select([5, 10, 20, 50, 100], @per_page),
                 :data => {
                     :remote => true,
                     :url => url_for(:action => action_name, :params => params.except(:page), :flag => "per_page")},

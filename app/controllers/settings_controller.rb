@@ -11,8 +11,8 @@ class SettingsController < ApplicationController
     if params[:date_format].present?
       user.settings.date_format = params[:date_format]
     end
-    if params[:lines_per_page].present?
-      user.settings.lines_per_page = params[:lines_per_page]
+    if params[:records_per_page].present?
+      user.settings.records_per_page = params[:records_per_page]
     end
   end
 end

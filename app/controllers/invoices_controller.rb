@@ -28,7 +28,7 @@ class InvoicesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
     respond_to do |format|
       format.html # index.html.erb
@@ -37,7 +37,7 @@ class InvoicesController < ApplicationController
   end
 
   def filter_invoices
-    @invoices = Invoice.filter(params, session["#{controller_name}-per_page"]).order("#{sort_column} #{sort_direction}")
+    @invoices = Invoice.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
   end
 

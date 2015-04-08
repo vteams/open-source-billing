@@ -21,12 +21,14 @@
 module Reporting
   module Dashboard
     # get the recent activity - 10 most recent items
-    def self.get_recent_activity(currency=nil)
+    def self.get_recent_activity(currency=nil, company = nil)
       # columns returned: activity type, client, amount, activity date, currency unit, currency code
       # fetch last 10 invoices and payments
+      company_filter = company.nil? ? "" : "company_id=#{company}"
+      payment_company_filter = company.nil? ? "" : "payments.company_id=#{company}"
       currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
-      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).order("created_at DESC").limit(5)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
+      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(5)
+      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
 
       # merge invoices and payments in activity array
       recent_activity = []
@@ -71,22 +73,24 @@ module Reporting
     end
 
     # get outstanding invoices
-    def self.get_outstanding_invoices(currency=nil)
+    def self.get_outstanding_invoices(currency=nil,company=nil)
       currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
       Invoice.total_invoices_amount - Payment.total_payments_amount
     end
 
-    def self.get_ytd_income(currency=nil)
+    def self.get_ytd_income(currency=nil, company=nil)
       ytd = 0
       currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
-      Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).each do |invoice|
+      company_filter = company.present? ? "invoices.company_id=#{company}" : ""
+      Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).where(company_filter).each do |invoice|
         ytd += invoice.payments.sum(:payment_amount).to_f
       end
       ytd
     end
 
-    def self.get_aging_data(currency=nil)
+    def self.get_aging_data(currency=nil, company=nil)
       currency_filter = currency.nil? ? "" : " AND invoices.currency_id=#{currency.id} "
+      company_filter = company.nil? ? "" : "AND invoices.company_id=#{company}"
       aged_invoices = Invoice.find_by_sql(<<-eos
           SELECT zero_to_thirty, thirty_one_to_sixty, sixty_one_to_ninety, ninety_one_and_above
           FROM (
@@ -111,6 +115,7 @@ module Reporting
                 AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{Date.today}')
                 AND (invoices.`status` != "paid")
                 #{currency_filter}
+                #{company_filter}
               GROUP BY clients.organization_name,  invoices.invoice_total, invoices.`status`, invoices.invoice_number
             ) AS aged
           ) total_aged

@@ -363,7 +363,7 @@ en:
       settings: "Settings"
       multi_currency: "Multi Currency"
       date_format: "Date Format"
-      lines_per_page: "Lines per page"
+      records_per_page: "Records per page"
 
     companies:
       companies: "Companies"

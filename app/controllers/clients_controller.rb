@@ -189,7 +189,7 @@ class ClientsController < ApplicationController
   end
 
   def get_args(status)
-    {status: status, per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   private
 

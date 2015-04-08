@@ -22,8 +22,8 @@ class Invoice < ActiveRecord::Base
   include ::OSB
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
-  scope :current_invoices,->{ where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('created_at DESC')}
-  scope :past_invoices, -> {where("IFNULL(due_date, invoice_date) < ?", Date.today).order('created_at DESC')}
+  scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
+  scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
 
   # constants
   STATUS_DESCRIPTION = {
@@ -213,9 +213,10 @@ class Invoice < ActiveRecord::Base
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
-  def self.total_invoices_amount(currency=nil)
+  def self.total_invoices_amount(currency=nil, company=nil)
     currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
-    where(currency_filter).sum('invoice_total')
+    company_filter = company.present? ? "invoices.company_id=#{company}" : ""
+    where(currency_filter).where(company_filter).sum('invoice_total')
   end
 
   def create_credit(amount)

@@ -26,9 +26,9 @@
             </div>
 
             <div class="field_row">
-              <div class="label_field left single"><%= t('views.settings.lines_per_page')  %></div>
+              <div class="label_field left single"><%= t('views.settings.records_per_page')  %></div>
               <div class="large_field">
-                <%= select_tag "lines_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.lines_per_page) %>
+                <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
               </div>
             </div>
 

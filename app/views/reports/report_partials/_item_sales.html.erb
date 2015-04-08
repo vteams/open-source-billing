@@ -27,7 +27,7 @@
         <%# unless @report.report_data.blank? %>
         <%# @report.report_data.each do |item| %>
         <!--<h2><%#= item.item_name || '' %></h2>-->
-        <table cellpadding="0" cellspacing="0" class="table_listing client_report_listing">
+        <table cellpadding="0" cellspacing="0" class="table_listing item_sales_listing">
           <colgroup>
             <col class="one"/>
             <col class="two"/>
@@ -49,25 +49,25 @@
               <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
                 <tr>
                   <td class="align_left"><%= items.first.item_name %></td>
-                  <td class="align_center ">
+                  <td class="align_center" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
                     <%  items.each do |item| %>
                       <%= item.attributes["item_quantity"].to_i %>
                       <br>
                     <% end %>
                   </td>
-                  <td class="align_right currency ">
+                  <td class="align_right currency" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
                     <%  items.each do |item| %>
                       <%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %>
                       <br>
                     <% end %>
                   </td>
-                  <td class="align_right currency ">
+                  <td class="align_right currency"  data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
                     <%  items.each do |item| %>
                       <%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %>
                       <br>
                     <% end %>
                   </td>
-                  <td class="align_right currency ">
+                  <td class="align_right currency"  data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
                     <%  items.each do |item| %>
                       <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
                       <br>

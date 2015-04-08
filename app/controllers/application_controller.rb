@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   before_filter :_reload_libs #reload libs on every request for dev environment only
                               #layout :choose_layout
                               #reload libs on every request for dev environment only
+  before_filter :set_per_page
 
   def _reload_libs
     if defined? RELOAD_LIBS
@@ -137,6 +138,14 @@ class ApplicationController < ActionController::Base
     session['current_company'] = params[:company_id]
     current_user.update_attributes(current_company: params[:company_id])
    end
+  end
+
+  def set_per_page
+    @per_page = if params[:per]
+                  params[:per]
+                else
+                  current_user.settings.records_per_page || session["#{controller_name}-per_page"]
+                end
   end
 
   protected

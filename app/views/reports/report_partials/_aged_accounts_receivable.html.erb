@@ -38,7 +38,7 @@
         <thead>
         <tr>
           <th class="align_left"><%= t('views.clients.client_name') %></th>
-          <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_0_30') %></th>
+          <th class="align_right"><%= t('views.reports.days_0_30') %></th>
           <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_31_60') %></th>
           <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_61_90') %></th>
           <th class="align_right {sorter:'thousands'}"><%= t('views.reports.days_above_90') %></th>
@@ -49,32 +49,34 @@
         <% unless @report.report_data.blank? %>
             <% @report.report_data.group_by{|data| data["client_name"]}.values.each do |ages| %>
               <tr>
-                <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= ages.first.attributes["client_name"] %></td>
-                <td class="align_right" >
+                <td class="align_left text-overflow-class" data-overflow-rows="2"  data-sort_val="<%= ages.first.attributes["client_name"] %>">
+                  <%= ages.first.attributes["client_name"] %>
+                </td>
+                <td class="align_right" data-sort_val="<%= ages.sum{|aged| aged.attributes['zero_to_thirty'] }  %>">
                   <% ages.each do |aged| %>
                     <%= number_to_currency(aged.attributes["zero_to_thirty"],unit: aged.attributes['currency_code']) %>
                     <br>
                   <% end %>
                 </td>
-                <td class="align_right" >
+                <td class="align_right" data-sort_val="<%= ages.sum{|aged| aged.attributes['thirty_one_to_sixty'] } %>">
                   <% ages.each do |aged| %>
                     <%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: aged.attributes['currency_code']) %>
                     <br>
                   <% end %>
                 </td>
-                <td class="align_right" >
+                <td class="align_right" data-sort_val="<%= ages.sum{|aged| aged.attributes['sixty_one_to_ninety'] } %>" >
                   <% ages.each do |aged| %>
                     <%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: aged.attributes['currency_code']) %>
                     <br>
                   <% end %>
                 </td>
-                <td class="align_right" >
+                <td class="align_right" data-sort_val="<%= ages.sum{|aged| aged.attributes['ninety_one_and_above'] } %>" >
                   <% ages.each do |aged| %>
                     <%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %>
                     <br>
                   <% end %>
                 </td>
-                <td class="align_right" >
+                <td class="align_right" data-sort_val="<%= ages.sum{|aged| aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"]} %>" >
                   <% ages.each do |aged| %>
                     <%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %>
                     <br>

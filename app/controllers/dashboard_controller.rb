@@ -25,17 +25,17 @@ class DashboardController < ApplicationController
     gon.currency_code=@currency_code = @currency.present? ? @currency.code : '$'
     gon.currency_id = @currency.id
     gon.chart_data = Reporting::Dashboard.get_chart_data(@currency, @current_company_id)
-    @recent_activity = Reporting::Dashboard.get_recent_activity
-    @aged_invoices = Reporting::Dashboard.get_aging_data(@currency)
+    @recent_activity = Reporting::Dashboard.get_recent_activity(@currency, @current_company_id)
+    @aged_invoices = Reporting::Dashboard.get_aging_data(@currency, @current_company_id)
     @outstanding_invoices = (@aged_invoices.attributes["zero_to_thirty"] || 0) +
         (@aged_invoices.attributes["thirty_one_to_sixty"] || 0) +
         (@aged_invoices.attributes["sixty_one_to_ninety"] || 0) +
         (@aged_invoices.attributes["ninety_one_and_above"] || 0)
-    @current_invoices = Invoice.current_invoices
-    @past_invoices = Invoice.past_invoices
-    @amount_billed = Invoice.total_invoices_amount(@currency)
+    @current_invoices = Invoice.current_invoices(@current_company_id)
+    @past_invoices = Invoice.past_invoices(@current_company_id)
+    @amount_billed = Invoice.total_invoices_amount(@currency, @current_company_id)
     #@outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices(@currency)
-    @ytd_income = Reporting::Dashboard.get_ytd_income(@currency)
+    @ytd_income = Reporting::Dashboard.get_ytd_income(@currency, @current_company_id)
     @unit_size='medium-unit'
   end
 

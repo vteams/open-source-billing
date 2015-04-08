@@ -1,3 +1,4 @@
+<% if current_user.settings.currency.present? and current_user.settings.currency == "On"  %>
 $("#invoice_currency").removeClass('hide')
 $('.invoice_currency').val("<%= @client.currency_id %>")
 $('#discount_type').find('option:last').val("<%= @client.currency.unit %>").html("<%= @client.currency.unit %>").trigger("liszt:updated");
@@ -13,3 +14,4 @@ $('.recurring_profile_currency').trigger("liszt:updated");
 
 window.currency_symbol = "<%= @client.currency.unit %>"
 $("#recurring_profile_total_lbl, #recurring_profile_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol})
+<% end %>

@@ -25,7 +25,7 @@ class PaymentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
     @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
     @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
     @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name

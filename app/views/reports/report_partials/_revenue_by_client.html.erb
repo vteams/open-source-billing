@@ -46,14 +46,14 @@
               <tr>
                 <td class="align_left text-overflow-class" ><%= revenues.first.organization_name %></td>
                 <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-                  <td class="align_right" >
+                  <td class="align_right" data-sort_val="<%= revenues.sum{|revenue| revenue["#{Date::MONTHNAMES[month]}"] } %>" >
                     <% revenues.each do |revenue| %>
                       <%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"],unit: revenue['currency_code']) %>
                       <br>
                     <% end %>
                   </td>
                 <% end %>
-                <td class="align_right" >
+                <td class="align_right" data-sort_val="<%= revenues.sum{|revenue| revenue.client_total } %>" >
                   <% revenues.each do |revenue| %>
                     <%= number_to_currency(revenue.client_total,unit: revenue['currency_code']) %>
                     <br>
