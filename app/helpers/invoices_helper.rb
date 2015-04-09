@@ -165,14 +165,15 @@ module InvoicesHelper
     items + load_items('edit',company_id)
   end
 
-  def load_line_items(action , company_id, invoice)
-    if invoice.item_id.present? and invoice.item.nil?
-      load_deleted_item(invoice, company_id)
-    elsif invoice.item_id.present? and invoice.item.archived?.present?
-      load_archived_items(invoice, company_id)
+  def load_line_items(action , company_id, line_item)
+    items = if line_item.item_id.present? and line_item.item.nil?
+      load_deleted_item(line_item, company_id)
+    elsif line_item.item_id.present? and line_item.item.archived?.present?
+      load_archived_items(line_item, company_id)
     else
-      load_items(action, company_id, invoice)
+      load_items(action, company_id, line_item)
     end
+    items.prepend([line_item.item_name, line_item.id,{'data-type' => 'active_line_item', type: 'active_line_item'}])
   end
 
   def load_taxes1

@@ -14,7 +14,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.settings.multi_currency')  %></div>
               <div class="large_field">
-                <input type="checkbox" name="currency_select" data-off-title="Off" data-on-title="On"  class="currency_select"  <%= "checked" if current_user.settings.currency.present? and current_user.settings.currency == "On" %>  >
+                <input type="checkbox" name="currency_select" data-off-title="Off" data-on-color="success" data-on-title="On"  class="currency_select"  <%= "checked" if current_user.settings.currency.present? and current_user.settings.currency == "On" %>  >
               </div>
             </div>
 
