@@ -237,7 +237,7 @@ jQuery ->
       applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
     # if currency is not selected
-    else if jQuery("#invoice_currency_id").val() is ""
+    else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
       applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
     # check if invoice date is selected
@@ -469,7 +469,7 @@ jQuery ->
   jQuery("#add_line_item").live "click", ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
-    $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"]').remove()
+    $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"]').remove()
     tax1 = $('.tax1:first').html()
     tax2 = $('.tax2:first').html()
     $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')

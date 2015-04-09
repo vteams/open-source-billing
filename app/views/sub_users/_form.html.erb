@@ -20,7 +20,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
                 <div class="large_field">
-                  <%= text_field_tag :email,'' %>
+                  <%= text_field_tag :email,'', :required => "" %>
                 </div>
               </div>
               <!--field_row-->
@@ -28,7 +28,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.users.password') %></span></div>
                 <div class="large_field">
-                  <%= password_field_tag :password,'' %>
+                  <%= password_field_tag :password,'', :required => "" %>
                 </div>
               </div>
 
@@ -37,7 +37,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.users.confirmation') %></span></div>
                 <div class="large_field">
-                  <%= password_field_tag :password_confirmation,'' %>
+                  <%= password_field_tag :password_confirmation,'', :required => "" %>
                 </div>
               </div>
 

@@ -144,7 +144,11 @@ class ApplicationController < ActionController::Base
     @per_page = if params[:per]
                   params[:per]
                 else
-                  current_user.settings.records_per_page || session["#{controller_name}-per_page"]
+                  if current_user.present?
+                    current_user.settings.records_per_page
+                  else
+                    session["#{controller_name}-per_page"]
+                  end
                 end
   end
 

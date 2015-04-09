@@ -19,8 +19,19 @@ class window.validateForms
 
   # validate all required fields
   validateRequired: ->
-    @password = @form.find("#login_pswd") if @password?
-    @confirm_password = @form.find("#login_confrm_pswd") if @confirm_password?
+#    @password = @form.find("#login_pswd") if @password?
+    if @password?
+       @password = if @form.find("#login_pswd").length == 0
+                     @password
+                   else
+                     @form.find("#login_pswd")
+#    @confirm_password = @form.find("#login_confrm_pswd") if @confirm_password?
+
+    if @confirm_password?
+       @confirm_password = if @form.find("#login_confrm_pswd").length == 0
+                              @confirm_password
+                           else
+                              @form.find("#login_confrm_pswd")
     emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
 
     if jQuery.trim(@user_name.val()) is ''
@@ -34,6 +45,9 @@ class window.validateForms
       false
     else if !emailReg.test(@email.val())
       @showQtip(@email, @getMessage("invalid_email"))
+      false
+    else if  @password.val() is ''
+      @showQtip(@password, @getMessage("required"))
       false
     else if @password.val().length < 8
       @showQtip(@password, @getMessage('password_length'))
@@ -65,6 +79,9 @@ class window.validateForms
           false
         else if @password_update.val() != @confirm_update.val()
           @showQtip(@confirm_update, @getMessage("confirm"))
+          false
+    else if @confirm_update.val() and  @password_update.val() is ''
+          @showQtip(@password_update, @getMessage("required"))
           false
     else true
 

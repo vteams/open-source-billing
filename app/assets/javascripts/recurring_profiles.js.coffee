@@ -22,7 +22,7 @@ jQuery ->
       applyPopover(jQuery("#recurring_profile_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
     # check if currency is not selected
-    else if jQuery("#recurring_profile_currency_id").val() is ""
+    else if jQuery("#recurring_profile_currency_id").val() is "" and jQuery("#recurring_profile_currency_id").is( ":hidden" ) == false
       applyPopover(jQuery("#recurring_profile_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
       # Check if payment term is selected
