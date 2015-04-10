@@ -10,3 +10,7 @@ setTimeout(function(){
 
 <%end%>
 
+<% if params[:destroy].present? and params[:destroy] =="Permanently Delete Payment" or params[:convert_to_credit].present? %>
+jQuery('.archive,.destroy,.payment,.send').show();
+jQuery('#active_links a.get_actives').addClass('active');
+<% end  %>

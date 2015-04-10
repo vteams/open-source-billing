@@ -194,7 +194,7 @@ class InvoicesController < ApplicationController
     convert_to_credit = params[:convert_to_credit].present?
 
     Services::InvoiceService.delete_invoices_with_payments(invoices_ids, convert_to_credit)
-    @invoices = Invoice.unarchived.page(params[:page]).per(params[:per])
+    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
     @message = invoices_deleted(invoices_ids) unless invoices_ids.blank?
     @message += convert_to_credit ? 'Corresponding payments have been converted to client credit.' : 'Corresponding payments have been deleted.'
