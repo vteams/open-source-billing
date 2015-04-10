@@ -172,16 +172,32 @@ module ApplicationHelper
     end
   end
 
-  def get_date_format
-    user_format = current_user.settings.date_format
-    user_format.present? ?  user_format : "%m/%d/%Y"
-  end
-
   def currencies
     #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
     currencies = Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )
     currencies = Currency.where(unit: 'USD') if currencies.empty?
     currencies
+  end
+
+  def get_url
+    if current_user.settings.currency.present? and current_user.settings.currency == "On"
+      "/dashboard?currency=#{currencies.first.try(:id)}"
+    else
+      "/dashboard"
+    end
+  end
+
+  def currency_is_off?
+    if current_user.settings.currency.present? and  current_user.settings.currency == "Off"
+      true
+    else
+      false
+    end
+  end
+
+  def get_date_format
+    user_format = current_user.settings.date_format
+    user_format.present? ?  user_format : "%m/%d/%Y"
   end
 
   def get_user_current_company

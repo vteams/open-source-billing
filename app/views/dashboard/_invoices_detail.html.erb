@@ -34,7 +34,7 @@
                 <tr>
                   <td class="align_left"><%= link_to details.invoice_number, invoice_path(details), target: '_blank' %></td>
                   <td class="align_left text-overflow-class"><%= details.client.organization_name rescue "" %></td>
-                  <td class="align_left"><%= (details.due_date || details.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
+                  <td class="align_left"><%= (details.due_date || details.invoice_date).to_time.to_date rescue "" %></td>
                   <td class="align_left"><%= details.status %></td>
                   <td class="align_right"><%= number_to_currency(details.invoice_total, unit: details.currency.present? ? details.currency.unit : "$") %></td>
                 </tr>

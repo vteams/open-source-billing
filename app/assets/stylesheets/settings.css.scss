@@ -8,3 +8,11 @@ a.btn.btn-default {
   background-position: 0px;
   z-index: 0;
 }
+.fields_content_container{
+  &.basic{
+    width: 500px;
+    select{
+      width: 350px;
+    }
+  }
+}

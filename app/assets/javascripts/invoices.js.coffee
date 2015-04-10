@@ -469,7 +469,7 @@ jQuery ->
   jQuery("#add_line_item").live "click", ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
-    $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company", option[data-type = "active_line_item"]').remove()
+    $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
     tax1 = $('.tax1:first').html()
     tax2 = $('.tax2:first').html()
     $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')

@@ -4,6 +4,6 @@
 
 jQuery ->
   jQuery(".reports #from_date, .reports #to_date").datepicker dateFormat: 'yy-mm-dd'
-  jQuery("table.table_listing:not(.aged_accounts_listing, .client_report_listing, .item_sales_listing)").tablesorter()
+  jQuery(".reports table.table_listing:not(.aged_accounts_listing, .client_report_listing, .item_sales_listing)").tablesorter()
   jQuery(".aged_accounts_listing, .client_report_listing, .item_sales_listing").tablesorter textExtraction: (node) ->
     node.getAttribute('data-sort_val')
