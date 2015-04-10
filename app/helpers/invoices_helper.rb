@@ -173,7 +173,7 @@ module InvoicesHelper
     else
       load_items(action, company_id, line_item)
     end
-    items.prepend([line_item.item_name, line_item.id,{'data-type' => 'active_line_item', type: 'active_line_item'}])
+    #items.prepend([line_item.item_name, line_item.id,{'data-type' => 'active_line_item', type: 'active_line_item'}])
   end
 
   def load_taxes1
@@ -216,7 +216,7 @@ module InvoicesHelper
             else
               load_taxes1
             end
-    line_item.tax1.present? ? taxes.prepend([line_item.tax1.name, line_item.tax1.id, {'data-type' => 'active_line_item_tax','data-tax_1' => line_item.tax1.percentage }]) : taxes
+    #line_item.tax1.present? ? taxes.prepend([line_item.tax1.name, line_item.tax1.id, {'data-type' => 'active_line_item_tax','data-tax_1' => line_item.tax1.percentage }]) : taxes
   end
 
   def load_line_item_taxes2(line_item)
@@ -227,7 +227,7 @@ module InvoicesHelper
             else
               load_taxes2
             end
-    line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
+    #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
 end
