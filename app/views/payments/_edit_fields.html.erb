@@ -29,23 +29,23 @@
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
-                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date).to_date rescue "" %></div>
+                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date).to_date.strftime(get_date_format) rescue "" %></div>
               </div>
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('views.invoices.invoice_amount') %><span>:</span></div>
-                <div class="inovice_description amount"><%= number_to_currency(payment.invoice.invoice_total) %></div>
+                <div class="inovice_description amount"><%= number_to_currency(payment.invoice.invoice_total, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
               </div>
 
               <% if %w(partial draft-partial).include?(payment.invoice.status) && payment.invoice.invoice_total > Payment.invoice_remaining_amount(payment.invoice.id) %>
                   <div class="invoice_data_row">
                     <div class="invoice_label"><%= t('views.common.received') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(payment.invoice.invoice_total - Payment.invoice_remaining_amount(payment.invoice.id)) %></div>
+                    <div class="inovice_description"><%= number_to_currency(payment.invoice.invoice_total - Payment.invoice_remaining_amount(payment.invoice.id),unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
                   </div>
 
                   <div class="invoice_data_row">
                     <div class="invoice_label"><%= t('views.payments.net_due') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.id)) %></div>
+                    <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.id),unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
                   </div>
               <% end %>
 
@@ -75,7 +75,7 @@
 
           <div class="field_row">
             <%= f.hidden_field :invoice_id %>
-            <div class="label_field left single"><%= t('payment') %> (<%= current_user.currency_code %>)</div>
+            <div class="label_field left single"><%= t('payment') %> (<%= payment.invoice.currency.unit %>)</div>
             <div class="small_field">
               <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :required => "", :class => "payment_amount" %>
               <div id="<%= index %>" style="display:none" class="rem_payment_amount" value="<%= payment.invoice.invoice_total  %>"></div>
