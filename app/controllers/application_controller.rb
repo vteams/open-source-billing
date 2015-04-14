@@ -138,6 +138,7 @@ class ApplicationController < ActionController::Base
 
   def set_date_format
     date_format = get_date_format
+    if date_format.present?
     formated_array = date_format.split("")
     formated_array.each_with_index do |value, index|
       if formated_array[index] == '%' and formated_array[index + 1] == 'd'
@@ -152,6 +153,7 @@ class ApplicationController < ActionController::Base
       end
     end
     gon.dateformat = formated_array.join("")
+    end
   end
 
   def set_default_date_format

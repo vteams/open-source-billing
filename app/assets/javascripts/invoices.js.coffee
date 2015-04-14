@@ -29,7 +29,6 @@ jQuery ->
   # chart options
   if gon?
     get_date_format = gon.dateformat
-    gon.ticks = ""
 
   $("a.deleted_entry").click (e)->
     applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")

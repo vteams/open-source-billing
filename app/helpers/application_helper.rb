@@ -196,8 +196,10 @@ module ApplicationHelper
   end
 
   def get_date_format
+    if current_user.present?
     user_format = current_user.settings.date_format
     user_format.present? ?  user_format : "%m/%d/%Y"
+    end
   end
 
   def get_user_current_company
