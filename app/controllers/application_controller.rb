@@ -139,20 +139,20 @@ class ApplicationController < ActionController::Base
   def set_date_format
     date_format = get_date_format
     if date_format.present?
-    formated_array = date_format.split("")
-    formated_array.each_with_index do |value, index|
-      if formated_array[index] == '%' and formated_array[index + 1] == 'd'
-        formated_array[index] = 'd'
-      elsif formated_array[index] == '%' and formated_array[index + 1] == 'm'
-        formated_array[index] = 'm'
-      elsif formated_array[index] == '%' and formated_array[index + 1] == 'y'
-        formated_array[index] = 'y'
-      elsif formated_array[index] == '%' and formated_array[index + 1] == 'Y'
-        formated_array[index] = 'yy'
-        formated_array[index + 1] = ''
+      formated_array = date_format.split("")
+      formated_array.each_with_index do |value, index|
+        if formated_array[index] == '%' and formated_array[index + 1] == 'd'
+          formated_array[index] = 'd'
+        elsif formated_array[index] == '%' and formated_array[index + 1] == 'm'
+          formated_array[index] = 'm'
+        elsif formated_array[index] == '%' and formated_array[index + 1] == 'y'
+          formated_array[index] = 'y'
+        elsif formated_array[index] == '%' and formated_array[index + 1] == 'Y'
+          formated_array[index] = 'yy'
+          formated_array[index + 1] = ''
+        end
       end
-    end
-    gon.dateformat = formated_array.join("")
+      gon.dateformat = formated_array.join("")
     end
   end
 
