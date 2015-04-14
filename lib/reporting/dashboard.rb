@@ -59,7 +59,7 @@ module Reporting
       company_filter = company_id.nil? ? "" : "company_id=#{company_id}"
       currency_filter = currency.present? ? "currency_id=#{currency.id}" : ""
       invoice_ids = Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",")
-      payment_currency_filter = currency.present? and invoice_ids.present? ? "invoice_id IN ('#{invoice_ids}')" : ""
+      payment_currency_filter = (currency.present? and invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
       invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).where(company_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
@@ -129,7 +129,7 @@ module Reporting
       company_filter = options[:current_company_id].present? ? "company_id=#{options[:current_company_id]}" : ""
       currency_filter = options[:currency].present? ? "currency_id=#{options[:currency]}" :""
       invoice_ids = Invoice.where(currency_id: options[:currency]).pluck(:id).map(&:to_s).join(",")
-      payment_currency_filter = options[:currency].present? and invoice_ids.present? ?  "invoice_id IN ('#{invoice_ids}')" : ""
+      payment_currency_filter = (options[:currency].present? and invoice_ids.present?) ?  "invoice_id IN (#{invoice_ids})" : ""
       if options[:chart_for] == 'invoices'
         Invoice.where(:invoice_date => chart_date..chart_date.at_end_of_month).where(currency_filter).where(company_filter).order('created_at DESC')
       else
