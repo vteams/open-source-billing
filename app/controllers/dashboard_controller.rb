@@ -23,7 +23,7 @@ class DashboardController < ApplicationController
   def index
     @current_company_id = get_company_id
     @currency = currency_is_off? ? "" : params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
-    gon.currency_code=@currency_code = @currency.present? ? @currency.code : '$'
+    gon.currency_code= @currency_code = @currency.present? ? @currency.code : '$'
     gon.currency_id = @currency.id if @currency.present?
     gon.chart_data = Reporting::Dashboard.get_chart_data(@currency, @current_company_id)
     @recent_activity = Reporting::Dashboard.get_recent_activity(@currency, @current_company_id)

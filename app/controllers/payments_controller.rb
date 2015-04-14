@@ -127,7 +127,7 @@ class PaymentsController < ApplicationController
       @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
     else
       Payment.delete_multiple(ids)
-      @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+      @payments = Payment.unarchived.page(params[:page]).per(@per_page)
       @action = "deleted"
       @message = payments_deleted(ids) unless ids.blank?
     end
@@ -149,14 +149,14 @@ class PaymentsController < ApplicationController
 
   def delete_non_credit_payments
     Payment.delete_multiple(params[:non_credit_payments])
-    @payments = Payment.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @payments = Payment.unarchived.page(params[:page]).per(@per_page)
     respond_to { |format| format.js }
   end
 
   private
 
   def set_per_page_session
-    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+    session["#{controller_name}-per_page"] = params[:per] || @per_page || 10
   end
 
   def sort_column

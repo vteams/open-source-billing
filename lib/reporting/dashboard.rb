@@ -26,7 +26,7 @@ module Reporting
       # fetch last 10 invoices and payments
       company_filter = company.nil? ? "" : "company_id=#{company}"
       payment_company_filter = company.nil? ? "" : "payments.company_id=#{company}"
-      currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
+      currency_filter = currency.present? ?  "currency_id=#{currency.id}" : ""
       invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(5)
       payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
 
@@ -57,8 +57,8 @@ module Reporting
 
       # invoices amount group by month for last *number_of_months* months
       company_filter = company_id.nil? ? "" : "company_id=#{company_id}"
-      currency_filter = currency.nil? ? "" : "currency_id=#{currency.id}"
-      payment_currency_filter = currency.nil? ? "" : "invoice_id IN ('#{Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",")}')"
+      currency_filter = currency.present? ? "currency_id=#{currency.id}" : ""
+      payment_currency_filter = currency.present? ? "invoice_id IN (#{Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",")})" : ""
       invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).where(company_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
@@ -89,8 +89,8 @@ module Reporting
     end
 
     def self.get_aging_data(currency=nil, company=nil)
-      currency_filter = currency.nil? ? "" : " AND invoices.currency_id=#{currency.id} "
-      company_filter = company.nil? ? "" : "AND invoices.company_id=#{company}"
+      currency_filter = currency.present? ? " AND invoices.currency_id=#{currency.id} " : ""
+      company_filter = company.present? ? "AND invoices.company_id=#{company}" : ""
       aged_invoices = Invoice.find_by_sql(<<-eos
           SELECT zero_to_thirty, thirty_one_to_sixty, sixty_one_to_ninety, ninety_one_and_above
           FROM (
@@ -125,9 +125,10 @@ module Reporting
 
     def self.get_chart_details(options)
       chart_date = Date.parse options[:chart_date]
-      company_filter = options[:current_company_id].nil? ? "" : "company_id=#{options[:current_company_id]}"
-      currency_filter = options[:currency].nil? ? "" : "currency_id=#{options[:currency]}"
-      payment_currency_filter = options[:currency].nil? ? "" : "invoice_id IN ('#{Invoice.where(currency_id: options[:currency]).pluck(:id).map(&:to_s).join(",")}')"
+      company_filter = options[:current_company_id].present? ? "company_id=#{options[:current_company_id]}" : ""
+      currency_filter = options[:currency].present? ? "currency_id=#{options[:currency]}" :""
+      payment_currency_filter = options[:currency].present? ?  "invoice_id IN (#{Invoice.where(currency_id: options[:currency]).pluck(:id).map(&:to_s).join(",")})" : ""
+      binding.pry
       if options[:chart_for] == 'invoices'
         Invoice.where(:invoice_date => chart_date..chart_date.at_end_of_month).where(currency_filter).where(company_filter).order('created_at DESC')
       else

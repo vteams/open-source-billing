@@ -26,7 +26,10 @@ window.applyChosen = (single_row) =>
 
 jQuery ->
 
-#  jQuery(".cost").spinner()
+  # chart options
+  if gon?
+    get_date_format = gon.dateformat
+    gon.ticks = ""
 
   $("a.deleted_entry").click (e)->
     applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
@@ -188,7 +191,7 @@ jQuery ->
 
   # Add date picker to invoice date , invoice due date and payment date.
   jQuery("#invoice_invoice_date, #invoice_due_date, .date_picker_class").datepicker
-    dateFormat: 'yy-mm-dd'
+    dateFormat: get_date_format
     beforeShow: (input, inst) ->
       widget = jQuery(inst).datepicker('widget')
       widget.css('margin-left', jQuery(input).outerWidth() - widget.outerWidth())
@@ -404,12 +407,15 @@ jQuery ->
     number_of_days = jQuery("option:selected",this).attr('number_of_days')
     setDuedate(jQuery("#invoice_invoice_date").val(),number_of_days)
 
+  $.datepicker.setDefaults
+    dateFormat: get_date_format
+
   # calculate invoice due date
   setDuedate = (invoice_date,term_days) ->
     if term_days? and invoice_date?
       invoice_due_date = new Date(invoice_date);
       invoice_due_date.setDate(invoice_due_date.getDate() + parseInt(term_days));
-      jQuery("#invoice_due_date").val(formated_date(invoice_due_date))
+      jQuery("#invoice_due_date").val(format_date(invoice_due_date))
     else
       jQuery("#invoice_due_date").val("")
 
@@ -418,6 +424,36 @@ jQuery ->
     jQuery(this).qtip("hide") if jQuery(this).qtip()
     term_days = jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days')
     setDuedate(jQuery(this).val(),term_days)
+
+  # Date formating function
+  format_date = (elem) ->
+    date_format = get_date_format
+    console.log('inside date format' + date_format)
+    separator_one = date_format.indexOf('/')
+    separator_two = date_format.indexOf('-')
+    separator = "-"
+    if separator_one > 0
+      separator = "/"
+    else if separator_two > 0
+      separator = "-"
+    else
+      separator = "-"
+    if get_date_format == "mm/dd/yy" or get_date_format == "mm-dd-yy"
+      new_date = ("0" + (elem.getMonth() + 1)).slice(-2)
+      new_date += separator + ("0" + elem.getDate()).slice(-2)
+      new_date += separator + elem.getFullYear()
+    else if  get_date_format == "dd/mm/yy" or get_date_format == "dd-mm-yy"
+      new_date = ("0" + elem.getDate()).slice(-2)
+      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+      new_date += separator + elem.getFullYear()
+    else if  get_date_format == "yyyy/mm/dd" or get_date_format == "yyyy-mm-dd"
+      new_date =  elem.getFullYear()
+      new_date += separator +  ("0" + elem.getDate()).slice(-2)
+      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+    else
+      new_date  = elem.getFullYear()
+      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+      new_date += separator + ("0" + elem.getDate()).slice(-2)
 
  # Date formating function
   formated_date = (elem) ->

@@ -92,7 +92,7 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find(params[:id])
-    @invoice.invoice_date = @invoice.invoice_date.to_date
+    @invoice.invoice_date = @invoice.invoice_date.to_date.strftime(get_date_format)
     @invoice.invoice_line_items.build()
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
@@ -280,7 +280,7 @@ class InvoicesController < ApplicationController
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
                                     :last_invoice_status, :company_id,:currency_id,
-                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_one, :tax_two, :_destroy]
+                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy]
     )
   end
 

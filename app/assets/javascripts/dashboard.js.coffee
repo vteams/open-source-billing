@@ -8,7 +8,7 @@ jQuery ->
     window.location = '/dashboard?currency=' + $(this).val()
 
   # chart options
-  if gon?
+  if gon? and gon.chart_data
     chart_ticks = gon.chart_data["ticks"]
     currency_code = gon.currency_code
     currency_id = gon.currency_id
@@ -77,7 +77,7 @@ jQuery ->
 #      useAxesFormatters: true
 
 
-  if gon?
+  if gon? and gon.chart_data
     invoices = gon.chart_data["invoices"]
     payments = gon.chart_data["payments"]
     chart_data = [invoices, payments]

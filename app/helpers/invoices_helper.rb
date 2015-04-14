@@ -166,7 +166,7 @@ module InvoicesHelper
   end
 
   def load_line_items(action , company_id, line_item)
-    items = if line_item.item_id.present? and line_item.item.nil?
+    if line_item.item_id.present? and line_item.item.nil?
       load_deleted_item(line_item, company_id)
     elsif line_item.item_id.present? and line_item.item.archived?.present?
       load_archived_items(line_item, company_id)
@@ -209,24 +209,24 @@ module InvoicesHelper
   end
 
   def load_line_item_taxes1(line_item)
-    taxes = if line_item.tax_1.present? and line_item.tax1.nil?
-              load_deleted_tax1(line_item)
-            elsif line_item.tax_1.present? and line_item.tax1.archived?.present?
-              load_archived_tax1(line_item)
-            else
-              load_taxes1
-            end
+    if line_item.tax_1.present? and line_item.tax1.nil?
+      load_deleted_tax1(line_item)
+    elsif line_item.tax_1.present? and line_item.tax1.archived?.present?
+      load_archived_tax1(line_item)
+    else
+      load_taxes1
+    end
     #line_item.tax1.present? ? taxes.prepend([line_item.tax1.name, line_item.tax1.id, {'data-type' => 'active_line_item_tax','data-tax_1' => line_item.tax1.percentage }]) : taxes
   end
 
   def load_line_item_taxes2(line_item)
-    taxes = if line_item.tax_2.present? and line_item.tax2.nil?
-              load_deleted_tax2(line_item)
-            elsif line_item.tax_2.present? and line_item.tax2.archived?.present?
-              load_archived_tax2(line_item)
-            else
-              load_taxes2
-            end
+      if line_item.tax_2.present? and line_item.tax2.nil?
+        load_deleted_tax2(line_item)
+      elsif line_item.tax_2.present? and line_item.tax2.archived?.present?
+        load_archived_tax2(line_item)
+      else
+        load_taxes2
+      end
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 

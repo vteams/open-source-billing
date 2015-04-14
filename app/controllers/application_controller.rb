@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
   #before_filter :authenticate_user_from_token!
   # This is Devise's authentication
+  include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
   before_filter :authenticate_user!
@@ -31,6 +32,9 @@ class ApplicationController < ActionController::Base
                               #layout :choose_layout
                               #reload libs on every request for dev environment only
   before_filter :set_per_page
+  before_filter :set_date_format
+  before_filter :set_default_date_format
+  before_filter :set_current_user
 
   def _reload_libs
     if defined? RELOAD_LIBS
@@ -132,6 +136,30 @@ class ApplicationController < ActionController::Base
     options
   end
 
+  def set_date_format
+    date_format = get_date_format
+    formated_array = date_format.split("")
+    formated_array.each_with_index do |value, index|
+      if formated_array[index] == '%' and formated_array[index + 1] == 'd'
+        formated_array[index] = 'd'
+      elsif formated_array[index] == '%' and formated_array[index + 1] == 'm'
+        formated_array[index] = 'm'
+      elsif formated_array[index] == '%' and formated_array[index + 1] == 'y'
+        formated_array[index] = 'y'
+      elsif formated_array[index] == '%' and formated_array[index + 1] == 'Y'
+        formated_array[index] = 'yy'
+        formated_array[index + 1] = ''
+      end
+    end
+    gon.dateformat = formated_array.join("")
+  end
+
+  def set_default_date_format
+    Time::DATE_FORMATS.merge!(:default=> get_date_format)
+    Date::DATE_FORMATS.merge!(:default=> get_date_format)
+    Time::DATE_FORMATS[:default] = get_date_format
+  end
+
   #set session of company_id
   def set_company_session
    unless params[:company_id].blank?
@@ -150,6 +178,10 @@ class ApplicationController < ActionController::Base
                     session["#{controller_name}-per_page"]
                   end
                 end
+  end
+
+  def set_current_user
+    User.current = current_user
   end
 
   protected

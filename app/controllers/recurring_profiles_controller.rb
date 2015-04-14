@@ -185,7 +185,7 @@ class RecurringProfilesController < ApplicationController
                                               :invoice_number, :discount_type, :invoice_total, :archive_number, :archived_at,
                                               :deleted_at, :payment_terms_id, :company_id, :last_invoice_status,
                                               :last_sent_date, :sent_invoices,
-                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_one, :tax_two,:archive_number, :archived_at, :deleted_at, :_destroy]
+                                              recurring_profile_line_items_attributes: [:id, :recurring_profile_id, :item_id, :item_name, :item_description, :item_unit_cost, :item_quantity, :tax_1, :tax_2,:archive_number, :archived_at, :deleted_at, :_destroy]
     )
   end
 
