@@ -34,7 +34,12 @@ module DateFormats
 
   def get_date_format
     user = User.current
-    return '%Y-%m-%d' if user.nil?
-    user.settings.date_format
+    if user.nil?
+     '%Y-%m-%d'
+     elsif user.settings.date_format.present?
+      user.settings.date_format
+     else
+       user.settings.date_format = '%Y-%m-%d'
+    end
   end
 end
