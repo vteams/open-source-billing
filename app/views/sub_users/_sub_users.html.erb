@@ -3,7 +3,7 @@
         <tr>
           <td class="align_left text-overflow-class"><%= sub_user.user_name %></td>
           <td class="align_left text-overflow-class"><%= sub_user.email %></td>
-          <td class="align_left" ><%= sub_user.created_at.to_time.strftime("%m/%d/%Y") %></td>
+          <td class="align_left" ><%= sub_user.created_at.to_time.strftime(get_date_format) %></td>
           <td class="align_center"><%= link_to "Edit", edit_sub_user_path(sub_user) %></td>
           <!--<td class="align_center"><%#= link_to "Delete", destroy_sub_user_path(sub_user), remote: true %></td>-->
         </tr>

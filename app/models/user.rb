@@ -24,9 +24,16 @@ class User < ActiveRecord::Base
          :encryptable, :encryptor => :restful_authentication_sha1
 
   validates_uniqueness_of :email, :uniqueness => :true
+  after_create :set_default_settings
   attr_accessor :account,:login
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'
+
+  def set_default_settings
+    self.settings.date_format = "%Y-%m-%d"
+    self.settings.currency = "On"
+    self.settings.records_per_page = 5
+  end
 
   def currency_symbol
     "$"

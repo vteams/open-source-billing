@@ -99,8 +99,9 @@ ActiveRecord::Schema.define(version: 20150403055445) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.decimal  "available_credit",  precision: 8, scale: 2, default: 0.0
     t.integer  "currency_id"
   end
 
@@ -205,8 +206,9 @@ ActiveRecord::Schema.define(version: 20150403055445) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
   end
 
   create_table "invoices", force: true do |t|
@@ -247,8 +249,9 @@ ActiveRecord::Schema.define(version: 20150403055445) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
   end
 
   create_table "line_item_taxes", force: true do |t|
@@ -430,10 +433,11 @@ ActiveRecord::Schema.define(version: 20150403055445) do
     t.string   "password_salt"
     t.string   "user_name"
     t.integer  "current_company"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "versions", force: true do |t|
