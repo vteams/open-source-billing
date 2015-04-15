@@ -406,12 +406,53 @@ jQuery ->
     number_of_days = jQuery("option:selected",this).attr('number_of_days')
     setDuedate(jQuery("#invoice_invoice_date").val(),number_of_days)
 
-  $.datepicker.setDefaults
+  jQuery.datepicker.setDefaults
     dateFormat: get_date_format
+
+
+  set_format_of_date = (invoice_date) ->
+    date_format = get_date_format
+    day = 1
+    month = 1
+    year = 1
+    switch date_format
+      when 'mm/dd/yy'
+        month = invoice_date.split('/')[0]
+        day = invoice_date.split('/')[1]
+        year = invoice_date.split('/')[2]
+        year = '20' + year
+      when 'mm/dd/yyyy'
+        month = invoice_date.split('/')[0]
+        day = invoice_date.split('/')[1]
+        year = invoice_date.split('/')[2]
+      when 'dd/mm/yy'
+        day = invoice_date.split('/')[0]
+        month = invoice_date.split('/')[1]
+        year = invoice_date.split('/')[2]
+        year = '20' + year
+      when 'dd/mm/yyyy'
+        day = invoice_date.split('/')[0]
+        month = invoice_date.split('/')[1]
+        year = invoice_date.split('/')[2]
+      when 'yy-mm-dd'
+        year  = invoice_date.split('-')[0]
+        month = invoice_date.split('-')[1]
+        day   = invoice_date.split('-')[2]
+        year = '20' + year
+      when 'yyyy-mm-dd'
+        year  = invoice_date.split('-')[0]
+        month = invoice_date.split('-')[1]
+        day   = invoice_date.split('-')[2]
+      else
+        year = invoice_date.split('-')[0]
+        month = invoice_date.split('-')[1]
+        day = invoice_date.split('-')[2]
+    year+'-'+month+'-'+day
 
   # calculate invoice due date
   setDuedate = (invoice_date,term_days) ->
     if term_days? and invoice_date?
+      invoice_date = set_format_of_date(invoice_date)
       invoice_due_date = new Date(invoice_date);
       invoice_due_date.setDate(invoice_due_date.getDate() + parseInt(term_days));
       jQuery("#invoice_due_date").val(format_date(invoice_due_date))
@@ -437,20 +478,24 @@ jQuery ->
       separator = "-"
     else
       separator = "-"
-    if get_date_format == "mm/dd/yy" or get_date_format == "mm-dd-yy"
+    if get_date_format == "mm/dd/y" or get_date_format == "mm-dd-y"
       new_date = ("0" + (elem.getMonth() + 1)).slice(-2)
       new_date += separator + ("0" + elem.getDate()).slice(-2)
-      new_date += separator + elem.getFullYear()
-    else if  get_date_format == "dd/mm/yy" or get_date_format == "dd-mm-yy"
+      new_date += separator + elem.getFullYear().slice(-2)
+    else if  get_date_format == "dd/mm/y" or get_date_format == "dd-mm-y"
       new_date = ("0" + elem.getDate()).slice(-2)
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator + elem.getFullYear()
-    else if  get_date_format == "yyyy/mm/dd" or get_date_format == "yyyy-mm-dd"
+      new_date += separator + elem.getFullYear().slice(-2)
+    else if  get_date_format == "yy/mm/dd" or get_date_format == "yy-mm-dd"
       new_date =  elem.getFullYear()
       new_date += separator +  ("0" + elem.getDate()).slice(-2)
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+    else if  get_date_format == "dd/mm/yy" or get_date_format == "dd-mm-yy"
+      new_date = ("0" + elem.getDate()).slice(-2)
+      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+      new_date += separator +  elem.getFullYear()
     else
-      new_date  = elem.getFullYear()
+      new_date  = elem.getFullYear().slice(-2)
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
       new_date += separator + ("0" + elem.getDate()).slice(-2)
 

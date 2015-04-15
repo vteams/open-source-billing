@@ -6,10 +6,10 @@
             <div class="control_name">
               <p><%= t('views.reports.date_range') %></p>
             </div>
-            <input name="criteria[from_date]" type="text" id="from_date" value="<%= 1.month.ago.to_date %>"/>
+            <input name="criteria[from_date]" type="text" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>"/>
 
             <p>to</p>
-            <input name="criteria[to_date]" type="text" id="to_date" value="<%= Date.today %>"/>
+            <input name="criteria[to_date]" type="text" id="to_date" value="<%= Date.today.strftime(get_date_format) %>"/>
           </div>
           <div class="report_clients">
             <div class="control_name">

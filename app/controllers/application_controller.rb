@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base
                               #reload libs on every request for dev environment only
   before_filter :set_per_page
   before_filter :set_date_format
-  before_filter :set_default_date_format
   before_filter :set_current_user
 
   def _reload_libs
@@ -147,6 +146,7 @@ class ApplicationController < ActionController::Base
           formated_array[index] = 'm'
         elsif formated_array[index] == '%' and formated_array[index + 1] == 'y'
           formated_array[index] = 'y'
+          formated_array[index + 1] = ''
         elsif formated_array[index] == '%' and formated_array[index + 1] == 'Y'
           formated_array[index] = 'yy'
           formated_array[index + 1] = ''
@@ -154,12 +154,6 @@ class ApplicationController < ActionController::Base
       end
       gon.dateformat = formated_array.join("")
     end
-  end
-
-  def set_default_date_format
-    Time::DATE_FORMATS.merge!(:default=> get_date_format)
-    Date::DATE_FORMATS.merge!(:default=> get_date_format)
-    Time::DATE_FORMATS[:default] = get_date_format
   end
 
   #set session of company_id

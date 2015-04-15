@@ -28,18 +28,34 @@ module DateFormats
         year, month, day = date.split('-')[0],date.split('-')[1],date.split('-')[2]
       else
         year, month, day = date.split('-')[0],date.split('-')[1],date.split('-')[2]
-      end
+    end
+
+    #handling year
+    current_year = Date.today.year
+    if year.to_s.length == 2
+      year = "#{current_year.to_s[0..1]}#{year}"
+    end
     "#{year}-#{month}-#{day}".to_date
   end
 
   def get_date_format
     user = User.current
     if user.nil?
-     '%Y-%m-%d'
-     elsif user.settings.date_format.present?
+      '%Y-%m-%d'
+    elsif user.settings.date_format.present?
       user.settings.date_format
-     else
-       user.settings.date_format = '%Y-%m-%d'
+    else
+      user.settings.date_format = '%Y-%m-%d'
     end
+  end
+
+  def set_filter_date_formats(options={})
+    if options[:from_date].present?
+      options[:from_date] = custom_date_format(options[:from_date]).to_s
+    end
+    if options[:to_date].present?
+      options[:to_date] = custom_date_format(options[:to_date]).to_s
+    end
+    options
   end
 end
