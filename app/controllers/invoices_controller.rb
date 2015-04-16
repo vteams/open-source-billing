@@ -22,6 +22,7 @@ class InvoicesController < ApplicationController
   before_filter :authenticate_user!, :set_per_page_session, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]
   protect_from_forgery :except => [:paypal_payments]
   helper_method :sort_column, :sort_direction
+  include DateFormats
 
   layout :choose_layout
   include InvoicesHelper
@@ -261,9 +262,6 @@ class InvoicesController < ApplicationController
   def sort_column
     params[:sort] ||= 'created_at'
     Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
-    #sort_col = Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
-    #sort_col = "case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end" if sort_col == 'clients.organization_name'
-    #sort_col
   end
 
   def sort_direction
@@ -280,7 +278,11 @@ class InvoicesController < ApplicationController
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
                                     :last_invoice_status, :company_id,:currency_id,
-                                    invoice_line_items_attributes: [:id, :invoice_id, :item_description, :item_id, :item_name, :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy]
+                                    invoice_line_items_attributes:
+                                        [
+                                          :id, :invoice_id, :item_description, :item_id, :item_name,
+                                          :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy
+                                        ]
     )
   end
 

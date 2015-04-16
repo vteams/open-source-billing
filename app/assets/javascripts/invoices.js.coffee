@@ -415,38 +415,51 @@ jQuery ->
     day = 1
     month = 1
     year = 1
+    console.log()
     switch date_format
       when 'mm/dd/yy'
         month = invoice_date.split('/')[0]
         day = invoice_date.split('/')[1]
         year = invoice_date.split('/')[2]
-        year = '20' + year
+        if year.length == 2
+          year = '20' + year
       when 'mm/dd/yyyy'
         month = invoice_date.split('/')[0]
         day = invoice_date.split('/')[1]
         year = invoice_date.split('/')[2]
+        if year.length == 2
+          year = '20' + year
       when 'dd/mm/yy'
-        day = invoice_date.split('/')[0]
+        year = invoice_date.split('/')[0]
         month = invoice_date.split('/')[1]
-        year = invoice_date.split('/')[2]
-        year = '20' + year
+        day = invoice_date.split('/')[2]
+        console.log('invoice_date = '+invoice_date)
+        if year.length == 2
+          year = '20' + year
       when 'dd/mm/yyyy'
         day = invoice_date.split('/')[0]
         month = invoice_date.split('/')[1]
         year = invoice_date.split('/')[2]
+        if year.length == 2
+          year = '20' + year
       when 'yy-mm-dd'
         year  = invoice_date.split('-')[0]
         month = invoice_date.split('-')[1]
         day   = invoice_date.split('-')[2]
-        year = '20' + year
+        if year.length == 2
+          year = '20' + year
       when 'yyyy-mm-dd'
         year  = invoice_date.split('-')[0]
         month = invoice_date.split('-')[1]
         day   = invoice_date.split('-')[2]
+        if year.length == 2
+          year = '20' + year
       else
         year = invoice_date.split('-')[0]
         month = invoice_date.split('-')[1]
         day = invoice_date.split('-')[2]
+        if year.length == 2
+          year = '20' + year
     year+'-'+month+'-'+day
 
   # calculate invoice due date
@@ -468,6 +481,7 @@ jQuery ->
   # Date formating function
   format_date = (elem) ->
     date_format = get_date_format
+    console.log('inside date elem' + elem)
     console.log('inside date format' + date_format)
     separator_one = date_format.indexOf('/')
     separator_two = date_format.indexOf('-')
@@ -481,11 +495,13 @@ jQuery ->
     if get_date_format == "mm/dd/y" or get_date_format == "mm-dd-y"
       new_date = ("0" + (elem.getMonth() + 1)).slice(-2)
       new_date += separator + ("0" + elem.getDate()).slice(-2)
-      new_date += separator + elem.getFullYear().slice(-2)
+      full_year =  String(elem.getFullYear())
+      new_date += separator + full_year.slice(-2)
     else if  get_date_format == "dd/mm/y" or get_date_format == "dd-mm-y"
       new_date = ("0" + elem.getDate()).slice(-2)
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator + elem.getFullYear().slice(-2)
+      full_year =  String(elem.getFullYear())
+      new_date += separator + full_year.slice(-2)
     else if  get_date_format == "yy/mm/dd" or get_date_format == "yy-mm-dd"
       new_date =  elem.getFullYear()
       new_date += separator +  ("0" + elem.getDate()).slice(-2)
@@ -494,12 +510,18 @@ jQuery ->
       new_date = ("0" + elem.getDate()).slice(-2)
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
       new_date += separator +  elem.getFullYear()
+    else if get_date_format == 'y-mm-dd' or get_date_format == 'y/mm/dd'
+      full_year = String(elem.getFullYear())
+      new_date  = full_year.slice(-2)
+      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
+      new_date += separator + ("0" + elem.getDate()).slice(-2)
     else
-      new_date  = elem.getFullYear().slice(-2)
+      new_date  = elem.getFullYear()
       new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
       new_date += separator + ("0" + elem.getDate()).slice(-2)
 
- # Date formating function
+
+  # Date formating function
   formated_date = (elem) ->
    separator = "-"
    new_date  = elem.getFullYear()

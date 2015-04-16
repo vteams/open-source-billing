@@ -21,18 +21,19 @@
 module Services
   #invoice related business logic will go here
   class InvoiceService
-
+    include DateFormats
     # build a new invoice object
     def self.build_new_invoice(params)
+      date_format = self.new.get_date_format
       if params[:invoice_for_client]
         company_id = get_company_id(params[:invoice_for_client])
-        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
         invoice = ::Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
       else
-        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today, :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }
       end
       invoice
