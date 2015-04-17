@@ -5,7 +5,7 @@
           <td class="align_left text-overflow-class" value="<%= payment.client_name %>"><%= payment.client_name %></td>
           <td class="align_center"><%= payment.payment_method || payment.payment_type %></td>
           <td class="align_center"><%= payment.notes %></td>
-          <td class="align_center"><%= payment.payment_date %></td>
+          <td class="align_center"><%= payment.payment_date.strftime(get_date_format) %></td>
           <td class="align_right"><%= "#{number_to_currency(payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$")}" %></td>
         </tr>
     <% end %>

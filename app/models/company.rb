@@ -4,7 +4,7 @@ class Company < ActiveRecord::Base
 
   mount_uploader :logo, ImageUploader
 
-  has_many :company_entities, :as => :parent, dependent: :destroy
+  has_many :company_entities, :as => :parent
   has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'
   has_many :clients, :through => :company_entities, :source => :entity, :source_type => 'Client'
   has_many :company_email_templates, :as => :parent

@@ -25,11 +25,6 @@ window.applyChosen = (single_row) =>
     event.stopImmediatePropagation()
 
 jQuery ->
-
-  # chart options
-  if gon?
-    get_date_format = gon.dateformat
-
   $("a.deleted_entry").click (e)->
     applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
     e.preventDefault()
@@ -108,40 +103,40 @@ jQuery ->
 
   # Update line and grand total if line item fields are changed
   jQuery("input.cost, input.qty").live "blur", ->
-     updateLineTotal(jQuery(this))
-     updateInvoiceTotal()
+    updateLineTotal(jQuery(this))
+    updateInvoiceTotal()
 
   jQuery("input.cost, input.qty").live "keyup", ->
-     updateLineTotal(jQuery(this))
-     updateInvoiceTotal()
-     #jQuery(this).popover "hide"
+    updateLineTotal(jQuery(this))
+    updateInvoiceTotal()
+  #jQuery(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
   jQuery("select.tax1, select.tax2").live "change", ->
-     updateInvoiceTotal()
+    updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
   jQuery("input.cost, input.qty").live "keypress", (e) ->
-     if e.which is 13
-       e.preventDefault()
-       false
+    if e.which is 13
+      e.preventDefault()
+      false
 
   # Load Items data when an item is selected from dropdown list
   jQuery(".invoice_grid_fields select.items_list").live "change", ->
-     # Add an empty line item row at the end if last item is changed.
-     elem = jQuery(this)
-     if elem.val() is ""
-       clearLineTotal(elem)
-       false
-     else
-       addLineItemRow(elem)
-       jQuery.ajax '/items/load_item_data',
-         type: 'POST'
-         data: "id=" + jQuery(this).val()
-         dataType: 'html'
-         error: (jqXHR, textStatus, errorThrown) ->
+    # Add an empty line item row at the end if last item is changed.
+    elem = jQuery(this)
+    if elem.val() is ""
+      clearLineTotal(elem)
+      false
+    else
+      addLineItemRow(elem)
+      jQuery.ajax '/items/load_item_data',
+        type: 'POST'
+        data: "id=" + jQuery(this).val()
+        dataType: 'html'
+        error: (jqXHR, textStatus, errorThrown) ->
           alert "Error: #{textStatus}"
-         success: (data, textStatus, jqXHR) ->
+        success: (data, textStatus, jqXHR) ->
           item = JSON.parse(data)
           container = elem.parents("tr.fields")
           # populate item's discription, cost, quantity and taxes.
@@ -157,22 +152,22 @@ jQuery ->
 
   # Add empty line item row
   addLineItemRow = (elem) ->
-   if elem.parents('tr.fields').next('tr.fields:visible').length is 0
-    jQuery(".add_nested_fields").click()
-    #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
+    if elem.parents('tr.fields').next('tr.fields:visible').length is 0
+      jQuery(".add_nested_fields").click()
+  #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
   jQuery(".add_nested_fields").live "click", ->
     setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
- # Re calculate the total invoice balance if an item is removed
+  # Re calculate the total invoice balance if an item is removed
   jQuery(".remove_nested_fields").live "click", ->
     setTimeout (->
-     updateInvoiceTotal()
+      updateInvoiceTotal()
     ), 100
 
   # Subtract discount percentage from subtotal
   jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
-     updateInvoiceTotal()
+    updateInvoiceTotal()
 
   # Subtract discount percentage from subtotal
   jQuery("select#discount_type").change ->
@@ -180,17 +175,17 @@ jQuery ->
 
   # Don't allow nagetive value for discount
   jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
-     if e.keyCode is 109 or e.keyCode is 13
-       e.preventDefault()
-       false
+    if e.keyCode is 109 or e.keyCode is 13
+      e.preventDefault()
+      false
 
   # Don't allow paste and right click in discount field
   jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
-     e.preventDefault()
+    e.preventDefault()
 
   # Add date picker to invoice date , invoice due date and payment date.
   jQuery("#invoice_invoice_date, #invoice_due_date, .date_picker_class").datepicker
-    dateFormat: get_date_format
+    dateFormat: DateFormats.format()
     beforeShow: (input, inst) ->
       widget = jQuery(inst).datepicker('widget')
       widget.css('margin-left', jQuery(input).outerWidth() - widget.outerWidth())
@@ -216,8 +211,8 @@ jQuery ->
   jQuery("form.dispute_form").submit ->
     flag = true
     if jQuery("#reason_for_dispute").val() is ""
-       applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
-       flag = false
+      applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
+      flag = false
     flag
   jQuery("#reason_for_dispute").live "keyup", ->
     jQuery(this).qtip("hide")
@@ -234,15 +229,15 @@ jQuery ->
     if jQuery("#invoice_company_id").val() is ""
       applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
       flag = false
-    # Check if client is selected
+      # Check if client is selected
     else if jQuery("#invoice_client_id").val() is ""
       applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
-    # if currency is not selected
+      # if currency is not selected
     else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
       applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
-    # check if invoice date is selected
+      # check if invoice date is selected
     else if jQuery("#invoice_invoice_date").val() is ""
       applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
       flag =false
@@ -250,22 +245,22 @@ jQuery ->
     else if jQuery("#invoice_payment_terms_id").val() is ""
       applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
       flag = false
-    # Check if discount percentage is an integer
+      # Check if discount percentage is an integer
     else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
       applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
       flag = false
-    # Check if no item is selected
+      # Check if no item is selected
     else if jQuery("tr.fields:visible").length < 1
       applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
       flag = false
-    # Check if item is selected
+      # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-        applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
-        flag = false
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
       applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
@@ -361,8 +356,8 @@ jQuery ->
     updateInvoiceTotal()
 
   jQuery('#active_links a').live 'click', ->
-     jQuery('#active_links a').removeClass('active')
-     jQuery(this).addClass('active')
+    jQuery('#active_links a').removeClass('active')
+    jQuery(this).addClass('active')
 
   jQuery(".invoice_action_links input[type=submit]").click ->
     jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
@@ -378,19 +373,19 @@ jQuery ->
       jQuery.get('/clients/'+ client_id + '/default_currency')
 
       jQuery.ajax '/clients/get_last_invoice',
-      type: 'POST'
-      data: "id=" + client_id
-      dataType: 'html'
-      error: (jqXHR, textStatus, errorThrown) ->
-        alert "Error: #{textStatus}"
-      success: (data, textStatus, jqXHR) ->
-        data = JSON.parse(data)
-        id = jQuery.trim(data[0])
-        client_name = data[1]
-        unless id is "no invoice"
-          useAsTemplatePopover(jQuery("#invoice_client_id_chzn"),id,client_name)
-        else
-          hidePopover(jQuery(".hint_text:eq(0)"))
+        type: 'POST'
+        data: "id=" + client_id
+        dataType: 'html'
+        error: (jqXHR, textStatus, errorThrown) ->
+          alert "Error: #{textStatus}"
+        success: (data, textStatus, jqXHR) ->
+          data = JSON.parse(data)
+          id = jQuery.trim(data[0])
+          client_name = data[1]
+          unless id is "no invoice"
+            useAsTemplatePopover(jQuery("#invoice_client_id_chzn"),id,client_name)
+          else
+            hidePopover(jQuery(".hint_text:eq(0)"))
 
   # Change currency of invoice
   jQuery("#invoice_currency_id").unbind 'change'
@@ -400,75 +395,20 @@ jQuery ->
     if not currency_id? or currency_id isnt ""
       jQuery.get('/invoices/selected_currency?currency_id='+ currency_id)
 
- # Autofill due date
+  # Autofill due date
   jQuery("#invoice_payment_terms_id").unbind 'change'
   jQuery("#invoice_payment_terms_id").change ->
     number_of_days = jQuery("option:selected",this).attr('number_of_days')
     setDuedate(jQuery("#invoice_invoice_date").val(),number_of_days)
 
   jQuery.datepicker.setDefaults
-    dateFormat: get_date_format
-
-
-  set_format_of_date = (invoice_date) ->
-    date_format = get_date_format
-    day = 1
-    month = 1
-    year = 1
-    console.log()
-    switch date_format
-      when 'mm/dd/yy'
-        month = invoice_date.split('/')[0]
-        day = invoice_date.split('/')[1]
-        year = invoice_date.split('/')[2]
-        if year.length == 2
-          year = '20' + year
-      when 'mm/dd/yyyy'
-        month = invoice_date.split('/')[0]
-        day = invoice_date.split('/')[1]
-        year = invoice_date.split('/')[2]
-        if year.length == 2
-          year = '20' + year
-      when 'dd/mm/yy'
-        year = invoice_date.split('/')[0]
-        month = invoice_date.split('/')[1]
-        day = invoice_date.split('/')[2]
-        console.log('invoice_date = '+invoice_date)
-        if year.length == 2
-          year = '20' + year
-      when 'dd/mm/yyyy'
-        day = invoice_date.split('/')[0]
-        month = invoice_date.split('/')[1]
-        year = invoice_date.split('/')[2]
-        if year.length == 2
-          year = '20' + year
-      when 'yy-mm-dd'
-        year  = invoice_date.split('-')[0]
-        month = invoice_date.split('-')[1]
-        day   = invoice_date.split('-')[2]
-        if year.length == 2
-          year = '20' + year
-      when 'yyyy-mm-dd'
-        year  = invoice_date.split('-')[0]
-        month = invoice_date.split('-')[1]
-        day   = invoice_date.split('-')[2]
-        if year.length == 2
-          year = '20' + year
-      else
-        year = invoice_date.split('-')[0]
-        month = invoice_date.split('-')[1]
-        day = invoice_date.split('-')[2]
-        if year.length == 2
-          year = '20' + year
-    year+'-'+month+'-'+day
+    dateFormat: DateFormats.format()
 
   # calculate invoice due date
   setDuedate = (invoice_date,term_days) ->
     if term_days? and invoice_date?
-      invoice_date = set_format_of_date(invoice_date)
-      invoice_due_date = new Date(invoice_date);
-      invoice_due_date.setDate(invoice_due_date.getDate() + parseInt(term_days));
-      jQuery("#invoice_due_date").val(format_date(invoice_due_date))
+      invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date,parseInt(term_days))
+      jQuery("#invoice_due_date").val(invoice_due_date)
     else
       jQuery("#invoice_due_date").val("")
 
@@ -477,56 +417,6 @@ jQuery ->
     jQuery(this).qtip("hide") if jQuery(this).qtip()
     term_days = jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days')
     setDuedate(jQuery(this).val(),term_days)
-
-  # Date formating function
-  format_date = (elem) ->
-    date_format = get_date_format
-    console.log('inside date elem' + elem)
-    console.log('inside date format' + date_format)
-    separator_one = date_format.indexOf('/')
-    separator_two = date_format.indexOf('-')
-    separator = "-"
-    if separator_one > 0
-      separator = "/"
-    else if separator_two > 0
-      separator = "-"
-    else
-      separator = "-"
-    if get_date_format == "mm/dd/y" or get_date_format == "mm-dd-y"
-      new_date = ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator + ("0" + elem.getDate()).slice(-2)
-      full_year =  String(elem.getFullYear())
-      new_date += separator + full_year.slice(-2)
-    else if  get_date_format == "dd/mm/y" or get_date_format == "dd-mm-y"
-      new_date = ("0" + elem.getDate()).slice(-2)
-      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      full_year =  String(elem.getFullYear())
-      new_date += separator + full_year.slice(-2)
-    else if  get_date_format == "yy/mm/dd" or get_date_format == "yy-mm-dd"
-      new_date =  elem.getFullYear()
-      new_date += separator +  ("0" + elem.getDate()).slice(-2)
-      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-    else if  get_date_format == "dd/mm/yy" or get_date_format == "dd-mm-yy"
-      new_date = ("0" + elem.getDate()).slice(-2)
-      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator +  elem.getFullYear()
-    else if get_date_format == 'y-mm-dd' or get_date_format == 'y/mm/dd'
-      full_year = String(elem.getFullYear())
-      new_date  = full_year.slice(-2)
-      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator + ("0" + elem.getDate()).slice(-2)
-    else
-      new_date  = elem.getFullYear()
-      new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-      new_date += separator + ("0" + elem.getDate()).slice(-2)
-
-
-  # Date formating function
-  formated_date = (elem) ->
-   separator = "-"
-   new_date  = elem.getFullYear()
-   new_date += separator + ("0" + (elem.getMonth() + 1)).slice(-2)
-   new_date += separator + ("0" + elem.getDate()).slice(-2)
 
   #set due date on page load
   setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
@@ -561,8 +451,8 @@ jQuery ->
     flag = true
     status = jQuery(this).attr "value"
     if status is "paid"
-           alert "Paid invoice can not be disputed."
-           flag = false
+      alert "Paid invoice can not be disputed."
+      flag = false
     flag
 
   jQuery(".more").live "click", ->

@@ -117,7 +117,7 @@
             <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %></div>
               <div class="small_field">
-                <%= f.text_field :invoice_date, :required => "" %>
+                <%= f.text_field :invoice_date,value: f.object.invoice_date, :required => "" %>
               </div>
             </div>
             <!--field_row-->

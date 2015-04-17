@@ -93,7 +93,6 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find(params[:id])
-    @invoice.invoice_date = @invoice.invoice_date.to_date.strftime(get_date_format)
     @invoice.invoice_line_items.build()
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
@@ -167,8 +166,10 @@ class InvoicesController < ApplicationController
   end
 
   def unpaid_invoices
+    company = get_company_id
+    company_filter = company.present? ? "invoices.company_id=#{company}" : ""
     for_client = params[:for_client].present? ? "and client_id = #{params[:for_client]}" : ''
-    @invoices = Invoice.joins(:client).where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
+    @invoices = Invoice.joins(:client).where("(status != 'paid' or status is null) #{for_client}").where(company_filter).order('created_at desc')
     respond_to { |format| format.js }
   end
 

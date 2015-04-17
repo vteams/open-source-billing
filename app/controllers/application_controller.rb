@@ -136,24 +136,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_date_format
-    date_format = get_date_format
-    if date_format.present?
-      formated_array = date_format.split("")
-      formated_array.each_with_index do |value, index|
-        if formated_array[index] == '%' and formated_array[index + 1] == 'd'
-          formated_array[index] = 'd'
-        elsif formated_array[index] == '%' and formated_array[index + 1] == 'm'
-          formated_array[index] = 'm'
-        elsif formated_array[index] == '%' and formated_array[index + 1] == 'y'
-          formated_array[index] = 'y'
-          formated_array[index + 1] = ''
-        elsif formated_array[index] == '%' and formated_array[index + 1] == 'Y'
-          formated_array[index] = 'yy'
-          formated_array[index + 1] = ''
-        end
-      end
-      gon.dateformat = formated_array.join("")
-    end
+    gon.dateformat = get_date_format
   end
 
   #set session of company_id

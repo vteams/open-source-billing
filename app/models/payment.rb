@@ -161,8 +161,11 @@ class Payment < ActiveRecord::Base
     where('invoice_id = ?', invoice.id)
   end
 
-  def self.total_payments_amount
-    where('payment_type is null or payment_type != "credit"').sum('payment_amount')
+  def self.total_payments_amount(currency=nil, company=nil)
+    invoice_ids = currency.present? ? Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",") : ""
+    payment_currency_filter = (currency.present? and invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
+    company_filter = company.present? ? "company_id=#{company}" : ""
+    where('payment_type is null or payment_type != "credit"').where(payment_currency_filter).where(company_filter).sum('payment_amount')
   end
 
   def self.partial_payments(invoice_id)

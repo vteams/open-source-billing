@@ -66,6 +66,7 @@
 //= require bootstrap-checkbox.min.js
 //= require bootstrap-checkbox.js
 //= require settings
+//= require date_formats
 
 jQuery(function () {
 

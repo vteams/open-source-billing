@@ -27,7 +27,7 @@
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
-                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date).to_date rescue "" %></div>
+                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date).to_date.strftime(get_date_format) rescue "" %></div>
               </div>
 
               <div class="invoice_data_row">

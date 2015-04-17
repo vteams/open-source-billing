@@ -69,7 +69,6 @@
 
         </div>
     <% end %>
-
     <div class="preview_top_right">
 
       <div class="top_right_row">
@@ -80,7 +79,7 @@
 
       <div class="top_right_row">
         <div class="preview_right_label"><%= t('views.invoices.invoice_date') %> <span>:</span></div>
-        <div class="preview_right_description"><%= @invoice.invoice_date.strftime('%B %d , %Y') rescue "" %></div>
+        <div class="preview_right_description"><%= @invoice.invoice_date rescue "" %></div>
       </div>
       <!--top_right_row-->
 
@@ -89,10 +88,9 @@
         <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
       <!--top_right_row-->
-
       <div class="top_right_row">
         <div class="preview_right_label"><%= t('views.invoices.due_date') %> <span>:</span></div>
-        <div class="preview_right_description"><%= @invoice.due_date.strftime('%B %d , %Y') rescue "" %></div>
+        <div class="preview_right_description"><%= @invoice.due_date rescue "" %></div>
       </div>
       <!--top_right_row-->
 
