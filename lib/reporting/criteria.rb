@@ -43,6 +43,12 @@ module Reporting
       @invoice_status = (options[:invoice_status] || "") # default for all status i.e ""
       @from_month = (options[:quarter].split('-')[0] rescue 1).to_i
       @to_month = (options[:quarter].split('-')[1] rescue 3).to_i
+      if @from_date.to_s[0] == '-'
+        @from_date = @from_date.to_s[1..@from_date.to_s.length-1]
+      end
+      if @to_date.to_s[0] == '-'
+        @to_date = @to_date.to_s[1..@to_date.to_s.length-1]
+      end
 
       @year = (options[:year] || Date.today.year).to_i # default to current year
       Rails.logger.debug "--> Criteria init... #{self.to_yaml}"

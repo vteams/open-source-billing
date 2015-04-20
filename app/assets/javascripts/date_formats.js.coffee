@@ -106,5 +106,14 @@ class DateFormats
     date = @get_formated_date(date)
     date
 
+  @validate_date:(date = null) ->
+    returnState = false
+    try
+      jQuery.datepicker.parseDate @format(), date
+      returnState = true
+    catch err
+      returnState = false
+    returnState
+
 
 window.DateFormats = DateFormats

@@ -6,11 +6,14 @@ jQuery ->
      controller = link.attr('controller')
      action = link.attr('action')
 
-     unless (action is 'new' or action is 'edit') and (controller is 'invoices' or controller is 'recurring_profiles')
-        jQuery.get "/application/new_selected_company_name?company_id=" + company_id, (response) ->
-          jQuery("#current_selected_company").text(response)
-          jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
-          window.location.reload()
+     if action is 'new' or action is 'edit'
+       unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
+         return true
+
+     jQuery.get "/application/new_selected_company_name?company_id=" + company_id, (response) ->
+       jQuery("#current_selected_company").text(response)
+       jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
+       window.location.reload()
 
   # validate company on save and update
   jQuery("form#new_company,form.edit_company").submit ->

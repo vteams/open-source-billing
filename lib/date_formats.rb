@@ -7,6 +7,16 @@ module DateFormats
     super(custom_date_format(date))
   end
 
+  def payment_date=(date)
+    super(custom_date_format(date))
+  end
+
+  def payment_date
+    date = super
+    return '' if date.nil?
+    date.to_date.strftime(date_format)
+  end
+
   def invoice_date
     date = super
     return '' if date.nil?

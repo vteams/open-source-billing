@@ -241,6 +241,12 @@ jQuery ->
     else if jQuery("#invoice_invoice_date").val() is ""
       applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
       flag =false
+    else if jQuery("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_invoice_date").val())
+      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+      flag = false
+    else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
+       applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+       flag = false
       # Check if payment term is selected
     else if jQuery("#invoice_payment_terms_id").val() is ""
       applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")

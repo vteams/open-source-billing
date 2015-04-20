@@ -1,18 +1,16 @@
 <% unless request.format.pdf? %>
-    <div class="header_data_right">
-      <ul class="download_report">
-        <li class="download_report_title"><%= t('views.reports.export_to') %>:</li>
-        <li class="download_sep"><%= link_to t('views.common.csv'), params.except('format','action').merge({format: :csv,action: 'reports'}) %></li>
-        <li><%= link_to t('views.common.excel'), params.except('format','action').merge({format: :xls, action: 'reports'}) %></li>
-      </ul>
-      <ul class="print_report">
-        <li><%= link_to t('views.reports.print_report'),params.except('action','format').merge({format: 'pdf', action: 'reports'}) %></li>
-      </ul>
-      <div class="report_duration">
-        <!--<ul>-->
-        <!--<li><%= @report.period %></li>-->
-        <!--</ul>-->
-      </div>
-      <!-- report_duration -->
+  <div class="header_data_right">
+    <ul class="download_report">
+      <li class="download_report_title"><%= t('views.reports.export_to') %>:</li>
+      <li class="download_sep"><%= link_to t('views.common.csv'), params.except('format','action').merge({format: :csv,action: 'reports'}) %></li>
+      <li><%= link_to t('views.common.excel'), params.except('format','action').merge({format: :xls, action: 'reports'}) %></li>
+    </ul>
+    <ul class="print_report">
+      <li><%= link_to t('views.reports.print_report'),params.except('action','format').merge({format: 'pdf', action: 'reports'}) %></li>
+    </ul>
+    <div class="report_duration">
+      <!--<li><%= @report.period %></li>-->
     </div>
+    <!-- report_duration -->
+  </div>
 <% end %>

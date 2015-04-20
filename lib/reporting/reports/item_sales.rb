@@ -34,7 +34,7 @@ module Reporting
       HEADER_COLUMNS = ['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
 
       def period
-        "Between #{@report_criteria.from_date} and #{@report_criteria.to_date}"
+        "Between #{@report_criteria.from_date.to_date.strftime(get_date_format)} and #{@report_criteria.to_date.to_date.strftime(get_date_format)}"
       end
 
       def get_report_data
@@ -129,8 +129,15 @@ module Reporting
         end
       end
 
-
-
+      def get_date_format
+        if User.current.present?
+          current_user = User.current
+          user_format = current_user.settings.date_format
+          user_format.present? ?  user_format : '%Y-%m-%d'
+        else
+          '%Y-%m-%d'
+        end
+      end
     end
   end
 end

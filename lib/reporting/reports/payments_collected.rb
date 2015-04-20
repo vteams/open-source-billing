@@ -33,7 +33,7 @@ module Reporting
       end
 
       def period
-        "Between #{@report_criteria.from_date} and #{@report_criteria.to_date}"
+        "Between #{@report_criteria.from_date.strftime(get_date_format)} and #{@report_criteria.to_date.strftime(get_date_format)}"
       end
 
       def get_report_data
@@ -140,6 +140,16 @@ module Reporting
           row= ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2)]
           is_first=false
           sheet.add_row(row)
+        end
+      end
+
+      def get_date_format
+        if User.current.present?
+          current_user = User.current
+          user_format = current_user.settings.date_format
+          user_format.present? ?  user_format : '%Y-%m-%d'
+        else
+          '%Y-%m-%d'
         end
       end
 

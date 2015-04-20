@@ -37,7 +37,7 @@ module Reporting
       end
 
       def period
-        "As of #{@report_criteria.to_date}"
+        "As of #{@report_criteria.to_date.to_date.strftime(get_date_format)}"
       end
 
       def get_report_data
@@ -150,6 +150,17 @@ module Reporting
           sheet.add_row(row)
         end
       end
+
+      def get_date_format
+        if User.current.present?
+          current_user = User.current
+          user_format = current_user.settings.date_format
+          user_format.present? ?  user_format : '%Y-%m-%d'
+        else
+          '%Y-%m-%d'
+        end
+      end
+
     end
   end
 end
