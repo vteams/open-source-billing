@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Payment < ActiveRecord::Base
-
+ include DateFormats
   # associations
   belongs_to :invoice
   belongs_to :client

@@ -20,8 +20,8 @@
             <td class="align_center"><%= inv.invoice_number %></td>
             <!--<td class="align_left"><%#= inv.client.organization_name unless inv.client.organization_name.blank? %></td>-->
             <td class="align_left"><%= inv.client.present?? inv.client.organization_name : inv.unscoped_client.organization_name %></td>
-            <td class="align_center"><%= inv.invoice_date.to_date %></td>
-            <td class="align_right"><%= number_to_currency(inv.invoice_total) %>
+            <td class="align_center"><%= inv.invoice_date %></td>
+            <td class="align_right"><%= number_to_currency(inv.invoice_total, unit: inv.currency.unit.present? ? inv.currency.unit : "$" ) %>
               <!--<span class="tt"> <%#= current_user.currency_code %></span></td>-->
           </tr>
           </thead>

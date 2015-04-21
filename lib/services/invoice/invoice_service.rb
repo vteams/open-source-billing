@@ -69,6 +69,7 @@ module Services
           invoice.create_credit(invoice.non_credit_payment_total)
         end
         invoice.delete_none_credit_payments
+        invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
         invoice.destroy
       end
     end

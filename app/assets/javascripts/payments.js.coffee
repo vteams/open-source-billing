@@ -79,10 +79,13 @@ jQuery ->
     else
       true
   # show intimation message when editing credit payment
-  jQuery(".payment_listing .edit_action").click ->
-    flag = true
-    if jQuery(this).attr("value") == "credit"
-       flag = false
-       jQuery(".alert.alert-error").show().find('span').html("You cannot edit credit payment")
-    flag
+  window.bind_edit_payment_links = () ->
+    jQuery(".payment_listing .edit_action").unbind 'click'
+    jQuery(".payment_listing .edit_action").click ->
+      flag = true
+      if jQuery(this).attr("value") == "credit"
+         flag = false
+         jQuery(".alert.alert-error").show().find('span').html("You cannot edit credit payment")
+      flag
+  window.bind_edit_payment_links()
 

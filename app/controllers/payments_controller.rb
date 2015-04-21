@@ -110,7 +110,7 @@ class PaymentsController < ApplicationController
     ids = ids.split(",") if ids and ids.is_a?(String)
     ids.each do |inv_id|
       company_id = Invoice.find(inv_id).company_id
-      @payments << Payment.new({:invoice_id => inv_id, :payment_date => Date.today.to_date, :company_id  => company_id }) end
+      @payments << Payment.new({:invoice_id => inv_id, :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id }) end
   end
 
   def update_individual_payment
