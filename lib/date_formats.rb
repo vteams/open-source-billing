@@ -57,7 +57,11 @@ module DateFormats
     if year.to_s.length == 2
       year = "#{current_year.to_s[0..1]}#{year}"
     end
-    "#{year}-#{month}-#{day}".to_date
+    formatted_date ="#{year}-#{month}-#{day}".to_date.to_s
+    if formatted_date.to_s[0] == '-'
+      formatted_date = formatted_date.to_s[1..formatted_date.to_s.length-1]
+    end
+    formatted_date.to_date
   end
 
   def date_format

@@ -61,8 +61,31 @@ jQuery ->
         jQuery(this).qtip({content: text: "Payments with 0 amount are not allowed. Either leave it blank to skip or enter a value greater than 0.", show: event: false, hide: event: false})
         jQuery(this).focus().qtip().show()
         validate = false
+      else
+        jQuery('.payment_dates').each ->
+          if jQuery(this).val() isnt "" and !DateFormats.validate_date((jQuery(this).val()))
+            applyPopover(jQuery(this), "rightTop", "leftMiddle", "Make sure date format is in '#{DateFormats.format()}' format")
+            validate = false
     validate
 
+  applyPopover = (elem,position,corner,message) ->
+    elem.qtip
+      content:
+        text: message
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: position
+      style:
+        tip:
+          corner: corner
+    elem.qtip().show()
+    elem.focus()
+
+  jQuery(".line_item_qtip").live "change",->
+    jQuery(this).qtip('hide')
   # hide qtip when enter some text in payment field
   jQuery(".payment_amount").keyup ->
     jQuery(this).qtip("hide")

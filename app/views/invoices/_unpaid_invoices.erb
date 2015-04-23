@@ -35,7 +35,7 @@
                 <td class="align_left"><%= inv.notes %></td>
                 <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
                 <td class="align_center currency"><%= number_to_currency(inv.invoice_total, unit: inv.currency.present? ? inv.currency.unit : "$") %>
-                <td class="align_center"><%= inv.invoice_date.to_date.strftime(get_date_format) rescue "" %></td>
+                <td class="align_center"><%= inv.invoice_date rescue "" %></td>
                 <td class="align_center <%= inv.status %>" title="<%= inv.tooltip %>">
             <span class="invoice-status invoice-sent">
               <%= inv.status.downcase %>
