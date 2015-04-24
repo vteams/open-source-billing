@@ -39,7 +39,6 @@ class Payment < ActiveRecord::Base
  after_save :update_client_available_credit
 
  def update_client_available_credit
-   binding.pry
    if self.invoice_id.present? and self.payment_method == 'Credit'
      client = self.invoice.client
      current_amount = self.payment_amount
