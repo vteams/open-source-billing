@@ -19,7 +19,7 @@ class RecurringProfile < ActiveRecord::Base
 
   # callbacks
   before_create :set_profile_id
-
+  before_save :set_default_currency
   # archive and delete
   acts_as_archival
   acts_as_paranoid
@@ -32,6 +32,10 @@ class RecurringProfile < ActiveRecord::Base
   #remaining invoices to be sent
   def remaining_occurrences
     occurrences.to_i == 0 ? "infinite" : occurrences.to_i - (sent_invoices.to_i || 0)
+  end
+
+  def set_default_currency
+    self.currency = Currency.default_currency unless self.currency_id.present?
   end
 
   def send_more?
