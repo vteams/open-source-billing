@@ -92,6 +92,9 @@ module DateFormats
     if options[:to_date].present?
       options[:to_date] = custom_date_format(options[:to_date]).to_s
     end
+    if options[:invoice_first_date].present?
+      options[:invoice_first_date] = custom_date_format(options[:invoice_first_date]).to_s
+    end
     options
   end
 end

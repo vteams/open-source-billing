@@ -20,7 +20,7 @@
 #
 module Services
   class RecurringService
-
+include DateFormats
     def initialize(options)
       @profile = options[:profile]
       @current_user = options[:user]
@@ -38,7 +38,8 @@ module Services
       #  schedule_date = occurrence.to_i * @profile.frequency.to_i
       #  RecurringService.delay(:run_at => 1.minute.from_now, :recurring_profile_id => @profile.id).create_invoice_from_recurring(get_due_date(schedule_date), @profile, @current_user)
       #end unless @profile.occurrences.blank?
-      start_schedule(@profile.first_invoice_date.to_date, @profile.occurrences, true)
+      filter_date = set_filter_date_formats({:invoice_first_date =>@profile.first_invoice_date})
+      start_schedule(filter_date[:invoice_first_date].to_date, @profile.occurrences, true)
 
     end
 
@@ -48,8 +49,8 @@ module Services
 
       occurrences = update_occurrences
       first_invoice_date = start_date_changed? ? @params[:recurring_profile][:first_invoice_date] : (last_invoice_date || @params[:recurring_profile][:first_invoice_date])
-
-      start_schedule(first_invoice_date.to_date, occurrences, false)
+      filter_date = set_filter_date_formats({:invoice_first_date => first_invoice_date})
+      start_schedule(filter_date[:invoice_first_date].to_date, occurrences, false)
     end
 
 
