@@ -36,6 +36,17 @@ class Payment < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
+ after_save :update_client_available_credit
+
+ def update_client_available_credit
+   binding.pry
+   if self.invoice_id.present? and self.payment_method == 'Credit'
+     client = self.invoice.client
+     current_amount = self.payment_amount
+     client_available_credit = client.client_available_credit - current_amount
+     client.first_payment.update_attribute(:payment_amount, client_available_credit)
+   end
+ end
 
   def client_name
     invoice = Invoice.with_deleted.find_by_id(self.invoice_id)

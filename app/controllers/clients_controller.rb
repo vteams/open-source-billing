@@ -199,7 +199,7 @@ class ClientsController < ApplicationController
                                    :organization_name, :postal_zip_code, :province_state,
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,
                                    :mobile_number, :client_contacts_attributes, :archive_number,
-                                   :archived_at, :deleted_at,:currency_id, :available_credit,
+                                   :archived_at, :deleted_at,:currency_id,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end
