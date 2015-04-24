@@ -114,7 +114,7 @@
                         <tr>
                           <td class="align_left"><%= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></td>
                           <td class="align_left text-overflow-class"  data-overflow-rows="2"><%= current_invoice.unscoped_client.organization_name rescue "" %></td>
-                          <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date).to_time.strftime(get_date_format) rescue "" %></td>
+                          <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date) rescue "" %></td>
                           <td class="align_right"><%= number_to_currency(current_invoice.invoice_total, unit: current_invoice.currency.present? ? current_invoice.currency.code : "$") %></td>
                         </tr>
                     <% end %>
@@ -165,7 +165,7 @@
                         <tr>
                           <td class="align_left"><%= link_to past_invoice.invoice_number, invoice_path(past_invoice) %></td>
                           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= past_invoice.unscoped_client.organization_name rescue "" %></td>
-                          <td class="align_left"><%= (past_invoice.due_date || past_invoice.invoice_date).to_time.strftime(get_date_format) rescue "" %></td>
+                          <td class="align_left"><%= (past_invoice.due_date || past_invoice.invoice_date) rescue "" %></td>
                           <td class="align_right"><%= number_to_currency(past_invoice.invoice_total, unit: past_invoice.currency.present? ? past_invoice.currency.code : "$") %></td>
                         </tr>
                     <% end %>

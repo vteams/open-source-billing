@@ -62,7 +62,7 @@
                     <% @invoices.each do |invoice| %>
                         <tr>
                           <td class="align_left"><%= link_to invoice.invoice_number, invoice_path(invoice), target: '_blank' %></td>
-                          <td class="align_left"><%= (invoice.due_date || invoice.invoice_date).to_time.strftime("%m/%d/%Y") rescue "" %></td>
+                          <td class="align_left"><%= (invoice.due_date || invoice.invoice_date) rescue "" %></td>
                           <td class="align_left"><%= invoice.company.company_name %></td>
                           <td class="align_right"><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : "$") %></td>
                         </tr>
