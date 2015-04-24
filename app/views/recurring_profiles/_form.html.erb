@@ -1,7 +1,7 @@
 <%= nested_form_for @recurring_profile, :html => {:class => 'form-recurring-profile', :novalidate => ""} do |f| %>
     <% @parent_f = f
        start_date = ''
-       start_date =  @recurring_profile.first_invoice_date.to_date.strftime("%Y-%m-%d") unless  @recurring_profile.first_invoice_date.blank?
+       start_date =  @recurring_profile.first_invoice_date unless  @recurring_profile.first_invoice_date.blank?
  %>
 
     <div class="invoice_form recurring_profile_form">

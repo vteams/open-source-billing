@@ -71,7 +71,7 @@ class RecurringProfilesController < ApplicationController
   # GET /recurring_profiles/1/edit
   def edit
     @recurring_profile = RecurringProfile.find(params[:id])
-    @recurring_profile.first_invoice_date = @recurring_profile.first_invoice_date.to_date
+    @recurring_profile.first_invoice_date = @recurring_profile.first_invoice_date
     @discount_types = @recurring_profile.currency.present? ? ['%', @recurring_profile.currency.unit] : DISCOUNT_TYPE
     get_clients_and_items
     respond_to {|format| format.js; format.html}

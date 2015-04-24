@@ -1,7 +1,7 @@
 jQuery ->
   # Add date picker to start date
   jQuery("#recurring_profile_first_invoice_date").datepicker
-    dateFormat: 'yy-mm-dd'
+    dateFormat: DateFormats.format()
 
   # Validate recurring profile form
   jQuery("form.form-recurring-profile").submit ->
