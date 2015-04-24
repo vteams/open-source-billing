@@ -57,6 +57,7 @@ class Invoice < ActiveRecord::Base
   # callbacks
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
+  before_save :set_default_currency
 
   # archive and delete
   acts_as_archival
@@ -64,6 +65,10 @@ class Invoice < ActiveRecord::Base
   has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new { |invoice| invoice.last_invoice_status == 'disputed' }
 
   paginates_per 10
+
+  def set_default_currency
+    self.currency = Currency.default_currency unless self.currency_id.present?
+  end
 
   def set_invoice_number
     self.invoice_number = Invoice.get_next_invoice_number(nil)
