@@ -132,6 +132,10 @@ class Invoice < ActiveRecord::Base
     payments.where("payment_type !='credit' or payment_type is null").sum('payment_amount')
   end
 
+  def credit_payment_total
+    payments.where("payment_type ='credit'").sum('payment_amount')
+  end
+
   def tooltip
     STATUS_DESCRIPTION[self.status.gsub('-', '_').to_sym]
   end
@@ -233,6 +237,13 @@ class Invoice < ActiveRecord::Base
     credit_pay.payment_amount = amount
     credit_pay.credit_applied = 0.00
     credit_pay.save
+  end
+
+  def create_credit_payment(non_credit_amount, credit_amount)
+     total_payment = non_credit_amount + credit_amount
+     payment_amount = client.payments.first.payment_amount
+     payment_amount += total_payment
+     client.payments.first.update_attributes!(payment_amount: payment_amount)
   end
 
   def partial_payments
