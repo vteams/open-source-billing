@@ -42,7 +42,8 @@ class Payment < ActiveRecord::Base
    if self.invoice_id.present? and self.payment_method == 'Credit'
      client = self.invoice.client
      current_amount = self.payment_amount
-     client_available_credit = client.client_available_credit - current_amount
+     available_credit = client.client_available_credit.present? ? client.client_available_credit : 0
+     client_available_credit = available_credit - current_amount
      client.first_payment.update_attribute(:payment_amount, client_available_credit)
    end
  end
