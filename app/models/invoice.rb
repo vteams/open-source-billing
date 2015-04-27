@@ -243,6 +243,7 @@ class Invoice < ActiveRecord::Base
      total_payment = non_credit_amount + credit_amount
      payment_amount = client.payments.first.payment_amount
      payment_amount += total_payment
+     self.create_credit(payment_amount)
      client.payments.first.update_attributes!(payment_amount: payment_amount)
   end
 
