@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403055445) do
+ActiveRecord::Schema.define(version: 20150429054414) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -329,6 +329,7 @@ ActiveRecord::Schema.define(version: 20150403055445) do
     t.decimal  "credit_applied",            precision: 10, scale: 2
     t.integer  "client_id"
     t.integer  "company_id"
+    t.string   "status"
   end
 
   create_table "recurring_profile_line_items", force: true do |t|

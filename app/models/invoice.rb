@@ -239,14 +239,6 @@ class Invoice < ActiveRecord::Base
     credit_pay.save
   end
 
-  def create_credit_payment(non_credit_amount, credit_amount)
-     total_payment = non_credit_amount + credit_amount
-     payment_amount = client.payments.first.payment_amount
-     payment_amount += total_payment
-     self.create_credit(payment_amount)
-     client.payments.first.update_attributes!(payment_amount: payment_amount)
-  end
-
   def partial_payments
     where("status = 'partial'")
   end

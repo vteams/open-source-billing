@@ -21,23 +21,20 @@
           <col class="five"/>
           <col class="six"/>
         </colgroup>
-        <thead>
-          <tr>
-            <th class="align_center"><%= t('invoice') %></th>
-            <th class="align_left"><%= t('client') %></th>
-            <th class="align_center"><%= t('views.common.type') %></th>
-            <th class="align_center"><%= t('views.common.notes') %></th>
-            <th class="align_center"><%= t('views.common.notes') %></th>
-            <th class="align_right {sorter:'thousands'}" style="padding-right: 20px;"><%= t('views.dashboard.amount') %></th>
-          </tr>
+        <thead id="payments_history_header">
+        <%= render 'payments_history_header' %>
         </thead>
         <tbody id="payment_body">
           <%= render 'payments_history' %>
-        <tfoot id="paging_links">
-          <%= render "application_partials/paging" %>
-        </tfoot>
         </tbody>
+        <tfoot id="paging_links">
+        <%= render "application_partials/paging" %>
+        </tfoot>
       </table>
-    </div><!--grid_table-->
-  </div><!--content_middle-->
+    </div>
+  </div>
+  <!--content_middle-->
+  <div class="content_bottom">
+    <%= link_to t('views.payments.back_to_invoice'), {:controller => 'invoices', :action => 'preview', :inv_id => params[:encrypted_id]}, :class => "btn_large" %>
+  </div>
 </div><!--payment_history-->

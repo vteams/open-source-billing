@@ -110,13 +110,22 @@ class PaymentsController < ApplicationController
     ids = ids.split(",") if ids and ids.is_a?(String)
     ids.each do |inv_id|
       company_id = Invoice.find(inv_id).company_id
-      @payments << Payment.new({:invoice_id => inv_id, :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id }) end
+      @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
+    end
   end
 
   def update_individual_payment
-    Services::PaymentService.update_payments(params.merge(user: current_user))
+    paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
     where_to_redirect = params[:from_invoices] ? invoices_url : payments_url
-    redirect_to(where_to_redirect, :notice => 'Payment(s) against selected invoice(s) have been recorded successfully.')
+    notice = ""
+    alert = ""
+    if paid_invoice_ids.present?
+      notice =  "Payment(s) against invoice(s) with invoice # #{paid_invoice_ids.join(",")} have been recorded successfully."
+    end
+    if unpaid_invoice_ids.present?
+      alert = "Payment(s) against invoice(s) with invoice # #{unpaid_invoice_ids.join(",")} have failed due to client's insufficiant credit balance."
+    end
+    redirect_to(where_to_redirect, :notice => notice , :alert => alert)
   end
 
   def bulk_actions
@@ -137,7 +146,7 @@ class PaymentsController < ApplicationController
 
   def payments_history
     client = Invoice.find_by_id(params[:id]).client
-    @payments = Payment.payments_history(client).page(params[:page])
+    @payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
   end
 
   def invoice_payments_history

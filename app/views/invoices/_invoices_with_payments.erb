@@ -24,9 +24,9 @@
             <td class="align_right"><%= number_to_currency(inv.invoice_total, unit: inv.currency.unit.present? ? inv.currency.unit : "$" ) %>
               <!--<span class="tt"> <%#= current_user.currency_code %></span></td>-->
           </tr>
-          </thead>
-          </table>
       <% end %>
+      </thead>
+    </table>
       </div>
   <!--grid_table-->
 </div><!--invoice_model-->

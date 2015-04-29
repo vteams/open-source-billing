@@ -4,7 +4,6 @@ class RecurringProfileLineItem < ActiveRecord::Base
   belongs_to :item
   belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
   belongs_to :tax2, :foreign_key => 'tax_2', :class_name => 'Tax'
-  has_many :line_item_taxes
   attr_accessor :tax_one, :tax_two
 
   # archive and delete

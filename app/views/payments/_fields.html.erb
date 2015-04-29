@@ -77,6 +77,7 @@
             <div class="label_field left single">Payment (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
             <div class="small_field">
               <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount" %>
+              <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
             </div>
             <div class="field_check">
               <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full" name="payments[][paid_full]"/>

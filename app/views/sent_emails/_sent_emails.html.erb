@@ -4,7 +4,7 @@
           <td class="align_left"><%= link_to sent_email.subject, {:controller => 'sent_emails', :action => 'show', :id => sent_email.id}, :class => "sent_email_link" %></td>
           <td class="align_left"><%= sent_email.recipient %></td>
           <td class="align_center"><%= sent_email.type %></td>
-          <td class="align_center"><%= sent_email.date %></td>
+          <td class="align_center"><%= sent_email.date.strftime(get_date_format) %></td>
         </tr>
     <% end %>
 <% else %>

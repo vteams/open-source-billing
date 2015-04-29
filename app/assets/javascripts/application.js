@@ -164,17 +164,21 @@ window.preventDeletedNavigation = function(){
         return elem.focus();
     };
 
-    $("a.deleted_entry").click(function(e){
-        applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
-        e.preventDefault();
-        return false;
-    });
-
-    $("a.deleted_entry").mouseleave(function(e){
-          $(this).qtip('hide')
-          return false;
-    });
-
+    bind_deleted_entry = function(){
+        $("a.deleted_entry").unbind('click');
+        $("a.deleted_entry").click(function(e){
+            applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
+            e.preventDefault();
+            return false;
+        });
+        $("a.deleted_entry").unbind('mouseleave');
+        $("a.deleted_entry").mouseleave(function(e){
+              $(this).qtip('hide')
+              return false;
+        });
+    }
 };
-
 window.preventDeletedNavigation();
+$(document).ready(function(){
+    bind_deleted_entry();
+});
