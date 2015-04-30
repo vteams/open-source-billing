@@ -239,6 +239,22 @@ class Invoice < ActiveRecord::Base
     credit_pay.save
   end
 
+  def create_credit_payment(amount)
+    credit_pay = Payment.new
+    credit_pay.payment_type = 'credit'
+    credit_pay.invoice_id = self.id
+    credit_pay.payment_date = Date.today
+    credit_pay.notes = "Converted from payments for invoice# #{self.invoice_number}"
+    credit_pay.payment_amount = amount
+    credit_pay.credit_applied = 0.00
+    credit_pay.status = 'added'
+    credit_pay.save
+    client = self.client
+    client_credit = client.payments.first.payment_amount
+    client_credit += credit_pay.payment_amount
+    client.payments.first.update_attribute(:payment_amount, client_credit)
+  end
+
   def partial_payments
     where("status = 'partial'")
   end

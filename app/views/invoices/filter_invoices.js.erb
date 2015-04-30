@@ -31,7 +31,6 @@ jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 jQuery('#select_all').attr('checked', false);
 
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
-
-
+bind_deleted_entry();
 
 

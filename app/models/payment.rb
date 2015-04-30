@@ -37,46 +37,6 @@ class Payment < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
- #after_create :update_client_available_credit
- #before_update :set_client_credit
- #
- #def update_client_available_credit
- #  if self.invoice_id.present? and self.payment_method == 'Credit'
- #    client = self.invoice.unscoped_client
- #    current_amount = self.payment_amount
- #    available_credit = client.client_available_credit.present? ? client.client_available_credit : 0
- #    client_available_credit = available_credit - current_amount
- #    client.first_payment.update_attribute(:payment_amount, client_available_credit)
- #  end
- #end
- #
- #def set_client_credit
- #  if self.invoice_id.present? and self.payment_method == 'Credit'
- #    payment = Payment.find(self.id)
- #    previous_payment = payment.payment_amount
- #    current_amount = self.payment_amount
- #    client = self.invoice.unscoped_client
- #     if previous_payment < current_amount
- #       difference = current_amount - previous_payment
- #       amount =  client.first_payment.payment_amount - difference
- #       client.first_payment.update_attribute(:payment_amount, amount)
- #     elsif previous_payment > current_amount
- #       difference = previous_payment - current_amount
- #       amount = client.first_payment.payment_amount + difference
- #       client.first_payment.update_attribute(:payment_amount, amount)
- #     end
- #  elsif self.invoice_id.present? and self.payment_method != 'Credit'
- #    payment = Payment.find(self.id)
- #    previous_payment = payment.payment_amount
- #    previous_method = payment.payment_method
- #    client = self.invoice.unscoped_client
- #    if previous_method == 'Credit'
- #      amount = previous_payment + client.first_payment.payment_amount
- #      client.first_payment.update_attribute(:payment_amount, amount)
- #    end
- #  end
- #end
-
   def client_name
     invoice = Invoice.with_deleted.find_by_id(self.invoice_id)
     if invoice.present?

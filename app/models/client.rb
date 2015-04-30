@@ -104,51 +104,40 @@ class Client < ActiveRecord::Base
     credit.flatten
   end
 
-  def client_credit(action=nil)
+  def available_credit
     client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
 
-    deleted_invoices_payments = Payment.where("payment_type = 'credit' AND status is NULL AND invoice_id in (?)", client_invoice_ids).all
+    deleted_invoices_payments = Payment.where("payment_type = 'credit' AND status IS NULL AND invoice_id in (?)", client_invoice_ids).all
     client_total_credit = deleted_invoices_payments.sum(:payment_amount)
-
+    update_payment_status(deleted_invoices_payments)
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
     # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
-
-    client_payments = Payment.where("payment_method = 'credit' AND status IS NULL  AND invoice_id in (?)", client_invoice_ids).all
-
-    client_debit = client_payments.sum(:payment_amount)
-    # Total available credit of client
-    client_available_credit = client_total_credit - client_debit
-    client_available_credit
+    client_total_credit
   end
 
-  def edit_client_credit(action=nil)
-    client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
-    # total credit
-
-    deleted_invoices_payments = Payment.where("payment_type = 'credit' AND status is NULL AND invoice_id in (?)", client_invoice_ids).all
-    client_total_credit = deleted_invoices_payments.sum(:payment_amount)
-    update_payment_status(deleted_invoices_payments) if action == 'edit' or action == 'index'
-
-    client_total_credit += self.payments.first.payment_amount.to_f rescue 0
-    # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
-
-    client_payments = Payment.where("payment_method = 'Credit' AND status IS NULL  AND invoice_id in (?)", client_invoice_ids).all
-
-    update_payment_status(client_payments, 'credited') if action == 'edit' or action == 'index'
-    client_debit = client_payments.sum(:payment_amount)
-    # Total available credit of client
-    client_available_credit = client_total_credit - client_debit
-
-    self.payments.first.update_attribute(:payment_amount, client_available_credit) if action == 'edit' or action == 'index'
-    client_available_credit
-  end
-  def update_payment_status(payments,status='added')
-    if payments.present?
-      payments.each do |payment|
-       payment.update_attribute(:status, status)
-      end
+  def update_payment_status(payments)
+    payments.each do |payment|
+      payment.update_attribute(:status, 'added')
     end
+  end
+
+  def client_credit
+    client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
+    # total credit
+
+    deleted_invoices_payments = Payment.where("payment_type = 'credit' AND status IS NULL AND invoice_id in (?)", client_invoice_ids).all
+    client_total_credit = deleted_invoices_payments.sum(:payment_amount)
+
+    client_total_credit += self.payments.first.payment_amount.to_f rescue 0
+    # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
+
+    client_payments = Payment.where("payment_method = 'credit' AND status IS NULL AND invoice_id in (?)", client_invoice_ids).all
+
+    client_debit = client_payments.sum(:payment_amount)
+    # Total available credit of client
+    client_available_credit = client_total_credit - client_debit
+    client_available_credit
   end
 
   def first_payment

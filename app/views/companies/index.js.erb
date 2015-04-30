@@ -29,7 +29,7 @@ setTimeout(function(){
 
 jQuery('#select_all').attr('checked', false);
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
-
+bind_deleted_entry();
 //jQuery("table.invoice_listing").trigger('update');
 
 

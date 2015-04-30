@@ -66,7 +66,7 @@ module Services
       ::Invoice.multiple(invoices_ids).each do |invoice|
         if convert_to_credit
           invoice.delete_credit_payments
-          invoice.create_credit(invoice.non_credit_payment_total)
+          invoice.create_credit_payment(invoice.non_credit_payment_total)
         end
         invoice.delete_none_credit_payments
         invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
