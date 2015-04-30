@@ -35,6 +35,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_date_format
   before_filter :set_current_user
 
+  before_action :set_locale
+
   def _reload_libs
     if defined? RELOAD_LIBS
       RELOAD_LIBS.each do |lib|
@@ -169,5 +171,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :account ,:email, :password, :password_confirmation, :remember_me) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :account, :email, :password, :remember_me) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :account, :email, :password, :password_confirmation, :current_password) }
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def default_url_options(options = {})
+    { locale: I18n.locale }.merge options
   end
 end

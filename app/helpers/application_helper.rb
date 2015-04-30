@@ -181,9 +181,9 @@ module ApplicationHelper
 
   def get_url
     if current_user.settings.currency.present? and current_user.settings.currency == "On"
-      "/dashboard?currency=#{currencies.first.try(:id)}"
+      dashboard_path(currency: currencies.first.try(:id))
     else
-      "/dashboard"
+      dashboard_path
     end
   end
 
