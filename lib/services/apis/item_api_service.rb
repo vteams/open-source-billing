@@ -3,7 +3,6 @@ module Services
     class ItemApiService
 
       def self.create(params)
-        #binding.pry
         item = ::Item.new(item_params_api(params))
         if item.save
           {message: 'Successfully created'}

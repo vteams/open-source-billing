@@ -45,16 +45,8 @@
               <col class="eight"/>
               <col class="nine"/>
             </colgroup>
-            <thead>
-            <tr>
-              <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-              <th class="align_center header"><%= sortable('invoices.invoice_number', t('views.invoices.invoice_number')) %></th>
-              <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
-              <th class="align_center header"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
-              <th class="align_center header"><%= sortable('payment_date', t('views.common.date')) %></th>
-              <th class="align_right big header sorting {sorter:'thousands'}"><%= sortable('payment_amount', t('amount')) %></th>
-              <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
-            </tr>
+            <thead id="payments_header">
+            <%= render 'payments_header'%>
             </thead>
             <tbody id="payment_body">
             <%= render 'payment' %>

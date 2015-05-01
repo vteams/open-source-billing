@@ -41,7 +41,6 @@ module Services
         amount += Payment.invoice_remaining_amount(invoice.id)
       end unless invoices.blank?
       amount
-      #binding.pry
     end
 
     def total_payments invoices

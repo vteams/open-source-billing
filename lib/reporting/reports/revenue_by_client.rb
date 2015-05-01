@@ -119,7 +119,6 @@ module Reporting
         doc.quiet_booleans!
         sheet1 = doc.add_sheet("Revenur By Client")
         unless report.report_data.blank?
-          #binding.pry
           sheet1.add_row(headers)
           report.report_data.each do |rpt|
             temp_row=[rpt.organization_name]

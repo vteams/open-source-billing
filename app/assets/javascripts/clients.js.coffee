@@ -71,6 +71,12 @@ jQuery ->
   jQuery("#client_email, #client_first_name, #client_last_name").click ->
     hideQtip(jQuery(this))
 
+  jQuery('.edit_client .field_row .medium_field #calculated_credit').change ->
+    available_credit = jQuery('.edit_client .field_row .medium_field #available_credit')
+    client_credit = jQuery(this)
+    available_credit.val(client_credit.val())
+
+
   # show details when client name is clicked.
   jQuery('table.client_listing .client_name').live 'click', ->
     row = jQuery(this).parents('tr')

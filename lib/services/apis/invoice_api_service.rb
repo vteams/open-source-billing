@@ -12,7 +12,6 @@ module Services
       end
 
       def self.update(params)
-        #binding.pry
         invoice = Invoice.find(params[:id])
         if invoice.present?
           if invoice.update_attributes(invoice_params_api(params))

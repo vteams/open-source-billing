@@ -3,7 +3,6 @@ module Services
     class PaymentApiService
 
       def self.create(params)
-        #binding.pry
         payment = Payment.new(payment_params_api(params))
         if payment.save
           {message: 'Successfully created'}
@@ -13,7 +12,6 @@ module Services
       end
 
       def self.update(params)
-        #binding.pry
         payment = Payment.find(params[:id])
         if payment.present?
           if payment.update_attributes(payment_params_api(params))

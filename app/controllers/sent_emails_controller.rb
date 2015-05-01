@@ -22,7 +22,7 @@ class SentEmailsController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
   def index
-    @sent_emails = SentEmail.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @sent_emails = SentEmail.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
     #filter emails by company
     @sent_emails = filter_by_company(@sent_emails)
     respond_to do |format|

@@ -1,0 +1,9 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_center header <%= sortable_class('invoices.invoice_number') %>"><%= sortable('invoices.invoice_number', t('views.invoices.invoice_number')) %></th>
+  <th class="align_left header <%= sortable_class(get_org_name) %>"><%= sortable(get_org_name, t('client')) %></th>
+  <th class="align_center header <%= sortable_class('IFNULL(payment_method,payment_type)') %>"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
+  <th class="align_center header <%= sortable_class('payment_date') %>"><%= sortable('payment_date', t('views.common.date')) %></th>
+  <th class="align_right big header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

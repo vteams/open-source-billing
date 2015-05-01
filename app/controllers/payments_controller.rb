@@ -22,7 +22,7 @@ class PaymentsController < ApplicationController
   before_filter :authenticate_user!, :set_per_page_session , :except => [:payments_history]
   layout :choose_layout
   include PaymentsHelper
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :get_org_name
 
   def index
     @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
@@ -32,7 +32,6 @@ class PaymentsController < ApplicationController
 
     #filter invoices by company
     @payments = filter_by_company(@payments)
-
     respond_to do |format|
       format.html # index.html.erb
       format.js

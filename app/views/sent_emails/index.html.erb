@@ -18,13 +18,8 @@
           <col class="three"/>
           <col class="four"/>
         </colgroup>
-        <thead>
-        <tr>
-          <th class="align_left header"><%= sortable('subject',t('views.clients.subject')) %></th>
-          <th class="align_left header"><%= sortable('recipient',t('views.clients.recipient')) %></th>
-          <th class="align_center header"><%= sortable('type',t('views.clients.type')) %></th>
-          <th class="align_center header"><%= sortable('date',t('views.clients.date')) %></th>
-        </tr>
+        <thead id="sent_emails_header">
+         <%= render 'sent_email_header' %>
         </thead>
         <tbody id="email_body">
         <%= render 'sent_emails' %>
@@ -33,6 +28,8 @@
         <%= render "application_partials/paging" %>
         </tfoot>
       </table>
+    </div>
+    <div class="content_bottom">
     </div>
     <!--grid_table-->
   </div>
