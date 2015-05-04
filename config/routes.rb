@@ -52,6 +52,7 @@ Osb::Application.routes.draw do
       get 'undo_actions'
       get 'payments_history'
       get 'invoice_payments_history'
+      post 'delete_non_credit_payments'
     end
   end
   resources :taxes do

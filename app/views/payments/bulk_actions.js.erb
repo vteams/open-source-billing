@@ -5,7 +5,7 @@ jQuery(".alert").hide();
         jQuery(".alert.alert-success").show().find('span').html("Payment(s) are <%= @action %> successfully");
 
     <% elsif @action == "credit entry" %>
-        jQuery("#credit_payments .modal-body").html("<%= escape_javascript(render "payments_with_credit") %>");
+        jQuery("#credit_payments .modal-body").html("<%= escape_javascript(render "payments_with_credit", :locals => {:per => params[:per]}) %>");
         jQuery('#credit_payments').modal('show');
 
         <%if @non_credit_payments.blank? %>

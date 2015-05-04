@@ -128,6 +128,7 @@ class PaymentsController < ApplicationController
   end
 
   def bulk_actions
+    per = params[:per].present? ? params[:per] : @per_page
     ids = params[:payment_ids]
     if Payment.is_credit_entry? ids
       @action = "credit entry"
@@ -135,12 +136,18 @@ class PaymentsController < ApplicationController
       @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
     else
       Payment.delete_multiple(ids)
-      @payments = Payment.unarchived.page(params[:page]).per(@per_page)
+      @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+      @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
+      @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
+      @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
+
+      #filter invoices by company
+      @payments = filter_by_company(@payments)
       @action = "deleted"
       @message = payments_deleted(ids) unless ids.blank?
     end
-    #respond_to { |format| format.js }
-    redirect_to payments_url
+    respond_to { |format| format.js }
+    #redirect_to payments_url
   end
 
   def payments_history
@@ -158,7 +165,14 @@ class PaymentsController < ApplicationController
 
   def delete_non_credit_payments
     Payment.delete_multiple(params[:non_credit_payments])
-    @payments = Payment.unarchived.page(params[:page]).per(@per_page)
+    #@payments = Payment.unarchived.page(params[:page]).per(@per_page)
+    @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+    @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
+    @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
+    @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
+    #filter invoices by company
+    @payments = filter_by_company(@payments)
+    flash[:notice] = 'Payment(s) are deleted successfully'
     respond_to { |format| format.js }
   end
 

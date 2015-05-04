@@ -19,6 +19,7 @@
       <th class="align_right"><%= t('amount') %></th>
     </tr>
     </thead>
+    <%= hidden_field_tag 'per', params[:per] %>
     <tbody id="payment_body">
     <% @payments_with_credit.each do |payment| %>
         <tr>
@@ -26,7 +27,7 @@
           <td class="align_left text-overflow-class"><%= payment.client_name %></td>
           <td class="align_center"><%= (payment.payment_method || payment.payment_type || "").capitalize %></td>
           <td class="align_left"><%= payment.notes %></td>
-          <td class="align_center"><%= payment.payment_date.strftime(get_date_format) %></td>
+          <td class="align_center"><%= payment.payment_date %></td>
           <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{payment.invoice.present??  number_to_currency(payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") : number_to_currency(payment.payment_amount)}" %></td>
         </tr>
     <% end %>

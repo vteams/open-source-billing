@@ -71,7 +71,7 @@ class window.validateForms
       @showQtip(@user_name, @getMessage('required'))
       false
     else if @email.val() is ''
-      @showQtip(@user_name, @getMessage('required'))
+      @showQtip(@email, @getMessage('required'))
       false
     else if @password_update.val()
         if @password_update.val().length < 8

@@ -125,7 +125,7 @@ module Reporting
 
       def get_data_row object
         [
-            object.invoice_number.to_s,
+            object.invoice.try(:invoice_number).to_s,
             object.client_name.to_s,
             (object.payment_type || object.payment_method || "").capitalize.to_s,
             object.notes.to_s,
