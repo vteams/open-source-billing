@@ -48,7 +48,7 @@
           <% unless @report.report_data.blank? %>
               <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
                 <tr>
-                  <td class="align_left"><%= items.first.item_name %></td>
+                  <td class="align_left" data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
                   <td class="align_center" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
                     <%  items.each do |item| %>
                       <%= item.attributes["item_quantity"].to_i %>

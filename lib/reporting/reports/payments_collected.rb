@@ -129,7 +129,7 @@ module Reporting
             object.client_name.to_s,
             (object.payment_type || object.payment_method || "").capitalize.to_s,
             object.notes.to_s,
-            object.created_at.to_date.to_s,
+            object.created_at.to_date.strftime(get_date_format).to_s,
             object.payment_amount.to_f.round(2)
         ]
       end
