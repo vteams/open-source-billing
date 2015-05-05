@@ -18,11 +18,8 @@ class AccountsControllerTest < ActionController::TestCase
 
   test "should create company" do
     assert_difference('Company.count') do
-<<<<<<< HEAD
-      post :create, account: { : @account. }
-=======
+
       post :create, account:   @account
->>>>>>> 23c2f7f5d689b6b99f5536699064a4ae10763894
     end
 
     assert_redirected_to company_path(assigns(:account))
@@ -39,11 +36,8 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   test "should update company" do
-<<<<<<< HEAD
-    put :update, id: @account, account: { : @account. }
-=======
+
     put :update, id: @account, account:   @account
->>>>>>> 23c2f7f5d689b6b99f5536699064a4ae10763894
     assert_redirected_to company_path(assigns(:account))
   end
 

@@ -19,7 +19,7 @@ name "MyString"
   end
 
   factory :account do
-    org_name 'Nxb'
+    org_name 'NextBridge'
     country 'Pakistan'
     street_address_1 '2nd Street'
     street_address_2 '3rd Street'
@@ -37,7 +37,7 @@ name "MyString"
     currency_symbol '123'
     admin_first_name 'Umair'
     admin_last_name 'Munir'
-    admin_email 'umairmunir@gmail.com'
+    admin_email 'umair.munir@nxb.com.pk'
     admin_billing_rate_per_hour 2
     admin_user_name 'umairmunir'
     admin_password 'password'

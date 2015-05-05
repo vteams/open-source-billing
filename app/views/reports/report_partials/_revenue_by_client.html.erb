@@ -44,7 +44,7 @@
           <% unless @report.report_data.blank? %>
             <% @report.report_data.group_by{|data| data.organization_name}.values.each do |revenues| %>
               <tr>
-                <td class="align_left text-overflow-class" ><%= revenues.first.organization_name %></td>
+                <td class="align_left text-overflow-class" data-sort_val="<%= revenues.first.organization_name %>"><%= revenues.first.organization_name %></td>
                 <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
                   <td class="align_right" data-sort_val="<%= revenues.sum{|revenue| revenue["#{Date::MONTHNAMES[month]}"] } %>" >
                     <% revenues.each do |revenue| %>
