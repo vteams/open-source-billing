@@ -42,7 +42,7 @@
             <tr>
               <td class="align_left"><b>Total</b></td>
               <td></td><td></td><td></td>
-              <td class="align_right"><b><%= number_to_currency(@chart_total, unit: currency_is_off? ? "" : @chart_details.last.currency.unit) %></b></td>
+              <td class="align_right"><b><%= number_to_currency(@chart_total, unit: currency_is_off? ? "" : @chart_details.last.currency.try(:unit)) %></b></td>
             </tr>
             </tbody>
           </table>
