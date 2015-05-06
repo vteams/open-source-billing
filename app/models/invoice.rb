@@ -252,7 +252,7 @@ class Invoice < ActiveRecord::Base
     client = self.client
     client_credit = client.payments.first.payment_amount rescue 0
     client_credit += credit_pay.payment_amount
-    client.payments.first.update_attribute(:payment_amount, client_credit)
+    client.payments.first.update_attribute(:payment_amount, client_credit) if client.payments.present?
   end
 
   def partial_payments
