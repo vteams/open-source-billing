@@ -250,7 +250,7 @@ class Invoice < ActiveRecord::Base
     credit_pay.status = 'added'
     credit_pay.save
     client = self.client
-    client_credit = client.payments.first.payment_amount
+    client_credit = client.payments.first.try(:payment_amount)
     client_credit += credit_pay.payment_amount
     client.payments.first.update_attribute(:payment_amount, client_credit)
   end
