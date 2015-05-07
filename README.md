@@ -31,8 +31,8 @@ This is `alpha` release so there could be some bugs. You may contribute by repor
 Requirements
 ------------
 
-* Ruby 1.9.2
-* Ruby on Rails 3.2.11
+* Ruby 2.x
+* Ruby on Rails ~> 4.1.8
 
 Installation
 ------------
