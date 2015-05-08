@@ -126,13 +126,13 @@ class Client < ActiveRecord::Base
     client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
 
-    deleted_invoices_payments = Payment.where("payment_type = 'credit' AND status IS NULL AND invoice_id in (?)", client_invoice_ids).all
+    deleted_invoices_payments = Payment.where("payment_type = 'credit'  AND invoice_id in (?)", client_invoice_ids).all
     client_total_credit = deleted_invoices_payments.sum(:payment_amount)
 
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
     # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
 
-    client_payments = Payment.where("payment_method = 'credit' AND status IS NULL AND invoice_id in (?)", client_invoice_ids).all
+    client_payments = Payment.where("payment_method = 'credit'  AND invoice_id in (?)", client_invoice_ids).all
 
     client_debit = client_payments.sum(:payment_amount)
     # Total available credit of client
@@ -153,7 +153,7 @@ class Client < ActiveRecord::Base
   end
 
   def update_available_credit(available_credit)
-    payments.first.update_attributes({payment_amount: available_credit})
+    payments.first.update_attribute(:payment_amount, available_credit)
   end
 
   def currency_symbol

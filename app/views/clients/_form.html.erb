@@ -51,13 +51,14 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.clients.available_credit') %></div>
               <div class="medium_field">
+                <div id="client_credit"></div>
                 <% @readonly = is_client_credit_payments @client %>
                 <%#= text_field_tag :available_credit_test, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly %>
 
                 <% if @client.new_record? %>
                     <%= text_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
                 <% else %>
-                    <%= hidden_field_tag :available_credit, @client.available_credit %>
+                    <%#= hidden_field_tag :available_credit, @client.available_credit %>
                     <%= text_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
                 <% end %>
 

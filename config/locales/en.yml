@@ -400,7 +400,7 @@ en:
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"
-      cc_prompt: "Please enter you credit card details to pay invoice"
+      cc_prompt: "Please enter your credit card details to pay invoice"
       card_holder_name: "Card Holder Name"
       cc_number: "CC Number"
       expiry_date: "Expiry Date"

@@ -7,7 +7,7 @@
             <h1><%= t('views.credit_card.pay_by_credit_card') %></h1>
 
             <p><%= t('views.credit_card.cc_prompt') %> (<%= @invoice.invoice_number %>)
-              of <%= number_to_currency(@invoice.unpaid_amount) %> <span>(<%= t('currency_code') %>)</span></p>
+              of <%= number_to_currency(@invoice.unpaid_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></p>
 
             <div class="cross_btn">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">

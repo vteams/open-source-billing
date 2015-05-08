@@ -106,7 +106,9 @@ class ClientsController < ApplicationController
     associate_entity(params, @client)
 
     #add/update available credit
+    if params[:available_credit].present?
     @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], get_company_id()) : @client.update_available_credit(params[:available_credit])
+    end
 
     respond_to do |format|
       if @client.update_attributes(client_params)

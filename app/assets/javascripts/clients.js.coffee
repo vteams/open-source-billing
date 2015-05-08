@@ -72,9 +72,10 @@ jQuery ->
     hideQtip(jQuery(this))
 
   jQuery('.edit_client .field_row .medium_field #calculated_credit').change ->
-    available_credit = jQuery('.edit_client .field_row .medium_field #available_credit')
     client_credit = jQuery(this)
-    available_credit.val(client_credit.val())
+    field = "<input id='available_credit' name='available_credit' type='hidden' value='#{client_credit.val()}'>"
+    jQuery('.edit_client .field_row .medium_field #client_credit').html(field)
+
 
 
   # show details when client name is clicked.
