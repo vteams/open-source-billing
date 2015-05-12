@@ -151,7 +151,7 @@ class RecurringProfile < ActiveRecord::Base
   end
 
   def self.recover_deleted ids
-    multiple(ids).only_deleted.each { |profile| profile.restore; profile.unarchive }
+    multiple(ids).only_deleted.each { |profile| profile.restore; profile.unarchive;  profile.recurring_profile_line_items.only_deleted.map(&:restore); }
   end
 
   def recurring_unscoped_client

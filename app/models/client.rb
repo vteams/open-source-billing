@@ -88,7 +88,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.recover_deleted ids
-    multiple(ids).only_deleted.each {|client| client.restore; client.unarchive}
+    multiple(ids).only_deleted.each {|client| client.restore; client.unarchive; client.client_contacts.only_deleted.map(&:restore);}
   end
 
   def self.filter(params)
