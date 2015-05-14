@@ -78,7 +78,7 @@ module Services
     end
 
     def send_invoices
-      @invoices.map { |invoice| invoice.update_attribute(:status, 'sent') if send_invoice_to_client(invoice) }
+      @invoices.map { |invoice| invoice.update_attribute(:status, 'sent') if (send_invoice_to_client(invoice) and (invoice.status != 'paid' and invoice.status != 'partial')) }
       {action: 'sent', invoices: get_invoices('unarchived')}
     end
 
