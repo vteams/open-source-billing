@@ -56,11 +56,11 @@
                     display: block;
                     color: #7b7b7b;
                     &.less{
-                    background: url(/assets/less.png) no-repeat left;
+                    background: asset-url('less.png') no-repeat left;
                     padding: 0 9px 0 14px;
                     }
                     &.more{
-                        background: url(/assets/more.png) no-repeat right;
+                        background: asset-url('more.png') no-repeat right;
                         padding: 0 14px 0 0;
                     }
                 }

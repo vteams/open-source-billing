@@ -76,7 +76,7 @@ html {
 }
 
 body {
-  background: url(/assets/body-bg.png) repeat;
+  background: asset-url('body-bg.png') repeat;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   color: #464646;
@@ -190,13 +190,13 @@ h4 {
 
 .white_container {
   width: 100%;
-  background: url(/assets/glow_bg.png) no-repeat top left #ffffff;
+  background: asset-url('glow_bg.png') no-repeat top left #ffffff;
   overflow: hidden;
 }
 
 .white_container {
   width: 100%;
-  background: url(/assets/glow_bg.png) no-repeat top left #ffffff;
+  background: asset-url('glow_bg.png') no-repeat top left #ffffff;
   overflow: hidden;
 }
 
@@ -225,13 +225,13 @@ h4 {
       color: #464646;
       text-decoration: none;
       > .caret{
-        background: url("/assets/top_arrow.png") no-repeat 0px -4px;
+        background: asset-url('top_arrow.png') no-repeat 0px -4px;
       }
     }
   }
   .dropdown_sep{
     float: right;
-    background: url("/assets/grid_control_sep2.png") no-repeat 0px -15px;
+    background: asset-url('grid_control_sep2.png') no-repeat 0px -15px;
     display: block;
     width: 1px;
     height: 15px;
@@ -271,7 +271,7 @@ h4 {
 }
 .nav_container {
   min-height: 86px;
-  background: url(/assets/nav_bg.png) no-repeat top center;
+  background: asset-url('nav_bg.png') no-repeat top center;
 }
 
 #nav {
@@ -312,7 +312,7 @@ h4 {
 /*#nav .select li:hover a,*/
 #nav .select li a.active {
   display: block;
-  background: url(/assets/nav_hover.png) no-repeat center;
+  background: asset-url('nav_hover.png') no-repeat center;
   height: 43px;
   text-decoration: none;
 }
@@ -322,7 +322,7 @@ h4 {
   padding-left: 20px;
   list-style: none;
   width: 880px;
-  background: url(/assets/sub_bg.png) repeat-x bottom;
+  background: asset-url('sub_bg.png') repeat-x bottom;
 }
 #nav .select li:hover .sub, #nav .select li a.active + .sub {
   height: 43px;
@@ -349,13 +349,13 @@ h4 {
   /*background: url(/assets/sub_hover.png) no-repeat bottom center;*/
 }
 #nav .select li .sub li a.active {
-  background: url(/assets/sub_hover.png) no-repeat bottom center;
+  background: asset-url('sub_hover.png') no-repeat bottom center;
 }
 #nav .select li .sub li.secondary a.active {
-  background: url(/assets/sub_secondary.png) no-repeat bottom center;
+  background: asset-url('sub_secondary.png') no-repeat bottom center;
 }
 #nav .select li .sub li.secondary_02 a.active {
-  background: url(/assets/sub_secondary_02.png) no-repeat bottom center;
+  background: asset-url('sub_secondary_02.png') no-repeat bottom center;
 }
 
 
@@ -521,7 +521,7 @@ h4 {
 }
 
 .grid_control_sep {
-  background: url(/assets/grid_control_sep.png) no-repeat right;
+  background: asset-url('grid_control_sep.png') no-repeat right;
   margin: 0 13px 0 0;
   padding: 0 2px 0 0;
 }
@@ -745,7 +745,7 @@ tfoot tr:hover{
 }
 
 .label_field span {
-  background: url(/assets/sterik.png) no-repeat right top;
+  background: asset-url('sterik.png') no-repeat right top;
   padding-right: 13px;
 }
 
@@ -853,12 +853,12 @@ input[disabled]{
 }
 
 .options_content_row a.remove {
-  background: url(/assets/add_remove.png) no-repeat;
+  background: asset-url('add_remove.png') no-repeat;
   color: #dd0c1d;
 }
 
 .options_content_row a.add {
-  background: url(/assets/add_remove.png) no-repeat 0px -13px;
+  background: asset-url('add_remove.png') no-repeat 0px -13px;
   color: #197b30;
   margin: 0px;
 }
@@ -922,12 +922,12 @@ input[disabled]{
 }
 
 .privacy_policy {
-  background: url(/assets/footer_sep.png) no-repeat 0px 6px;
+  background: asset-url('footer_sep.png') no-repeat 0px 6px;
   padding: 0 9px 0 11px;
 }
 
 .contact_us {
-  background: url(/assets/footer_sep.png) no-repeat left;
+  background: asset-url('footer_sep.png') no-repeat left;
   padding: 0 0 0 11px;
 }
 
@@ -1017,23 +1017,23 @@ table.table_listing, table.report-data-table {
         }
       }
       .header {
-        background-image: url(/assets/bg.png);
+        background-image: asset-url('bg.png');
         background-repeat: no-repeat;
         background-position: center right;
         cursor: pointer;
         padding: 0px 5px 0 10px;
         &.sortup{
-          background-image: url(/assets/sorting_up.png);
+          background-image: asset-url('sorting_up.png');
         }
         &.sortdown{
-          background-image: url(/assets/sorting_dn.png);
+          background-image: asset-url('sorting_dn.png');
         }
       }
       .headerSortUp {
-        background-image: url(/assets/asc.png);
+        background-image: asset-url('asc.png');
       }
       .headerSortDown {
-        background-image: url(/assets/desc.png);
+        background-image: asset-url('desc.png');
       }
     }
     a.sortable{
@@ -1112,17 +1112,17 @@ table.table_listing, table.report-data-table {
   margin-top: 12px;
   background-color: none;
   &.alert-success {
-    background: url(/assets/success.png) no-repeat 19px 19px;
+    background: asset-url('success.png') no-repeat 19px 19px;
     border-color: #97c93c;
     color: #85BD1E;
   }
   &.alert-warning {
-    background: url(/assets/warning.png) no-repeat 19px 19px;
+    background: asset-url('warning.png') no-repeat 19px 19px;
     border-color: #F57300;
     color: #F57300;
   }
   &.alert-error {
-    background: url(/assets/invalid.png) no-repeat 19px 19px;
+    background: asset-url('invalid.png') no-repeat 19px 19px;
     border-color: #d73442;
     span {
       color: #CD0011 !important;
@@ -1161,7 +1161,7 @@ table.table_listing, table.report-data-table {
     width: 100%;
     li {
       margin: 8px 0 0 0;
-      background: url(/assets/intimation_bullet.png) no-repeat 0px 6px;
+      background: asset-url('intimation_bullet.png') no-repeat 0px 6px;
       padding-left: 12px;
     }
   }
@@ -1247,7 +1247,7 @@ select.discount_select
   border-left: none !important;
   border-right: none !important;
   border-top: none !important;
-  background:  url(/assets/top_arrow.png) no-repeat;
+  background:  asset-url('top_arrow.png') no-repeat;
   width: 8px;
   height: 4px;
 }
@@ -1301,11 +1301,11 @@ select.discount_select
   }
 }
 .sortup{
-  background: url(/assets/sorting_up.png);
+  background: asset-url('sorting_up.png');
   background-position: right center;
 }
 .sortdown{
-  background: url(/assets/sorting_dn.png);
+  background: asset-url('sorting_dn.png');
 }
 
 .company_filter {

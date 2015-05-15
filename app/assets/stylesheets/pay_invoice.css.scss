@@ -23,25 +23,25 @@
     margin: -1px 0 0 -1px;
   }
   .draft{
-      background: url(/assets/draft_pmt.png) no-repeat;
+      background: asset-url('draft_pmt.png') no-repeat;
   }
   .sent{
-      background: url(/assets/sent_pmt.png) no-repeat;
+      background: asset-url('sent_pmt.png') no-repeat;
   }
   .draft-partial{
-      background: url(/assets/draft_partial_pmt.png) no-repeat;
+      background: asset-url('draft_partial_pmt.png') no-repeat;
   }
   .partial{
-      background: url(/assets/partial_pmt.png) no-repeat;
+      background: asset-url('partial_pmt.png') no-repeat;
   }
   .paid{
-      background: url(/assets/paid_pmt.png) no-repeat;
+      background: asset-url('paid_pmt.png') no-repeat;
   }
   .disputed{
-      background: url(/assets/disputed_pmt.png) no-repeat;
+      background: asset-url('disputed_pmt.png') no-repeat;
   }
   .viewed{
-    background: url(/assets/viewed_pmt.png) no-repeat;
+    background: asset-url('viewed_pmt.png') no-repeat;
   }
   .payment_summary {
     float: left;

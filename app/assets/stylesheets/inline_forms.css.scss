@@ -99,22 +99,22 @@
         height:100px;
     }
     .sent_green{
-        background: url(/assets/sent_green.png) no-repeat;
+        background: asset-url('sent_green.png') no-repeat;
     }
     .sent_blue{
-        background: url(/assets/sent_blue.png) no-repeat;
+        background: asset-url('sent_blue.png') no-repeat;
     }
     .draft{
-        background: url(/assets/draft.png) no-repeat;
+        background: asset-url('draft.png') no-repeat;
     }
     .disputed{
-        background: url(/assets/disputed.png) no-repeat;
+        background: asset-url('disputed.png') no-repeat;
     }
     .draft_partial{
-        background: url(/assets/draft_partial.png) no-repeat;
+        background: asset-url('draft_partial.png') no-repeat;
     }
     .partial{
-        background: url(/assets/partial.png) no-repeat;
+        background: asset-url('partial.png') no-repeat;
     }
     .payment_invoice_data{
         float: left;

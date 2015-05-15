@@ -111,7 +111,7 @@
 table.invoice_grid_fields {
   .action_links {
     .remove_item {
-      background: url("/assets/del-move-icons.png") no-repeat scroll 0 0 transparent;
+      background: asset-url('del-move-icons.png') no-repeat scroll 0 0 transparent;
       float: left;
       height: 10px;
       width: 7px;
@@ -120,7 +120,7 @@ table.invoice_grid_fields {
       background-position: 0 -12px;
     }
     .sort_icon {
-      background: url("/assets/del-move-icons.png") no-repeat scroll -7px 0 transparent;
+      background: asset-url('del-move-icons.png') no-repeat scroll -7px 0 transparent;
       float: left;
       height: 12px;
       margin-left: 4px;

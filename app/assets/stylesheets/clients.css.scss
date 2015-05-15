@@ -93,20 +93,20 @@
   width: 100%;
   .top_corner{
     float: left;
-    background: url(/assets/top_corner.png) no-repeat;
+    background: asset-url('top_corner.png') no-repeat;
     width: 22px;
     height: 12px;
     margin: -1px 0 0 41px;
   }
   .cross_btn{
     float: right;
-    background: url(/assets/btn_x_client.png) no-repeat;
+    background: asset-url('btn_x_client.png') no-repeat;
     width: 7px;
     height: 7px;
     margin: 11px 10px 0 0;
     cursor: pointer;
     &:hover{
-      background: url(/assets/btn_x_client.png) no-repeat 0px -7px;
+      background: asset-url('btn_x_client.png') no-repeat 0px -7px;
     }
   }
 }

@@ -15,7 +15,7 @@
   }
   .label_field{
     span{
-    background: url("/assets/sterik_small.png") no-repeat scroll right top transparent;
+    background: asset-url('sterik_small.png') no-repeat scroll right top transparent;
     padding-right: 8px;
     }
     &.left {

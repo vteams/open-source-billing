@@ -5,7 +5,7 @@
     padding: 23px 0 0;
   }
   .links_dd{
-    background: url(/assets/links_dd.png) no-repeat right;
+    background: asset-url('links_dd.png') no-repeat right;
     padding: 0 12px 0 0;
   }
   .btn_large.big{
@@ -36,25 +36,25 @@
     *margin: -1px 0 0 -839px;
   }
   .draft{
-    background: url(/assets/draft.png) no-repeat;
+    background: asset-url('draft.png') no-repeat;
   }
   .sent{
-    background: url(/assets/sent.png) no-repeat;
+    background: asset-url('sent.png') no-repeat;
   }
   .draft-partial{
-    background: url(/assets/draft_partial.png) no-repeat;
+    background: asset-url('draft_partial.png') no-repeat;
   }
   .partial{
-    background: url(/assets/partial.png) no-repeat;
+    background: asset-url('partial.png') no-repeat;
   }
   .paid{
-    background: url(/assets/paid.png) no-repeat;
+    background: asset-url('paid.png') no-repeat;
   }
   .disputed{
-    background: url(/assets/disputed.png) no-repeat;
+    background: asset-url('disputed.png') no-repeat;
   }
   .viewed{
-    background: url(/assets/viewed.png) no-repeat;
+    background: asset-url('viewed.png') no-repeat;
   }
   .invoice_preview_content{
     float: left;

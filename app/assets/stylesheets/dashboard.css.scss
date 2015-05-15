@@ -361,17 +361,17 @@
     width: 31px;
     height: 27px;
     margin: 4px 0 0 0;
-    background: url(/assets/btn_close_bg.png) no-repeat;
+    background: asset-url('btn_close_bg.png') no-repeat;
     z-index: 9999;
   }
   .popup_close{
     width: 7px;
     height: 7px;
-    background: url(/assets/btn_x.png) no-repeat;
+    background: asset-url('btn_x.png') no-repeat;
     cursor: pointer;
     margin: 5px 0 0 15px;
     &:hover{
-      background: url(/assets/btn_x.png) no-repeat 0px -7px;
+      background: asset-url('btn_x.png') no-repeat 0px -7px;
     }
   }
 }
