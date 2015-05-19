@@ -108,6 +108,8 @@ jQuery ->
       flag = true
       if jQuery(this).attr("value") == "credit"
          flag = false
+         if jQuery('.alert-success').length > 0
+           jQuery('.alert-success').hide()
          jQuery(".alert.alert-error").show().find('span').html("You cannot edit credit payment")
       flag
   window.bind_edit_payment_links()
