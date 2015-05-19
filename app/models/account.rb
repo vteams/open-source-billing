@@ -31,8 +31,25 @@ class Account < ActiveRecord::Base
   # callbacks
   before_save :change_currency_symbol
 
+  after_create do
+    if defined? MultiTenant and MultiTenant::ENABLED
+      Thread.current[:current_account] = self.id
+      MultiTenant::AccountEmailTemplate.generate(self.id)
+
+      CompanyEmailTemplate.where(parent_type: 'Account').each{|cet| cet.update_column(:parent_id, self.id) }
+    end
+  end
+
   def change_currency_symbol
     self.currency_symbol = CURRENCY_SYMBOL[self.currency_code]
+  end
+
+  def url
+    "#{OSB::CONFIG::APP_PROTOCOL}://#{self.subdomain}.#{OSB::CONFIG::APP_HOST}"
+  end
+
+  def self.url(subdomain=nil)
+    subdomain.present? ? "#{OSB::CONFIG::APP_PROTOCOL}://#{subdomain}.#{OSB::CONFIG::APP_HOST}" : "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}"
   end
 
 end

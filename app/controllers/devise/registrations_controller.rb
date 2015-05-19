@@ -79,7 +79,8 @@ class Devise::RegistrationsController < DeviseController
 
       # After password is updated its redirected to change password screen
       #respond_with resource, :location => after_update_path_for(resource)
-      respond_with resource, :location => edit_user_registration_path(resource)
+      #respond_with resource, :location => edit_user_registration_path(resource)
+      respond_with resource, :location => dashboard_path
     else
       clean_up_passwords resource
       respond_with resource

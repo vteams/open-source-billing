@@ -34,7 +34,7 @@ class SubUsersController < ApplicationController
         redirect_to(edit_sub_user_url(sub_user), notice: 'User has been saved successfully')
         return
       else
-        format.html { render action: 'new' }
+        format.html { render action: 'new', alert: 'Failed to save user. Make sure you have entered correct record' }
       end
     end
   end

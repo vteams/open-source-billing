@@ -14,7 +14,7 @@ class EmailTemplate < ActiveRecord::Base
 
     # remove records from default, which have a custom templates
     custom_templates.each do |ct|
-      default_templates.delete_if { |dt| dt["template_type"] == ct["template_type"] }
+      default_templates.to_a.delete_if { |dt| dt["template_type"] == ct["template_type"] }
     end
 
     all_templates = default_templates + custom_templates
