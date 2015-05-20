@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/akshayrawat/dj_mon
+  revision: b360a3a9ba225ff58b10bfa1cad5c8b4dfcd79d6
+  specs:
+    dj_mon (1.1.0)
+      haml (>= 3.1)
+      rails (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -152,6 +160,8 @@ GEM
       grape
       i18n
       rabl
+      tilt
+    haml (4.0.6)
       tilt
     hashie (3.3.2)
     hashie_rails (0.0.1)
@@ -391,6 +401,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise (= 3.2.3)
   devise-encryptable
+  dj_mon!
   doorkeeper (~> 1.4.0)
   factory_girl (~> 4.5.0)
   factory_girl_rails (~> 4.5.0)

@@ -138,6 +138,7 @@ class InvoicesController < ApplicationController
         end
       elsif @invoice.update_attributes(invoice_params)
         @invoice.update_line_item_taxes()
+        @invoice.notify(@invoice.client, @invoice.id).deliver
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
         return

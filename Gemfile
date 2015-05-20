@@ -75,6 +75,7 @@ group :test do
 end
 
 gem 'money', '~>  6.5.0'
+gem 'dj_mon', git: 'https://github.com/akshayrawat/dj_mon'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
