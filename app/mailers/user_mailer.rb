@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
         'user_creator'=> current_user.user_name || current_user.email,
         'user_email'=> (sub_user.email rescue 'ERROR'),
         'user_password'=> (sub_user.password rescue 'ERROR'),
-        'app_url' => Account.url,
+        'app_url' =>  Account.url(current_user.try(:account_id)),
         'company_name' => current_user.accounts.first.org_name || '',
         'company_signature' => (current_user.accounts.first.org_name  || ''),
         'company_contact' => (current_user.accounts.first.admin_first_name  rescue 'ERROR'),

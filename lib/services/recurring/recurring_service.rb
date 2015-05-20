@@ -20,7 +20,7 @@
 #
 module Services
   class RecurringService
-include DateFormats
+  include DateFormats
     def initialize(options)
       @profile = options[:profile]
       @current_user = options[:user]
@@ -96,6 +96,7 @@ include DateFormats
       profile.recurring_profile_line_items.each do |line_item|
         ::InvoiceLineItem.create({
                                      invoice_id: invoice_id,
+                                     item_name: line_item.item_name,
                                      item_id: line_item.item_id,
                                      item_description: line_item.item_description,
                                      item_unit_cost: line_item.item_unit_cost,

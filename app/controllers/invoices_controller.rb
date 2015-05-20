@@ -19,7 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  before_filter :authenticate_user!, :set_per_page_session, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card]
+  before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice]
+  before_filter :set_per_page_session
   protect_from_forgery :except => [:paypal_payments]
   helper_method :sort_column, :sort_direction
   include DateFormats
@@ -212,7 +213,9 @@ class InvoicesController < ApplicationController
   end
 
   def dispute_invoice
-    @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], current_user)
+    invoice = Invoice.find params[:invoice_id]
+    user = invoice.creator
+    @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], user)
     org_name = current_user.accounts.first.org_name rescue or_name = ''
     @message = dispute_invoice_message(org_name)
 

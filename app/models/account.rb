@@ -45,12 +45,16 @@ class Account < ActiveRecord::Base
   end
 
   def url
-    "#{OSB::CONFIG::APP_PROTOCOL}://#{self.subdomain}.#{OSB::CONFIG::APP_HOST}"
+    self.try(:subdomain).present? ? "#{OSB::CONFIG::APP_PROTOCOL}://#{self.subdomain}.#{OSB::CONFIG::APP_HOST}" : "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}"
   end
 
-  def self.url
-    subdomain = Thread.current[:subdomain]
-    subdomain.present? ? "#{OSB::CONFIG::APP_PROTOCOL}://#{subdomain}.#{OSB::CONFIG::APP_HOST}" : "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}"
+  def self.url(account_id = nil)
+    if account_id.present?
+      account = Account.find account_id
+      account.url
+    else
+      "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}"
+    end
   end
 
 end

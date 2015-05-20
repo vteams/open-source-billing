@@ -40,7 +40,7 @@ module DateFormats
   end
 
   def custom_date_format(date)
-    date = date.class == Date ? date.to_date.to_s : date
+    date = (date.class == Date or date.class == ActiveSupport::TimeWithZone) ? date.to_date.to_s : date
     user_date_format = date_format
     day = 1
     month = 2
