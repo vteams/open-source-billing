@@ -48,6 +48,7 @@ Clone the repository and run
 
 	# precompile assets
 	RAILS_ENV=production bundle exec rake assets:precompile
+	RAILS_ENV=production bundle exec bin/delayed_job start
 
 Configurations
 --------------

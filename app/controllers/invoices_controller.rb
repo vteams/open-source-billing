@@ -130,6 +130,7 @@ class InvoicesController < ApplicationController
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
+          @invoice.notify(current_user, @invoice.id) if params[:commit].present?
           redirect_to(edit_invoice_url(@invoice), notice: 'Your Invoice has been updated successfully.')
           return
         else
@@ -138,7 +139,7 @@ class InvoicesController < ApplicationController
         end
       elsif @invoice.update_attributes(invoice_params)
         @invoice.update_line_item_taxes()
-        @invoice.notify(@invoice.client, @invoice.id).deliver
+        @invoice.notify(current_user, @invoice.id) if params[:commit].present?
         format.json { head :no_content }
         redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
         return
