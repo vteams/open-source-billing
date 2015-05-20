@@ -176,10 +176,6 @@ Osb::Application.routes.draw do
 
     resources :sent_emails
 
-    if defined? MultiTenant and MultiTenant::ENABLED
-      mount MultiTenant::Engine => "/welcome"
-    end
-
     # The priority is based upon order of creation:
     # first created -> highest priority.
 

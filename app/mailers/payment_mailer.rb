@@ -60,7 +60,7 @@ class PaymentMailer < ActionMailer::Base
         'company_name' => (invoice.company.company_name  rescue 'ERROR'),
         'invoice_total' => (invoice.invoice_total.to_s  rescue 'ERROR'),
         'company_signature' => (invoice.company.company_name  rescue 'ERROR'),
-        'invoice_url' => "#{Account.url(Thread.current[:current_subdomain])}/invoices/preview?inv_id=#{invoice.encrypted_id}"
+        'invoice_url' => "#{Account.url}/invoices/preview?inv_id=#{invoice.encrypted_id}"
     }
     template.body = template.body.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
