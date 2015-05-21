@@ -93,6 +93,7 @@ module Services
 
     # create invoice line items from recurring profile line items
     def self.create_invoice_line_items(profile, invoice_id)
+      invoice = ::Invoice.find invoice_id
       profile.recurring_profile_line_items.each do |line_item|
         ::InvoiceLineItem.create({
                                      invoice_id: invoice_id,

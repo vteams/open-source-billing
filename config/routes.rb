@@ -43,7 +43,8 @@ Osb::Application.routes.draw do
 
   get "dashboard" => "dashboard#index"
   post 'dashboard/chart_details' => "dashboard#chart_details"
-  resources :payments do
+  post '/invoices/send_note_only' => 'invoices#send_note_only'
+    resources :payments do
     collection do
       get 'enter_payment'
       put 'update_individual_payment'
