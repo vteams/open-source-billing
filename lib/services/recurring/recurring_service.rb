@@ -71,7 +71,9 @@ module Services
                                      invoice_total: profile.invoice_total,
                                      payment_terms_id: profile.payment_terms_id,
                                      company_id: profile.company_id,
-                                     due_date: due_date
+                                     due_date: due_date,
+                                     created_by: profile.created_by,
+                                     updated_by: profile.updated_by
                                  })
 
       # create invoice items from recurring profile line items
