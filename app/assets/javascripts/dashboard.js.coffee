@@ -108,3 +108,5 @@ jQuery ->
   jQuery('#chart_details .popup_close').click ->
     jQuery("#chart_details").hide()
 
+  $('#cc_popup').mouseleave ->
+    $('.qtip').hide()
