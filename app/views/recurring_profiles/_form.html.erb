@@ -29,7 +29,7 @@
                 </ul>
               </div>
               <div class="small_field">
-                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? t('views.common.infinite') :  @recurring_profile.occurrences %>
+                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? 1 :  @recurring_profile.occurrences, :required => true %>
                 <span id="how_many_symbol"></span>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.how_many') %></li>

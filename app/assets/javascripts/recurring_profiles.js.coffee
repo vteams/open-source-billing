@@ -186,7 +186,7 @@ jQuery ->
     click: ->
       @value = '' if @value is 'infinite'
     blur: ->
-      @value = 'infinite' if @value is ''
+      @value = '1' if @value is ''
 
   # Don't allow paste and right click in occurrences field
   jQuery("#recurring_profile_occurrences").bind "contextmenu", (e) ->

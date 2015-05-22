@@ -42,7 +42,14 @@ module Reporting
 
       def get_report_data
         # Report columns: Client, 0_30, 31_60, 61_90, Over_90
-        aged_invoices = Invoice.find_by_sql(<<-eos
+        condition = <<-SQL
+              (`invoices`.`deleted_at` IS NULL)
+              AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{@report_criteria.to_date}')
+              AND (invoices.`status` != "paid")
+              #{@report_criteria.client_id == 0 ? "" : "AND invoices.client_id = #{@report_criteria.client_id}"}
+        SQL
+
+        aged_invoices = Invoice.find_by_sql(<<-SQL
           SELECT aged.client_name,aged.currency_id,aged.currency_code,
             SUM(CASE WHEN aged.age BETWEEN 0 AND 30 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS zero_to_thirty,
             SUM(CASE WHEN aged.age BETWEEN 31 AND 60 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS thirty_one_to_sixty,
@@ -64,14 +71,11 @@ module Reporting
               INNER JOIN `clients` ON `clients`.`id` = `invoices`.`client_id`
               LEFT JOIN `payments` ON `invoices`.`id` = `payments`.`invoice_id` AND (payments.payment_date <= '#{@report_criteria.to_date}') AND (`payments`.`deleted_at` IS NULL)
             WHERE
-              (`invoices`.`deleted_at` IS NULL)
-              AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{@report_criteria.to_date}')
-              AND (invoices.`status` != "paid")
-              #{@report_criteria.client_id == 0 ? "" : "AND invoices.client_id = #{@report_criteria.client_id}"}
+              #{condition}
             GROUP BY clients.organization_name,  invoices.invoice_total, invoices.`status`, invoices.invoice_number
           ) AS aged
           GROUP BY aged.client_name,aged.currency_id
-        eos
+        SQL
         )
         aged_invoices
       end
