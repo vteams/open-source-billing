@@ -35,11 +35,11 @@ class PaypalService
 
   def process_payment
     return OSB::Paypal::TransStatus::ALREADY_PAID if @invoice.paid?
-
+    gateway = Account.payment_gateway
     if @credit_card.valid?
-      response = OSB::Paypal::gateway.authorize(@amount, @credit_card, @purchase_options)
+      response = gateway.authorize(@amount, @credit_card, @purchase_options)
       if response.success?
-        OSB::Paypal::gateway.capture(@amount, response.authorization)
+        gateway.capture(@amount, response.authorization)
         add_payment_on_success
         {status: OSB::Paypal::TransStatus::SUCCESS, amount_in_cents: @amount, message: "Invoice has been paid successfully"}
       else

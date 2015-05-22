@@ -228,7 +228,7 @@ class InvoicesController < ApplicationController
 
   def paypal_payments
     # send a post request to paypal to verify payment data
-    response = RestClient.post("https://www.sandbox.paypal.com/cgi-bin/webscr", params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
+    response = RestClient.post(OSB::CONFIG::PAYPAL_URL, params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
     invoice = Invoice.find(invoice_params)
     # if status is verified make an entry in payments and update the status on invoice
     if response == "VERIFIED"

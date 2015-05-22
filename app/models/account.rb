@@ -57,4 +57,12 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def self.payment_gateway
+    ActiveMerchant::Billing::PaypalGateway.new(
+        :login => OSB::CONFIG::PAYPAL_LOGIN,
+        :password => OSB::CONFIG::PAYPAL_PASSWORD,
+        :signature => OSB::CONFIG::PAYPAL_SIGNATURE
+    )
+  end
+
 end
