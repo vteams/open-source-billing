@@ -32,13 +32,13 @@ class Devise::RegistrationsController < DeviseController
   def create
     build_resource(sign_up_params)
     resource.skip_confirmation!
-
+    account = Account.find_or_create_by(org_name: params[:user][:account])
     # create a default account and company
-    resource.accounts.build({org_name: params[:user][:account]})
-    resource.current_account.companies.build({company_name: params[:user][:account] })
-
     if resource.save
-
+      resource.accounts << account
+      if resource.current_account.companies.empty?
+        resource.current_account.companies.create({company_name: params[:user][:account] })
+      end
       #update email templates for first user
       CompanyEmailTemplate.update_all(parent_id: resource.id) if User.count == 1
 
