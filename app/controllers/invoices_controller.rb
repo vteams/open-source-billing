@@ -107,7 +107,7 @@ class InvoicesController < ApplicationController
     @invoice.create_line_item_taxes()
     respond_to do |format|
       if @invoice.save
-        @invoice.notify(current_user, @invoice.id)
+        @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
         new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
         redirect_to(edit_invoice_url(@invoice), :notice => new_invoice_message)
         return
@@ -126,7 +126,8 @@ class InvoicesController < ApplicationController
   def update
     @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
-    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client]) unless params[:response_to_client].blank?
+    notify = params[:commit].present? ? true : false
+    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], notify) unless params[:response_to_client].blank?
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)

@@ -263,9 +263,9 @@ class Invoice < ActiveRecord::Base
     OSB::Paypal::URL + values.to_query
   end
 
-  def update_dispute_invoice(current_user, id, response_to_client)
+  def update_dispute_invoice(current_user, id, response_to_client, notify = nil)
     self.update_attribute('status', 'sent')
-    self.notify(current_user, id)
+    self.notify(current_user, id) if notify
     self.sent_emails.create({
                                 :content => response_to_client,
                                 :sender => current_user.email, #User email

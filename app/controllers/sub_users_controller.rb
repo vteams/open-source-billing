@@ -72,7 +72,6 @@ class SubUsersController < ApplicationController
   end
 
   def user_settings
-
   end
 
   private
