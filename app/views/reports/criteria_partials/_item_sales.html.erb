@@ -18,7 +18,7 @@
               <p><%= t('views.common.item') %></p>
             </div>
             <div class="report_select">
-              <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + Item.all, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item chzn-select"} %>
+              <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + get_report_items, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item chzn-select"} %>
             </div>
             <div class="control_name">
               <p><%= t('views.invoices.invoice_status') %></p>

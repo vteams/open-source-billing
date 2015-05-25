@@ -13,7 +13,7 @@
               <p><%= t('views.clients.clients') %></p>
             </div>
             <div class="client_select">
-              <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name =>t("views.common.all")})] + Client.all, :id, :organization_name, {:prompt => "All"}, {:class => "client chzn-select"} %>
+              <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name =>t("views.common.all")})] + get_report_clients, :id, :organization_name, {:prompt => "All"}, {:class => "client chzn-select"} %>
             </div>
           </div>
           <div class="report_update">

@@ -3,6 +3,7 @@ class Company < ActiveRecord::Base
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
   mount_uploader :logo, ImageUploader
+  skip_callback :commit, :after, :remove_logo!
 
   has_many :company_entities, :as => :parent
   has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'

@@ -204,6 +204,16 @@ module ApplicationHelper
     end
   end
 
+  def get_report_clients
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    Company.find(company_id).clients
+  end
+
+  def get_report_items
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    Company.find(company_id).items
+  end
+
   def get_user_current_company
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     Company.find(company_id)

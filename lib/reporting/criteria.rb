@@ -26,7 +26,7 @@ module Reporting
     attr_accessor :from_date, :to_date, :client_id, :payment_method
 
     # attributes for *Revenue by Clients* report
-    attr_accessor :year, :from_month, :to_month, :quarter
+    attr_accessor :year, :from_month, :to_month, :quarter, :company_id
 
     # attributes for *Item sales* report
     attr_accessor :item_id, :invoice_status
@@ -38,6 +38,7 @@ module Reporting
       @from_date = (options[:from_date] || 1.month.ago).to_date # default for one month back from today
       @to_date = (options[:to_date] || Date.today).to_date # default to today
       @client_id = (options[:client_id] || 0).to_i # default to all i.e. 0
+      @company_id = (options[:current_company] || 0).to_i # default to all i.e. 0
       @payment_method = (options[:payment_method] || "") # default to all i.e. ""
       @item_id = (options[:item_id] || 0).to_i # default for all items i.e 0
       @invoice_status = (options[:invoice_status] || "") # default for all status i.e ""

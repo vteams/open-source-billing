@@ -54,6 +54,7 @@ class ReportsController < ApplicationController
   # AJAX request to fetch report data after
   # reports/data/:report_name
   def reports_data
+    params[:criteria].merge!(current_company: current_user.current_company.to_s)
     @report = get_report(params)
 
     respond_to do |format|

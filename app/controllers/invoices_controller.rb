@@ -180,6 +180,7 @@ class InvoicesController < ApplicationController
   def bulk_actions
     result = Services::InvoiceService.perform_bulk_action(params.merge({current_user: current_user}))
     @invoices = filter_by_company(result[:invoices]).order("#{sort_column} #{sort_direction}")
+    @invoice_has_deleted_clients = invoice_has_deleted_clients?(@invoices)
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
     @action = result[:action]
     @invoices_with_payments = result[:invoices_with_payments]
@@ -260,6 +261,16 @@ class InvoicesController < ApplicationController
 
 
   private
+
+  def invoice_has_deleted_clients?(invoices)
+    invoice_with_deleted_clients = []
+    invoices.each do |invoice|
+      if invoice.unscoped_client.deleted_at.present?
+        invoice_with_deleted_clients << invoice.invoice_number
+      end
+    end
+    invoice_with_deleted_clients
+  end
 
   def get_intimation_message(action_key, invoice_ids)
     helper_methods = {archive: 'invoices_archived', destroy: 'invoices_deleted'}

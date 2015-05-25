@@ -17,7 +17,7 @@
             </div>
             <div class="client_select">
               <%#= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => "All"})] + Item.all, :id, :item_name, {:prompt => "All"}, {:class => "item chzn-select"} %>
-              <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + Client.all, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client chzn-select"} %>
+              <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client chzn-select"} %>
             </div>
             <div class="control_name">
               <p><%= t('views.common.type') %></p>

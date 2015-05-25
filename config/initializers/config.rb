@@ -4,9 +4,9 @@ module OSB
 
     ACTIVEMERCHANT_BILLING_MODE ||= :test
     PAYPAL_URL ||= 'https://www.sandbox.paypal.com/cgi-bin/webscr?'
-    PAYPAL_LOGIN ||= 'PAYPAL_LOGIN_HERE'
-    PAYPAL_PASSWORD ||= 'PAYPAL_PASSWORD_HERE'
-    PAYPAL_SIGNATURE ||= 'PAYPAL_SIGNATURE_HERE'
+    PAYPAL_LOGIN ||= 'umair.munir-facilitator_api1.nxb.com.pk'
+    PAYPAL_PASSWORD ||= 'QR3FZ5MS69454MER'
+    PAYPAL_SIGNATURE ||= 'AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ'
 
 # they will be used to send url in emails and mailer default options
     APP_HOST ||= 'localhost:3000' # e.g. osb.mydomain.com

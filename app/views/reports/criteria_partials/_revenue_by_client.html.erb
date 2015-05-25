@@ -18,7 +18,7 @@
             <div class="control_name">
               <p><%= t('header.links.clients.clients') %></p>
             </div>
-            <div class="client_select"><%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + Client.all, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client chzn-select"} %></div>
+            <div class="client_select"><%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client chzn-select"} %></div>
           </div>
           <div class="report_update">
             <%= submit_tag t('views.common.go'), :class => "report_update" %>

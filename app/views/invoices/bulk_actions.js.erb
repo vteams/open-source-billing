@@ -1,7 +1,11 @@
 jQuery('.alert').hide();
 
 <% if @action == "enter payment" %>
-    window.location.href = "/payments/enter_payment?invoice_ids=<%= params[:invoice_ids].join(",") %>&from_invoices=true"
+    <% if @invoice_has_deleted_clients.length > 0 %>
+        jQuery(".alert.alert-error").show().find('span').html("Please recover clients for invoice(s) with invoice# <%= @invoice_has_deleted_clients.join(",") %> to enter payment");
+    <% else %>
+        window.location.href = "/payments/enter_payment?invoice_ids=<%= params[:invoice_ids].join(",") %>&from_invoices=true"
+    <% end %>
 <%else%>
 
 <% unless params[:flag]%>
