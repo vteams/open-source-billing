@@ -55,6 +55,7 @@ module Reporting
 
         payments = payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         payments = payments.where(["payments.payment_method = ?", @report_criteria.payment_method]) unless @report_criteria.payment_method == ""
+        payments = payments.where(["payments.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
         payments.except(:order)
 
         credit_payments = Payment.select(
@@ -72,6 +73,7 @@ module Reporting
         payments.created_at").where("payments.payment_type = 'credit'").joins(:company).joins(:client).joins(invoice: :currency).
             where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         credit_payments = credit_payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
+        credit_payments = credit_payments.where(["payments.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
         payments + credit_payments
       end
 

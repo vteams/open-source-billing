@@ -47,6 +47,7 @@ module Reporting
               AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{@report_criteria.to_date}')
               AND (invoices.`status` != "paid")
               #{@report_criteria.client_id == 0 ? "" : "AND invoices.client_id = #{@report_criteria.client_id}"}
+              #{@report_criteria.company_id == "" ? "" : "AND invoices.company_id = #{@report_criteria.company_id}"}
         SQL
 
         aged_invoices = Invoice.find_by_sql(<<-SQL

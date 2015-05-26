@@ -53,6 +53,7 @@ module Reporting
 
         item_sales = item_sales.where(["invoice_line_items.item_id = ?", @report_criteria.item_id]) unless @report_criteria.item_id == 0
         item_sales = item_sales.where(["invoices.status = ?", @report_criteria.invoice_status]) unless @report_criteria.invoice_status == ""
+        item_sales = item_sales.where(["invoices.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
         item_sales
       end
 

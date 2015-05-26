@@ -41,7 +41,7 @@ module Reporting
         (@report_criteria.from_month..@report_criteria.to_month).each { |month| month_wise_payment << "SUM(CASE WHEN MONTH(IFNULL(i.due_date, i.invoice_date)) = #{month} THEN i.invoice_total ELSE NULL END) AS #{Date::MONTHNAMES[month]}" }
         month_wise_payment = month_wise_payment.join(", \n")
         client_filter = @report_criteria.client_id == 0 ? "" : " AND i.client_id = #{@report_criteria.client_id}"
-        current_company = @report_criteria.company_id
+        current_company = @report_criteria.company_id.present? ? "AND i.company_id = #{@report_criteria.company_id}" : ""
         Payment.find_by_sql("
                 SELECT case when c.organization_name = '' then CONCAT(c.first_name,' ',c.last_name) else c.organization_name end as organization_name, #{month_wise_payment},
                 SUM(i.invoice_total) AS client_total,
@@ -52,7 +52,7 @@ module Reporting
                       AND MONTH(IFNULL(i.due_date, i.invoice_date)) >= #{@report_criteria.from_month} AND MONTH(IFNULL(i.due_date, i.invoice_date)) <= #{@report_criteria.to_month}
                       AND i.status <> 'draft'
                       AND i.deleted_at IS NULL
-                      AND i.company_id = #{current_company}
+                      #{current_company}
                       #{client_filter}
 					      GROUP BY c.organization_name, c.id
               ")

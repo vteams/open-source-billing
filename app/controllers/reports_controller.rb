@@ -31,6 +31,7 @@ class ReportsController < ApplicationController
   # reports/:report_name
   def reports
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
+    params.merge!(criteria: {current_company: current_user.current_company.to_s})
     @report = get_report(params)
     respond_to do |format|
       format.html # index.html.erb
