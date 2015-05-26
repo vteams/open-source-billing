@@ -31,8 +31,8 @@ class ReportsController < ApplicationController
   # reports/:report_name
   def reports
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
-    params.merge!(criteria: {current_company: current_user.current_company.to_s})
-    @report = get_report(params)
+    criteria = get_criteria(params)
+    @report = get_report(criteria)
     respond_to do |format|
       format.html # index.html.erb
       format.csv { send_data @report.to_csv }
@@ -55,8 +55,8 @@ class ReportsController < ApplicationController
   # AJAX request to fetch report data after
   # reports/data/:report_name
   def reports_data
-    params[:criteria].merge!(current_company: current_user.current_company.to_s)
-    @report = get_report(params)
+    criteria = get_criteria(params)
+    @report = get_report(criteria)
 
     respond_to do |format|
       format.js
@@ -64,6 +64,15 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def get_criteria(options)
+    if options[:criteria].present?
+      options[:criteria].merge!(current_company: current_user.current_company.to_s)
+    else
+      options.merge!(criteria: {current_company: current_user.current_company.to_s})
+    end
+    options
+  end
 
   def get_report(options={})
     @criteria = Reporting::Criteria.new(options[:criteria]) # report criteria
