@@ -76,7 +76,6 @@ end
 
 gem 'money', '~>  6.5.0'
 gem 'dj_mon', git: 'https://github.com/akshayrawat/dj_mon'
-gem 'osb_api', path: 'vendor/engines/osb_api'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
