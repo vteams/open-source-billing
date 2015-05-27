@@ -65,16 +65,6 @@ module Osb
     # config.middleware.use "PDFKit::Middleware", :print_media_type => true
     ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
 
-    config.paths.add File.join('app','api'), glob: File.join('**', '*.rb')
-    config.autoload_paths += Dir[Rails.root.join('app','api', '*')]
-
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :delete, :patch, :put]
-      end
-    end
-
   end
 
 end

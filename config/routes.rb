@@ -1,12 +1,11 @@
 Osb::Application.routes.draw do
-
+  mount OsbApi::Engine => "/api"
   use_doorkeeper
 
   #namespace :OpenSourceBilling do
   #  resources :people
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
-  mount V1::OSB => '/'
   mount DjMon::Engine => 'dj_mon'
   scope "(:locale)", locale: /en|fr/ do
     resources :email_templates do
