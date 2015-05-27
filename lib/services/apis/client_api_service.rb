@@ -3,7 +3,7 @@ module Services
     class ClientApiService
 
       def self.create(params)
-        client = Client.new(client_params_api(params))
+        client = ::Client.new(client_params_api(params))
         if client.save
           {message: 'Successfully created'}
         else
@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        client = client.find(params[:id])
+        client = ::Client.find(params[:id])
         if client.present?
           if client.update_attributes(client_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Client.destroy(params)
+        if ::Client.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

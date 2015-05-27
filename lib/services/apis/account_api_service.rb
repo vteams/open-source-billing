@@ -3,7 +3,7 @@ module Services
     class AccountApiService
 
       def self.create(params)
-        account = Account.new(account_params_api(params))
+        account = ::Account.new(account_params_api(params))
         if account.save
           {message: 'Successfully created'}
         else
@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        account = Account.find(params[:id])
+        account = ::Account.find(params[:id])
         if account.present?
           if account.update_attributes(account_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Account.destroy(params)
+        if ::Account.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

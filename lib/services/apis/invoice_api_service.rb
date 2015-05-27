@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        invoice = Invoice.find(params[:id])
+        invoice = ::Invoice.find(params[:id])
         if invoice.present?
           if invoice.update_attributes(invoice_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Invoice.destroy(params)
+        if ::Invoice.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

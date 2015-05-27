@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        item = Item.find(params[:id])
+        item = ::Item.find(params[:id])
         if item.present?
           if item.update_attributes(item_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Item.destroy(params)
+        if ::Item.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

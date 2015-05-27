@@ -3,7 +3,7 @@ module Services
     class PaymentApiService
 
       def self.create(params)
-        payment = Payment.new(payment_params_api(params))
+        payment = ::Payment.new(payment_params_api(params))
         if payment.save
           {message: 'Successfully created'}
         else
@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        payment = Payment.find(params[:id])
+        payment = ::Payment.find(params[:id])
         if payment.present?
           if payment.update_attributes(payment_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Payment.destroy(params)
+        if ::Payment.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

@@ -3,7 +3,7 @@ module Services
     class CompanyApiService
 
       def self.create(params)
-        company = Company.new(company_params_api(params))
+        company = ::Company.new(company_params_api(params))
         if company.save
           {message: 'Successfully created'}
         else
@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        company = Company.find(params[:id])
+        company = ::Company.find(params[:id])
         if company.present?
           if company.update_attributes(company_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Company.destroy(params)
+        if ::Company.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}

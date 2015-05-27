@@ -12,7 +12,7 @@ module Services
       end
 
       def self.update(params)
-        tax = Tax.find(params[:id])
+        tax = ::Tax.find(params[:id])
         if tax.present?
           if tax.update_attributes(tax_params_api(params))
             {message: 'Successfully updated'}
@@ -25,7 +25,7 @@ module Services
       end
 
       def self.destroy(params)
-        if Tax.destroy(params)
+        if ::Tax.destroy(params)
           {message: 'Successfully deleted'}
         else
           {message: 'Not deleted'}
