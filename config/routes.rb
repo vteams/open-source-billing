@@ -1,4 +1,6 @@
 Osb::Application.routes.draw do
+  mount OsbApi::Engine => "/api"
+  use_doorkeeper
 
   #namespace :OpenSourceBilling do
   #  resources :people
