@@ -27,7 +27,7 @@ class PaypalService
     @invoice_id = options.is_a?(Hash) ? OSB::Util.decrypt(options[:invoice_id]).to_i : options
     @invoice = Invoice.find_by_id(@invoice_id)
     return nil unless @invoice
-    @client = @invoice.client
+    @client = @invoice.unscoped_client
     @options = options
 
     prepare_payment
