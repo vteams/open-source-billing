@@ -81,7 +81,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.update_attributes(payment_params)
         @payment.update_attribute(:send_payment_notification,params[:payments][0][:send_payment_notification]) if params[:payments] and params[:payments][0][:send_payment_notification]
-        @payment.notify_client(current_user)
+        @payment.notify_client(current_user)  if params[:payments] and params[:payments][0][:send_payment_notification]
         format.html { redirect_to(edit_payment_url(@payment), :notice => 'Your Payment has been updated successfully.') }
         format.json { head :no_content }
       else
