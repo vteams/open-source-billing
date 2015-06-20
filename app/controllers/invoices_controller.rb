@@ -54,6 +54,7 @@ class InvoicesController < ApplicationController
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
 
     @invoice = Invoice.find(params[:id])
+    @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.pdf do
         pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
@@ -70,6 +71,7 @@ class InvoicesController < ApplicationController
 
   def preview
     @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
+    @client = Client.unscoped.find_by_id @invoice.client_id
     render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
   end
 
