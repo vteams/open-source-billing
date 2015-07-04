@@ -161,6 +161,7 @@
     <!--preview_top_left-->
 
     <div class="preview_right btm">
+      <% if @invoice.discount_amount > 0 %>
       <div class="top_right_row preview_heading">
         <div class="preview_right_label"><%= t('views.invoices.subtotal') %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.sub_total, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
@@ -171,6 +172,7 @@
         <div class="preview_right_label"><%= t('views.common.discount') %> <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
+      <% end %>
       <!--top_right_row-->
       <% unless @invoice.tax_detail_with_discount.blank? %>
           <%= taxes_list(@invoice.tax_detail_with_discount,@invoice) %>

@@ -242,8 +242,8 @@
 
     <div class="content_bottom">
       <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-      <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit' %>
-      <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
+      <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit', :data => {disable_with: t('views.invoices.send_invoice')} %>
+      <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft", :data => {:disable_with => "#{button_text}"} %>
       <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, :class => 'btn_large grey' %>
     </div>
     <!--content_bottom-->

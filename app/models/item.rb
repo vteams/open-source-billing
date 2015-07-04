@@ -70,7 +70,6 @@ class Item < ActiveRecord::Base
     # sort items in ascending or descending order
     items.sort! do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
-
       if %w(tax1.name tax2.name).include?(params[:sort_column])
         item1 = a.send(params[:sort_column].split('.')[0]).send(params[:sort_column].split('.')[1]) rescue ''
         item2 = b.send(params[:sort_column].split('.')[0]).send(params[:sort_column].split('.')[1]) rescue ''
@@ -79,6 +78,9 @@ class Item < ActiveRecord::Base
         #item1 = eval("a.#{params[:sort_column]}") rescue ''
         #item2 = eval("b.#{params[:sort_column]}") rescue ''
         item1 <=> item2
+	
+      elsif %w(unit_cost).include?(params[:sort_column])
+        a.send(params[:sort_column]) <=> b.send(params[:sort_column])
       else
         a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
       end
