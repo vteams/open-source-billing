@@ -61,7 +61,8 @@ class PaypalService
                                 :payment_method => "paypal",
                                 :payment_amount => @amount / 100,
                                 :payment_date => Date.today,
-                                :paid_full => 1
+                                :paid_full => 1,
+                                :company_id => @invoice.company_id
                             })
     @invoice.update_attributes(status: 'paid')
   end

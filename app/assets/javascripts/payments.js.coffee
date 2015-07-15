@@ -111,6 +111,11 @@ jQuery ->
          if jQuery('.alert-success').length > 0
            jQuery('.alert-success').hide()
          jQuery(".alert.alert-error").show().find('span').html("You cannot edit credit payment")
+      if jQuery(this).hasClass 'disabled'
+        flag = false
+        if jQuery('.alert-success').length > 0
+          jQuery('.alert-success').hide()
+        jQuery(".alert.alert-error").show().find('span').html("You cannot edit payment with paypal")
       flag
   window.bind_edit_payment_links()
 

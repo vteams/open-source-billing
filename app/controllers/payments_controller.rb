@@ -58,6 +58,9 @@ class PaymentsController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
+    if @payment.payment_method and @payment.payment_method == 'paypal'
+      redirect_to payments_path,alert: "You can not edit payment with paypal!"
+    end
   end
 
   def create

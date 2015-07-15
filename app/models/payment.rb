@@ -28,6 +28,8 @@ class Payment < ActiveRecord::Base
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
+  after_create :add_company_id
+
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
 
@@ -182,6 +184,12 @@ class Payment < ActiveRecord::Base
 
   def unscoped_client
     Client.unscoped.find_by_id self.client_id
+  end
+
+  def add_company_id
+    if self.company_id.blank?
+      self.update_attribute(:company_id, self.invoice.company_id)
+    end
   end
 
 end
