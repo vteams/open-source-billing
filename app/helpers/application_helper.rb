@@ -227,4 +227,15 @@ module ApplicationHelper
     avalilable_locales
   end
 
+  def add_language_class(user)
+    language = user.settings.language
+    if language == 'de'
+      'german'
+    elsif language == 'fr'
+      'french'
+    else
+      ''
+    end
+  end
+
 end

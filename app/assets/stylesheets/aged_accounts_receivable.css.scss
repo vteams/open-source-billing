@@ -13,6 +13,61 @@
     col.one {width: 120px;}
     col.two, col.three, col.four, col.five {width: 70px; font-weight: normal;}
     col.six {width: 92px;}
+    &.german, &.french{
+      th{
+        line-height: normal;
+        padding: 5px 10px 5px 5px;
+        text-align: left !important;
+      }
+    }
+    &.german{
+      col{
+        &.one{
+          width: 120px;
+        }
+        &.two{
+          width: 105px;
+        }
+        &.three{
+          width: 105px;
+        }
+        &.four{
+          width: 105px;
+        }
+        &.five{
+          width: 105px;
+        }
+        &.six{
+          width: 300px;
+        }
+      }
+
+    }
+    &.french{
+      col{
+        &.one{
+          width: 120px;
+        }
+        &.two{
+          width: 110px;
+        }
+        &.three{
+          width: 120px;
+        }
+        &.four{
+          width: 120px;
+        }
+        &.five{
+          width: 120px;
+        }
+        &.six{
+          width: 250px;
+        }
+      }
+    }
+
+
+
     .col_hover, .row_hover, tfoot tr:hover{background-color: #F7F7F7;}
     tfoot tr td{
       /*border-bottom: medium double #dadada;*/

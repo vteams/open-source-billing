@@ -7,7 +7,7 @@
         width : 94px;
     }
     .grid_table table col.three{ /*clients*/
-        width: 329px;
+        width: 251px;
     }
     .grid_table table col.four{ /*type*/
         width : 176px;
@@ -21,9 +21,63 @@
     .grid_table table col.seven{ /*amount*/
         width : 125px;
     }
-    .grid_table table col.eight{ /*actions*/
-        width : 98px;
+
+    .grid_table{
+      table{
+        &.german{
+          col{
+            &.one{
+              width: 33px;
+            }
+            &.two{
+              width: 120px;
+            }
+            &.three{
+              width: 183px;
+            }
+            &.four{
+              width: 75px;
+            }
+            &.five{
+              width: 90px;
+            }
+            &.six{
+              width: 125px;
+            }
+            &.seven{
+              width: 214px;
+            }
+          }
+        }
+        &.french{
+          col{
+            &.one{
+              width: 33px;
+            }
+            &.two{
+              width: 120px;
+            }
+            &.three{
+              width: 183px;
+            }
+            &.four{
+              width: 75px;
+            }
+            &.five{
+              width: 90px;
+            }
+            &.six{
+              width: 125px;
+            }
+            &.seven{
+              width: 214px;
+            }
+          }
+        }
+      }
     }
+
+
 
 }
 
