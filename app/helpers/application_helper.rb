@@ -220,7 +220,11 @@ module ApplicationHelper
   end
 
   def get_available_languages
-
+    files = Dir["#{Rails.root}/config/locales/*.yml"]
+    files = files.map{|x| (File.basename x).split('.').first}
+    files = files.reject!{|x| ['devise','doorkeeper'].include? x}
+    avalilable_locales= LANGUAGES.select{|v| files.include? v[1]}
+    avalilable_locales
   end
 
 end

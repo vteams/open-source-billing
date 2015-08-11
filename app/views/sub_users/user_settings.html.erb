@@ -35,7 +35,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.settings.language')  %></div>
               <div class="large_field">
-                <%= select_tag "locale", options_for_select(LANGUAGES, :selected => current_user.settings.language) %>
+                <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>
               </div>
             </div>
 
