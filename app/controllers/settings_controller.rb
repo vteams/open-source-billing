@@ -1,6 +1,7 @@
 class SettingsController < ApplicationController
   def create
     user = current_user
+    @language_changed = false
     if params[:currency_select].present?
       user.settings.currency = "On"
     else
@@ -11,6 +12,10 @@ class SettingsController < ApplicationController
     end
     if params[:records_per_page].present?
       user.settings.records_per_page = params[:records_per_page]
+    end
+    if params[:locale].present?
+      user.settings.language = params[:locale]
+      @language_changed = true
     end
     respond_to { |format| format.js }
   end

@@ -219,4 +219,8 @@ module ApplicationHelper
     Company.find(company_id)
   end
 
+  def get_available_languages
+
+  end
+
 end

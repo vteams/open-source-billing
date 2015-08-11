@@ -364,6 +364,7 @@ en:
       multi_currency: "Multi Currency"
       date_format: "Date Format"
       records_per_page: "Records per page"
+      language: "Language"
 
     companies:
       companies: "Companies"
