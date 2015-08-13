@@ -333,6 +333,8 @@ de:
       number_of_days: "Anzahl an Tagen"
       editing: "Bezahlungsbedingungen am bearbeiten"
       new: "Neue Bezahlungsbedingungen"
+      add_new_payment_term: 'In New Zahlungs-Ausdruck'
+      description: 'Beschreibung'
 
     reports:
       reports: "Berichte"
