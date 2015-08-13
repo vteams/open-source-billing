@@ -227,9 +227,17 @@ module ApplicationHelper
     avalilable_locales
   end
 
-  def add_language_class(user)
-    language = user.settings.language
-    if language == 'de'
+  def add_language_class(user, request_url)
+    user ||= User.new
+    language = user.present? ? user.settings.language : ''
+    request_url ||= ''
+    if request_url == 'de'
+      'german'
+    elsif request_url == 'fr'
+      'french'
+    elsif request_url == 'en'
+      ''
+    elsif language == 'de'
       'german'
     elsif language == 'fr'
       'french'

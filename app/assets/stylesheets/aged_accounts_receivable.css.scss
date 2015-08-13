@@ -13,17 +13,17 @@
     col.one {width: 120px;}
     col.two, col.three, col.four, col.five {width: 70px; font-weight: normal;}
     col.six {width: 92px;}
-    &.german, &.french{
+    &.de, &.fr{
       th{
         line-height: normal;
         padding: 5px 10px 5px 5px;
         text-align: left !important;
       }
     }
-    &.german{
+    &.de{
       col{
         &.one{
-          width: 120px;
+          width: 150px;
         }
         &.two{
           width: 105px;
@@ -38,15 +38,15 @@
           width: 105px;
         }
         &.six{
-          width: 300px;
+          width: 270px;
         }
       }
 
     }
-    &.french{
+    &.fr{
       col{
         &.one{
-          width: 120px;
+          width: 170px;
         }
         &.two{
           width: 110px;
@@ -61,7 +61,7 @@
           width: 120px;
         }
         &.six{
-          width: 250px;
+          width: 200px;
         }
       }
     }

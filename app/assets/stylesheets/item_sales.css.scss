@@ -5,14 +5,14 @@
     col.three{width:    175px}
     col.four{width:     175px}
     col.five{width:     175px}
-    &.german, &.french{
+    &.de, &.fr{
       th{
         line-height: normal;
         padding: 5px 10px 5px 5px;
         text-align: left !important;
       }
     }
-    &.german{
+    &.de{
       col{
         &.one{
           width: 145px;
@@ -32,7 +32,7 @@
       }
 
     }
-    &.french{
+    &.fr{
       col{
         &.one{
           width: 145px;
