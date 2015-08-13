@@ -5,7 +5,7 @@
 <%#= form_tag "/items/create", :id => "create_item", :remote => true do %>
 
       <div class="tiny_form_top">
-        <div class="tiny_form_heading"><h4>Add New Item</h4></div>
+        <div class="tiny_form_heading"><h4><%= t('views.items.add_new_item') %></h4></div>
         <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
       </div>
       <!--tiny_form_top-->
@@ -15,7 +15,7 @@
         <div class="fields_content_data">
 
           <div class="field_row">
-            <div class="label_field left"><span>Name</span></div>
+            <div class="label_field left"><span><%= t('views.items.name') %></span></div>
             <div class="small_field">
               <%= text_field_tag "item[item_name]", '', :required => 'required', "data-unique" => "" %>
             </div>
@@ -23,7 +23,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><span>Description</span></div>
+            <div class="label_field left single"><span><%= t('views.items.description') %></span></div>
             <div class="small_field">
               <%= text_field_tag "item[item_description]", '', :required => 'required' %>
             </div>
@@ -31,7 +31,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single">Unit cost</div>
+            <div class="label_field left single"><%= t('views.items.item_unit_cost') %></div>
             <div class="small_field">
               <%= text_field_tag "item[unit_cost]", '' %>
             </div>
@@ -39,7 +39,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single">Quantity</div>
+            <div class="label_field left single"><%= t('views.items.quantity') %></div>
             <div class="small_field">
               <%= number_field_tag "item[quantity]", '' %>
               <%= hidden_field_tag :quick_create %>

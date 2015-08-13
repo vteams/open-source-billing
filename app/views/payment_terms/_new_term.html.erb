@@ -5,7 +5,7 @@
 <%#= form_tag "/payment_terms/create", :id => "create_term", :remote => true do %>
 
       <div class="tiny_form_top">
-        <div class="tiny_form_heading"><h4>Add New Payment Term</h4></div>
+        <div class="tiny_form_heading"><h4><%= t('views.payment_terms.add_new_payment_term') %></h4></div>
         <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
       </div>
       <!--tiny_form_top-->
@@ -15,7 +15,7 @@
         <div class="fields_content_data">
 
           <div class="field_row">
-            <div class="label_field left"><span>Number of days</span></div>
+            <div class="label_field left"><span><%= t('views.payment_terms.number_of_days') %></span></div>
             <div class="small_field">
               <%= text_field_tag "payment_term[number_of_days]", '', :required => 'required' %>
             </div>
@@ -23,7 +23,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><span>Description</span></div>
+            <div class="label_field left single"><span><%= t('views.payment_terms.description') %></span></div>
             <div class="small_field">
               <%= text_field_tag "payment_term[description]", '', :required => 'required' %>
               <%= hidden_field_tag :quick_create %>

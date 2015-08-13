@@ -331,6 +331,8 @@ fr:
       number_of_days: "Nombre de jours"
       editing: "Les modalités de paiement d'édition"
       new: "Nouveau délai de paiement"
+      add_new_payment_term: 'Ajouter une nouvelle durée de paiement'
+      description: 'Beschreibung'
 
     reports:
       reports: "rapports"

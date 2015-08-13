@@ -295,6 +295,7 @@ en:
       contact_title: "Contact title"
 
     items:
+      add_new_item: 'Add New Item'
       name: "Name"
       item_name: "Item Name"
       description: "description"
@@ -335,6 +336,8 @@ en:
       number_of_days: "Number of days"
       editing: "Editing payment terms"
       new: "New payment term"
+      add_new_payment_term: 'Add New Payment Term'
+      description: 'Description'
 
     reports:
       reports: "Reports"
