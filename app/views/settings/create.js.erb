@@ -1,1 +1,4 @@
 jQuery(".alert.alert-success").show().find('span').html("Setting are successfully updated");
+<% if @language_changed.present? and @language_changed == true  %>
+window.location.href = "/<%= current_user.settings.language.to_sym %>/sub_users/user_settings";
+<% end %>

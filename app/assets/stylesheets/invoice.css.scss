@@ -37,6 +37,62 @@
     /*actions*/
       width: 62px;
     }
+    &.de{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 120px;
+        }
+        &.three{
+          width: 100px;
+        }
+        &.four{
+          width: 105px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 202px;
+        }
+        &.seven{
+          width: 90px;
+        }
+        &.eight{
+          width: 90px;
+        }
+      }
+    }
+    &.fr{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 120px;
+        }
+        &.three{
+          width: 100px;
+        }
+        &.four{
+          width: 105px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 202px;
+        }
+        &.seven{
+          width: 90px;
+        }
+        &.eight{
+          width: 90px;
+        }
+      }
+    }
   }
 }
 

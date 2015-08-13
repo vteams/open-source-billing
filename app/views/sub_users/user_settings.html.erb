@@ -31,6 +31,14 @@
                 <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
               </div>
             </div>
+
+            <div class="field_row">
+              <div class="label_field left single"><%= t('views.settings.language')  %></div>
+              <div class="large_field">
+                <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>
+              </div>
+            </div>
+
           </div>
           <!--fields_content_data-->
         </div>

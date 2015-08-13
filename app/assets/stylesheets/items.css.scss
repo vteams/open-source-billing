@@ -23,6 +23,66 @@
   .grid_table table col.eight { /*actions*/
     width: 70px;
   }
+  .grid_table{
+    table{
+      &.de{
+        col{
+          &.one{
+            width: 33px;
+          }
+          &.two{
+            width: 120px;
+          }
+          &.three{
+            width: 200px;
+          }
+          &.four{
+            width: 105px;
+          }
+          &.five{
+            width: 102px;
+          }
+          &.six{
+            width: 100px;
+          }
+          &.seven{
+            width: 90px;
+          }
+          &.eight{
+            width: 90px;
+          }
+        }
+      }
+      &.fr{
+        col{
+          &.one{
+            width: 33px;
+          }
+          &.two{
+            width: 120px;
+          }
+          &.three{
+            width: 175px;
+          }
+          &.four{
+            width: 130px;
+          }
+          &.five{
+            width: 102px;
+          }
+          &.six{
+            width: 100px;
+          }
+          &.seven{
+            width: 90px;
+          }
+          &.eight{
+            width: 90px;
+          }
+        }
+      }
+    }
+  }
 }
 .items_wrapper {
   .fields_content {

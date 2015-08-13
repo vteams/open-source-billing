@@ -255,6 +255,28 @@ DATE_FORMATS = [
 
 LINES_PER_PAGE = %w(5 10 20 50 100)
 
+LANGUAGES = [
+    ['English', 'en'],
+    ['German', 'de'],
+    ['France', 'fr'],
+    ['English Canada', 'en-CA'],
+    ['English US', 'en-US'],
+    ['Japanese', 'ja'],
+    ['Vietnamese', 'vi'],
+    ['Nepali', 'nep'],
+    ['Persian', 'fa'],
+    ['Korean', 'ko'],
+    ['Polish', 'pl'],
+    ['Swedish', 'sv'],
+    ['Spanish', 'es'],
+    ['Russian', 'ru'],
+    ['Dutch', 'nl'],
+    ['Slovak', 'sk'],
+    ['Italian', 'it'],
+    ['Arabic', 'ar'],
+    ['Urdu', 'ur']
+]
+
 RECURRING_FREQUENCY = [['weekly', '1.week'], ['2 weeks', '2.weeks'], ['4 weeks', '4.weeks'], ['monthly', '1.month'], ['2 months', '2.months'], ['4 months','4.months'], ['6 months', '6.months'], ['yearly', '1.year'], ['2 years', '2.years'], ['3 years', '3.years']]
 
 QUARTER_MONTHS = [['Jan - Mar', '1-3'], ['Apr - Jun', '4-6'], ['Jul - Sep', '7-9'], ['Oct - Dec', '10-12']]

@@ -15,29 +15,85 @@
       /*clients*/
       width: 120px;
     }
+//    col.four {
+//      /*company*/
+//      width: 145px;
+//    }
     col.four {
-      /*company*/
-      width: 145px;
-    }
-    col.five {
       /*last sent*/
       width: 100px;
     }
-    col.six {
+    col.five {
       /*frequency*/
       width: 100px;
     }
-    col.seven {
+    col.six {
       /*amount*/
       width: 90px;
     }
-    col.eight {
+    col.seven {
       /*remaining*/
       width: 100px;
     }
-    col.nine {
+    col.eight {
       /*actions*/
       width: 62px;
+    }
+    &.de{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 90px;
+        }
+        &.three{
+          width: 90px;
+        }
+        &.four{
+          width: 130px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 90px;
+        }
+        &.seven{
+          width: 100px;
+        }
+        &.eight{
+          width: 62px;
+        }
+      }
+    }
+    &.fr{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 90px;
+        }
+        &.three{
+          width: 120px;
+        }
+        &.four{
+          width: 100px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 90px;
+        }
+        &.seven{
+          width: 100px;
+        }
+        &.eight{
+          width: 62px;
+        }
+      }
     }
   }
 }

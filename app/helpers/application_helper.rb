@@ -219,4 +219,31 @@ module ApplicationHelper
     Company.find(company_id)
   end
 
+  def get_available_languages
+    files = Dir["#{Rails.root}/config/locales/*.yml"]
+    files = files.map{|x| (File.basename x).split('.').first}
+    files = files.reject!{|x| ['devise','doorkeeper'].include? x}
+    avalilable_locales= LANGUAGES.select{|v| files.include? v[1]}
+    avalilable_locales
+  end
+
+  def add_language_class(user, request_url)
+    user ||= User.new
+    language = user.present? ? user.settings.language : ''
+    request_url ||= ''
+    if request_url == 'de'
+      'german'
+    elsif request_url == 'fr'
+      'french'
+    elsif request_url == 'en'
+      ''
+    elsif language == 'de'
+      'german'
+    elsif language == 'fr'
+      'french'
+    else
+      ''
+    end
+  end
+
 end

@@ -7,7 +7,7 @@ Osb::Application.routes.draw do
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
   mount DjMon::Engine => 'dj_mon'
-  scope "(:locale)", locale: /en|fr/ do
+  scope "(:locale)" do
     resources :email_templates do
       collection do
         get 'bulk_actions'
