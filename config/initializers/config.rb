@@ -35,5 +35,7 @@ module OSB
         user_name: 'YOUR_EMAIL_HERE',
         password: 'YOUR_PASSWORD_HERE'
     }
+
+    ENCRYPTION_KEY ||= "ENTER-YOUR-ENCRYPTED-KEY-HERE"
   end
 end

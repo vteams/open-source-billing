@@ -54,10 +54,11 @@ class InvoicesController < ApplicationController
   def invoice_pdf
     # to be used in invoice_pdf view because it requires absolute path of image
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
-
-    @invoice = Invoice.find(params[:id])
+    invoice_id = OSB::Util.decrypt(params[:id])
+    @invoice = Invoice.find(invoice_id)
     respond_to do |format|
       format.pdf do
+        file_name = "Invoice-#{Date.today.to_s}.pdf"
         pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
           layout: 'pdf_mode.html.erb',
           encoding: "UTF-8",
@@ -65,7 +66,7 @@ class InvoicesController < ApplicationController
           footer:{
             right: 'Page [page] of [topage]'
           }
-        send_data pdf
+        send_data pdf, filename: file_name
       end
     end
   end

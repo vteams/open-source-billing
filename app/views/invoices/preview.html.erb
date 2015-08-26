@@ -9,10 +9,10 @@
         <div class="grid_control_right">
           <ul>
             <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal"><%= t('views.commo.dispute') %></a></li>
-            <li class="grid_control_sep sep_right"><%= link_to "PDF", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %></li>
+            <li class="grid_control_sep sep_right"><%= link_to "PDF", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %></li>
             <li class="grid_control_sep sep_right">
               <!--<a href="#">Print</a>-->
-              <%= link_to t("views.common.print"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %>
+              <%= link_to t("views.common.print"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
             <li><%= link_to t('views.invoices.payment_history'), {:controller => 'payments', :action => 'payments_history', :id => @invoice.id, :encrypted_id => params[:inv_id]}, :class => "no_padding" %></li>
           </ul>

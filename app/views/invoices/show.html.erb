@@ -18,11 +18,11 @@
               <%= link_to t('views.common.send'), "send_invoice?id=#{@invoice.id}" %>
             </li>
             <li class="grid_control_sep sep_right">
-              <%= link_to t('views.common.pdf'), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %>
+              <%= link_to t('views.common.pdf'), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
             <li class="grid_control_sep sep_right">
               <!--<a href="#">Print</a>-->
-              <%= link_to t('views.common.print'), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.id, :format => "pdf"}, :target => '_blank' %>
+              <%= link_to t('views.common.print'), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
             <li>
               <%= link_to t('views.invoices.payment_history'), {:controller => 'payments', :action => 'invoice_payments_history', :id => @invoice.id}, :class => "no_padding" %>
