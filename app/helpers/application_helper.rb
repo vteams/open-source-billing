@@ -231,17 +231,11 @@ module ApplicationHelper
     user ||= User.new
     language = user.present? ? user.settings.language : ''
     request_url ||= ''
-    if request_url == 'de'
+    if [request_url,language].include? 'de'
       'german'
-    elsif request_url == 'fr'
+    elsif [request_url,language].include? 'fr'
       'french'
-    elsif request_url == 'en'
-      ''
-    elsif language == 'de'
-      'german'
-    elsif language == 'fr'
-      'french'
-    else
+    elsif [request_url,language].include? 'en'
       ''
     end
   end

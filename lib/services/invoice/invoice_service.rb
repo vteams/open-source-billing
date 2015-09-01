@@ -60,6 +60,7 @@ module Services
       invoice.disputed!
       InvoiceMailer.dispute_invoice_email(current_user, invoice, dispute_reason).deliver
       invoice = ::Invoice.find_by_id(invoice_id)
+      invoice
     end
 
     def self.delete_invoices_with_payments(invoices_ids, convert_to_credit)

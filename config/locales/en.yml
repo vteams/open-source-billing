@@ -415,6 +415,10 @@ en:
 
     help:
       help: "Help"
+      help_yourself: "Help yourself and Heaven will help you too. :)"
+      we_hope_you_donot_need_help: "We hope you won't need any help to use this software."
+      never_mind_just_kidding: "Never mind, just kidding... We'll be right back with detailed help. Currently, stuck in some other high priority stuff."
+      happy_invoicing: "Happy Invoicing!"
 
     invoice_line_item:
       new: "New Invoice Line Item"

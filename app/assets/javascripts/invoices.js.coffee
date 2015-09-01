@@ -434,7 +434,10 @@ jQuery ->
   ).live("blur", ->
     @placeholder = @dataPlaceholder
     @removeAttribute "dataPlaceholder"
-  ).live "keypress", ->
+  ).live "keypress", (e) ->
+    if e.which is 13
+      e.preventDefault()
+      jQuery(".active-form .btn_save").trigger("click")
     hidePopover(jQuery(this))
 
   # Show quick create popups under create buttons

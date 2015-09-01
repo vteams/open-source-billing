@@ -408,6 +408,10 @@ de:
 
     help:
       help: "Hilfe"
+      help_yourself: "Helfen Sie sich selbst und der Himmel wird Ihnen auch helfen. :)"
+      we_hope_you_donot_need_help: "Wir hoffen, dass Sie keine Hilfe, um diese Software verwenden müssen."
+      never_mind_just_kidding: "Macht nichts, nur ein Scherz ... Wir werden bald wieder mit ausführlicher Hilfe sein. Derzeit stecken auf andere hohe Priorität Zeug."
+      happy_invoicing: "Glückliche Abrechnung!"
 
     invoice_line_item:
       new: "Neue Rechnungs Auftragsposition"

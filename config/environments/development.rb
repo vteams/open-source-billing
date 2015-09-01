@@ -38,7 +38,7 @@ Osb::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
+  config.consider_all_requests_local = false
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
 
   config.address = "http://localhost:3000/"

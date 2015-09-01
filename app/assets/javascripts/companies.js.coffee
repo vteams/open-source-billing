@@ -10,7 +10,7 @@ jQuery ->
        unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
          return true
 
-     jQuery.get "/application/new_selected_company_name?company_id=" + company_id, (response) ->
+     jQuery.get "/companies/#{company_id}/select", (response) ->
        jQuery("#current_selected_company").text(response)
        jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
        window.location.reload()

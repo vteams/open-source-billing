@@ -113,10 +113,10 @@
               <%= active_link_to t("header.links.reports.reports"), reports_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                 <ul>
-                  <li><%= active_link_to t("header.links.reports.payment_collected"), '/reports/payments_collected' %></li>
-                  <li><%= active_link_to t("header.links.reports.revenue_by_client"), '/reports/revenue_by_client' %></li>
-                  <li><%= active_link_to t("header.links.reports.aged_account_receivable"), '/reports/aged_accounts_receivable' %></li>
-                  <li><%= active_link_to t("header.links.reports.item_sales"), '/reports/item_sales' %></li>
+                  <li><%= active_link_to t("header.links.reports.payment_collected"), "/#{I18n.locale}/reports/payments_collected" %></li>
+                  <li><%= active_link_to t("header.links.reports.revenue_by_client"), "/#{I18n.locale}/reports/revenue_by_client" %></li>
+                  <li><%= active_link_to t("header.links.reports.aged_account_receivable"), "/#{I18n.locale}/reports/aged_accounts_receivable" %></li>
+                  <li><%= active_link_to t("header.links.reports.item_sales"), "/#{I18n.locale}/reports/item_sales" %></li>
                 </ul>
               </div>
             </li>
@@ -140,7 +140,7 @@
               </div>
             </li>
 
-            <li><%= active_link_to  t("header.links.help"), "/help" %></li>
+            <li><%= active_link_to  t("header.links.help"), help_index_path %></li>
           </ul>
         </div>
       </div>

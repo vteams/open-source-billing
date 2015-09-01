@@ -116,6 +116,13 @@ class CompaniesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def select
+    session['current_company'] = params[:id]
+    current_user.update_attributes(current_company: params[:id])
+    company =  Company.find(params[:id])
+    render :text => company.company_name
+  end
+
   private
 
   def get_intimation_message(action_key, company_ids)

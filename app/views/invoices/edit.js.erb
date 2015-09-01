@@ -1,7 +1,1 @@
-if (confirm('Your changes will be discarded by switching company. Are you sure you want to switch company?')) {
-    // Set the session and reload the new invoices page
-    jQuery.get("/application/new_selected_company_name?company_id=" + "<%= params[:company_id] %>", function(response) {
-        jQuery("#current_selected_company").text(response);
-    });
-    setTimeout(function(){window.location.href = '/invoices';},1000);
-}
+

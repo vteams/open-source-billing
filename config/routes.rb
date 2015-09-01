@@ -21,6 +21,9 @@ Osb::Application.routes.draw do
         get 'filter_companies'
         get 'undo_actions'
       end
+      member do
+        get 'select'
+      end
     end
 
     resources :sub_users do
@@ -34,32 +37,31 @@ Osb::Application.routes.draw do
     resources :payment_terms
 
     resources :accounts
-
-    get "help" => "help#index"
+    resources :help
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#reports_data"
     get "reports" => "reports#index"
 
-  get "dashboard" => "dashboard#index"
-  post 'dashboard/chart_details' => "dashboard#chart_details"
-  post '/invoices/send_note_only' => 'invoices#send_note_only'
-  resources :payments do
-    collection do
-      get 'enter_payment'
-      put 'update_individual_payment'
-      get 'filter_payments'
-      get 'bulk_actions'
-      get 'undo_actions'
-      get 'payments_history'
-      get 'invoice_payments_history'
-      post 'delete_non_credit_payments'
+    get "dashboard" => "dashboard#index"
+    post 'dashboard/chart_details' => "dashboard#chart_details"
+    post '/invoices/send_note_only' => 'invoices#send_note_only'
+    resources :payments do
+      collection do
+        get 'enter_payment'
+        put 'update_individual_payment'
+        get 'filter_payments'
+        get 'bulk_actions'
+        get 'undo_actions'
+        get 'payments_history'
+        get 'invoice_payments_history'
+        post 'delete_non_credit_payments'
+      end
     end
-  end
-  resources :taxes do
-    collection do
-      get 'filter_taxes'
-      get 'bulk_actions'
-      get 'undo_actions'
+    resources :taxes do
+      collection do
+        get 'filter_taxes'
+        get 'bulk_actions'
+        get 'undo_actions'
       end
     end
 
@@ -125,40 +127,40 @@ Osb::Application.routes.draw do
 
     resources :recurring_profile_line_items
 
-  resources :sent_emails
+    resources :sent_emails
 
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+    # The priority is based upon order of creation:
+    # first created -> highest priority.
 
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
+    # Sample of regular route:
+    #   match 'products/:id' => 'catalog#view'
+    # Keep in mind you can assign values other than :controller and :action
 
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+    # Sample of named route:
+    #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+    # This route can be invoked with purchase_url(:id => product.id)
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+    # Sample resource route (maps HTTP verbs to controller actions automatically):
+    #   resources :products
 
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+    # Sample resource route with options:
+    #   resources :products do
+    #     member do
+    #       get 'short'
+    #       post 'toggle'
+    #     end
+    #
+    #     collection do
+    #       get 'sold'
+    #     end
+    #   end
 
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+    # Sample resource route with sub-resources:
+    #   resources :products do
+    #     resources :comments, :sales
+    #     resource :seller
+    #   end
     resources :recurring_profiles do
       resources :recurring_profile_line_items
       collection do
