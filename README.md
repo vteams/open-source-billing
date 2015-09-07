@@ -20,13 +20,13 @@ Features
 Demo
 ---
 
-Please check out the [demo]{http://demo.opensourcebilling.org} to see above features in action.
+Please check out the [demo](http://demo.opensourcebilling.org) to see above features in action.
 
 
 Caveats
 -------
 
-This is `alpha` release so there could be some bugs. You may contribute by reporting the bugs you find.
+This is `1.0` release. You may contribute by having any suggesstion or reporting the bugs you find.
 
 Requirements
 ------------
