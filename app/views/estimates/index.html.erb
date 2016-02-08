@@ -1,0 +1,17 @@
+<%- model_class = Estimate -%>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<div class="invoice">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, "New Estimate")),
+                  new_estimate_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+</div>
