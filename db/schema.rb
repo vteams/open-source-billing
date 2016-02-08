@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527141546) do
+ActiveRecord::Schema.define(version: 20160208152135) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -192,6 +192,28 @@ ActiveRecord::Schema.define(version: 20150527141546) do
     t.boolean  "send_email",               default: true
     t.integer  "no_of_days"
     t.boolean  "is_late_payment_reminder", default: false
+  end
+
+  create_table "estimates", force: true do |t|
+    t.string   "estimate_number"
+    t.datetime "estimate_date"
+    t.string   "po_number"
+    t.decimal  "discount_percentage", precision: 10, scale: 2
+    t.integer  "client_id"
+    t.text     "terms"
+    t.text     "notes"
+    t.string   "status"
+    t.decimal  "sub_total",           precision: 10, scale: 2
+    t.decimal  "discount_amount",     precision: 10, scale: 2
+    t.decimal  "tax_amount",          precision: 10, scale: 2
+    t.decimal  "estimate_total",      precision: 10, scale: 2
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "discount_type"
+    t.integer  "company_id"
   end
 
   create_table "invoice_line_items", force: true do |t|
