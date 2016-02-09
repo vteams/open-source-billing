@@ -1,0 +1,36 @@
+<%
+   no_record_message = t('views.invoices.no_invoice_msg')
+if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+no_record_message = t('views.invoices.no_archived_msg')
+elsif params[:status] == "deleted" || @action == "recovered from deleted"
+no_record_message = t('views.invoices.no_deleted_msg')
+end
+%>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<% if  @estimates.length > 0 %>
+    <% @estimates.each do |estimate| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}" %></td>
+          <td class="align_center"><%= link_to(estimate.estimate_number, estimate_path(estimate), :class => "estimate_link #{'deleted_entry' if estimate.deleted?}") %></td>
+<td class="align_left text-overflow-class" data-overflow-rows="2" ><%=  estimate.client.try(:organization_name).blank??  estimate.unscoped_client.try(:organization_name) : estimate.client.organization_name %></td>
+          <td class="align_right"><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.unit : "$")}" %></td>
+          <td class="align_center"><%= estimate.estimate_date rescue "" %></td>
+          <td class="align_center <%= estimate.status %>" title="<%= estimate.tooltip %>">
+<span><%= estimate.status %></span></td>
+          <td class="align_center">
+<% if estimate.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+    edit_estimate_path(estimate) %>
+    <% end %>
+</td>
+        </tr>
+<% end %>
+
+    <% else %>
+    <tr>
+<td colspan="8">
+    <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>
