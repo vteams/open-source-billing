@@ -5,12 +5,12 @@
 window.applyChosen = (single_row) =>
   # listen to Chosen liszt:ready even
   # add a Add New button at the bottom of every chosen list
-  jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select, .invoice_currency, .recurring_profile_currency')",'.invoices-main,.recurring_profiles-main').on "liszt:ready", ->
+  jQuery(".chzn-select:not('.estimate_company, .company_filter, .frequency_select, .per_page, .discount_select, .estimate_currency')",'.estimates-main').on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
       chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
   #remove identical line items
-  identical_line_items = jQuery('.invoice_grid_fields tr.fields:last .chzn-select:first option')
+  identical_line_items = jQuery('.estimate_grid_fields tr.fields:last .chzn-select:first option')
   identical_line_items.each ->
     $(this).siblings('[value=' + @value + ']').remove()
 
@@ -52,33 +52,33 @@ jQuery ->
     total = 0
     tax_amount = 0
     discount_amount = 0
-    jQuery("table.invoice_grid_fields tr:visible .line_total").each ->
+    jQuery("table.estimate_grid_fields tr:visible .line_total").each ->
       line_total = parseFloat(jQuery(this).text())
       total += line_total
       #update invoice sub total lable and hidden field
-      jQuery("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
-      jQuery("#invoice_sub_total_lbl").text(total.toFixed(2))
+      jQuery("#estimate_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
+      jQuery("#estimate_sub_total_lbl").text(total.toFixed(2))
 
-      #update invoice total lable and hidden field
-      jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2))
-      jQuery("#invoice_total_lbl").text(total.toFixed(2))
+      #update estimate total lable and hidden field
+      jQuery("#estimate_estimate_total, #recurring_profile_estimate_total").val(total.toFixed(2))
+      jQuery("#estimate_total_lbl").text(total.toFixed(2))
 
       tax_amount += applyTax(line_total,jQuery(this))
 
     discount_amount = applyDiscount(total)
 
     #update tax amount label and tax amount hidden field
-    jQuery("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2))
-    jQuery("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
+    jQuery("#estimate_tax_amount_lbl").text(tax_amount.toFixed(2))
+    jQuery("#estimate_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
 
     #update discount amount lable and discount hidden field
-#    jQuery("#invoice_discount_amount_lbl").text(discount_amount.toFixed(2))
-    jQuery("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
+#    jQuery("#estimate_discount_amount_lbl").text(discount_amount.toFixed(2))
+    jQuery("#estimate_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
 
-    total_balance = (parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount)
-    jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
-    jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
-    jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
+    total_balance = (parseFloat(jQuery("#estimate_total_lbl").text() - discount_amount) + tax_amount)
+    jQuery("#estimate_estimate_total, #recurring_profile_estimate_total").val(total_balance.toFixed(2))
+    jQuery("#estimate_total_lbl").text(total_balance.toFixed(2))
+    jQuery("#estimate_total_lbl").formatCurrency({symbol: window.currency_symbol})
 
     window.taxByCategory()
 
@@ -96,7 +96,7 @@ jQuery ->
 
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->
-    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+    discount_percentage = jQuery("#estimate_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
     discount_type = jQuery("select#discount_type").val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
@@ -122,7 +122,7 @@ jQuery ->
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".invoice_grid_fields select.items_list").live "change", ->
+  jQuery(".estimate_grid_fields select.items_list").live "change", ->
     # Add an empty line item row at the end if last item is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -154,19 +154,19 @@ jQuery ->
   addLineItemRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length is 0
       jQuery(".add_nested_fields").click()
-  #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
+  #applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))
 
   jQuery(".add_nested_fields").live "click", ->
-    setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
+    setTimeout "window.applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))", 0
 
-  # Re calculate the total invoice balance if an item is removed
+  # Re calculate the total estimate balance if an item is removed
   jQuery(".remove_nested_fields").live "click", ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
 
   # Subtract discount percentage from subtotal
-  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
+  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
     updateInvoiceTotal()
 
   # Subtract discount percentage from subtotal
@@ -174,30 +174,30 @@ jQuery ->
     updateInvoiceTotal()
 
   # Don't allow nagetive value for discount
-  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
+  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
     if e.keyCode is 109 or e.keyCode is 13
       e.preventDefault()
       false
 
   # Don't allow paste and right click in discount field
-  jQuery("#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
+  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
     e.preventDefault()
 
-  # Add date picker to invoice date , invoice due date and payment date.
-  jQuery("#invoice_invoice_date, #invoice_due_date, .date_picker_class").datepicker
+  # Add date picker to estimate date , estimate due date and payment date.
+  jQuery("#estimate_estimate_date, #estimate_due_date, .date_picker_class").datepicker
     dateFormat: DateFormats.format()
     beforeShow: (input, inst) ->
       widget = jQuery(inst).datepicker('widget')
       widget.css('margin-left', jQuery(input).outerWidth() - widget.outerWidth())
 
-  # Makes the invoice line item list sortable
-  jQuery("#invoice_grid_fields tbody").sortable
+  # Makes the estimate line item list sortable
+  jQuery("#estimate_grid_fields tbody").sortable
     handle: ".sort_icon"
     items: "tr.fields"
     axis: "y"
 
-  # Calculate line total and invoice total on page load
-  jQuery(".invoice_grid_fields tr:visible .line_total").each ->
+  # Calculate line total and estimate total on page load
+  jQuery(".estimate_grid_fields tr:visible .line_total").each ->
     updateLineTotal(jQuery(this))
     # dont use decimal points in quantity and make cost 2 decimal points
     container = jQuery(this).parents("tr.fields")
@@ -217,43 +217,37 @@ jQuery ->
   jQuery("#reason_for_dispute").live "keyup", ->
     jQuery(this).qtip("hide")
 
-  # Validate client, cost and quantity on invoice save
-  jQuery(".invoice-form.form-horizontal").submit ->
-    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+  # Validate client, cost and quantity on estimate save
+  jQuery(".estimate-form.form-horizontal").submit ->
+    discount_percentage = jQuery("#estimate_discount_percentage").val()
     discount_type = jQuery("select#discount_type").val()
-    sub_total = jQuery('#invoice_sub_total').val()
+    sub_total = jQuery('#estimate_sub_total').val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
-    item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
+    item_rows = jQuery("table#estimate_grid_fields tr.fields:visible")
+
     flag = true
     # Check if company is selected
-    if jQuery("#invoice_company_id").val() is ""
-      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+    if jQuery("#estimate_company_id").val() is ""
+      applyPopover(jQuery("#estimate_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
       flag = false
       # Check if client is selected
-    else if jQuery("#invoice_client_id").val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+    else if jQuery("#estimate_client_id").val() is ""
+      applyPopover(jQuery("#estimate_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
       # if currency is not selected
-    else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+    else if jQuery("#estimate_currency_id").val() is "" and jQuery("#estimate_currency_id").is( ":hidden" ) == false
+      applyPopover(jQuery("#estimate_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
-      # check if invoice date is selected
-    else if jQuery("#invoice_invoice_date").val() is ""
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+      # check if estimate date is selected
+    else if jQuery("#estimate_estimate_date").val() is ""
+      applyPopover(jQuery("#estimate_estimate_date"),"rightTop","leftMiddle","Select estimate date")
       flag =false
-    else if jQuery("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_invoice_date").val())
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-      flag = false
-    else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
-       applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-       flag = false
-      # Check if payment term is selected
-    else if jQuery("#invoice_payment_terms_id").val() is ""
-      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+    else if jQuery("#estimate_estimate_date").val() isnt "" and !DateFormats.validate_date(jQuery("#estimate_estimate_date").val())
+      applyPopover(jQuery("#estimate_estimate_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
       flag = false
       # Check if discount percentage is an integer
-    else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+    else if jQuery("input#estimate_discount_percentage").val()  isnt "" and isNaN(jQuery("input#estimate_discount_percentage").val())
+      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
       flag = false
       # Check if no item is selected
     else if jQuery("tr.fields:visible").length < 1
@@ -261,17 +255,18 @@ jQuery ->
       flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-      first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
+      first_item = jQuery("table#estimate_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
       flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
 
       # Item cost and quantity should be greater then 0
+
     else
       jQuery("tr.fields:visible").each ->
         row = jQuery(this)
@@ -317,7 +312,7 @@ jQuery ->
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/invoices/new/#{id}'>To create new invoice use the last invoice send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/estimates/new/#{id}'>To create new estimate use the last estimate send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -340,9 +335,9 @@ jQuery ->
 
   # Hide use as template qtip
   jQuery('.use_as_template .close_qtip').live "click", ->
-    hidePopover(jQuery("#invoice_client_id_chzn"))
+    hidePopover(jQuery("#estimate_client_id_chzn"))
 
-  jQuery("#invoice_client_id_chzn,.chzn-container").live "click", ->
+  jQuery("#estimate_client_id_chzn,.chzn-container").live "click", ->
     jQuery(this).qtip("hide")
 
   jQuery("#add_line_item").live "click",->
@@ -365,20 +360,20 @@ jQuery ->
     jQuery('#active_links a').removeClass('active')
     jQuery(this).addClass('active')
 
-  jQuery(".invoice_action_links input[type=submit]").click ->
+  jQuery(".estimate_action_links input[type=submit]").click ->
     jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
 
-  # Load last invoice for client if any
-  jQuery("#invoice_client_id").unbind 'change'
-  jQuery("#invoice_client_id").change ->
+  # Load last estimate for client if any
+  jQuery("#estimate_client_id").unbind 'change'
+  jQuery("#estimate_client_id").change ->
     client_id = jQuery(this).val()
-    hidePopover(jQuery("#invoice_client_id_chzn")) if client_id is ""
-    jQuery("#last_invoice").hide()
+    hidePopover(jQuery("#estimate_client_id_chzn")) if client_id is ""
+    jQuery("#last_estimate").hide()
     if not client_id? or client_id isnt ""
 
       jQuery.get('/clients/'+ client_id + '/default_currency')
 
-      jQuery.ajax '/clients/get_last_invoice',
+      jQuery.ajax '/clients/get_last_estimate',
         type: 'POST'
         data: "id=" + client_id
         dataType: 'html'
@@ -388,44 +383,22 @@ jQuery ->
           data = JSON.parse(data)
           id = jQuery.trim(data[0])
           client_name = data[1]
-          unless id is "no invoice"
-            useAsTemplatePopover(jQuery("#invoice_client_id_chzn"),id,client_name)
+          unless id is "no estimate"
+            useAsTemplatePopover(jQuery("#estimate_client_id_chzn"),id,client_name)
           else
             hidePopover(jQuery(".hint_text:eq(0)"))
 
-  # Change currency of invoice
-  jQuery("#invoice_currency_id").unbind 'change'
-  jQuery("#invoice_currency_id").change ->
+  # Change currency of estimate
+  jQuery("#estimate_currency_id").unbind 'change'
+  jQuery("#estimate_currency_id").change ->
     currency_id = jQuery(this).val()
-    hidePopover(jQuery("#invoice_currency_id_chzn")) if currency_id is ""
+    hidePopover(jQuery("#estimate_currency_id_chzn")) if currency_id is ""
     if not currency_id? or currency_id isnt ""
-      jQuery.get('/invoices/selected_currency?currency_id='+ currency_id)
+      jQuery.get('/estimates/selected_currency?currency_id='+ currency_id)
 
-  # Autofill due date
-  jQuery("#invoice_payment_terms_id").unbind 'change'
-  jQuery("#invoice_payment_terms_id").change ->
-    number_of_days = jQuery("option:selected",this).attr('number_of_days')
-    setDuedate(jQuery("#invoice_invoice_date").val(),number_of_days)
 
   jQuery.datepicker.setDefaults
     dateFormat: DateFormats.format()
-
-  # calculate invoice due date
-  setDuedate = (invoice_date,term_days) ->
-    if term_days? and invoice_date?
-      invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date,parseInt(term_days))
-      jQuery("#invoice_due_date").val(invoice_due_date)
-    else
-      jQuery("#invoice_due_date").val("")
-
-  # re calculate invoice due date on invoice date change
-  jQuery("#invoice_invoice_date").change ->
-    jQuery(this).qtip("hide") if jQuery(this).qtip()
-    term_days = jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days')
-    setDuedate(jQuery(this).val(),term_days)
-
-  #set due date on page load
-  setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
   # Hide placeholder text on focus
   jQuery("input[type=text],input[type=number]",".quick_create_wrapper").live("focus",->
@@ -454,13 +427,13 @@ jQuery ->
   jQuery(".close_btn").live "click", ->
     jQuery(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
 
-  # Alert on dispute if invoice is paid
+  # Alert on dispute if estimate is paid
   jQuery('#dispute_link').click ->
     jQuery('#reason_for_dispute').val('')
     flag = true
     status = jQuery(this).attr "value"
     if status is "paid"
-      alert "Paid invoice can not be disputed."
+      alert "Paid estimate can not be disputed."
       flag = false
     flag
 
@@ -484,7 +457,7 @@ jQuery ->
 
   #send only email to client on clicking send this note only link.
   jQuery('#send_note_only').click ->
-    jQuery.ajax '/invoices/send_note_only',
+    jQuery.ajax '/estimates/send_note_only',
       type: 'POST'
       data: "response_to_client=" + jQuery("#response_to_client").val() + "&inv_id=" + jQuery("#inv_id").val()
       dataType: 'html'

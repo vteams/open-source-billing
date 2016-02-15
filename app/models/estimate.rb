@@ -20,6 +20,9 @@ class Estimate < ActiveRecord::Base
   belongs_to :currency
 
   has_many :sent_emails, :as => :notification
+  has_many :estimate_line_items, :dependent => :destroy, class_name: "InvoiceLineItem"
+
+  accepts_nested_attributes_for :estimate_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 
 
   before_create :set_estimate_number
@@ -73,4 +76,80 @@ class Estimate < ActiveRecord::Base
     return '' if date.nil?
     date.to_date.strftime(date_format)
   end
+
+  def use_as_template
+    estimate = self.dup
+    estimate.estimate_number = Invoice.get_next_estimate_number(nil)
+    estimate.estimate_date = Date.today
+    estimate.estimate_line_items << self.estimate_line_items.map(&:dup)
+    estimate
+  end
+
+  def dispute_history
+    sent_emails.where("type = 'Disputed'")
+  end
+
+  def load_deleted_tax1(line_item)
+    Tax.unscoped.find_by_id(line_item.tax_1)
+  end
+
+  def load_deleted_tax2(line_item)
+    Tax.unscoped.find_by_id(line_item.tax_2)
+  end
+
+  def load_archived_tax1(line_item)
+    Tax.find_by_id(line_item.tax_1)
+  end
+
+  def load_archived_tax2(line_item)
+    Tax.find_by_id(line_item.tax_2)
+  end
+
+  def tax_detail_with_discount
+    taxes = []
+    tlist = Hash.new(0)
+    self.estimate_line_items.each do |li|
+      next unless [li.item_unit_cost, li.item_quantity].all?
+      line_total = li.item_unit_cost * li.item_quantity
+      # calculate tax1 and tax2
+      if li.tax_1.present? and li.tax1.nil?
+        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax1(li).percentage / 100.0)  : ((line_total + discount_amount) * load_deleted_tax1(li).percentage / 100.0)}) unless load_deleted_tax1(li).blank?
+      elsif li.tax_1.present? and li.tax1.archived?.present?
+        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax1(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
+      else
+        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax1.percentage / 100.0)  : ((line_total + discount_amount) * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
+      end
+
+      if li.tax_2.present? and li.tax2.nil?
+        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax2(li).percentage / 100.0)  :  ((line_total  +  discount_amount) * load_deleted_tax2(li).percentage / 100.0)}) unless load_deleted_tax2(li).blank?
+      elsif li.tax_2.present? and li.tax2.archived?.present?
+        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax2(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax2(li).percentage / 100.0)}) unless load_archived_tax2(li).blank?
+      else
+        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax2.percentage / 100.0)  :  ((line_total  + discount_amount)  * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+      end
+    end
+    taxes.each do |tax|
+      tlist["#{tax[:name]} #{tax[:pct]}"] += tax[:amount]
+    end
+    tlist
+  end
+
+  def create_line_item_taxes
+    self.estimate_line_items.each do |estimate_line_item|
+      if estimate_line_item.tax_one.present? and estimate_line_item.tax_one != estimate_line_item.tax1.try(:tax_id)
+        tax_1 = Tax.find estimate_line_item.tax_one
+        estimate_line_item.tax1 = LineItemTax.create(name: tax_1.name, percentage: tax_1.percentage, tax_id: tax_1.id)
+      end
+      if estimate_line_item.tax_two.present? and estimate_line_item.tax_two != estimate_line_item.tax2.try(:tax_id)
+        tax_2 = Tax.find estimate_line_item.tax_two
+        estimate_line_item.tax2 = LineItemTax.create(name: tax_2.name, percentage: tax_2.percentage, tax_id: tax_2.id)
+      end
+    end
+    self.save
+  end
+
+  def notify(current_user, id = nil)
+    EstimateMailer.new_estimate_email(self.client, self, self.encrypted_id, current_user)
+  end
+
 end

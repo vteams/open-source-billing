@@ -168,6 +168,11 @@ class ClientsController < ApplicationController
     render partial: 'client_detail'
   end
 
+  def get_last_estimate
+    client = Client.find_by_id(params[:id]).present? ? Client.find(params[:id]) : Client.unscoped.find_by_id(params[:id])
+    render :text => [client.last_estimate || "no estimate", client.organization_name || ""]
+  end
+
   private
 
   def get_intimation_message(action_key, invoice_ids)

@@ -73,6 +73,7 @@ Osb::Application.routes.draw do
         get 'filter_clients'
         get 'bulk_actions'
         post 'get_last_invoice'
+        post 'get_last_estimate'
         get 'undo_actions'
       end
       member do
@@ -177,7 +178,11 @@ Osb::Application.routes.draw do
 
 
     resources :sent_emails
-    resources :estimates
+    resources :estimates do
+      collection do
+        get 'selected_currency'
+      end
+    end
 
     # The priority is based upon order of creation:
     # first created -> highest priority.

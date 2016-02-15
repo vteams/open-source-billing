@@ -1,4 +1,4 @@
-<%- model_class = Invoice -%>
+<%- model_class = Estimate -%>
 
 <div class="content_top">
   <div class="primary_heading">
@@ -14,9 +14,7 @@
 <div id="items_holder" style="display: none;" class="quick_create_wrapper">
   <%= render 'items/new_item' %>
 </div>
-<div id="payment_terms_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'payment_terms/new_term' %>
-</div>
+
 <div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
   <%= render 'taxes/new_tax' %>
 </div>

@@ -1,0 +1,234 @@
+.estimate_form {
+  .fields_content{
+    padding: 40px 0 23px 0;
+  }
+  .fields_content_container {
+    width: 100%;
+  }
+  .fields_content_data {
+    width: 780px;
+    margin: auto;
+    float: none;
+    padding-top: 0px;
+    &.custom_field{
+      width: 807px;
+      padding-left: 33px;
+    }
+  }
+  .fields_content_left {
+    float: left;
+    width: 490px;
+    .chzn-container-single .chzn-single abbr{
+      top: 7px;
+      right: 18px;
+    }
+    .medium_field{
+      input[type="text"]{
+        width: 280px;
+      }
+    }
+  }
+  .fields_content_right {
+    float: right;
+    width: 242px;
+  }
+  .fields_content_left .label_field{
+    width: 100px;
+  }
+  .fields_content_right .label_field {
+    width: 112px;
+  }
+
+  .field_row .btn {
+    float: right;
+    margin: 0 0 0 5px;
+  }
+  .label_field.textarea {
+    float: none;
+    padding: 0 0 7px 0;
+  }
+  .large_field textarea {
+    width: 760px;
+    margin-bottom: 6px;
+  }
+  .grid_table{
+    padding: 0px;
+  }
+  table {
+    border-collapse: separate;
+  }
+  .grid_table table tr:hover {
+    background: none !important;
+  }
+  .grid_table table th:first-child {
+    border-radius: 0px;
+    background-color: #ffffff;
+  }
+  .grid_table table th:last-child {
+    border-radius: 0 4px 4px 0 !important;
+  }
+  .grid_table table th:nth-child(2) {
+    border-radius: 4px 0 0 4px;
+  }
+  .grid_table table tr:nth-child(2) td {
+    padding-top: 11px;
+  }
+  .grid_table table td {
+    border: none;
+    padding: 3px 2px 4px 2px;
+    vertical-align: top;
+  }
+  .grid_table table td:nth-child(2) {
+    padding-left: 0px;
+  }
+  .grid_table table td:last-child {
+    padding-right: 0px;
+  }
+  .grid_table table col.one {
+    width: 33px;
+  }
+  .grid_table table col.two { /*item*/
+    width: 176px;
+  }
+  .grid_table table col.three { /*description*/
+    width: 174px;
+  }
+  .grid_table table col.four { /*unit cost*/
+    width: 83px;
+  }
+  .grid_table table col.five { /*qty*/
+    width: 83px;
+  }
+  .grid_table table col.six { /*tax*/
+    width: 83px;
+  }
+  .grid_table table col.seven { /*tax2*/
+    width: 83px;
+  }
+  .grid_table table col.eight { /*line total*/
+    width: 100px;
+  }
+  input.grid_small,
+  .blank_input {
+    width: 60px;
+  }
+  select{
+    width: 300px;
+  }
+  select.grid_small {
+    width: 80px;
+  }
+  .grid_table table tr th:first-child {
+    border-right: none !important;
+  }
+  input.grid_medium,
+  .blank_input.grid_medium,
+  select.grid_medium {
+    width: 100px;
+  }
+  input.grid_large,
+  .blank_input,
+  select.grid_large {
+    width: 150px;
+  }
+  input.grid_large_medium,
+  .blank_input,
+  select.grid_large_medium {
+    width: 173px;
+  }
+  .grid_summary {
+    //padding: 30px 0;
+    float: right;
+    margin: -26px 0 0;
+    padding: 0 0 30px;
+    width: 50%;
+    &.custom{
+      .grid_summary_content{
+        width: 220px;
+      }
+      .grid_summary_title{
+        width: 120px;
+      }
+      select{
+        width: 60px;
+      }
+      .grid_summary_description{
+        &.custom{
+          padding-right: 0px;
+        }
+      }
+
+    }
+  }
+  .grid_summary_content {
+    width: 190px;
+    float: right;
+  }
+  .grid_summary_row {
+    float: left;
+    width: 100%;
+    min-height: 31px;
+    ul li{
+      min-height: 31px;
+    }
+    &.discount{
+      min-height: 43px;
+    }
+  }
+  .grid_summary_row.last {
+    min-height: 23px;
+  }
+  .grid_summary_title {
+    float: left;
+    width: 110px;
+    padding: 0 0 0 10px;
+    .chzn-container{
+      vertical-align: middle;
+      .chzn-single span{
+        margin-right: 0px;
+      }
+    }
+    ul.chzn-results li{
+      min-height: 15px;
+    }
+  }
+  .grid_summary_description {
+    float: right;
+    width: 60px;
+    padding: 0 10px 0 0;
+    text-align: right;
+    label {
+      float: right;
+      margin-bottom: 0px;
+    }
+  }
+  .grid_summary_row.net_total {
+    border-top: double #d7d7d7;
+    border-bottom: double #d7d7d7;
+    min-height: 34px;
+    line-height: 34px;
+    font-weight: bold;
+  }
+  .net_total_value {
+    line-height: 34px;
+  }
+  .grid_table table td input, .grid_table table th input {
+    margin: 0px;
+  }
+  .field_description.select li{
+    line-height: normal;
+  }
+  select.per_page, select.discount_select{
+    height: 28px;
+    margin: 0 5px 3px;
+    padding: 4px 3px 4px 2px;
+    width: 51px;
+  }
+  input.estimate_discount{
+    height: 28px;
+    line-height: 28px;
+    padding: 0 9px 0 9px;
+    text-align: right;
+    width: 42px;
+  }
+}
