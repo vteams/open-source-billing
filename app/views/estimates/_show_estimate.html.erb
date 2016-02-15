@@ -1,0 +1,176 @@
+<div class="show_estimate">
+  <div class="estimate_preview">
+    <div class="estimate_preview_contianer">
+      <div class="estimate_tag <%= @estimate.status %>"></div>
+
+      <div class="estimate_preview_content">
+
+        <div class="preview_content_top">
+
+          <div class="preview_top">
+
+            <div class="preview_top_left">
+              <div class="estimate_date">
+                <h2><%= t('estimate') %></h2>
+              </div>
+              <div class="estimate_name"><%= @estimate.company.company_name || '' %></div>
+
+              <div class="estimate_organization">
+                <p><%= @estimate.company.contact_name %></p>
+
+                <p><%= @estimate.company.street_address_1 %></p>
+
+                <p><%= @estimate.company.street_address_2 %></p>
+
+                <p><%= "#{@estimate.company.city}, #{@estimate.company.province_or_state } #{@estimate.company.postal_or_zipcode}" if @estimate.company.city %></p>
+
+                <p><%= @estimate.company.country %></p>
+              </div>
+
+            </div>
+
+            <div class="preview_top_right">
+              <% unless @estimate.company.logo_url.blank? %>
+
+                  <div class="company_logo"><%= request.format.pdf? ? (wicked_pdf_image_tag  @estimate.company.logo_url(:thumb)) : (image_tag @estimate.company.logo_url(:thumb)) %></div>
+              <% end %>
+              <div class="company_logo"><%= @estimate.company.company_tag_line %></div>
+            </div>
+
+          </div>
+          <!--preview_top-->
+
+
+          <div class="preview_btm">
+
+            <% if @client.present? %>
+                <div class="preview_top_left">
+                  <div class="estimate_name"><%= @client.organization_name rescue '' %></div>
+
+                  <div class="estimate_organization">
+                    <p><%= @client.first_name.to_s + " " +@client.last_name.to_s %></p>
+
+                    <p><%= @client.address_street1 %></p>
+
+                    <p><%= @client.address_street2 %></p>
+
+                    <p><%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %></p>
+
+                    <p><%= @client.country %></p>
+                  </div>
+
+                </div>
+            <% end %>
+            <div class="preview_top_right">
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Estimate # <span>:</span></div>
+                <div class="preview_right_description"><%= @estimate.estimate_number %></div>
+              </div>
+              <!--top_right_row-->
+
+              <div class="top_right_row">
+                <div class="preview_right_label">Estimate Date <span>:</span></div>
+                <div class="preview_right_description"><%= @estimate.estimate_date rescue "" %></div>
+              </div>
+              <!--top_right_row-->
+            </div>
+          </div>
+        </div>
+        <!--preview_content_top-->
+
+        <div class="preview_content_middle">
+          <div class="grid_table">
+            <table cellpadding="0" cellspacing="0">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+                <col class="five"/>
+
+              </colgroup>
+              <tr>
+                <th class="align_left"><%= t('views.common.item') %></th>
+                <th class="align_left"><%= t('views.common.description') %></th>
+                <th class="align_right"><%= t('views.common.unit_cost') %></th>
+                <th class="align_right"><%= t('views.items.quantity') %></th>
+                <th class="align_right"><%= t('views.estimates.line_total') %></th>
+              </tr>
+              <% @estimate.estimate_line_items.each do |item|
+                item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+              %>
+                  <tr>
+                    <td class="align_left"><%= item.item_name rescue "" %></td>
+                    <td class="align_left"><%= item.item_description %></td>
+                    <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                    <td class="align_right"><%= item.item_quantity.to_i %></td>
+                    <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+          <!--grid_table-->
+        </div>
+        <!--preview_content_middle-->
+
+        <div class="preview_content_btm">
+          <div class="preview_btm_top">
+
+            <% unless @estimate.notes.blank? %>
+                <div class="preview_left btm">
+                  <div class="preview_notes">
+                    <p class="preview_heading"><%= t('views.common.notes') %></p>
+
+                    <p><%= @estimate.notes %></p>
+                  </div>
+                </div>
+            <% end %>
+            <!--preview_top_left-->
+
+            <div class="preview_right btm">
+              <div class="top_right_row preview_heading">
+                <div class="preview_right_label"> Subtotal </div>
+                <div class="preview_right_description"><%= number_to_currency(@estimate.sub_total, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
+              </div>
+              <!--top_right_row-->
+
+              <div class="top_right_row">
+                <div class="preview_right_label"><%= t('views.common.discount') %> <%= @estimate.discount_percentage %><%= @estimate.discount_type %></div>
+                <div class="preview_right_description"><%= number_to_currency(@estimate.discount_amount, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
+              </div>
+              <!--top_right_row-->
+              <% unless @estimate.tax_detail_with_discount.blank? %>
+                  <%= taxes_list(@estimate.tax_detail_with_discount,@estimate) %>
+              <% end %>
+
+              <!--top_right_row-->
+
+              <div class="top_right_row preview_heading border-row">
+                <div class="preview_right_label"><%= t('views.common.total') %></div>
+                <div class="preview_right_description"><%= number_to_currency(@estimate.estimate_total, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
+              </div>
+              <!--top_right_row-->
+
+
+            </div>
+            <!--preview_top_right-->
+
+          </div>
+          <!--preview_btm_top-->
+          <div class="preview_btm_footer">
+            <ul>
+              <li class="footer_txt">This Estimate was using </li>
+              <li><%= request.format.pdf? ? (wicked_pdf_image_tag "payment_logo.png", :size => "74x13", :alt => "") : (image_tag "payment_logo.png", :size => "74x13", :alt => "") %></li>
+            </ul>
+          </div>
+          <!--preview_btm_footer-->
+        </div>
+        <!--preview_content_btm-->
+      </div>
+      <!--estimate_preview_content-->
+    </div>
+    <!--estimate_preview_container-->
+  </div>
+  <!--estimate_preview-->
+</div><!--show_estimate-->
