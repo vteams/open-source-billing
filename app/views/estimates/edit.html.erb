@@ -1,0 +1,20 @@
+<%- model_class = Estimate -%>
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>
+      <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                    :default => "Edit #{model_class.model_name.human}") %>
+    </h1>
+  </div>
+</div>
+
+<%= render :partial => 'form' %>
+<div id="clients_holder" style="display: none;" class="quick_create_wrapper">
+  <%= render 'clients/new_client' %>
+</div>
+<div id="items_holder" style="display: none;" class="quick_create_wrapper">
+  <%= render 'items/new_item' %>
+</div>
+<div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
+  <%= render 'taxes/new_tax' %>
+</div>

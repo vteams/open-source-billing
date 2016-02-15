@@ -148,6 +148,20 @@ class Estimate < ActiveRecord::Base
     self.save
   end
 
+  def update_line_item_taxes
+    self.estimate_line_items.each do |estimate_line_item|
+      if estimate_line_item.tax_one.present? and estimate_line_item.tax_one != estimate_line_item.tax1.try(:tax_id)
+        tax_1 = LineItemTax.find_by_id(estimate_line_item.tax_one).present? ? LineItemTax.find(estimate_line_item.tax_one)  : Tax.find(estimate_line_item.tax_one)
+        estimate_line_item.tax1 = tax_1.class.to_s == 'Tax' ? LineItemTax.create(name: tax_1.name, percentage: tax_1.percentage, tax_id: tax_1.id) : tax_1
+      end
+      if estimate_line_item.tax_two.present? and estimate_line_item.tax_two != estimate_line_item.tax2.try(:tax_id)
+        tax_2 = LineItemTax.find_by_id(estimate_line_item.tax_two).present? ? LineItemTax.find(estimate_line_item.tax_two)  : Tax.find(estimate_line_item.tax_two)
+        estimate_line_item.tax2 = tax_2.class.to_s == 'Tax' ? LineItemTax.create(name: tax_2.name, percentage: tax_2.percentage, tax_id: tax_2.id) : tax_2
+      end
+    end
+    self.save
+  end
+
   def notify(current_user, id = nil)
     EstimateMailer.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end

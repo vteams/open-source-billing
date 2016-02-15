@@ -54,11 +54,36 @@ class EstimatesController < ApplicationController
       if @estimate.save
         @estimate.notify(current_user, @estimate.id)  if params[:commit].present?
         new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft])
-        #redirect_to(edit_estimate_url(@estimate), :notice => new_invoice_message)
-        redirect_to estimates_path, :notice => new_estimate_message
+        redirect_to(edit_estimate_url(@estimate), :notice => new_invoice_message)
         return
       else
         format.html { render :action => 'new' }
+        format.json { render :json => @estimate.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def edit
+    @estimate = Estimate.find(params[:id])
+    @estimate.estimate_line_items.build()
+    get_clients_and_items
+    @discount_types = @estimate.currency.present? ? ['%', @estimate.currency.unit] : DISCOUNT_TYPE
+    respond_to {|format| format.js; format.html}
+  end
+
+  def update
+    @estimate = Estimate.find(params[:id])
+    @estimate.company_id = get_company_id()
+    notify = params[:commit].present? ? true : false
+    respond_to do |format|
+      if @estimate.update_attributes(estimate_params)
+        @estimate.update_line_item_taxes()
+        @estimate.notify(current_user, @estimate.id) if params[:commit].present?
+        format.json { head :no_content }
+        redirect_to({:action => "edit", :controller => "estimates", :id => @estimate.id}, :notice => 'Your Estimate has been updated successfully.')
+        return
+      else
+        format.html { render :action => "edit" }
         format.json { render :json => @estimate.errors, :status => :unprocessable_entity }
       end
     end
