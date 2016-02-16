@@ -312,7 +312,7 @@ jQuery ->
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/estimates/new/#{id}'>To create new estimate use the last estimate send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/estimates/#{id}/edit/'>To create new estimate use the last estimate send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -384,7 +384,7 @@ jQuery ->
           id = jQuery.trim(data[0])
           client_name = data[1]
           unless id is "no estimate"
-            useAsTemplatePopover(jQuery("#estimate_client_id_chzn"),id,client_name)
+            #useAsTemplatePopover(jQuery("#estimate_client_id_chzn"),id,client_name)
           else
             hidePopover(jQuery(".hint_text:eq(0)"))
 

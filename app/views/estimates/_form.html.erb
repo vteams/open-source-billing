@@ -95,7 +95,7 @@
                   <div class="small_field">
                     <%= f.text_field :estimate_number, :readonly => "", :required => "" %>
                     <ul class="field_description">
-                      <li><%= t('views.invoices.auto_generated') %></li>
+                      <li><%= 'Auto Generated' %></li>
                     </ul>
                   </div>
                 </div>
@@ -149,7 +149,7 @@
             <%= f.fields_for :estimate_line_items, :wrapper => false %>
             <tr style="border:none;" class="no_hover">
               <td>&nbsp</td>
-              <td class="add_line_item_row" colspan="2"><%= f.link_to_add t("views.invoices.add_line_item"), :estimate_line_items, :class => "btn btn-mini", id: 'add_line_item' %></td>
+              <td class="add_line_item_row" colspan="2"><%= f.link_to_add 'Add Line Item', :estimate_line_items, :class => "btn btn-mini", id: 'add_line_item' %></td>
             </tr>
           </table>
 
