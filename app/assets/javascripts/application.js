@@ -50,7 +50,6 @@
 //= require progress_indicator.js.coffee
 //= require jquery.tablehover.min.js
 //= require tax-calculations.js.coffee
-//= require estimate-tax-calculations.js.coffee
 //= require jquery.formatCurrency-1.4.0.js
 //= require table-listing.js.coffee
 //= require credit-payment.js.coffee
@@ -72,9 +71,9 @@
 
 jQuery(function () {
 
-    //override default behavior of inserting new subforms into form    
+    //override default behavior of inserting new subforms into form
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1) {
+        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/estimates\//) != -1) {
             var $tr = $(link).closest('tr');
             return $(content).insertBefore($tr);
         } else if (document.location.pathname.search(/\/clients\//) != -1) {
