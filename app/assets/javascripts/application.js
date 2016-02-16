@@ -50,6 +50,7 @@
 //= require progress_indicator.js.coffee
 //= require jquery.tablehover.min.js
 //= require tax-calculations.js.coffee
+//= require estimate-tax-calculations.js.coffee
 //= require jquery.formatCurrency-1.4.0.js
 //= require table-listing.js.coffee
 //= require credit-payment.js.coffee

@@ -54,7 +54,7 @@ class EstimatesController < ApplicationController
       if @estimate.save
         @estimate.notify(current_user, @estimate.id)  if params[:commit].present?
         new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft])
-        redirect_to(edit_estimate_url(@estimate), :notice => new_invoice_message)
+        redirect_to(edit_estimate_url(@estimate), :notice => new_estimate_message)
         return
       else
         format.html { render :action => 'new' }
