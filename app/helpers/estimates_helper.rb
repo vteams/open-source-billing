@@ -50,24 +50,16 @@ module EstimatesHelper
     notice.html_safe
   end
 
-  def payment_for_estimates ids
-    notice = <<-HTML
-     <p>Payments of ${amount} against <a>N estimates</a> have been recorded successfully.
-     <a href="estimates/filter_estimates?status=deleted#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Deleted</a> section on this page.</p>
-    HTML
-    notice.html_safe
-  end
-
   def send_estimate _message
     notice = <<-HTML
-     <p>Invoice sent successfully.</p>
+     <p>Estimate sent successfully.</p>
     HTML
     notice.html_safe
   end
 
   def dispute_estimate_message company_name
     notice = <<-HTML
-     <p>Invoice disputed.</p>
+     <p>Estimate disputed.</p>
      <p> #{company_name} has been notified of the dispute.</p>
     HTML
     notice.html_safe

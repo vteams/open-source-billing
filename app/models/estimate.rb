@@ -3,7 +3,7 @@ class Estimate < ActiveRecord::Base
   include DateFormats
   include Trackstamps
 
-
+  scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   # constants
   STATUS_DESCRIPTION = {
       draft: 'Estimate created, but you have not notified your client. Your client will not see this estimate if they log in.',

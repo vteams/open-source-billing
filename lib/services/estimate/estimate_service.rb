@@ -27,5 +27,10 @@ module Services
       entities.first.parent_id if entities.present?
     end
 
+    # estimate bulk actions
+    def self.perform_bulk_action(params)
+      Services::EstimateBulkActionsService.new(params).perform
+    end
+
   end
 end

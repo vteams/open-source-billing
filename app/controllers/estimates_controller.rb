@@ -115,6 +115,15 @@ class EstimatesController < ApplicationController
     redirect_to(estimate_path(estimate), notice: 'Estimate sent successfully.')
   end
 
+  def bulk_actions
+    result = Services::EstimateService.perform_bulk_action(params.merge({current_user: current_user}))
+    @estimates = filter_by_company(result[:estimates]).order("#{sort_column} #{sort_direction}")
+    @estimate_has_deleted_clients = estimate_has_deleted_clients?(@estimates)
+    @message = get_intimation_message(result[:action_to_perform], result[:estimate_ids])
+    @action = result[:action]
+    respond_to { |format| format.js }
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
@@ -146,6 +155,22 @@ class EstimatesController < ApplicationController
                                             :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy
                                         ]
     )
+  end
+
+  def estimate_has_deleted_clients?(estimates)
+    estimate_with_deleted_clients = []
+    estimates.each do |estimate|
+      if estimate.unscoped_client.deleted_at.present?
+        estimate_with_deleted_clients << estimate.estimate_number
+      end
+    end
+    estimate_with_deleted_clients
+  end
+
+  def get_intimation_message(action_key, estimate_ids)
+    helper_methods = {archive: 'estimates_archived', destroy: 'estimates_deleted'}
+    helper_method = helper_methods[action_key.to_sym]
+    helper_method.present? ? send(helper_method, estimate_ids) : nil
   end
 
 end
