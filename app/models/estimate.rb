@@ -166,4 +166,9 @@ class Estimate < ActiveRecord::Base
     EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end
 
+  def send_estimate current_user, id
+    status = "sent"
+    self.notify(current_user, id) if self.update_attributes(:status => status)
+  end
+
 end

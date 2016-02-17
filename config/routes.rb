@@ -181,6 +181,7 @@ Osb::Application.routes.draw do
     resources :estimates do
       collection do
         get 'selected_currency'
+        get 'send_estimate'
       end
     end
 

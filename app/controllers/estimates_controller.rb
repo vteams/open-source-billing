@@ -109,6 +109,12 @@ class EstimatesController < ApplicationController
     end
   end
 
+  def send_estimate
+    estimate = Estimate.find(params[:id])
+    estimate.send_estimate(current_user, params[:id])
+    redirect_to(estimate_path(estimate), notice: 'Estimate sent successfully.')
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
