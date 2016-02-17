@@ -168,7 +168,7 @@ class EstimatesController < ApplicationController
   end
 
   def get_intimation_message(action_key, estimate_ids)
-    helper_methods = {archive: 'estimates_archived', destroy: 'estimates_deleted'}
+    helper_methods = {archive: 'estimates_archived', destroy: 'estimates_deleted', invoiced: 'convert_to_invoice'}
     helper_method = helper_methods[action_key.to_sym]
     helper_method.present? ? send(helper_method, estimate_ids) : nil
   end

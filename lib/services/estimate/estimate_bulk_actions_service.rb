@@ -23,7 +23,7 @@ module Services
     attr_reader :estimates, :estimate_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted send destroy_archived)
+      actions_list = %w(archive destroy recover_archived recover_deleted send destroy_archived convert_to_invoice)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @estimate_ids = @options[:estimate_ids]
@@ -73,8 +73,15 @@ module Services
     end
 
     def send_estimates
-      @estimates.map { |estimate| estimate.update_attribute(:status, 'sent') }
+      @estimates.map { |estimate| estimate.update_attribute(:status, 'sent') if send_estimate_to_client(estimate) }
       {action: 'sent', estimates: get_estimates('unarchived')}
+    end
+
+    def convert_to_invoice
+      @estimates.each do |estimate|
+        estimate.convert_to_invoice
+      end
+      {action: 'invoiced', estimates: get_estimates('unarchived')}
     end
 
     private
@@ -83,10 +90,9 @@ module Services
       EstimateeMailer.delay.new_estimate_email(estimate.client, estimate, estimate.encrypted_id, @current_user)
     end
 
-    private
-
     def get_estimates(estimate_filter)
       ::Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").send(estimate_filter).page(@options[:page]).per(@options[:per])
     end
+
   end
 end

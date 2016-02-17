@@ -85,6 +85,31 @@ class Estimate < ActiveRecord::Base
     estimate
   end
 
+  def convert_to_invoice
+    self.update_attribute(:status, 'invoiced')
+    invoice = Invoice.new( invoice_date:          self.estimate_date ,
+                           po_number:             self.po_number ,
+                           discount_percentage:   self.discount_percentage ,
+                           client_id:             self.client_id ,
+                           terms:                 self.terms ,
+                           notes:                 self.notes ,
+                           status:                "draft" ,
+                           sub_total:             self.sub_total ,
+                           discount_amount:       self.discount_amount ,
+                           tax_amount:            self.tax_amount ,
+                           invoice_total:         self.estimate_total,
+                           archive_number:        self.archive_number ,
+                           archived_at:           self.archived_at ,
+                           discount_type:         self.discount_type ,
+                           company_id:            self.company_id ,
+                           created_by:            self.created_by,
+                           updated_by:            self.updated_by,
+                           currency_id:           self.currency_id
+                          )
+
+    self.estimate_line_items.each { |item| item.update_attributes(invoice_id: invoice.id) } if invoice.save
+  end
+
   def dispute_history
     sent_emails.where("type = 'Disputed'")
   end

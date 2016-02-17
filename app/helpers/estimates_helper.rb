@@ -57,6 +57,13 @@ module EstimatesHelper
     notice.html_safe
   end
 
+  def convert_to_invoices
+    notice = <<-HTML
+     <p>#{ids.size} estimate(s) have been converted to invoice. You can find them in Invoices section</p>
+    HTML
+    notice.html_safe
+  end
+
   def dispute_estimate_message company_name
     notice = <<-HTML
      <p>Estimate disputed.</p>

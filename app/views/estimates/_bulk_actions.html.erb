@@ -13,5 +13,6 @@
     <li class="grid_control_sep"><%= submit_tag t('views.common.archive'), :name => "archive", :class => "top_links archive" %></li>
     <li class="grid_control_sep"><%= submit_tag t('views.common.delete'), :name => "destroy", :class => "top_links destroy" %></li>
     <li class="grid_control_sep"><%= submit_tag t('views.common.delete'), :name => "destroy_archived", :class => "top_links destroy_archived", :style => "display:none;" %></li>
-    <li><%= submit_tag t('views.common.send'), :name => "send", :class => "top_links send" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.send'), :name => "send", :class => "top_links send" %></li>
+    <li><%= submit_tag t('views.common.convert_to_invoice'), :name => "convert_to_invoice", :class => "top_links send" %></li>
 <% end %>

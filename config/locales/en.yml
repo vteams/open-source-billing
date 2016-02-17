@@ -74,6 +74,7 @@ en:
       delete: "Delete"
       deleted: "Deleted"
       send: "Send"
+      convert_to_invoice: "Convert to Invoice"
       active: "Active"
       recover: "Recover"
       less: "less"
