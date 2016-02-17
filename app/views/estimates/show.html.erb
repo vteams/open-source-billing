@@ -20,10 +20,15 @@
             <li class="grid_control_sep sep_right">
               <%= link_to t('views.common.pdf'), {:controller => 'estimates', :action => 'estimate_pdf', :id => @estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
-            <li >
+            <li class="grid_control_sep sep_right">
               <!--<a href="#">Print</a>-->
               <%= link_to t('views.common.print'), {:controller => 'estimates', :action => 'estimate_pdf', :id => @estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
+            <% if !@estimate.status.eql?("invoiced") %>
+            <li >
+              <%= link_to t('views.common.convert_to_invoice'), {:controller => 'estimates', :action => 'convert_to_invoice', :id => @estimate.id} %>
+            </li>
+            <% end %>
           </ul>
         </div>
       </div>

@@ -124,6 +124,12 @@ class EstimatesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def convert_to_invoice
+    estimate = Estimate.find(params[:id])
+    estimate.convert_to_invoice
+    redirect_to(estimate_path(estimate), notice: 'Estimate successfully converted to invoice.')
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
