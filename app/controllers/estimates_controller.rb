@@ -89,6 +89,26 @@ class EstimatesController < ApplicationController
     end
   end
 
+  def estimate_pdf
+    # to be used in invoice_pdf view because it requires absolute path of image
+    @images_path = "#{request.protocol}#{request.host_with_port}/assets"
+    estimate_id = OSB::Util.decrypt(params[:id])
+    @estimate = Estimate.find(estimate_id)
+    respond_to do |format|
+      format.pdf do
+        file_name = "Estimate-#{Date.today.to_s}.pdf"
+        pdf = render_to_string  pdf: "#{@estimate.estimate_number}",
+                                layout: 'pdf_mode.html.erb',
+                                encoding: "UTF-8",
+                                template: 'estimates/estimate_pdf.html.erb',
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                }
+        send_data pdf, filename: file_name
+      end
+    end
+  end
+
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
