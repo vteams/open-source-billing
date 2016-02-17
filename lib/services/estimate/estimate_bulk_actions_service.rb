@@ -79,7 +79,7 @@ module Services
 
     def convert_to_invoice
       @estimates.each do |estimate|
-        estimate.convert_to_invoice
+        estimate.convert_to_invoice unless estimate.status.eql?("invoiced")
       end
       {action: 'invoiced', estimates: get_estimates('unarchived')}
     end

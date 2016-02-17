@@ -58,9 +58,17 @@ class Estimate < ActiveRecord::Base
   end
 
   def self.filter(params, per_page)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    mappings = {active: 'unarchived_and_not_invoiced', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     method = mappings[params[:status].to_sym]
     self.send(method).page(params[:page]).per(per_page)
+  end
+
+  def self.invoiced
+    where(status: 'invoiced')
+  end
+
+  def self.unarchived_and_not_invoiced
+    unarchived.where.not(status: 'invoiced')
   end
 
   def unscoped_client
