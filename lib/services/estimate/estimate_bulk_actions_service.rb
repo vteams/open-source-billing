@@ -81,7 +81,7 @@ module Services
       @estimates.each do |estimate|
         estimate.convert_to_invoice unless estimate.status.eql?("invoiced")
       end
-      {action: 'invoiced', estimates: get_estimates('unarchived')}
+      {action: 'invoiced', estimates: get_estimates('unarchived_and_not_invoiced')}
     end
 
     private
