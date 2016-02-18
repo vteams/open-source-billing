@@ -26,7 +26,6 @@ module EstimatesHelper
        <p>#{message}.</p>
        <ul>
          <li><a href="/estimates/new">Create another estimate</a></li>
-         <li><a href="/estimates/estimate_pdf/#{id}.pdf" target="_blank">Download this estimate as PDF</a></li>
        </ul>
     HTML
     notice.html_safe
