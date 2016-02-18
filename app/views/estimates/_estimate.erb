@@ -1,9 +1,9 @@
 <%
-   no_record_message = t('views.invoices.no_invoice_msg')
+   no_record_message = "You haven't created any estimate yet. Please click on New Estimate button to create new estimate."
 if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
-no_record_message = t('views.invoices.no_archived_msg')
+no_record_message = "You haven't any archived estimate."
 elsif params[:status] == "deleted" || @action == "recovered from deleted"
-no_record_message = t('views.invoices.no_deleted_msg')
+no_record_message = "You haven't any deleted estimate."
 end
 %>
 <%= hidden_field_tag :direction, params[:direction] %>
