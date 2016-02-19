@@ -204,8 +204,4 @@ class Estimate < ActiveRecord::Base
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
-  def change_status_after_recover
-    sent! if %w(draft replied viewed).include?(status)
-    draft! if status == 'draft'
-  end
 end

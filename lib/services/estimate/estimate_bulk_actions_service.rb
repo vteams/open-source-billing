@@ -37,7 +37,7 @@ module Services
 
     def archive
       @estimates.map(&:archive)
-      {action: 'archived', estimates: get_estimates('unarchived')}
+      {action: 'archived', estimates: get_estimates('unarchived_and_not_invoiced')}
     end
 
     def destroy
@@ -47,7 +47,7 @@ module Services
       (@estimates).map(&:destroy)
 
       action =  'deleted'
-      {action: action, estimates: get_estimates('unarchived')}
+      {action: action, estimates: get_estimates('unarchived_and_not_invoiced')}
     end
 
     def destroy_archived
@@ -67,7 +67,7 @@ module Services
     end
 
     def recover_deleted
-      @estimates.only_deleted.map { |estimate| estimate.restore; estimate.unarchive; estimate.change_status_after_recover; estimate.estimate_line_items.only_deleted.map(&:restore); }
+      @estimates.only_deleted.map { |estimate| estimate.restore; estimate.unarchive; estimate.status; estimate.estimate_line_items.only_deleted.map(&:restore); }
       estimates = ::Estimate.only_deleted.page(@options[:page]).per(@options[:per])
       {action: 'recovered from deleted', estimates: get_estimates('only_deleted')}
     end
