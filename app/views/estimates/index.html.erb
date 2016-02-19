@@ -9,7 +9,7 @@
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, "New Estimate")),
+      <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
                   new_estimate_path,
                   :class => 'btn_large' %>
     </div>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, 'New Estimate')),
+        <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
                     new_estimate_path,
                     :class => 'btn_large' %>
       </div>

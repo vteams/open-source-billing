@@ -13,7 +13,7 @@
       <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
     </li>
     <li>
-      <%= link_to "Invoiced", "estimates?status=invoiced#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_invoiced #{'active' if params[:status] == 'invoiced'}", :remote => true %>
+      <%= link_to t('views.common.invoiced'), "estimates?status=invoiced#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_invoiced #{'active' if params[:status] == 'invoiced'}", :remote => true %>
       <span id="invoiced">(<%= get_count(params.merge(status: 'invoiced')) %>)</span>
     </li>
   </ul>

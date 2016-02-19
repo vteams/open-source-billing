@@ -64,13 +64,13 @@
             <div class="preview_top_right">
 
               <div class="top_right_row">
-                <div class="preview_right_label">Estimate # <span>:</span></div>
+                <div class="preview_right_label"><%= t('estimate')%> # <span>:</span></div>
                 <div class="preview_right_description"><%= @estimate.estimate_number %></div>
               </div>
               <!--top_right_row-->
 
               <div class="top_right_row">
-                <div class="preview_right_label">Estimate Date <span>:</span></div>
+                <div class="preview_right_label"><%= t('views.estimates.estimate_date')%><span>:</span></div>
                 <div class="preview_right_description"><%= @estimate.estimate_date rescue "" %></div>
               </div>
               <!--top_right_row-->
@@ -130,7 +130,7 @@
 
             <div class="preview_right btm">
               <div class="top_right_row preview_heading">
-                <div class="preview_right_label"> Subtotal </div>
+                <div class="preview_right_label"> <%= t('views.estimates.subtotal') %> </div>
                 <div class="preview_right_description"><%= number_to_currency(@estimate.sub_total, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
               </div>
               <!--top_right_row-->
@@ -160,7 +160,7 @@
           <!--preview_btm_top-->
           <div class="preview_btm_footer">
             <ul>
-              <li class="footer_txt">This Estimate was using </li>
+              <li class="footer_txt"><%= t('views.estimates.this_estimate_was_sent_using')%></li>
               <li><%= request.format.pdf? ? (wicked_pdf_image_tag "payment_logo.png", :size => "74x13", :alt => "") : (image_tag "payment_logo.png", :size => "74x13", :alt => "") %></li>
             </ul>
           </div>
