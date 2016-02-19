@@ -1,4 +1,5 @@
 Osb::Application.routes.draw do
+  resources :expenses
   mount OsbApi::Engine => "/api"
   use_doorkeeper
 

@@ -1,4 +1,17 @@
 # encoding: UTF-8
+CATEGORIES = ['Advertising',
+              'Truck Expenses',
+              'Contractors',
+              'Education and Training',
+              'Employee Benefits',
+              'Meals and Entertainment',
+              'Office Expenses',
+              'Professional Services',
+              'Rent or Lease',
+              'Supplies',
+              'Travel',
+              'Utilities',
+              'Other Expenses']
 COUNTRY_LIST = ['Afghanistan',
                 'Albania',
                 'Algeria',

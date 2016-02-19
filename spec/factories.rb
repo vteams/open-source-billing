@@ -1,7 +1,17 @@
 require 'factory_girl'
 require 'faker'
 
-FactoryGirl.define do  factory :line_item_tax do
+FactoryGirl.define do  factory :expense_category do
+    name "MyString"
+  end
+  factory :expense do
+    amount 1.5
+date "2016-02-15 20:27:15"
+category "MyString"
+note "MyText"
+client_id 1
+  end
+  factory :line_item_tax do
     invoice_line_item_id 1
 percentage "9.99"
 name "MyString"

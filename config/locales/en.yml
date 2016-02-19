@@ -33,6 +33,10 @@ en:
         listing: "Invoice Listing"
         new: "New Invoice"
         recurring: "Recurring"
+      expenses:
+        expenses: "Expenses"
+        listing: "Expenses Listing"
+        new: "New Expense"
       clients:
         clients: "Clients"
         listing: "Clients Listing"
@@ -293,6 +297,15 @@ en:
       no_deleted_client: "You haven't any deleted client."
       add_new_client: "Add New Client"
       contact_title: "Contact title"
+    expenses:
+      expenses: "Expenses"
+      listing: "Expenses Listing"
+      new_expense: "New Expense"
+      note: "Note"
+      category: "Category"
+      amount: "Amount"
+      client_hint: "Select a client for this expense"
+      no_record_msg: "You haven't created any expenses yet."
 
     items:
       add_new_item: 'Add New Item'

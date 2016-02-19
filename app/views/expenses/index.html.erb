@@ -1,0 +1,53 @@
+<%- model_class = Expense -%>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<div class="expense">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t '.title', :default => t("expenses") %>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
+        new_expense_path,
+        :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+
+  <!--grid_control-->
+  <div class="grid_table">
+    <table cellpadding="0" cellspacing="0" class="table table_listing client_listing <%= I18n.locale %>">
+      <colgroup>
+        <col class="one"/>
+        <col class="two"/>
+        <col class="three"/>
+        <col class="four"/>
+        <col class="five"/>
+        <col class="six"/>
+        <col class="seven"/>
+      </colgroup>
+      <thead  id="client_head">
+      <%= render 'expenses/expenses_header' %>
+      </thead>
+      <tbody id="client_body">
+      <%= render 'expenses' %>
+      <tfoot id="paging_links">
+      <%= render "application_partials/paging" %>
+      </tfoot>
+      </tbody>
+    </table>
+  </div>
+  <!--grid_table-->
+</div>
+<!--content_middle-->
+<div class="content_bottom">
+  <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
+              new_expense_path,
+              :class => 'btn_large' %>
+</div>
+<!--content_bottom-->
+</div><!--expenses-->
+

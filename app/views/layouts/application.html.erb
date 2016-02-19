@@ -140,6 +140,16 @@
               </div>
             </li>
 
+            <li class="dropdown">
+              <%= active_link_to t("header.links.expenses.expenses"), expenses_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                <ul>
+                  <li><%= active_link_to t("header.links.expenses.listing"), "/#{I18n.locale}/expenses/index" %></li>
+                  <li><%= active_link_to t("header.links.expenses.new"), "/#{I18n.locale}/expenses/new" %></li>
+
+                </ul>
+              </div>
+            </li>
             <li><%= active_link_to  t("header.links.help"), help_index_path %></li>
           </ul>
         </div>

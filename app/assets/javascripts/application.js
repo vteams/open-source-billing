@@ -25,6 +25,7 @@
 //= require jquery.css3caching.js
 //= require inline-forms.js.coffee
 //= require invoices.js.coffee
+//= require expenses.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
 //= require tablesorter.staticrow.js
