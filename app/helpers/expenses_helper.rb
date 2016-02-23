@@ -22,4 +22,8 @@ module ExpensesHelper
       #current_user.current_account.expenses.send(status).count
       Expense.send(status).count
     end
+
+    def load_taxes_data
+      Tax.order('name').map { |tax| [tax.name, tax.id, {'data-type' => 'deleted_tax', 'data-tax_1' => tax.percentage/100}] }
+    end
 end

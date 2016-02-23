@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222121254) do
+ActiveRecord::Schema.define(version: 20160223082306) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -194,6 +194,31 @@ ActiveRecord::Schema.define(version: 20160222121254) do
     t.boolean  "is_late_payment_reminder", default: false
   end
 
+  create_table "estimates", force: true do |t|
+    t.string   "estimate_number"
+    t.datetime "estimate_date"
+    t.string   "po_number"
+    t.decimal  "discount_percentage", precision: 10, scale: 2
+    t.integer  "client_id"
+    t.text     "terms"
+    t.text     "notes"
+    t.string   "status"
+    t.decimal  "sub_total",           precision: 10, scale: 2
+    t.decimal  "discount_amount",     precision: 10, scale: 2
+    t.decimal  "tax_amount",          precision: 10, scale: 2
+    t.decimal  "estimate_total",      precision: 10, scale: 2
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "discount_type"
+    t.integer  "company_id"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.integer  "currency_id"
+  end
+
   create_table "expense_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -211,6 +236,8 @@ ActiveRecord::Schema.define(version: 20160222121254) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
+    t.integer  "tax_1"
+    t.integer  "tax_2"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -228,6 +255,7 @@ ActiveRecord::Schema.define(version: 20160222121254) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+    t.integer  "estimate_id"
   end
 
   create_table "invoices", force: true do |t|

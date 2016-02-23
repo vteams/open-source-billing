@@ -2,6 +2,8 @@ class Expense < ActiveRecord::Base
   include DateFormats
   belongs_to :client
   belongs_to :category, class_name: 'ExpenseCategory', foreign_key: 'category_id'
+  belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
+  belongs_to :tax2, :foreign_key => 'tax_2', :class_name => 'Tax'
 
   paginates_per 10
 
@@ -25,6 +27,17 @@ class Expense < ActiveRecord::Base
 
   def self.recover_deleted(ids)
     multiple(ids).only_deleted.each { |expense| expense.restore; expense.unarchive }
+  end
+
+  def total
+    amount + total_tax_amount
+  end
+
+  def total_tax_amount
+    tax_amount = 0
+    tax_amount += amount * (tax1.percentage / 100.0) if tax1.present?
+    tax_amount += amount * (tax2.percentage / 100.0) if tax2.present?
+    tax_amount
   end
 
 end
