@@ -1,5 +1,5 @@
 <div class="invoice_form expense_form">
-<%= form_for @expense, :html => {:id => 'newExpense', :novalidate => ""} do |f| %>
+<%= form_for @expense, :html => {:class => 'expense-form form-horizontal', :id => 'newExpense', :novalidate => ""} do |f| %>
   <% @parent_f = f %>
 
     <div class="content_middle">
@@ -10,7 +10,7 @@
             <div class="fields_content_data">
               <div class="fields_content_left">
                 <div class="field_row">
-                  <div class="label_field left single"><%= t('views.expenses.category') %></div>
+                  <div class="label_field left single"><%= f.label :category_id, content_tag(:span, 'Category') %></div>
                   <div class="small_field">
                     <%= f.collection_select(:category_id, ExpenseCategory.all, :id, :name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a category...", :class => "invoice_client small chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "130"})  %>
                   </div>
@@ -30,24 +30,27 @@
                   </div>
                 </div>
                 <!--field_row-->
+                <%= render partial: 'tax_fields', locals: {f: f} %>
+
                 </div>
 
               <div class="fields_content_right">
-                <div class="field_row">
-                  <div class="label_field left single"><%= t('views.expenses.amount') %></div>
+                <div class="field_row ">
+                  <div class="label_field left single"><%= f.label :amount, content_tag(:span, 'Amount') %></div>
                   <div class="small_field">
-                    <%= f.number_field :amount, :class => 'text_field', :step => 'any' %>
+                    <%= f.number_field :amount, :class => 'text_field', :step => 'any', min: 0 %>
                   </div>
                 </div>
                 <!--field_row-->
 
                 <div class="field_row">
-                  <div class="label_field left single"><%= t('views.common.date') %></div>
+                  <div class="label_field left single"><%= f.label :date, content_tag(:span, 'Date') %></div>
                   <div class="small_field">
                     <%= f.text_field :expense_date %>
                   </div>
                 </div>
                 <!--field_row-->
+
 
               </div>
               <div class="field_row">

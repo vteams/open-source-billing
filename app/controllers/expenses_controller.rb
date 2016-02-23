@@ -106,7 +106,7 @@ class ExpensesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def expense_params
-      params.require(:expense).permit(:amount, :expense_date, :category_id, :note, :client_id)
+      params.require(:expense).permit(:amount, :expense_date, :category_id, :note, :client_id, :tax_1, :tax_2)
     end
 
   def sort_column
