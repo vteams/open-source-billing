@@ -16,38 +16,51 @@
     </div>
   </div>
   <!--content_top-->
+  <%= form_tag bulk_actions_expenses_path, {method: :get, :remote => true} do -%>
+      <div class="content_middle">
+          <div class="grid_control">
+            <div class="grid_control_left">
+              <ul value='company' id="bulk_actions">
+                <%= render "bulk_actions" %>
+              </ul>
 
-  <!--grid_control-->
-  <div class="grid_table">
-    <table cellpadding="0" cellspacing="0" class="table table_listing client_listing <%= I18n.locale %>">
-      <colgroup>
-        <col class="one"/>
-        <col class="two"/>
-        <col class="three"/>
-        <col class="four"/>
-        <col class="five"/>
-        <col class="six"/>
-        <col class="seven"/>
-      </colgroup>
-      <thead  id="client_head">
-      <%= render 'expenses/expenses_header' %>
-      </thead>
-      <tbody id="client_body">
-      <%= render 'expenses' %>
-      <tfoot id="paging_links">
-      <%= render "application_partials/paging" %>
-      </tfoot>
-      </tbody>
-    </table>
-  </div>
-  <!--grid_table-->
-</div>
-<!--content_middle-->
-<div class="content_bottom">
-  <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
-              new_expense_path,
-              :class => 'btn_large' %>
-</div>
+            </div>
+            <div class="grid_control_right" id="active_links">
+              <%= render "filter_links" %>
+            </div>
+          </div>
+            <!--grid_control-->
+          <div class="grid_table">
+            <table cellpadding="0" cellspacing="0" class="table table_listing client_listing <%= I18n.locale %>">
+              <colgroup>
+                <col class="one"/>
+                <col class="two"/>
+                <col class="three"/>
+                <col class="four"/>
+                <col class="five"/>
+                <col class="six"/>
+                <col class="seven"/>
+              </colgroup>
+              <thead  id="expenses_head">
+              <%= render 'expenses/expenses_header' %>
+              </thead>
+              <tbody id="expense_body">
+              <%= render 'expenses' %>
+              <tfoot id="paging_links">
+              <%= render "application_partials/paging" %>
+              </tfoot>
+              </tbody>
+            </table>
+          </div>
+          <!--grid_table-->
+    </div>
+    <!--content_middle-->
+    <div class="content_bottom">
+      <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
+                  new_expense_path,
+                  :class => 'btn_large' %>
+    </div>
+  <% end %>
 <!--content_bottom-->
 </div><!--expenses-->
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219082001) do
+ActiveRecord::Schema.define(version: 20160222121254) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -201,13 +201,16 @@ ActiveRecord::Schema.define(version: 20160219082001) do
   end
 
   create_table "expenses", force: true do |t|
-    t.float    "amount",       limit: 24
+    t.float    "amount",         limit: 24
     t.datetime "expense_date"
     t.integer  "category_id"
     t.text     "note"
     t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
   end
 
   create_table "invoice_line_items", force: true do |t|

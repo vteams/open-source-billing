@@ -1,5 +1,5 @@
 Osb::Application.routes.draw do
-  resources :expenses
+
   mount OsbApi::Engine => "/api"
   use_doorkeeper
 
@@ -100,6 +100,14 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         post 'load_item_data'
         get 'duplicate_item'
+        get 'undo_actions'
+      end
+    end
+
+    resources :expenses do
+      collection do
+        get 'bulk_actions'
+        get 'filter_items'
         get 'undo_actions'
       end
     end

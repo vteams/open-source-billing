@@ -306,6 +306,8 @@ en:
       amount: "Amount"
       client_hint: "Select a client for this expense"
       no_record_msg: "You haven't created any expenses yet."
+      no_archived_expense: "You don't have any archived expense."
+      no_deleted_expense: "You don't have any deleted expense."
 
     items:
       add_new_item: 'Add New Item'

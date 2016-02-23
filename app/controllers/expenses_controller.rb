@@ -2,10 +2,18 @@ class ExpensesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
   before_action :set_expense, only: [:show, :edit, :update, :destroy]
+  include ExpensesHelper
 
   # GET /expenses
   def index
-    @expenses = Expense.all.page(params[:page]).per(params[:per])
+    params[:status] = params[:status] || 'active'
+    #@expenses = Expense.all.page(params[:page]).per(params[:per])
+    @expenses = Expense.filter(params.merge(per: @per_page)).order(sort_column + " " + sort_direction)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: expenses }
+      format.js
+    end
   end
 
   # GET /expenses/1
@@ -44,7 +52,16 @@ class ExpensesController < ApplicationController
   # DELETE /expenses/1
   def destroy
     @expense.destroy
-    redirect_to expenses_url, notice: 'Expense was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to expenses_url }
+      format.json { head :no_content }
+    end
+    #redirect_to expenses_url, notice: 'Expense was successfully destroyed.'
+  end
+
+  def filter_expenses
+    @companies = Expense.filter(params.merge(per: session["#{controller_name}-per_page"])).order(sort_column + " " + sort_direction)
+    respond_to { |format| format.js }
   end
 
   def set_per_page_session
@@ -61,7 +78,38 @@ class ExpensesController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
+  def bulk_actions
+    # if params[:expense_ids].include? get_user_current_company.id.to_s
+    #   if params[:archive].present?
+    #     @action_for_company = "archived"
+    #   else
+    #     @action_for_company = "deleted"
+    #   end
+    #   @flag_current_company = true
+    # else
+      params[:sort] = params[:sort] || 'created_at'
+      result = Services::ExpenseBulkActionsService.new(params.merge({current_user: current_user})).perform
+      @expenses = result[:expenses]
+      @message = get_intimation_message(result[:action_to_perform], result[:expense_ids])
+      @action = result[:action]
+    #end
+    respond_to { |format| format.js }
+  end
+
+  def undo_actions
+    params[:archived] ? Expense.recover_archived(params[:ids]) : Expense.recover_deleted(params[:ids])
+    #expenses = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+
+    respond_to { |format| format.js }
+  end
+
   private
+    def get_intimation_message(action_key, expense_ids)
+      helper_methods = {archive: 'expenses_archived', destroy: 'expenses_deleted'}
+      helper_method = helper_methods[action_key.to_sym]
+      helper_method.present? ? send(helper_method, expense_ids) : nil
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_expense
       @expense = Expense.find(params[:id])
@@ -71,4 +119,14 @@ class ExpensesController < ApplicationController
     def expense_params
       params.require(:expense).permit(:amount, :expense_date, :category_id, :note, :client_id)
     end
+
+  def sort_column
+    params[:sort].present? ? params[:sort] : 'created_at'
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
 end
