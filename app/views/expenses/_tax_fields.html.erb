@@ -1,25 +1,29 @@
-<div class="field_row description">
-  <div class="label_field left single">Tax 1 </div>
-  <div class="small_field tax_div">
-    <%= f.select :tax_1, options_for_select(load_taxes_data, selected: f.object.tax_1),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "tax_holder", "data-dropdown-width" => "300"} %>
-  </div>
-</div>
-<div class="field_row description">
-  <div class="label_field left single">Amount  </div>
-  <div class="small_field amount_div">
-    <%= text_field_tag :amount1, nil, class: "grid_small" , readonly: true %>
-  </div>
+<div class="fields_content_left">
+    <div class="field_row description">
+      <div class="label_field left single">Tax 1 </div>
+      <div class="small_field tax_div">
+        <%= f.select :tax_1, options_for_select(load_taxes_data, selected: f.object.tax_1),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 chzn-select grid_small", "data-form-container" => "tax_holder", "data-dropdown-width" => "300"} %>
+      </div>
+    </div>
+    <div class="field_row description">
+      <div class="label_field left single">Amount  </div>
+      <div class="small_field amount_div">
+        <%= text_field_tag :amount1, nil, class: 'text_field' , readonly: true %>
+      </div>
+    </div>
 </div>
 
-<div class="field_row description">
-  <div class="label_field left single">Tax 2 </div>
-  <div class="small_field tax_div">
-    <%= f.select :tax_2, options_for_select(load_taxes_data, selected: f.object.tax_2),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "tax_holder", "data-dropdown-width" => "300"} %>
-  </div>
-</div>
-<div class="field_row description">
-  <div class="label_field left single">Amount  </div>
-  <div class="small_field amount_div">
-    <%= text_field_tag :amount2, nil, class: "grid_small", readonly: true %>
-  </div>
+<div class="fields_content_right">
+    <div class="field_row description">
+      <div class="label_field left single">Tax 2 </div>
+      <div class="small_field tax_div">
+        <%= f.select :tax_2, options_for_select(load_taxes_data, selected: f.object.tax_2),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 chzn-select grid_small", "data-form-container" => "tax_holder", "data-dropdown-width" => "300"} %>
+      </div>
+    </div>
+    <div class="field_row description">
+      <div class="label_field left single">Amount  </div>
+      <div class="small_field amount_div">
+        <%= text_field_tag :amount2, nil, class: 'text_field', readonly: true %>
+      </div>
+    </div>
 </div>

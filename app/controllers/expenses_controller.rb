@@ -34,7 +34,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new(expense_params)
 
     if @expense.save
-      redirect_to @expense, notice: 'Expense was successfully created.'
+      redirect_to @expenses, notice: 'Expense was successfully created.'
     else
       render :new
     end

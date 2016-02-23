@@ -15,7 +15,7 @@
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.amount %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.note %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%=  expense.expense_date %></td>
-          <td class="align_left text-overflow-class" data-overflow-rows="2">0</td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.total) %></td>
           <td class="align_center">
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_expense_path(expense), :class => 'edit_action' %>

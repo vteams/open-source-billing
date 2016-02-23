@@ -30,8 +30,6 @@
                   </div>
                 </div>
                 <!--field_row-->
-                <%= render partial: 'tax_fields', locals: {f: f} %>
-
                 </div>
 
               <div class="fields_content_right">
@@ -53,6 +51,7 @@
 
 
               </div>
+              <%= render partial: 'tax_fields', locals: {f: f} %>
               <div class="field_row">
                 <div class="label_field left single"><%= t('views.expenses.note') %></div>
                 <div class="large_field">
