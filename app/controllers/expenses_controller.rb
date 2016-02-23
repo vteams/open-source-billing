@@ -56,7 +56,6 @@ class ExpensesController < ApplicationController
       format.html { redirect_to expenses_url }
       format.json { head :no_content }
     end
-    #redirect_to expenses_url, notice: 'Expense was successfully destroyed.'
   end
 
   def filter_expenses
@@ -79,14 +78,6 @@ class ExpensesController < ApplicationController
   end
 
   def bulk_actions
-    # if params[:expense_ids].include? get_user_current_company.id.to_s
-    #   if params[:archive].present?
-    #     @action_for_company = "archived"
-    #   else
-    #     @action_for_company = "deleted"
-    #   end
-    #   @flag_current_company = true
-    # else
       params[:sort] = params[:sort] || 'created_at'
       result = Services::ExpenseBulkActionsService.new(params.merge({current_user: current_user})).perform
       @expenses = result[:expenses]
@@ -98,9 +89,7 @@ class ExpensesController < ApplicationController
 
   def undo_actions
     params[:archived] ? Expense.recover_archived(params[:ids]) : Expense.recover_deleted(params[:ids])
-    #expenses = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
-
     respond_to { |format| format.js }
   end
 

@@ -1,6 +1,5 @@
 module Services
   class ExpenseBulkActionsService
-  #attr_reader :clients, :client_ids, :options, :action_to_perform
   attr_reader :expenses, :expense_ids, :options, :action_to_perform
 
   def initialize(options)
@@ -38,15 +37,13 @@ module Services
 
   def recover_deleted
     @expenses.only_deleted.map { |expense| expense.restore; expense.unarchive; }
-    #invoices = ::Invoice.only_deleted.page(@options[:page]).per(@options[:per])
     {action: 'recovered from deleted', expenses: get_expenses('only_deleted')}
   end
 
   private
 
-  def get_expenses(invoice_filter)
-    #@current_user.current_account.expenses.send(invoice_filter).page(@options[:page]).per(@options[:per])
-    Expense.send(invoice_filter).page(@options[:page]).per(@options[:per])
+  def get_expenses(expense_filter)
+    Expense.send(expense_filter).page(@options[:page]).per(@options[:per])
   end
   end
 end
