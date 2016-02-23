@@ -34,7 +34,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new(expense_params)
 
     if @expense.save
-      redirect_to @expenses, notice: 'Expense was successfully created.'
+      redirect_to expenses_path, notice: 'Expense was successfully created.'
     else
       render :new
     end
@@ -43,7 +43,7 @@ class ExpensesController < ApplicationController
   # PATCH/PUT /expenses/1
   def update
     if @expense.update(expense_params)
-      redirect_to @expense, notice: 'Expense was successfully updated.'
+      redirect_to expenses_path, notice: 'Expense was successfully updated.'
     else
       render :edit
     end
