@@ -31,7 +31,7 @@ jQuery ->
 
   # Expense form validation
 
-  jQuery(".expense_form form#newExpense").submit ->
+  jQuery(".expense_form .expense-submit-btn").live "click", ->
 
     expense_category = jQuery("#expense_category_id").val()
     amount = jQuery("#expense_amount").val()

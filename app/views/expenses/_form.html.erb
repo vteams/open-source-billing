@@ -63,8 +63,11 @@
           </div>
         </div>
     </div>
-  <div class="content_bottom">
-    <%= f.submit :class => "btn_large submit" %>
-  </div><!--content_bottom-->
+
 <% end %>
+  <div class="content_bottom">
+    <% button_name = @expense.persisted? ? 'Update Expense' : 'Create Expense' %>
+    <%= button_tag button_name, class: "btn_large submit expense-submit-btn" %>
+    <%= link_to t("views.common.cancel"), expenses_path, :class => 'btn_large grey' %>
+  </div><!--content_bottom-->
 </div><!--clients-->
