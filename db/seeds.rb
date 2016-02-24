@@ -204,3 +204,7 @@ default_currency = (Currency.where(unit: 'USD').first || Currency.first)
 Client.where(currency_id: nil).update_all(currency_id: default_currency.id)
 Invoice.where(currency_id: nil).update_all(currency_id: default_currency.id)
 RecurringProfile.where(currency_id: nil).update_all(currency_id: default_currency.id)
+
+CATEGORIES.each do |category|
+  ExpenseCategory.create name: category unless ExpenseCategory.find_by_name category
+end
