@@ -1,0 +1,8 @@
+<% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_center sorting header <%= sortable_class('project_name') %>"><%= sortable('project_name', "#{t('project_name')}") %></th>
+  <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
+  <th class="align_right header sorting <%= sortable_class('total_hours') %>"><%= sortable('total_hours', t('views.projects.total_hours')) %></th>
+  <th class="align_center not-sortable "><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

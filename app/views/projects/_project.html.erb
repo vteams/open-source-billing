@@ -1,0 +1,35 @@
+<%
+   no_record_message = t('views.projects.no_project_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.projects.no_archived_msg')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.projects.no_deleted_msg')
+   end
+%>
+
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if  @projects.length > 0 %>
+    <% @projects.each do |project| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "project_ids[]", project.id, false, :id => "project_#{project.id}" %></td>
+          <td class="align_center"><%= link_to(project.project_name, project_path(project), :class => "projects_link #{'deleted_entry' if project.deleted?}") %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2" ><%=  project.client.try(:organization_name).blank??  project.unscoped_client.try(:organization_name) : project.client.organization_name %></td>
+          <td class="align_right"><%= project.total_hours %></td>
+          <td class="align_center">
+            <% if project.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_project_path(project) %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+
+<% else %>
+    <tr>
+      <td colspan="8">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>

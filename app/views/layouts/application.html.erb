@@ -70,6 +70,20 @@
             </li>
 
             <li class="dropdown">
+              <%= active_link_to t("header.links.time_tracking.time_tracking"), projects_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
+              <ul class="sub">
+                <li><%= active_link_to t("header.links.time_tracking.time_sheet"), projects_path %></li>
+                <li><%= active_link_to t("header.links.time_tracking.project"), projects_path %></li>
+              </ul>
+                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                   <ul>
+                    <li><%= active_link_to t("header.links.time_tracking.time_sheet"), projects_path %></li>
+                    <li><%= active_link_to t("header.links.time_tracking.project"), projects_path %></li>
+                   </ul>
+                </div>
+            </li>
+
+            <li class="dropdown">
               <%= active_link_to t("header.links.clients.clients"), clients_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <ul class="sub">
                 <li><%= active_link_to t("header.links.clients.clients"), clients_path %></li>

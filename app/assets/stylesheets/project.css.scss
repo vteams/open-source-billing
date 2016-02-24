@@ -1,0 +1,155 @@
+.project {
+
+  .grid_table table {
+    table-layout: auto;
+    col.one {
+      /*check box*/
+      width: 33px;
+    }
+    col.two {
+      /*project*/
+      width: 94px;
+    }
+    col.three {
+      /*clients*/
+      width: 140px;
+    }
+    col.four {
+      /*description*/
+      width: 143px;
+    }
+    col.five {
+      /*total*/
+      width: 98px;
+    }
+    col.six {
+      /*date*/
+      width: 90px;
+    }
+    col.seven {
+      /*due date*/
+      width: 90px;
+    }
+    col.eight {
+      /*status*/
+      width: 90px;
+    }
+    col.nine {
+      /*actions*/
+      width: 62px;
+    }
+    &.de{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 120px;
+        }
+        &.three{
+          width: 100px;
+        }
+        &.four{
+          width: 105px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 202px;
+        }
+        &.seven{
+          width: 90px;
+        }
+        &.eight{
+          width: 90px;
+        }
+      }
+    }
+    &.fr{
+      col{
+        &.one{
+          width: 33px;
+        }
+        &.two{
+          width: 120px;
+        }
+        &.three{
+          width: 100px;
+        }
+        &.four{
+          width: 105px;
+        }
+        &.five{
+          width: 100px;
+        }
+        &.six{
+          width: 202px;
+        }
+        &.seven{
+          width: 90px;
+        }
+        &.eight{
+          width: 90px;
+        }
+      }
+    }
+  }
+}
+
+.project_model {
+  .cross_btn {
+    margin-top: -93px;
+  }
+  .grid_table table {
+    col.one {
+      /*project*/
+      width: 82px;
+    }
+    col.two {
+      /*clients*/
+      width: 450px;
+    }
+    col.three {
+      /*date*/
+      width: 90px;
+    }
+    col.four {
+      /*amount*/
+      width: 82px;
+    }
+  }
+  .btn_large.small_case {
+    text-transform: none;
+    padding: 0 15px;
+  }
+}
+
+.chzn-container {
+  .add-new {
+    background-color: #00BDE5;
+    border-radius: 3px 3px 3px 3px;
+    color: white;
+    height: 26px;
+    margin: 10px;
+    padding: 6px 0 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: "Dosis Regular", sans-serif;
+    font-size: 14px;
+    text-transform:capitalize;
+  }
+}
+
+._form {
+  .grid_table table {
+    tr.no_hover:hover {
+      background-color: #FFFFFF;
+    }
+    td.add_line_item_row {
+      padding: 15px 0 0 32px;
+    }
+  }
+}
+
