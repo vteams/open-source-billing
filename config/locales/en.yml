@@ -448,7 +448,9 @@ en:
       no_project_msg: "You haven't created any project yet. Please click on New Project button to create new project."
       no_archived_msg: "You haven't any archived project."
       no_deleted_msg: "You haven't any deleted project."
-
+      manager_hint: "Project manager can generate invoices, view team timesheets, and edit project details."
+      billing_method_hint: "Hourly rates can be changed from your staff tab by editing team profiles."
+      time_estimate_hint: "A project time estimate helps you track progress against projections."
 
 
   number:

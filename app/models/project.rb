@@ -4,6 +4,10 @@ class Project < ActiveRecord::Base
   belongs_to :company
 
 
+  validates :project_name, presence: true
+  validates :client_id, presence: true
+  validates :manager_id, presence: true
+
   acts_as_archival
   acts_as_paranoid
 

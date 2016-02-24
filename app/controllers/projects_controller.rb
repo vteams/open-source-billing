@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
+      redirect_to projects_path, notice: 'Project was successfully created.'
     else
       render :new
     end
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: 'Project was successfully updated.'
+      redirect_to projects_path, notice: 'Project was successfully updated.'
     else
       render :edit
     end
@@ -71,6 +71,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def project_params
-      params[:project]
+      params.require(:project).permit!
     end
 end
