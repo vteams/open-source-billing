@@ -1,0 +1,26 @@
+jQuery('thead#iproject_head').html('<%= escape_javascript render("project_header") %>')
+jQuery('tbody#project_body').html('<%= escape_javascript render("project") %>');
+//jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+//jQuery("table.table_listing").trigger('update');
+jQuery('#sort_direction').html('<%= params[:direction]%>');
+// Add page params in table listing headers
+<% status = params[:status]%>
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+<%if status == "active" %>
+jQuery('.archive,.destroy').show();
+jQuery('#active_links a.get_actives').addClass('active');
+<% elsif status == "archived"%>
+jQuery('.recover_archived,.destroy_archived').show();
+jQuery('#active_links a.get_archived').addClass('active');
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show().parent('li').removeAttr('class');
+jQuery('#active_links a.get_deleted').addClass('active');
+<%end%>
+window.preventDeletedNavigation()
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
+bind_deleted_entry();

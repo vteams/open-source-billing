@@ -18,19 +18,14 @@
   <%= form_tag "projects/bulk_actions", {method: :get, :remote => true} do -%>
       <div class="content_middle">
 
-        <!--<div class="company_select">-->
-        <!--<p>Select a Company</p>-->
-        <!--<%#= filter_by_companies() %>-->
-        <!--</div>-->
-
         <div class="grid_control">
           <div class="grid_control_left">
             <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%#= render "bulk_actions" %>
+              <%= render "bulk_actions" %>
             </ul>
           </div>
           <div class="grid_control_right" id="active_links">
-            <%#= render "filter_links" %>
+            <%= render "filter_links" %>
           </div>
         </div>
         <!--grid_control-->

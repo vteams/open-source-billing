@@ -122,7 +122,13 @@ Osb::Application.routes.draw do
     end
 
 
-    resources :projects
+    resources :projects do
+      collection do
+        get 'bulk_actions'
+        get 'undo_actions'
+      end
+    end
+
     post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
     post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
     post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
