@@ -1,0 +1,38 @@
+
+
+jQuery('#sort_direction').html('<%= params[:direction]%>');
+jQuery('tbody#task_body').html('<%= escape_javascript(render 'tasks/tasks') %>').hide(300).show(300);
+jQuery('tfoot#paging_links').html('<%= escape_javascript render('application_partials/paging') %>');
+jQuery('#tasks_head').html('<%= escape_javascript render('tasks/tasks_header') %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render('bulk_actions') %>');
+jQuery('#active_links').html('<%= escape_javascript render('filter_links') %>');
+
+<% status = params[:status].present? ? params[:status] : 'active' %>
+
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+
+<%if status == "active" %>
+jQuery('.archive,.destroy').show();
+jQuery('#active_links a.get_actives').addClass('active');
+<% elsif status == "archived"%>
+jQuery('.recover_archived,.destroy_archived').show();
+jQuery('#active_links a.get_archived').addClass('active');
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show();
+jQuery('.recover_deleted').parent("li").removeClass("grid_control_sep")
+jQuery('#active_links a.get_deleted').addClass('active');
+<%end%>
+
+setTimeout(function(){
+    jQuery(".company_listing .text-overflow-class").ellipsis({row:1});
+},100);
+
+jQuery('#select_all').attr('checked', false);
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
+bind_deleted_entry();
+//jQuery("table.invoice_listing").trigger('update');
+
+
+

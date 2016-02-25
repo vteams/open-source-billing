@@ -1,0 +1,60 @@
+<div class="task">
+  <%= form_for @task, :html => {:novalidate => "", :multipart => true} do |f| %>
+      <div class="content_middle form">
+        <div class="fields_content">
+          <div class="fields_content_container">
+            <% if @task.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+                  <ul>
+                    <% @task.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+
+            <div class="fields_content_data">
+
+              <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.tasks.name') %></span></div>
+                <div class="medium_field">
+                  <%= f.text_field :name  %>
+                </div>
+              </div>
+              <!--field_row-->
+
+              <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.tasks.description') %></span></div>
+                <div class="large_field">
+                  <%= f.text_area :description %>
+                </div>
+              </div>
+              <!--field_row-->
+
+              <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.tasks.billable') %></span></div>
+                <div class="small_field">
+                  <%= f.check_box :billable %>
+                </div>
+                <div class="label_field right single"><%= t('views.tasks.rate') %></div>
+                <div class="small_field"><%= f.number_field :rate %></div>
+              </div>
+              <!--field_row-->
+
+
+
+            </div>
+            <!--fields_content_data-->
+          </div>
+          <!--fields_content_container-->
+        </div>
+        <!--fields_content-->
+      </div>
+      <!--content_middle-->
+
+      <div class="content_bottom">
+        <%= f.submit :class => "btn_large submit" %>
+      </div>
+  <% end %>
+</div><!--tasks-->

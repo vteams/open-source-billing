@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527141546) do
+ActiveRecord::Schema.define(version: 20160224125613) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -192,6 +192,27 @@ ActiveRecord::Schema.define(version: 20150527141546) do
     t.boolean  "send_email",               default: true
     t.integer  "no_of_days"
     t.boolean  "is_late_payment_reminder", default: false
+  end
+
+  create_table "expense_categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "expenses", force: true do |t|
+    t.float    "amount",         limit: 24
+    t.datetime "expense_date"
+    t.integer  "category_id"
+    t.text     "note"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.integer  "tax_1"
+    t.integer  "tax_2"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -408,6 +429,18 @@ ActiveRecord::Schema.define(version: 20150527141546) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "billable"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taxes", force: true do |t|
     t.string   "name"

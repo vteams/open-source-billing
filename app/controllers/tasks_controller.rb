@@ -1,0 +1,111 @@
+class TasksController < ApplicationController
+  helper_method :sort_column, :sort_direction
+  before_filter :set_per_page_session
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  include TasksHelper
+
+  # GET /tasks
+  def index
+    params[:status] = params[:status] || 'active'
+    @tasks = Task.filter(params.merge(per: @per_page)).order(sort_column + " " + sort_direction)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: tasks }
+      format.js
+    end
+
+  end
+
+  # GET /tasks/1
+  def show
+  end
+
+  # GET /tasks/new
+  def new
+    @task = Task.new
+  end
+
+  # GET /tasks/1/edit
+  def edit
+  end
+
+  # POST /tasks
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      redirect_to @task, notice: 'Task was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  # PATCH/PUT /tasks/1
+  def update
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Task was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  # DELETE /tasks/1
+  def destroy
+    @task.destroy
+    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+  end
+
+  def filter_expenses
+    @tasks = Task.filter(params.merge(per: session["#{controller_name}-per_page"])).order(sort_column + " " + sort_direction)
+    respond_to { |format| format.js }
+  end
+
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def bulk_actions
+    params[:sort] = params[:sort] || 'created_at'
+    result = Services::TaskBulkActionsService.new(params.merge({current_user: current_user})).perform
+    @tasks = result[:tasks]
+    @message = get_intimation_message(result[:action_to_perform], result[:task_ids])
+    @action = result[:action]
+    #end
+    respond_to { |format| format.js }
+  end
+
+  def undo_actions
+    params[:archived] ? Task.recover_archived(params[:ids]) : Task.recover_deleted(params[:ids])
+    tasks = Task.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    respond_to { |format| format.js }
+  end
+
+
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_task
+      @task = Task.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def task_params
+      params.require(:task).permit(:name, :description, :billable, :rate)
+    end
+
+    def get_intimation_message(action_key, task_ids)
+      helper_methods = {archive: 'tasks_archived', destroy: 'tasks_deleted'}
+      helper_method = helper_methods[action_key.to_sym]
+      helper_method.present? ? send(helper_method, task_ids) : nil
+    end
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = params[:sort]
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+end

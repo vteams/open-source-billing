@@ -1,0 +1,43 @@
+jQuery('.alert').hide();
+
+<% if @flag_current_task %>
+    jQuery(".alert.alert-error").show().find('span').html("Sorry, Current Company cannot be <%= @action_for_task %>");
+<% else %>
+    <% if @action == "archived" or @action == "deleted" %>
+        jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+    <%else%>
+        jQuery(".alert.alert-success").show().find('span').html("Tasks are <%= @action %> successfully.");
+    <% end %>
+
+    <% unless params[:task_ids].blank?%>
+        jQuery('tbody#task_body').html('<%= escape_javascript(render 'tasks') %>');
+        jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+    <%end%>
+
+    // Enable/Disable action links(Archive,Delete,Recover). //
+
+    jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+    jQuery('#active_links a').removeClass('active');
+
+    jQuery('#select_all').attr('checked', false);
+
+        jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
+        jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+
+    jQuery('.top_links').hide();
+    <% if @action == "recovered from archived"%>
+        jQuery('.send').parent("li").removeClass("grid_control_sep");
+        jQuery('.recover_archived,.destroy_archived,.send').show();
+        jQuery('.get_archived').addClass('active');
+    <% elsif @action == "recovered from deleted" %>
+        jQuery('.recover_deleted').show().parent("li").removeClass("grid_control_sep");
+        jQuery('.get_deleted').addClass('active');
+    <% elsif @action == "deleted from archived" %>
+        jQuery('.recover_archived,.destroy_archived').show();
+        jQuery('#active_links a.get_archived').addClass('active');
+    <%else%>
+        jQuery('.archive,.destroy,.payment,.send').show();
+        jQuery('.get_actives').addClass('active');
+    <%end%>
+<% end %>
+bind_deleted_entry();

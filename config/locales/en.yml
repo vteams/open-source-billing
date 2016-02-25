@@ -60,6 +60,9 @@ en:
         users: "Users"
         basic_settings: "Basic Settings"
       help: "Help"
+      tasks:
+        new: "New Task"
+        edit_task: "Edit Task"
 
   views:
     common:
@@ -254,6 +257,12 @@ en:
         prorate: "Prorate"
         prorate_for: "Prorate for"
         gateway: "Gateway"
+
+    tasks:
+      name: "Task Name"
+      description: "Description"
+      billable: "Bill to Client"
+      rate: "Rate per hour"
 
     clients:
       client_name: "Client Name"

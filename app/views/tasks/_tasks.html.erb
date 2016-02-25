@@ -1,0 +1,38 @@
+<%
+   no_record_message = t('views.invoices.no_invoice_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.invoices.no_archived_msg')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.invoices.no_deleted_msg')
+   end
+%>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if  @tasks.length > 0 %>
+    <% @tasks.each do |task| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "task_ids[]", task.id, false, :id => "task_#{task.id}" %></td>
+          <td class="align_center"><%= link_to(task.name, task_path(task), :class => "tasks_link #{'deleted_entry' if task.deleted?}") %></td>
+          <td class="align_center"> <%= task.description %> </td>
+          <td class="align_center"> <%= task.billable %> </td>
+          <td class="align_right"><%= "#{number_to_currency(task.rate)}" %></td>
+
+          <td class="align_center">
+            <% if task.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_task_path(task) %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+
+<% else %>
+    <tr>
+      <td colspan="8">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>
