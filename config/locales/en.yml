@@ -60,9 +60,6 @@ en:
         users: "Users"
         basic_settings: "Basic Settings"
       help: "Help"
-      tasks:
-        new: "New Task"
-        edit_task: "Edit Task"
 
   views:
     common:
@@ -263,6 +260,8 @@ en:
       description: "Description"
       billable: "Bill to Client"
       rate: "Rate per hour"
+      new: "New Task"
+      edit_task: "Edit Task"
 
     clients:
       client_name: "Client Name"
