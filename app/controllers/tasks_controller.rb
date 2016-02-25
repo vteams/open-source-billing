@@ -18,6 +18,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   def show
+    redirect_to edit_task_path
   end
 
   # GET /tasks/new
