@@ -12,7 +12,7 @@ jQuery(".task_form .task-submit-btn").live "click", ->
   else
     flag = true
   if(flag)
-    jQuery(".task_form>form#newTask").get(0).submit()
+    jQuery("form#newTask").get(0).submit()
 
 applyPopover = (elem,position,corner,message) ->
   elem.qtip
