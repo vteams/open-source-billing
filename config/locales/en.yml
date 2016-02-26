@@ -59,6 +59,12 @@ en:
         email_templates: "Email Templates"
         users: "Users"
         basic_settings: "Basic Settings"
+      staffs:
+        Staffs: "Staffs"
+        listing: "Staffs Listing"
+        new: "New Staff"
+      tasks:
+        new: "New Task"
       help: "Help"
 
   views:
@@ -254,6 +260,16 @@ en:
         prorate: "Prorate"
         prorate_for: "Prorate for"
         gateway: "Gateway"
+
+    staffs:
+          name: "Staff Name"
+          email: "Email"
+          rate: "Rate per hour"
+          new: "New Staff"
+          edit_staff: "Edit Staff"
+          no_staff_msg: "You haven't created any staff yet. Please click on New Staff button to create new staff."
+          no_archived_msg: "You haven't archived any staff."
+          no_deleted_msg: "You haven't deleted any staff."
 
     clients:
       client_name: "Client Name"

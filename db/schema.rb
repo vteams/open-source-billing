@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527141546) do
-
+ActiveRecord::Schema.define(version: 20160226125408) do
   create_table "account_users", force: true do |t|
     t.integer "user_id"
     t.integer "account_id"
@@ -408,6 +407,18 @@ ActiveRecord::Schema.define(version: 20150527141546) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+  create_table "staffs", force: true do |t|
+    t.string   "email"
+    t.string   "name"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taxes", force: true do |t|
     t.string   "name"

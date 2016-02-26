@@ -1,0 +1,63 @@
+<%- model_class = Staff -%>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<div class="staff">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, t('header.links.staffs.new'))),
+                  new_staff_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+  <%= form_tag bulk_actions_staffs_path, {method: :get, :remote => true} do -%>
+      <div class="content_middle">
+        <div class="grid_control">
+          <div class="grid_control_left">
+            <ul value='<%= model_class.model_name %>' id="bulk_actions">
+              <%= render "bulk_actions" %>
+            </ul>
+
+          </div>
+          <div class="grid_control_right" id="active_links">
+            <%= render "filter_links" %>
+          </div>
+        </div>
+
+        <!--grid_control-->
+        <div class="grid_table">
+          <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %>">
+            <colgroup>
+              <col class="one"/>
+              <col class="two"/>
+              <col class="three"/>
+              <col class="four"/>
+              <col class="five"/>
+            </colgroup>
+            <thead id="staff_head">
+            <%= render partial: 'staffs_header' %>
+            </thead>
+            <tbody id="staff_body">
+            <%= render 'staffs' %>
+            <tfoot id="paging_links">
+            <%= render 'application_partials/paging' %>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+        <!--grid_table-->
+      </div>
+      <!--content_middle-->
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, t('header.links.staffs.new'))),
+                    new_staff_path,
+                    :class => 'btn_large' %>
+      </div>
+  <% end %>
+  <!--content_bottom-->
+</div>
