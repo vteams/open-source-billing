@@ -473,6 +473,18 @@ ActiveRecord::Schema.define(version: 20160224113217) do
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
 
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "billable"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "taxes", force: true do |t|
     t.string   "name"
     t.decimal  "percentage",     precision: 10, scale: 2

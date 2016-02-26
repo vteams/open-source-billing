@@ -14,6 +14,14 @@ Osb::Application.routes.draw do
       end
     end
 
+    resources :tasks do
+      collection do
+        get 'bulk_actions'
+        get 'filter_items'
+        get 'undo_actions'
+      end
+    end
+
     resources :companies do
       collection do
         get 'bulk_actions'

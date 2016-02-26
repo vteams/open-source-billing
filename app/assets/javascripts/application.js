@@ -58,6 +58,7 @@
 //= require validate-forms.js.coffee
 //= require jquery.ellipsis.js
 //= require companies.js.coffee
+//= require tasks.js.coffee
 //= require email_templates.js.coffee
 //= require tinymce
 //= require email_template.js

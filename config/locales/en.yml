@@ -267,6 +267,14 @@ en:
         prorate_for: "Prorate for"
         gateway: "Gateway"
 
+    tasks:
+      name: "Task Name"
+      description: "Description"
+      billable: "Bill to Client"
+      rate: "Rate per hour"
+      new: "New Task"
+      edit_task: "Edit Task"
+
     clients:
       client_name: "Client Name"
       client: "Client"
