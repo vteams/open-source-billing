@@ -1,7 +1,14 @@
 require 'factory_girl'
 require 'faker'
 
-FactoryGirl.define do  factory :task do
+FactoryGirl.define do  factory :staff do
+    email "MyString"
+name "MyString"
+rate "9.99"
+created_by 1
+updated_by 1
+  end
+  factory :task do
     name "MyString"
 description "MyString"
 billable false

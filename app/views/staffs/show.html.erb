@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Email:
+  = @staff.email
+p
+  strong Name:
+  = @staff.name
+p
+  strong Rate:
+  = @staff.rate
+p
+  strong Created by:
+  = @staff.created_by
+p
+  strong Updated by:
+  = @staff.updated_by
+
+= link_to 'Edit', edit_staff_path(@staff)
+'|
+= link_to 'Back', staffs_path

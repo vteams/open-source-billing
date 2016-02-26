@@ -1,0 +1,37 @@
+<%
+   no_record_message = t('views.staffs.no_staff_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.staffs.no_archived_msg')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.staffs.no_deleted_msg')
+   end
+%>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<% if  @staffs.length > 0 %>
+    <% @staffs.each do |staff| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "staff_ids[]", staff.id, false, :id => "task_#{staff.id}" %></td>
+          <td class="align_center"><%= link_to(staff.name, staff_path(staff), :class => "staffs_link #{'deleted_entry' if staff.deleted?}") %></td>
+          <td class="align_center"> <%= staff.email %> </td>
+          <td class="align_right"><%= "#{number_to_currency(staff.rate)}" %></td>
+
+          <td class="align_center">
+            <% if staff.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_staff_path(staff) %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+
+<% else %>
+    <tr>
+      <td colspan="8">
+        <div class="no_record_container"><%= no_record_message %></div>
+      </td>
+    </tr>
+<% end %>

@@ -56,7 +56,7 @@ class TasksController < ApplicationController
     redirect_to tasks_url, notice: 'Task was successfully destroyed.'
   end
 
-  def filter_expenses
+  def filter_tasks
     @tasks = Task.filter(params.merge(per: session["#{controller_name}-per_page"])).order(sort_column + " " + sort_direction)
     respond_to { |format| format.js }
   end
@@ -99,14 +99,14 @@ class TasksController < ApplicationController
       helper_method = helper_methods[action_key.to_sym]
       helper_method.present? ? send(helper_method, task_ids) : nil
     end
-  def sort_column
-    params[:sort] ||= 'created_at'
-    sort_col = params[:sort]
-  end
+    def sort_column
+      params[:sort] ||= 'created_at'
+      sort_col = params[:sort]
+    end
 
-  def sort_direction
-    params[:direction] ||= 'desc'
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
+    def sort_direction
+      params[:direction] ||= 'desc'
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    end
 
 end
