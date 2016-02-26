@@ -5,6 +5,8 @@ class Task < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
+  belongs_to :project
+
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 

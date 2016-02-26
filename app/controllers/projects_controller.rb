@@ -38,6 +38,7 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
+
     @project = Project.new(project_params)
     @project.company_id = get_company_id
     if @project.save

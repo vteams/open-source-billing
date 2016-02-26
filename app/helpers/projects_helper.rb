@@ -8,6 +8,10 @@ module ProjectsHelper
     CONST::BillingMethod::TYPES.map{|bm| [bm, bm]}
   end
 
+  def load_tasks_for_project(project)
+    Task.where("id NOT IN(?)", project.task_ids).map{|task| [task.name, task.id]}
+  end
+
   def projects_archived ids
     notice = <<-HTML
      <p>#{ids.size} project(s) have been archived. You can find them under

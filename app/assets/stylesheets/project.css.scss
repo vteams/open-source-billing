@@ -153,3 +153,20 @@
   }
 }
 
+
+.remove_task {
+  background: asset-url('del-move-icons.png') no-repeat scroll 0 0 transparent;
+  float: left;
+  height: 10px;
+  width: 7px;
+  position: relative;
+  top: 3px;
+  margin-right: 20px;
+}
+.remove_task:hover {
+  background-position: 0 -12px;
+}
+
+.task_bill{
+  float: right;
+}

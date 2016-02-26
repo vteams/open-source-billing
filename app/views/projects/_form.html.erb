@@ -1,65 +1,99 @@
 <%= nested_form_for @project, :html => {:class => 'project-form', :novalidate => ""} do |f| %>
-    <div class="invoice_form">
+    <div class="project_form" xmlns="http://www.w3.org/1999/html">
       <div class="content_middle">
         <div class="fields_content">
           <div class="fields_content_container">
-            <div class="fields_content_data new_project_fields custom_field">
-              <div class="fields_content_left">
+            <fieldset class="project-information">
+                <legend> Project Information </legend>
+                <div class="fields_content_data new_project_fields custom_field">
+                  <div class="fields_content_left">
 
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :project_name, content_tag(:span, t('project_name')) %></div>
-                  <div class="medium_field">
-                    <div> <%= f.text_field :project_name %> </div>
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :project_name, content_tag(:span, t('project_name')) %></div>
+                      <div class="medium_field">
+                        <div> <%= f.text_field :project_name %> </div>
+                      </div>
+                    </div>
+
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :description %></div>
+                      <div class="medium_field">
+                        <div> <%= f.text_area :description %> </div>
+                      </div>
+                    </div>
+
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
+                      <div class="medium_field">
+                        <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "report_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
+                      </div>
+                    </div>
+
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :manager_id, 'Project Manager' %></div>
+                      <div class="medium_field">
+                        <%= f.select :manager_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
+                      </div>
+                      <ul class="field_description select">
+                        <li><%= t('views.projects.manager_hint') %></li>
+                      </ul>
+                    </div>
+
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :billing_method %></div>
+                      <div class="medium_field">
+                        <%= f.select :billing_method, options_for_select(load_billing_methods_for_project, selected: f.object.billing_method),  {}, {:class => "report_billing_method medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
+                      </div>
+                      <ul class="field_description select">
+                        <li><%= t('views.projects.billing_method_hint') %></li>
+                      </ul>
+                    </div>
+
+                    <div class="field_row description">
+                      <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
+                      <div class="medium_field">
+                        <div> <%= f.number_field :total_hours %> hours </div>
+                      </div>
+                      <ul class="field_description select">
+                        <li><%= t('views.projects.time_estimate_hint') %></li>
+                      </ul>
+                    </div>
+
                   </div>
-                </div>
 
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :description %></div>
-                  <div class="medium_field">
-                    <div> <%= f.text_area :description %> </div>
-                  </div>
                 </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
-                  <div class="small_field">
-                    <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "report_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
-                  </div>
-                </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :manager_id, 'Project Manager' %></div>
-                  <div class="small_field">
-                    <%= f.select :manager_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
-                  </div>
-                  <ul class="field_description select">
-                    <li><%= t('views.projects.manager_hint') %></li>
-                  </ul>
-                </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :billing_method %></div>
-                  <div class="small_field">
-                    <%= f.select :billing_method, options_for_select(load_billing_methods_for_project, selected: f.object.billing_method),  {}, {:class => "report_billing_method medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
-                  </div>
-                  <ul class="field_description select">
-                    <li><%= t('views.projects.billing_method_hint') %></li>
-                  </ul>
-                </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
-                  <div class="small_field">
-                    <div> <%= f.number_field :total_hours %> hours </div>
-                  </div>
-                  <ul class="field_description select">
-                    <li><%= t('views.projects.time_estimate_hint') %></li>
-                  </ul>
-                </div>
-
+            </fieldset>
+            <fieldset>
+              <legend> Assigned Tasks </legend>
+              <div class="assigned-tasks">
+                <% if @project.tasks.blank? %>
+                    <p> You currently have no tasks assigned to this project. </p>
+                <% else %>
+                    <ul class="assigned-tasks-list">
+                    <% @project.tasks.each do |task| %>
+                        <li data-task-id="<%= task.id %>" data-task-name="<%= task.name %>">
+                          <span class="task_name"> <%= task.name %></span>
+                          <span class="remove_task"></span>
+                          <span class="task_bill"> <%= task.billable ? "billable" : "non billable"%></span>
+                          <input id='project_task_ids' multiple='multiple' name='project[task_ids][]' type='hidden' class="project_task_<%=task.id%>" value="<%= task.id %>">
+                        </li>
+                    <% end %>
+                    </ul>
+                <% end %>
               </div>
+              <div class="fields_content_data new_project_fields custom_field">
+                <div class="field_row description">
+                  <div class="task_hidden_fields_block">
 
-            </div>
+                  </div>
+                  <div class="label_field left single"><%= f.label :task_ids, "Add a Task" %></div>
+                  <div class="medium_field">
+                    <%= select_tag "project_tasks", options_for_select(load_tasks_for_project(@project), nil),  :prompt => "Select a task -",  :class => "project_task_select medium", "data-form-container" => "tasks_holder", "data-dropdown-width" => "300" %>
+                  </div>
+
+                </div>
+              </div>
+            </fieldset>
           </div>
         </div>
       </div>

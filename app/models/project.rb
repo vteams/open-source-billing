@@ -7,11 +7,9 @@ class Project < ActiveRecord::Base
 
   belongs_to :client
   belongs_to :company
+  has_many :tasks, dependent: :destroy
 
-
-  validates :project_name, presence: true
-  validates :client_id, presence: true
-  validates :manager_id, presence: true
+  accepts_nested_attributes_for :tasks, :reject_if => proc { |task| task['id'].blank? }, :allow_destroy => true
 
   acts_as_archival
   acts_as_paranoid
