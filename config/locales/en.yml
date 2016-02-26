@@ -41,6 +41,7 @@ en:
         time_tracking: "Time Tracking"
         time_sheet: "Timesheet"
         project: "Projects"
+        task: "Tasks"
       projects:
         new: "New Project"
         listing: "Project Listing"
