@@ -19,6 +19,7 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'filter_items'
         get 'undo_actions'
+        post 'load_task_data'
       end
     end
 

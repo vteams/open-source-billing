@@ -8,8 +8,8 @@ module ProjectsHelper
     CONST::BillingMethod::TYPES.map{|bm| [bm, bm]}
   end
 
-  def load_tasks_for_project(project)
-    Task.where("id NOT IN(?)", project.task_ids).map{|task| [task.name, task.id]}
+  def load_tasks_for_project
+    Task.unassigned.map{|task| [task.name, task.id]}
   end
 
   def projects_archived ids

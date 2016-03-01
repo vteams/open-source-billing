@@ -33,12 +33,22 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     @task = Task.new(task_params)
-
-    if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
-    else
-      render :new
+    if Item.is_exists?(params[:task][:name])
+      @item_exists = true
+      redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
+      return
     end
+    respond_to do |format|
+      if @task.save
+        format.js
+        format.json { render :json => @task, :status => :created, :location => @task }
+        redirect_to @task, notice: 'Task was successfully created.' unless params[:quick_create]
+        return
+      else
+        format.html { render :action => "new" }
+        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+      end
+   end
   end
 
   # PATCH/PUT /tasks/1
@@ -82,6 +92,10 @@ class TasksController < ApplicationController
   end
 
 
+  def load_task_data
+      task = Task.find_by_id(params[:id]).present? ?  Task.find(params[:id]) : Task.unscoped.find_by_id(params[:id])
+      render :text => [task.description || "", task.rate, task.billable, task.name]
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

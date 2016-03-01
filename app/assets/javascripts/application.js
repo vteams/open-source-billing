@@ -74,7 +74,7 @@ jQuery(function () {
 
     //override default behavior of inserting new subforms into form    
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1) {
+        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1) {
             var $tr = $(link).closest('tr');
             return $(content).insertBefore($tr);
         } else if (document.location.pathname.search(/\/clients\//) != -1) {

@@ -1,0 +1,6 @@
+<li data-task-id="<%= task.id %>" data-task-name="<%= task.name %>">
+  <span class="task_name"> <%= task.name %></span>
+  <span class="remove_task"></span>
+  <span class="task_bill"> <%= task.billable ? "billable" : "non billable"%></span>
+  <input id='project_task_ids' multiple='multiple' name='project[task_ids][]' type='hidden' class="project_task_<%=task.id%>" value="<%= task.id %>">
+</li>

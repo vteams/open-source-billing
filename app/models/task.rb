@@ -7,6 +7,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
 
+
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
@@ -21,8 +22,20 @@ class Task < ActiveRecord::Base
     multiple(ids).map(&:unarchive)
   end
 
+  def task_id
+    self.id
+  end
+
   def self.recover_deleted(ids)
     multiple(ids).only_deleted.each { |task| task.restore; task.unarchive }
+  end
+
+  def self.unassigned
+    where(project_id: nil)
+  end
+
+  def self.is_exists? task_name
+    where(:name => task_name).present?
   end
 
 end

@@ -5,12 +5,12 @@
 window.applyChosen = (single_row) =>
   # listen to Chosen liszt:ready even
   # add a Add New button at the bottom of every chosen list
-  jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select, .invoice_currency, .recurring_profile_currency')",'.invoices-main,.recurring_profiles-main').on "liszt:ready", ->
+  jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select, .invoice_currency, .recurring_profile_currency, .report_client, .report_manager, .report_billing_method')",'.projects-main, .invoices-main,.recurring_profiles-main').on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
       chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
   #remove identical line items
-  identical_line_items = jQuery('.invoice_grid_fields tr.fields:last .chzn-select:first option')
+  identical_line_items = jQuery('.invoice_grid_fields tr.fields:last .chzn-select:first option, .task_grid_fields tr.fields:last .chzn-select:first option')
   identical_line_items.each ->
     $(this).siblings('[value=' + @value + ']').remove()
 
@@ -21,6 +21,7 @@ window.applyChosen = (single_row) =>
 
   # Add New click handler to show form inside the list
   jQuery(".add-new").live "click",(event) ->
+    console.log jQuery(this).attr("data-dropdown-id")
     new InlineForms(jQuery(this).attr("data-dropdown-id")).showForm()
     event.stopImmediatePropagation()
 
@@ -428,7 +429,7 @@ jQuery ->
   setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
   # Hide placeholder text on focus
-  jQuery("input[type=text],input[type=number]",".quick_create_wrapper").live("focus",->
+  jQuery("input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper").live("focus",->
     @dataPlaceholder = @placeholder
     @removeAttribute "placeholder"
   ).live("blur", ->

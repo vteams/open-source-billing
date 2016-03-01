@@ -275,6 +275,7 @@ en:
       rate: "Rate per hour"
       new: "New Task"
       edit_task: "Edit Task"
+      add_new_task: "Add New Task"
 
     clients:
       client_name: "Client Name"
@@ -460,6 +461,8 @@ en:
       manager_hint: "Project manager can generate invoices, view team timesheets, and edit project details."
       billing_method_hint: "Hourly rates can be changed from your staff tab by editing team profiles."
       time_estimate_hint: "A project time estimate helps you track progress against projections."
+      add_task: "Add Task"
+      select_a_task: "Select a task.."
 
 
   number:
