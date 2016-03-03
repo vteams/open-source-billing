@@ -60,6 +60,7 @@
 //= require jquery.ellipsis.js
 //= require companies.js.coffee
 //= require tasks.js.coffee
+//= require staffs.js.coffee
 //= require email_templates.js.coffee
 //= require tinymce
 //= require email_template.js

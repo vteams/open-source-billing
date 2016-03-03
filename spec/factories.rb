@@ -4,12 +4,12 @@ require 'faker'
 
 FactoryGirl.define do  factory :project_task do
     name "MyString"
-description "MyText"
-rate 1
-archive_number "MyString"
-archived_at "2016-03-03 13:32:12"
-project_id 1
-task_id 1
+    description "MyText"
+    rate 1
+    archive_number "MyString"
+    archived_at "2016-03-03 13:32:12"
+    project_id 1
+    task_id 1
   end
   factory :project do
     project_name "MyString"
@@ -24,12 +24,25 @@ task_id 1
       description "MyString"
       billable false
       rate "9.99"
-  end
-    factory :line_item_tax do
-      invoice_line_item_id 1
-      percentage "9.99"
+
+  factory :staff do
+      email "MyString"
       name "MyString"
-    end
+      rate "9.99"
+      created_by 1
+      updated_by 1
+  end
+
+  factory :line_item_tax do
+    invoice_line_item_id 1
+    percentage "9.99"
+    name "MyString"
+  end
+  factory :line_item_tax do
+    invoice_line_item_id 1
+    percentage "9.99"
+    name "MyString"
+  end
 
 
   sequence :email do |n|
@@ -105,6 +118,7 @@ task_id 1
    archive_number '123'
   end
 
+      end
 end
 
 
