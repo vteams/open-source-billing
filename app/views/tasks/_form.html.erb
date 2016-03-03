@@ -42,6 +42,12 @@
               </div>
               <!--field_row-->
 
+              <div class="options_row clients">
+                <div class="label_field left single options template"><%= t('views.tasks.make_this_task_available_to') %>:</div>
+                <div class="options_content">
+                  <%= associate_account(controller_name, action_name, @task) %>
+                </div>
+              </div>
 
 
             </div>

@@ -8,8 +8,51 @@ module ProjectsHelper
     CONST::BillingMethod::TYPES.map{|bm| [bm, bm]}
   end
 
-  def load_tasks_for_project
-    Task.unassigned.map{|task| [task.name, task.id]}
+  def task_in_other_company(company_id, project_task)
+    flag = false
+    if company_id.present? and project_task.present?
+      if Company.find_by_id(company_id).tasks.include?(Task.find_by_id(project_task.task_id))
+        flag = false
+      else
+        flag = true
+      end
+    end
+    flag
+  end
+  def load_task(action,company_id, project_task = nil)
+    account_level = current_user.current_account.tasks.unarchived
+    id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    tasks = Company.find_by_id(id).tasks.unarchived
+    data = action == 'new' && company_id.blank? ? account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} + tasks.map{|c| [c.name, c.id, {type: 'company_level'}]} : Company.find_by_id(company_id).tasks.unarchived.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]}
+    if action == 'edit'
+      if task_in_other_company?(company_id, project_task)
+        data = [*Task.find_by_id(project_task.task_id)].map{|c| [c.name, c.id, {type: 'company_level', 'data-type' => 'other_company'}]} + tasks.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]}
+      else
+        data = company_id.present? ? Company.find_by_id(company_id).tasks.unarchived.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} : account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} + items.map{|c| [c.name, c.id, {type: 'company_level'}]}
+      end
+    end
+    data
+  end
+
+  def load_deleted_task(project_task,company_id)
+    tasks = Task.unscoped.where(id: project_task.task_id).map{|task| [task.name,task.id,{'data-type' => 'deleted_task', type: 'deleted_task'}]}
+    tasks + load_tasks('edit',company_id)
+  end
+
+  def load_archived_tasks(project_task, company_id)
+    tasks = Task.where(id: project_task.task_id).map{|task| [task.name,task.id,{'data-type' => 'archived_task', type: 'archived_task'}]}
+    tasks + load_tasks('edit',company_id)
+  end
+
+  def load_tasks_for_project(action , company_id, project_task)
+    #Task.unassigned.map{|task| [task.name, task.id]}
+    if project_task.task_id.present? and project_task.task.nil?
+      load_deleted_task(project_task, company_id)
+    elsif project_task.task_id.present? and project_task.task.archived?.present?
+      load_archived_tasks(project_task, company_id)
+    else
+      load_task(action, company_id, project_task)
+    end
   end
 
   def projects_archived ids

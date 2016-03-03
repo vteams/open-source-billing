@@ -80,10 +80,10 @@
                     <th class="align_left"><%= t('views.tasks.description') %></th>
                     <th class="align_right"><%= t('views.tasks.rate') %></th>
                   </tr>
-                  <%= f.fields_for :tasks, :wrapper => false %>
+                  <%= f.fields_for :project_tasks, :wrapper => false %>
                   <tr style="border:none;" class="no_hover">
                     <td>&nbsp</td>
-                    <td class="add_task_row" colspan="2"><%= f.link_to_add t("views.projects.add_task"), :tasks, :class => "btn btn-mini", id: 'add_task' %></td>
+                    <td class="add_task_row" colspan="2"><%= f.link_to_add t("views.projects.add_task"), :project_tasks, :class => "btn btn-mini", id: 'add_task' %></td>
                   </tr>
                 </table>
 

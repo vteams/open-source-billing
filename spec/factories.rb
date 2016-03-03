@@ -2,7 +2,16 @@ require 'factory_girl'
 require 'faker'
 
 
-FactoryGirl.define do  factory :project do
+FactoryGirl.define do  factory :project_task do
+    name "MyString"
+description "MyText"
+rate 1
+archive_number "MyString"
+archived_at "2016-03-03 13:32:12"
+project_id 1
+task_id 1
+  end
+  factory :project do
     project_name "MyString"
     client_id 1
     manager_id 1

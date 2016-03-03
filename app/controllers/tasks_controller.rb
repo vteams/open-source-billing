@@ -6,6 +6,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
+    set_company_session
     params[:status] = params[:status] || 'active'
     @tasks = Task.filter(params.merge(per: @per_page)).order(sort_column + " " + sort_direction)
     respond_to do |format|
@@ -32,13 +33,18 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
-    @task.billable = task_params[:rate].present?
-    if Task.is_exists?(params[:task][:name])
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+
+    if Task.is_exists?(params[:task][:name], company_id)
       @task_exists = true
-      redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
+      redirect_to(new_tasks_path, :alert => "Task with same name already exists") unless params[:quick_create]
       return
     end
+    @task = Task.new(task_params)
+    @task.billable = task_params[:rate].present?
+    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    associate_entity(options, @task)
+
     respond_to do |format|
       if @task.save
         format.js

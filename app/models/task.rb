@@ -5,10 +5,14 @@ class Task < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
-  belongs_to :project
+  has_many :project_tasks
+  belongs_to :company
+  has_many :company_entities, :as => :entity
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
+  scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
 
   # filter tasks i.e active, archive, deleted
   def self.filter(params)
@@ -21,10 +25,6 @@ class Task < ActiveRecord::Base
     multiple(ids).map(&:unarchive)
   end
 
-  def task_id
-    self.id
-  end
-
   def self.recover_deleted(ids)
     multiple(ids).only_deleted.each { |task| task.restore; task.unarchive }
   end
@@ -33,8 +33,9 @@ class Task < ActiveRecord::Base
     where(project_id: nil)
   end
 
-  def self.is_exists? task_name
-    where(:name => task_name).present?
+  def self.is_exists? task_name, company_id = nil
+    company = Company.find company_id if company_id.present?
+    company.present? ? company.tasks.where(:name => task_name).present? : where(:name => task_name).present?
   end
 
 end

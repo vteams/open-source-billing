@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    3.times { @project.tasks.build() }
+    3.times { @project.project_tasks.build() }
   end
 
   # GET /projects/1/edit
@@ -101,9 +101,9 @@ class ProjectsController < ApplicationController
     def project_params
       #params.require(:project).permit!
       params.require(:project).permit(:project_name, :description, :client_id, :manager_id, :billing_method,
-                                      :total_hours, :company_id,:tasks_attributes,  tasks_attributes:
+                                      :total_hours, :company_id,:project_tasks_attributes,  project_tasks_attributes:
                                       [
-                                        :id, :name, :description, :billable, :rate, :_destroy
+                                        :id, :task_id, :name, :description, :rate, :_destroy
                                       ])
     end
 

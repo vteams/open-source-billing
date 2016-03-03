@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226112940) do
+ActiveRecord::Schema.define(version: 20160303083212) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -380,6 +380,18 @@ ActiveRecord::Schema.define(version: 20160226112940) do
     t.integer  "client_id"
     t.integer  "company_id"
     t.string   "status"
+  end
+
+  create_table "project_tasks", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.integer  "project_id"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects", force: true do |t|

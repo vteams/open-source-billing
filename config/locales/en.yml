@@ -276,6 +276,7 @@ en:
       new: "New Task"
       edit_task: "Edit Task"
       add_new_task: "Add New Task"
+      make_this_task_available_to: "Make this Task available to"
 
     clients:
       client_name: "Client Name"

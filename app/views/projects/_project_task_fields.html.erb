@@ -7,11 +7,10 @@
     </div>
   </td>
   <td class="align_left">
-    <%= f.select :task_id, options_for_select(load_tasks_for_project, selected: f.object),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.projects.select_a_task'), :class => "tasks_list medium chzn-select grid_large_medium", "data-form-container" => "tasks_holder", "data-dropdown-width" => "300", :required => ""} %>
+    <%= f.select :task_id, options_for_select(load_tasks_for_project(action_name, @project.company_id, f.object), selected: f.object.task_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.projects.select_a_task'), :class => "tasks_list medium chzn-select grid_large_medium", "data-form-container" => "tasks_holder", "data-dropdown-width" => "300", :required => ""} %>
   </td>
 
   <%= f.hidden_field :name, :class => 'task_name' %>
-  <%= f.hidden_field :billable, :class => 'billable' %>
   <td class="align_left">
     <%= f.text_field :description, :class => 'grid_large description' %>
   </td>

@@ -7,6 +7,7 @@ class Company < ActiveRecord::Base
 
   has_many :company_entities, :as => :parent
   has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'
+  has_many :tasks, :through => :company_entities, :source => :entity, :source_type => 'Task'
   has_many :clients, :through => :company_entities, :source => :entity, :source_type => 'Client'
   has_many :company_email_templates, :as => :parent
   has_many :email_templates, :through => :company_email_templates, :foreign_key => 'template_id'
