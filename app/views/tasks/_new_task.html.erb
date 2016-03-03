@@ -30,23 +30,13 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><%= t('views.tasks.billable') %></div>
-            <div class="small_field">
-              <%= check_box_tag "task[billable]", true, checked: "checked" %>
-            </div>
-          </div>
-          <!--field_row-->
-
-          <div class="field_row">
             <div class="label_field left single"><%= t('views.tasks.rate') %></div>
             <div class="small_field">
-              <%= number_field_tag "task[rate]", '' %>
+              <%= number_field_tag "task[rate]", 0.0 %>
               <%= hidden_field_tag :quick_create %>
             </div>
           </div>
           <!--field_row-->
-
-
 
           <div id="clientModal" class="client-modal">
             <div class="cross_btn">

@@ -33,8 +33,9 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     @task = Task.new(task_params)
-    if Item.is_exists?(params[:task][:name])
-      @item_exists = true
+    @task.billable = task_params[:rate].present?
+    if Task.is_exists?(params[:task][:name])
+      @task_exists = true
       redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
       return
     end
@@ -45,6 +46,7 @@ class TasksController < ApplicationController
         redirect_to @task, notice: 'Task was successfully created.' unless params[:quick_create]
         return
       else
+        format.js
         format.html { render :action => "new" }
         format.json { render :json => @task.errors, :status => :unprocessable_entity }
       end

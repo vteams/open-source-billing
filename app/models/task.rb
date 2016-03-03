@@ -7,7 +7,6 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
 
-
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
