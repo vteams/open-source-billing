@@ -42,6 +42,7 @@ en:
         time_sheet: "Timesheet"
         project: "Projects"
         staff: "Staffs"
+        task: "Tasks"
       projects:
         new: "New Project"
         listing: "Project Listing"
@@ -293,6 +294,7 @@ en:
           no_staff_msg: "You haven't created any staff yet. Please click on New Staff button to create new staff."
           no_archived_msg: "You haven't archived any staff."
           no_deleted_msg: "You haven't deleted any staff."
+          make_this_staff_available_to: "Make this Staff available to"
 
     clients:
       client_name: "Client Name"

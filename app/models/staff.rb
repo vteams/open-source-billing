@@ -5,8 +5,13 @@ class Staff < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
+  belongs_to :company
+  has_many :company_entities, :as => :entity
+
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
+  scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
 
   # filter tasks i.e active, archive, deleted
   def self.filter(params)
@@ -21,6 +26,11 @@ class Staff < ActiveRecord::Base
 
   def self.recover_deleted(ids)
     multiple(ids).only_deleted.each { |staff| staff.restore; staff.unarchive }
+  end
+
+  def self.is_exists? staff_eamil, company_id = nil
+    company = Company.find company_id if company_id.present?
+    company.present? ? company.staffs.where(:email => staff_eamil).present? : where(:email => staff_eamil).present?
   end
 
 end

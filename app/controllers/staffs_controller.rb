@@ -6,6 +6,7 @@ class StaffsController < ApplicationController
 
   # GET /staffs
   def index
+    set_company_session
     params[:status] = params[:status] || 'active'
     @staffs = Staff.filter(params.merge(per: @per_page)).order(sort_column + " " + sort_direction)
     respond_to do |format|
@@ -31,12 +32,26 @@ class StaffsController < ApplicationController
 
   # POST /staffs
   def create
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    if Staff.is_exists?(params[:staff][:email], company_id)
+      @staff_exists = true
+      redirect_to(new_staff_path, :alert => "Staff with same email already exists") unless params[:quick_create]
+      return
+    end
     @staff = Staff.new(staff_params)
-
-    if @staff.save
-      redirect_to @staff, notice: 'Staff was successfully created.'
-    else
-      render :new
+    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    associate_entity(options, @staff)
+    respond_to do |format|
+      if @staff.save
+        format.js
+        format.json { render :json => @staff, :status => :created, :location => @staff }
+        redirect_to @staff, notice: 'Staff was successfully created.' unless params[:quick_create]
+        return
+      else
+        format.js
+        format.html { render :action => "new" }
+        format.json { render :json => @staff.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

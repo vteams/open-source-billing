@@ -38,6 +38,13 @@
               </div>
               <!--field_row-->
 
+              <div class="options_row clients">
+                <div class="label_field left single options template"><%= t('views.staffs.make_this_staff_available_to') %>:</div>
+                <div class="options_content">
+                  <%= associate_account(controller_name, action_name, @staff) %>
+                </div>
+              </div>
+
             </div>
             <!--fields_content_data-->
           </div>
