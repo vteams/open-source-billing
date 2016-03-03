@@ -55,5 +55,9 @@ jQuery ->
       #jQuery("#add_task").click()
 
   jQuery(".project_grid_fields .add_nested_fields").live "click", ->
-    setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
+    setTimeout "window.applyChosen(jQuery('.project_grid_fields tr.fields:last .chzn-select'))", 0
 
+  jQuery("#add_task").live "click", ->
+    options = $('.tasks_list:first').html()
+    $('.tasks_list:last').html(options).find('option:selected').removeAttr('selected')
+    $('.tasks_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()

@@ -25,6 +25,7 @@
 //= require jquery.css3caching.js
 //= require inline-forms.js.coffee
 //= require invoices.js.coffee
+//= require projects.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
 //= require tablesorter.staticrow.js
@@ -68,7 +69,7 @@
 //= require bootstrap-checkbox.js
 //= require settings
 //= require date_formats
-//= require projects.js.coffee
+
 
 jQuery(function () {
 
