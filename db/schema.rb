@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226125408) do
+ActiveRecord::Schema.define(version: 20160303083212) do
+
   create_table "account_users", force: true do |t|
     t.integer "user_id"
     t.integer "account_id"
@@ -193,6 +194,52 @@ ActiveRecord::Schema.define(version: 20160226125408) do
     t.boolean  "is_late_payment_reminder", default: false
   end
 
+  create_table "estimates", force: true do |t|
+    t.string   "estimate_number"
+    t.datetime "estimate_date"
+    t.string   "po_number"
+    t.decimal  "discount_percentage", precision: 10, scale: 2
+    t.integer  "client_id"
+    t.text     "terms"
+    t.text     "notes"
+    t.string   "status"
+    t.decimal  "sub_total",           precision: 10, scale: 2
+    t.decimal  "discount_amount",     precision: 10, scale: 2
+    t.decimal  "tax_amount",          precision: 10, scale: 2
+    t.decimal  "estimate_total",      precision: 10, scale: 2
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "discount_type"
+    t.integer  "company_id"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.integer  "currency_id"
+  end
+
+  create_table "expense_categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "expenses", force: true do |t|
+    t.float    "amount",         limit: 24
+    t.datetime "expense_date"
+    t.integer  "category_id"
+    t.text     "note"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.integer  "tax_1"
+    t.integer  "tax_2"
+  end
+
   create_table "invoice_line_items", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"
@@ -208,6 +255,7 @@ ActiveRecord::Schema.define(version: 20160226125408) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+    t.integer  "estimate_id"
   end
 
   create_table "invoices", force: true do |t|
@@ -334,6 +382,35 @@ ActiveRecord::Schema.define(version: 20160226125408) do
     t.string   "status"
   end
 
+  create_table "project_tasks", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.integer  "project_id"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", force: true do |t|
+    t.string   "project_name"
+    t.integer  "client_id"
+    t.integer  "manager_id"
+    t.string   "billing_method"
+    t.text     "description"
+    t.integer  "total_hours"
+    t.integer  "company_id"
+    t.integer  "updated_by"
+    t.integer  "created_by"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "recurring_profile_line_items", force: true do |t|
     t.integer  "recurring_profile_id"
     t.integer  "item_id"
@@ -407,6 +484,7 @@ ActiveRecord::Schema.define(version: 20160226125408) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
   create_table "staffs", force: true do |t|
     t.string   "email"
     t.string   "name"
@@ -418,6 +496,21 @@ ActiveRecord::Schema.define(version: 20160226125408) do
     t.time     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "billable"
+    t.decimal  "rate",           precision: 10, scale: 0
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "updated_by"
+    t.integer  "created_by"
+    t.integer  "project_id"
   end
 
   create_table "taxes", force: true do |t|
