@@ -127,7 +127,7 @@
 }
 
 
-.remove_task {
+.remove_task, .remove_member {
   background: asset-url('del-move-icons.png') no-repeat scroll 0 0 transparent;
   float: left;
   height: 10px;
@@ -136,7 +136,7 @@
   top: 3px;
   margin-right: 20px;
 }
-.remove_task:hover {
+.remove_task:hover, .remove_member:hover {
   background-position: 0 -12px;
 }
 

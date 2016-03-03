@@ -61,3 +61,26 @@ jQuery ->
     options = $('.tasks_list:first').html()
     $('.tasks_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.tasks_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
+
+
+  # Load Staff data when an staff is selected from dropdown list
+  jQuery(".project_grid_fields select.members_list").live "change", ->
+    # Add an empty line item row at the end if last task is changed.
+    elem = jQuery(this)
+    if elem.val() is ""
+      clearLineTotal(elem)
+      false
+    else
+      addLineTaskRow(elem)
+      jQuery.ajax '/staffs/load_staff_data',
+        type: 'POST'
+        data: "id=" + jQuery(this).val()
+        dataType: 'html'
+        error: (jqXHR, textStatus, errorThrown) ->
+          alert "Error: #{textStatus}"
+        success: (data, textStatus, jqXHR) ->
+          item = JSON.parse(data)
+          container = elem.parents("tr.fields")
+          container.find("input.task_name").val(item[2])
+          container.find("input.description").val(item[0])
+          container.find("input.rate").val(item[1])

@@ -90,6 +90,34 @@
               </div>
               <!--grid_table-->
 
+            </fieldset>
+
+            <fieldset>
+              <legend> Assigned Team Members </legend>
+              <div class="grid_table">
+                <table cellpadding="0" cellspacing="0" class="project_grid_fields" id="project_grid_fields">
+                  <colgroup>
+                    <col class="one"/>
+                    <col class="two"/>
+                    <col class="three"/>
+                    <col class="four"/>
+                    <col class="five"/>
+                  </colgroup>
+                  <tr>
+                    <th class="align_center">&nbsp;</th>
+                    <th class="align_left"><%= t('views.staffs.name') %></th>
+                    <th class="align_left"><%= t('views.staffs.email') %></th>
+                    <th class="align_right"><%= t('views.staffs.rate') %></th>
+                  </tr>
+                  <%= f.fields_for :team_members, :wrapper => false %>
+                  <tr style="border:none;" class="no_hover">
+                    <td>&nbsp</td>
+                    <td class="add_member_row" colspan="2"><%= f.link_to_add t("views.projects.add_team"), :team_members, :class => "btn btn-mini", id: 'add_member' %></td>
+                  </tr>
+                </table>
+
+              </div>
+              <!--grid_table-->
 
             </fieldset>
           </div>

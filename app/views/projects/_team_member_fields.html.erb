@@ -1,0 +1,20 @@
+<tr class="fields">
+  <td class="align_center">
+    <div class="action_links">
+      <%= f.hidden_field :_destroy%>
+      <a data-association="team_members" class="remove_member remove_nested_fields" href="javascript:void(0)" title=" Delete this Member"></a>
+      <a class="sort_icon" href="javascript:" title="Drag this task to your desired location in this project"></a>
+    </div>
+  </td>
+  <td class="align_left">
+    <%= f.select :staff_id, options_for_select(load_staffs_for_project(action_name, @project.company_id, f.object), selected: f.object.staff_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.projects.select_a_member'), :class => "members_list medium chzn-select grid_large_medium", "data-form-container" => "staffs_holder", "data-dropdown-width" => "300", :required => ""} %>
+  </td>
+
+  <%= f.hidden_field :name, :class => 'task_name' %>
+  <td class="align_left">
+    <%= f.text_field :email, :class => 'grid_large description' %>
+  </td>
+  <td class="align_right">
+    <%= f.text_field :rate, :class => 'grid_small align_right rate' %>
+  </td>
+</tr>

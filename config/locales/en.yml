@@ -295,6 +295,7 @@ en:
           no_archived_msg: "You haven't archived any staff."
           no_deleted_msg: "You haven't deleted any staff."
           make_this_staff_available_to: "Make this Staff available to"
+          add_new_staff: "Add New Staff"
 
     clients:
       client_name: "Client Name"
@@ -482,6 +483,9 @@ en:
       time_estimate_hint: "A project time estimate helps you track progress against projections."
       add_task: "Add Task"
       select_a_task: "Select a task.."
+      add_team: "Add Team Member"
+      select_a_member: "Select a Member.."
+
 
 
   number:

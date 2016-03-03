@@ -19,6 +19,7 @@ module ProjectsHelper
     end
     flag
   end
+
   def load_task(action,company_id, project_task = nil)
     account_level = current_user.current_account.tasks.unarchived
     id = session['current_company'] || current_user.current_company || current_user.first_company_id
@@ -36,12 +37,12 @@ module ProjectsHelper
 
   def load_deleted_task(project_task,company_id)
     tasks = Task.unscoped.where(id: project_task.task_id).map{|task| [task.name,task.id,{'data-type' => 'deleted_task', type: 'deleted_task'}]}
-    tasks + load_tasks('edit',company_id)
+    tasks + load_task('edit',company_id)
   end
 
   def load_archived_tasks(project_task, company_id)
     tasks = Task.where(id: project_task.task_id).map{|task| [task.name,task.id,{'data-type' => 'archived_task', type: 'archived_task'}]}
-    tasks + load_tasks('edit',company_id)
+    tasks + load_task('edit',company_id)
   end
 
   def load_tasks_for_project(action , company_id, project_task)
@@ -51,6 +52,56 @@ module ProjectsHelper
       load_archived_tasks(project_task, company_id)
     else
       load_task(action, company_id, project_task)
+    end
+  end
+
+
+  def staff_in_other_company?(company_id, staff)
+    flag = false
+    if company_id.present? and staff.present?
+      if Company.find_by_id(company_id).staffs.include?(Staff.find_by_id(staff.staff_id))
+        flag = false
+      else
+        flag = true
+      end
+    end
+    flag
+  end
+
+
+  def load_staff(action,company_id, staff = nil)
+    account_level = current_user.current_account.staffs.unarchived
+    id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    staffs = Company.find_by_id(id).staffs.unarchived
+    data = action == 'new' && company_id.blank? ? account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} + staffs.map{|c| [c.name, c.id, {type: 'company_level'}]} : company_id.blank? ? account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} : Company.find_by_id(company_id).staffs.unarchived.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]}
+    if action == 'edit'
+      if staff_in_other_company?(company_id, staff)
+        data = [*Staff.find_by_id(staff.staff_id)].map{|c| [c.name, c.id, {type: 'company_level', 'data-type' => 'other_company'}]} + staffs.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]}
+      else
+        data = company_id.present? ? Company.find_by_id(company_id).staffs.unarchived.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} : account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} + staffs.map{|c| [c.name, c.id, {type: 'company_level'}]}
+      end
+    end
+    data
+  end
+
+  def load_deleted_staff(staff,company_id)
+    staffs = Staff.unscoped.where(id: staff.staff_id).map{|staff| [staff.name,staff.id,{'data-type' => 'deleted_staff', type: 'deleted_staff'}]}
+    staffs + load_staff('edit',company_id)
+  end
+
+  def load_archived_staff(staff, company_id)
+    staffs = Staff.where(id: staff.staff_id).map{|staff| [staff.name,staff.id,{'data-type' => 'archived_staff', type: 'archived_staff'}]}
+    staffs + load_staff('edit',company_id)
+  end
+
+
+  def load_staffs_for_project(action , company_id, staff)
+    if staff.present? and staff.staff_id.present? and staff.staff.nil?
+      load_deleted_staff(staff, company_id)
+    elsif staff.present? and  staff.staff_id.present? and staff.staff.archived?.present?
+      load_archived_staff(staff, company_id)
+    else
+      load_staff(action, company_id, staff)
     end
   end
 

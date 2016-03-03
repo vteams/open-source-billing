@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    3.times { @project.project_tasks.build() }
+    3.times { @project.project_tasks.build(); @project.team_members.build() }
   end
 
   # GET /projects/1/edit
@@ -99,10 +99,16 @@ class ProjectsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def project_params
       params.require(:project).permit(:project_name, :description, :client_id, :manager_id, :billing_method,
-                                      :total_hours, :company_id,:project_tasks_attributes,  project_tasks_attributes:
+                                      :total_hours, :company_id,:project_tasks_attributes,:team_members_attributes,
+                                      project_tasks_attributes:
                                       [
-                                        :id, :task_id, :name, :description, :rate, :_destroy, :project_id
-                                      ])
+                                        :id, :task_id, :name, :description, :rate, :project_id, :_destroy
+                                      ],
+                                      team_members_attributes:
+                                      [
+                                        :id, :staff_id, :name, :rate, :project_id, :_destroy
+                                      ]
+      )
     end
 
   def get_company_id

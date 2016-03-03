@@ -95,6 +95,10 @@ class StaffsController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def load_staff_data
+    staff = Staff.find_by_id(params[:id]).present? ?  Staff.find(params[:id]) : Staff.unscoped.find_by_id(params[:id])
+    render :text => [staff.email , staff.rate, staff.name]
+  end
 
 
   private
