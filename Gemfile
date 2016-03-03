@@ -62,6 +62,8 @@ gem 'rmagick'
 gem 'tinymce-rails'
 gem 'wicked_pdf', '~> 0.11.0'
 gem 'wkhtmltopdf-binary', '~> 0.9.9.3'
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
 # testing
 gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'

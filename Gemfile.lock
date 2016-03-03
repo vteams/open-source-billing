@@ -144,6 +144,7 @@ GEM
     ffi (1.9.6)
     file-temp (1.2.1)
       ffi (>= 1.0.0)
+    fullcalendar-rails (2.0.2.0)
     github-linguist (2.6.7)
       charlock_holmes (~> 0.6.6)
       escape_utils (~> 0.3.1)
@@ -198,6 +199,8 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.6.1)
     minitest (5.6.1)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     money (6.5.0)
       i18n (>= 0.6.4, <= 0.7.0)
     multi_json (1.11.0)
@@ -416,10 +419,12 @@ DEPENDENCIES
   factory_girl (~> 4.5.0)
   factory_girl_rails (~> 4.5.0)
   faker (~> 1.4.3)
+  fullcalendar-rails
   gon
   hashie_rails
   jquery-rails (~> 2.1.4)
   kaminari
+  momentjs-rails
   money (~> 6.5.0)
   mysql2
   nested_form
@@ -452,3 +457,6 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer
   zapata
+
+BUNDLED WITH
+   1.11.2

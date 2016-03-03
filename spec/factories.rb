@@ -1,7 +1,13 @@
 require 'factory_girl'
 require 'faker'
 
-FactoryGirl.define do  factory :line_item_tax do
+FactoryGirl.define do  factory :log do
+    project_id 1
+task_id 1
+hours 1.5
+notes "MyString"
+  end
+  factory :line_item_tax do
     invoice_line_item_id 1
 percentage "9.99"
 name "MyString"
