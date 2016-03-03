@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
   has_many :project_tasks, dependent: :destroy
 
 
-  accepts_nested_attributes_for :project_tasks, :reject_if => proc { |task| task['id'].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :project_tasks , :allow_destroy => true
 
   acts_as_archival
   acts_as_paranoid

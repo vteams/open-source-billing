@@ -39,7 +39,6 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-
     @project = Project.new(project_params)
     @project.company_id = get_company_id
     if @project.save
@@ -99,11 +98,10 @@ class ProjectsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def project_params
-      #params.require(:project).permit!
       params.require(:project).permit(:project_name, :description, :client_id, :manager_id, :billing_method,
                                       :total_hours, :company_id,:project_tasks_attributes,  project_tasks_attributes:
                                       [
-                                        :id, :task_id, :name, :description, :rate, :_destroy
+                                        :id, :task_id, :name, :description, :rate, :_destroy, :project_id
                                       ])
     end
 

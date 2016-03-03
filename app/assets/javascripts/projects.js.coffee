@@ -35,10 +35,10 @@ jQuery ->
           item = JSON.parse(data)
           container = elem.parents("tr.fields")
           # populate task's discription, billable and rate.
-          container.find("input.task_name").val(item[3])
+          container.find("input.task_name").val(item[2])
           container.find("input.description").val(item[0])
           container.find("input.rate").val(item[1])
-          container.find("input.billable").val(item[2])
+
 
 
   clearLineTotal = (elem) ->
@@ -51,14 +51,9 @@ jQuery ->
 
   addLineTaskRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length is 0
-      jQuery(".add_nested_fields").click()
+      jQuery(".project_grid_fields .add_nested_fields").click()
       #jQuery("#add_task").click()
 
-
-  jQuery("#add_task").live "click",->
-    jQuery(this).qtip('hide')
-
-  jQuery("#add_task").live "click", ->
-    options = $('.tasks_list:first').html()
-    $('.tasks_list:last').html(options).find('option:selected').removeAttr('selected')
+  jQuery(".project_grid_fields .add_nested_fields").live "click", ->
+    setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 

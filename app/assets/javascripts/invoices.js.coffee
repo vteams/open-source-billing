@@ -154,10 +154,10 @@ jQuery ->
   # Add empty line item row
   addLineItemRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length is 0
-      jQuery(".add_nested_fields").click()
+      jQuery(".invoice_grid_fields .add_nested_fields").click()
   #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".add_nested_fields").live "click", ->
+  jQuery(".invoice_grid_fields .add_nested_fields").live "click", ->
     setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total invoice balance if an item is removed
