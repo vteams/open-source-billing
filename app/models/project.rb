@@ -8,9 +8,10 @@ class Project < ActiveRecord::Base
   belongs_to :client
   belongs_to :company
   has_many :project_tasks, dependent: :destroy
-
+  has_many :team_members, dependent: :destroy
 
   accepts_nested_attributes_for :project_tasks , :allow_destroy => true
+  accepts_nested_attributes_for :team_members , :allow_destroy => true
 
   acts_as_archival
   acts_as_paranoid

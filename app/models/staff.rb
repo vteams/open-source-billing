@@ -7,6 +7,7 @@ class Staff < ActiveRecord::Base
 
   belongs_to :company
   has_many :company_entities, :as => :entity
+  has_many :team_members
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }

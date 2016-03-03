@@ -2,7 +2,16 @@ require 'factory_girl'
 require 'faker'
 
 
-FactoryGirl.define do  factory :project_task do
+FactoryGirl.define do  factory :team_member do
+    email "MyString"
+name "MyString"
+rate "9.99"
+archive_number "MyString"
+archived_at "2016-03-03 20:14:12"
+project_id 1
+staff_id 1
+  end
+  factory :project_task do
     name "MyString"
     description "MyText"
     rate 1
@@ -38,12 +47,6 @@ FactoryGirl.define do  factory :project_task do
     percentage "9.99"
     name "MyString"
   end
-  factory :line_item_tax do
-    invoice_line_item_id 1
-    percentage "9.99"
-    name "MyString"
-  end
-
 
   sequence :email do |n|
     "person#{n}@example.com"
