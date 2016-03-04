@@ -54,8 +54,11 @@ jQuery ->
       jQuery(".project_grid_fields .add_nested_fields").click()
       #jQuery("#add_task").click()
 
-  jQuery(".project_grid_fields .add_nested_fields").live "click", ->
-    setTimeout "window.applyChosen(jQuery('.project_grid_fields tr.fields:last .chzn-select'))", 0
+  jQuery(".project_team_member_fields .add_nested_fields").live "click", ->
+    setTimeout "window.applyChosen(jQuery('.project_team_member_fields tr.fields:last .chzn-select'))", 0
+
+  jQuery(".project_task_fields .add_nested_fields").live "click", ->
+    setTimeout "window.applyChosen(jQuery('.project_task_fields tr.fields:last .chzn-select'))", 0
 
   jQuery("#add_task").live "click", ->
     options = $('.tasks_list:first').html()
