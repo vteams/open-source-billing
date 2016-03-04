@@ -51,7 +51,7 @@ class Invoice < ActiveRecord::Base
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
 
-  accepts_nested_attributes_for :invoice_line_items, :allow_destroy => true
+  accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 
   # validation
 

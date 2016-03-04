@@ -106,7 +106,7 @@ class ProjectsController < ApplicationController
                                       ],
                                       team_members_attributes:
                                       [
-                                        :id, :staff_id, :name, :rate, :project_id, :_destroy
+                                        :id, :staff_id, :email, :name, :rate, :project_id, :_destroy
                                       ]
       )
     end
