@@ -32,6 +32,9 @@
 //= require jquery.metadata.js
 //= require application.js
 //= require bootstrap.js.coffee
+//= require moment
+//= require fullcalendar
+//= require calendar.js
 //= require clients.js.coffee
 //= require client_additional_contacts.js.coffee
 //= require client_contacts.js.coffee

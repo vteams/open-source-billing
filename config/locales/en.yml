@@ -358,6 +358,13 @@ en:
       add_new_tax: "Add New Tax"
       select_a_tax: "Select a tax..."
 
+    logs:
+      project: "Select Project"
+      task: "Select Task"
+      hours: "Hours"
+      notes: "Notes"
+      info: "Select date from calendar to enter time log.."
+
     payments:
       payments: "Payment"
       new: "New Payment"

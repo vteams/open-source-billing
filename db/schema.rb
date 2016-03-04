@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.boolean  "is_late_payment_reminder", default: false
   end
 
+
   create_table "estimates", force: true do |t|
     t.string   "estimate_number"
     t.datetime "estimate_date"
@@ -313,6 +314,16 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
+  end
+
+  create_table "logs", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "task_id"
+    t.float    "hours",      limit: 24
+    t.string   "notes"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "oauth_access_grants", force: true do |t|
@@ -511,6 +522,7 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.integer  "updated_by"
     t.integer  "created_by"
     t.integer  "project_id"
+
   end
 
   create_table "taxes", force: true do |t|

@@ -206,6 +206,9 @@ Osb::Application.routes.draw do
 
     resources :sent_emails
 
+    #get 'calendar' => 'calendar#index'
+    #get 'calendar' => 'log#index'
+    resources :logs
     # The priority is based upon order of creation:
     # first created -> highest priority.
 
