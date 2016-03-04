@@ -1,6 +1,11 @@
 class LogsController < ApplicationController
+  before_action :set_log, only: [:show, :edit, :update, :destroy]
+  layout 'application'
+  protect_from_forgery
+
   def index
-    @logs = Log.all
+    @date = params[:date] || Time.zone.now.beginning_of_day
+    @logs = Log.where('created_at >= ?', @date)
     @log = Log.new
     respond_to do |format|
       format.html # index.html.erb
@@ -22,9 +27,14 @@ class LogsController < ApplicationController
     @log = Log.new(log_params)
 
     if @log.save
-      redirect_to @log, notice: 'Log was successfully created.'
+      #redirect_to @log, notice: 'Log was successfully created.'
+      @logs = Log.where('created_at >= ?', Time.zone.now.beginning_of_day)
+      respond_to do |format|
+        format.html # index.html.erb
+        format.js
+      end
     else
-      render :new
+      render :index
     end
   end
 
@@ -49,8 +59,8 @@ class LogsController < ApplicationController
     @log = Log.find(params[:id])
   end
 
-  def item_params
-    params.require(:log).permit(:project_id, :task_id, :hours, :notes)
+  def log_params
+    params.require(:log).permit(:project_id, :task_id, :hours, :notes, :date)
   end
 
 end

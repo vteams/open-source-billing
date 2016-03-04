@@ -1,5 +1,3 @@
-
-
 <%- model_class = Log -%>
 <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
 <div class="log">
@@ -11,15 +9,19 @@
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.logs.new'))),
+      <% link_to (content_tag(:span, t('header.links.logs.new'))),
                   new_log_path,
                   :class => 'btn_large' %>
     </div>
   </div>
   <!--content_top-->
-  <%= render partial: 'logs/form' %>
+  <div id="calendar_div">
 
-  <div id='calendar'></div>
+  <div id="calendar_form"> <%= render 'logs/form' %>  </div>
+
+    <div id='calendar'></div>
+  </div>
+
       <div class="content_middle">
 
         <div class="grid_table">
@@ -30,6 +32,7 @@
               <col class="three"/>
               <col class="four"/>
               <col class="five"/>
+
             </colgroup>
             <thead id="log_head">
             <%= render partial: 'logs_header' %>
@@ -44,10 +47,9 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.logs.new'))),
+        <% link_to (content_tag(:span, t('header.links.logs.new'))),
                     new_log_path,
                     :class => 'btn_large' %>
       </div>
   <!--content_bottom-->
 </div>
-

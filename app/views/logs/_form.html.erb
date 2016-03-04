@@ -1,5 +1,4 @@
-<div class="logForm">
-  <%= form_for @log, :html => {:novalidate => "", :multipart => true,class: 'log_form form-horizontal',:id => 'newLog'} do |f| %>
+<%= form_for(@log ,remote: true, class: 'form-horizontal' ) do |f| %>
       <div class="content_middle form">
         <div class="fields_content">
           <div class="fields_content_container">
@@ -13,26 +12,25 @@
                   </ul>
                 </div>
             <% end %>
-
             <div class="fields_content_data">
 
               <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.logs.Log for') %></span></div>
-                <div class="medium_field">
+                <div class="label_field left single"><span><%= t('views.common.date') %></span></div>
+                <div class="small_field">
                   <%= f.text_field :date,:readonly => true  %>
                 </div>
               </div>
               <!--field_row-->
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
-                <div class="medium_field">
+                <div class="small_field">
                   <%= f.text_field :project_id  %>
                 </div>
               </div>
               <!--field_row-->
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.task') %></span></div>
-                <div class="medium_field">
+                <div class="small_field">
                   <%= f.text_field :task_id  %>
                 </div>
               </div>
@@ -40,13 +38,13 @@
 
               <div class="field_row">
 
-                <div class="label_field right single"><%= t('views.logs.hours') %></div>
+                <div class="label_field left single"><%= t('views.logs.hours') %></div>
                 <div class="small_field"><%= f.number_field :hours %></div>
               </div>
               <!--field_row-->
               <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.logs.name') %></span></div>
-                <div class="medium_field">
+                <div class="label_field left single"><span><%= t('views.logs.notes') %></span></div>
+                <div class="small_field">
                   <%= f.text_area :notes  %>
                 </div>
               </div>
@@ -68,5 +66,5 @@
         <%= f.submit :class => "btn_large submit log-submit-btn" %>
       </div>
   <% end %>
-</div><!--logs-->
+<!--logs-->
 
