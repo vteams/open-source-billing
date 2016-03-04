@@ -40,5 +40,8 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def unscoped_client
+    Client.unscoped.find_by_id self.client_id
+  end
 
 end
