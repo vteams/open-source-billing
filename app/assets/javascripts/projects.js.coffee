@@ -20,7 +20,7 @@ jQuery ->
           container = elem.parents("tr.fields")
           # populate task's discription, billable and rate.
           container.find("input.task_name").val(item[2])
-          container.find("input.description").val(item[0])
+          container.find(".description").val(item[0])
           container.find("input.rate").val(item[1])
 
 
@@ -28,8 +28,7 @@ jQuery ->
   clearLineTotal = (elem) ->
     container = elem.parents("tr.fields")
     container.find("input.task_name").val('')
-    container.find("input.description").val('')
-    container.find("input.billable").val('')
+    container.find(".description").val('')
     container.find("input.rate").val('')
 
 

@@ -180,32 +180,42 @@ table.task_grid_fields {
   .fields_content_container {
     width: 100%;
   }
-  .fields_content_data {
-    width: 780px;
-    margin: auto;
-    float: none;
-    padding-top: 0px;
-    &.custom_field{
-      width: 807px;
-      padding-left: 33px;
-    }
-  }
+
   .fields_content_left {
     float: left;
-    width: 490px;
+    width: 50%;
     .chzn-container-single .chzn-single abbr{
       top: 7px;
       right: 18px;
     }
     .medium_field{
       input[type="text"]{
-        width: 280px;
+        width: 200px;
       }
+    }
+    select{
+      width: 220px;
     }
   }
   .fields_content_right {
     float: right;
-    width: 242px;
+    width: 50%;
+    .chzn-container-single .chzn-single abbr{
+      top: 7px;
+      right: 18px;
+    }
+    .medium_field{
+      input[type="text"], input[type="number"]{
+        width: 200px;
+      }
+    }
+    select{
+      width: 220px;
+    }
+    textarea{
+      width: 200px;
+    }
+
   }
   .fields_content_left .label_field{
     width: 100px;
@@ -230,6 +240,7 @@ table.task_grid_fields {
     padding: 0px;
   }
   table {
+    width: 100%;
     border-collapse: separate;
   }
   .grid_table table tr:hover {
@@ -260,36 +271,23 @@ table.task_grid_fields {
     padding-right: 0px;
   }
   .grid_table table col.one {
-    width: 33px;
+    width: 5%;
   }
   .grid_table table col.two { /*item*/
-    width: 176px;
+    width: 35%;
   }
   .grid_table table col.three { /*description*/
-    width: 174px;
+    width: 40%;
   }
   .grid_table table col.four { /*unit cost*/
-    width: 83px;
+    width: 20%;
   }
-  .grid_table table col.five { /*qty*/
-    width: 83px;
-  }
-  .grid_table table col.six { /*tax*/
-    width: 83px;
-  }
-  .grid_table table col.seven { /*tax2*/
-    width: 83px;
-  }
-  .grid_table table col.eight { /*line total*/
-    width: 100px;
-  }
+  
   input.grid_small,
   .blank_input {
     width: 60px;
   }
-  select{
-    width: 300px;
-  }
+
   select.grid_small {
     width: 80px;
   }
@@ -406,4 +404,19 @@ table.task_grid_fields {
     text-align: right;
     width: 42px;
   }
+  .tasks_list, .members_list {
+    width: 250px !important;
+  }
+  .grid_large.description{
+    width: 280px !important;
+  }
+  .grid_small.rate{
+    width: 80px !important;
+  }
+
+  td.add_task_row, td.add_member_row{
+    padding-left: 20px !important;
+  }
+
 }
+
