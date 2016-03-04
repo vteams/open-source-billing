@@ -124,9 +124,10 @@
         </div>
       </div>
 
-      <div class="content_bottom">
-        <%= f.submit :class => 'btn_large submit' %>
-        <%= link_to t("views.common.cancel"), projects_path, :class => 'btn_large grey' %>
-      </div>
     </div>
 <% end %>
+<div class="content_bottom">
+  <% button_name = @project.persisted? ? 'Update Project' : 'Create Project' %>
+  <%= button_tag button_name, class: "btn_large submit project-submit-btn" %>
+  <%= link_to t("views.common.cancel"), projects_path, :class => 'btn_large grey' %>
+</div><!--content_bottom-->

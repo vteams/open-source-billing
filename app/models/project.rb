@@ -17,6 +17,12 @@ class Project < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
+  before_save :check_estimate_hours
+
+  def check_estimate_hours
+    self.total_hours = self.total_hours.present? ? self.total_hours : 0.0
+  end
+
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
