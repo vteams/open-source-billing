@@ -24,14 +24,15 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
                 <div class="small_field">
-                  <%= f.text_field :project_id  %>
+                  <%= f.select :project_id, options_for_select(Project.all.map{|p| [p.project_name, p.id]}),include_blank: 'Select a Project', selected: f.object.project_id   %>
                 </div>
               </div>
               <!--field_row-->
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.task') %></span></div>
-                <div class="small_field">
-                  <%= f.text_field :task_id  %>
+                <div class="small_field tasks_dropdown">
+
+                  <%= f.select :task_id, {}%>
                 </div>
               </div>
               <!--field_row-->

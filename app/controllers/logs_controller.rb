@@ -5,8 +5,9 @@ class LogsController < ApplicationController
 
   def index
     @date = params[:date] || Time.zone.now.beginning_of_day
-    @logs = Log.where('created_at >= ?', @date)
+    @logs = Log.where('date = ?', @date)
     @log = Log.new
+    @tasks = [] # Project.find(true)
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -51,6 +52,25 @@ class LogsController < ApplicationController
   def destroy
     @log.destroy
     redirect_to logs_url, notice: 'Log was successfully destroyed.'
+  end
+
+  def events
+    @logs = Log.all.group(:date).sum(:hours)
+
+    respond_to do |format|
+      format.json
+    end
+  end
+
+  def update_tasks
+    #binding.pry
+    project_id = params[:project_id].to_i
+    unless project_id == 0
+      @tasks = Project.find(project_id).project_tasks
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   private

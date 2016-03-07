@@ -8,7 +8,6 @@ $(document).ready(function() {
     // initialize the calendar...
     $('#calendar').fullCalendar({
         dayClick: function(date, jsEvent, view) {
-
            $.ajax({
                 dataType: 'script',
                 type: 'GET',
@@ -18,7 +17,8 @@ $(document).ready(function() {
             $('#log_date').val(date.format())
 
         //alert('Clicked on: ' + date.format());
-        }
+        },
+        events: '/logs/events.json'
         //eventClick: function(event) {
             //window.open(event.showUrl)
             //alert('a day has been clicked!');
@@ -63,6 +63,16 @@ $(document).ready(function() {
             alert('false');
             return false;
         }
+    });
+
+    return $(document).on('change', '#log_project_id', function(evt) {
+        return $.ajax('/logs/update_tasks', {
+            type: 'GET',
+            dataType: 'script',
+            data: {
+                project_id: $("#log_project_id option:selected").val()
+            }
+        });
     });
 });
 

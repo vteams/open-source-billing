@@ -83,7 +83,7 @@ gem 'osb_api', path: 'vendor/engines/osb_api'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder', '~> 2.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'

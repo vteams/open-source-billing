@@ -6,3 +6,11 @@
 
 }
 #calendar{float: left; margin-top: 8%}
+
+.fc-event-title,.fc-event-inner,
+.fc-ltr .fc-event-hori.fc-event-start, .fc-rtl .fc-event-hori.fc-event-end{
+  background-color: #fff4d6 !important;
+  border: 0px !important;
+  color: black !important;
+  padding: 1px 3px !important;
+}

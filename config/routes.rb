@@ -208,7 +208,12 @@ Osb::Application.routes.draw do
 
     #get 'calendar' => 'calendar#index'
     #get 'calendar' => 'log#index'
-    resources :logs
+    resources :logs do
+      collection do
+        get 'events'
+        get 'update_tasks', as: 'update_tasks'
+      end
+    end
     # The priority is based upon order of creation:
     # first created -> highest priority.
 
