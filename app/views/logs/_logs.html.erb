@@ -7,7 +7,7 @@
           <td class="align_center"> <%= log.notes %> </td>
 
           <td class="align_center">
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log) %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log), remote: true %>
           </td>
         </tr>
     <% end %>

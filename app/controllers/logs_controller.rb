@@ -21,15 +21,14 @@ class LogsController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+
   end
 
   # POST /tasks
   def create
     @log = Log.new(log_params)
-
     if @log.save
-      #redirect_to @log, notice: 'Log was successfully created.'
-      @logs = Log.where('created_at >= ?', Time.zone.now.beginning_of_day)
+      @logs = load_logs(@log.date)
       respond_to do |format|
         format.html # index.html.erb
         format.js
@@ -41,8 +40,14 @@ class LogsController < ApplicationController
 
   # PATCH/PUT /tasks/1
   def update
-    if @log.update(log_params)
-      redirect_to @log, notice: 'Log was successfully updated.'
+    if @log.update_attributes(log_params)
+      @logs = load_logs(@log.date)
+      respond_to do |format|
+        format.html {
+            redirect_to logs_path, notice: 'Log was successfully updated.'
+        }
+        format.js
+      end
     else
       render :edit
     end
@@ -83,4 +88,8 @@ class LogsController < ApplicationController
     params.require(:log).permit(:project_id, :task_id, :hours, :notes, :date)
   end
 
+  def load_logs(log_date)
+    date = log_date.to_datetime
+    Log.where('date BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
+  end
 end

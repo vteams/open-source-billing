@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
   has_many :project_tasks
   belongs_to :company
   has_many :company_entities, :as => :entity
+  has_many :logs, dependent: :destroy
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }

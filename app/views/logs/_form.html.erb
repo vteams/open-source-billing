@@ -24,7 +24,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
                 <div class="small_field">
-                  <%= f.select :project_id, options_for_select(Project.all.map{|p| [p.project_name, p.id]}),include_blank: 'Select a Project', selected: f.object.project_id   %>
+                  <%= f.select :project_id, options_for_select(Project.all.map{|p| [p.project_name, p.id]}, selected: f.object.project_id),include_blank: 'Select a Project', selected: f.object.project_id   %>
                 </div>
               </div>
               <!--field_row-->
