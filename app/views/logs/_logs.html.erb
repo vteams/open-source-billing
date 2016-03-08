@@ -1,13 +1,13 @@
 <% if  @logs.length > 0 %>
     <% @logs.each do |log| %>
         <tr>
-          <td class="align_center"> <%= log.project_id %> </td>
-          <td class="align_center"> <%= log.task_id %> </td>
+          <td class="align_center"> <%= log.project.project_name %> </td>
+          <td class="align_center"> <%= log.task.present? ? log.task.name : 'N/A' %> </td>
           <td class="align_center"> <%= log.hours %> </td>
           <td class="align_center"> <%= log.notes %> </td>
 
           <td class="align_center">
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log) %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log),remote: true %>
           </td>
         </tr>
     <% end %>

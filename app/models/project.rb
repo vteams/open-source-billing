@@ -9,6 +9,7 @@ class Project < ActiveRecord::Base
   belongs_to :manager, class_name: 'Staff', foreign_key: 'manager_id'
   belongs_to :company
   has_many :project_tasks, dependent: :destroy
+  has_many :logs, dependent: :destroy
   has_many :team_members, dependent: :destroy
 
   accepts_nested_attributes_for :project_tasks , :reject_if => proc { |task| task['task_id'].blank? }, :allow_destroy => true

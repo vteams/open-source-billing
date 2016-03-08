@@ -1,8 +1,9 @@
 #calendar{width: 40%}
 .log{
-  #new_log{float: right}
-  #new_log, .fields_content_data, .fields_content{ width: 50% }
+  .new_log,.edit_log{float: right}
+  .new_log,.edit_log, .fields_content_data, .fields_content{ width: 50% }
   .grid_table thead tr th{width: 100%}
+  .fields_content_data, .field_row{width: 100%}
 
 }
 #calendar{float: left; margin-top: 8%}

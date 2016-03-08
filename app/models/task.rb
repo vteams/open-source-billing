@@ -6,6 +6,7 @@ class Task < ActiveRecord::Base
   acts_as_paranoid
 
   has_many :project_tasks
+  has_many :logs, dependent: :destroy
   belongs_to :company
   has_many :company_entities, :as => :entity
 

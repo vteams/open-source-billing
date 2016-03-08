@@ -3,28 +3,31 @@
 //    xhr.setRequestHeader("X-CSRF-Token", token);
 //});
 
-$(document).ready(function() {
-
+function init_fullcalendar(){
     // initialize the calendar...
     $('#calendar').fullCalendar({
         dayClick: function(date, jsEvent, view) {
-           $.ajax({
+            $.ajax({
                 dataType: 'script',
                 type: 'GET',
                 data:{date:date.format()},
                 url: '/en/logs'
-              });
+            });
             $('#log_date').val(date.format())
 
-        //alert('Clicked on: ' + date.format());
+            //alert('Clicked on: ' + date.format());
         },
         events: '/logs/events.json'
         //eventClick: function(event) {
-            //window.open(event.showUrl)
-            //alert('a day has been clicked!');
+        //window.open(event.showUrl)
+        //alert('a day has been clicked!');
         //}
 
     });
+}
+$(document).ready(function() {
+
+    init_fullcalendar();
     $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
 
     jQuery(".log-submit-btn").live("click", function() {

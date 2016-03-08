@@ -16,7 +16,7 @@
 
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.common.date') %></span></div>
-                <div class="small_field">
+                <div class="small_field"> <%# binding.pry %>
                   <%= f.text_field :date,:readonly => true  %>
                 </div>
               </div>
@@ -24,15 +24,14 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
                 <div class="small_field">
-                  <%= f.select :project_id, options_for_select(Project.all.map{|p| [p.project_name, p.id]}),include_blank: 'Select a Project', selected: f.object.project_id   %>
+                  <%= f.select :project_id, options_for_select(load_projects_for_log(@log), selected: f.object.project_id),include_blank: 'Select a Project'   %>
                 </div>
               </div>
               <!--field_row-->
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.task') %></span></div>
                 <div class="small_field tasks_dropdown">
-
-                  <%= f.select :task_id, {}%>
+                  <%= f.select :task_id, load_tasks_for_log(@log), {"data-placeholder" => "Select a task...", :class => "small_field", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"}%>
                 </div>
               </div>
               <!--field_row-->

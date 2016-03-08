@@ -1,11 +1,12 @@
 class LogsController < ApplicationController
+  include DateFormats
   before_action :set_log, only: [:show, :edit, :update, :destroy]
   layout 'application'
   protect_from_forgery
 
   def index
-    @date = params[:date] || Time.zone.now.beginning_of_day
-    @logs = Log.where('date = ?', @date)
+    @date = params[:date] || Date.today
+    @logs = Log.where(date: @date)
     @log = Log.new
     @tasks = [] # Project.find(true)
     respond_to do |format|
@@ -21,6 +22,11 @@ class LogsController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @tasks = Project.find(@log.project_id).project_tasks
+    @log.date = @log.date
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /tasks
@@ -29,7 +35,7 @@ class LogsController < ApplicationController
 
     if @log.save
       #redirect_to @log, notice: 'Log was successfully created.'
-      @logs = Log.where('created_at >= ?', Time.zone.now.beginning_of_day)
+      @logs = Log.where(date: @log.date)
       respond_to do |format|
         format.html # index.html.erb
         format.js
@@ -42,9 +48,11 @@ class LogsController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @log.update(log_params)
-      redirect_to @log, notice: 'Log was successfully updated.'
-    else
-      render :edit
+      @logs = Log.where(date: @log.date)
+      respond_to do |format|
+        format.html # index.html.erb
+        format.js
+      end
     end
   end
 

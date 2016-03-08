@@ -1,0 +1,23 @@
+<div class="grid_table">
+  <div class="primary_heading">
+    <h1>Time logs for <%= @log.date? ? @log.date : @date  %> </h1>
+  </div>
+  <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %>">
+    <colgroup>
+      <col class="one"/>
+      <col class="two"/>
+      <col class="three"/>
+      <col class="four"/>
+      <col class="five"/>
+
+    </colgroup>
+    <thead id="log_head">
+    <%= render partial: 'logs_header' %>
+    </thead>
+    <tbody id="task_body">
+    <%= render 'logs' %>
+
+    </tbody>
+  </table>
+</div>
+<!--grid_table-->
