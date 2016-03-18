@@ -461,6 +461,3 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer
   zapata
-
-BUNDLED WITH
-   1.11.2
