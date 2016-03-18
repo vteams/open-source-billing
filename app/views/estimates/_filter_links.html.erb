@@ -1,0 +1,20 @@
+<div class="grid_control_right">
+  <ul>
+    <li class="grid_control_sep sep_right">
+      <%= link_to t('views.common.active'), "estimates?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}", :remote => true %>
+      <span id="actives">(<%= get_count(params.merge(status: 'unarchived_and_not_invoiced')) %>)</span>
+    </li>
+    <li class="grid_control_sep sep_right">
+      <%= link_to t('views.common.archived'), "estimates?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}", :remote => true %>
+      <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
+    </li>
+    <li class="grid_control_sep sep_right">
+      <%= link_to t('views.common.deleted'), "estimates?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}", :remote => true %>
+      <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+    </li>
+    <li>
+      <%= link_to t('views.common.invoiced'), "estimates?status=invoiced#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_invoiced #{'active' if params[:status] == 'invoiced'}", :remote => true %>
+      <span id="invoiced">(<%= get_count(params.merge(status: 'invoiced')) %>)</span>
+    </li>
+  </ul>
+</div>

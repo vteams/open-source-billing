@@ -1,0 +1,28 @@
+// Place all the styles related to the expenses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#expense_client_id_chzn{ width:200px !important;}
+#expense_category_id_chzn{ width:200px !important;}
+
+#expense_tax_1, #expense_tax_2{width: 200px; }
+
+.expense_form .fields_content_left{
+  width: 400px !important;
+}
+
+.expense_form .fields_content_right{
+  width: 320px !important;
+}
+
+.expense_form .small_field input{
+  width: 180px;
+}
+
+.expense .grid_table table col.one {
+  width: 33px;
+}
+
+.expense .grid_table table col.eight {
+  width: 65px;
+}

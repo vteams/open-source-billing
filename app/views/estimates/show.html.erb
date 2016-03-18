@@ -1,0 +1,46 @@
+<%- model_class = Estimate -%>
+<div class="show_estimate">
+
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1><%= t '.title', :default => model_class.model_name.human %>:<%= @estimate.estimate_number %></h1>
+    </div>
+
+    <div class="primary_links">
+      <div id="active_links" class="grid_control_right">
+        <div class="grid_control_right">
+          <ul>
+            <li class="grid_control_sep sep_right">
+              <%= link_to t('helpers.links.edit'), edit_estimate_path(@estimate) %>
+            </li>
+            <!--<li><a href="#">Send</a></li>-->
+            <li class="grid_control_sep sep_right">
+              <%= link_to t('views.common.send'), "send_estimate?id=#{@estimate.id}" %>
+            </li>
+            <li class="grid_control_sep sep_right">
+              <%= link_to t('views.common.pdf'), {:controller => 'estimates', :action => 'estimate_pdf', :id => @estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
+            </li>
+            <li class="grid_control_sep sep_right">
+              <!--<a href="#">Print</a>-->
+              <%= link_to t('views.common.print'), {:controller => 'estimates', :action => 'estimate_pdf', :id => @estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
+            </li>
+            <% if !@estimate.status.eql?("invoiced") %>
+            <li >
+              <%= link_to t('views.common.convert_to_invoice'), {:controller => 'estimates', :action => 'convert_to_invoice', :id => @estimate.id} %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--primary_links-->
+
+  </div>
+  <!--content_top-->
+
+  <div class="content_middle">
+    <%= render :partial => "show_estimate" %>
+  </div>
+  <!--content_middle-->
+
+</div><!--show_invoice-->

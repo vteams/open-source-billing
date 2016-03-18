@@ -1,0 +1,61 @@
+<%- model_class = Estimate -%>
+<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+<div class="estimate">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
+      </h1>
+    </div>
+    <div class="primary_btn">
+      <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
+                  new_estimate_path,
+                  :class => 'btn_large' %>
+    </div>
+  </div>
+  <%= form_tag "estimates/bulk_actions", {method: :get, :remote => true} do -%>
+      <div class="content_middle">
+
+        <div class="grid_control">
+          <div class="grid_control_left">
+            <ul value='<%= model_class.model_name %>' id="bulk_actions">
+              <%= render "bulk_actions" %>
+            </ul>
+          </div>
+          <div class="grid_control_right" id="active_links">
+            <%= render "filter_links" %>
+          </div>
+        </div>
+
+        <div class="grid_table">
+          <table cellpadding="0" cellspacing="0" class="table table_listing estimate_listing <%= I18n.locale %>">
+            <colgroup>
+              <col class="one"/>
+              <col class="two"/>
+              <col class="three"/>
+              <col class="four"/>
+              <col class="five"/>
+              <col class="six"/>
+              <col class="seven"/>
+
+            </colgroup>
+            <thead id="estimate_head">
+            <%= render partial: 'estimate_header' %>
+            </thead>
+            <tbody id="estimate_body">
+            <%= render 'estimate' %>
+            <tfoot id="paging_links">
+            <%= render "application_partials/paging" %>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
+                    new_estimate_path,
+                    :class => 'btn_large' %>
+      </div>
+  <% end %>
+</div>

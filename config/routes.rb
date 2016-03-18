@@ -91,6 +91,7 @@ Osb::Application.routes.draw do
         get 'filter_clients'
         get 'bulk_actions'
         post 'get_last_invoice'
+        post 'get_last_estimate'
         get 'undo_actions'
       end
       member do
@@ -117,6 +118,14 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         post 'load_item_data'
         get 'duplicate_item'
+        get 'undo_actions'
+      end
+    end
+
+    resources :expenses do
+      collection do
+        get 'bulk_actions'
+        get 'filter_items'
         get 'undo_actions'
       end
     end
@@ -203,6 +212,13 @@ Osb::Application.routes.draw do
 
 
     resources :sent_emails
+    resources :estimates do
+      collection do
+        get 'selected_currency'
+        get 'send_estimate'
+        get 'bulk_actions'
+      end
+    end
 
     #get 'calendar' => 'calendar#index'
     #get 'calendar' => 'log#index'

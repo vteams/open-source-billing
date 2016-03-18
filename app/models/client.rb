@@ -23,6 +23,7 @@ class Client < ActiveRecord::Base
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
   # associations
+  has_many :estimates
   has_many :invoices
   has_many :payments
   has_many :client_contacts, :dependent => :destroy
@@ -30,6 +31,7 @@ class Client < ActiveRecord::Base
   belongs_to :company
   belongs_to :currency
   has_many :company_entities, :as => :entity
+  has_many :expenses
   after_create :create_default_currency
 
   acts_as_archival
@@ -47,6 +49,10 @@ class Client < ActiveRecord::Base
 
   def last_invoice
     invoices.unarchived.first.id rescue nil
+  end
+
+  def last_estimate
+    estimates.unarchived.first.id rescue nil
   end
 
   def purchase_options

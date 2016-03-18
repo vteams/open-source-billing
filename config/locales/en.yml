@@ -20,6 +20,7 @@ en:
   current: "Current"
   past: "Past"
   edit: "Edit"
+  estimate: "Estimate"
 
   date:
     formats:
@@ -46,7 +47,14 @@ en:
       projects:
         new: "New Project"
         listing: "Project Listing"
-
+      estimates:
+        estimates: "Estimates"
+        listing:  "Estimate Listing"
+        new:  "New Estimate"
+      expenses:
+        expenses: "Expenses"
+        listing: "Expenses Listing"
+        new: "New Expense"
       clients:
         clients: "Clients"
         listing: "Clients Listing"
@@ -93,7 +101,9 @@ en:
       archived: "Archived"
       delete: "Delete"
       deleted: "Deleted"
+      invoiced: "Invoiced"
       send: "Send"
+      convert_to_invoice: "Convert to Invoice"
       active: "Active"
       recover: "Recover"
       less: "less"
@@ -159,6 +169,7 @@ en:
       yes: "Yes"
       no: "No"
       pdf: "PDF"
+      select_estimate_currency: "Select currency..."
 
     pagination:
       previous: "Previous"
@@ -297,6 +308,24 @@ en:
       make_this_staff_available_to: "Make this Staff available to"
       add_new_staff: "Add New Staff"
 
+    estimates:
+        no_estimate_msg: "You haven't created any estimate yet. Please click on New Estimate button to create new estimate."
+        no_archived_msg: "You haven't any archived estimate."
+        no_deleted_msg: "You haven't any deleted estimate."
+        no_invoiced_msg: "You haven't any invoiced estimate."
+        send_this_note_only: "Send this note only"
+        send_estimate_instructions: "or click ‘Resend Estimate’ button below to resend estimate too."
+        company_hint: "company for this estimate"
+        client_hint: "client you want to send estimate"
+        auto_generated: "Auto Generated"
+        estimate_date: "Estimate Date"
+        line_total: "Line Total"
+        add_line_item: "Add Line Item"
+        subtotal: "Subtotal"
+        net_total: "Net Total"
+        send_estimate: "Send Estimate"
+        this_estimate_was_sent_using: "This estimate was sent using"
+
     clients:
       client_name: "Client Name"
       client: "Client"
@@ -335,6 +364,18 @@ en:
       no_deleted_client: "You haven't any deleted client."
       add_new_client: "Add New Client"
       contact_title: "Contact title"
+    expenses:
+      expenses: "Expenses"
+      listing: "Expenses Listing"
+      new_expense: "New Expense"
+      edit_expense: "Edit Expense"
+      note: "Note"
+      category: "Category"
+      amount: "Amount"
+      client_hint: "Select a client for this expense"
+      no_record_msg: "You haven't created any expenses yet."
+      no_archived_expense: "You don't have any archived expense."
+      no_deleted_expense: "You don't have any deleted expense."
 
     items:
       add_new_item: 'Add New Item'

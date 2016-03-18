@@ -1,0 +1,32 @@
+jQuery('thead#estimate_head').html('<%= escape_javascript render("estimate_header") %>')
+jQuery('tbody#estimate_body').html('<%= escape_javascript render("estimate") %>');
+
+jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+
+jQuery('#sort_direction').html('<%= params[:direction]%>');
+// Add page params in table listing headers
+<% status = params[:status]%>
+jQuery('.top_links').hide();
+jQuery('#active_links a').removeClass('active');
+jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+<%if status == "active" %>
+jQuery('.archive,.destroy,.payment,.send, .convert_to_invoice').show();
+jQuery('#active_links a.get_actives').addClass('active');
+jQuery('.send').parent("li").addClass("grid_control_sep");
+jQuery('.destroy').parent("li").addClass("grid_control_sep");
+<% elsif status == "archived"%>
+jQuery('.recover_archived,.destroy_archived,.send, .convert_to_invoice').show();
+jQuery('#active_links a.get_archived').addClass('active');
+jQuery('.send').parent("li").addClass("grid_control_sep");
+<% elsif status == "deleted"%>
+jQuery('.recover_deleted').show().parent('li').removeAttr('class');
+jQuery('#active_links a.get_deleted').addClass('active');
+<% elsif status == "invoiced"%>
+jQuery('.get_invoiced').show().parent('li').removeAttr('class');
+jQuery('#active_links a.get_invoiced').addClass('active');
+jQuery('.destroy').show();
+jQuery('.destroy').parent("li").removeClass("grid_control_sep");
+<%end%>
+window.preventDeletedNavigation()
+window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
+bind_deleted_entry();

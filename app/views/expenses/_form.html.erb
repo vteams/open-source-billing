@@ -1,0 +1,73 @@
+<div class="invoice_form expense_form">
+<%= form_for @expense, :html => {:class => 'expense-form form-horizontal', :id => 'newExpense', :novalidate => ""} do |f| %>
+  <% @parent_f = f %>
+
+    <div class="content_middle">
+
+        <div class="fields_content">
+          <div class="fields_content_container">
+
+            <div class="fields_content_data">
+              <div class="fields_content_left">
+                <div class="field_row">
+                  <div class="label_field left single"><%= f.label :category_id, content_tag(:span, 'Category') %></div>
+                  <div class="small_field">
+                    <%= f.collection_select(:category_id, ExpenseCategory.all, :id, :name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a category...", :class => "invoice_client small chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "130"})  %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row description">
+                  <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
+                  <div class="small_field">
+                    <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
+                    <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+                    <%= f.select :client_id, options_from_collection_for_select(Client.order('first_name, last_name'), :id, :contact_name,  selected_client),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "130"} %>
+                    <ul class="field_description select">
+                      <li><%= t('views.expenses.client_hint') %></li>
+
+                    </ul>
+                  </div>
+                </div>
+                <!--field_row-->
+                </div>
+
+              <div class="fields_content_right">
+                <div class="field_row ">
+                  <div class="label_field left single"><%= f.label :amount, content_tag(:span, 'Amount') %></div>
+                  <div class="small_field">
+                    <%= f.number_field :amount, :class => 'text_field', :step => 'any', min: 0 %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field left single"><%= f.label :date, content_tag(:span, 'Date') %></div>
+                  <div class="small_field">
+                    <%= f.text_field :expense_date %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+
+              </div>
+              <%= render partial: 'tax_fields', locals: {f: f} %>
+              <div class="field_row">
+                <div class="label_field left single"><%= t('views.expenses.note') %></div>
+                <div class="large_field">
+                  <%= f.text_area :note %>
+                </div>
+              </div>
+              <!--field_row-->
+            </div>
+          </div>
+        </div>
+    </div>
+
+<% end %>
+  <div class="content_bottom">
+    <% button_name = @expense.persisted? ? 'Update Expense' : 'Create Expense' %>
+    <%= button_tag button_name, class: "btn_large submit expense-submit-btn" %>
+    <%= link_to t("views.common.cancel"), expenses_path, :class => 'btn_large grey' %>
+  </div><!--content_bottom-->
+</div><!--clients-->

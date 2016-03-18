@@ -219,7 +219,7 @@ jQuery ->
     jQuery(this).qtip("hide")
 
   # Validate client, cost and quantity on invoice save
-  jQuery("form.form-horizontal").submit ->
+  jQuery(".invoice-form.form-horizontal").submit ->
     discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
     discount_type = jQuery("select#discount_type").val()
     sub_total = jQuery('#invoice_sub_total').val()

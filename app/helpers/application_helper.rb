@@ -172,6 +172,17 @@ module ApplicationHelper
     end
   end
 
+  #get Estimate for invoices
+  def get_estimate_company_name(estimate=nil)
+    company = estimate.company
+    if company.present?
+      company.company_name
+    else
+      company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+      Company.find(company_id).company_name
+    end
+  end
+
   def currencies
     #Currency.where(id: filter_by_company(Invoice,'invoices').group_by(&:currency_id).keys.compact)
     currencies = Currency.where(id: (Invoice.select("DISTINCT(currency_id)").map &:currency_id) )

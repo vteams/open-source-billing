@@ -26,6 +26,8 @@
 //= require inline-forms.js.coffee
 //= require invoices.js.coffee
 //= require projects.js.coffee
+//= require estimates.js.coffee
+//= require expenses.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
 //= require tablesorter.staticrow.js
@@ -77,9 +79,9 @@
 
 jQuery(function () {
 
-    //override default behavior of inserting new subforms into form    
+    //override default behavior of inserting new subforms into form
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1) {
+        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1 || document.location.pathname.search(/\/estimates\//) != -1) {
             var $tr = $(link).closest('tr');
             return $(content).insertBefore($tr);
         } else if (document.location.pathname.search(/\/clients\//) != -1) {

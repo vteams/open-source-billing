@@ -1,0 +1,19 @@
+<% status = params[:status] if params[:status].present? %>
+<%= hidden_field_tag :page, params[:page] %>
+<%= hidden_field_tag :from_estimates %>
+<% if status == 'deleted' %>
+    <li><%= submit_tag t('views.common.recover'), :name => "recover_deleted", :class => "top_links recover_deleted" %></li>
+<% elsif status == 'archived' %>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.recover'), :name => "recover_archived", :class => "top_links recover_archived" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.delete'), :name => "destroy_archived", :class => "top_links destroy_archived" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.send'), :name => "send", :class => "top_links send" %></li>
+    <li><%= submit_tag t('views.common.convert_to_invoice'), :name => "convert_to_invoice", :class => "top_links convert_to_invoice" %></li>
+<% else%>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.recover'), :name => "recover_archived", :class => "top_links recover_archived", :style => "display:none;" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.recover'), :name => "recover_deleted", :class => "top_links recover_deleted", :style => "display:none;" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.archive'), :name => "archive", :class => "top_links archive" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.delete'), :name => "destroy", :class => "top_links destroy" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.delete'), :name => "destroy_archived", :class => "top_links destroy_archived", :style => "display:none;" %></li>
+    <li class="grid_control_sep"><%= submit_tag t('views.common.send'), :name => "send", :class => "top_links send" %></li>
+    <li><%= submit_tag t('views.common.convert_to_invoice'), :name => "convert_to_invoice", :class => "top_links convert_to_invoice"%></li>
+<% end %>

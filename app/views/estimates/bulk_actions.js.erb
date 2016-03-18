@@ -1,0 +1,69 @@
+jQuery('.alert').hide();
+
+<% if @action == "enter payment" %>
+<% if @estimate_has_deleted_clients.length > 0 %>
+jQuery(".alert.alert-error").show().find('span').html("Please recover clients for estimate(s) with estimate# <%= @estimate_has_deleted_clients.join(",") %> to enter payment");
+<% end %>
+<%else%>
+
+<% unless params[:flag]%>
+<% if @action == "archived" or @action == "deleted" %>
+jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+<%
+ if params[:destroy_archived].present?
+    status = 'destroy_archived'
+ elsif params[:destroy].present?
+    status = 'destroy'
+ else
+    status = ''
+ end
+%>
+<%else%>
+jQuery(".alert.alert-success").show().find('span').html("Estimates(s) are <%= @action %> successfully.");
+<% end %>
+<% end %>
+
+<%if !params[:estimate_ids].blank? && @action != "paid estimates"%>
+jQuery('tbody#estimate_body').html('<%= escape_javascript(render :partial=>"estimate") %>');
+<%end%>
+
+// Enable/Disable action links(Archive,Delete,Recover). //
+
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+jQuery('#active_links a').removeClass('active');
+
+
+
+jQuery('#select_all').attr('checked', false);
+
+<%if @action != "paid estimates"%>
+jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
+jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+jQuery("table.table_listing").trigger('update');
+jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+//    jQuery(".text-overflow-class").ellipsis({row: 1});
+<%end%>
+
+jQuery('.top_links').hide();
+<% if @action == "recovered from archived"%>
+jQuery('.send').parent("li").removeClass("grid_control_sep");
+jQuery('.recover_archived,.destroy_archived,.send, .convert_to_invoice').show();
+jQuery('.get_archived').addClass('active');
+<% elsif @action == "recovered from deleted" %>
+jQuery('.recover_deleted').show().parent("li").removeClass("grid_control_sep");
+jQuery('.get_deleted').addClass('active');
+<% elsif @action == "deleted from archived" %>
+jQuery('.send').parent("li").removeClass("grid_control_sep");
+jQuery('.recover_archived,.destroy_archived,.send, .convert_to_invoice').show();
+jQuery('#active_links a.get_archived').addClass('active');
+<% elsif params[:destroy_archived].present?  %>
+jQuery('.send').parent("li").removeClass("grid_control_sep");
+jQuery('.recover_archived,.destroy_archived,.send, .convert_to_invoice').show();
+jQuery('#active_links a.get_archived').addClass('active');
+<%else%>
+jQuery('.archive,.destroy,.convert_to_invoice,.send').show();
+jQuery('.get_actives').addClass('active');
+<%end%>
+
+<%end%>
+bind_deleted_entry();
