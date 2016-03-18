@@ -1358,3 +1358,7 @@ input[type="color"]:focus, .uneditable-input:focus{
     border-color: #CCCCCC !important;
   }
 }
+
+.estimate .grid_table table{
+  table-layout: auto;
+}

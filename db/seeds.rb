@@ -184,7 +184,20 @@ templates = EmailTemplate.create(
            <p>If you have any questions please contact {{company_contact}} at {{company_phone}}.
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
-        }
+        },
+        {
+            :torder => 9,
+            :status => 'Default',
+            :template_type => 'New Estimate',
+            :email_from => 'nfor20@yahoo.com',
+            :subject => '{{client_company}}: {{company_name}} Estimate: {{estimate_number}}',
+            :body => '<p>Dear {{client_contact}},</p>
+            <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your records, click the link below:</p>
+            <p><a href="{{estimate_url}}">Estimate# {{estimate_number}}</a> </p>
+            <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
+            <p>Thanks,</p>
+            <p>{{company_signature}}</p>'
+        },
     ])
 templates.each do |template|
   CompanyEmailTemplate.create(
@@ -204,3 +217,5 @@ default_currency = (Currency.where(unit: 'USD').first || Currency.first)
 Client.where(currency_id: nil).update_all(currency_id: default_currency.id)
 Invoice.where(currency_id: nil).update_all(currency_id: default_currency.id)
 RecurringProfile.where(currency_id: nil).update_all(currency_id: default_currency.id)
+Estimate.where(currency_id: nil).update_all(currency_id: default_currency.id)
+

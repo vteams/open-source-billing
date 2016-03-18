@@ -22,12 +22,14 @@
  *= payments_editing.css.scss
  *= reports.css.scss
  *= invoice_form.css.scss
+ *= estimate_form.css.scss
  *= tiny_form_container.css.scss
  *= pay_invoice.css.scss
  *= log_page.css.scss
  *= aged_accounts_receivable.css.scss
  *= revenue_by_client.css.scss
  *= show_invoice.css.scss
+ *= show_estimate.css.scss
  *= payment_history.css.scss
  *= dispute_history.css.scss
  *= credit_card.css.scss

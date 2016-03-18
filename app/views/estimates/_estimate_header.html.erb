@@ -1,0 +1,10 @@
+<% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_center sorting header <%= sortable_class('estimate_number') %>"><%= sortable('estimate_number', "#{t('estimate')} #") %></th>
+  <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
+  <th class="align_right header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('views.common.total')) %></th>
+  <th class="align_center header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.common.date')) %></th>
+  <th class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
+  <th class="align_center not-sortable "><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>
