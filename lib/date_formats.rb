@@ -2,6 +2,9 @@ module DateFormats
   def invoice_date=(date)
     super(custom_date_format(date))
   end
+  def expense_date=(date)
+    super(custom_date_format(date))
+  end
 
   def due_date=(date)
     super(custom_date_format(date))
@@ -16,6 +19,12 @@ module DateFormats
   end
 
   def first_invoice_date
+    date = super
+    return '' if date.nil?
+    date.to_date.strftime(date_format)
+  end
+
+  def expense_date
     date = super
     return '' if date.nil?
     date.to_date.strftime(date_format)

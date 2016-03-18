@@ -1,0 +1,33 @@
+<% no_record_message = t('views.expenses.no_record_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.expenses.no_archived_expense')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.expenses.no_deleted_expense')
+   end
+%>
+
+<% if @expenses.length > 0 %>
+    <% @expenses.each do |expense| %>
+        <tr>
+          <td class="align_center"><%= check_box_tag "expense_ids[]", expense.id, false, :id => "expense_#{expense.id}" %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.category.name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.client.contact_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.amount %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.note %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%=  expense.expense_date %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.total) %></td>
+          <td class="align_center">
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_expense_path(expense), :class => 'edit_action' %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="6">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

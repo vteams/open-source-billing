@@ -218,6 +218,27 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.integer  "currency_id"
   end
 
+  create_table "expense_categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "expenses", force: true do |t|
+    t.float    "amount",         limit: 24
+    t.datetime "expense_date"
+    t.integer  "category_id"
+    t.text     "note"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "archive_number"
+    t.datetime "archived_at"
+    t.time     "deleted_at"
+    t.integer  "tax_1"
+    t.integer  "tax_2"
+  end
+
   create_table "invoice_line_items", force: true do |t|
     t.integer  "invoice_id"
     t.integer  "item_id"

@@ -72,3 +72,57 @@ module Services
     end
   end
 end
+
+class ExpenseBulkActionsService
+  #attr_reader :clients, :client_ids, :options, :action_to_perform
+  attr_reader :expenses, :expense_ids, :options, :action_to_perform
+
+  def initialize(options)
+    actions_list = %w(archive destroy recover_archived recover_deleted new_invoice destroy_archived)
+    @options = options
+    @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first
+    @client_ids = @options[:client_ids]
+    @clients = ::Client.multiple(@client_ids)
+    @current_user = @options[:current_user]
+  end
+
+  def perform
+    method(@action_to_perform).call.merge({client_ids: @client_ids, action_to_perform: @action_to_perform})
+  end
+
+  def new_invoice
+    {action: 'new_invoice', clients: @clients}
+  end
+
+  def destroy_archived
+    @clients.map(&:destroy)
+    {action: 'deleted from archived', clients: get_clients('archived')}
+  end
+
+  def archive
+    @clients.map(&:archive)
+    {action: 'archived', clients: get_clients('unarchived')}
+  end
+
+  def destroy
+    @clients.map{|c|c.client_contacts.only_deleted.map{|cc|cc.really_destroy!}}
+    @clients.map(&:destroy)
+    {action: 'deleted', clients: get_clients('unarchived')}
+  end
+
+  def recover_archived
+    @clients.map(&:unarchive)
+    {action: 'recovered from archived', clients: get_clients('archived')}
+  end
+
+  def recover_deleted
+    @clients.only_deleted.map { |client| client.restore; client.unarchive; client.client_contacts.only_deleted.map(&:restore); }
+    {action: 'recovered from deleted', clients: get_clients('only_deleted')}
+  end
+
+  private
+
+  def get_clients(filter)
+    ::Client.get_clients(@options.merge(status: filter)) #(filter).page(@options[:page]).per(@options[:per])
+  end
+end

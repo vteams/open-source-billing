@@ -1,0 +1,10 @@
+<tr>
+  <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
+  <th class="align_left header <%= sortable_class('category') %>"><%= sortable('category',t('views.expenses.category'))%></th>
+  <th class="align_left header <%= sortable_class('clients.first_name') %>"><%= sortable('clients.first_name',t('views.expenses.client'))%></th>
+  <th class="align_left header <%= sortable_class('amount') %>"><%= sortable('amount',t('views.expenses.amount'))%></th>
+  <th class="align_left header <%= sortable_class('note') %>"><%= sortable('note',t('views.expenses.note'))%></th>
+  <th class="align_left header <%= sortable_class('date') %>"><%= sortable('date',t('views.common.date'))%></th>
+  <th class="align_left not-sortable"> Total </th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

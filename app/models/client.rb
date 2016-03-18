@@ -31,6 +31,7 @@ class Client < ActiveRecord::Base
   belongs_to :company
   belongs_to :currency
   has_many :company_entities, :as => :entity
+  has_many :expenses
   after_create :create_default_currency
 
   acts_as_archival

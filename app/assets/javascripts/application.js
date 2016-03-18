@@ -27,6 +27,7 @@
 //= require invoices.js.coffee
 //= require projects.js.coffee
 //= require estimates.js.coffee
+//= require expenses.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
 //= require tablesorter.staticrow.js

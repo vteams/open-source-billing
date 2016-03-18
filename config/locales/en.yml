@@ -51,6 +51,10 @@ en:
         estimates: "Estimates"
         listing:  "Estimate Listing"
         new:  "New Estimate"
+      expenses:
+        expenses: "Expenses"
+        listing: "Expenses Listing"
+        new: "New Expense"
       clients:
         clients: "Clients"
         listing: "Clients Listing"
@@ -360,6 +364,18 @@ en:
       no_deleted_client: "You haven't any deleted client."
       add_new_client: "Add New Client"
       contact_title: "Contact title"
+    expenses:
+      expenses: "Expenses"
+      listing: "Expenses Listing"
+      new_expense: "New Expense"
+      edit_expense: "Edit Expense"
+      note: "Note"
+      category: "Category"
+      amount: "Amount"
+      client_hint: "Select a client for this expense"
+      no_record_msg: "You haven't created any expenses yet."
+      no_archived_expense: "You don't have any archived expense."
+      no_deleted_expense: "You don't have any deleted expense."
 
     items:
       add_new_item: 'Add New Item'

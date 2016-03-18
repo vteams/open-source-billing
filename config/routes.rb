@@ -122,6 +122,14 @@ Osb::Application.routes.draw do
       end
     end
 
+    resources :expenses do
+      collection do
+        get 'bulk_actions'
+        get 'filter_items'
+        get 'undo_actions'
+      end
+    end
+
     resources :invoice_line_items
 
     resources :invoices do
