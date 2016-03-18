@@ -8,6 +8,8 @@
         <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
+    <%= link_to 'Start Timer', '#',
+                :onclick => "window.open('/en/logs/timer', 'newwindow', 'width=380, height=auto'); return false;",class: "btn_large timer_button" %>
     <div class="primary_btn">
       <% link_to (content_tag(:span, t('header.links.logs.new'))),
                   new_log_path,
@@ -15,13 +17,10 @@
     </div>
   </div>
   <!--content_top-->
-  <div id="calendar_div">
-
-  <div id="calendar_form"> <%= render 'logs/form' %>  </div>
-
+  <div id="calendar_div" class="month">
     <div id='calendar'></div>
+    <div id="calendar_form" > <%= render 'logs/form' %>  </div>
   </div>
-
       <div class="content_middle logs_table">
         <%= render 'logs/logs_table' %>
       </div>

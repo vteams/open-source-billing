@@ -8,6 +8,7 @@
 
           <td class="align_center">
             <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log),remote: true %>
+            <%= link_to t('.delete', :default => t("helpers.links.delete")),log_path(log),:method => :delete,remote: true %>
           </td>
         </tr>
     <% end %>
@@ -19,3 +20,10 @@
       </td>
     </tr>
 <% end %>
+
+<tr>
+  <td colspan="8" class="align_center">
+    <%= paginate @logs, remote: true %>
+    <%= page_entries_info @logs %>
+  </td>
+</tr>

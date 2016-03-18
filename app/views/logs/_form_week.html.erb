@@ -1,0 +1,64 @@
+
+
+
+<%= form_for(@log ,remote: true, html: {class: '.form-inline'} ) do |f| %>
+    <div class="content_middle form">
+      <div class="fields_content">
+
+    <% if @log.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h2>
+          <ul>
+            <% @log.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div id="hours_div">
+        <div id="hours_label">
+            <label>Log Hours:</label>
+        </div>
+        <div id="hours_div_inner">
+            <% (1..7).each do |id| %>
+                <div class="form-group">
+                    <div class="small_field">
+                        <%= number_field(:time, id, size: 20) %>
+                      <%= hidden_field(:day,id) %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br/>
+    <div id="form_week_main">
+      <%= hidden_field_tag :form_for_week, true %>
+      <div class="field_row">
+          <div style="float: left">
+            <div class="form-group">
+                <div class="label_field left single"><span>Select Project</span></div>
+                <div class="small_field">
+                  <%= f.select :project_id, options_for_select(load_projects_for_log(@log), selected: f.object.project_id),include_blank: 'Select a Project'   %>
+                </div>
+            </div>
+          </div>
+        <div style="float: right">
+            <div class="form-group">
+            <div class="label_field left single"><span>Select Task</span></div>
+            <div class="small_field tasks_dropdown">
+            <%= f.select :task_id, load_tasks_for_log(@log),html: {placeholder: 'Select a task...', class: 'small_field', }%>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+          </div>
+      <%= hidden_field_tag :view,'basicWeek' %>
+    <!--content_middle-->
+    </div>
+    <div class="content_bottom">
+      <%= f.submit :class => "btn_large submit log-submit-btn" %>
+    </div>
+<% end %>
+<!--logs-->

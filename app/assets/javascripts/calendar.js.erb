@@ -1,11 +1,14 @@
-//$(document).ajaxSend(function(e, xhr, options) {
-//    var token = $("meta[name='csrf-token']").attr("content");
-//    xhr.setRequestHeader("X-CSRF-Token", token);
-//});
-
 function init_fullcalendar(){
     // initialize the calendar...
+    var current = 'month' ;
     $('#calendar').fullCalendar({
+
+        contentHeight: 'auto',
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek'
+        },
         dayClick: function(date, jsEvent, view) {
             $.ajax({
                 dataType: 'script',
@@ -13,96 +16,43 @@ function init_fullcalendar(){
                 data:{date:date.format()},
                 url: '/en/logs'
             });
-            $('#log_date').val(date.format())
+            $('#log_date').val(date.format());
+            $('#logs_for').html(date.format());
 
-            //alert('Clicked on: ' + date.format());
+        },
+
+        viewRender: function( view, element ){
+            if( view.name != current){
+                current = view.name;
+                $.ajax({
+                    dataType: 'script',
+                    type: 'GET',
+                    async: false,
+                    data:{view: view.name},
+                    url: '/logs/load_view'
+                });
+                $('#calendar_div').toggleClass('month basicWeek');
+            }
+            if (view.name == 'basicWeek'){
+                var count = 0;
+                $('#hours_div_inner input[type=hidden]').each(function (){
+                    var now = new Date(view.start);
+                    now.setDate(now.getDate() + count);
+                    $(this).attr('value',now);
+                    count+=1;
+                });
+            }
+            $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
         },
         events: '/logs/events.json'
-        //eventClick: function(event) {
-        //window.open(event.showUrl)
-        //alert('a day has been clicked!');
-        //}
+//        eventClick: function(event) {
+//            $('#log_date').val(event.date.format());
+//            $('#logs_for').html(event.date.format());
+//        }
 
     });
 }
+
 $(document).ready(function() {
-
     init_fullcalendar();
-    $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
-
-    jQuery(".log-submit-btn").live("click", function() {
-        var date,project_id, task_id, hours;
-        date = jQuery("#log_date").val();
-        project_id = jQuery("#log_project_id").val();
-        task_id = jQuery("#log_task_id").val();
-        hours = jQuery("#log_hours").val();
-//        $('form#new_log *').filter(':input').each(function(){
-//            hidePopover(this);
-//        });
-        flag = true;
-        if (date === "") {
-            applyPopover(jQuery("#log_date"), "bottomMiddle", "topLeft", "Select a date from the calendar");
-            flag = false;
-        } else{ hidePopover(jQuery("#log_date")) }
-
-        if (project_id === "") {
-            applyPopover(jQuery("#log_project_id"), "bottomMiddle", "topLeft", "Select a project");
-            flag = false;
-        } else{ hidePopover(jQuery("#log_project_id")) }
-        if (task_id === "") {
-            applyPopover(jQuery("#log_task_id"), "bottomMiddle", "topLeft", "Select a task");
-            flag = false;
-        } else{ hidePopover(jQuery("#log_task_id")) }
-        if (hours === "") {
-            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
-            flag = false;
-        } else {
-            hidePopover(jQuery("#log_hours"))
-        }
-        if (flag) {
-            return true; //jQuery("form#new_log").get(0).submit();
-        }
-        else{
-            alert('false');
-            return false;
-        }
-    });
-
-    return $(document).on('change', '#log_project_id', function(evt) {
-        return $.ajax('/logs/update_tasks', {
-            type: 'GET',
-            dataType: 'script',
-            data: {
-                project_id: $("#log_project_id option:selected").val()
-            }
-        });
-    });
 });
-
-var applyPopover, hidePopover;
-applyPopover = function(elem, position, corner, message) {
-    elem.qtip({
-        content: {
-            text: message
-        },
-        show: {
-            event: false
-        },
-        hide: {
-            event: false
-        },
-        position: {
-            at: position
-        },
-        style: {
-            tip: {
-                corner: corner
-            }
-        }
-    });
-    elem.qtip().show();
-    return elem.focus();
-};
-hidePopover = function(elem) {
-    return elem.qtip("hide");
-};

@@ -1,0 +1,13 @@
+<div id="timer_wrapper" class="center">
+    <div class="timer"></div>
+
+    <div id="timer_buttons" class="center">
+      <%= link_to 'Start', 'javascript:start_timer()', class: 'btn_large'%>
+      <%= link_to 'Stop', 'javascript:stop_timer()', class: 'btn_large'%>
+      <%= link_to 'Reset', 'javascript:reset_timer()', class: 'btn_large'%>
+    </div>
+
+    <div id="calendar_div" class="month">
+      <div id="calendar_form" > <%= render 'logs/form' %>  </div>
+    </div>
+</div>

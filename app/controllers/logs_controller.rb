@@ -6,7 +6,7 @@ class LogsController < ApplicationController
 
   def index
     @date = params[:date] || Date.today
-    @logs = Log.where(date: @date)
+    @logs = Log.where(date: @date).order(:created_at).page(params[:page]).per(10)
     @log = Log.new
     @tasks = [] # Project.find(true)
     respond_to do |format|
@@ -31,26 +31,41 @@ class LogsController < ApplicationController
 
   # POST /tasks
   def create
-    @log = Log.new(log_params)
-
-    if @log.save
-      #redirect_to @log, notice: 'Log was successfully created.'
-      @logs = Log.where(date: @log.date)
-      respond_to do |format|
-        format.html # index.html.erb
-        format.js
+    unless params[:form_for_week]   #creating log for single day
+      @log = Log.new(log_params)
+      if @log.save
+        @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+        respond_to do |format|
+          format.html
+          format.js
+        end
+      else
+        render :index
       end
-    else
-      render :index
+    else #creating bulk log for 1 week
+      params[:time].each do |index,value|
+        unless value == ''
+          Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, notes: nil, date: params[:day][index])
+        end
+      end
+        @logs = Log.where(date: Date.today).order(:created_at).page(params[:page]).per(10)
+        respond_to do |format|
+          format.html # index.html.erb
+          format.js
+        end
     end
+
   end
 
   # PATCH/PUT /tasks/1
   def update
     if @log.update(log_params)
-      @logs = Log.where(date: @log.date)
+      @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+      @view = params[:view]
+      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'
+      @log = Log.new
       respond_to do |format|
-        format.html # index.html.erb
+        format.html
         format.js
       end
     end
@@ -59,7 +74,11 @@ class LogsController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @log.destroy
-    redirect_to logs_url, notice: 'Log was successfully destroyed.'
+    @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def events
@@ -70,14 +89,34 @@ class LogsController < ApplicationController
     end
   end
 
+  def load_view
+    @view = params[:view]
+    @log = Log.new
+    if @view == 'basicWeek'
+      @form_type = 'form_week'
+    else
+      @form_type = 'form'
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def update_tasks
-    #binding.pry
     project_id = params[:project_id].to_i
     unless project_id == 0
       @tasks = Project.find(project_id).project_tasks
       respond_to do |format|
         format.js
       end
+    end
+  end
+
+  def timer
+    @log = Log.new
+    respond_to do |format|
+      format.html{ render layout: 'timer' }
+      format.js
     end
   end
 
@@ -88,7 +127,7 @@ class LogsController < ApplicationController
   end
 
   def log_params
-    params.require(:log).permit(:project_id, :task_id, :hours, :notes, :date)
+    params.require(:log).permit(:project_id, :task_id, :hours, :notes, :date, :form_for_week)
   end
 
 end
