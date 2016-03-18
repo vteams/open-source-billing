@@ -286,16 +286,16 @@ en:
       make_this_task_available_to: "Make this Task available to"
 
     staffs:
-          name: "Staff Name"
-          email: "Email"
-          rate: "Rate per hour"
-          new: "New Staff"
-          edit_staff: "Edit Staff"
-          no_staff_msg: "You haven't created any staff yet. Please click on New Staff button to create new staff."
-          no_archived_msg: "You haven't archived any staff."
-          no_deleted_msg: "You haven't deleted any staff."
-          make_this_staff_available_to: "Make this Staff available to"
-          add_new_staff: "Add New Staff"
+      name: "Staff Name"
+      email: "Email"
+      rate: "Rate per hour"
+      new: "New Staff"
+      edit_staff: "Edit Staff"
+      no_staff_msg: "You haven't created any staff yet. Please click on New Staff button to create new staff."
+      no_archived_msg: "You haven't archived any staff."
+      no_deleted_msg: "You haven't deleted any staff."
+      make_this_staff_available_to: "Make this Staff available to"
+      add_new_staff: "Add New Staff"
 
     clients:
       client_name: "Client Name"
@@ -509,7 +509,7 @@ en:
         edit: "Edit"
       page_entries_info:
         more_pages:
-          display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+            display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
 #  activerecord:
 #    errors:
 #      messages:

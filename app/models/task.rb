@@ -15,6 +15,7 @@ class Task < ActiveRecord::Base
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
   scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
 
+
   # filter tasks i.e active, archive, deleted
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}

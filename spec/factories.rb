@@ -1,7 +1,8 @@
 require 'factory_girl'
 require 'faker'
 
-FactoryGirl.define do  factory :team_member do
+FactoryGirl.define do
+  factory :team_member do
       email "MyString"
       name "MyString"
       rate "9.99"
@@ -9,8 +10,9 @@ FactoryGirl.define do  factory :team_member do
       archived_at "2016-03-03 20:14:12"
       project_id 1
       staff_id 1
-    end
-    factory :log do
+  end
+
+  factory :log do
       project_id 1
       task_id 1
       hours 1.5
@@ -26,6 +28,7 @@ FactoryGirl.define do  factory :team_member do
     project_id 1
     task_id 1
   end
+
   factory :project do
     project_name "MyString"
     client_id 1
@@ -34,11 +37,13 @@ FactoryGirl.define do  factory :team_member do
     description "MyText"
     estimate_time 1.5
   end
+
   factory :task do
       name "MyString"
       description "MyString"
       billable false
       rate "9.99"
+  end
 
   factory :staff do
       email "MyString"
@@ -126,8 +131,6 @@ FactoryGirl.define do  factory :team_member do
    mobile_number '123'
    archive_number '123'
   end
-
-      end
 end
 
 
