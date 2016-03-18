@@ -1,7 +1,5 @@
 require 'factory_girl'
 require 'faker'
-
-<<<<<<< HEAD
 FactoryGirl.define do
   factory :team_member do
       email "MyString"
@@ -37,22 +35,6 @@ FactoryGirl.define do
     billing_method "MyString"
     description "MyText"
     estimate_time 1.5
-=======
-FactoryGirl.define do  factory :expense_category do
-    name "MyString"
-  end
-  factory :expense do
-    amount 1.5
-date "2016-02-15 20:27:15"
-category "MyString"
-note "MyText"
-client_id 1
-  end
-  factory :line_item_tax do
-    invoice_line_item_id 1
-percentage "9.99"
-name "MyString"
->>>>>>> nt-expenses
   end
 
   factory :task do
