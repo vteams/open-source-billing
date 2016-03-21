@@ -2,28 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-window.applyChosen = (single_row) =>
-  # listen to Chosen liszt:ready even
-  # add a Add New button at the bottom of every chosen list
-  jQuery(".chzn-select:not('.estimate_company, .company_filter, .frequency_select, .per_page, .discount_select, .estimate_currency')",'.estimates-main').on "liszt:ready", ->
-    chzn_drop = jQuery(this).next().find(".chzn-drop")
-    unless chzn_drop.find("div.add-new").length > 0
-      chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
-  #remove identical line items
-  identical_line_items = jQuery('.estimate_grid_fields tr.fields:last .chzn-select:first option')
-  identical_line_items.each ->
-    $(this).siblings('[value=' + @value + ']').remove()
-
-  # apply chosen on dropdown lists
-  # trigger the "liszt:ready" manually so that we can add Add New button to list. See above
-  dropdowns = unless single_row? then jQuery(".chzn-select") else jQuery(single_row)
-  dropdowns.chosen({allow_single_deselect: true, disable_search_threshold: 10}).trigger("liszt:ready", this)
-
-  # Add New click handler to show form inside the list
-  jQuery(".add-new").live "click",(event) ->
-    new InlineForms(jQuery(this).attr("data-dropdown-id")).showForm()
-    event.stopImmediatePropagation()
-
 jQuery ->
   $("a.deleted_entry").click (e)->
     applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
