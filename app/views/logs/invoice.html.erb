@@ -13,7 +13,7 @@
             <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
                 <div class="small_field">
-                    <%= select_tag :project_id, options_for_select(load_projects_for_log()), include_blank: 'Select a Project'   %>
+                    <%= select_tag :project_id, options_for_select(load_projects_for_invoice), include_blank: 'Select a Project'   %>
                 </div>
                 <div class="btn_invoice">
                     <%= submit_tag('Generate Invoice',:class => "btn_large submit") %>

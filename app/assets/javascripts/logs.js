@@ -1,4 +1,34 @@
 $(document).ready(function() {
+
+    var applyPopover, hidePopover;
+    applyPopover = function (elem, position, corner, message) {
+        elem.qtip({
+            content: {
+                text: message
+            },
+            show: {
+                event: false
+            },
+            hide: {
+                event: false
+            },
+            position: {
+                at: position
+            },
+            style: {
+                tip: {
+                    corner: corner
+                }
+            }
+        });
+        elem.qtip().show();
+        return elem.focus();
+    };
+    hidePopover = function (elem) {
+        return elem.qtip("hide");
+    };
+
+
     $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()));
     jQuery(".log-submit-btn").live("click", function () {
 
@@ -51,32 +81,4 @@ $(document).ready(function() {
         });
     });
 
-
-    var applyPopover, hidePopover;
-    applyPopover = function (elem, position, corner, message) {
-        elem.qtip({
-            content: {
-                text: message
-            },
-            show: {
-                event: false
-            },
-            hide: {
-                event: false
-            },
-            position: {
-                at: position
-            },
-            style: {
-                tip: {
-                    corner: corner
-                }
-            }
-        });
-        elem.qtip().show();
-        return elem.focus();
-    };
-    hidePopover = function (elem) {
-        return elem.qtip("hide");
-    };
 });

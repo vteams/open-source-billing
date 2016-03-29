@@ -1,7 +1,12 @@
 module CalendarHelper
 
-  def load_projects_for_log()
+  def load_projects_for_log
     Project.all.map{|p| [p.project_name, p.id]}
+  end
+
+
+  def load_projects_for_invoice
+    Project.select{|p| p.logs.present?}.map{|p| [p.project_name, p.id]}
   end
 
   def load_tasks_for_log(log)
@@ -11,4 +16,5 @@ module CalendarHelper
       []
     end
   end
+
 end
