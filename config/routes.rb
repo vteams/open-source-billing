@@ -226,6 +226,11 @@ Osb::Application.routes.draw do
       collection do
         get 'events'
         get 'update_tasks', as: 'update_tasks'
+        get 'load_view'
+        get 'timer'
+        get 'invoice'
+        post 'invoice_form'
+
       end
     end
     # The priority is based upon order of creation:

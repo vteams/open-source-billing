@@ -1,5 +1,8 @@
 <% if @tasks %>
+    <option value="">Select a task</option>
     <% @tasks.each do |task| %>
-    <option value="<%= task.id %>"><%= task.name.titleize %></option>
+    <option value="<%= task.task_id %>">
+      <%= task.name.titleize %>
+    </option>
     <% end %>
 <% end %>

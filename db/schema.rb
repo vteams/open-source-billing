@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.integer  "task_id"
     t.float    "hours",      limit: 24
     t.string   "notes"
-    t.datetime "date"
+    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

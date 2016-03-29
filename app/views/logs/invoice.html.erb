@@ -1,0 +1,27 @@
+<%- model_class = Invoice -%>
+
+<div class="content_top">
+  <div class="primary_heading">
+    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                      :default => "New #{model_class.model_name.human}") %></h1>
+  </div>
+</div><!--content_top-->
+
+    <div class="content_middle">
+    <%= form_tag(invoice_form_logs_url, method: "post") do %>
+        <div class="fields_content_data">
+            <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
+                <div class="small_field">
+                    <%= select_tag :project_id, options_for_select(load_projects_for_log()), include_blank: 'Select a Project'   %>
+                </div>
+                <div class="btn_invoice">
+                    <%= submit_tag('Generate Invoice',:class => "btn_large submit") %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_bottom">
+
+    </div>
+    <% end %>

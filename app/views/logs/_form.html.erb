@@ -1,71 +1,72 @@
 <%= form_for(@log ,remote: true, class: 'form-horizontal' ) do |f| %>
-      <div class="content_middle form">
-        <div class="fields_content">
-          <div class="fields_content_container">
-            <% if @log.errors.any? %>
-                <div id="error_explanation">
-                  <h2><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h2>
-                  <ul>
-                    <% @log.errors.full_messages.each do |msg| %>
-                        <li><%= msg %></li>
-                    <% end %>
-                  </ul>
-                </div>
-            <% end %>
-            <div class="fields_content_data">
-
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.common.date') %></span></div>
-                <div class="small_field">
-                  <%= f.text_field :date,:readonly => true  %>
-                </div>
+    <div class="content_middle form">
+      <div class="fields_content">
+        <div class="fields_content_container">
+          <% if @log.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@log.errors.count, "error") %> prohibited this log from being saved:</h2>
+                <ul>
+                  <% @log.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                  <% end %>
+                </ul>
               </div>
-              <!--field_row-->
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
-                <div class="small_field">
-                  <%= f.select :project_id, options_for_select(Project.all.map{|p| [p.project_name, p.id]}, selected: f.object.project_id),include_blank: 'Select a Project', selected: f.object.project_id   %>
-                </div>
+          <% end %>
+          <div class="fields_content_data">
+
+            <div class="field_row">
+              <div class="label_field left single"><span><%= t('views.common.date') %></span></div>
+              <div class="small_field"> <%# binding.pry %>
+                <%= f.text_field :date,:readonly => true  %>
               </div>
-              <!--field_row-->
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.logs.task') %></span></div>
-                <div class="small_field tasks_dropdown">
-
-                  <%= f.select :task_id, {}%>
-                </div>
-              </div>
-              <!--field_row-->
-
-              <div class="field_row">
-
-                <div class="label_field left single"><%= t('views.logs.hours') %></div>
-                <div class="small_field"><%= f.number_field :hours %></div>
-              </div>
-              <!--field_row-->
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.logs.notes') %></span></div>
-                <div class="small_field">
-                  <%= f.text_area :notes  %>
-                </div>
-              </div>
-              <!--field_row-->
-
-
-
-
             </div>
-            <!--fields_content_data-->
-          </div>
-          <!--fields_content_container-->
-        </div>
-        <!--fields_content-->
-      </div>
-      <!--content_middle-->
+            <!--field_row-->
+            <div class="field_row">
+              <div class="label_field left single"><span><%= t('views.logs.project') %></span></div>
+              <div class="small_field">
+                <%= f.select :project_id, options_for_select(load_projects_for_log(), selected: f.object.project_id),include_blank: 'Select a Project'   %>
+              </div>
+            </div>
+            <!--field_row-->
+            <div class="field_row">
+              <div class="label_field left single"><span><%= t('views.logs.task') %></span></div>
+              <div class="small_field tasks_dropdown">
+                <%= f.select :task_id, options_for_select(load_tasks_for_log(@log),selected: f.object.task_id),include_blank: 'Select a task' %>
+              </div>
+            </div>
+            <!--field_row-->
 
-      <div class="content_bottom">
-        <%= f.submit :class => "btn_large submit log-submit-btn" %>
+            <div class="field_row">
+
+              <div class="label_field left single"><span><%= t('views.logs.hours') %></span></div>
+              <div class="small_field"><%= f.number_field :hours %></div>
+            </div>
+            <!--field_row-->
+            <div class="field_row">
+              <div class="label_field left single"><%= t('views.logs.notes') %></div>
+              <div class="small_field">
+                <%= f.text_area :notes  %>
+              </div>
+            </div>
+            <!--field_row-->
+
+
+
+
+          </div>
+          <!--fields_content_data-->
+        </div>
+        <!--fields_content_container-->
       </div>
-  <% end %>
+      <!--fields_content-->
+    </div>
+    <%= hidden_field_tag :view,'month' %>
+    <!--content_middle-->
+
+    <div class="content_bottom">
+      <%= f.submit :class => "btn_large submit log-submit-btn" %>
+    </div>
+<% end %>
 <!--logs-->
+
 

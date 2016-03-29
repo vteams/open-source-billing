@@ -9,6 +9,7 @@ class Project < ActiveRecord::Base
   belongs_to :manager, class_name: 'Staff', foreign_key: 'manager_id'
   belongs_to :company
   has_many :project_tasks, dependent: :destroy
+  has_many :logs, dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :logs, dependent: :destroy
 

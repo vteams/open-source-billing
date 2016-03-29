@@ -44,6 +44,7 @@ en:
         project: "Projects"
         staff: "Staffs"
         task: "Tasks"
+        invoice: "Generate Invoice"
       projects:
         new: "New Project"
         listing: "Project Listing"
