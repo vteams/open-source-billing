@@ -1,6 +1,6 @@
 module CalendarHelper
 
-  def load_projects_for_log(log)
+  def load_projects_for_log()
     Project.all.map{|p| [p.project_name, p.id]}
   end
 

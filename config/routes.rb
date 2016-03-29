@@ -214,6 +214,8 @@ Osb::Application.routes.draw do
         get 'update_tasks', as: 'update_tasks'
         get 'load_view'
         get 'timer'
+        get 'invoice'
+        post 'invoice_form'
 
       end
     end

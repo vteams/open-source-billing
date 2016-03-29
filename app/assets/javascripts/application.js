@@ -36,6 +36,7 @@
 //= require fullcalendar
 //= require calendar.js
 //= require logs.js
+//= require logs_invoice.js.coffee
 //= require clients.js.coffee
 //= require client_additional_contacts.js.coffee
 //= require client_contacts.js.coffee

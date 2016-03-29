@@ -120,6 +120,24 @@ class LogsController < ApplicationController
     end
   end
 
+  def invoice
+  end
+
+  def invoice_form
+    id = params[:project_id]
+    @project = Project.find(id)
+    @invoice = Services::InvoiceService.build_new_invoice(params)
+    #@client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+    #@client = @invoice.client if params[:id].present?
+    @client = @project.client
+    @client_name = "#{@client.first_name} #{@client.last_name}"
+    @invoice.currency = @client.currency if @client.present?
+    get_clients_and_items
+    @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+    #binding.pry
+
+  end
+
   private
 
   def set_log
