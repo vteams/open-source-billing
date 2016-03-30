@@ -112,7 +112,8 @@ class Estimate < ActiveRecord::Base
                            company_id:            self.company_id ,
                            created_by:            self.created_by,
                            updated_by:            self.updated_by,
-                           currency_id:           self.currency_id
+                           currency_id:           self.currency_id,
+                           invoice_type:          "EstimateInvoice"
                           )
 
     self.estimate_line_items.each { |item| item.update_attributes(invoice_id: invoice.id) } if invoice.save

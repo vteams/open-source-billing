@@ -50,7 +50,7 @@ class Invoice < ActiveRecord::Base
   has_many :payments
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
-  has_many :invoice_tasks, :dependent => :destroy, class_name: "ProjectTask"
+  has_many :invoice_tasks, :dependent => :destroy
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 

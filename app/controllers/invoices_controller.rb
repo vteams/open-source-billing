@@ -95,15 +95,20 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find(params[:id])
-    @invoice.invoice_line_items.build()
-    get_clients_and_items
-    @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
-    respond_to {|format| format.js; format.html}
+    if @invoice.invoice_type.eql?("ProjectInvoice")
+      redirect_to :back, alert:  "Project Invoice cannot be updated"
+    else
+      @invoice.invoice_line_items.build()
+      get_clients_and_items
+      @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+      respond_to {|format| format.js; format.html}
+   end
   end
 
   def create
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     respond_to do |format|

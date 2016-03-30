@@ -22,7 +22,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
                   <div class="medium_field">
-                    <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, "data-placeholder" => "Select a client...", "data-dropdown-width" => "300"} %>
+                    <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", readonly: true}, {"readonly" => true, "data-placeholder" => "Select a client...", "data-dropdown-width" => "300"} %>
                     <ul class="field_description">
                       <li><%= t('views.invoices.client_hint') %></li>
                     </ul>

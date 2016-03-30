@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330075352) do
+ActiveRecord::Schema.define(version: 20160330110032) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -258,6 +258,16 @@ ActiveRecord::Schema.define(version: 20160330075352) do
     t.integer  "estimate_id"
   end
 
+  create_table "invoice_tasks", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "rate"
+    t.float    "hours",       limit: 24
+    t.integer  "invoice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", force: true do |t|
     t.string   "invoice_number"
     t.datetime "invoice_date"
@@ -322,7 +332,7 @@ ActiveRecord::Schema.define(version: 20160330075352) do
     t.integer  "task_id"
     t.float    "hours",      limit: 24
     t.string   "notes"
-    t.date     "date"
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -404,7 +414,6 @@ ActiveRecord::Schema.define(version: 20160330075352) do
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "invoice_id"
   end
 
   create_table "projects", force: true do |t|

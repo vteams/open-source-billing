@@ -8,7 +8,7 @@ class LogsController < ApplicationController
     @date = params[:date] || Date.today
     @logs = Log.where(date: @date).order(:created_at).page(params[:page]).per(10)
     @log = Log.new
-    @tasks = [] # Project.find(true)
+    @tasks = []
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -134,17 +134,14 @@ class LogsController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
     @invoice.company_id = get_company_id()
-    #invoice task create
-
     respond_to do |format|
       if @invoice.save
         Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        render :show, :notice => 'Invoice successfully created'
-        #redirect_to(invoice_url(@invoice), :notice => "Invoice successfully created")
+        redirect_to(invoice_url(@invoice), :notice => "Invoice successfully created")
         return
       else
-        format.html { render :action => 'new' }
+        format.html { render :action => 'invoice_form' }
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -169,14 +166,9 @@ class LogsController < ApplicationController
     params.require(:invoice).permit(:client_id, :discount_amount, :discount_type,
                                     :discount_percentage, :invoice_date, :invoice_number,
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
-                                    :invoice_total, :invoice_line_items_attributes, :archive_number,
-                                    :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                    :last_invoice_status, :company_id,:currency_id, :project_id, :invoice_type,
-                                    invoice_line_items_attributes:
-                                        [
-                                            :id, :invoice_id, :item_description, :item_id, :item_name,
-                                            :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy
-                                        ]
+                                    :invoice_total, :archive_number, :archived_at, :deleted_at,
+                                    :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,
+
     )
   end
 end

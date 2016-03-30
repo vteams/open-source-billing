@@ -10,9 +10,11 @@
       <div id="active_links" class="grid_control_right">
         <div class="grid_control_right">
           <ul>
+            <% unless @invoice.invoice_type.eql?("ProjectInvoice") %>
             <li class="grid_control_sep sep_right">
               <%= link_to t('helpers.links.edit'), edit_invoice_path(@invoice) %>
             </li>
+            <% end %>
             <!--<li><a href="#">Send</a></li>-->
             <li class="grid_control_sep sep_right">
               <%= link_to t('views.common.send'), "send_invoice?id=#{@invoice.id}" %>

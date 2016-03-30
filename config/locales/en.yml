@@ -98,6 +98,7 @@ en:
       date: "Date"
       total: "Total"
       status: "Status"
+      invoice_type: "Invoice Type"
       archive: "Archive"
       archived: "Archived"
       delete: "Delete"

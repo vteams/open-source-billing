@@ -42,7 +42,7 @@ module Services
 
     def self.build_new_project_invoice(project)
       date_format = self.new.date_format
-      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), client: project.client, currency: project.client.currency, invoice_type: "project_invoice"})
+      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), client: project.client, currency: project.client.currency, invoice_type: "ProjectInvoice"})
     end
 
     # invoice bulk actions
@@ -123,10 +123,8 @@ module Services
 
 
     def self.create_invoice_tasks(invoice)
-      project = invoice.project
-      tasks = project.logs.collect(&:task)
-      tasks.each do |task|
-        invoice.invoice_tasks.create(task.attributes.except("id", "created_at", "updated_at"))
+      invoice.project.logs.collect(&:task).each do |task|
+        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: task.log.hours)
       end
     end
 
