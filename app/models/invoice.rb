@@ -43,13 +43,14 @@ class Invoice < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :payment_term
   belongs_to :company
-
+  belongs_to :project
   belongs_to :currency
 
   has_many :invoice_line_items, :dependent => :destroy
   has_many :payments
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
+  has_many :invoice_tasks, :dependent => :destroy
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
 

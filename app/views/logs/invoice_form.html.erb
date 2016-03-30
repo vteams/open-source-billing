@@ -1,0 +1,15 @@
+<%- model_class = Invoice -%>
+
+<div class="content_top">
+  <div class="primary_heading">
+    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                      :default => "New #{model_class.model_name.human}") %></h1>
+  </div>
+</div><!--content_top-->
+
+<%= render :partial => 'logs/form_invoice' %>
+
+
+<div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
+  <%= render 'taxes/new_tax' %>
+</div>

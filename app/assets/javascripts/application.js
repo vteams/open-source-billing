@@ -37,6 +37,8 @@
 //= require moment
 //= require fullcalendar
 //= require calendar.js
+//= require logs.js
+//= require logs_invoice.js.coffee
 //= require clients.js.coffee
 //= require client_additional_contacts.js.coffee
 //= require client_contacts.js.coffee
@@ -75,6 +77,10 @@
 //= require bootstrap-checkbox.js
 //= require settings
 //= require date_formats
+//= require flipclock
+//= require hourlycounter
+//= require timer
+
 
 
 jQuery(function () {

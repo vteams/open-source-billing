@@ -258,6 +258,16 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.integer  "estimate_id"
   end
 
+  create_table "invoice_tasks", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "rate"
+    t.float    "hours",       limit: 24
+    t.integer  "invoice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", force: true do |t|
     t.string   "invoice_number"
     t.datetime "invoice_date"
@@ -284,6 +294,8 @@ ActiveRecord::Schema.define(version: 20160303151412) do
     t.integer  "currency_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.integer  "project_id"
+    t.string   "invoice_type"
   end
 
   create_table "items", force: true do |t|

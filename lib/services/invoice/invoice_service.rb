@@ -24,6 +24,7 @@ module Services
     include DateFormats
     # build a new invoice object
     def self.build_new_invoice(params)
+      #binding.pry
       date_format = self.new.date_format
       if params[:invoice_for_client]
         company_id = get_company_id(params[:invoice_for_client])
@@ -37,6 +38,11 @@ module Services
         3.times { invoice.invoice_line_items.build() }
       end
       invoice
+    end
+
+    def self.build_new_project_invoice(project)
+      date_format = self.new.date_format
+      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), client: project.client, currency: project.client.currency, invoice_type: "ProjectInvoice"})
     end
 
     # invoice bulk actions
@@ -113,6 +119,13 @@ module Services
           where("company_entities.entity_id=? AND company_entities.entity_type = 'Client' AND company_entities.parent_type = 'Company'", client_id).
           group(:entity_id)
       entities.first.parent_id if entities.present?
+    end
+
+
+    def self.create_invoice_tasks(invoice)
+      invoice.project.logs.collect(&:task).each do |task|
+        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: task.log.hours)
+      end
     end
 
   end

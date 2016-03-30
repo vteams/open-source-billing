@@ -29,6 +29,7 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'filter_items'
         get 'undo_actions'
+        post 'load_staff_data'
       end
     end
 
@@ -226,6 +227,12 @@ Osb::Application.routes.draw do
       collection do
         get 'events'
         get 'update_tasks', as: 'update_tasks'
+        get 'load_view'
+        get 'timer'
+        get 'invoice'
+        post 'invoice_form'
+        post 'create_invoice'
+
       end
     end
     # The priority is based upon order of creation:

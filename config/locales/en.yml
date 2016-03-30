@@ -44,6 +44,7 @@ en:
         project: "Projects"
         staff: "Staffs"
         task: "Tasks"
+        invoice: "Generate Invoice"
       projects:
         new: "New Project"
         listing: "Project Listing"
@@ -97,6 +98,7 @@ en:
       date: "Date"
       total: "Total"
       status: "Status"
+      invoice_type: "Invoice Type"
       archive: "Archive"
       archived: "Archived"
       delete: "Delete"

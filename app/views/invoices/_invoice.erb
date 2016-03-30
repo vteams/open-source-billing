@@ -19,8 +19,9 @@
           <td class="align_center"><%= invoice.due_date rescue "" %></td>
           <td class="align_center <%= invoice.status %>" title="<%= invoice.tooltip %>">
             <span><%= invoice.status %></span></td>
+          <td class="align_center"> <span><%= invoice.invoice_type.underscore.humanize || "Invoiced" %> </span> </td>
           <td class="align_center">
-            <% if invoice.deleted_at.nil? %>
+            <% if invoice.deleted_at.nil? and !invoice.invoice_type.eql?("ProjectInvoice") %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_invoice_path(invoice) %>
             <% end %>

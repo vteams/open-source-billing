@@ -1,6 +1,13 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do
+FactoryGirl.define do  factory :invoice_task do
+    name "MyString"
+description "MyString"
+rate 1
+hours 1.5
+invoice_id 1
+  end
+
   factory :team_member do
       email "MyString"
       name "MyString"

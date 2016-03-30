@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Source Billing</title>
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= include_gon %>
+</head>
+<body class="timer_body" currency-unit="<%= t("currency_unit") %>">
+<div class="alert alert-success" style="display:<%= notice.blank? ? 'none' : 'block' %>">
+  <button type="button" class="close">&times;</button>
+  <table>
+    <tbody>
+    <tr>
+      <td>
+        <span><%= notice %></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="alert alert-error" style="display:<%= alert.blank? ? 'none' : 'block' %>">
+  <button type="button" class="close">&times;</button>
+  <table>
+    <tbody>
+    <tr>
+      <td>
+        <span><%= alert %></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+ <%= yield %>
+</body>
+</html>
+
