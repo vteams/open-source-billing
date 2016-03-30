@@ -34,8 +34,8 @@
                 <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @invoice.currency.nil? or current_user.settings.currency.nil? or current_user.settings.currency == "Off" %>" id="invoice_currency">
                   <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
                   <div class="small_field">
-                    <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                    <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_invoice_currency"), :class => "invoice_currency medium chzn-select", "data-dropdown-width" => "300"} %>
+
+                    <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: f.object.currency_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_invoice_currency"), :class => "invoice_currency medium chzn-select", "data-dropdown-width" => "300"} %>
                   </div>
                 </div>
                 <!--field_row-->
@@ -131,7 +131,6 @@
 
             <div class="grid_summary_row discount">
               <div class="grid_summary_title">
-                <!--Discount <span class="discount_percentage_lbl"></span>%-->
                 Discount <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select chzn-select", :id => "discount_type"} %>
               </div>
 
@@ -181,7 +180,8 @@
 
       </div>
       <!--content_middle-->
-
+      <%= f.hidden_field :invoice_type %>
+      <%= f.hidden_field :project_id %>
       <div class="content_bottom">
         <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
         <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit' %>

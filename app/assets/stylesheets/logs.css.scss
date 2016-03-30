@@ -1,8 +1,12 @@
 .log_invoice_form{
    .grid_summary {
     float: right;
-    margin: 14px 158px 0;
+    margin: 14px 25px 0;
     padding: 0 0 30px;
     width: 50%;
+  }
+
+  #log_invoice_grid_fields{
+    width: 100% !important;
   }
 }

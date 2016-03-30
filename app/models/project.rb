@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   has_many :logs, dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :logs, dependent: :destroy
+  has_many :invoices, dependent: :destroy
 
   accepts_nested_attributes_for :project_tasks , :reject_if => proc { |task| task['task_id'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :team_members ,  :reject_if => proc { |staff| staff['staff_id'].blank? }, :allow_destroy => true

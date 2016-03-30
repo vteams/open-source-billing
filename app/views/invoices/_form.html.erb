@@ -1,4 +1,4 @@
-<%= nested_form_for (@invoice, url: create_invoice_logs_path(@invoice), :html => {:class => 'invoice-form form-horizontal', :novalidate => ""}) do |f| %>
+<%= nested_form_for @invoice, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
     <% @parent_f = f %>
 
     <div class="invoice_form">

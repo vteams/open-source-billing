@@ -124,12 +124,9 @@ class LogsController < ApplicationController
   end
 
   def invoice_form
-    id = params[:project_id]
-    @project = Project.find(id)
-    @invoice = Services::InvoiceService.build_new_invoice(params)
+    @project = Project.find(params[:project_id])
     @client = @project.client
-    @invoice.currency = @client.currency if @client.present?
-    get_clients_and_items
+    @invoice = Services::InvoiceService.build_new_project_invoice(@project)
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
   end
 
@@ -137,11 +134,14 @@ class LogsController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
     @invoice.company_id = get_company_id()
+    #invoice task create
+
     respond_to do |format|
       if @invoice.save
+        Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
 
-        redirect_to(edit_invoice_url(@invoice), :notice => "Invoice successfully created")
+        redirect_to(invoice_url(@invoice), :notice => "Invoice successfully created")
         return
       else
         format.html { render :action => 'new' }
@@ -171,7 +171,7 @@ class LogsController < ApplicationController
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                    :last_invoice_status, :company_id,:currency_id,
+                                    :last_invoice_status, :company_id,:currency_id, :project_id, :invoice_type,
                                     invoice_line_items_attributes:
                                         [
                                             :id, :invoice_id, :item_description, :item_id, :item_name,

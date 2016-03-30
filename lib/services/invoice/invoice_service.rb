@@ -40,6 +40,11 @@ module Services
       invoice
     end
 
+    def self.build_new_project_invoice(project)
+      date_format = self.new.date_format
+      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), client: project.client, currency: project.client.currency, invoice_type: "project_invoice"})
+    end
+
     # invoice bulk actions
     def self.perform_bulk_action(params)
       Services::InvoiceBulkActionsService.new(params).perform
@@ -114,6 +119,15 @@ module Services
           where("company_entities.entity_id=? AND company_entities.entity_type = 'Client' AND company_entities.parent_type = 'Company'", client_id).
           group(:entity_id)
       entities.first.parent_id if entities.present?
+    end
+
+
+    def self.create_invoice_tasks(invoice)
+      project = invoice.project
+      tasks = project.logs.collect(&:task)
+      tasks.each do |task|
+        invoice.invoice_tasks.create(task.attributes.except("id", "created_at", "updated_at"))
+      end
     end
 
   end

@@ -43,7 +43,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :payment_term
   belongs_to :company
-
+  belongs_to :project
   belongs_to :currency
 
   has_many :invoice_line_items, :dependent => :destroy
