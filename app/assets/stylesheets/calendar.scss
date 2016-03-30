@@ -47,14 +47,16 @@
 //.timer{width: }
 .timer_body{background-color: white}
 .center {display: block; margin-left: auto; margin-right: auto;}
-#timer_wrapper,{ width:380px; height: 100%; padding-top: 40px; background-color: white}
+#timer_wrapper{ width:380px; height: 100%; padding-top: 40px; background-color: white}
 #timer_wrapper{
   .btn_large{min-width:57px}
   #timer_buttons{ width: 205px; }
   .fields_content{padding-left: 10px}
   .content_middle,.content_bottom, form{background-color: white}
+  .log-submit-btn{width:100px}
 }
 .timer_button{float:right}
+
 
 
 $clock-font-size: 50px;

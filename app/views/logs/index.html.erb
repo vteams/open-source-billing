@@ -9,7 +9,7 @@
       </h1>
     </div>
     <%= link_to 'Start Timer', '#',
-                :onclick => "window.open('/en/logs/timer', 'newwindow', 'width=380, height=auto'); return false;",class: "btn_large timer_button" %>
+                :onclick => "window.open('/en/logs/timer', 'newwindow', 'resizable, width=400, height=650'); return false;",class: "btn_large timer_button" %>
     <div class="primary_btn">
       <% link_to (content_tag(:span, t('header.links.logs.new'))),
                   new_log_path,
