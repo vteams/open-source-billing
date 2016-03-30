@@ -1,4 +1,4 @@
-<%= nested_form_for @invoice, :html => {:class => 'form-horizontal', :novalidate => ""} do |f| %>
+<%= nested_form_for(@invoice, url: create_invoice_logs_path ,:html => {:class => 'project-invoice form-horizontal', :novalidate => ""}) do |f| %>
     <% @parent_f = f %>
 
     <div class="invoice_form log_invoice_form">
@@ -22,7 +22,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
                   <div class="medium_field">
-                    <div> <%= text_field_tag 'client', @client_name, :readonly => 'true' %> </div>
+                    <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, "data-placeholder" => "Select a client...", "data-dropdown-width" => "300"} %>
                     <ul class="field_description">
                       <li><%= t('views.invoices.client_hint') %></li>
                     </ul>
@@ -40,18 +40,6 @@
                 </div>
                 <!--field_row-->
 
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t('views.invoices.terms')) %></div>
-                  <div class="small_field">
-                    <%#= collection_select :invoice, :payment_terms_id, PaymentTerm.all, :id, :description, {:prompt => ""}, {"data-placeholder" => "Select a payment term...", :class => "medium chzn-select"} %>
-                    <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
-                    <ul class="field_description select">
-                      <li><%= t('views.invoices.terms_hint') %></li>
-                    </ul>
-                  </div>
-                </div>
-                <!--field_row-->
-                <script>$(".field_row.description").last().css('min-height', '46px');</script>
               </div>
 
               <div class="fields_content_right">
@@ -98,13 +86,15 @@
         <div class="grid_table">
           <table cellpadding="0" cellspacing="0" class="log_invoice_grid_fields" id="log_invoice_grid_fields">
             <colgroup>
-              <col class="ten"/>
+              <col class="one"/>
               <col class="two"/>
               <col class="three"/>
               <col class="four"/>
+              <col class="five"/>
+              <col class="six"/>
             </colgroup>
             <tr>
-              <th class="align_center"><%= t('views.tasks.name') %></th>
+              <th></th>
               <th class="align_center"><%= t('views.tasks.name') %></th>
               <th class="align_center"><%= t('views.tasks.description') %></th>
               <th class="align_center"><%= t('views.tasks.rate') %></th>
@@ -113,7 +103,7 @@
             </tr>
             <% @project.logs.each do |log| %>
                 <tr>
-                    <td></td>
+                  <td></td>
                     <td class="align_center"><%= log.task.name %></td>
                     <td class="align_center"><%= log.task.description %></td>
                     <td class="align_center"><%= log.task.rate %></td>

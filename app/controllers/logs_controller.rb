@@ -127,15 +127,27 @@ class LogsController < ApplicationController
     id = params[:project_id]
     @project = Project.find(id)
     @invoice = Services::InvoiceService.build_new_invoice(params)
-    #@client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
-    #@client = @invoice.client if params[:id].present?
     @client = @project.client
-    @client_name = "#{@client.first_name} #{@client.last_name}"
     @invoice.currency = @client.currency if @client.present?
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
-    #binding.pry
+  end
 
+  def create_invoice
+    @invoice = Invoice.new(invoice_params)
+    @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.company_id = get_company_id()
+    respond_to do |format|
+      if @invoice.save
+        @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
+
+        redirect_to(edit_invoice_url(@invoice), :notice => "Invoice successfully created")
+        return
+      else
+        format.html { render :action => 'new' }
+        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -151,5 +163,20 @@ class LogsController < ApplicationController
   def load_logs(log_date)
     date = log_date.to_datetime
     Log.where('date BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
+  end
+
+  def invoice_params
+    params.require(:invoice).permit(:client_id, :discount_amount, :discount_type,
+                                    :discount_percentage, :invoice_date, :invoice_number,
+                                    :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
+                                    :invoice_total, :invoice_line_items_attributes, :archive_number,
+                                    :archived_at, :deleted_at, :payment_terms_id, :due_date,
+                                    :last_invoice_status, :company_id,:currency_id,
+                                    invoice_line_items_attributes:
+                                        [
+                                            :id, :invoice_id, :item_description, :item_id, :item_name,
+                                            :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy
+                                        ]
+    )
   end
 end

@@ -16,6 +16,7 @@ function start_timer(){
         countdown: false
     });
     $('#log_hours').prop('disabled',true);
+    $(".log-submit-btn").prop('disabled',true);
 
 }
 function stop_timer(){
@@ -23,9 +24,11 @@ function stop_timer(){
     var time  = clock.getTime();
     $('#log_hours').val((time/3600).toFixed(2))
     $('#log_hours').prop('disabled',false);
+    $(".log-submit-btn").prop('disabled',false);
 }
 function reset_timer(){
     clock.reset();
     clock.stop();
     $('#log_hours').prop('disabled',false);
+    $(".log-submit-btn").prop('disabled',false);
 }

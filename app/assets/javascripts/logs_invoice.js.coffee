@@ -4,11 +4,6 @@
 
 jQuery ->
 
-#  window.applyChosen()
-#
-#  window.tableListing()
-#
-#  window.validateCreditCard()
 
 #  Calculate the line total for invoice
   updateLineTotal = (elem) ->
@@ -55,20 +50,6 @@ jQuery ->
     jQuery("#log_invoice_total_lbl").text(total_balance.toFixed(2))
     jQuery("#log_invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
 
-    #window.taxByCategory()
-
-  # Apply Tax on totals
-#  applyTax = (line_total,elem) ->
-#    tax1 = elem.parents("tr").find("select.tax1 option:selected").attr('data-tax_1')
-#    tax2 = elem.parents("tr").find("select.tax2 option:selected").attr('data-tax_2')
-#    tax1 = 0 if not tax1? or tax1 is ""
-#    tax2 = 0 if not tax2? or tax2 is ""
-#    # if line total is 0
-#    tax1=tax2=0 if line_total is 0
-#    discount_amount = applyDiscount(line_total)
-#    total_tax = (parseFloat(tax1) + parseFloat(tax2))
-#    (line_total - discount_amount) * (parseFloat(total_tax) / 100.0)
-
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->
     discount_percentage = jQuery("#invoice_discount_percentage").val() #|| jQuery("#recurring_profile_discount_percentage").val()
@@ -101,31 +82,6 @@ jQuery ->
 
   # Load Items data when an item is selected from dropdown list
   jQuery(".log_invoice_grid_fields select.items_list").live "change", ->
-#    # Add an empty line item row at the end if last item is changed.
-#    elem = jQuery(this)
-#    if elem.val() is ""
-#      clearLineTotal(elem)
-#      false
-#    else
-#      addLineItemRow(elem)
-#      jQuery.ajax '/items/load_item_data',
-#        type: 'POST'
-#        data: "id=" + jQuery(this).val()
-#        dataType: 'html'
-#        error: (jqXHR, textStatus, errorThrown) ->
-#          alert "Error: #{textStatus}"
-#        success: (data, textStatus, jqXHR) ->
-#          item = JSON.parse(data)
-#          container = elem.parents("tr.fields")
-#          # populate item's discription, cost, quantity and taxes.
-#          container.find("input.description").val(item[0])
-#          container.find("input.cost").val(item[1].toFixed(2))
-#          container.find("input.qty").val(item[2])
-#          container.find("select.tax1,select.tax2").val('').trigger("liszt:updated")
-#          container.find("select.tax1").val(item[3]).trigger("liszt:updated") if item[3] isnt 0
-#          container.find("select.tax2").val(item[4]).trigger("liszt:updated") if item[4] isnt 0
-#          container.find("input.item_name").val(item[5])
-#          updateLineTotal(elem)
     updateInvoiceTotal()
 
   # Add empty line item row
@@ -195,126 +151,126 @@ jQuery ->
   jQuery("#reason_for_dispute").live "keyup", ->
     jQuery(this).qtip("hide")
 
-  # Validate client, cost and quantity on invoice save
-  jQuery("form.form-horizontal").submit ->
-    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
-    discount_type = jQuery("select#discount_type").val()
-    sub_total = jQuery('#invoice_sub_total').val()
-    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
-    item_rows = jQuery("table#log_invoice_grid_fields tr.fields:visible")
-    flag = true
-    # Check if company is selected
-    if jQuery("#invoice_company_id").val() is ""
-      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
-      flag = false
-      # Check if client is selected
-    else if jQuery("#invoice_client_id").val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
-      flag = false
-      # if currency is not selected
-    else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
-      flag = false
-      # check if invoice date is selected
-    else if jQuery("#log_invoice_date").val() is ""
-      applyPopover(jQuery("#log_invoice_date"),"rightTop","leftMiddle","Select invoice date")
-      flag =false
-    else if jQuery("#log_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#log_invoice_date").val())
-      applyPopover(jQuery("#log_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-      flag = false
-    else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
-      applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-      flag = false
-      # Check if payment term is selected
-    else if jQuery("#invoice_payment_terms_id").val() is ""
-      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
-      flag = false
-      # Check if discount percentage is an integer
-    else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
-      flag = false
-      # Check if no item is selected
-    else if jQuery("tr.fields:visible").length < 1
-      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
-      flag = false
-      # Check if item is selected
-    else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-      first_item = jQuery("table#log_invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
-      applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
-      flag = false
-    else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
-      flag = false
-    else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
-      flag = false
-
-      # Item cost and quantity should be greater then 0
-    else
-      jQuery("tr.fields:visible").each ->
-        row = jQuery(this)
-        if row.find("select.items_list").val() isnt ""
-          cost = row.find(".cost")
-          qty =  row.find(".qty")
-          tax1 = row.find("select.tax1")
-          tax2 = row.find("select.tax2")
-          tax1_value = jQuery("option:selected",tax1).val()
-          tax2_value = jQuery("option:selected",tax2).val()
-
-          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
-            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
-            flag = false
-          else hidePopover(cost)
-
-          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
-            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
-            flag = false
-          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
-            flag = false
-          else hidePopover(qty)
-    flag
-
-
-  applyPopover = (elem,position,corner,message) ->
-    elem.qtip
-      content:
-        text: message
-      show:
-        event: false
-      hide:
-        event: false
-      position:
-        at: position
-      style:
-        tip:
-          corner: corner
-    elem.qtip().show()
-    elem.focus()
-
-  useAsTemplatePopover = (elem,id,client_name) ->
-    elem.qtip
-      content:
-        text: "<a href='/invoices/new/#{id}'>To create new invoice use the last invoice send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
-      show:
-        event: false
-      hide:
-        event: false
-      position:
-        at: "rightTop"
-      style:
-        classes: 'use_as_template'
-        tip:
-          corner: "bottomLeft"
-    elem.qtip().show()
-    qtip = jQuery(".qtip.use_as_template")
-    qtip.css("top",qtip.offset().top - qtip.height())
-    qtip.attr('data-top',qtip.offset().top - qtip.height())
-    elem.focus()
-
-  hidePopover = (elem) ->
-    #elem.next(".popover").hide()
-    elem.qtip("hide")
+#  # Validate client, cost and quantity on invoice save
+#  jQuery(".project-invoice.form-horizontal").submit ->
+#    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+#    discount_type = jQuery("select#discount_type").val()
+#    sub_total = jQuery('#invoice_sub_total').val()
+#    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
+#    item_rows = jQuery("table#log_invoice_grid_fields tr.fields:visible")
+#    flag = true
+#    # Check if company is selected
+#    if jQuery("#invoice_company_id").val() is ""
+#      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+#      flag = false
+#      # Check if client is selected
+#    else if jQuery("#invoice_client_id").val() is ""
+#      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+#      flag = false
+#      # if currency is not selected
+#    else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
+#      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+#      flag = false
+#      # check if invoice date is selected
+#    else if jQuery("#log_invoice_date").val() is ""
+#      applyPopover(jQuery("#log_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+#      flag =false
+#    else if jQuery("#log_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#log_invoice_date").val())
+#      applyPopover(jQuery("#log_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+#      flag = false
+#    else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
+#      applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+#      flag = false
+#      # Check if payment term is selected
+#    else if jQuery("#invoice_payment_terms_id").val() is ""
+#      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+#      flag = false
+#      # Check if discount percentage is an integer
+#    else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
+#      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+#      flag = false
+#      # Check if no item is selected
+#    else if jQuery("tr.fields:visible").length < 1
+#      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+#      flag = false
+#      # Check if item is selected
+#    else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
+#      first_item = jQuery("table#log_invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
+#      applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+#      flag = false
+#    else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
+#      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+#      flag = false
+#    else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
+#      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+#      flag = false
+#
+#      # Item cost and quantity should be greater then 0
+#    else
+#      jQuery("tr.fields:visible").each ->
+#        row = jQuery(this)
+#        if row.find("select.items_list").val() isnt ""
+#          cost = row.find(".cost")
+#          qty =  row.find(".qty")
+#          tax1 = row.find("select.tax1")
+#          tax2 = row.find("select.tax2")
+#          tax1_value = jQuery("option:selected",tax1).val()
+#          tax2_value = jQuery("option:selected",tax2).val()
+#
+#          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
+#            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+#            flag = false
+#          else hidePopover(cost)
+#
+#          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
+#            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+#            flag = false
+#          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
+#            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+#            flag = false
+#          else hidePopover(qty)
+#    flag
+#
+#
+#  applyPopover = (elem,position,corner,message) ->
+#    elem.qtip
+#      content:
+#        text: message
+#      show:
+#        event: false
+#      hide:
+#        event: false
+#      position:
+#        at: position
+#      style:
+#        tip:
+#          corner: corner
+#    elem.qtip().show()
+#    elem.focus()
+#
+#  useAsTemplatePopover = (elem,id,client_name) ->
+#    elem.qtip
+#      content:
+#        text: "<a href='/invoices/new/#{id}'>To create new invoice use the last invoice send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+#      show:
+#        event: false
+#      hide:
+#        event: false
+#      position:
+#        at: "rightTop"
+#      style:
+#        classes: 'use_as_template'
+#        tip:
+#          corner: "bottomLeft"
+#    elem.qtip().show()
+#    qtip = jQuery(".qtip.use_as_template")
+#    qtip.css("top",qtip.offset().top - qtip.height())
+#    qtip.attr('data-top',qtip.offset().top - qtip.height())
+#    elem.focus()
+#
+#  hidePopover = (elem) ->
+#    #elem.next(".popover").hide()
+#    elem.qtip("hide")
 
   # Hide use as template qtip
   jQuery('.use_as_template .close_qtip').live "click", ->

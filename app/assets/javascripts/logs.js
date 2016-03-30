@@ -28,6 +28,19 @@ $(document).ready(function() {
         return elem.qtip("hide");
     };
 
+    jQuery('.generate_invoice_btn').live("click", function (){
+        project_id = jQuery("#project_id").val();
+        flag = true;
+        if (project_id === "") {
+            applyPopover(jQuery("#project_id"), "bottomMiddle", "topLeft", "Select a project");
+            flag = false;
+        }
+        else
+            hidePopover(jQuery("#project_id"));
+
+        return flag;
+
+    });
 
     $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()));
     jQuery(".log-submit-btn").live("click", function () {
