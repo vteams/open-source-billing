@@ -48,7 +48,7 @@ class LogsController < ApplicationController
           Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, notes: nil, date: params[:day][index])
         end
       end
-        @logs = Log.where(date: Date.today).order(:created_at).page(params[:page]).per(10)
+      @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:day]['1']), Date.parse(params[:day]['7']) ).order(:created_at).page(params[:page]).per(10)
         respond_to do |format|
           format.html # index.html.erb
           format.js
@@ -94,8 +94,10 @@ class LogsController < ApplicationController
     @log = Log.new
     if @view == 'basicWeek'
       @form_type = 'form_week'
+      @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
     else
       @form_type = 'form'
+      @logs = Log.where(date: Date.today).order(:created_at).page(params[:page]).per(10)
     end
     respond_to do |format|
       format.js

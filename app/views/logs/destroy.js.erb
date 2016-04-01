@@ -1,3 +1,3 @@
-jQuery('#task_body').html('<%= escape_javascript render('logs/logs') %>');
+$('#task_body').html('<%= escape_javascript render('logs/logs') %>');
 $('#calendar').fullCalendar( 'refetchEvents' );
-jQuery(".alert.alert-success").show().find('span').html("Log was deleted successfully.");
+$(".alert.alert-success").show().find('span').html("Log was deleted successfully.");

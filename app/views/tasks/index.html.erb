@@ -31,14 +31,13 @@
 
     <!--grid_control-->
     <div class="grid_table">
-      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %>">
+      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %> tasks_listing">
         <colgroup>
           <col class="one"/>
           <col class="two"/>
           <col class="three"/>
           <col class="four"/>
           <col class="five"/>
-          <col class="six"/>
         </colgroup>
         <thead id="task_head">
         <%= render partial: 'tasks_header' %>

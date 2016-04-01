@@ -1,4 +1,4 @@
 $('.logs_table').html('<%= escape_javascript render('logs/logs_table') %>');
 $('#calendar_form').html('<%= escape_javascript render("logs/#{@form_type}") %>');
 $('#calendar').fullCalendar( 'refetchEvents' );
-jQuery(".alert.alert-success").show().find('span').html("Log was updated successfully.");
+$(".alert.alert-success").show().find('span').html("Log(s) updated successfully.");
