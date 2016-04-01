@@ -24,16 +24,33 @@ function init_fullcalendar(){
         viewRender: function( view, element ){
             if( view.name != current){
                 current = view.name;
+//                $.ajax({
+//                    dataType: 'script',
+//                    type: 'GET',
+//                    async: false,
+//                    data:{view: view.name, date: new Date(view.start)},
+//                    url: '/logs/load_view'
+//                });
+                $('#calendar_div').toggleClass('month basicWeek');
+            }
+            if (view.name == 'month'){
                 $.ajax({
                     dataType: 'script',
                     type: 'GET',
                     async: false,
-                    data:{view: view.name},
+                    data:{view: view.name, date: $.datepicker.formatDate('yy-mm-dd', new Date())},
                     url: '/logs/load_view'
                 });
-                $('#calendar_div').toggleClass('month basicWeek');
+                $('#logs_for').html($.datepicker.formatDate('dd-mm-yy', new Date()));
             }
             if (view.name == 'basicWeek'){
+                $.ajax({
+                    dataType: 'script',
+                    type: 'GET',
+                    async: false,
+                    data:{view: view.name, date: new Date(view.start)},
+                    url: '/logs/load_view'
+                });
                 var count = 0;
                 $('#hours_div_inner input[type=hidden]').each(function (){
                     var now = new Date(view.start);
@@ -41,6 +58,11 @@ function init_fullcalendar(){
                     $(this).attr('value',now);
                     count+=1;
                 });
+                var start = $.datepicker.formatDate('dd-mm-yy', new Date(view.start));
+                var end = new Date(view.end);
+                end.setDate(end.getDate() - 1);
+                var end = $.datepicker.formatDate('dd-mm-yy', end);
+                $('#logs_for').html(start + ' to ' + end);
             }
             $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
         },
