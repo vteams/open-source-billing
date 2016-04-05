@@ -422,4 +422,9 @@ class Invoice < ActiveRecord::Base
   def unscoped_client
     Client.unscoped.find_by_id self.client_id
   end
+
+  def inv_type
+    return "Invoiced" if invoice_type.blank?
+    invoice_type.underscore.humanize
+  end
 end
