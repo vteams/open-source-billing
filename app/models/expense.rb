@@ -4,6 +4,7 @@ class Expense < ActiveRecord::Base
   belongs_to :category, class_name: 'ExpenseCategory', foreign_key: 'category_id'
   belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
   belongs_to :tax2, :foreign_key => 'tax_2', :class_name => 'Tax'
+  belongs_to :company
 
   paginates_per 10
 
@@ -14,11 +15,10 @@ class Expense < ActiveRecord::Base
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
   # filter companies i.e active, archive, deleted
-  def self.filter(params)
+  def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    #params[:account].expenses.send(method).page(params[:page]).per(params[:per])
-    Expense.send(method).page(params[:page]).per(params[:per])
+    Expense.send(method).page(params[:page]).per(params[:per_page])
   end
 
   def self.recover_archived(ids)
