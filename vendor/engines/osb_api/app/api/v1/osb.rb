@@ -33,5 +33,6 @@ module V1
     mount V1::OSB::TaxApi => '/'
     mount V1::OSB::DashboardApi => '/'
     mount V1::OSB::ReportApi => '/'
+    mount V1::OSB::ExpenseApi => '/'
   end
  end
