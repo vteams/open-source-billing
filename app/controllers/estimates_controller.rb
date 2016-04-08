@@ -124,6 +124,14 @@ class EstimatesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def undo_actions
+    params[:archived] ? Estimate.recover_archived(params[:ids]) : Estimate.recover_deleted(params[:ids])
+    @estimates = Estimate.unarchived_and_not_invoiced.page(params[:page]).per(session["#{controller_name}-per_page"])
+    #filter invoices by company
+    @estimates = filter_by_company(@estimates).order("#{sort_column} #{sort_direction}")
+    respond_to { |format| format.js }
+  end
+
   def convert_to_invoice
     estimate = Estimate.find(params[:id])
     estimate.convert_to_invoice
