@@ -91,7 +91,7 @@ class StaffsController < ApplicationController
 
   def undo_actions
     params[:archived] ? Staff.recover_archived(params[:ids]) : Staff.recover_deleted(params[:ids])
-    staffs = Staff.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @staffs = Staff.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 
