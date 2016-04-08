@@ -1,7 +1,4 @@
-
-
-
-<%= form_for(@log ,remote: true, html: {class: '.form-inline'} ) do |f| %>
+<%= form_for(@log ,remote: true, html: {class: '.form-inline frm_week'} ) do |f| %>
     <div class="content_middle form">
       <div class="fields_content">
 
@@ -24,7 +21,7 @@
             <% (1..7).each do |id| %>
                 <div class="form-group">
                     <div class="small_field">
-                        <%= number_field(:time, id, size: 20) %>
+                        <%= number_field(:time, id, size: 20, class: 'bulk_hours_input') %>
                       <%= hidden_field(:day,id) %>
                     </div>
                 </div>
