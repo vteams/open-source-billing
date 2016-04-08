@@ -218,6 +218,7 @@ Osb::Application.routes.draw do
         get 'selected_currency'
         get 'send_estimate'
         get 'bulk_actions'
+        get 'undo_actions'
       end
     end
 

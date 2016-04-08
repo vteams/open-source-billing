@@ -89,7 +89,7 @@ class ExpensesController < ApplicationController
 
   def undo_actions
     params[:archived] ? Expense.recover_archived(params[:ids]) : Expense.recover_deleted(params[:ids])
-    expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 

@@ -56,6 +56,7 @@ class InvoicesController < ApplicationController
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
     invoice_id = OSB::Util.decrypt(params[:id])
     @invoice = Invoice.find(invoice_id)
+    @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.pdf do
         file_name = "Invoice-#{Date.today.to_s}.pdf"
