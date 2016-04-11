@@ -26,7 +26,7 @@ module V1
       desc 'Return users estimates'
       get do
         params[:status] = params[:status] || 'active'
-        @estimates = Expense.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
+        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
         @estimates = filter_by_company(@estimates)
       end
 
@@ -36,53 +36,64 @@ module V1
       end
 
       get ':id' do
-        Expense.find params[:id]
+        Estimate.find params[:id]
       end
 
       desc 'Create Estimate'
       params do
         requires :estimate, type: Hash do
-          requires :amount, type: String
-          requires :expense_date, type: String
-          requires :category_id, type: Integer
-          optional :note, type: String
+          optional :estimate_number, type: String
+          requires :estimate_date, type: String
+          optional :po_number, type: String
+          optional :discount_percentage, type: String
           requires :client_id, type: Integer
+          requires :terms, type: String
+          optional :notes, type: String
+          optional :status, type: String
+          optional :sub_total, type: String
+          optional :discount_amount, type: String
+          optional :tax_amount, type: String
+          optional :estimate_total, type: String
+          optional :archive_number, type: String
+          optional :archived_at, type: Boolean
+          optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
-          optional :archive_number, type: String
-          optional :archived_at, type: String
-          optional :deleted_at, type: String
-          optional :tax_1, type: String
-          optional :tax_2, type: String
+          optional :discount_type, type: String
           requires :company_id, type: Integer
         end
       end
+
       post do
-        binding.pry
         Services::Apis::EstimateApiService.create(params)
       end
 
       desc 'Update Estimate'
       params do
         requires :estimate, type: Hash do
-          optional :amount, type: String
-          optional :expense_date, type: String
-          optional :category_id, type: Integer
-          optional :note, type: String
+          optional :estimate_number, type: String
+          optional :estimate_date, type: String
+          optional :po_number, type: String
+          optional :discount_percentage, type: String
           optional :client_id, type: Integer
+          optional :terms, type: String
+          optional :notes, type: String
+          optional :status, type: String
+          optional :sub_total, type: String
+          optional :discount_amount, type: String
+          optional :tax_amount, type: String
+          optional :estimate_total, type: String
+          optional :archive_number, type: String
+          optional :archived_at, type: Boolean
+          optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
-          optional :archive_number, type: String
-          optional :archived_at, type: String
-          optional :deleted_at, type: String
-          optional :tax_1, type: String
-          optional :tax_2, type: String
+          optional :discount_type, type: String
           optional :company_id, type: Integer
         end
       end
 
       patch ':id' do
-        binding.pry
         Services::Apis::EstimateApiService.update(params)
       end
 
