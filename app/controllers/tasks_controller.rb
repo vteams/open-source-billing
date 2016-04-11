@@ -95,7 +95,7 @@ class TasksController < ApplicationController
 
   def undo_actions
     params[:archived] ? Task.recover_archived(params[:ids]) : Task.recover_deleted(params[:ids])
-    tasks = Task.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @tasks = Task.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 

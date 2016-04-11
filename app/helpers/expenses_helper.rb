@@ -19,8 +19,8 @@ module ExpensesHelper
     end
 
     def get_expenses_count(status)
-      #current_user.current_account.expenses.send(status).count
-      Expense.send(status).count
+      current_user.current_account.company.expenses.send(status).count
+      #Expense.send(status).count
     end
 
     def load_taxes_data

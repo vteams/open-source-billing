@@ -7,8 +7,8 @@ class ExpensesController < ApplicationController
   # GET /expenses
   def index
     params[:status] = params[:status] || 'active'
-    #@expenses = Expense.all.page(params[:page]).per(params[:per])
-    @expenses = Expense.filter(params.merge(per: @per_page)).order(sort_column + " " + sort_direction)
+    @expenses = Expense.joins("LEFT OUTER JOIN clients ON clients.id = expenses.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @expenses = filter_by_company(@expenses)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: expenses }
@@ -32,7 +32,7 @@ class ExpensesController < ApplicationController
   # POST /expenses
   def create
     @expense = Expense.new(expense_params)
-
+    @expense.company_id = get_company_id()
     if @expense.save
       redirect_to expenses_path, notice: 'Expense was successfully created.'
     else
@@ -89,7 +89,7 @@ class ExpensesController < ApplicationController
 
   def undo_actions
     params[:archived] ? Expense.recover_archived(params[:ids]) : Expense.recover_deleted(params[:ids])
-    expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
+    @expenses = Expense.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
   end
 
