@@ -3,6 +3,7 @@
 jQuery(".staff_form .staff-submit-btn").live "click", ->
   name = jQuery("#staff_name").val()
   email = jQuery("#staff_email").val()
+  flag = true
   if name is ""
     applyPopover(jQuery("#staff_name"),"bottomMiddle","topLeft","Enter a name for this staff")
     flag = false
@@ -13,6 +14,8 @@ jQuery(".staff_form .staff-submit-btn").live "click", ->
     flag = true
   if(flag)
     jQuery("form#newStaff").get(0).submit()
+  else
+    return false
 
 applyPopover = (elem,position,corner,message) ->
   elem.qtip
