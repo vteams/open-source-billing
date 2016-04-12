@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330110032) do
+ActiveRecord::Schema.define(version: 20160406104106) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.time     "deleted_at"
     t.integer  "tax_1"
     t.integer  "tax_2"
+    t.integer  "company_id"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -332,7 +333,7 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "task_id"
     t.float    "hours",      limit: 24
     t.string   "notes"
-    t.datetime "date"
+    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
