@@ -25,9 +25,10 @@ module V1
 
       desc 'Return all staff'
       get do
+        set_company_session
         params[:status] = params[:status] || 'active'
-        @staffs = Staff.joins("LEFT OUTER JOIN clients ON clients.id = expenses.client_id ")
-        #@staffs = filter_by_company(@expenses)
+        @staffs = Staff.all
+        @staffs = filter_by_company(@staffs)
       end
 
       desc 'Fetch single staff'
@@ -41,47 +42,38 @@ module V1
 
       desc 'Create staff'
       params do
-        requires :expense, type: Hash do
-          requires :amount, type: String
-          requires :expense_date, type: String
-          requires :category_id, type: Integer
-          optional :note, type: String
-          requires :client_id, type: Integer
+        requires :staff, type: Hash do
+          requires :name, type: String
+          requires :email, type: String
+          requires :company_id, type: String
+          optional :rate, type: String
+          optional :archive_number, type: String
+          optional :archived_at, type: Boolean
+          optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
-          optional :archive_number, type: String
-          optional :archived_at, type: String
-          optional :deleted_at, type: String
-          optional :tax_1, type: String
-          optional :tax_2, type: String
-          requires :company_id, type: Integer
         end
       end
       post do
+        params[:user_id] = @current_user.id
         Services::Apis::StaffApiService.create(params)
       end
 
       desc 'Update staff'
       params do
-        requires :expense, type: Hash do
-          optional :amount, type: String
-          optional :expense_date, type: String
-          optional :category_id, type: Integer
-          optional :note, type: String
-          optional :client_id, type: Integer
+        requires :staff, type: Hash do
+          optional :name, type: String
+          optional :email, type: String
+          optional :rate, type: String
+          optional :archive_number, type: String
+          optional :archived_at, type: Boolean
+          optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
-          optional :archive_number, type: String
-          optional :archived_at, type: String
-          optional :deleted_at, type: String
-          optional :tax_1, type: String
-          optional :tax_2, type: String
-          optional :company_id, type: Integer
         end
       end
 
       patch ':id' do
-        binding.pry
         Services::Apis::StaffApiService.update(params)
       end
 

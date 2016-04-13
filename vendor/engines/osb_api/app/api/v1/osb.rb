@@ -23,6 +23,14 @@ module V1
       def current_page
         params[:page] || 1
       end
+
+      #set session of company_id
+      def set_company_session
+        unless params[:company_id].blank?
+          session['current_company'] = params[:company_id]
+          current_user.update_attributes(current_company: params[:company_id])
+        end
+      end
     end
     mount V1::OSB::ClientApi => '/'
     mount V1::OSB::AccountApi => '/'
