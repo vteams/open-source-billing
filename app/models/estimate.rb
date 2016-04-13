@@ -57,6 +57,10 @@ class Estimate < ActiveRecord::Base
     self.multiple_estimates(ids).each { |estimate| estimate.unarchive }
   end
 
+  def self.recover_deleted(ids)
+    multiple(ids).only_deleted.each { |estimate| estimate.restore; estimate.unarchive }
+  end
+
   def self.filter(params, per_page)
     mappings = {active: 'unarchived_and_not_invoiced', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     method = mappings[params[:status].to_sym]

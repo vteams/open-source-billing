@@ -9,6 +9,12 @@ function init_fullcalendar(){
             center: 'title',
             right: 'month,basicWeek'
         },
+        buttonText: {
+            today: 'Today',
+            month: 'Month',
+            week: 'Week',
+            day: 'Day'
+        },
         dayClick: function(date, jsEvent, view) {
             $.ajax({
                 dataType: 'script',
