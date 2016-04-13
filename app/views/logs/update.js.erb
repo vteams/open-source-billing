@@ -1,4 +1,27 @@
 $('.logs_table').html('<%= escape_javascript render('logs/logs_table') %>');
 $('#calendar_form').html('<%= escape_javascript render("logs/#{@form_type}") %>');
-$('#calendar').fullCalendar( 'refetchEvents' );
 $(".alert.alert-success").show().find('span').html("Log(s) updated successfully.");
+
+var view = $('#calendar').fullCalendar('getView');
+if(view.name == 'basicWeek'){
+    var start = $.datepicker.formatDate('yy-mm-dd', new Date(view.start));
+    var end = new Date(view.end);
+    end.setDate(end.getDate() - 1);
+    var end = $.datepicker.formatDate('yy-mm-dd', end);
+    $('#logs_for').html(start + ' to ' + end);
+    //setting values for day hidden field dates
+    var count = 0;
+    $('#hours_div_inner input[type=hidden]').each(function (){
+        var now = new Date(view.start);
+        now.setDate(now.getDate() + count);
+        $(this).attr('value',now);
+        count+=1;
+        console.log($(this).val());
+    });
+}
+else{
+    $('#logs_for').html($.datepicker.formatDate('yy-mm-dd', new Date('<%= @date %>')));
+}
+
+$('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
+$('#calendar').fullCalendar( 'refetchEvents' );

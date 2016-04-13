@@ -62,7 +62,7 @@ class LogsController < ApplicationController
     if @log.update(log_params)
       @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
       @view = params[:view]
-      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'
+      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'; @date=@log.date
       @log = Log.new
       respond_to do |format|
         format.html
