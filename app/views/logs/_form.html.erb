@@ -39,7 +39,7 @@
             <div class="field_row">
 
               <div class="label_field left single"><span><%= t('views.logs.hours') %></span></div>
-              <div class="small_field"><%= f.number_field :hours %></div>
+              <div class="small_field"><%= f.number_field :hours, min: 0 %></div>
             </div>
             <!--field_row-->
             <div class="field_row">
