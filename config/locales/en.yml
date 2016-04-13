@@ -550,6 +550,7 @@ en:
       actions: "Actions"
       links:
         edit: "Edit"
+        delete: "Delete"
       page_entries_info:
         more_pages:
             display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
