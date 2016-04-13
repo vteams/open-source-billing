@@ -1,7 +1,7 @@
 function init_fullcalendar(){
     // initialize the calendar...
     var current = 'month' ;
-    $('#calendar').fullCalendar({
+    var clock = $('#calendar').fullCalendar({
 
         contentHeight: 'auto',
         header: {
@@ -41,7 +41,7 @@ function init_fullcalendar(){
                     data:{view: view.name, date: $.datepicker.formatDate('yy-mm-dd', new Date())},
                     url: '/logs/load_view'
                 });
-                $('#logs_for').html($.datepicker.formatDate('dd-mm-yy', new Date()));
+                $('#logs_for').html($.datepicker.formatDate('yy-mm-dd', new Date()));
             }
             if (view.name == 'basicWeek'){
                 $.ajax({
@@ -58,10 +58,10 @@ function init_fullcalendar(){
                     $(this).attr('value',now);
                     count+=1;
                 });
-                var start = $.datepicker.formatDate('dd-mm-yy', new Date(view.start));
+                var start = $.datepicker.formatDate('yy-mm-dd', new Date(view.start));
                 var end = new Date(view.end);
                 end.setDate(end.getDate() - 1);
-                var end = $.datepicker.formatDate('dd-mm-yy', end);
+                var end = $.datepicker.formatDate('yy-mm-dd', end);
                 $('#logs_for').html(start + ' to ' + end);
             }
             $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
