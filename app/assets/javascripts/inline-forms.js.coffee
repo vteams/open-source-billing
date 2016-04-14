@@ -183,7 +183,9 @@ class window.InlineForms
     fname = @chznContainer.find(".tiny_create_form #client_first_name")
     lname = @chznContainer.find(".tiny_create_form #client_last_name")
     pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+    pattern_phone = /^(()?\d{3}())?(-|\s)?\d{3}(-|\s)?\d{4}$/
     email = @chznContainer.find(".tiny_create_form #client_email")
+    phone = @chznContainer.find(".tiny_create_form #client_business_phone")
     if valid_form and fname.length
        if !jQuery(fname).val()  and  !jQuery(lname).val()
          jQuery(fname).qtip({content:
@@ -199,4 +201,9 @@ class window.InlineForms
          jQuery(email).qtip().show()
          jQuery(email).focus()
          valid_form = false
+      if !pattern_phone.test(phone.val())
+        jQuery(phone).qtip({content:  text: "Invalid Business Phone",    show:  event: false, hide:  event: false})
+        jQuery(phone).qtip().show()
+        jQuery(phone).focus()
+        valid_form = false
     valid_form
