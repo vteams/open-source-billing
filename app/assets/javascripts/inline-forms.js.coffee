@@ -183,7 +183,7 @@ class window.InlineForms
     fname = @chznContainer.find(".tiny_create_form #client_first_name")
     lname = @chznContainer.find(".tiny_create_form #client_last_name")
     pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
-    pattern_phone = /^(()?\d{3}())?(-|\s)?\d{3}(-|\s)?\d{4}$/
+    pattern_phone = /^\d+$/
     email = @chznContainer.find(".tiny_create_form #client_email")
     phone = @chznContainer.find(".tiny_create_form #client_business_phone")
     if valid_form and fname.length
