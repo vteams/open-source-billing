@@ -1,9 +1,14 @@
 .task {
-  .one, .two, .three, .four, .five, .six {
+  col.one{
+    width: 3% !important;
+  }
+  .two, .three, .four, .five, .six {
     width: 16.5%
   }
 }
-
+.task_head tr th:first-child{
+  width: 10% !important;
+}
 .tasks_listing{
   table-layout: auto !important;
 }
