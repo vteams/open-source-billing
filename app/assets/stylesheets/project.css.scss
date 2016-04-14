@@ -423,6 +423,26 @@ table.task_grid_fields {
     margin-bottom: 20px;
   }
 
+  .tiny_form_container {
+    .fields_content_data{
+      width: 100%;
+    }
+    .small_field{
+      input{
+        width: 160px !important;
+      }
+    }
+    .label_field.left{
+      width: 85px !important;
+      font-size: 11px !important;
+      float: left !important;
+      margin-right: 5px !important;
+    }
+  }
+
+  .tasks_list + .chzn-container, .members_list + .chzn-container{
+    position: relative !important;
+  }
 }
 
 #paging_links .chzn-single span{

@@ -76,12 +76,17 @@ jQuery ->
     if $("#project_project_name").val() is ""
       flag = false
       applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft","Project Name field is required")
+    else if ($("#project_total_hours").val() < 0)
+        hidePopover(jQuery("#project_project_name"))
+        flag = false
+        applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
     else
-      hidePopover(jQuery("#project_project_name"))
+      hidePopover(jQuery("#project_total_hours"))
       flag = true
     if(flag)
       jQuery("form.project-form").get(0).submit()
-
+    else
+      reture false
 
   applyPopover = (elem,position,corner,message) ->
     elem.qtip
