@@ -1,5 +1,5 @@
 <div class="task">
-  <%= form_for @task, :html => {:novalidate => "", :multipart => true,class: 'task_form form-horizontal',:id => 'newTask'} do |f| %>
+  <%= form_for @task, :html => { :multipart => true,class: 'task_form form-horizontal',:id => 'newTask'} do |f| %>
       <div class="content_middle form">
         <div class="fields_content">
           <div class="fields_content_container">
@@ -34,7 +34,7 @@
 
               <div class="field_row rate_div">
                 <div class="label_field left single"><span><%= t('views.tasks.rate') %></span></div>
-                <div class="small_field"><%= f.number_field :rate %></div>
+                <div class="small_field"><%= f.number_field :rate, min: 0 %></div>
               </div>
 
               <div class="options_row clients">

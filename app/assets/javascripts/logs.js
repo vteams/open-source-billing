@@ -27,6 +27,15 @@ $(document).ready(function() {
     hidePopover = function (elem) {
         return elem.qtip("hide");
     };
+    jQuery('#log_project_id').live("click", function() {
+        return hidePopover(jQuery("#log_project_id"));
+    });
+    jQuery('#log_task_id').live("click", function() {
+        return hidePopover(jQuery("#log_task_id"));
+    });
+    jQuery('#log_hours').live("click", function() {
+        return hidePopover(jQuery("#log_hours"));
+    });
 
     jQuery('.generate_invoice_btn').live("click", function (){
         project_id = jQuery("#project_id").val();
@@ -52,8 +61,6 @@ $(document).ready(function() {
         flag = true;
         window.valid = 0;
         $(".frm_week input[type=number]").filter(function () {
-            console.log($(this).val());
-            console.log(window.valid);
             if ($.trim($(this).val()).length == 0) window.valid+=1;
         });
 
