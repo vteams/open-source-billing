@@ -186,6 +186,8 @@ class window.InlineForms
     pattern_phone = /^\d+$/
     email = @chznContainer.find(".tiny_create_form #client_email")
     phone = @chznContainer.find(".tiny_create_form #client_business_phone")
+    staff_email = @chznContainer.find(".tiny_create_form #staff_email")
+    staff_rate = @chznContainer.find(".tiny_create_form #staff_rate")
     if valid_form and fname.length
        if !jQuery(fname).val()  and  !jQuery(lname).val()
          jQuery(fname).qtip({content:
@@ -206,4 +208,18 @@ class window.InlineForms
         jQuery(phone).qtip().show()
         jQuery(phone).focus()
         valid_form = false
+
+    if !valid_form and staff_email.length
+      if !pattern.test(staff_email.val())
+        jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        jQuery(staff_email).qtip().show()
+        jQuery(staff_email).focus()
+        valid_form = false
+      else if staff_rate.length and staff_rate.val() < 0
+        jQuery(staff_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        jQuery(staff_rate).qtip().show()
+        jQuery(staff_rate).focus()
+        valid_form = false
+      else
+        return true
     valid_form
