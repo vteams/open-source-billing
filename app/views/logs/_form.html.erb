@@ -15,8 +15,8 @@
           <div class="fields_content_data">
 
             <div class="field_row">
-              <div class="label_field left single"><span><%= t('views.common.date') %></span></div>
-              <div class="small_field"> <%# binding.pry %>
+              <div class="label_field left single"><%= t('views.common.date') %></div>
+              <div class="small_field">
                 <%= f.text_field :date,:readonly => true  %>
               </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="field_row">
 
               <div class="label_field left single"><span><%= t('views.logs.hours') %></span></div>
-              <div class="small_field"><%= f.number_field :hours, min: 0 %></div>
+              <div class="small_field"><%= f.number_field :hours %></div>
             </div>
             <!--field_row-->
             <div class="field_row">

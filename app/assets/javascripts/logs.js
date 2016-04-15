@@ -52,8 +52,6 @@ $(document).ready(function() {
         flag = true;
         window.valid = 0;
         $(".frm_week input[type=number]").filter(function () {
-            console.log($(this).val());
-            console.log(window.valid);
             if ($.trim($(this).val()).length == 0) window.valid+=1;
         });
 
@@ -63,13 +61,6 @@ $(document).ready(function() {
         }else {
             hidePopover(jQuery("#hours_div"))
         }
-        if (date === "") {
-            applyPopover(jQuery("#log_date"), "bottomMiddle", "topLeft", "Select a date from the calendar");
-            flag = false;
-        } else {
-            hidePopover(jQuery("#log_date"))
-        }
-
         if (project_id === "") {
             applyPopover(jQuery("#log_project_id"), "bottomMiddle", "topLeft", "Select a project");
             flag = false;
@@ -85,7 +76,12 @@ $(document).ready(function() {
         if (hours === "") {
             applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
             flag = false;
-        } else {
+        }
+        else if(hours < 0){
+            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours value greater than or equal to 0");
+            flag = false;
+        }
+        else {
             hidePopover(jQuery("#log_hours"))
         }
         if (flag) {
