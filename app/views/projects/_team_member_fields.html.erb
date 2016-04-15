@@ -15,6 +15,6 @@
     <%= f.text_field :email, :class => 'grid_large description' %>
   </td>
   <td class="align_center">
-    <%= f.number_field :rate, :class => 'grid_small align_right rate' %>
+    <%= f.number_field :rate, min: 0, :class => 'grid_small align_right rate project_team_member_rate' %>
   </td>
 </tr>
