@@ -32,7 +32,7 @@
           <div class="field_row">
             <div class="label_field left single"><%= t('views.tasks.rate') %></div>
             <div class="small_field">
-              <%= number_field_tag "task[rate]", 0.0, min: 0 %>
+              <%= number_field_tag "task[rate]", 0.0, min: 0, :class => 'project_task_rate' %>
               <%= hidden_field_tag :quick_create %>
             </div>
           </div>

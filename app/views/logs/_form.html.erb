@@ -1,4 +1,4 @@
-<%= form_for(@log ,remote: true, class: 'form-horizontal' ) do |f| %>
+<%= form_for(@log ,remote: true, class: 'form-horizontal', autocomplete: 'off'  ) do |f| %>
     <div class="content_middle form">
       <div class="fields_content">
         <div class="fields_content_container">
@@ -14,7 +14,7 @@
           <% end %>
           <div class="fields_content_data">
 
-            <div class="field_row">
+            <div class="field_row" id="log_date_div">
               <div class="label_field left single"><%= t('views.common.date') %></div>
               <div class="small_field">
                 <%= f.text_field :date,:readonly => true  %>

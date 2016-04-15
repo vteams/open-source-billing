@@ -108,3 +108,9 @@ jQuery ->
   hidePopover = (elem) ->
     elem.qtip("hide")
 
+  $(document).on 'blur', '.project_task_rate', (evt) ->
+    jQuery("#task_rate").val( Math.abs(jQuery("#task_rate").val()))
+
+  $(document).on 'blur', '.project_tasks_rate_field', (evt) ->
+    $(this).val(Math.abs($(this).val()))
+#    jQuery("#task_rate").val( Math.abs(jQuery("#task_rate").val()))
