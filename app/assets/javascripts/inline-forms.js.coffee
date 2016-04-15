@@ -188,6 +188,8 @@ class window.InlineForms
     phone = @chznContainer.find(".tiny_create_form #client_business_phone")
     staff_email = @chznContainer.find(".tiny_create_form #staff_email")
     staff_rate = @chznContainer.find(".tiny_create_form #staff_rate")
+    task_rate = @chznContainer.find(".tiny_create_form #task_rate")
+
     if valid_form and fname.length
        if !jQuery(fname).val()  and  !jQuery(lname).val()
          jQuery(fname).qtip({content:
@@ -209,8 +211,8 @@ class window.InlineForms
         jQuery(phone).focus()
         valid_form = false
 
-    if !valid_form and staff_email.length
-      if !pattern.test(staff_email.val())
+    if !valid_form and (staff_email.length or task_rate.length)
+      if !pattern.test(staff_email.val()) and staff_email.length
         jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
         jQuery(staff_email).qtip().show()
         jQuery(staff_email).focus()
@@ -220,6 +222,13 @@ class window.InlineForms
         jQuery(staff_rate).qtip().show()
         jQuery(staff_rate).focus()
         valid_form = false
+      else if task_rate.length and task_rate.val() < 0
+        jQuery(task_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        jQuery(task_rate).qtip().show()
+        jQuery(task_rate).focus()
+        valid_form = false
       else
+        console.log "all valid"
+        valid_form = true
         return true
     valid_form
