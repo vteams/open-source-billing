@@ -37,7 +37,7 @@ class TasksController < ApplicationController
 
     if Task.is_exists?(params[:task][:name], company_id)
       @task_exists = true
-      redirect_to(new_tasks_path, :alert => "Task with same name already exists") unless params[:quick_create]
+      redirect_to(new_task_path, :alert => "Task with same name already exists") unless params[:quick_create]
       return
     end
     @task = Task.new(task_params)
