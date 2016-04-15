@@ -185,7 +185,6 @@ class window.InlineForms
     pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
     pattern_phone = /^\d+$/
     email = @chznContainer.find(".tiny_create_form #client_email")
-    staff_email = @chznContainer.find(".tiny_create_form #staff_email")
     phone = @chznContainer.find(".tiny_create_form #client_business_phone")
     staff_email = @chznContainer.find(".tiny_create_form #staff_email")
     staff_rate = @chznContainer.find(".tiny_create_form #staff_rate")
@@ -206,18 +205,13 @@ class window.InlineForms
         jQuery(email).qtip().show()
         jQuery(email).focus()
         valid_form = false
-      if !pattern.test(staff_email.val())
-        jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
-        jQuery(staff_email).qtip().show()
-        jQuery(staff_email).focus()
-        valid_form = false
       if !pattern_phone.test(phone.val())
         jQuery(phone).qtip({content:  text: "Invalid Business Phone",    show:  event: false, hide:  event: false})
         jQuery(phone).qtip().show()
         jQuery(phone).focus()
         valid_form = false
 
-    if !valid_form and (staff_email.length or task_rate.length)
+    if valid_form and (staff_email.length or task_rate.length)
       if !pattern.test(staff_email.val()) and staff_email.length
         jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
         jQuery(staff_email).qtip().show()
