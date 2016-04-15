@@ -2,18 +2,22 @@
 
 jQuery(".task_form .task-submit-btn").live "click", ->
   name = jQuery("#task_name").val()
-  description = jQuery("#task_description").val()
   rate = jQuery("#task_rate").val()
   flag = true
   if name is ""
-    applyPopover(jQuery("#task_name"),"bottomMiddle","topLeft","Enter a name for this task")
+    applyPopover(jQuery("#task_name"),"bottomMiddle","topLeft","Enter a name for the task")
     flag = false
-  if description is ""
-    applyPopover(jQuery("#task_description"),"bottomMiddle","topLeft","Enter description for task")
+  else if rate is ""
+    applyPopover(jQuery("#task_rate"),"bottomMiddle","topLeft","Enter rate per hour for the task")
     flag = false
-  if rate is ""
-    applyPopover(jQuery("#task_rate"),"bottomMiddle","topLeft","Enter rate for task")
+    hidePopover(jQuery("#task_name"))
+  else if rate < 0
+    applyPopover(jQuery("#task_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the task")
     flag = false
+    hidePopover(jQuery("#task_name"))
+  else
+    flag = true
+    hidePopover(jQuery("#task_rate"))
   if(flag)
     jQuery("form#newTask").get(0).submit()
   else
