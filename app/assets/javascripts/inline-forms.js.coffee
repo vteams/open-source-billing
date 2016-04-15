@@ -173,7 +173,7 @@ class window.InlineForms
     @chznContainer.find(".tiny_create_form input[required]").each (e, elem) =>
       unless jQuery(elem).val()
         jQuery(elem).qtip({content:
-          text: "This field is require",
+          text: "This field is required",
           show:
             event: false, hide:
               event: false})
@@ -183,20 +183,58 @@ class window.InlineForms
     fname = @chznContainer.find(".tiny_create_form #client_first_name")
     lname = @chznContainer.find(".tiny_create_form #client_last_name")
     pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+    pattern_phone = /^\d+$/
     email = @chznContainer.find(".tiny_create_form #client_email")
+    staff_email = @chznContainer.find(".tiny_create_form #staff_email")
+    phone = @chznContainer.find(".tiny_create_form #client_business_phone")
+    staff_email = @chznContainer.find(".tiny_create_form #staff_email")
+    staff_rate = @chznContainer.find(".tiny_create_form #staff_rate")
+    task_rate = @chznContainer.find(".tiny_create_form #task_rate")
+
     if valid_form and fname.length
-       if !jQuery(fname).val()  and  !jQuery(lname).val()
-         jQuery(fname).qtip({content:
-           text: "First Name or Last Name is required",
-           show:
-             event: false, hide:
-               event: false})
-         jQuery(fname).qtip().show()
-         jQuery(fname).focus()
-         valid_form = false
-       if !pattern.test(email.val())
-         jQuery(email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
-         jQuery(email).qtip().show()
-         jQuery(email).focus()
-         valid_form = false
+      if !jQuery(fname).val()  and  !jQuery(lname).val()
+        jQuery(fname).qtip({content:
+         text: "First Name or Last Name is required",
+         show:
+           event: false, hide:
+             event: false})
+        jQuery(fname).qtip().show()
+        jQuery(fname).focus()
+        valid_form = false
+      if !pattern.test(email.val())
+        jQuery(email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        jQuery(email).qtip().show()
+        jQuery(email).focus()
+        valid_form = false
+      if !pattern.test(staff_email.val())
+        jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        jQuery(staff_email).qtip().show()
+        jQuery(staff_email).focus()
+        valid_form = false
+      if !pattern_phone.test(phone.val())
+        jQuery(phone).qtip({content:  text: "Invalid Business Phone",    show:  event: false, hide:  event: false})
+        jQuery(phone).qtip().show()
+        jQuery(phone).focus()
+        valid_form = false
+
+    if !valid_form and (staff_email.length or task_rate.length)
+      if !pattern.test(staff_email.val()) and staff_email.length
+        jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        jQuery(staff_email).qtip().show()
+        jQuery(staff_email).focus()
+        valid_form = false
+      else if staff_rate.length and staff_rate.val() < 0
+        jQuery(staff_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        jQuery(staff_rate).qtip().show()
+        jQuery(staff_rate).focus()
+        valid_form = false
+      else if task_rate.length and task_rate.val() < 0
+        jQuery(task_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        jQuery(task_rate).qtip().show()
+        jQuery(task_rate).focus()
+        valid_form = false
+      else
+        console.log "all valid"
+        valid_form = true
+        return true
     valid_form

@@ -1,4 +1,4 @@
-<%= nested_form_for @project, :html => {:class => 'project-form', :novalidate => ""} do |f| %>
+<%= nested_form_for @project, :html => {:class => 'project-form'} do |f| %>
     <div class="project_form">
       <div class="content_middle">
         <div class="fields_content">
@@ -59,7 +59,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
                   <div class="medium_field">
-                    <div> <%= f.number_field :total_hours %> hours </div>
+                    <div> <%= f.number_field :total_hours, min: 0 %> hours </div>
                   </div>
                   <ul class="field_description select">
                     <li><%= t('views.projects.time_estimate_hint') %></li>
