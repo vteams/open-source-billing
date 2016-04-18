@@ -58,7 +58,6 @@ module V1
         end
       end
       post do
-        binding.pry
         Services::Apis::ExpenseApiService.create(params)
       end
 

@@ -20,7 +20,7 @@ module Services
             {error: expense.errors.full_messages}
           end
         else
-          {error: 'Account not found'}
+          {error: 'Expense not found'}
         end
       end
 
@@ -36,7 +36,6 @@ module Services
 
       def self.expense_params_api(params)
         ActionController::Parameters.new(params).require(:expense).permit(
-            :id,
             :amount,
             :expense_date,
             :category_id,
