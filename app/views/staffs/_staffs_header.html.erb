@@ -1,8 +1,8 @@
 <% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
 <tr>
   <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-  <th class="align_center header ><%= t('name') %></th>
-  <th class="align_center header <%= sortable_class('email') %>"><%= sortable('email', t('views.staffs.email')) %></th>
-  <th class="align_center header <%= sortable_class('rate') %>"><%= sortable('rate', t('views.staffs.rate')) %></th>
-  <th class="align_center not-sortable "><%= t '.actions', :default => t("helpers.actions") %></th>
+  <th class="align_left not-sortable"><%= t('name') %></th>
+  <th class="align_left not-sortable"><%= t('views.staffs.email') %></th>
+  <th class="align_right not-sortable"><%= t('views.staffs.rate') %></th>
+  <th class="align_center not-sortable ">Action(s)</th>
 </tr>

@@ -15,9 +15,9 @@
     <% @tasks.each do |task| %>
         <tr>
           <td class="align_center"> <%= check_box_tag "task_ids[]", task.id, false, :id => "task_#{task.id}" %></td>
-          <td class="align_center"><%= link_to(task.name, task_path(task), :class => "tasks_link #{'deleted_entry' if task.deleted?}") %></td>
-          <td class="align_center"> <%= task.description %> </td>
-          <td class="align_center"><%= "#{number_to_currency(task.rate)}" %></td>
+          <td class="align_left"><%= link_to(task.name, task_path(task), :class => "tasks_link #{'deleted_entry' if task.deleted?}") %></td>
+          <td class="align_left"> <%= task.description %> </td>
+          <td class="align_right"><%= "#{number_to_currency(task.rate)}" %></td>
 
           <td class="align_center">
             <% if task.deleted_at.nil? %>
