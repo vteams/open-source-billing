@@ -34,10 +34,15 @@ class Expense < ActiveRecord::Base
   end
 
   def total_tax_amount
-    tax_amount = 0
-    tax_amount += amount * (tax1.percentage / 100.0) if tax1.present?
-    tax_amount += amount * (tax2.percentage / 100.0) if tax2.present?
-    tax_amount
+    tax1_amount + tax2_amount
+  end
+
+  def tax1_amount
+    tax1.present? ? amount * (tax1.percentage / 100.0) : 0.0
+  end
+
+  def tax2_amount
+    tax2.present? ? amount * (tax2.percentage / 100.0) : 0.0
   end
 
 end
