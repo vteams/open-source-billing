@@ -44,7 +44,7 @@
                 <div class="field_row">
                   <div class="label_field left single"><%= f.label :date, content_tag(:span, 'Date') %></div>
                   <div class="small_field">
-                    <%= f.text_field :expense_date %>
+                    <%= f.text_field :expense_date, value: f.object.expense_date   %>
                   </div>
                 </div>
                 <!--field_row-->
