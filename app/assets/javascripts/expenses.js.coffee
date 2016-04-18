@@ -42,14 +42,22 @@ jQuery ->
       flag = false
     else if amount is ""
       applyPopover(jQuery("#expense_amount"),"bottomMiddle","topLeft","Insert amount")
+      hidePopover(jQuery("#expense_category_id_chzn"))
+      flag = false
+    else if amount < 0
+      applyPopover(jQuery("#expense_amount"),"bottomMiddle","topLeft","Insert amount greater or equal to 0.")
+      hidePopover(jQuery("#expense_category_id_chzn"))
       flag = false
     else if client is ""
       applyPopover(jQuery("#expense_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+      hidePopover(jQuery("#expense_amount"))
       flag = false
     else if expense_date is ""
       applyPopover(jQuery("#expense_expense_date"),"bottomMiddle","topLeft","Select expense date")
+      hidePopover(jQuery("#expense_client_id_chzn"))
       flag = false
     else
+      hidePopover(jQuery("#expense_expense_date"))
       flag = true
     if(flag)
       jQuery(".expense_form>form#newExpense").get(0).submit()
