@@ -7,7 +7,7 @@ class ExpensesController < ApplicationController
   # GET /expenses
   def index
     params[:status] = params[:status] || 'active'
-    @expenses = Expense.joins("LEFT OUTER JOIN clients ON clients.id = expenses.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @expenses = Expense.joins(:client, :category).filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @expenses = filter_by_company(@expenses)
     respond_to do |format|
       format.html # index.html.erb

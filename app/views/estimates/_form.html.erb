@@ -90,7 +90,7 @@
               <div class="fields_content_right">
 
                 <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :estimate_number, content_tag(:span, 'Estimate #') %></div>
+                  <div class="label_field left single"><%= f.label :estimate_number,  'Estimate #' %></div>
                   <div class="small_field">
                     <%= f.text_field :estimate_number, :readonly => "", :required => "" %>
                     <ul class="field_description">
@@ -137,10 +137,10 @@
             </colgroup>
             <tr>
               <th class="align_center">&nbsp;</th>
-              <th class="align_left"><%= t('item') %></th>
-              <th class="align_left"><%= t('views.common.description') %></th>
+              <th class="align_center"><%= t('item') %></th>
+              <th class="align_center"><%= t('views.common.description') %></th>
               <th class="align_center"><%= t('views.common.unit_cost') %></th>
-              <th class="align_right"><%= t('views.common.qty') %></th>
+              <th class="align_center"><%= t('views.common.qty') %></th>
               <th class="align_center"><%= t('views.common.tax') %>1</th>
               <th class="align_center"><%= t('views.common.tax') %>2</th>
               <th class="align_center"><%= t('views.estimates.line_total') %></th>
