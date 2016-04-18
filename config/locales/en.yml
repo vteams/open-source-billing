@@ -13,6 +13,7 @@ en:
   project_name: "Project Name"
   payment: "Payment"
   client: "Client"
+  manager: "Manager"
   clients: "Clients"
   item: "Item"
   report: "Report"

@@ -1,8 +1,9 @@
 <% sort_class = params[:direction] == 'desc' ? 'sortdown' : 'sortup' %>
 <tr>
   <th class="align_center not-sortable"><%= check_box_tag 'select_all' %></th>
-  <th class="align_center not-sortable"><%= t('project_name') %></th>
-  <th class="align_center not-sortable"><%= t('client') %></th>
+  <th class="align_left not-sortable"><%= t('project_name') %></th>
+  <th class="align_left not-sortable"><%= t('client') %></th>
+  <th class="align_left not-sortable"><%= t('manager') %></th>
   <th class="align_center not-sortable%>"><%= t('views.projects.total_hours') %></th>
   <th class="align_center not-sortable ">Action(s)</th>
 </tr>

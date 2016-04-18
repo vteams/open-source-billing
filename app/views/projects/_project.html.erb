@@ -14,8 +14,9 @@
     <% @projects.each do |project| %>
         <tr>
           <td class="align_center"> <%= check_box_tag "project_ids[]", project.id, false, :id => "project_#{project.id}" %></td>
-          <td class="align_center"><%= project.project_name %></td>
-          <td class="align_center text-overflow-class" data-overflow-rows="2" ><%=  project.client.try(:organization_name).blank??  project.unscoped_client.try(:organization_name) : project.client.organization_name %></td>
+          <td class="align_left"><%= project.project_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2" ><%=  project.client.try(:organization_name).blank??  project.unscoped_client.try(:organization_name) : project.client.organization_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2" ><%=  project.manager.try(:name) %></td>
           <td class="align_center"><%= project.total_hours %></td>
           <td class="align_center">
             <% if project.deleted_at.nil? %>
