@@ -5,7 +5,7 @@ jQuery(".task_form .task-submit-btn").live "click", ->
   rate = jQuery("#task_rate").val()
   association_name = jQuery('input[name=association]:checked').attr("id")
   no_of_selected_companies = jQuery('.company_checkbox:checked').length
-  console.log (company_association)
+
   flag = false
   if name is ""
     applyPopover(jQuery("#task_name"),"bottomMiddle","topLeft","Enter a name for the task")
