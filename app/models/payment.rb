@@ -151,7 +151,7 @@ class Payment < ActiveRecord::Base
   end
 
   def notify_client current_user
-    PaymentMailer.payment_notification_email(current_user, self).deliver if self.send_payment_notification
+    PaymentMailer.delay.payment_notification_email(current_user, self) if self.send_payment_notification
   end
 
   def self.payments_history(client)
