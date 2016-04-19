@@ -25,7 +25,8 @@ module V1
 
       desc 'Return users logs'
       get do
-        @logs= Log.all
+        @logs = Log.all
+        @logs = filter_by_company(@logs)
       end
 
       desc 'Fetch single log'
@@ -45,20 +46,23 @@ module V1
           requires :hours, type: String
           requires :date, type: String
           optional :notes, type: String
+          optional :company_id, type: Integer
         end
       end
       post do
+        params[:log][:company_id] = get_company_id
         Services::Apis::LogApiService.create(params)
       end
 
       desc 'Update Log'
       params do
         requires :log, type: Hash do
-          optional :project_id, type: String
-          optional :task_id, type: String
+          optional :project_id, type: Integer
+          optional :task_id, type: Integer
           optional :hours, type: String
           optional :notes, type: String
           optional :date, type: String
+          optional :company_id, type: Integer
           optional :created_at, type: String
           optional :updated_at, type: String
           optional :archive_number, type: String

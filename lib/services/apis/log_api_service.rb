@@ -41,6 +41,7 @@ module Services
             :hours,
             :notes,
             :date,
+            :company_id,
             :created_at,
             :updated_at,
             :archive_number,

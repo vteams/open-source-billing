@@ -54,10 +54,11 @@ module V1
           optional :deleted_at, type: String
           optional :tax_1, type: String
           optional :tax_2, type: String
-          requires :company_id, type: Integer
+          optional :company_id, type: Integer
         end
       end
       post do
+        params[:log][:company_id] = get_company_id
         Services::Apis::ExpenseApiService.create(params)
       end
 
@@ -81,7 +82,6 @@ module V1
       end
 
       patch ':id' do
-        binding.pry
         Services::Apis::ExpenseApiService.update(params)
       end
 

@@ -60,11 +60,12 @@ module V1
           optional :created_at, type: String
           optional :updated_at, type: String
           optional :discount_type, type: String
-          requires :company_id, type: Integer
+          optional :company_id, type: Integer
         end
       end
 
       post do
+        params[:log][:company_id] = get_company_id
         Services::Apis::EstimateApiService.create(params)
       end
 
