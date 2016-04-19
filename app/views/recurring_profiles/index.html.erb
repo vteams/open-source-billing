@@ -20,7 +20,7 @@
       <div class="content_middle">
         <div class="grid_control">
           <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
+            <ul value='<%= "Recurring Profile" %>' id="bulk_actions">
               <%= render "bulk_actions" %>
             </ul>
           </div>
@@ -59,7 +59,7 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("views.invoices.recurring.heading"))),
+        <%= link_to (content_tag(:span, t("views.invoices.recurring.new"))),
                     new_recurring_profile_path,
                     :class => 'btn_large' %>
       </div>
