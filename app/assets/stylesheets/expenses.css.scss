@@ -22,7 +22,8 @@
 .expense .grid_table table col.one {
   width: 33px;
 }
-
+.expense .grid_table table { table-layout:  auto;}
 .expense .grid_table table col.eight {
   width: 70px;
 }
+
