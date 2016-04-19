@@ -6,7 +6,7 @@ class LogsController < ApplicationController
 
   def index
     @date = params[:date] || Date.today
-    @logs = Log.where(date: @date).order(:created_at).page(params[:page]).per(10)
+    @logs = get_logs
     @log = Log.new
     @tasks = []
     respond_to do |format|
@@ -33,8 +33,10 @@ class LogsController < ApplicationController
   def create
     unless params[:form_for_week]   #creating log for single day
       @log = Log.new(log_params)
+      @log.company_id = get_company_id()
       if @log.save
         @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+        @logs = filter_by_company(@logs)
         respond_to do |format|
           format.html
           format.js
@@ -45,10 +47,11 @@ class LogsController < ApplicationController
     else #creating bulk log for 1 week
       params[:time].each do |index,value|
         unless value == ''
-          Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, notes: nil, date: params[:day][index])
+          Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, company_id: get_company_id(), notes: nil, date: params[:day][index])
         end
       end
       @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:day]['1']), Date.parse(params[:day]['7']) ).order(:created_at).page(params[:page]).per(10)
+      @logs = filter_by_company(@logs)
         respond_to do |format|
           format.html # index.html.erb
           format.js
@@ -60,7 +63,7 @@ class LogsController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @log.update(log_params)
-      @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+      @logs = get_logs(@log.date)
       @view = params[:view]
       @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'; @date=@log.date
       @log = Log.new
@@ -74,7 +77,7 @@ class LogsController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @log.destroy
-    @logs = Log.where(date: @log.date).order(:created_at).page(params[:page]).per(10)
+    @logs = get_logs(@log.date)
     respond_to do |format|
       format.html
       format.js
@@ -82,7 +85,8 @@ class LogsController < ApplicationController
   end
 
   def events
-    @logs = Log.all.group(:date).sum(:hours)
+    @logs = Log.all
+    @logs = filter_by_company(@logs).group(:date).sum(:hours)
 
     respond_to do |format|
       format.json
@@ -95,9 +99,10 @@ class LogsController < ApplicationController
     if @view == 'basicWeek'
       @form_type = 'form_week'
       @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
+      @logs = filter_by_company(@logs)
     else
       @form_type = 'form'
-      @logs = Log.where(date: Date.today).order(:created_at).page(params[:page]).per(10)
+      @logs = get_logs(Date.today)
     end
     respond_to do |format|
       format.js
@@ -135,12 +140,12 @@ class LogsController < ApplicationController
   def create_invoice
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
-    @invoice.company_id = get_company_id()
+    @invoice.company_id = get_company_id
     respond_to do |format|
       if @invoice.save
         Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        redirect_to(invoice_url(@invoice), :notice => "Invoice successfully created")
+        redirect_to(invoice_url(@invoice), :notice => 'Invoice successfully created')
         return
       else
         format.html { render :action => 'invoice_form' }
@@ -159,9 +164,10 @@ class LogsController < ApplicationController
     params.require(:log).permit(:project_id, :task_id, :hours, :notes, :date, :form_for_week)
   end
 
-  def load_logs(log_date)
-    date = log_date.to_datetime
-    Log.where('date BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
+  def get_logs(date=nil)
+
+    @logs = Log.where(date: date || @date).order(:created_at).page(params[:page]).per(10)
+    @logs = filter_by_company(@logs)
   end
 
   def invoice_params

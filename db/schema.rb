@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406104106) do
+ActiveRecord::Schema.define(version: 20160419114923) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -336,6 +336,7 @@ ActiveRecord::Schema.define(version: 20160406104106) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
 
   create_table "oauth_access_grants", force: true do |t|
@@ -519,6 +520,7 @@ ActiveRecord::Schema.define(version: 20160406104106) do
     t.time     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
 
   create_table "tasks", force: true do |t|
