@@ -66,6 +66,17 @@ module Osb
     # config.middleware.use "PDFKit::Middleware", :print_media_type => true
     ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
 
+    config.to_prepare do
+      # Only Applications list
+      Doorkeeper::ApplicationsController.layout "doorkeeper"
+
+      # Only Authorization endpoint
+      Doorkeeper::AuthorizationsController.layout "doorkeeper"
+
+      # Only Authorized Applications
+      Doorkeeper::AuthorizedApplicationsController.layout "doorkeeper"
+    end
+
   end
 
 end
