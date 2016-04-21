@@ -3,7 +3,7 @@ class CreateProjectTasks < ActiveRecord::Migration
     create_table :project_tasks do |t|
       t.string :name
       t.text :description
-      t.decimal :rate
+      t.float :rate
       t.string :archive_number
       t.datetime :archived_at
       t.integer :project_id

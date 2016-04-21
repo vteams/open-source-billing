@@ -23,6 +23,8 @@ class CreateInvoices < ActiveRecord::Migration
       t.string   "last_invoice_status"
       t.string   "discount_type"
       t.integer  "company_id"
+      t.integer  "project_id"
+      t.string   "invoice_type"
     end
   end
 end

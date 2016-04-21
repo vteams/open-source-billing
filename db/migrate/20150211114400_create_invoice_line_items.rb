@@ -15,6 +15,7 @@ class CreateInvoiceLineItems < ActiveRecord::Migration
       t.datetime "created_at",                                              null: false
       t.datetime "updated_at",                                              null: false
       t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+      t.integer "estimate_id"
     end
   end
 end

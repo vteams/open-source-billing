@@ -20,6 +20,9 @@ class CreateEstimates < ActiveRecord::Migration
       t.datetime "updated_at",                                   null: false
       t.string   "discount_type"
       t.integer  "company_id"
+      t.integer  "created_by"
+      t.integer  "updated_by"
+      t.integer  "currency_id"
     end
   end
 end

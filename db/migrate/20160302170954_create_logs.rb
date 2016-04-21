@@ -6,6 +6,7 @@ class CreateLogs < ActiveRecord::Migration
       t.float :hours
       t.string :notes
       t.date :date
+      t.integer :company_id
 
       t.timestamps
     end

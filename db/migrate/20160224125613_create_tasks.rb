@@ -4,10 +4,13 @@ class CreateTasks < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.boolean :billable
-      t.decimal :rate
+      t.float :rate
       t.string   :archive_number
       t.datetime :archived_at
       t.time     :deleted_at
+      t.integer  :updated_by
+      t.integer  :created_by
+      t.integer  :project_id
 
       t.timestamps
     end
