@@ -1356,3 +1356,16 @@ input[type="color"]:focus, .uneditable-input:focus{
 .estimate .grid_table table{
   table-layout: auto;
 }
+
+/* Doorkeeper Views*/
+.oauth_applications_btn{float: right}
+.doorkeeper_index{
+  .content_middle{width: 75%;  margin: auto;  float: none;}
+  .btn_submit{width:380px; float: left}
+  .form_submit, form input {width:150px; float: left;height: 38px !important; text-decoration: none}
+  form a, form a:hover {text-decoration: none; }
+  form input{padding-bottom: 5px}
+
+textarea + .field_description {
+  padding: 0px !important;
+}

@@ -5,4 +5,8 @@ class Log < ActiveRecord::Base
 
   validates :project_id,:task_id,:date , presence: true
 
+  def line_total
+    (hours * task.rate).round(2)
+  end
+
 end

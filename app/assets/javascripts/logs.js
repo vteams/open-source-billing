@@ -37,6 +37,12 @@ $(document).ready(function() {
         return hidePopover(jQuery("#log_hours"));
     });
 
+    jQuery("#log_notes").live('keypress',function(e) {
+        var tval = $('textarea').val(), tlength = tval.length, max = 400, remain = parseInt(max - tlength);
+        $('.text-limit').text(remain + "  characters remaining" );
+    });
+
+
     jQuery('.generate_invoice_btn').live("click", function (){
         project_id = jQuery("#project_id").val();
         flag = true;
@@ -110,5 +116,7 @@ $(document).ready(function() {
             }
         });
     });
+
+
 
 });

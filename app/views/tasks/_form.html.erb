@@ -34,7 +34,7 @@
 
               <div class="field_row rate_div">
                 <div class="label_field left single"><span><%= t('views.tasks.rate') %></span></div>
-                <div class="small_field"><%= f.number_field :rate, min: 0 %></div>
+                <div class="small_field"><%= f.number_field :rate, min: 0, step: "any" %></div>
               </div>
 
               <div class="options_row clients">

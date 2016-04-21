@@ -24,7 +24,7 @@
   <div class="content_bottom top">
     <% if @invoice.status != "paid" %>
         <!--showing 2 payment options buttons -->
-      <%= link_to t('pay_by_paypal'), @invoice.paypal_url("http://#{request.host_with_port}/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "http://#{request.host_with_port}/invoices/paypal_payments"), :class => "btn_large big" %>
+      <%= link_to t('pay_by_paypal'), @invoice.paypal_url("http://#{request.host_with_port}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "http://#{request.host_with_port}/en/invoices/paypal_payments"), :class => "btn_large big" %>
       <%= link_to t("pay_by_credit_card"), "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
     <% else %>
       <div></div>
