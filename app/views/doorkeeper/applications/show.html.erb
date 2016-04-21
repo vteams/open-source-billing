@@ -1,0 +1,63 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>
+      Application: <%= @application.name %>
+    </h1>
+  </div>
+
+</div>
+
+
+<div class="row doorkeeper_index">
+  <div class="col-md-8">
+        <div class="content_middle">
+              <div class="fields_content_data">
+                <div class="field_row">
+                  <div class="label_field left single">Application Id:</div>
+                  <div class="medium_field">
+                    <p><code id="application_id"><%= @application.uid %></code></p>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field left single">Secret::</div>
+                  <div class="medium_field">
+                    <p><code id="secret"><%= @application.secret %></code></p>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field left single">Callback urls:</div>
+                </div>
+                <!--field_row-->
+
+                <table class="table table_listing">
+                  <% @application.redirect_uri.split.each do |uri| %>
+                    <tr>
+                      <td>
+                        <code><%= uri %></code>
+                      </td>
+                      <td>
+                        <%= link_to 'Authorize', oauth_authorization_path(client_id: @application.uid, redirect_uri: uri, response_type: 'code'), class: 'btn btn-success', target: '_blank' %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+            </div>
+
+          <div class="content_bottom">
+            <div class="btn_submit">
+              <%= link_to 'Edit', edit_oauth_application_path(@application), class: 'btn_large' %>
+              <%= link_to t("views.common.cancel"), oauth_applications_path, :class => 'btn_large grey' %>
+            </div>
+            <div class=" form_submit">
+              <%= render 'delete_form', application: @application, submit_btn_css: 'btn_large grey' %>
+            </div>
+          </div>
+        </div>
+
+
+  </div>
+</div>

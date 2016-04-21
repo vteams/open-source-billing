@@ -1,0 +1,50 @@
+<%= form_for [:oauth, application], html: {class: 'form-horizontal', role: 'form'} do |f| %>
+<div class="content_middle form">
+    <div class="fields_content">
+        <div class="fields_content_container">
+        <% if application.errors.any? %>
+        <div class="alert alert-danger" data-alert><p>Whoops! Check your form for possible errors</p></div>
+        <% end %>
+        <div class="fields_content_data">
+          <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:name].present?}" do %>
+            <div class="field_row">
+                <div class="label_field left single"><%= f.label :name, for: 'application_name' %></div>
+                <div class="medium_field">
+                    <%= f.text_field :name, class: 'form-control' %>
+                    <%= doorkeeper_errors_for application, :name %>
+                </div>
+            </div>
+          <% end %>
+          <%= content_tag :div, class: "form-group#{' has-error' if application.errors[:redirect_uri].present?}" do %>
+            <div class="field_row">
+              <div class="label_field left single"><%= f.label :redirect_uri, for: 'application_redirect_uri' %> </div>
+              <div class="medium_field">
+                <%= f.text_area :redirect_uri, class: 'form-control' %>
+                <%= doorkeeper_errors_for application, :redirect_uri %>
+                <span class="help-block">
+                 Use one line per URI
+                </span>
+                <% if Doorkeeper.configuration.native_redirect_uri %>
+                  <span class="help-block">
+                    Use <code><%= Doorkeeper.configuration.native_redirect_uri %></code> for local tests
+                  </span>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-sm-10">
+
+            </div>
+            <% end %>
+
+
+          <div class="content_bottom">
+            <%= f.submit :class => "btn_large submit" %>
+            <%= link_to t("views.common.cancel"), oauth_applications_path, :class => 'btn_large grey' %>
+          </div>
+
+<% end %>
+            </div>
+
+        </div>
+    </div>
+</div>
