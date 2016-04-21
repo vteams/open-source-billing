@@ -255,8 +255,7 @@ class Invoice < ActiveRecord::Base
 
   def paypal_url(return_url, notify_url)
     values = {
-        #:business => 'osb_personal@osb.com',
-        :business => 'onlyforarif-facilitator@gmail.com',
+        :business => OSB::CONFIG::PAYPAL_BUSINESS,
         :cmd => '_xclick',
         :upload => 1,
         :return => return_url,
