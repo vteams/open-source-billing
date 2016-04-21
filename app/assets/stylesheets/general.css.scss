@@ -1353,6 +1353,6 @@ input[type="color"]:focus, .uneditable-input:focus{
   }
 }
 
-.estimate .grid_table table{
-  table-layout: auto;
+textarea + .field_description {
+  padding: 0px !important;
 }

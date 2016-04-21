@@ -85,6 +85,13 @@
 
 jQuery(function () {
 
+    $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
+        var tval = $('textarea').val(), tlength = tval.length, max = 400,
+        remain = parseInt(max - tlength);
+       $('.text-limit').text(remain + "  characters remaining" );
+    });
+
+
     //override default behavior of inserting new subforms into form
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
         if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1 || document.location.pathname.search(/\/estimates\//) != -1) {

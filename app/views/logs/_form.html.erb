@@ -45,7 +45,11 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.logs.notes') %></div>
               <div class="small_field">
-                <%= f.text_area :notes  %>
+                <%= f.text_area :notes,  maxlength: 400  %>
+                <ul class="field_description">
+                  <li class="text-limit">
+                  </li>
+                </ul>
               </div>
             </div>
             <!--field_row-->
