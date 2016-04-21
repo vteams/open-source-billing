@@ -2,7 +2,6 @@ require File.expand_path('../boot', __FILE__)
 
 require 'csv'
 require 'rails/all'
-require File.expand_path('../initializers/config', __FILE__)
 
 
 if defined?(Bundler)
@@ -64,7 +63,6 @@ module Osb
     config.autoload_paths += %W(#{config.root}/lib)
     # require 'pdfkit'
     # config.middleware.use "PDFKit::Middleware", :print_media_type => true
-    ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
 
     config.to_prepare do
       # Only Applications list

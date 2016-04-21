@@ -22,8 +22,6 @@ Osb::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
-  config.action_mailer.smtp_settings = OSB::CONFIG::SMTP_SETTINGS_PROD
-
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

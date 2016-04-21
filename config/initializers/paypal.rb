@@ -1,3 +1,5 @@
+ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
+
 module OSB
   module Paypal
     URL = OSB::CONFIG::PAYPAL_URL
