@@ -143,6 +143,7 @@ Osb::Application.routes.draw do
         get 'enter_single_payment'
         get 'send_invoice'
         post 'paypal_payments'
+        get  'paypal_payments'
         post 'preview'
         get 'preview'
         get 'credit_card_info'

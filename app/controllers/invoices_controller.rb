@@ -21,7 +21,7 @@
 class InvoicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice]
   before_filter :set_per_page_session
-  protect_from_forgery :except => [:paypal_payments]
+  protect_from_forgery :except => [:preview, :paypal_payments]
   helper_method :sort_column, :sort_direction
   include DateFormats
 
@@ -73,16 +73,7 @@ class InvoicesController < ApplicationController
   end
 
   def preview
-    if request.post? and params["payment_status"].eql?("Completed")
-      invoice_id = OSB::Util::decrypt(params[:inv_id]).to_i rescue invoice_id = nil
-      @invoice = Invoice.find_by_id(invoice_id)
-      if !invoice_id.blank?
-        @invoice.payments.create(client_id: @invoice.client_id, payment_amount: params["payment_gross"].to_f, payment_method: "Paypal", payment_date: params["payment_date"].to_time.to_date, company_id: @invoice.company_id)
-        @invoice.paid!
-      end
-    else
-      @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
-    end
+    @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
     render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
   end
 
