@@ -92,6 +92,10 @@ class Invoice < ActiveRecord::Base
     update_attributes(last_invoice_status: status, status: 'draft-partial')
   end
 
+  def paid!
+    update_attributes(last_invoice_status: status, status: 'paid')
+  end
+
   def partial!
     update_attributes(last_invoice_status: status, status: 'partial')
   end
