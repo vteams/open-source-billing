@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Source Billing</title>
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= include_gon %>
+</head>
+<body currency-unit="<%= t("currency_unit") %>">
+<div class="main_container">
+  <div class="white_container">
+
+    <div class="primary_header">
+      <div class="logo">
+        <%= link_to image_tag("logo.png", :size => "218x30"), get_url %>
+      </div>
+      <div class="primary_menu">
+
+        <div class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.user_name || current_user.email %>
+            <b class="caret"></b></a>
+          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <div class="top_arrow"><%=image_tag "dd_top.png" %></div>
+            <ul>
+              <li><%= link_to "Edit Profile", new_account_path, tabindex: "-1" %></li>
+              <li><%= link_to "Change password", edit_user_registration_path, tabindex: "-1" %></li>
+              <li><%= link_to "Logout", destroy_user_session_path, :method => :delete, tabindex: "-1" %></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dropdown_sep"></div>
+
+        <div class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span id="current_selected_company"><%= get_company_name %></span>
+            <b class="caret"></b>
+          </a>
+          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <div class="top_arrow"><%= image_tag "dd_top.png" %></div>
+            <%= filter_by_companies() %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--header-->
+
+    <!-- CONTENT AREA START-->
+    <div class="content <%= controller.controller_name %>-main">
+      <div class="content_container">
+        <div class="alert alert-success" style="display:<%= notice.blank? ? 'none' : 'block' %>">
+          <button type="button" class="close">&times;</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span><%= notice %></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-error" style="display:<%= alert.blank? ? 'none' : 'block' %>">
+          <button type="button" class="close">&times;</button>
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <span><%= alert %></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <%= yield %>
+      </div>
+    </div>
+    <!--content-->
+
+    <div class="footer_primary">
+      <div class="footer_container">
+        <div class="footer_content">
+          <ul>
+            <li class="copy_right">Copyright © 2013 by <a href="http://vteams.com/">vteams</a>. All rights reserved.</li>
+            <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
+            <li class="contact_us"><a href="mailto:teena@vteams.com">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--footer_primary-->
+  </div>
+  <!--white_container-->
+</div>
+<!--main_container-->
+<div id="progress_indicator" style="display: none;"></div>
+</body>
+</html>
+
