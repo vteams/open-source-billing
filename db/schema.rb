@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419114923) do
+ActiveRecord::Schema.define(version: 20160421101059) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -333,7 +333,7 @@ ActiveRecord::Schema.define(version: 20160419114923) do
     t.integer  "task_id"
     t.float    "hours",      limit: 24
     t.string   "notes"
-    t.date     "date"
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -409,7 +409,7 @@ ActiveRecord::Schema.define(version: 20160419114923) do
   create_table "project_tasks", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.decimal  "rate",           precision: 10, scale: 0
+    t.float    "rate",           limit: 24
     t.string   "archive_number"
     t.datetime "archived_at"
     t.integer  "project_id"
@@ -512,7 +512,7 @@ ActiveRecord::Schema.define(version: 20160419114923) do
   create_table "staffs", force: true do |t|
     t.string   "email"
     t.string   "name"
-    t.decimal  "rate",           precision: 10, scale: 0
+    t.float    "rate",           limit: 24
     t.integer  "created_by"
     t.integer  "updated_by"
     t.string   "archive_number"
@@ -520,14 +520,13 @@ ActiveRecord::Schema.define(version: 20160419114923) do
     t.time     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "company_id"
   end
 
   create_table "tasks", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.boolean  "billable"
-    t.decimal  "rate",           precision: 10, scale: 0
+    t.float    "rate",           limit: 24
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
@@ -551,7 +550,7 @@ ActiveRecord::Schema.define(version: 20160419114923) do
   create_table "team_members", force: true do |t|
     t.string   "email"
     t.string   "name"
-    t.decimal  "rate",           precision: 10, scale: 0
+    t.float    "rate",           limit: 24
     t.string   "archive_number"
     t.datetime "archived_at"
     t.integer  "project_id"

@@ -196,7 +196,11 @@
       <div class="field_row textarea">
         <div class="label_field textarea"><%= f.label :notes %></div>
         <div class="large_field">
-          <%= f.text_area :notes %>
+          <%= f.text_area :notes, maxlength: 400 %>
+          <ul class="field_description">
+            <li class="text-limit">
+            </li>
+          </ul>
         </div>
       </div>
       <!--field_row-->

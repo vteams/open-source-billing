@@ -1,6 +1,8 @@
 .estimate {
 
   .grid_table table {
+    table-layout: auto;
+
     col.one {
       /*check box*/
       width: 33px;

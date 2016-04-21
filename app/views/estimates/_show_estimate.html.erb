@@ -22,7 +22,7 @@
 
                 <p><%= @estimate.company.street_address_2 %></p>
 
-                <p><%= "#{@estimate.company.city}, #{@estimate.company.province_or_state } #{@estimate.company.postal_or_zipcode}" if @estimate.company.city %></p>
+                <p><%= [@estimate.company.city, "#{@estimate.company.province_or_state } #{@estimate.company.postal_or_zipcode}"].reject(&:blank?).join(", ") %></p>
 
                 <p><%= @estimate.company.country %></p>
               </div>
@@ -54,7 +54,7 @@
 
                     <p><%= @client.address_street2 %></p>
 
-                    <p><%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %></p>
+                    <p><%= [@client.city, "#{@client.province_state } #{@client.postal_zip_code}"].reject(&:blank?).join(",") %></p>
 
                     <p><%= @client.country %></p>
                   </div>
