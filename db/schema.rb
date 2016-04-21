@@ -520,7 +520,6 @@ ActiveRecord::Schema.define(version: 20160419114923) do
     t.time     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "company_id"
   end
 
   create_table "tasks", force: true do |t|

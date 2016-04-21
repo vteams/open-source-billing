@@ -9,7 +9,7 @@ module OSB
     PAYPAL_SIGNATURE ||= 'AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ'
 
 # they will be used to send url in emails and mailer default options
-    APP_HOST ||= 'localhost:3000' # e.g. osb.mydomain.com
+    APP_HOST ||= 'st.opensourcebilling.vteamslabs.com' # e.g. osb.mydomain.com
     APP_PROTOCOL ||= :http
 
 # wkhtmltopdf path
