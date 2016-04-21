@@ -1365,7 +1365,9 @@ input[type="color"]:focus, .uneditable-input:focus{
   .form_submit, form input {width:150px; float: left;height: 38px !important; text-decoration: none}
   form a, form a:hover {text-decoration: none; }
   form input{padding-bottom: 5px}
+  .tbl_uri_listing{ width: 80%; float:right}
 }
+.dev_logo{clear: both; color: grey; font-family: 'Dosis Medium',sans-serif; font-size: 22px; margin-left: 79px; margin-top: -1px;}
 
 textarea + .field_description {
   padding: 0px !important;
