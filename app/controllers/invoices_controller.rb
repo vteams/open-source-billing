@@ -73,7 +73,16 @@ class InvoicesController < ApplicationController
   end
 
   def preview
-    @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
+    if request.post? and params["payment_status"].eql?("Completed")
+      invoice_id = OSB::Util::decrypt(params[:inv_id]).to_i rescue invoice_id = nil
+      @invoice = Invoice.find_by_id(invoice_id)
+      if !invoice_id.blank?
+        @invoice.payments.create(client_id: @invoice.client_id, payment_amount: params["payment_gross"].to_f, payment_method: "Paypal", payment_date: params["payment_date"].to_time.to_date, company_id: @invoice.company_id)
+        @invoice.paid!
+      end
+    else
+      @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
+    end
     render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
   end
 
