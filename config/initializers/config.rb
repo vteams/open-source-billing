@@ -7,6 +7,7 @@ module OSB
     PAYPAL_LOGIN ||= 'umair.munir-facilitator_api1.nxb.com.pk'
     PAYPAL_PASSWORD ||= 'QR3FZ5MS69454MER'
     PAYPAL_SIGNATURE ||= 'AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ'
+    PAYPAL_BUSINESS ||= 'onlyforarif-facilitator@gmail.com'
 
 # they will be used to send url in emails and mailer default options
     APP_HOST ||= 'st.opensourcebilling.vteamslabs.com' # e.g. osb.mydomain.com
