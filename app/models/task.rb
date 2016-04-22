@@ -41,4 +41,30 @@ class Task < ActiveRecord::Base
     company.present? ? company.tasks.where(:name => task_name).present? : where(:name => task_name).present?
   end
 
+
+  def self.get_tasks(params)
+    account = params[:user].current_account
+
+    # get the tasks associated with companies
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company_tasks = Company.find(company_id).tasks.send(params[:status])
+
+    # get the unique tasks associated with companies and accounts
+    tasks = (account.tasks.send(params[:status]) + company_tasks).uniq
+
+    # sort tasks in ascending or descending order
+    tasks.sort! do |a, b|
+      b, a = a, b if params[:sort_direction] == 'desc'
+
+      if a.send(params[:sort_column]).class.to_s == 'BigDecimal' and b.send(params[:sort_column]).class.to_s == 'BigDecimal'
+        a.send(params[:sort_column]).to_i <=> b.send(params[:sort_column]).to_i
+      else
+        a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
+      end
+    end if params[:sort_column] && params[:sort_direction]
+
+    Kaminari.paginate_array(tasks).page(params[:page]).per(params[:per])
+
+  end
+
 end
