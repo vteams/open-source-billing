@@ -3,7 +3,7 @@ class CreateTeamMembers < ActiveRecord::Migration
     create_table :team_members do |t|
       t.string :email
       t.string :name
-      t.decimal :rate
+      t.float :rate
       t.string :archive_number
       t.datetime :archived_at
       t.integer :project_id

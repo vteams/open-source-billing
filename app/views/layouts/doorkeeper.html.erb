@@ -14,7 +14,7 @@
 
     <div class="primary_header">
       <div class="logo">
-        <%= link_to image_tag("logo.png", :size => "218x30"), get_url %>
+        <%= link_to image_tag("logo.png", :size => "218x30"), oauth_applications_path %>
       </div>
       <div class="primary_menu">
 
@@ -31,20 +31,8 @@
           </div>
         </div>
 
-        <div class="dropdown_sep"></div>
-
-        <div class="dropdown">
-          <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <span id="current_selected_company"><%= get_company_name %></span>
-            <b class="caret"></b>
-          </a>
-          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-            <div class="top_arrow"><%= image_tag "dd_top.png" %></div>
-            <%= filter_by_companies() %>
-          </div>
-        </div>
-
       </div>
+      <p class="dev_logo">Developer</p>
     </div>
     <!--header-->
 

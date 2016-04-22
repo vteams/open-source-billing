@@ -3,7 +3,7 @@ class CreateStaffs < ActiveRecord::Migration
     create_table :staffs do |t|
       t.string :email
       t.string :name
-      t.decimal :rate
+      t.float :rate
       t.integer :created_by
       t.integer :updated_by
       t.string   :archive_number

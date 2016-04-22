@@ -1,42 +1,23 @@
-# Paypal related configurations
 module OSB
   module CONFIG
 
-    ACTIVEMERCHANT_BILLING_MODE ||= :test
-    PAYPAL_URL ||= 'https://www.sandbox.paypal.com/cgi-bin/webscr?'
-    PAYPAL_LOGIN ||= 'umair.munir-facilitator_api1.nxb.com.pk'
-    PAYPAL_PASSWORD ||= 'QR3FZ5MS69454MER'
-    PAYPAL_SIGNATURE ||= 'AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ'
-    PAYPAL_BUSINESS ||= 'onlyforarif-facilitator@gmail.com'
+    APP_CONFIG = HashWithIndifferentAccess.new(YAML.load_file(Rails.root.join('config','config.yml'))[Rails.env])
+    APP_HOST ||= APP_CONFIG[:app_host]
+    APP_PROTOCOL ||= APP_CONFIG[:app_protocol]
+    ACTIVEMERCHANT_BILLING_MODE ||= APP_CONFIG[:activemerchant_billing_mode]
 
-# they will be used to send url in emails and mailer default options
-    APP_HOST ||= 'st.opensourcebilling.vteamslabs.com' # e.g. osb.mydomain.com
-    APP_PROTOCOL ||= :http
+    PAYPAL ||= APP_CONFIG[:paypal]
+    PAYPAL_URL ||= PAYPAL[:paypal_url]
+    PAYPAL_LOGIN ||= PAYPAL[:paypal_login]
+    PAYPAL_PASSWORD ||= PAYPAL[:paypal_password]
+    PAYPAL_SIGNATURE ||= PAYPAL[:paypal_signature]
+    PAYPAL_BUSINESS ||= PAYPAL[:paypal_business]
 
-# wkhtmltopdf path
-    WKHTMTTOPDF_PATH ||= '/home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf' # the location where wkhtmltopdf is installed
+    WKHTMTTOPDF_PATH ||= APP_CONFIG[:wkhtmltopdf_path]
 
-# SMTP SETTINGS
-# production mode
-    SMTP_SETTINGS_PROD ||= {
-        address: 'smtp.gmail.com',
-        port: 587,
-        authentication: :plain,
-        enable_starttls_auto: true,
-        user_name: 'YOUR_EMAIL_HERE',
-        password: 'YOUR_PASSWORD_HERE'
-    }
+    SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
 
-# development mode
-    SMTP_SETTINGS_DEV ||= {
-        address: 'smtp.gmail.com',
-        port: 587,
-        authentication: :plain,
-        enable_starttls_auto: true,
-        user_name: 'YOUR_EMAIL_HERE',
-        password: 'YOUR_PASSWORD_HERE'
-    }
+    ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
 
-    ENCRYPTION_KEY ||= "ENTER-YOUR-ENCRYPTED-KEY-HERE"
   end
 end

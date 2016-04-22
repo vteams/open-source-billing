@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421101059) do
+ActiveRecord::Schema.define(version: 20160330110032) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -231,14 +231,14 @@ ActiveRecord::Schema.define(version: 20160421101059) do
     t.integer  "category_id"
     t.text     "note"
     t.integer  "client_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
-    t.integer  "tax_1"
-    t.integer  "tax_2"
+    t.float    "tax_1",          limit: 24
+    t.float    "tax_2",          limit: 24
     t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -292,11 +292,11 @@ ActiveRecord::Schema.define(version: 20160421101059) do
     t.string   "last_invoice_status"
     t.string   "discount_type"
     t.integer  "company_id"
+    t.integer  "project_id"
+    t.string   "invoice_type"
     t.integer  "currency_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.integer  "project_id"
-    t.string   "invoice_type"
   end
 
   create_table "items", force: true do |t|
@@ -333,10 +333,10 @@ ActiveRecord::Schema.define(version: 20160421101059) do
     t.integer  "task_id"
     t.float    "hours",      limit: 24
     t.string   "notes"
-    t.datetime "date"
+    t.date     "date"
+    t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "company_id"
   end
 
   create_table "oauth_access_grants", force: true do |t|
@@ -530,11 +530,11 @@ ActiveRecord::Schema.define(version: 20160421101059) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "updated_by"
     t.integer  "created_by"
     t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taxes", force: true do |t|
