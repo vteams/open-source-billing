@@ -1,7 +1,7 @@
 Osb::Application.routes.draw do
 
   mount OsbApi::Engine => "/api"
-  use_doorkeeper
+  use_doorkeeper :scope => 'developer'
 
   #namespace :OpenSourceBilling do
   #  resources :people
@@ -166,7 +166,7 @@ Osb::Application.routes.draw do
     resources :recurring_profile_line_items
 
     resources :sent_emails
-
+    #get 'oauth/applications' => ''
 
     # The priority is based upon order of creation:
     # first created -> highest priority.
