@@ -1,0 +1,44 @@
+development:
+  app_host: localhost:3000 # e.g. osb.mydomain.com
+  app_protocol: http
+
+  activemerchant_billing_mode: test
+
+  paypal:
+    paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    paypal_login: sunny.ciitlahore@yahoo.com
+    paypal_password: word@pass
+    paypal_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ
+    paypal_business: suneel.kumar-facilitator@phaedrasolutions.com
+
+  wkhtmltopdf_path: /home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf
+
+  smtp_setting:
+    address: localhost
+    port: 1025
+
+
+  encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
+
+
+production:
+  app_host: localhost:3000 # e.g. osb.mydomain.com
+  app_protocol: http
+
+  activemerchant_billing_mode: test
+
+  paypal:
+    paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    paypal_login: sunny.ciitlahore@yahoo.com
+    paypal_password: word@pass
+    paypal_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ
+    paypal_business: suneel.kumar-facilitator@phaedrasolutions.com
+
+  wkhtmltopdf_path: /home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf
+
+  smtp_setting:
+    address: localhost
+    port: 1025
+
+
+  encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
