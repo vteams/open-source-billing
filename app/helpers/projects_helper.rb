@@ -105,11 +105,8 @@ module ProjectsHelper
     end
   end
 
-  def load_managers_for_project(company_id)
-    account_level = current_user.current_account.staffs.unscoped
-    id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    staffs = Company.find_by_id(id).staffs.unscoped
-    company_id.blank? ? account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} + staffs.map{|c| [c.name, c.id, {type: 'company_level'}]} : company_id.blank? ? account_level.map{|c| [c.name, c.id, {type: 'account_level'}]} : Company.find_by_id(company_id).staffs.unarchived.map{|c| [c.name, c.id, {type: 'company_level'}]} + account_level.map{|c| [c.name, c.id, {type: 'account_level'}]}
+  def load_managers_for_project(action , company_id, manager)
+    load_staffs_for_project(action , company_id, manager)
   end
 
   def projects_archived ids
