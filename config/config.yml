@@ -5,12 +5,13 @@ development:
   ACTIVEMERCHANT_BILLING_MODE: "test"
 
   PAYPAL:
-    PAYPAL_URL: 'https://www.sandbox.paypal.com/cgi-bin/webscr?'
-    PAYPAL_LOGIN: 'umair.munir-facilitator_api1.nxb.com.pk'
-    PAYPAL_PASSWORD: 'QR3FZ5MS69454MER'
-    PAYPAL_SIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ'
-    PAYPAL_BUSINESS: 'onlyforarif-facilitator@gmail.com'
-  WKHTMTTOPDF_PATH: '/home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf' # the location where wkhtmltopdf is installed
+    PAYPAL_URL: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    PAYPAL_LOGIN: paypallogin@paypal.com
+    PAYPAL_PASSWORD: paypalpassword
+    PAYPAL_SIGNATURE: AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ
+    PAYPAL_BUSINESS: suneel.kumar-facilitator@phaedrasolutions.com
+
+  WKHTMTTOPDF_PATH: /home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf
 
   SMTP_SETTING:
     address: localhost
