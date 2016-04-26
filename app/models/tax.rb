@@ -28,6 +28,7 @@ class Tax < ActiveRecord::Base
   # associations
   has_many :invoice_line_items
   has_many :items
+  has_many :expenses
   validates :name, :presence => true
   validates :percentage, :presence => true
 

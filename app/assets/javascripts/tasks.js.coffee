@@ -30,6 +30,12 @@ jQuery(".task_form .task-submit-btn").live "click", ->
   else
     return false
 
+jQuery('#task_name').live "change", ->
+  return hidePopover(jQuery("#task_name"))
+
+jQuery('.company_checkbox').live "change", ->
+  return hidePopover(jQuery("#company_association"))
+
 applyPopover = (elem,position,corner,message) ->
   elem.qtip
     content:
@@ -48,5 +54,4 @@ applyPopover = (elem,position,corner,message) ->
 
 
 hidePopover = (elem) ->
-  #elem.next(".popover").hide()
   elem.qtip("hide")
