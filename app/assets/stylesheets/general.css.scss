@@ -1368,6 +1368,11 @@ input[type="color"]:focus, .uneditable-input:focus{
   .tbl_uri_listing{ width: 80%; float:right}
 }
 .dev_logo{clear: both; color: grey; font-family: 'Dosis Medium',sans-serif; font-size: 22px; margin-left: 79px; margin-top: -1px;}
+.doorkeeper_main_container{
+  .doorkeeper_nav{
+    background: #00BDE5; margin-top: 20px;
+  }
+}
 
 textarea + .field_description {
   padding: 0px !important;

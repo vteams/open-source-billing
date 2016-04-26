@@ -90,6 +90,8 @@ en:
       tasks:
         new: "New Task"
       help: "Help"
+      applications: "Applications"
+      api_docs: "API Documentation"
 
   views:
     common:
