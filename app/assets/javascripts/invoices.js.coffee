@@ -494,3 +494,7 @@ jQuery ->
       success: () ->
         jQuery('.alert').hide();
         jQuery(".alert.alert-success").show().find("span").html "This note has been sent successfully"
+
+  jQuery(".single-recover-link").live "click", ->
+    $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
+    $(".top_links.recover_deleted").click();

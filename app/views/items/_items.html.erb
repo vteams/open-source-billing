@@ -19,6 +19,9 @@
           <td class="align_center">
             <% if item.deleted_at.nil? %>
                 <%= link_to 'Edit', edit_item_path(item), :class => "edit_action" %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
             <% end %>
           </td>
         </tr>

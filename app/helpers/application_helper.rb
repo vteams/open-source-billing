@@ -147,7 +147,7 @@ module ApplicationHelper
     model = elem.classify.constantize
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
-    if %(clients items).include?(elem)
+    if %(clients items staffs tasks).include?(elem)
       account = params[:user].current_account
       (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).send(params[:status])).size
     else
