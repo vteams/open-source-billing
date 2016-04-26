@@ -24,6 +24,6 @@ module ExpensesHelper
     end
 
     def load_taxes_data
-      Tax.order('name').map { |tax| [tax.name, tax.id, {'data-type' => 'deleted_tax', 'data-tax_1' => tax.percentage/100}] }
+      Tax.order('name').map { |tax| [tax.name, tax.id, {'data-type' => 'deleted_tax', 'data-tax_1' => tax.percentage}] }
     end
 end
