@@ -96,7 +96,7 @@ jQuery ->
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/recurring_profiles/new/#{id}'>To create new recurring profile use the last invoice send to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/recurring_profiles/new/#{id}'>To create new recurring profile use the last invoice sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
