@@ -37,8 +37,11 @@ class Devise::RegistrationsController < DeviseController
     if resource.save
       resource.accounts << account
       if resource.current_account.companies.empty?
-        resource.current_account.companies.create({company_name: params[:user][:account] })
+        company = resource.current_account.companies.create({company_name: params[:user][:account] })
+      else
+        company = resource.current_account.companies.first
       end
+      resource.update(current_company: company.id)
       #update email templates for first user
       CompanyEmailTemplate.update_all(parent_id: resource.id) if User.count == 1
 
