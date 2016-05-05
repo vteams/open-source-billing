@@ -26,7 +26,7 @@
                             edit_invoice_path(invoice) %>
             <% else %>
                 <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
-                            "javascript:;", class: "single-recover-link" %>
+                            "javascript:;", class: "single-recover-link" if params[:status] == "deleted" %>
             <% end %>
           </td>
         </tr>
