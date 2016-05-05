@@ -58,7 +58,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :manager_id, 'Project Manager' %></div>
                   <div class="medium_field">
-                    <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, @project.company_id, f.object.manager_id), selected: f.object.manager_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "staffs_holder", "data-dropdown-width" => "300"} %>
+                    <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, @project.company_id, f.object.manager), selected: f.object.manager_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "staffs_holder", "data-dropdown-width" => "300"} %>
                   </div>
                   <ul class="field_description select" style="display: none;">
                     <li><%= t('views.projects.manager_hint') %></li>
