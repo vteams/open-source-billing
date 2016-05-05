@@ -36,5 +36,6 @@ module V1
     mount V1::OSB::ExpenseApi => '/'
     mount V1::OSB::EstimateApi => '/'
     mount V1::OSB::LogApi => '/'
+    mount V1::OSB::TaskApi => '/'
   end
  end
