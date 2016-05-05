@@ -27,6 +27,9 @@ jQuery ->
     client_email = jQuery("#client_email").val()
     client_fname = jQuery("#client_first_name").val()
     client_lname = jQuery("#client_last_name").val()
+    client_phone = jQuery("#client_business_phone").val()
+    client_mobile = jQuery("#client_mobile_number").val()
+    pattern_phone = /^\d+$/
     if client_email is ""
       applyQtip(jQuery("#client_email"), "Email is required", 'topRight')
       flag = false
@@ -35,6 +38,12 @@ jQuery ->
       flag = false
     else if client_fname is "" and client_lname is ""
       applyQtip(jQuery("#client_first_name"), "First or Last Name is required", 'topRight')
+      flag = false
+    else if client_phone isnt "" and !pattern_phone.test(client_phone)
+      applyQtip(jQuery("#client_business_phone"), "Invalid business phone number", 'topRight')
+      flag = false
+    else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
+      applyQtip(jQuery("#client_mobile_number"), "Invalid mobile number", 'topRight')
       flag = false
 #    else if jQuery("#client_organization_name").val() is ""
       #jQuery("#client_organization_name").val(client_email)
