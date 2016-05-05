@@ -123,8 +123,9 @@ module Services
 
 
     def self.create_invoice_tasks(invoice)
-      invoice.project.logs.collect(&:task).each do |task|
-        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: task.log.hours)
+      invoice.project.logs.each do |log|
+        task = log.task
+        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: log.hours)
       end
     end
 
