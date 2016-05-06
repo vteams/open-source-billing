@@ -8,7 +8,7 @@
       <div id="active_links" class="grid_control_right">
         <div class="grid_control_right">
           <ul>
-            <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal"><%= t('views.commo.dispute') %></a></li>
+            <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal"><%= t('views.common.dispute') %></a></li>
             <li class="grid_control_sep sep_right"><%= link_to "PDF", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %></li>
             <li class="grid_control_sep sep_right">
               <!--<a href="#">Print</a>-->
