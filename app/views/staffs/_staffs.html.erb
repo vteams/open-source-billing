@@ -23,6 +23,9 @@
             <% if staff.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_staff_path(staff) %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
             <% end %>
           </td>
         </tr>

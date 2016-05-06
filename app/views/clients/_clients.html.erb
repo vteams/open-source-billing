@@ -21,6 +21,9 @@
             <% if client.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_client_path(client), :class => 'edit_action' %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
             <% end %>
           </td>
         </tr>

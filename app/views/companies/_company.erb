@@ -23,7 +23,10 @@
           <td class="align_left">
           <% if company.deleted_at.nil? %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_company_path(company), class: "demo-links" %>
-          <% end %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
+            <% end %>
           </td>
         </tr>
     <% end %>

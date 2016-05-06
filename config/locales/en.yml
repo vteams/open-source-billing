@@ -90,6 +90,8 @@ en:
       tasks:
         new: "New Task"
       help: "Help"
+      applications: "Applications"
+      api_docs: "API Documentation"
 
   views:
     common:
@@ -552,6 +554,7 @@ en:
       links:
         edit: "Edit"
         delete: "Delete"
+        recover: "Recover"
       page_entries_info:
         more_pages:
             display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

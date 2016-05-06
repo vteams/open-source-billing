@@ -253,9 +253,17 @@ class Invoice < ActiveRecord::Base
     OSB::Util::encrypt(id)
   end
 
-  def paypal_url(return_url, notify_url)
+  def fetch_paypal_url user
+    OSB::Paypal::URL
+  end
+
+  def paypal_business user
+     OSB::CONFIG::PAYPAL_BUSINESS
+  end
+
+  def paypal_url(return_url, notify_url, user = nil)
     values = {
-        :business => OSB::CONFIG::PAYPAL_BUSINESS,
+        :business => paypal_business(user),
         :cmd => '_xclick',
         :upload => 1,
         :return => return_url,
@@ -264,8 +272,9 @@ class Invoice < ActiveRecord::Base
         :item_name => "Invoice",
         :amount => unpaid_amount
     }
-    OSB::Paypal::URL + values.to_query
+    fetch_paypal_url(user) + values.to_query
   end
+
 
   def update_dispute_invoice(current_user, id, response_to_client, notify = nil)
     self.update_attribute('status', 'sent')

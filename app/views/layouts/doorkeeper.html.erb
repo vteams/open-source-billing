@@ -9,7 +9,7 @@
   <%= include_gon %>
 </head>
 <body currency-unit="<%= t("currency_unit") %>">
-<div class="main_container">
+<div class="main_container doorkeeper_main_container">
   <div class="white_container">
 
     <div class="primary_header">
@@ -35,6 +35,20 @@
       <p class="dev_logo">Developer</p>
     </div>
     <!--header-->
+
+    <div class="navigation">
+      <div class="nav_container">
+        <div id="nav" class="doorkeeper_nav">
+          <ul class="select">
+            <li><%= active_link_to t("header.links.dashboard"), get_url %></li>
+            <li><%= active_link_to t("header.links.applications"), oauth_applications_path %></li>
+            <li><%= active_link_to t("header.links.api_docs"), get_url %></li>
+            <li><%= active_link_to t("header.links.help"), help_index_path %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- NAVIGATION END -->
 
     <!-- CONTENT AREA START-->
     <div class="content <%= controller.controller_name %>-main">

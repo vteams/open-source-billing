@@ -24,6 +24,9 @@
             <% if invoice.deleted_at.nil? and !invoice.invoice_type.eql?("ProjectInvoice") %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_invoice_path(invoice) %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" if params[:status] == "deleted" %>
             <% end %>
           </td>
         </tr>

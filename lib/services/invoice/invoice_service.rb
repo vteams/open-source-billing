@@ -64,7 +64,7 @@ module Services
       invoice = ::Invoice.find_by_id(invoice_id)
       return nil if invoice.blank?
       invoice.disputed!
-      InvoiceMailer.dispute_invoice_email(current_user, invoice, dispute_reason).deliver
+      InvoiceMailer.delay.dispute_invoice_email(current_user, invoice, dispute_reason)
       invoice = ::Invoice.find_by_id(invoice_id)
       invoice
     end
@@ -123,8 +123,9 @@ module Services
 
 
     def self.create_invoice_tasks(invoice)
-      invoice.project.logs.collect(&:task).each do |task|
-        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: task.log.hours)
+      invoice.project.logs.each do |log|
+        task = log.task
+        invoice.invoice_tasks.create(name: task.name, description: task.description, rate: task.rate, hours: log.hours)
       end
     end
 

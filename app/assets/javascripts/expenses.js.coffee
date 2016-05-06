@@ -24,8 +24,8 @@ jQuery ->
     amount2 = jQuery(".amount_div #amount2")
 
     amount = jQuery("#expense_amount").val() || 0
-    amount1_val = (amount*tax1).toFixed(2)
-    amount2_val = (amount*tax2).toFixed(2)
+    amount1_val = (amount*tax1/100).toFixed(2)
+    amount2_val = (amount*tax2/100).toFixed(2)
     amount1.val(amount1_val)
     amount2.val(amount2_val)
 

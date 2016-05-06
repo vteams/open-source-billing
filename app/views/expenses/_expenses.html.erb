@@ -16,8 +16,13 @@
           <td class="align_center text-overflow-class" data-overflow-rows="2"><%=  expense.expense_date %></td>
           <td class="align_right text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.total) %></td>
           <td class="align_center">
+            <% if expense.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_expense_path(expense), :class => 'edit_action' %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
+            <% end %>
           </td>
         </tr>
     <% end %>

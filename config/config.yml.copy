@@ -1,17 +1,17 @@
 development:
-  app_host: localhost:3000 # e.g. osb.mydomain.com
+  app_host: localhost
   app_protocol: http
 
   activemerchant_billing_mode: test
 
   paypal:
     paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-    paypal_login: sunny.ciitlahore@yahoo.com
-    paypal_password: word@pass
-    paypal_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ
-    paypal_business: suneel.kumar-facilitator@phaedrasolutions.com
+    paypal_login: YOUR_PAYPAL_LOGIN
+    paypal_password: YOUR_PAYPAL_PASSWORD
+    paypal_signature: YOUR_PAYPAL_SIGNATURE
+    paypal_business: YOUR_PAYPAL_BUSINESS
 
-  wkhtmltopdf_path: /home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf
+  wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
 
   smtp_setting:
     address: localhost
@@ -29,12 +29,12 @@ production:
 
   paypal:
     paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-    paypal_login: sunny.ciitlahore@yahoo.com
-    paypal_password: word@pass
-    paypal_signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AvdaH-JlMzh6jMIiXfnDp2DVt9sQ
-    paypal_business: suneel.kumar-facilitator@phaedrasolutions.com
+    paypal_login: YOUR_PAYPAL_LOGIN
+    paypal_password: YOUR_PAYPAL_PASSWORD
+    paypal_signature: YOUR_PAYPAL_SIGNATURE
+    paypal_business: YOUR_PAYPAL_BUSINESS
 
-  wkhtmltopdf_path: /home/umair/.rvm/gems/ruby-2.0.0-p598@osb_live/bin/wkhtmltopdf
+  wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
 
   smtp_setting:
     address: localhost
