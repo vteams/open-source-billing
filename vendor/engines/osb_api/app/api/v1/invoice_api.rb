@@ -59,7 +59,6 @@ module V1
 
       get :preview_of_invoices do
         @invoice = Services::InvoiceService.get_invoice_for_preview(params[:invoice_id])
-        #render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
       end
 
       desc 'Return unpaid-invoices'
