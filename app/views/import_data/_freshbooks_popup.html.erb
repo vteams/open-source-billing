@@ -1,0 +1,66 @@
+<div id="freshModal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="freshModalLabel" aria-hidden="true">
+  <div class="model_grey_container">
+    <div class="modal-header">
+      <h1>Import Data from your Freshbooks Account</h1>
+
+      <div class="cross_btn" style="margin:-50px -1px 0 0">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <%= form_for :freshbooks, url: import_freshbooks_data_import_data_path,  :html => {novalidate: "", class: "form-horizontal"} do |f| %>
+          <div class="fields_content">
+            <div class="fields_content_container">
+              <div>
+                <div class="field_row">
+                  <div class="label_field left single"><span> Account URL </span></div>
+                  <div class="large_field">
+                    <%= f.text_field :account_url, :required => "required"  %>
+                  </div>
+                </div>
+                <!--field_row-->
+
+                <div class="field_row">
+                  <div class="label_field left single"><span>  API Token </span></div>
+                  <div class="large_field">
+                    <%= f.text_field :api_token, :required => "required" %>
+                  </div>
+                </div>
+
+                <div class="field_row">
+                  <div>
+                    <span>  Select module to import</span>
+                  </div>
+                  <% ["Invoice", "Client", "Esitmate"].each do |a_value| %>
+                    <div class="checkbox">
+                      <label for="freshbook_data_filter_<%= a_value.downcase %>">
+                        <%= f.check_box(:data_filters, {multiple: true, checked: "checked"}, a_value.downcase, nil) %>
+                        <%= a_value %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+
+              </div>
+            </div>
+
+              <!--field_row-->
+          </div>
+      <% end %>
+    </div>
+
+    <div class="footer ">
+        <%= submit_tag "Submit", :class => "btn_large submit model-submit-btn" %>
+        <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(".model-submit-btn").click(function (){
+      $(this).parents().find("form").submit();
+  })
+</script>

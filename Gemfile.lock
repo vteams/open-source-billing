@@ -180,6 +180,9 @@ GEM
       hashie (>= 3.0)
       rails (~> 4.0)
     hike (1.2.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     ice_nine (0.11.1)
     jbuilder (2.4.0)
@@ -307,6 +310,9 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    ruby-freshbooks (0.4.1)
+      builder (>= 2.1.2)
+      httparty (>= 0.5.0)
     sass (3.4.9)
     sass-rails (5.0.0)
       railties (>= 4.0.0, < 5.0)
@@ -445,6 +451,7 @@ DEPENDENCIES
   rmagick
   rspec-its
   rspec-rails (~> 3.1.0)
+  ruby-freshbooks
   sass-rails
   shoulda (~> 3.5.0)
   shoulda-matchers
@@ -461,3 +468,6 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer
   zapata
+
+BUNDLED WITH
+   1.10.6

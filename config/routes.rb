@@ -238,6 +238,14 @@ Osb::Application.routes.draw do
 
       end
     end
+
+
+    resources :import_data do
+      collection do
+        post 'import_freshbooks_data', as: 'import_freshbooks_data'
+      end
+
+    end
     # The priority is based upon order of creation:
     # first created -> highest priority.
 
