@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509110002) do
+ActiveRecord::Schema.define(version: 20160509124445) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -299,6 +299,8 @@ ActiveRecord::Schema.define(version: 20160509110002) do
     t.integer  "currency_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "items", force: true do |t|
@@ -316,6 +318,8 @@ ActiveRecord::Schema.define(version: 20160509110002) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "line_item_taxes", force: true do |t|
@@ -548,6 +552,8 @@ ActiveRecord::Schema.define(version: 20160509110002) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "team_members", force: true do |t|
