@@ -8,6 +8,7 @@ module Services
 
     def import_data
       return @taxes if @taxes.keys.include?("error")
+      return {"error" => "Sorry! We couldn't find tax in your account", "code" => "404"} if @taxes["taxes"]["tax"].blank?
       @taxes["taxes"]["tax"].each do |tax|
         unless ::Tax.find_by_provider_id(tax["tax_id"])
           osb_tax = ::Tax.new(name: tax["name"], percentage: tax["rate"], created_at: tax["updated"],

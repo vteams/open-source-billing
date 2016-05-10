@@ -9,6 +9,7 @@ module Services
 
     def import_data
       return @clients if @clients.keys.include?("error")
+      return {"error" => "Sorry! We couldn't find client in your account", "code" => 404} if @clients["clients"]["client"].blank?
       @clients["clients"]["client"].each do |client|
         unless ::Client.find_by_email(client["email"])
           osb_client=  ::Client.new(

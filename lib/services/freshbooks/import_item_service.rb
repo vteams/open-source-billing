@@ -8,6 +8,7 @@ module Services
 
     def import_data
       return @items if @items.keys.include?("error")
+      return {"error" => "Sorry! We couldn't find item in your account", "code" => "404"} if @items["items"]["item"].blank?
       @items["items"]["item"].each do |item|
         unless ::Item.find_by_provider_id(item["item_id"])
           osb_item = ::Item.new(  item_name: item["name"], item_description: item["description"],
