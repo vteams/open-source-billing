@@ -33,7 +33,7 @@
                   <div>
                     <span>  Select module to import</span>
                   </div>
-                  <% ["Client", "Item", "Tax","Task"].each do |a_value| %>
+                  <% ["Client", "Item", "Tax","Task", "Category", "Expense"].each do |a_value| %>
                     <div class="checkbox">
                       <label for="freshbooks_data_filters_<%= a_value.downcase %>">
                         <%= f.check_box(:data_filters, {multiple: true, checked: "checked"}, a_value.downcase, nil) %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510082726) do
+ActiveRecord::Schema.define(version: 20160511121932) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -225,6 +225,8 @@ ActiveRecord::Schema.define(version: 20160510082726) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "expenses", force: true do |t|
@@ -236,11 +238,13 @@ ActiveRecord::Schema.define(version: 20160510082726) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
-    t.float    "tax_1",          limit: 24
-    t.float    "tax_2",          limit: 24
+    t.integer  "tax_1"
+    t.integer  "tax_2"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "invoice_line_items", force: true do |t|
