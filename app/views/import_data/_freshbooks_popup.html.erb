@@ -34,7 +34,7 @@
                     <span>  Select module to import</span>
                   </div>
                   <% Services::Freshbook::DATA_MODULES.each do |a_value| %>
-                    <div class="checkbox">
+                    <div class="data-import-module checkbox">
                       <label for="freshbooks_data_filters_<%= a_value.downcase %>">
                         <%= f.check_box(:data_filters, {multiple: true, checked: "checked"}, a_value.downcase, nil) %>
                         <%= a_value %>
