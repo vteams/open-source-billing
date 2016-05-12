@@ -4,8 +4,8 @@ class ImportDataController < ApplicationController
   end
 
   def import_freshbooks_data
-    if params[:freshbooks][:account_url].blank? and  params[:freshbooks][:api_token].blank?
-      redirect_to import_data_path, alert: "Please provide freshbooks account url and api key"
+    if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
+      redirect_to import_data_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else
       options = {}
       freshbooks_client = FreshBooks::Client.new(params[:freshbooks][:account_url], params[:freshbooks][:api_token])
