@@ -13,6 +13,7 @@ module Services
         unless fb_taxes['tax'].blank?
 
           fb_taxes['tax'].each do |tax|
+            tax= fb_taxes['tax'] if fb_taxes.eql?(1)
             unless ::Tax.find_by_provider_id(tax['tax_id'].to_i)
               hash = { name: tax['name'], percentage: tax['rate'], created_at: tax['updated'],
                        updated_at: tax['updated'], provider: 'Freshbooks', provider_id: tax['tax_id'].to_i }

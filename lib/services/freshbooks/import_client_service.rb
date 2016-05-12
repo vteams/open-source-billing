@@ -14,6 +14,7 @@ module Services
         unless fb_clients['client'].blank?
 
           fb_clients['client'].each do |client|
+            client = fb_clients['client'] if total.eql?(1)
             unless ::Client.find_by_email(client['email'])
               hash = { provider: 'Freshbooks', provider_id: client['client_id'].to_i, first_name: client['first_name'],
                        last_name: client['last_name'], email: client['email'], organization_name: client['organization'],

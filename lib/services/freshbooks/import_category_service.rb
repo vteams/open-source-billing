@@ -14,6 +14,7 @@ module Services
         unless fb_categories['category'].blank?
 
           fb_categories['category'].each do |category|
+            category = fb_categories['category'] if total.eql?(1)
             unless ::ExpenseCategory.find_by_provider_id(category['category_id'].to_i)
               hash = { name: category['name'], created_at: category['updated'],
                        updated_at: category['updated'], provider: 'Freshbooks',

@@ -14,6 +14,7 @@ module Services
         page+=1
         if fb_tasks['task'].present?
           fb_tasks['task'].each do |task|
+            task = fb_tasks['task'] if total.eql?(1)
             unless ::Task.find_by_provider_id(task['task_id'].to_i)
               hash = {name: task['name'], description: task['description'],
                       rate: task['rate'], created_at: task['updated'],

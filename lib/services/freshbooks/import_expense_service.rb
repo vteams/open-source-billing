@@ -14,6 +14,7 @@ module Services
         if fb_expenses['expense'].present?
 
           fb_expenses['expense'].each do |expense|
+            expense = fb_expenses['expense'] if total.eql?(1)
             unless ::Expense.find_by_provider_id(expense['expense_id'].to_i)
 
               hash = {provider_id: expense['expense_id'].to_i,  provider: 'Freshbooks', created_at: expense['updated'],

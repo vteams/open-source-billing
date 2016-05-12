@@ -14,6 +14,7 @@ module Services
         unless fb_items['item'].blank?
 
           fb_items['item'].each do |item|
+            item = fb_items['item'] if total.eql?(1)
             unless ::Item.find_by_provider_id(item['item_id'].to_i)
               hash = {  item_name: item['name'], item_description: item['description'],
                         unit_cost: item['unit_cost'], created_at: item['updated'],

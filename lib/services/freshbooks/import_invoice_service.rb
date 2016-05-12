@@ -13,6 +13,7 @@ module Services
         if fb_invoices['invoice'].present?
 
           fb_invoices['invoice'].each do |invoice|
+            invoice = fb_invoices['invoice'] if total.eql?(1)
             unless ::Invoice.find_by_provider_id(invoice['invoice_id'].to_i)
               hash = { provider: 'Freshbooks', provider_id: invoice['invoice_id'].to_i, updated_at: invoice['update'],
                        created_at: invoice['update'],invoice_number: invoice['number'],po_number: invoice['po_number'],
