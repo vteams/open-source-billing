@@ -22,7 +22,7 @@ module Services
                        fax: client['fax'], home_phone: client['home_phone'], mobile_number: client['mobile'],
                        updated_at: client['update'], created_at: client['update'] }
 
-              osb_client=  ::Client.create(hash)
+              osb_client=  ::Client.new(hash)
               osb_client.currency = ::Currency.find_by_unit(client['currency_code'])
               osb_client.save
               options[:company_ids].each do |c_id|
