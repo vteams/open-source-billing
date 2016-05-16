@@ -85,6 +85,12 @@ gem 'osb_api', path: 'vendor/engines/osb_api'
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
 
+gem 'oauth'
+gem 'roxml'
+gem 'nokogiri'
+gem 'quickbooks-ruby'
+
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
