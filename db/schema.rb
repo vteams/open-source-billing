@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516113923) do
+ActiveRecord::Schema.define(version: 20160516122508) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -447,6 +447,8 @@ ActiveRecord::Schema.define(version: 20160516113923) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "recurring_profile_line_items", force: true do |t|
