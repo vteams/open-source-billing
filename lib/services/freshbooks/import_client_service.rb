@@ -24,7 +24,7 @@ module Services
                        updated_at: client['update'], created_at: client['update'] }
 
               osb_client=  ::Client.new(hash)
-              osb_client.currency = ::Currency.find_by_unit(client['currency_code'])
+              osb_client.currency = ::Currency.find_by_unit(client['currency_code']) if client['currency_code'].present?
               osb_client.save
               options[:company_ids].each do |c_id|
                 entities << {entity_id: osb_client.id, entity_type: 'Client', parent_id: c_id, parent_type: 'Company'}

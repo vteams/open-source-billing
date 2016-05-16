@@ -23,8 +23,8 @@ module Services
                       }
 
               osb_invoice=  ::Invoice.new(hash)
-              osb_invoice.currency = ::Currency.find_by_unit(invoice['currency_code'])
-              osb_invoice.client = ::Client.find_by_provider_id(invoice['client_id'])
+              osb_invoice.currency = ::Currency.find_by_unit(invoice['currency_code']) if invoice['currency_code'].present?
+              osb_invoice.client = ::Client.find_by_provider_id(invoice['client_id']) if invoice['client_id'].present?
               osb_invoice.save
               amount = 0
               invoice['lines']['line'].each do |item|

@@ -22,8 +22,8 @@ module Services
                        discount_type: '%', estimate_total: estimate['amount'].to_f }
 
               osb_estimate=  ::Estimate.new(hash)
-              osb_estimate.currency = ::Currency.find_by_unit(estimate['currency_code'])
-              osb_estimate.client = ::Client.find_by_provider_id(estimate['client_id'])
+              osb_estimate.currency = ::Currency.find_by_unit(estimate['currency_code']) if estimate['currency_code'].present?
+              osb_estimate.client = ::Client.find_by_provider_id(estimate['client_id'].to_i) if estimate['client_id'].present?
               osb_estimate.save
               amount = 0
               estimate['lines']['line'].each do |item|

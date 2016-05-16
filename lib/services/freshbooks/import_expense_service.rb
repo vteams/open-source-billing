@@ -23,7 +23,7 @@ module Services
               osb_expense = ::Expense.new (hash)
               osb_expense.tax1 = ::Tax.find_by_provider_and_name('Freshbooks', expense['tax1_name']) if expense['tax1_name'].present?
               osb_expense.tax2 = ::Tax.find_by_provider_and_name('Freshbooks', expense['tax2_name']) if expense['tax2_name'].present?
-              osb_expense.client = ::Client.find_by_provider_id(expense['client_id']) if expense['client_id'].present?
+              osb_expense.client = ::Client.find_by_provider_id(expense['client_id'].to_i) if expense['client_id'].present?
               osb_expense.category = ::ExpenseCategory.find_by_provider_id(expense['category_id'].to_i) if expense['category_id'].present?
               osb_expense.company_id = options[:current_company_id]
               osb_expense.save

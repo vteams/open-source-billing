@@ -9,7 +9,7 @@ module Services
         categories = options[:freshbooks].category.list per_page: per_page, page: page+1
         return categories if categories.keys.include?('error')
         fb_categories = categories['categories']
-        total = fb_categories['categories'].to_i
+        total = fb_categories['total'].to_i
         page+=1
         unless fb_categories['category'].blank?
 
