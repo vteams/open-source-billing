@@ -1,0 +1,26 @@
+<div class="import_data">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1>
+        <%= t('views.import_data.import_data') %>
+      </h1>
+    </div>
+  </div>
+  <div class="content_middle">
+    <div class="grid_control">
+      <div class="grid_control_left">
+        <ul value='import_data'>
+          <li>
+            <a href="javascript:;" data-toggle = "modal" data-target = "#freshModal">
+              <img src="/assets/freshbooks.png" class="img-import" alt="freshbooks">
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%= render partial: 'freshbooks_popup'%>

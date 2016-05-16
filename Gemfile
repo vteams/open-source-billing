@@ -99,3 +99,5 @@ gem 'quickbooks-ruby'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'ruby-freshbooks'

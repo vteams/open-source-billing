@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330110032) do
+ActiveRecord::Schema.define(version: 20160516100615) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.datetime "updated_at",                                              null: false
     t.decimal  "available_credit",  precision: 8, scale: 2, default: 0.0
     t.integer  "currency_id"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "companies", force: true do |t|
@@ -217,12 +219,16 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "currency_id"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "expense_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "expenses", force: true do |t|
@@ -234,11 +240,13 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
-    t.float    "tax_1",          limit: 24
-    t.float    "tax_2",          limit: 24
+    t.integer  "tax_1"
+    t.integer  "tax_2"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -297,6 +305,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "currency_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "items", force: true do |t|
@@ -314,6 +324,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "line_item_taxes", force: true do |t|
@@ -404,6 +416,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "client_id"
     t.integer  "company_id"
     t.string   "status"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "project_tasks", force: true do |t|
@@ -536,6 +550,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "taxes", force: true do |t|
@@ -546,6 +562,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "team_members", force: true do |t|

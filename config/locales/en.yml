@@ -83,6 +83,7 @@ en:
         email_templates: "Email Templates"
         users: "Users"
         basic_settings: "Basic Settings"
+        import_data: "Import Data"
       staffs:
         Staffs: "Staffs"
         listing: "Staffs Listing"
@@ -539,7 +540,9 @@ en:
       add_team: "Add Team Member"
       select_a_member: "Select a Member.."
 
-
+    import_data:
+      import_data: "Import Data"
+      fresh_books: "FreshBooks"
 
   number:
     currency:
