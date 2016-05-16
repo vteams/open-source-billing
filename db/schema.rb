@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516122508) do
+ActiveRecord::Schema.define(version: 20160516130907) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -343,12 +343,14 @@ ActiveRecord::Schema.define(version: 20160516122508) do
   create_table "logs", force: true do |t|
     t.integer  "project_id"
     t.integer  "task_id"
-    t.float    "hours",      limit: 24
+    t.float    "hours",       limit: 24
     t.string   "notes"
     t.date     "date"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "oauth_access_grants", force: true do |t|
