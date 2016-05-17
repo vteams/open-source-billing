@@ -3,7 +3,7 @@ module Services
 
     def import_data(options)
 
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 20
 
       while(per_page* page < total)
         categories = options[:freshbooks].category.list per_page: per_page, page: page+1
@@ -21,11 +21,12 @@ module Services
                        provider_id: category['category_id'].to_i
                      }
               ::ExpenseCategory.create(hash)
+              counter+=1
             end
           end
         end
       end
-      {success: "Category successfully imported"}
+      "Category #{counter} record(s) successfully imported."
     end
 
   end

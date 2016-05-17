@@ -3,7 +3,7 @@ module Services
 
     def import_data(options)
 
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
 
       while(per_page* page < total)
         projects = options[:freshbooks].project.list per_page: per_page, page: page+1
@@ -26,6 +26,7 @@ module Services
               fb_project = ::Project.new(hash)
               fb_project.client =  ::Client.find_by_provider_id(project['client_id'].to_i) if project['client_id'].present?
               fb_project.save
+              counter+=1
               create_project_tasks(fb_project, project['tasks']['task']) if project['tasks'].present?
               create_team_members(fb_project, project['staff']['staff']) if project['staff'].present?
               create_manager(fb_project, project['project_manager_id']) if project['project_manager_id'].present?
@@ -33,7 +34,7 @@ module Services
           end
         end
       end
-      {success: "Project successfully imported"}
+      "Project #{counter} record(s) successfully imported."
     end
 
     def create_project_tasks(project, tasks)

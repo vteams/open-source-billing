@@ -2,7 +2,7 @@ module Services
   class ImportClientService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
       entities = []
 
       while(per_page* page < total)
@@ -26,6 +26,7 @@ module Services
               osb_client=  ::Client.new(hash)
               osb_client.currency = ::Currency.find_by_unit(client['currency_code']) if client['currency_code'].present?
               osb_client.save
+              counter+=1
               options[:company_ids].each do |c_id|
                 entities << {entity_id: osb_client.id, entity_type: 'Client', parent_id: c_id, parent_type: 'Company'}
               end
@@ -35,7 +36,7 @@ module Services
         end
       end
       ::CompanyEntity.create(entities)
-      {success: "Client successfully imported"}
+      "Client #{counter} record(s) successfully imported."
     end
 
   end

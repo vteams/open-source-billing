@@ -17,7 +17,11 @@ class ImportDataController < ApplicationController
       params[:freshbooks][:data_filters].each do |filter|
         data_import_response <<  eval("Services::Import#{filter.humanize}Service").new.import_data(options)
       end
-      redirect_to import_data_path, notice: data_import_response
+      if data_import_response.first.class.eql?(String)
+        redirect_to import_data_path, notice: data_import_response.join('<br>').html_safe
+      else
+        redirect_to import_data_path, alert: data_import_response.first['error']
+      end
     end
 
   end

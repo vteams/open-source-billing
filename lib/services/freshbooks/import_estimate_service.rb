@@ -2,7 +2,7 @@ module Services
   class ImportEstimateService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
 
       while(per_page* page < total)
         estimates = options[:freshbooks].estimate.list per_page: per_page, page: page+1
@@ -25,6 +25,7 @@ module Services
               osb_estimate.currency = ::Currency.find_by_unit(estimate['currency_code']) if estimate['currency_code'].present?
               osb_estimate.client = ::Client.find_by_provider_id(estimate['client_id'].to_i) if estimate['client_id'].present?
               osb_estimate.save
+              counter+=1
               amount = 0
               estimate['lines']['line'].each do |item|
                 if item['name'].present?
@@ -44,7 +45,7 @@ module Services
           end
         end
       end
-      {success: 'Estimate successfully imported'}
+      "Estimate #{counter} record(s) successfully imported."
     end
 
   end

@@ -3,7 +3,7 @@ module Services
 
     def import_data(options)
 
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
 
       while(per_page* page < total)
         time_entries = options[:freshbooks].time_entry.list per_page: per_page, page: page+1
@@ -26,11 +26,12 @@ module Services
               fb_log.project = ::Project.find_by_provider_id(entry['project_id'].to_i) if entry['project_id'].present?
               fb_log.task = ::ProjectTask.joins(:task).where('tasks.provider_id =?', entry['task_id']).last if entry['task_id'].present?
               fb_log.save
+              counter+=1
             end
           end
         end
       end
-      {success: "Time Log successfully imported"}
+      "Timelog #{counter} record(s) successfully imported."
     end
   end
 end

@@ -2,7 +2,7 @@ module Services
   class ImportExpenseService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
       entities = []
 
       while(per_page* page < total)
@@ -27,14 +27,14 @@ module Services
               osb_expense.category = ::ExpenseCategory.find_by_provider_id(expense['category_id'].to_i) if expense['category_id'].present?
               osb_expense.company_id = options[:current_company_id]
               osb_expense.save
-
+              counter+=1
 
             end
           end
         end
       end
       ::CompanyEntity.create(entities)
-      {success: "Expense successfully imported"}
+      "Expense #{counter} record(s) successfully imported."
     end
   end
 end
