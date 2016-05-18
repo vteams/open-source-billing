@@ -2,7 +2,7 @@ module Services
   class ImportTaskService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
       entities = []
 
 
@@ -21,6 +21,7 @@ module Services
                       updated_at: task['updated'], provider: 'Freshbooks',
                       provider_id: task['task_id'].to_i, billable: task['billable']}
               osb_task = ::Task.create(hash)
+              counter+=1
               options[:company_ids].each do |c_id|
                 entities << {entity_id: osb_task.id, entity_type: 'Task', parent_id: c_id, parent_type: 'Company'}
               end
@@ -29,7 +30,7 @@ module Services
         end
       end
       ::CompanyEntity.create(entities)
-      {success: 'Task successfully imported'}
+      "Task #{counter} record(s) successfully imported."
     end
 
   end

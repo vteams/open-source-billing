@@ -2,7 +2,7 @@ module Services
   class ImportInvoiceService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
 
       while(per_page* page < total)
         invoices = options[:freshbooks].invoice.list per_page: per_page, page: page+1
@@ -26,6 +26,7 @@ module Services
               osb_invoice.currency = ::Currency.find_by_unit(invoice['currency_code']) if invoice['currency_code'].present?
               osb_invoice.client = ::Client.find_by_provider_id(invoice['client_id']) if invoice['client_id'].present?
               osb_invoice.save
+              counter+=1
               amount = 0
               invoice['lines']['line'].each do |item|
                 if item['name'].present?
@@ -45,7 +46,7 @@ module Services
           end
         end
       end
-      {success: 'Invoice successfully imported'}
+      "Invoice #{counter} record(s) successfully imported."
     end
 
   end

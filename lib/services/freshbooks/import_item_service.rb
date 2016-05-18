@@ -2,7 +2,7 @@ module Services
   class ImportItemService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
       entities = []
 
       while(per_page* page < total)
@@ -24,6 +24,7 @@ module Services
               osb_item.tax1 = ::Tax.find_by_provider_id(item['tax1_id'].to_i) unless item['tax1_id'].blank?
               osb_item.tax2 = ::Tax.find_by_provider_id(item['tax2_id'].to_i) unless item['tax2_id'].blank?
               osb_item.save
+              counter+=1
               options[:company_ids].each do |c_id|
                 entities << {entity_id: osb_item.id, entity_type: 'Item', parent_id: c_id, parent_type: 'Company'}
               end
@@ -33,7 +34,7 @@ module Services
         end
       end
       ::CompanyEntity.create(entities)
-      {success: "Item successfully imported"}
+      "Item #{counter} record(s) successfully imported."
     end
   end
 end

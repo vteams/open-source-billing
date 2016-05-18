@@ -2,7 +2,7 @@ module Services
   class ImportTaxService
 
     def import_data(options)
-      page, per_page, total = 0, 25, 50
+      page, per_page, total, counter = 0, 25, 50, 0
 
       while(per_page* page < total)
         taxes = options[:freshbooks].tax.list per_page: per_page, page: page+1
@@ -19,11 +19,12 @@ module Services
                        updated_at: tax['updated'], provider: 'Freshbooks', provider_id: tax['tax_id'].to_i }
 
               ::Tax.create(hash)
+              counter+=1
             end
           end
         end
       end
-      {success: "Tax successfully imported"}
+      "Tax #{counter} record(s) successfully imported."
     end
 
   end
