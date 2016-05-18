@@ -1,4 +1,7 @@
 class ImportDataController < ApplicationController
+  #before_action :set_vendor, only: [:show, :edit, :update, :destroy]
+  before_action :set_qb_service, only: [:oauth_callback]
+
   def index
 
   end
@@ -20,6 +23,43 @@ class ImportDataController < ApplicationController
       redirect_to import_data_path, notice: data_import_response
     end
 
+  end
+
+  def authenticate
+    callback = oauth_callback_import_data_url
+    token = QB_OAUTH_CONSUMER.get_request_token(:oauth_callback => callback)
+    session[:qb_request_token] = token
+    # If Rails >= 4.1 you need to do this => session[:qb_request_token] = Marshal.dump(token)
+    redirect_to("https://appcenter.intuit.com/Connect/Begin?oauth_token=#{token.token}") and return
+  end
+
+  def oauth_callback
+    at = session[:qb_request_token].get_access_token(:oauth_verifier => params[:oauth_verifier])
+    #at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
+    # If Rails >= 4.1 you need to do this =>  at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
+    session[:token] = at.token
+    session[:secret] = at.secret
+    session[:realm_id] = params['realmId']
+    service = Quickbooks::Service::Vendor.new(:access_token => at, :company_id => session[:realm_id])
+    #service.company_id = session[:realm_id] # also known as RealmID
+    #service.access_token = at.token # the OAuth Access Token you have from above
+    vendors = service.query()
+    #binding.pry
+
+    redirect_to import_data_url, notice: "Your QuickBooks account has been successfully linked."
+  end
+
+  def import_quickbooks_data
+
+  end
+
+  private
+
+  def set_qb_service
+    oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+    @vendor_service = Quickbooks::Service::Vendor.new
+    @vendor_service.access_token = oauth_client
+    @vendor_service.company_id = session[:realm_id]
   end
 
 end

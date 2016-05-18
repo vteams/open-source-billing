@@ -18,6 +18,21 @@
         </ul>
 
       </div>
+      <% unless session[:token] %>
+          <ipp:connectToIntuit></ipp:connectToIntuit>
+      <% end %>
+
+      <% if notice %>
+          <div style="padding: 10px;background: gainsboro;font-weight: 900;width: 50%;"><%= notice %></div>
+      <% end %>
+
+      <%= yield %>
+
+      <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+
+      <script>
+          intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_import_data_url %>'});
+      </script>
     </div>
   </div>
 
