@@ -296,6 +296,8 @@ QUARTER_MONTHS = [['Jan - Mar', '1-3'], ['Apr - Jun', '4-6'], ['Jul - Sep', '7-9
 
 INVOICE_STATUS = [['Draft', 'draft'], ['Sent', 'sent'], ['Viewed', 'viewed'], ['Paid', 'paid'], ['Partial', 'partial'], ['Draft partial', 'draft_partial'], ['Disputed', 'disputed']]
 
+INVOICE_DATE_TO_USE = [['Invoice Date', 'invoice_date'], ['Paid Date', 'paid_date']]
+
 CREDIT_CARD_TYPE = ['Visa', 'Master Card', 'Discover', 'American Express']
 
 COMPANY_SIZE = ['1-10 employees',

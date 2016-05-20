@@ -31,6 +31,9 @@ module Reporting
     # attributes for *Item sales* report
     attr_accessor :item_id, :invoice_status
 
+    # attributes for *Invoice detail* report
+    attr_accessor :from_date, :to_date, :client_id, :invoice_status, :date_to_use
+
     def initialize(options={})
       Rails.logger.debug "--> Criteria init... #{options.to_yaml}"
       options ||= {} # if explicitly nil is passed then convert it to empty hash
@@ -52,6 +55,7 @@ module Reporting
       end
 
       @year = (options[:year] || Date.today.year).to_i # default to current year
+      @date_to_use = (options[:date_to_use] || "invoice_date")
       Rails.logger.debug "--> Criteria init... #{self.to_yaml}"
     end
   end

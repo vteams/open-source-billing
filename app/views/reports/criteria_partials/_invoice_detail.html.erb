@@ -1,0 +1,38 @@
+<div class="reports">
+  <div class="report_header">
+    <div class="report_header_content">
+      <%= form_tag "/reports/data/#{@report.report_name}", :method => :get, :remote => true do %>
+
+          <div class="report_date">
+            <div class="control_name">
+              <p><%= t('views.reports.date_range') %></p>
+            </div>
+            <input name="criteria[from_date]" type="text" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>"/>
+
+            <p>to</p>
+            <input name="criteria[to_date]" type="text" id="to_date" value="<%= Date.today.strftime(get_date_format) %>"/>
+          </div>
+
+          <div class="report_items">
+            <div class="control_name">
+              <p><%= t('views.invoices.date_to_use') %></p>
+            </div>
+            <div class="report_select"><%= select_tag "criteria[date_to_use]", options_for_select(INVOICE_DATE_TO_USE), {:class => "invoice-status chzn-select"} %></div>
+          </div>
+
+
+          <div class="report_items">
+            <div class="control_name">
+              <p><%= t('views.invoices.invoice_status') %></p>
+            </div>
+            <div class="report_select"><%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS), {:prompt => t('views.common.all'), :class => "invoice-status chzn-select"} %></div>
+          </div>
+
+          <div class="report_update">
+            <%= submit_tag t('views.common.go'), :class => "report_update" %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <!-- report_header -->
+</div><!--reports-->
