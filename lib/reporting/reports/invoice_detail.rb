@@ -39,7 +39,7 @@ module Reporting
 
       def get_report_data
         if @report_criteria.date_to_use.eql?("invoice_date")
-          invoices = Invoice.where(created_at: @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
+          invoices = Invoice.where(invoice_date: @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         else
           invoices = Invoice.joins(:payments).where("payments.payment_date",@report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         end
