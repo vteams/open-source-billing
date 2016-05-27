@@ -46,11 +46,11 @@
           <% unless @report.report_data.blank? %>
             <% @report.report_data.each do |invoice| %>
                 <tr>
-                  <td class="align_center"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), :class => "invoices_link") %></td>
-                  <td class="align_left"><%= invoice.client.organization_name %></td>
-                  <td class="align_center"><%= invoice.invoice_date %></td>
-                  <td class="align_center <%= invoice.status %>" title="<%= invoice.tooltip %>" ><%= invoice.status %></td>
-                  <td class="align_right"><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : "$") %></td>
+                  <td class="align_center" data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), :class => "invoices_link") %></td>
+                  <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
+                  <td class="align_center" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
+                  <td class="align_center <%= invoice.status %>" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" ><%= invoice.status %></td>
+                  <td class="align_right" data-sort_val="<%= invoice.invoice_total %>" ><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : "$") %></td>
                 </tr>
             <% end %>
             <tfoot>
