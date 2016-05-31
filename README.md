@@ -6,23 +6,23 @@ A simple web application to create and send invoices, receive payments, manage c
 Features
 ---------
 
--* A nice looking Dashboard with graph and key metrics
--* Create and send invoices to your clients
--* Create and send estimates to your clients
--* Create/Manage expenses
--* Time Tracking for running projects
--* Generate invoice from project log hours
--* Convert estimate to invoice
--* Recurring invoices
--* Receive payments against sent invoices
--* Partial payments tracking
--* Receive payments through Paypal and credit card
--* Invoice dispute handling
--* Manage billing for your multiple sister companies under one account
--* Export invoices to PDF
--* Export estimates to PDF
--* Import data from Freshbooks
--* Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
+* A nice looking Dashboard with graph and key metrics
+* Create and send invoices to your clients
+* Create and send estimates to your clients
+* Create/Manage expenses
+* Time Tracking for running projects
+* Generate invoice from project log hours
+* Convert estimate to invoice
+* Recurring invoices
+* Receive payments against sent invoices
+* Partial payments tracking
+* Receive payments through Paypal and credit card
+* Invoice dispute handling
+* Manage billing for your multiple sister companies under one account
+* Export invoices to PDF
+* Export estimates to PDF
+* Import data from Freshbooks
+* Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
 
 
 Caveats
