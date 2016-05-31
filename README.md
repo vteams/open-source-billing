@@ -1,26 +1,26 @@
 Open Source Billing
 ===================
 
-A simple web application to create and send invoices, make payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.1.8. and Ruby v2.0.0. This document describe the OSB application setup on ubuntu 14.04 LTS  machine.
+A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.1.8. and Ruby v2.0.0. This document describe the OSB application setup on ubuntu 14.04 LTS  machine.
 
 Features
 ---------
 
--* A nice looking Dashboard with graph and your key metrics
+-* A nice looking Dashboard with graph and key metrics
 -* Create and send invoices to your clients
--* Create and send estimate to your clients
--* Create expense for your clients
--* Time Tracking for running project of your client
--* Invoice for project logs
--* Estimate to invoice
+-* Create and send estimates to your clients
+-* Create/Manage expenses
+-* Time Tracking for running projects
+-* Generate invoice from project log hours
+-* Convert estimate to invoice
 -* Recurring invoices
--* Enter payments against sent invoices
+-* Receive payments against sent invoices
 -* Partial payments tracking
 -* Receive payments through Paypal and credit card
--* Invoice dispute management
+-* Invoice dispute handling
 -* Manage billing for your multiple sister companies under one account
 -* Export invoices to PDF
--* Export estimate to PDF
+-* Export estimates to PDF
 -* Import data from Freshbooks
 -* Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
 
@@ -37,7 +37,7 @@ MySql is an open-source relational database management system. Run the following
     sudo apt-get install mysql-server mysql-client libmysqlclient-dev
 
 #### 1.2 Git
-Git is a source code control for ruby on rails. Run the following command to install git.
+Git is version control system we used for OSB. Run the following command to install git.
     
     sudo apt-get install git
     
@@ -143,22 +143,23 @@ and use your application in browser by typing in url: localhost:3000
 
 #### 4.2 Production Environment
 
-You can also configure Apache, Nginx or any other web server to use application in production mode.
+You can also configure Apache, Nginx or any other web/application server of your choice to execute OSB in production mode.
 
 Contributing
 ------------
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
+2. Create your feature branch (`git checkout -b my-awesome-feature`)
 3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
+4. Push to the branch (`git push origin my-awesome-feature`)
 5. Create new Pull Request
 
 Contact Information
 -------------------
 
-Tomara Armstrong
+Teena Liberman
++1 (858) 586 7777
 
-E-mail: <tomara@vteams.com>
+E-mail: <teena@vteams.com> | <support@opensourcebilling.org> | <feedback@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>
