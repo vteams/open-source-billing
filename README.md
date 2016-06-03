@@ -48,7 +48,7 @@ Run the following command to install ruby dependencies:
 
     sudo apt-get update
 
-    sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev libicu-devlibgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+    sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libmagickcore-dev libmagickwand-dev
     
 #### 2.2 Ruby using RVM (development version)
 Run the following commands to install stable version:
