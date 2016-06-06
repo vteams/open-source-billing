@@ -38,22 +38,43 @@ class ImportDataController < ApplicationController
   end
 
   def oauth_callback
-    at = session[:qb_request_token].get_access_token(:oauth_verifier => params[:oauth_verifier])
+    token_hash = session[:qb_request_token].get_access_token(:oauth_verifier => params[:oauth_verifier])
     #at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
     # If Rails >= 4.1 you need to do this =>  at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
-    session[:token] = at.token
-    session[:secret] = at.secret
+    session[:token] = token_hash.token
+    session[:secret] = token_hash.secret
     session[:realm_id] = params['realmId']
-    service = Quickbooks::Service::Vendor.new(:access_token => at, :company_id => session[:realm_id])
-    #service.company_id = session[:realm_id] # also known as RealmID
-    #service.access_token = at.token # the OAuth Access Token you have from above
-    vendors = service.query()
-    #binding.pry
+    session[:token_hash] = token_hash
+    #options[:current_company_id] = get_company_id
+    #Services::ImportQbClientService.new.import_data(options)
+    #Services::ImportQbItemService.new.import_data(options)
+    #Services::ImportQbEstimateService.new.import_data(options)
+    #Services::ImportQbInvoiceService.new.import_data(options)
+    redirect_to select_qb_data_import_data_path
+    #redirect_to import_data_url, notice: 'Your QuickBooks account has been successfully linked.'
+  end
 
-    redirect_to import_data_url, notice: "Your QuickBooks account has been successfully linked."
+  def select_qb_data
+    #layout 'timer'
+    render layout: 'layouts/timer'
   end
 
   def import_quickbooks_data
+    binding.pry
+    options = {}
+    options[:realm_id] = session[:realm_id]
+    options[:token_hash] = session[:token_hash]
+    options[:current_company_id] = get_company_id
+    #Services::ImportQbClientService.new.import_data(options)
+    #Services::ImportQbItemService.new.import_data(options)
+    #Services::ImportQbEstimateService.new.import_data(options)
+    #Services::ImportQbInvoiceService.new.import_data(options)
+    data_import_response = []
+    params[:quickbooks][:data_filters].each do |filter|
+      data_import_response <<  eval("Services::ImportQb#{filter.humanize}Service").new.import_data(options)
+    end
+
+    redirect_to import_data_url, notice: 'Your QuickBooks account has been successfully linked.'
 
   end
 

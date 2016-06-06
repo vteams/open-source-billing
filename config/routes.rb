@@ -243,6 +243,8 @@ Osb::Application.routes.draw do
     resources :import_data do
       collection do
         post 'import_freshbooks_data', as: 'import_freshbooks_data'
+        post 'import_quickbooks_data', as: 'import_quickbooks_data'
+        get 'select_qb_data', as: 'select_qb_data'
         get :authenticate
         get :oauth_callback
       end

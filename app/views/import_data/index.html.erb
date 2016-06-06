@@ -18,9 +18,9 @@
         </ul>
 
       </div>
-      <% unless session[:token] %>
+      <%# unless session[:token] %>
           <ipp:connectToIntuit></ipp:connectToIntuit>
-      <% end %>
+      <%# end %>
 
       <% if notice %>
           <div style="padding: 10px;background: gainsboro;font-weight: 900;width: 50%;"><%= notice %></div>
