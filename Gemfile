@@ -69,7 +69,7 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 gem 'faker', '~> 1.4.3'
-
+gem 'activerecord-session_store'
 group :test do
   gem 'shoulda-matchers'
   gem 'shoulda', '~> 3.5.0'

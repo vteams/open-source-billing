@@ -7,7 +7,6 @@ module Services
       invoices = invoices.all
       if invoices.present?
         invoices.each do |invoice|
-          binding.pry
           unless ::Invoice.find_by_provider_id(invoice.id.to_i)
             hash = { provider: 'Quickbooks', provider_id: invoice.id.to_i,
                      invoice_number: invoice.doc_number,
