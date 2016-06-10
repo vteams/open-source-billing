@@ -60,7 +60,6 @@ class ImportDataController < ApplicationController
   end
 
   def import_quickbooks_data
-    binding.pry
     options = {}
     options[:realm_id] = session[:realm_id]
     options[:token_hash] = session[:token_hash]
