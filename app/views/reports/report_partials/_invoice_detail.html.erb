@@ -1,0 +1,79 @@
+<div class="reports">
+  <div class="content_middle">
+
+    <div class="report_content_header">
+      <div class="report_content_heading">
+        <h1><%= t('views.reports.invoice_detail') %></h1>
+      </div>
+
+      <div class="content_header_data">
+        <div class="header_data_left">
+          <div class="header_data_detail">
+            <ul>
+              <!--<li class="header_name "><%= @report.client_name %></li>-->
+              <li class="header_duration"><%= @report.period %></li>
+              <li class="header_description">
+                <%= t('views.reports.invoice_detail_dtl') %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- content_header_data -->
+    </div>
+    <!-- report_content_header -->
+
+    <%= render 'reports/report_partials/format_links'%>
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table_listing aged_accounts_listing <%= I18n.locale %>">
+        <colgroup>
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+          <col class="five"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th class="align_center"><%= t('views.invoices.invoice_number') %></th>
+          <th class="align_left"><%= t('client') %></th>
+          <th class="align_center"><%= t('views.invoices.invoice_date') %></th>
+          <th class="align_center"><%= t('views.invoices.invoice_status') %></th>
+          <th class="align_right {sorter:'thousands'}"><%= t('views.invoices.invoice_amount') %></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% unless @report.report_data.blank? %>
+            <% @report.report_data.each do |invoice| %>
+                <tr>
+                  <td class="align_center" data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), :class => "invoices_link") %></td>
+                  <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
+                  <td class="align_center" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
+                  <td class="align_center <%= invoice.status %>" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" ><%= invoice.status %></td>
+                  <td class="align_right" data-sort_val="<%= invoice.invoice_total %>" ><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : "$") %></td>
+                </tr>
+            <% end %>
+            <tfoot>
+            <tr>
+              <td class="align_left"><%= t('views.common.total') %></td>
+              <td class="align_left"></td>
+              <td class="align_left"></td>
+              <td class="align_left"></td>
+              <td class="align_right currency">
+                <% @report.report_total.each do |total| %>
+                    <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
+                    <br>
+                <% end %>
+              </td>
+            </tr>
+            </tfoot>
+          <% else %>
+            <tr>
+              <td colspan="5"><%= t('views.reports.report_no_data') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
