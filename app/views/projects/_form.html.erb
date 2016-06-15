@@ -23,7 +23,7 @@
                   </div>
                 </div>
 
-                <div class="field_row description">
+                <div class="field_row description" style="display:none;">
                   <div class="label_field left single"><%= f.label :billing_method %></div>
                   <div class="medium_field">
                     <%= f.select :billing_method, options_for_select(load_billing_methods_for_project, selected: f.object.billing_method),  {}, {:class => "report_billing_method medium chzn-select", "data-form-container" => "billing_holder", "data-dropdown-width" => "300"} %>
@@ -33,6 +33,15 @@
                   </ul>
                 </div>
 
+                <div class="field_row description">
+                  <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
+                  <div class="">
+                    <div> <%= f.number_field :total_hours, min: 0 %> hours </div>
+                  </div>
+                  <ul class="field_description select">
+                    <li><%= t('views.projects.time_estimate_hint') %></li>
+                  </ul>
+                </div>
 
 
               </div>
@@ -49,22 +58,14 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :manager_id, 'Project Manager' %></div>
                   <div class="medium_field">
-                    <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, @project.company_id, f.object.manager_id), selected: f.object.manager_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "staffs_holder", "data-dropdown-width" => "300"} %>
+                    <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, @project.company_id, f.object.manager), selected: f.object.manager_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a manager...", :class => "report_manager medium chzn-select", "data-form-container" => "staffs_holder", "data-dropdown-width" => "300"} %>
                   </div>
                   <ul class="field_description select" style="display: none;">
                     <li><%= t('views.projects.manager_hint') %></li>
                   </ul>
                 </div>
 
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
-                  <div class="medium_field">
-                    <div> <%= f.number_field :total_hours, min: 0 %> hours </div>
-                  </div>
-                  <ul class="field_description select">
-                    <li><%= t('views.projects.time_estimate_hint') %></li>
-                  </ul>
-                </div>
+               
 
               </div>
             </div>

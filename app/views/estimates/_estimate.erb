@@ -25,6 +25,9 @@ end
 <% if estimate.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
     edit_estimate_path(estimate) %>
+<% else %>
+     <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
     <% end %>
 </td>
         </tr>

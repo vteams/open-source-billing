@@ -58,7 +58,11 @@ GEM
       activerecord (>= 3.2.9)
       activesupport (>= 3.2.9)
       mysql (>= 2.9.0)
-    activesupport (4.1.15)
+    activerecord-session_store (0.1.2)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
+    activesupport (4.1.10)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -180,6 +184,9 @@ GEM
       hashie (>= 3.0)
       rails (~> 4.0)
     hike (1.2.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     ice_nine (0.11.2)
     jbuilder (2.4.0)
@@ -208,6 +215,7 @@ GEM
       i18n (>= 0.6.4, <= 0.7.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     murmurhash3 (0.1.5)
     mysql (2.9.1)
     mysql2 (0.3.17)
@@ -215,6 +223,7 @@ GEM
     netrc (0.10.2)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
+    oauth (0.4.7)
     offsite_payments (2.0.1)
       active_utils (~> 2.2.0)
       activesupport (>= 3.2.14, < 5.0.0)
@@ -247,6 +256,12 @@ GEM
     pygments.rb (0.4.2)
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.1.0)
+    quickbooks-ruby (0.4.3)
+      activemodel
+      multipart-post
+      nokogiri
+      oauth (= 0.4.7)
+      roxml (= 3.3.1)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rabl (0.12.0)
@@ -284,6 +299,9 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rmagick (2.15.0)
+    roxml (3.3.1)
+      activesupport (>= 2.3.0)
+      nokogiri (>= 1.3.3)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -307,6 +325,9 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    ruby-freshbooks (0.4.1)
+      builder (>= 2.1.2)
+      httparty (>= 0.5.0)
     sass (3.4.9)
     sass-rails (5.0.0)
       railties (>= 4.0.0, < 5.0)
@@ -405,6 +426,7 @@ DEPENDENCIES
   active_link_to
   activemerchant
   activerecord-mysql-adapter
+  activerecord-session_store
   acts_as_archival
   awesome_print
   better_errors
@@ -432,19 +454,24 @@ DEPENDENCIES
   money (~> 6.5.0)
   mysql2
   nested_form
+  nokogiri
+  oauth
   osb_api!
   paper_trail
   paranoia
   paypal-sdk-rest
   pry
+  quickbooks-ruby
   quiet_assets
   rails (~> 4.1.8)
   rails-settings-cached (= 0.4.1)
   railties
   rest-client
   rmagick
+  roxml
   rspec-its
   rspec-rails (~> 3.1.0)
+  ruby-freshbooks
   sass-rails
   shoulda (~> 3.5.0)
   shoulda-matchers
@@ -461,3 +488,6 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer
   zapata
+
+BUNDLED WITH
+   1.11.2

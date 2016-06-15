@@ -1,0 +1,15 @@
+<div class="import_data">
+    <div class="content_top">
+        <div class="primary_heading">
+            <h1>
+                <%= t('views.import_data.import_data') %>
+            </h1>
+        </div>
+    </div>
+    <div id='import_links'>
+        <%= render partial: 'fb_connect' %>
+        <%= render partial: 'qb_connect' %>
+    </div>
+</div>
+
+<%= render partial: 'freshbooks_popup'%>

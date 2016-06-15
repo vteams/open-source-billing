@@ -69,7 +69,7 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'zapata', groups: %w(development test)
 gem 'faker', '~> 1.4.3'
-
+gem 'activerecord-session_store'
 group :test do
   gem 'shoulda-matchers'
   gem 'shoulda', '~> 3.5.0'
@@ -85,6 +85,12 @@ gem 'osb_api', path: 'vendor/engines/osb_api'
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
 
+gem 'oauth'
+gem 'roxml'
+gem 'nokogiri'
+gem 'quickbooks-ruby'
+
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -93,3 +99,5 @@ gem 'jbuilder', '~> 2.0'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'ruby-freshbooks'

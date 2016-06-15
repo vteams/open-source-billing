@@ -8,7 +8,7 @@
       <div id="active_links" class="grid_control_right">
         <div class="grid_control_right">
           <ul>
-            <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal"><%= t('views.commo.dispute') %></a></li>
+            <li class="grid_control_sep sep_right"><a id="dispute_link" value="<%= @invoice.status %>" href="#dispute_invoice_popup" data-toggle="modal"><%= t('views.common.dispute') %></a></li>
             <li class="grid_control_sep sep_right"><%= link_to "PDF", {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %></li>
             <li class="grid_control_sep sep_right">
               <!--<a href="#">Print</a>-->
@@ -24,7 +24,7 @@
   <div class="content_bottom top">
     <% if @invoice.status != "paid" %>
         <!--showing 2 payment options buttons -->
-      <%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments"), :class => "btn_large big" %>
+      <%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), :class => "btn_large big" %>
       <%= link_to t("pay_by_credit_card"), "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
     <% else %>
       <div></div>

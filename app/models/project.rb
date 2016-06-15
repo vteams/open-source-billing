@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
   belongs_to :client
-  belongs_to :manager, class_name: 'Staff', foreign_key: 'manager_id'
+  belongs_to :manager, class_name: 'TeamMember', foreign_key: 'manager_id'
   belongs_to :company
   has_many :project_tasks, dependent: :destroy
   has_many :logs, dependent: :destroy

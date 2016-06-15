@@ -18,6 +18,8 @@ class SubUsersController < ApplicationController
                          password_confirmation: params[:password_confirmation]
                         })
 
+    sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
+
     # skip email confirmation for login
     sub_user.skip_confirmation!
 

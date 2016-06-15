@@ -1,0 +1,45 @@
+<div id="freshModal" class="modal fad" tabindex="-1" role="dialog" aria-labelledby="freshModalLabel" aria-hidden="false">
+  <div class="model_grey_container">
+    <div class="modal-header">
+      <h1>Import Data from your Quickbooks Account</h1>
+    </div>
+    <div class="modal-body">
+      <%= form_for :quickbooks, url: import_quickbooks_data_import_data_path,  :html => {novalidate: "", class: "form-horizontal"} do |f| %>
+          <div class="fields_content">
+            <div class="fields_content_container">
+              <div>
+
+                <div class="field_row">
+                  <div>
+                    <span>  Select modules to import</span>
+                  </div>
+                  <% Services::Quickbook::DATA_MODULES.each do |a_value| %>
+                      <div class="data-import-module checkbox">
+                        <label for="quickbooks_data_filters_<%= a_value.downcase %>">
+                          <%= f.check_box(:data_filters, {multiple: true, checked: "checked"}, a_value.downcase, nil) %>
+                          <%= a_value %>
+                        </label>
+                      </div>
+                  <% end %>
+                </div>
+
+              </div>
+            </div>
+
+            <!--field_row-->
+          </div>
+      <% end %>
+    </div>
+
+    <div class="footer ">
+      <%= submit_tag "Submit", :class => "btn_large submit model-submit-btn" %>
+      <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(".model-submit-btn").click(function (){
+        $(this).parents().find("form").submit();
+    })
+</script>

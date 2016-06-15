@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330110032) do
+ActiveRecord::Schema.define(version: 20160606082842) do
 
   create_table "account_users", force: true do |t|
     t.integer "user_id"
@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.datetime "updated_at",                                              null: false
     t.decimal  "available_credit",  precision: 8, scale: 2, default: 0.0
     t.integer  "currency_id"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "companies", force: true do |t|
@@ -217,12 +219,16 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "currency_id"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "expense_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "expenses", force: true do |t|
@@ -234,11 +240,13 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.time     "deleted_at"
-    t.float    "tax_1",          limit: 24
-    t.float    "tax_2",          limit: 24
+    t.integer  "tax_1"
+    t.integer  "tax_2"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "invoice_line_items", force: true do |t|
@@ -297,6 +305,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "currency_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "items", force: true do |t|
@@ -314,6 +324,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.decimal  "actual_price",     precision: 10, scale: 2, default: 0.0
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "line_item_taxes", force: true do |t|
@@ -331,12 +343,14 @@ ActiveRecord::Schema.define(version: 20160330110032) do
   create_table "logs", force: true do |t|
     t.integer  "project_id"
     t.integer  "task_id"
-    t.float    "hours",      limit: 24
+    t.float    "hours",       limit: 24
     t.string   "notes"
     t.date     "date"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "oauth_access_grants", force: true do |t|
@@ -404,6 +418,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "client_id"
     t.integer  "company_id"
     t.string   "status"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "project_tasks", force: true do |t|
@@ -433,6 +449,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "recurring_profile_line_items", force: true do |t|
@@ -498,6 +516,16 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "company_id"
   end
 
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
   create_table "settings", force: true do |t|
     t.string   "var",                   null: false
     t.text     "value"
@@ -520,6 +548,9 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.time     "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "tasks", force: true do |t|
@@ -535,6 +566,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "taxes", force: true do |t|
@@ -545,6 +578,8 @@ ActiveRecord::Schema.define(version: 20160330110032) do
     t.string   "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
+    t.string   "provider"
+    t.string   "provider_id"
   end
 
   create_table "team_members", force: true do |t|

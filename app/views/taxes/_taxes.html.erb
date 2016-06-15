@@ -15,6 +15,9 @@
           <td class="align_center">
             <% if taxis.deleted_at.nil? %>
                 <%= link_to 'Edit', edit_tax_path(taxis), :class => "edit_action" %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
             <% end %>
           </td>
         </tr>

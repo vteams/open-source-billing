@@ -65,6 +65,7 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
+      associate_entity(params, @task)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
       render :edit

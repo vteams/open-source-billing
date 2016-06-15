@@ -1,0 +1,8 @@
+<div id='qb_link'>
+    <ipp:connectToIntuit></ipp:connectToIntuit>
+    <%= yield %>
+    <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+    <script>
+    intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_import_data_url %>'});
+    </script>
+</div>
