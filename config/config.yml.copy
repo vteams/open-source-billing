@@ -16,8 +16,8 @@ development:
   smtp_setting:
      address: 'smtp.gmail.com'
      port: 587
-     authentication: :plain,
-     enable_starttls_auto: true,
+     authentication: :plain
+     enable_starttls_auto: true
      user_name: 'YOUR_EMAIL_HERE'
      password: 'YOUR_PASSWORD_HERE'
 
@@ -43,8 +43,8 @@ production:
   smtp_setting:
      address: 'smtp.gmail.com'
      port: 587
-     authentication: :plain,
-     enable_starttls_auto: true,
+     authentication: :plain
+     enable_starttls_auto: true
      user_name: 'YOUR_EMAIL_HERE'
      password: 'YOUR_PASSWORD_HERE'
 
