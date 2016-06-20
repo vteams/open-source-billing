@@ -9,7 +9,7 @@ gem 'sprockets-rails', '~> 2.2.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'xlsx_writer', '0.4.4'
-gem 'mysql2', '0.4.4'
+gem 'mysql2', '0.3.20'
 gem 'devise', '3.2.3'
 gem 'devise-encryptable', '0.2.0'
 gem 'slim-rails', '3.1.0'
