@@ -12,9 +12,9 @@
           <td class="align_center"><%= check_box_tag "expense_ids[]", expense.id, false, :id => "expense_#{expense.id}" %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.category.name %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= expense.client.contact_name %></td>
-          <td class="align_right text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.amount) %></td>
+          <td class="align_right text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.amount, unit: expense.client.currency_symbol) %></td>
           <td class="align_center text-overflow-class" data-overflow-rows="2"><%=  expense.expense_date %></td>
-          <td class="align_right text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.total) %></td>
+          <td class="align_right text-overflow-class" data-overflow-rows="2"><%= number_to_currency(expense.total, unit: expense.client.currency_symbol) %></td>
           <td class="align_center">
             <% if expense.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),

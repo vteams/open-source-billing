@@ -17,6 +17,9 @@ class SettingsController < ApplicationController
       user.settings.language = params[:locale]
       @language_changed = true
     end
+    if params[:default_currency].present?
+      user.settings.default_currency = params[:default_currency]
+    end
     respond_to { |format| format.js }
   end
 end

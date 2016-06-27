@@ -33,6 +33,13 @@
             </div>
 
             <div class="field_row">
+              <div class="label_field left single"><%= t('views.settings.default_currency')  %></div>
+              <div class="large_field">
+                <%= select_tag "default_currency", options_for_select(currency_list, :selected => current_user.settings.default_currency), class: "chzn-select" %>
+              </div>
+            </div>
+
+            <div class="field_row">
               <div class="label_field left single"><%= t('views.settings.language')  %></div>
               <div class="large_field">
                 <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>

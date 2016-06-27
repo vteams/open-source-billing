@@ -251,4 +251,12 @@ module ApplicationHelper
     end
   end
 
+  def currency_list
+    Currency.all.collect{|c| [c.title,c.unit] }
+  end
+
+  def default_currency_unit
+    Currency.default_currency.code
+  end
+
 end

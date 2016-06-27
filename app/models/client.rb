@@ -194,8 +194,7 @@ class Client < ActiveRecord::Base
 
   def create_default_currency
     return true if self.currency.present?
-    currency = Currency.where(unit: 'USD').first || Currency.first
-    self.currency = currency
+    self.currency = Currency.default_currency
     self.save
   end
 end

@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
     self.settings.date_format = "%Y-%m-%d"
     self.settings.currency = "On"
     self.settings.records_per_page = 5
+    self.settings.default_currency = "USD"
   end
 
   def currency_symbol

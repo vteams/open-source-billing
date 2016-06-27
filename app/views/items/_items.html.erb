@@ -12,7 +12,7 @@
           <td class="align_center"> <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}" %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_name %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_description %></td>
-          <td class="align_right"><%= number_to_currency(item.unit_cost) %></td>
+          <td class="align_right"><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></td>
           <td class="align_right"><%= item.quantity %></td>
           <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax1.name rescue "" %></td>
           <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax2.name rescue "" %></td>
