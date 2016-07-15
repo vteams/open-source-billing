@@ -32,5 +32,14 @@ module Services
       Services::EstimateBulkActionsService.new(params).perform
     end
 
+    def self.get_estimate_for_preview(encrypted_estimate_id)
+      estimate_id = OSB::Util::decrypt(encrypted_estimate_id).to_i rescue estimate_id = nil
+      estimate = ::Estimate.find_by_id(estimate_id)
+      if estimate.blank?
+        return ::Estimate.only_deleted.find_by_id(estimate_id).blank? ? nil : "Estimate deleted"
+      end
+      estimate
+    end
+
   end
 end

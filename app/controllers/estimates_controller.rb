@@ -1,7 +1,8 @@
 class EstimatesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_per_page_session
-  protect_from_forgery
+  protect_from_forgery except: [:preview]
+  before_filter :authenticate_user!, except: [:preview]
   helper_method :sort_column, :sort_direction
   include DateFormats
 
@@ -156,6 +157,12 @@ class EstimatesController < ApplicationController
   def selected_currency
     @currency = Currency.find params[:currency_id]
   end
+
+  def preview
+    @estimate = Services::EstimateService.get_estimate_for_preview(params[:inv_id])
+    render action: 'estimate_deleted_message', notice: "This estimate has been deleted." if @estimate == 'Estimate deleted'
+  end
+
   private
 
   def estimate_params
