@@ -223,3 +223,9 @@ Estimate.where(currency_id: nil).update_all(currency_id: default_currency.id)
 CATEGORIES.each do |category|
   ExpenseCategory.create name: category unless ExpenseCategory.find_by_name category
 end
+
+Role.delete_all
+
+ROLES.each do |role|
+  Role.create name: role
+end

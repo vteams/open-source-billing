@@ -41,6 +41,14 @@
                 </div>
               </div>
 
+
+              <div class="field_row">
+                <div class="label_field left single"><span>Assign Role</span></div>
+                <div class="large_field">
+                  <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
+                </div>
+              </div>
+
               <!--field_row-->
 
             </div>

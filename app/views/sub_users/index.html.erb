@@ -30,6 +30,7 @@
         <tr>
           <th class="align_left header"><%= sortable('user_name',t('views.users.full_name')) %></th>
           <th class="align_left header"><%= sortable('email',t('email')) %></th>
+          <th class="align_left header"><%= sortable('role', "Role") %></th>
           <th class="align_left header"><%= sortable('created_at',t('views.common.date')) %></th>
           <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
         </tr>

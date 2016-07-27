@@ -385,3 +385,5 @@ CUSTOM_FIELDS = {
             {label: 'User Password', token: '{{user_password}}'},
         ]
 }
+
+ROLES = ['admin', 'manager', 'staff']

@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings
   attr_accessor :account,:login
+
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'
 

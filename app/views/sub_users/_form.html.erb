@@ -42,6 +42,14 @@
               </div>
 
               <div class="field_row">
+                <div class="label_field left single"><span>Assign Role</span></div>
+                <div class="large_field">
+                  <%= select_tag :role_ids, options_for_select(load_user_roles) %>
+                </div>
+              </div>
+
+
+              <div class="field_row">
                 <div class="label_field left single"></div>
                 <div class="field_check">
                   <%= check_box_tag :notify_user %> <p><label for="notify_user"><%= t('views.users.notify_user') %></label></p>
