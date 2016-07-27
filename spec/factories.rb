@@ -1,6 +1,9 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :invoice_task do
+FactoryGirl.define do  factory :role do
+    
+  end
+  factory :invoice_task do
     name "MyString"
 description "MyString"
 rate 1

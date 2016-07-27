@@ -100,3 +100,5 @@ gem 'quickbooks-ruby', '0.4.4'
 # gem 'debugger'
 
 gem 'ruby-freshbooks', '0.4.1'
+gem 'cancancan', '1.15.0'
+gem 'rolify', '5.1.0'

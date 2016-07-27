@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
   #before_filter :authenticate_user_from_token!
   # This is Devise's authentication
+
   include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
@@ -36,6 +37,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_user
 
   before_action :set_locale
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
 
   def _reload_libs
     if defined? RELOAD_LIBS
