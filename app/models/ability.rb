@@ -10,6 +10,7 @@ class Ability
     elsif user.has_role? :staff
       cannot :manage, :user
       cannot :delete, :all
+      cannot :manage, :reporting
     end
 
   end

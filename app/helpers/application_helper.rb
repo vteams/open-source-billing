@@ -259,4 +259,8 @@ module ApplicationHelper
     Currency.default_currency.code
   end
 
+  def has_access_right?(method, klass)
+    can? method, klass
+  end
+
 end

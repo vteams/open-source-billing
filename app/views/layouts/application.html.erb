@@ -156,27 +156,27 @@
                 </ul>
               </div>
             </li>
-
-            <li class="dropdown">
-              <%= active_link_to t("header.links.reports.reports"), reports_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to t("header.links.reports.payment_collected"), "/#{I18n.locale}/reports/payments_collected" %></li>
-                  <li><%= active_link_to t("header.links.reports.revenue_by_client"), "/#{I18n.locale}/reports/revenue_by_client" %></li>
-                  <li><%= active_link_to t("header.links.reports.aged_account_receivable"), "/#{I18n.locale}/reports/aged_accounts_receivable" %></li>
-                  <li><%= active_link_to t("header.links.reports.item_sales"), "/#{I18n.locale}/reports/item_sales" %></li>
-                  <li><%= active_link_to t("header.links.reports.invoice_detail"), "/#{I18n.locale}/reports/invoice_detail" %></li>
-                </ul>
-              </div>
-            </li>
-
+            <% if has_access_right?(:manage, Reporting) %>
+                <li class="dropdown">
+                  <%= active_link_to t("header.links.reports.reports"), reports_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    <ul>
+                      <li><%= active_link_to t("header.links.reports.payment_collected"), "/#{I18n.locale}/reports/payments_collected" %></li>
+                      <li><%= active_link_to t("header.links.reports.revenue_by_client"), "/#{I18n.locale}/reports/revenue_by_client" %></li>
+                      <li><%= active_link_to t("header.links.reports.aged_account_receivable"), "/#{I18n.locale}/reports/aged_accounts_receivable" %></li>
+                      <li><%= active_link_to t("header.links.reports.item_sales"), "/#{I18n.locale}/reports/item_sales" %></li>
+                      <li><%= active_link_to t("header.links.reports.invoice_detail"), "/#{I18n.locale}/reports/invoice_detail" %></li>
+                    </ul>
+                  </div>
+                </li>
+            <% end %>
             <li class="dropdown">
               <%= active_link_to t("header.links.setting.setting"), companies_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
 
               <ul class="sub">
                 <li><%= active_link_to t("header.links.setting.companies"), companies_path %></li>
                 <li class="secondary"><%= active_link_to t("header.links.setting.email_templates"), email_templates_path %></li>
-                <% if can? :manage, User %>
+                <% if has_access_right?(:manage, User) %>
                     <li class="secondary_02"><%= link_to t("header.links.setting.users"), sub_users_path,class: "#{'active' if params[:controller] == 'sub_users' and params[:action] != 'user_settings'}" %></li>
                 <% end %>
                 <li class="secondary_03"><%= link_to t("header.links.setting.basic_settings"), user_settings_sub_users_path,class: "#{'active' if params[:action]=='user_settings'}" %></li>
@@ -186,7 +186,7 @@
                 <ul>
                   <li><%= active_link_to  t("header.links.setting.companies"), companies_path %></li>
                   <li><%= active_link_to  t("header.links.setting.email_templates"), email_templates_path %></li>
-                  <% if can? :manage, User %>
+                  <% if has_access_right?(:manage, User) %>
                       <li><%= active_link_to  t("header.links.setting.users"), sub_users_path %></li>
                   <% end %>
 
