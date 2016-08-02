@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-
+  load_and_authorize_resource :project
   helper_method :sort_column, :sort_direction
 
   layout :choose_layout

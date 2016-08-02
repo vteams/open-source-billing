@@ -18,8 +18,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class
-PaymentTermsController < ApplicationController
+class PaymentTermsController < ApplicationController
+  load_and_authorize_resource :payment_term
   # GET /payment_terms
   # GET /payment_terms.json
   def index

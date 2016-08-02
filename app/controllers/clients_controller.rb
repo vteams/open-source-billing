@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientsController < ApplicationController
+  load_and_authorize_resource :client
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
 

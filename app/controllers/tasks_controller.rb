@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  load_and_authorize_resource :task
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
   before_action :set_task, only: [:show, :edit, :update, :destroy]

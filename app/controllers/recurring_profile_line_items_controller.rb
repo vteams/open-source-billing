@@ -1,4 +1,5 @@
 class RecurringProfileLineItemsController < ApplicationController
+  load_and_authorize_resource :recurring_profile_line_item
   # GET /recurring_profile_line_items
   # GET /recurring_profile_line_items.json
   def index

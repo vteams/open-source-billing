@@ -1,4 +1,5 @@
 class EmailTemplatesController < ApplicationController
+  load_and_authorize_resource :email_template
   # GET /email_templates
   # GET /email_templates.json
   helper_method :sort_column, :sort_direction

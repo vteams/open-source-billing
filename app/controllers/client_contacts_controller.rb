@@ -21,6 +21,7 @@
 class ClientContactsController < ApplicationController
   # GET /client_contacts
   # GET /client_contacts.json
+  load_and_authorize_resource :client_contact
   def index
     @client_contacts = ClientContact.all
 
