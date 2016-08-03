@@ -1,5 +1,5 @@
 class SubUsersController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  load_and_authorize_resource :user, :only => [:index, :show, :create, :destroy, :update, :new, :edit]
 
   helper_method :sort_column, :sort_direction
 
