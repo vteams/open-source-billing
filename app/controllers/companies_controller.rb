@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  load_and_authorize_resource :company
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   include CompaniesHelper

@@ -1,5 +1,5 @@
 class EstimatesController < ApplicationController
-  load_and_authorize_resource :estimate
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :authenticate_user!
   before_filter :set_per_page_session
   protect_from_forgery except: [:preview]

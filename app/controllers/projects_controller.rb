@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  load_and_authorize_resource :project
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   helper_method :sort_column, :sort_direction
 
   layout :choose_layout
