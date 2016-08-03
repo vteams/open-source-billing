@@ -1,0 +1,23 @@
+<%= f.fields_for :user do |f|%>
+    <div class="field_row">
+      <div class="label_field left single"><span><%= t('views.staffs.username') %></span></div>
+      <div class="medium_field">
+        <%= f.text_field :user_name %>
+      </div>
+    </div>
+
+    <div class="field_row">
+      <div class="label_field left single"><span><%= t('views.staffs.password') %></span></div>
+      <div class="medium_field">
+        <%= f.password_field :password %>
+      </div>
+    </div>
+
+    <div class="field_row">
+      <div class="label_field left single"><span><%= t('views.staffs.password_confirmation') %></span></div>
+      <div class="medium_field">
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+    <%= f.hidden_field :email %>
+<% end %>

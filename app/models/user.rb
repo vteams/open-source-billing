@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_default_role
+
+  has_one :staff
   attr_accessor :account,:login
 
   include RailsSettings::Extend
@@ -40,6 +42,7 @@ class User < ActiveRecord::Base
 
   def set_default_role
     # sign up user only has admin role
+    return self.add_role :staff if self.staff.present?
     self.add_role :admin if self.roles.blank?
   end
 

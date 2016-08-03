@@ -308,6 +308,9 @@ en:
     staffs:
       name: "Staff Name"
       email: "Email"
+      username: "Username"
+      password: "Password"
+      password_confirmation: "Password Confirmation"
       rate: "Rate per hour"
       new: "New Staff"
       edit_staff: "Edit Staff"

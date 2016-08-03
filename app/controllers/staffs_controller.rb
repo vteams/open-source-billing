@@ -28,6 +28,7 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new
     @staff = Staff.new
+    @staff.build_user
   end
 
   # GET /staffs/1/edit
@@ -44,9 +45,15 @@ class StaffsController < ApplicationController
     end
     @staff = Staff.new(staff_params)
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    if staff_params.has_key? "user_attributes"
+      @staff.user.add_role :staff
+      @staff.user.skip_confirmation!
+      options["staff"].delete("user_attributs")
+    end
     associate_entity(options, @staff)
     respond_to do |format|
       if @staff.save
+        current_user.accounts.first.users << @staff.user if @staff.user.present?
         format.js
         format.json { render :json => @staff, :status => :created, :location => @staff }
         redirect_to @staff, notice: 'Staff was successfully created.' unless params[:quick_create]
@@ -112,7 +119,7 @@ class StaffsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def staff_params
-      params.require(:staff).permit(:email, :name, :rate, :created_by, :updated_by)
+      params.require(:staff).permit(:email, :name, :rate, :created_by, :updated_by, user_attributes: [:user_name, :password, :password_confirmation, :email])
     end
 
   def get_intimation_message(action_key, staff_ids)
