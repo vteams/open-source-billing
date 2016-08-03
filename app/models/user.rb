@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
          :encryptable, :encryptor => :restful_authentication_sha1
 
   validates_uniqueness_of :email, :uniqueness => :true
-  after_create :set_default_settings
+  after_create :set_default_settings, :set_default_role
   attr_accessor :account,:login
 
   include RailsSettings::Extend
@@ -36,6 +36,11 @@ class User < ActiveRecord::Base
     self.settings.currency = "On"
     self.settings.records_per_page = 5
     self.settings.default_currency = "USD"
+  end
+
+  def set_default_role
+    # sign up user only has admin role
+    self.add_role :admin if self.roles.blank?
   end
 
   def currency_symbol
