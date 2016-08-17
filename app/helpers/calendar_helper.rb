@@ -10,11 +10,7 @@ module CalendarHelper
   end
 
   def load_tasks_for_log(log)
-    if log.persisted?
-      log.project.project_tasks.map{|p| [p.name, p.id]}
-    else
-      []
-    end
+    log.persisted? ? log.project.project_tasks.map{|p| [p.name, p.id]} : []
   end
 
   def get_company_id

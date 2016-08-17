@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   after_create :set_default_settings, :set_default_role
 
   has_one :staff
+  has_many :logs, dependent: :destroy
+
   attr_accessor :account,:login
 
   include RailsSettings::Extend
