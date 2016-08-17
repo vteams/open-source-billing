@@ -99,7 +99,7 @@ class LogsController < ApplicationController
     @log = Log.new
     if @view == 'basicWeek'
       @form_type = 'form_week'
-      @logs = Log.where('project_id IN(?) AND date BETWEEN ? AND ?', load_project_ids, Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
+      @logs = Log.where('company_id IN(?) AND project_id IN(?) AND date BETWEEN ? AND ?', get_company_id ,load_project_ids, Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
       @logs = filter_by_company(@logs)
     else
       @form_type = 'form'
@@ -166,7 +166,7 @@ class LogsController < ApplicationController
   end
 
   def get_logs(date=nil)
-    @logs =Log.where("project_id IN(?) AND date = ?" , load_project_ids, date || @date).order(:created_at).page(params[:page]).per(10)
+    @logs =Log.where('company_id IN(?) AND project_id IN(?) AND date = ?' , get_company_id ,load_project_ids, date || @date).order(:created_at).page(params[:page]).per(10)
   end
 
   def invoice_params
