@@ -1,7 +1,8 @@
 module CalendarHelper
 
   def load_projects_for_log
-    Project.where("company_id IN(?)", get_company_id).unarchived.map{|p| [p.project_name, p.id]}
+    projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    projects.unarchived.map{|p| [p.project_name, p.id]}
   end
 
   def load_projects_for_invoice
