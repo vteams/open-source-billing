@@ -221,6 +221,7 @@ Osb::Application.routes.draw do
         get 'send_estimate'
         get 'bulk_actions'
         get 'undo_actions'
+        get 'preview'
       end
     end
 

@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   helper_method :sort_column, :sort_direction
 
   layout :choose_layout
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     params[:status] = params[:status] || 'active'
-    @projects = Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    load_projects
     @projects = filter_by_company(@projects)
     respond_to do |format|
       format.html # index.html.erb
@@ -129,6 +129,11 @@ class ProjectsController < ApplicationController
     helper_methods = {archive: 'projects_archived', destroy: 'projects_deleted'}
     helper_method = helper_methods[action_key.to_sym]
     helper_method.present? ? send(helper_method, invoice_ids) : nil
+  end
+
+  def load_projects
+    projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    @projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
   end
 
 end

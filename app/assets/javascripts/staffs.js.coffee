@@ -33,6 +33,7 @@ jQuery(".staff_form .staff-submit-btn").live "click", ->
     hidePopover(jQuery("input[name=association]:checked"))
     flag = true
   if(flag)
+    jQuery("#staff_user_attributes_email").val(jQuery("#staff_email").val())
     jQuery("form#newStaff").get(0).submit()
   else
     return false

@@ -1,0 +1,32 @@
+<%- model_class = Estimate -%>
+<div class="show_estimate">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1><%= t '.title', default: t('estimate') %>:<%= @estimate.estimate_number %></h1>
+    </div>
+    <div class="primary_links">
+      <div id="active_links" class="grid_control_right">
+        <div class="grid_control_right">
+          <ul>
+            <li class="grid_control_sep sep_right">
+              <%= link_to "PDF", {controller: 'estimates', action: 'estimate_pdf', id: @estimate.encrypted_id, format: "pdf"}, target: '_blank' %>
+            </li>
+            <li class="grid_control_sep sep_right">
+              <!--<a href="#">Print</a>-->
+              <%= link_to t("views.common.print"), {controller: 'estimates', action: 'estimate_pdf', id: @estimate.encrypted_id, format: "pdf"}, target: '_blank' %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!--primary_links-->
+  </div><!--content_top-->
+
+
+  <div class="content_middle">
+    <div id="show_estimate_container">
+      <%= render partial: "show_estimate" %>
+    </div>
+
+  </div>
+
+</div>

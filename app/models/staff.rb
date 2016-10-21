@@ -6,8 +6,12 @@ class Staff < ActiveRecord::Base
   acts_as_paranoid
 
   belongs_to :company
+  belongs_to :user
   has_many :company_entities, :as => :entity
   has_many :team_members
+  has_many :projects , through: :team_members
+
+  accepts_nested_attributes_for :user, :allow_destroy => true
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }

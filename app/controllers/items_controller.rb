@@ -20,6 +20,7 @@
 #
 class ItemsController < ApplicationController
   #before_filter :authenticate_user!
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   # GET /items

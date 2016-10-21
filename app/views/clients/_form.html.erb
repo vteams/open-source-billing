@@ -123,7 +123,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.common.currency') %></div>
               <div class="medium_field">
-                <%= f.select :currency_id, Currency.all.collect{|c| [ "#{c.unit} #{c.title}",c.id ]}, {:prompt => ""}, {"data-placeholder" => t("views.common.select_default_currency"), :class => "medium chzn-select"} %>
+                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| [ "#{c.unit} #{c.title}",c.id ]}, selected: Currency.default_currency.id), {:prompt => ""}, {"data-placeholder" => t("views.common.select_default_currency"), :class => "medium chzn-select"} %>
               </div>
             </div>
             <!--field_row-->

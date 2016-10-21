@@ -308,6 +308,9 @@ en:
     staffs:
       name: "Staff Name"
       email: "Email"
+      username: "Username"
+      password: "Password"
+      password_confirmation: "Password Confirmation"
       rate: "Rate per hour"
       new: "New Staff"
       edit_staff: "Edit Staff"
@@ -468,6 +471,7 @@ en:
       multi_currency: "Multi Currency"
       date_format: "Date Format"
       records_per_page: "Records per page"
+      default_currency: "Default Currency"
       language: "Language"
 
     companies:

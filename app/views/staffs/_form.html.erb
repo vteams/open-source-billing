@@ -38,6 +38,8 @@
               </div>
               <!--field_row-->
 
+              <%= render partial: 'user_registration_fields', locals: {f: f } if @staff.new_record? %>
+
               <div class="options_row clients">
                 <div class="label_field left single options template"><%= t('views.staffs.make_this_staff_available_to') %>:</div>
                 <div class="options_content">

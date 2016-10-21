@@ -21,6 +21,7 @@
 class AccountsController < ApplicationController
   # GET /companies
   # GET /companies.json
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   def index
     @accounts = current_user.accounts
 

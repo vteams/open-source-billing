@@ -1,4 +1,5 @@
 class LogsController < ApplicationController
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   include DateFormats
   before_action :set_log, only: [:show, :edit, :update, :destroy]
   layout 'application'
@@ -85,8 +86,8 @@ class LogsController < ApplicationController
   end
 
   def events
-    @logs = Log.all
-    @logs = filter_by_company(@logs).group(:date).sum(:hours)
+    logs = Log.where("project_id IN(?)" , load_project_ids)
+    @logs = filter_by_company(logs).group(:date).sum(:hours)
 
     respond_to do |format|
       format.json
@@ -98,7 +99,7 @@ class LogsController < ApplicationController
     @log = Log.new
     if @view == 'basicWeek'
       @form_type = 'form_week'
-      @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
+      @logs = Log.where('company_id IN(?) AND project_id IN(?) AND date BETWEEN ? AND ?', get_company_id ,load_project_ids, Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
       @logs = filter_by_company(@logs)
     else
       @form_type = 'form'
@@ -165,9 +166,7 @@ class LogsController < ApplicationController
   end
 
   def get_logs(date=nil)
-
-    @logs = Log.where(date: date || @date).order(:created_at).page(params[:page]).per(10)
-    @logs = filter_by_company(@logs)
+    @logs =Log.where('company_id IN(?) AND project_id IN(?) AND date = ?' , get_company_id ,load_project_ids, date || @date).order(:created_at).page(params[:page]).per(10)
   end
 
   def invoice_params
@@ -178,5 +177,10 @@ class LogsController < ApplicationController
                                     :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,
 
     )
+  end
+
+  def load_project_ids
+    projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    projects.collect(&:id)
   end
 end

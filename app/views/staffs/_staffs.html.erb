@@ -17,7 +17,7 @@
           <td class="align_center"> <%= check_box_tag "staff_ids[]", staff.id, false, :id => "task_#{staff.id}" %></td>
           <td class="align_left"><%= link_to(staff.name, staff_path(staff), :class => "staffs_link #{'deleted_entry' if staff.deleted?}") %></td>
           <td class="align_left"> <%= staff.email %> </td>
-          <td class="align_right"><%= "#{number_to_currency(staff.rate)}" %></td>
+          <td class="align_right"><%= "#{number_to_currency(staff.rate, unit: default_currency_unit)}" %></td>
 
           <td class="align_center">
             <% if staff.deleted_at.nil? %>

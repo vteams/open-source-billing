@@ -1,4 +1,6 @@
 class SubUsersController < ApplicationController
+  load_and_authorize_resource :user, :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+
   helper_method :sort_column, :sort_direction
 
   def index
@@ -19,7 +21,7 @@ class SubUsersController < ApplicationController
                         })
 
     sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
-
+    sub_user.role_ids = params[:role_ids]
     # skip email confirmation for login
     sub_user.skip_confirmation!
 
@@ -58,6 +60,7 @@ class SubUsersController < ApplicationController
       end
 
       message = if sub_user.update_attributes(options)
+                  sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
                   {notice: 'User has been updated successfully'}
                 else
                   {alert: 'User can not be updated'}

@@ -8,9 +8,11 @@ class Project < ActiveRecord::Base
   belongs_to :client
   belongs_to :manager, class_name: 'TeamMember', foreign_key: 'manager_id'
   belongs_to :company
+  belongs_to :user
   has_many :project_tasks, dependent: :destroy
   has_many :logs, dependent: :destroy
   has_many :team_members, dependent: :destroy
+  has_many :staffs, through: :team_members
   has_many :logs, dependent: :destroy
   has_many :invoices, dependent: :destroy
 
