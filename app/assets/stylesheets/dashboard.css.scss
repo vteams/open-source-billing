@@ -26,7 +26,6 @@
       a {
         display: block;
         min-width: 201px;
-        height: 28px;
         border: 1px solid #d7d7d7;
         border-radius: 4px;
         text-align: center;
@@ -34,7 +33,7 @@
         font-style: normal;
         font-size: 20px;
         color: #464646;
-        padding: 8px 0 0 0;
+        padding: 8px 0 8px 0;
         &.small {
           min-width: 200px;
         }
@@ -406,4 +405,3 @@
     }
   }
 }
-
