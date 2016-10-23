@@ -47,7 +47,7 @@
 //= require invoice_line_items.js.coffee
 //= require items.js.coffee
 //= require jqamp-ui-spinner.min.js
-//= require jquery.qtip.min.js
+//= require jquery.qtip.js
 //= require jwerty.js
 //= require payments.js.coffee
 //= require payment_terms.js.coffee

@@ -916,7 +916,7 @@ input[disabled]{
 }
 
 .privacy_policy {
-  background: asset-url('footer_sep.png') no-repeat 0px 6px;
+  background: asset-url('footer_sep.png') no-repeat left;
   padding: 0 9px 0 11px;
 }
 
@@ -943,14 +943,14 @@ input[disabled]{
   display: inline-block;
   font-family: "Dosis Regular", sans-serif;
   font-size: 20px;
-  height: 30px;
-  padding: 8px 0 0 0;
+  padding: 4px 0 8px 0;
   min-width: 176px;
   text-align: center;
   text-transform: capitalize;
   border: none;
   font-weight: normal;
   margin-right: 6px;
+  height: 38px;
 }
 .btn_large:last-child{
   margin-right: 0px !important;
@@ -958,11 +958,12 @@ input[disabled]{
 
 .btn_large.submit {
   padding: 0px;
-  height: 38px;
   vertical-align: top;
 }
 
 .btn_large.grey {
+  padding: 0px;
+  vertical-align: top;
   background-color: #acacac; /*grey*/
 }
 

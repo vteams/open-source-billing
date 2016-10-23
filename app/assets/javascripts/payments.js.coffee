@@ -17,7 +17,7 @@ jQuery ->
       jQuery('#payments_' + rem_value_id + '_payment_amount').removeAttr('readonly')
       jQuery('#payments_' + rem_value_id + '_payment_amount').val('')
 
-#  jQuery('#submit_payment_form').live "click", ->
+#  jQuery('#submit_payment_form').on "click",null, ->
 #    console.log "test"
 #    flag = true
 #    jQuery(".apply_credit:checked").each ->
@@ -59,7 +59,7 @@ jQuery ->
     else
       return false
   # validate payments fields on enter payment form submit
-#  jQuery('#submit_payment_form').live "click", ->
+#  jQuery('#submit_payment_form').on "click",null, ->
 #    validate = true
 #    payment_fields = jQuery('.payment_amount')
 #

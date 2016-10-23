@@ -93,7 +93,7 @@ class window.InlineForms
     # Show form
     @inlineFormContainer.show().find("input:eq(0)").focus()
     # bind the hideForm to form's close button
-    @chznContainer.find(".close_btn").live "click", (e) =>
+    @chznContainer.find(".close_btn").on "click",null, (e) =>
       @hideForm()
       @revertChosenWidth()
     # setup 'save' and 'save & add more' actions
@@ -120,7 +120,7 @@ class window.InlineForms
     @chznResults.after(@inlineFormContainer)
 
   setupSaveActions: =>
-    @chznContainer.find(".btn_large").live "click", (event) =>
+    @chznContainer.find(".btn_large").on "click",null, (event) =>
       console.log "validating form"
       return unless @validateForm()
       # serialize the inputs in tiny create form
