@@ -7,10 +7,10 @@ jQuery ->
       widget.css('margin-left', jQuery(input).outerWidth() - widget.outerWidth())
 
 # Applied taxes expense
-  jQuery(".tax_div select.tax1, .tax_div select.tax2").live "change", ->
+  jQuery(".tax_div select.tax1, .tax_div select.tax2").on "change",null, ->
     updateAmountField()
 
-  jQuery("#expense_amount").live "keyup", ->
+  jQuery("#expense_amount").on "keyup",null, ->
     hidePopover($(this))
     updateAmountField()
 
@@ -31,7 +31,7 @@ jQuery ->
 
   # Expense form validation
 
-  jQuery(".expense_form .expense-submit-btn").live "click", ->
+  jQuery(".expense_form").on "click",'.expense-submit-btn', ->
 
     expense_category = jQuery("#expense_category_id").val()
     amount = jQuery("#expense_amount").val()

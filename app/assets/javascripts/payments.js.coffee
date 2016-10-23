@@ -3,11 +3,11 @@ jQuery ->
   window.creditPayment()
 
   flag = true
-  jQuery("#close_popup").live "click", ->
+  jQuery("#close_popup").on "click",null, ->
     jQuery("#invoices_container").hide()
 
   #Autocomplete amount field on paid full checkbox
-  jQuery(".paid_full").live "click", ->
+  jQuery(".paid_full").on "click",null, ->
     rem_value = parseFloat(jQuery(this).next('.rem_payment_amount').attr('value'))
     rem_value_id = jQuery(this).next('.rem_payment_amount').attr('id')
     if jQuery(this).is ":checked"
@@ -34,7 +34,7 @@ jQuery ->
 #        flag = true
 #    flag
 #  #edit payment form check if credit exceed available credit
-  jQuery('#submit_payment_form').live "click", ->
+  jQuery('#submit_payment_form').on "click",null, ->
     pay_amount = parseFloat(jQuery("#payments_0_payment_amount").val())
     pay_method = jQuery("#payments_0_payment_method").val()
     rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
@@ -92,7 +92,7 @@ jQuery ->
     elem.qtip().show()
     elem.focus()
 
-  jQuery(".line_item_qtip").live "change",->
+  jQuery(".line_item_qtip").on "change",null, ->
     jQuery(this).qtip('hide')
   # hide qtip when enter some text in payment field
   jQuery(".payment_amount").keyup ->
@@ -126,4 +126,3 @@ jQuery ->
         jQuery(".alert.alert-error").show().find('span').html("You cannot edit payment with paypal")
       flag
   window.bind_edit_payment_links()
-

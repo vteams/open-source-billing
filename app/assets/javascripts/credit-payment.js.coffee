@@ -1,6 +1,6 @@
 window.creditPayment = ->
   #Select credit from method dropdown if apply from credit checkbox is checked
-  jQuery(".apply_credit").live "click", ->
+  jQuery(".apply_credit").on "click",null, ->
 
     apply_credit_id = jQuery(this).attr("id")
     parent = jQuery(this).parents(".pay_invoice")
@@ -27,4 +27,3 @@ window.creditPayment = ->
         payment_field.val(amount_due.toFixed(2))
     else
       payment_field.val('') unless payfull.is ":checked"
-

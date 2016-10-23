@@ -1,6 +1,6 @@
 jQuery ->
   #/ Change selected company in companies list in header
-  jQuery("a.header_company_link").live "click", ->
+  jQuery("a.header_company_link").on "click",null, ->
      link = jQuery(this)
      company_id = link.attr('company_id')
      controller = link.attr('controller')

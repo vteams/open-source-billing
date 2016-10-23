@@ -1,6 +1,6 @@
 # Task form validation
 
-jQuery(".task_form .task-submit-btn").live "click", ->
+jQuery(".task_form").on "click", null, ->
   name = jQuery("#task_name").val()
   rate = jQuery("#task_rate").val()
   association_name = jQuery('input[name=association]:checked').attr("id")
@@ -30,10 +30,10 @@ jQuery(".task_form .task-submit-btn").live "click", ->
   else
     return false
 
-jQuery('#task_name').live "change", ->
+jQuery('#task_name').on "change", null, ->
   return hidePopover(jQuery("#task_name"))
 
-jQuery('.company_checkbox').live "change", ->
+jQuery('.company_checkbox').on "change", null, ->
   return hidePopover(jQuery("#company_association"))
 
 applyPopover = (elem,position,corner,message) ->

@@ -80,27 +80,27 @@ jQuery ->
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
   # Update line and grand total if line item fields are changed
-  jQuery("input.cost, input.qty").live "blur", ->
+  jQuery("input.cost, input.qty").on "blur",null, ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
 
-  jQuery("input.cost, input.qty").live "keyup", ->
+  jQuery("input.cost, input.qty").on "keyup",null, ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
   #jQuery(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
-  jQuery("select.tax1, select.tax2").live "change", ->
+  jQuery("select.tax1, select.tax2").on "change",null, ->
     updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
-  jQuery("input.cost, input.qty").live "keypress", (e) ->
+  jQuery("input.cost, input.qty").on "keypress",null, (e) ->
     if e.which is 13
       e.preventDefault()
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".estimate_grid_fields select.items_list").live "change", ->
+  jQuery(".estimate_grid_fields").on "change",'select.items_list', ->
     # Add an empty line item row at the end if last item is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -134,11 +134,11 @@ jQuery ->
       jQuery(".add_nested_fields").click()
   #applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".add_nested_fields").live "click", ->
+  jQuery(".add_nested_fields").on "click",null, ->
     setTimeout "window.applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total estimate balance if an item is removed
-  jQuery(".remove_nested_fields").live "click", ->
+  jQuery(".remove_nested_fields").on "click",null, ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
@@ -192,7 +192,7 @@ jQuery ->
       applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
       flag = false
     flag
-  jQuery("#reason_for_dispute").live "keyup", ->
+  jQuery("#reason_for_dispute").on "keyup",null, ->
     jQuery(this).qtip("hide")
 
   # Validate client, cost and quantity on estimate save
@@ -312,16 +312,16 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('.use_as_template .close_qtip').live "click", ->
+  jQuery('.use_as_template').on "click",'.close_qtip', ->
     hidePopover(jQuery("#estimate_client_id_chzn"))
 
-  jQuery("#estimate_client_id_chzn,.chzn-container").live "click", ->
+  jQuery("#estimate_client_id_chzn,.chzn-container").on "click",null, ->
     jQuery(this).qtip("hide")
 
-  jQuery("#add_line_item").live "click",->
+  jQuery("#add_line_item").on "click",null,->
     jQuery(this).qtip('hide')
 
-  jQuery(".line_item_qtip").live "change",->
+  jQuery(".line_item_qtip").on "change",null,->
     jQuery(this).qtip('hide')
 
   # Don't send an ajax request if an item is deselected.
@@ -334,7 +334,7 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links a').live 'click', ->
+  jQuery('#active_links a').on 'click',null, ->
     jQuery('#active_links a').removeClass('active')
     jQuery(this).addClass('active')
 
@@ -379,13 +379,13 @@ jQuery ->
     dateFormat: DateFormats.format()
 
   # Hide placeholder text on focus
-  jQuery("input[type=text],input[type=number]",".quick_create_wrapper").live("focus",->
+  jQuery("input[type=text],input[type=number]",".quick_create_wrapper").on("focus",null,->
     @dataPlaceholder = @placeholder
     @removeAttribute "placeholder"
-  ).live("blur", ->
+  ).on("blur",null, ->
     @placeholder = @dataPlaceholder
     @removeAttribute "dataPlaceholder"
-  ).live "keypress", (e) ->
+  ).on "keypress",null, (e) ->
     if e.which is 13
       e.preventDefault()
       jQuery(".active-form .btn_save").trigger("click")
@@ -402,7 +402,7 @@ jQuery ->
       left: pos.left + "px"
     ).show()
 
-  jQuery(".close_btn").live "click", ->
+  jQuery(".close_btn").on "click",null, ->
     jQuery(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
 
   # Alert on dispute if estimate is paid
@@ -415,10 +415,10 @@ jQuery ->
       flag = false
     flag
 
-  jQuery(".more").live "click", ->
+  jQuery(".more").on "click",null, ->
     jQuery(".toggleable").removeClass("collapse")
 
-  jQuery("#add_line_item").live "click", ->
+  jQuery("#add_line_item").on "click",null, ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
@@ -430,7 +430,7 @@ jQuery ->
     $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
 
-  jQuery(".less").live "click", ->
+  jQuery(".less").on "click",null, ->
     jQuery(".toggleable").addClass("collapse")
 
   #send only email to client on clicking send this note only link.
