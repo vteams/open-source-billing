@@ -37,6 +37,7 @@ Gemfile.lock
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+.ruby-version
 
 /config/config.yml
 node_modules/*
