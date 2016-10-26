@@ -1,4 +1,5 @@
 Osb::Application.routes.draw do
+  mount Osbm::Engine => "/osbm"
 
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'

@@ -26,7 +26,7 @@
                 <div class="field_row">
                   <div class="label_field sign_up"><%= f.label :account, 'Organization' %></div>
                   <div class="medium_field sign_up">
-                    <%= f.text_field :account, :autofocus => true, :id => "login_company", :class => 'sign_up', :required => '' %>
+                    <%= f.text_field :account, :value => current_account.try(:org_name), :readonly => true,  :autofocus => true, :id => "login_company", :class => 'sign_up', :required => '' %>
                   </div>
                 </div>
                 <!--field_row-->

@@ -32,6 +32,10 @@ class Account < ActiveRecord::Base
 
   # callbacks
   before_save :change_currency_symbol
+  after_create do
+    Thread.current[:current_account] = self.id
+    Osbm::AccountEmailTemplate.generate(self.id)
+  end
 
   def change_currency_symbol
     self.currency_symbol = CURRENCY_SYMBOL[self.currency_code]
@@ -50,12 +54,15 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def self.payment_gateway
+  def payment_gateway
     ActiveMerchant::Billing::PaypalGateway.new(
-        :login => OSB::CONFIG::PAYPAL_LOGIN,
-        :password => OSB::CONFIG::PAYPAL_PASSWORD,
-        :signature => OSB::CONFIG::PAYPAL_SIGNATURE
+        :login => self.pp_login,
+        :password => self.pp_password,
+        :signature => self.pp_signature
     )
+  end
+  def self.payment_gateway(account_id)
+    Account.find(account_id).payment_gateway
   end
 
 end

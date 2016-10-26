@@ -19,6 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 module ApplicationHelper
+  def current_account
+    Account.find(session[:current_account])
+  end
 
   def number_to_currency number,options = {}
     options[:unit] ||= t("currency_unit")

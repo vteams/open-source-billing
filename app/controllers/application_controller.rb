@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, unless: :is_home_page?
   before_filter :_reload_libs #reload libs on every request for dev environment only
                               #layout :choose_layout
                               #reload libs on every request for dev environment only
@@ -39,6 +39,34 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to dashboard_url, :alert => exception.message
+  end
+
+
+  before_filter :set_current_account, if: :current_account_required?
+  def set_current_account
+    if request.subdomain.empty?
+      redirect_to '/osbm/home'
+    else
+      unless Osbm::OPEN_ACCESS
+        if Account.where(subdomain: request.subdomain).count == 0
+          redirect_to '/osbm/home'
+          return
+        end
+      end
+      account = Account.find_by(subdomain: request.subdomain)
+      if account.present?
+        session[:current_account] = account.id
+        Thread.current[:current_account] = session[:current_account]
+        Thread.current[:current_subdomain] = request.subdomain
+        if request.subdomain == 'admin'
+          if params[:controller]!='osbm/admins' and params[:controller] !='devise/sessions'
+            redirect_to '/osbm/admin/accounts' and return
+          end
+        end
+      else
+        redirect_to '/osbm/home'
+      end
+    end
   end
 
 
@@ -170,7 +198,31 @@ class ApplicationController < ActionController::Base
     User.current = current_user
   end
 
+
+  def multi_tenant_enabled?
+    if defined? Osbm
+      Osbm::ENABLED == true
+    else
+      false
+    end
+  end
+
+  helper_method :multi_tenant_enabled?
+
   protected
+
+  def is_home_page?
+    if multi_tenant_enabled?
+      %w(home landing).include? params[:action]
+    else
+      false
+    end
+  end
+
+  def current_account_required?
+    multi_tenant_enabled? and !is_home_page?
+  end
+
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:user_name, :account ,:email, :password, :password_confirmation, :remember_me) }

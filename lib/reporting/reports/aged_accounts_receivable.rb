@@ -50,7 +50,8 @@ module Reporting
               #{@report_criteria.company_id == "" ? "" : "AND invoices.company_id = #{@report_criteria.company_id}"}
         SQL
 
-        aged_invoices = Invoice.find_by_sql(<<-SQL
+                condition +=  "AND invoices.account_id = #{Thread.current[:current_account]}"
+aged_invoices = Invoice.find_by_sql(<<-SQL
           SELECT aged.client_name,aged.currency_id,aged.currency_code,
             SUM(CASE WHEN aged.age BETWEEN 0 AND 30 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS zero_to_thirty,
             SUM(CASE WHEN aged.age BETWEEN 31 AND 60 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS thirty_one_to_sixty,

@@ -35,7 +35,7 @@ class PaypalService
 
   def process_payment
     return OSB::Paypal::TransStatus::ALREADY_PAID if @invoice.paid?
-    gateway = Account.payment_gateway
+    gateway = Account.find(@invoice.account_id).payment_gateway
     if @credit_card.valid?
       response = gateway.authorize(@amount, @credit_card, @purchase_options)
       if response.success?
