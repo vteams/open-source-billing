@@ -81,6 +81,7 @@
 //= require hourlycounter
 //= require timer
 
+$(function () {
 
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400,

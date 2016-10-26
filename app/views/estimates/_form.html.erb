@@ -58,7 +58,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
                   <div class="medium_field">
-                    <div> <%= text_field_tag 'company', get_estimate_company_name(@estimate), :readonly => '', :class => 'company_read_only' %> </div>
+                    <div> <%= text_field_tag 'company', get_estimate_company_name(@estimate), :readonly => '', :class => 'company_read_only form-control' %> </div>
                     <ul class="field_description">
                       <li><%= t('views.estimates.company_hint') %></li>
                     </ul>
@@ -92,7 +92,7 @@
                 <div class="field_row description right-fields">
                   <div class="label_field left single"><%= f.label :estimate_number,  'Estimate #' %></div>
                   <div class="small_field">
-                    <%= f.text_field :estimate_number, :readonly => "", :required => "" %>
+                    <%= f.text_field :estimate_number, :readonly => "", :required => "", :class => 'form-control' %>
                     <ul class="field_description">
                       <li><%= t('views.estimates.auto_generated') %></li>
                     </ul>
@@ -103,7 +103,7 @@
                 <div class="field_row description right-fields">
                   <div class="label_field left single"><%= f.label :estimate_date, content_tag(:span, t('views.estimates.estimate_date')) %></div>
                   <div class="small_field">
-                    <%= f.text_field :estimate_date,value: f.object.estimate_date, :required => "" %>
+                    <%= f.text_field :estimate_date,value: f.object.estimate_date, :required => "", :class => 'form-control' %>
                   </div>
                 </div>
                 <!--field_row-->
@@ -176,7 +176,7 @@
               <div class="grid_summary_description custom">
                 <%= f.hidden_field :discount_amount %>
                 <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-                <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip" %>
+                <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip form-control" %>
               </div>
             </div>
 
@@ -209,7 +209,7 @@
           <div class="field_row textarea">
             <div class="label_field textarea"><%= f.label :notes %></div>
             <div class="large_field">
-              <%= f.text_area :notes, maxlength: 400 %>
+              <%= f.text_area :notes, maxlength: 400, :class => 'form-control' %>
               <ul class="field_description">
                 <li class="text-limit"> </li>
               </ul>

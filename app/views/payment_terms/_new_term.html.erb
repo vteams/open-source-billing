@@ -17,7 +17,7 @@
           <div class="field_row">
             <div class="label_field left"><span><%= t('views.payment_terms.number_of_days') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "payment_term[number_of_days]", '', :required => 'required' %>
+              <%= text_field_tag "payment_term[number_of_days]", '', :required => 'required', class: 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -25,7 +25,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.payment_terms.description') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "payment_term[description]", '', :required => 'required' %>
+              <%= text_field_tag "payment_term[description]", '', :required => 'required', class: 'form-control' %>
               <%= hidden_field_tag :quick_create %>
             </div>
           </div>
@@ -57,4 +57,3 @@
   <!--tiny_create_form-->
 </div><!--tiny_form_container-->
 <%# end %>
-

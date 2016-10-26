@@ -806,28 +806,6 @@ tfoot tr:hover{
   margin: 0 11px 0 0;
 }
 
-input[type="text"],
-textarea,
-.blank_input {
-  border: 1px solid #d7d7d7;
-  height: 28px;
-  line-height: 28px;
-  padding: 0 9px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 13px;
-  color: #464646;
-  margin: 0px;
-  border-radius: 4px;
-  background-color: #ffffff;
-}
-select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
-  background-color: #EEEEEE;
-  cursor: not-allowed;
-}
-input[disabled]{
-  background-color: #CCCCCC;
-  cursor: not-allowed;
-}
 .options_content {
   float: left;
   margin: 0 0 0 130px;
@@ -1332,18 +1310,6 @@ select.discount_select
   color: #464646;
   padding: 4px 8px !important;
   font-weight: normal !important;
-}
-
-/*all input focus border*/
-textarea:focus, input[type="text"]:focus,
-input[type="password"]:focus, input[type="datetime"]:focus,
-input[type="datetime-local"]:focus, input[type="date"]:focus,
-input[type="month"]:focus, input[type="time"]:focus,
-input[type="week"]:focus, input[type="number"]:focus,
-input[type="email"]:focus, input[type="url"]:focus,
-input[type="search"]:focus, input[type="tel"]:focus,
-input[type="color"]:focus, .uneditable-input:focus{
-  border-color: rgba(0, 189, 229, 0.8);
 }
 
 .chzn-search{

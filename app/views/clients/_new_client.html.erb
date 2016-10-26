@@ -15,7 +15,7 @@
           <div class="field_row">
             <div class="label_field left single"><%= t('views.clients.organization') %></div>
             <div class="small_field">
-              <%= text_field_tag "client[organization_name]", '' %>
+              <%= text_field_tag "client[organization_name]", '', :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -23,7 +23,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[email]", '', :required => '' %>
+              <%= text_field_tag "client[email]", '', :required => '', :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -31,7 +31,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.clients.first_name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[first_name]", '', :required => true %>
+              <%= text_field_tag "client[first_name]", '', :required => true, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -39,7 +39,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.clients.last_name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[last_name]", '', :required => true %>
+              <%= text_field_tag "client[last_name]", '', :required => true, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -47,7 +47,7 @@
           <div class="field_row">
             <div class="label_field left"><span><%= t('views.clients.business_phone') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "client[business_phone]", '' %>
+              <%= text_field_tag "client[business_phone]", '', :class => 'form-control' %>
               <%= hidden_field_tag :quick_create %>
               <%#= hidden_field_tag :association, 'account' %>
             </div>
@@ -79,4 +79,3 @@
   </div>
   <!--tiny_create_form-->
 </div><!--tiny_form_container-->
-

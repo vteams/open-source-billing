@@ -12,7 +12,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :project_name, content_tag(:span, t('project_name')) %></div>
                   <div class="medium_field">
-                    <div> <%= f.text_field :project_name %> </div>
+                    <div> <%= f.text_field :project_name, :class => 'form-control' %> </div>
                   </div>
                 </div>
 
@@ -36,7 +36,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :total_hours, "Time Estimate" %></div>
                   <div class="">
-                    <div> <%= f.number_field :total_hours, min: 0 %> hours </div>
+                    <div> <%= f.number_field :total_hours, min: 0, :class => 'form-control' %> hours </div>
                   </div>
                   <ul class="field_description select">
                     <li><%= t('views.projects.time_estimate_hint') %></li>
@@ -51,7 +51,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"><%= f.label :description %></div>
                   <div class="medium_field">
-                    <div> <%= f.text_area :description %> </div>
+                    <div> <%= f.text_area :description, :class => 'form-control' %> </div>
                   </div>
                 </div>
 
@@ -65,7 +65,7 @@
                   </ul>
                 </div>
 
-               
+
 
               </div>
             </div>

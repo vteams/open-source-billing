@@ -3,29 +3,29 @@
     <div class="field_row">
       <div class="label_field left single"><%= t('views.common.email') %></div>
       <div class="medium_field">
-        <%= f.text_field :email %>
+        <%= f.text_field :email, :class => 'form-control' %>
       </div>
       <div class="label_field right"><%= t('views.common.phone') %></div>
-      <div class="small_field"><%= f.text_field :home_phone %></div>
+      <div class="small_field"><%= f.text_field :home_phone, :class => 'form-control' %></div>
     </div>
     <!--field_row-->
 
     <div class="field_row description">
       <div class="label_field left single"><%= t('views.common.name') %></div>
       <div class="small_field">
-        <%= f.text_field :first_name %>
+        <%= f.text_field :first_name, :class => 'form-control' %>
         <ul class="field_description">
           <li><%= t('views.clients.first_name') %></li>
         </ul>
       </div>
       <div class="small_field right">
-        <%= f.text_field :last_name %>
+        <%= f.text_field :last_name, :class => 'form-control' %>
         <ul class="field_description">
           <li><%= t('views.clients.last_name') %></li>
         </ul>
       </div>
       <div class="label_field right single"><%= t('views.common.mobile') %></div>
-      <div class="small_field"> <%= f.text_field :mobile_number %></div>
+      <div class="small_field"> <%= f.text_field :mobile_number, :class => 'form-control' %></div>
     </div>
     <div class="options_row">
       <div class="options_content">

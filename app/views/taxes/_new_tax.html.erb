@@ -17,7 +17,7 @@
           <div class="field_row">
             <div class="label_field left"><span><%= t('views.taxes.tax_name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "tax[name]", '', :class => 'text_field', :required => 'required', "data-unique" => "" %>
+              <%= text_field_tag "tax[name]", '', :class => 'text_field form-control', :required => 'required', "data-unique" => "" %>
             </div>
           </div>
           <!--field_row-->
@@ -25,7 +25,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.common.percentage') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "tax[percentage]", '', :required => 'required' %>
+              <%= text_field_tag "tax[percentage]", '', :class => 'form-control', :required => 'required' %>
               <%= hidden_field_tag :quick_create %>
             </div>
           </div>
@@ -44,8 +44,6 @@
       <!--tiny_form_middle-->
 
       <div class="tiny_form_btm">
-<%#= submit_tag "save", :name => "save", :class => "btn_large", :style => "width:40px;" %>
-<%#= submit_tag "save & ADD MORE", :name => "add_more", :class => "btn_large" %>
         <%= button_tag 'save', :name => "save", :class => "btn_large tiny_btn btn_save" %>
         <%= button_tag 'save & add more', :name => "add_more", :class => "btn_large tiny_btn btn_save_and_add_more" %>
       </div>
@@ -57,4 +55,3 @@
   <!--tiny_create_form-->
 </div><!--tiny_form_container-->
 <%# end %>
-

@@ -11,7 +11,7 @@
               <label for="company_org_name"><span><%= t('views.companies.name') %></span></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :org_name, :required => 'required' %>
+              <%= f.text_field :org_name, :required => 'required', :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -22,7 +22,7 @@
               <label for="company_admin_first_name"><span><%= t('views.clients.first_name') %></span></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :admin_first_name, :required => 'required' %>
+              <%= f.text_field :admin_first_name, :required => 'required', :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -33,7 +33,7 @@
               <label for="company_admin_last_name"><span><%= t('views.clients.last_name') %></span></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :admin_last_name, :required => 'required' %>
+              <%= f.text_field :admin_last_name, :required => 'required', :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -54,7 +54,7 @@
               <label for="company_street_address_1"><%= t('views.common.street_address') %></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :street_address_1 %>
+              <%= f.text_field :street_address_1, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -64,7 +64,7 @@
               <%= f.label " " %>
             </div>
             <div class="middle_field">
-              <%= f.text_field :street_address_2 %>
+              <%= f.text_field :street_address_2, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -74,7 +74,7 @@
               <%= f.label :city, t('views.common.city') %>
             </div>
             <div class="middle_field">
-              <%= f.text_field :city %>
+              <%= f.text_field :city, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -84,7 +84,7 @@
               <label for="company_province_or_state"><%= t('views.common.province') %></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :province_or_state %>
+              <%= f.text_field :province_or_state, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -94,7 +94,7 @@
               <label for="company_postal_or_zip_code"><%= t('views.common.zip_code') %></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :postal_or_zip_code %>
+              <%= f.text_field :postal_or_zip_code, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -104,7 +104,7 @@
               <label for="company_phone_business"><%= t('views.common.phone') %></label>
             </div>
             <div class="middle_field">
-              <%= f.text_field :phone_business %>
+              <%= f.text_field :phone_business, :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -125,4 +125,3 @@
   </div><!--content_bottom-->
 
 <% end %>
-

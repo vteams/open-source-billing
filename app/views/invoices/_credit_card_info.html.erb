@@ -49,13 +49,13 @@
                     <div class="field_row description">
                       <div class="label_field left single"><span><%= t('views.credit_card.card_holder_name') %></span></div>
                       <div class="small_field">
-                        <%= text_field_tag :first_name, '', :required => "" %>
+                        <%= text_field_tag :first_name, '', :required => "", class: 'form-control' %>
                         <ul class="field_description">
                           <li><%= t('views.clients.first_name') %></li>
                         </ul>
                       </div>
                       <div class="small_field right">
-                        <%= text_field_tag :last_name, '', :required => "" %>
+                        <%= text_field_tag :last_name, '', :required => "", class: 'form-control' %>
                         <ul class="field_description">
                           <li><%= t('views.clients.last_name') %></li>
                         </ul>
@@ -66,7 +66,7 @@
                     <div class="field_row">
                       <div class="label_field left single"><span><%= t('views.credit_card.cc_number') %></span></div>
                       <div class="medium_field">
-                        <%= text_field_tag :cc_number, '', :required => "" %>
+                        <%= text_field_tag :cc_number, '', :required => "", class: 'form-control' %>
                       </div>
                     </div>
                     <!--field_row-->
@@ -74,14 +74,12 @@
                     <div class="field_row description">
                       <div class="label_field left single"><span><%= t('views.credit_card.expiry_date') %></span></div>
                       <div class="small_field">
-                        <%#= text_field_tag :cc_month %>
                         <%= select_month 1, {:use_short_month => true, :include_blank => false, :prompt => false}, {:name => 'cc_month'} %>
                         <ul class="field_description">
                           <li><%= t('views.common.month') %></li>
                         </ul>
                       </div>
                       <div class="small_field right">
-                        <%#= text_field_tag :cc_year %>
                         <%= select_year Date.today, {:start_year => Time.now.year, :end_year => Time.now.year + 10, :include_blank => false}, {:id => 'cc_year', :name => 'cc_year'} %>
                         <ul class="field_description">
                           <li><%= t('views.common.year') %></li>
@@ -93,7 +91,7 @@
                     <div class="field_row">
                       <div class="label_field left single"><span><%= t('views.credit_card.verification_code') %></span></div>
                       <div class="medium_field">
-                        <%= text_field_tag :cc_verification, '', :required => "" %>
+                        <%= text_field_tag :cc_verification, '', :required => "", class: 'form-control' %>
                         <%= hidden_field_tag :invoice_id, params[:inv_id] %>
                       </div>
                     </div><!--field_row-->

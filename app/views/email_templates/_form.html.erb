@@ -49,7 +49,7 @@
                 <div class="field_row">
                   <div class="label_field left single"> <%= f.label :Send_After %></div>
                   <div class="medium_field">
-                    <%= f.text_field :no_of_days, :class => 'after' %>
+                    <%= f.text_field :no_of_days, :class => 'after form-control' %>
                     <label class="after"><%= t('views.email_templates.days_of_due_date') %></label>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
             <div class="field_row">
               <div class="label_field left single"> <%= f.label :email_from, t('views.email_templates.email_from') %></div>
               <div class="medium_field">
-                <%= f.text_field :email_from %>
+                <%= f.text_field :email_from, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -67,14 +67,14 @@
             <div class="field_row">
               <div class="label_field left single"> <%= f.label :subject, t('views.clients.subject') %></div>
               <div class="medium_field">
-                <%= f.text_field :subject %>
+                <%= f.text_field :subject, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
 
             <div class="field_row">
               <div class="large_field">
-                <%= f.text_area :body, :class => "tinymce" %>
+                <%= f.text_area :body, :class => "tinymce form-control" %>
               </div>
             </div>
             <!--field_row-->

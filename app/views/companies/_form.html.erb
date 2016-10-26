@@ -24,7 +24,7 @@
             <div class="field_row">
               <div class="label_field left single"><span><%= t('views.companies.name') %></span></div>
               <div class="large_field">
-                <%= f.text_field :company_name, :required => "required"  %>
+                <%= f.text_field :company_name, :required => "required", :class => 'form-control'  %>
               </div>
             </div>
             <!--field_row-->
@@ -32,7 +32,7 @@
             <div class="field_row">
               <div class="label_field left single"><span><%= t('views.clients.contact_name') %></span></div>
               <div class="medium_field">
-                <%= f.text_field :contact_name, :required => "required" %>
+                <%= f.text_field :contact_name, :required => "required", :class => 'form-control' %>
               </div>
               <div class="label_field right single"><%= t('views.clients.contact_title') %></div>
               <div class="small_field"><%= f.text_field :contact_title %></div>
@@ -42,17 +42,17 @@
             <div class="field_row">
               <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
               <div class="medium_field">
-                <%= f.text_field :email, :required => "required" %>
+                <%= f.text_field :email, :required => "required", :class => 'form-control' %>
               </div>
               <div class="label_field right single"><%= t('views.common.phone') %></div>
-              <div class="small_field"><%= f.text_field :phone_number %></div>
+              <div class="small_field"><%= f.text_field :phone_number, :class => 'form-control' %></div>
             </div>
             <!--field_row-->
 
             <div class="field_row">
               <div class="label_field left single"><%= t('views.common.fax') %></div>
               <div class="small_field">
-                <%= f.text_field :fax_number %>
+                <%= f.text_field :fax_number, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -87,7 +87,7 @@
             <div class="field_row description">
               <div class="label_field left single"></div>
               <div class="large_field">
-                <%= f.text_field :street_address_1 %>
+                <%= f.text_field :street_address_1, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.street') %>#1</li>
                 </ul>
@@ -98,7 +98,7 @@
             <div class="field_row description">
               <div class="label_field left single">&nbsp;</div>
               <div class="large_field">
-                <%= f.text_field :street_address_2 %>
+                <%= f.text_field :street_address_2, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.street') %>>#2</li>
                 </ul>
@@ -109,19 +109,19 @@
             <div class="field_row description">
               <div class="label_field left single">&nbsp;</div>
               <div class="small_field">
-                <%= f.text_field :city %>
+                <%= f.text_field :city, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.city') %></li>
                 </ul>
               </div>
               <div class="small_field right">
-                <%= f.text_field :province_or_state %>
+                <%= f.text_field :province_or_state, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.province') %></li>
                 </ul>
               </div>
               <div class="small_field right">
-                <%= f.text_field :postal_or_zipcode %>
+                <%= f.text_field :postal_or_zipcode, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.zip_code') %></li>
                 </ul>
@@ -153,7 +153,7 @@
                 <input type="file" name="company[logo]" style="display:none;" id="pdffile"/>
 
                 <div class="input-append">
-                  <input type="text" name="subfile" id="subfile" class="input-xlarge"/>
+                  <input type="text" name="subfile" id="subfile form-control" class="input-xlarge"/>
                   <a class="btn" onclick="$('#pdffile').click();"><%= t('views.companies.browse') %></a>
                 </div>
               </div>
@@ -172,7 +172,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.companies.tag_line') %></div>
               <div class="large_field">
-                <%= f.text_field :company_tag_line %>
+                <%= f.text_field :company_tag_line, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -180,7 +180,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= t('views.companies.memo') %></div>
               <div class="large_field">
-                <%= f.text_area :memo %>
+                <%= f.text_area :memo, :class => 'form-control' %>
               </div>
             </div>
 

@@ -58,7 +58,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
-                <div> <%= text_field_tag 'company', get_invoice_company_name(@invoice), :readonly => '', :class => 'company_read_only' %> </div>
+                <div> <%= text_field_tag 'company', get_invoice_company_name(@invoice), :readonly => '', :class => 'company_read_only form-control' %> </div>
                 <ul class="field_description">
                   <li><%= t('views.invoices.company_hint') %></li>
                 </ul>
@@ -106,7 +106,7 @@
             <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, 'Invoice #') %></div>
               <div class="small_field">
-                <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
+                <%= f.text_field :invoice_number, :readonly => "", :required => "", :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.invoices.auto_generated') %></li>
                 </ul>
@@ -117,7 +117,7 @@
             <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %></div>
               <div class="small_field">
-                <%= f.text_field :invoice_date,value: f.object.invoice_date, :required => "" %>
+                <%= f.text_field :invoice_date,value: f.object.invoice_date, :required => "", :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -125,7 +125,7 @@
             <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :due_date, t("views.invoices.due_date") %></div>
               <div class="small_field">
-                <%= f.text_field :due_date, :placeholder => "TBD" %>
+                <%= f.text_field :due_date, :placeholder => "TBD", :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -195,7 +195,7 @@
           <div class="grid_summary_description custom">
             <%= f.hidden_field :discount_amount %>
             <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-            <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip" %>
+            <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip form-control" %>
           </div>
         </div>
 
