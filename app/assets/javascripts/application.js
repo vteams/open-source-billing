@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui.js
+//= require jquery-ui
 //= require twitter/bootstrap
 //= require jquery.jqplot.js
 //= require jqplot.barRenderer.min.js
@@ -82,9 +82,6 @@
 //= require timer
 
 
-
-$(function () {
-
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400,
         remain = parseInt(max - tlength);
@@ -104,11 +101,6 @@ $(function () {
     };
 
     $("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
-
-//    $("#nav ul.select > li").mouseenter(function () {
-//        $(".sub").hide();
-//        $(".sub", $(this)).show();
-//    });
 
     // Show sub menu on mouseover
     $('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
@@ -154,9 +146,6 @@ $(function () {
             });
         });
     })(jQuery);
-
-    //$(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
-
 });
 
 window.preventDeletedNavigation = function(){
