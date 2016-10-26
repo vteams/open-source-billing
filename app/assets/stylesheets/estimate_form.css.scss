@@ -103,12 +103,11 @@
   .grid_table table col.eight { /*line total*/
     width: 100px;
   }
-  input.grid_small,
   .blank_input {
-    width: 60px;
+    width: 100%;
   }
   select{
-    width: 300px;
+    width: 200px;
   }
   select.grid_small {
     width: 80px;
@@ -116,33 +115,18 @@
   .grid_table table tr th:first-child {
     border-right: none !important;
   }
-  input.grid_medium,
-  .blank_input.grid_medium,
-  select.grid_medium {
-    width: 100px;
-  }
-  input.grid_large,
-  .blank_input,
-  select.grid_large {
-    width: 150px;
-  }
-  input.grid_large_medium,
-  .blank_input,
-  select.grid_large_medium {
-    width: 173px;
-  }
   .grid_summary {
     //padding: 30px 0;
     float: right;
     margin: -26px 0 0;
-    padding: 0 0 30px;
+    padding: 0 12px 30px;
     width: 50%;
     &.custom{
       .grid_summary_content{
         width: 220px;
       }
       .grid_summary_title{
-        width: 120px;
+        width: 130px;
       }
       select{
         width: 60px;
@@ -218,12 +202,5 @@
     margin: 0 5px 3px;
     padding: 4px 3px 4px 2px;
     width: 51px;
-  }
-  input.estimate_discount{
-    height: 28px;
-    line-height: 28px;
-    padding: 0 9px 0 9px;
-    text-align: right;
-    width: 42px;
   }
 }
