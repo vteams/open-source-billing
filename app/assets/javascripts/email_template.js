@@ -1,8 +1,8 @@
 $(document).ready( function() {
     $('#email_template_custom_fields li').click(function(evt) {
         var custom_token = $(this).find('.custom_field_token').text();
-        var subject_focused = jQuery("#email_template_subject").is(":focus");
-        var tiny_focused = jQuery("#email_template_body_ifr").is(":focus");
+        var subject_focused = $("#email_template_subject").is(":focus");
+        var tiny_focused = $("#email_template_body_ifr").is(":focus");
         if(subject_focused)
         {$("#email_template_subject").insertAtCaret(custom_token);}
         else if(tiny_focused) {

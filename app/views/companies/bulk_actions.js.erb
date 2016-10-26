@@ -1,43 +1,43 @@
-jQuery('.alert').hide();
+$('.alert').hide();
 
 <% if @flag_current_company %>
-    jQuery(".alert.alert-error").show().find('span').html("Sorry, Current Company cannot be <%= @action_for_company %>");
+    $(".alert.alert-error").show().find('span').html("Sorry, Current Company cannot be <%= @action_for_company %>");
 <% else %>
     <% if @action == "archived" or @action == "deleted" %>
-        jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+        $(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
     <%else%>
-        jQuery(".alert.alert-success").show().find('span').html("Companies are <%= @action %> successfully.");
+        $(".alert.alert-success").show().find('span').html("Companies are <%= @action %> successfully.");
     <% end %>
 
     <% unless params[:company_ids].blank?%>
-        jQuery('tbody#company_body').html('<%= escape_javascript(render 'company') %>');
-        jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+        $('tbody#company_body').html('<%= escape_javascript(render 'company') %>');
+        $('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
     <%end%>
 
     // Enable/Disable action links(Archive,Delete,Recover). //
 
-    jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
-    jQuery('#active_links a').removeClass('active');
+    $('#active_links').html('<%= escape_javascript render("filter_links") %>');
+    $('#active_links a').removeClass('active');
 
-    jQuery('#select_all').attr('checked', false);
+    $('#select_all').attr('checked', false);
 
-        jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
-        jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+        $('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
+        $(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
 
-    jQuery('.top_links').hide();
+    $('.top_links').hide();
     <% if @action == "recovered from archived"%>
-        jQuery('.send').parent("li").removeClass("grid_control_sep");
-        jQuery('.recover_archived,.destroy_archived,.send').show();
-        jQuery('.get_archived').addClass('active');
+        $('.send').parent("li").removeClass("grid_control_sep");
+        $('.recover_archived,.destroy_archived,.send').show();
+        $('.get_archived').addClass('active');
     <% elsif @action == "recovered from deleted" %>
-        jQuery('.recover_deleted').show().parent("li").removeClass("grid_control_sep");
-        jQuery('.get_deleted').addClass('active');
+        $('.recover_deleted').show().parent("li").removeClass("grid_control_sep");
+        $('.get_deleted').addClass('active');
     <% elsif @action == "deleted from archived" %>
-        jQuery('.recover_archived,.destroy_archived').show();
-        jQuery('#active_links a.get_archived').addClass('active');
+        $('.recover_archived,.destroy_archived').show();
+        $('#active_links a.get_archived').addClass('active');
     <%else%>
-        jQuery('.archive,.destroy,.payment,.send').show();
-        jQuery('.get_actives').addClass('active');
+        $('.archive,.destroy,.payment,.send').show();
+        $('.get_actives').addClass('active');
     <%end%>
 <% end %>
 bind_deleted_entry();

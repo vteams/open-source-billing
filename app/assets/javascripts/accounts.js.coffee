@@ -2,20 +2,20 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  jQuery("form#new_account, form.edit_account").submit ->
+  $("form#new_account, form.edit_account").submit ->
     flag = true
-    flag = if jQuery.trim(jQuery("#account_org_name").val()) is ""
-      applyQtip(jQuery("#account_org_name"),"Enter company name")
+    flag = if jQuery.trim($("#account_org_name").val()) is ""
+      applyQtip($("#account_org_name"),"Enter company name")
       false
-    else if jQuery.trim(jQuery("#account_admin_first_name").val()) is ""
-      applyQtip(jQuery("#account_admin_first_name"),"Enter first name")
+    else if jQuery.trim($("#account_admin_first_name").val()) is ""
+      applyQtip($("#account_admin_first_name"),"Enter first name")
       false
-    else if jQuery.trim(jQuery("#account_admin_last_name").val()) is ""
-      applyQtip(jQuery("#account_admin_last_name"),"Enter last name")
+    else if jQuery.trim($("#account_admin_last_name").val()) is ""
+      applyQtip($("#account_admin_last_name"),"Enter last name")
       false
 
-  jQuery("input[type=text]",".companies_wrapper").keypress ->
-    hideQtip(jQuery(this))
+  $("input[type=text]",".companies_wrapper").keypress ->
+    hideQtip($(this))
 
   applyQtip = (elem,message) ->
     elem.qtip

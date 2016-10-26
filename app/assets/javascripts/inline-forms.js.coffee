@@ -3,13 +3,13 @@ class window.InlineForms
 
   constructor: (@dropdownId) ->
     # our dropdown and formcontainer to retrieve form html
-    @dropdown = jQuery("##{@dropdownId}")
+    @dropdown = $("##{@dropdownId}")
     @formContainerId = @dropdown.attr("data-form-container")
     @resource = @formContainerId.replace /_holder/, ''
     # clients|items|taxes|terms
     # chosen elements
     @chznContainerWidth = @dropdown.attr("data-dropdown-width")
-    @chznContainer = jQuery("##{@dropdownId}_chzn")
+    @chznContainer = $("##{@dropdownId}_chzn")
     @chznDrop = @chznContainer.find(".chzn-drop")
     @chznResults = @chznContainer.find(".chzn-results")
     @chznSearchBox = @chznContainer.find(".chzn-drop .chzn-search input[type=text]")
@@ -56,18 +56,18 @@ class window.InlineForms
       new_val = $(new_record).attr 'value'
       text = $(new_record).text()
       new_record_tax2 = "<option value='#{new_val}' data-tax_2='#{tax_val}' selected>#{text}</option>"
-      all_dropdowns = jQuery(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
-      all_dropdowns = jQuery(".tax2:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = $(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = $(".tax2:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
     else if dropdown_class_for_tax == 'tax2'
       new_record_tax2 = new_record
       tax_val = $(new_record).data 'tax_2'
       new_val = $(new_record).attr 'value'
       text = $(new_record).text()
       new_record_tax1 = "<option value='#{new_val}' data-tax_1='#{tax_val}' selected>#{text}</option>"
-      all_dropdowns = jQuery(".tax1:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
-      all_dropdowns = jQuery(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = $(".tax1:not('##{dropdown_id}')").append(new_record_tax1.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = $(".#{dropdown_class_for_tax}:not('##{dropdown_id}')").append(new_record_tax2.replace('selected','')).trigger("liszt:updated")
     else
-      all_dropdowns = jQuery(".#{dropdown_class}:not('##{dropdown_id}')").append(new_record.replace('selected','')).trigger("liszt:updated")
+      all_dropdowns = $(".#{dropdown_class}:not('##{dropdown_id}')").append(new_record.replace('selected','')).trigger("liszt:updated")
 
 
   # show qtip when record is successfully added and selected
@@ -114,7 +114,7 @@ class window.InlineForms
 
   addFormToList: =>
     # clone the form from DOM and append in chozen list and set the inlineForm
-    @inlineFormContainer = jQuery(jQuery("##{@formContainerId}").clone().wrap('<p>').parent().html())
+    @inlineFormContainer = $($("##{@formContainerId}").clone().wrap('<p>').parent().html())
     @inlineFormContainer.addClass("active-form")
     @chznContainer.find("##{@formContainerId}").remove()
     @chznResults.after(@inlineFormContainer)
@@ -126,7 +126,7 @@ class window.InlineForms
       # serialize the inputs in tiny create form
       form_data = @chznContainer.find(".tiny_create_form :input").serialize()
       # add an extra parameter "add_more" if save & add more button is clicked
-      form_data += '&add_more=' if jQuery(event.target).hasClass('btn_save_and_add_more')
+      form_data += '&add_more=' if $(event.target).hasClass('btn_save_and_add_more')
       jQuery.ajax "/#{@resource}",
         type: 'POST'
         data: form_data
@@ -171,14 +171,14 @@ class window.InlineForms
     valid_form = true
     # fetch all required inputs with empty value
     @chznContainer.find(".tiny_create_form input[required]").each (e, elem) =>
-      unless jQuery(elem).val()
-        jQuery(elem).qtip({content:
+      unless $(elem).val()
+        $(elem).qtip({content:
           text: "This field is required",
           show:
             event: false, hide:
               event: false})
-        jQuery(elem).qtip().show()
-        jQuery(elem).focus()
+        $(elem).qtip().show()
+        $(elem).focus()
         valid_form = false
     fname = @chznContainer.find(".tiny_create_form #client_first_name")
     lname = @chznContainer.find(".tiny_create_form #client_last_name")
@@ -191,41 +191,41 @@ class window.InlineForms
     task_rate = @chznContainer.find(".tiny_create_form #task_rate")
 
     if valid_form and fname.length
-      if !jQuery(fname).val()  and  !jQuery(lname).val()
-        jQuery(fname).qtip({content:
+      if !$(fname).val()  and  !$(lname).val()
+        $(fname).qtip({content:
          text: "First Name or Last Name is required",
          show:
            event: false, hide:
              event: false})
-        jQuery(fname).qtip().show()
-        jQuery(fname).focus()
+        $(fname).qtip().show()
+        $(fname).focus()
         valid_form = false
       if !pattern.test(email.val())
-        jQuery(email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
-        jQuery(email).qtip().show()
-        jQuery(email).focus()
+        $(email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        $(email).qtip().show()
+        $(email).focus()
         valid_form = false
       if !pattern_phone.test(phone.val())
-        jQuery(phone).qtip({content:  text: "Invalid Business Phone",    show:  event: false, hide:  event: false})
-        jQuery(phone).qtip().show()
-        jQuery(phone).focus()
+        $(phone).qtip({content:  text: "Invalid Business Phone",    show:  event: false, hide:  event: false})
+        $(phone).qtip().show()
+        $(phone).focus()
         valid_form = false
 
     if valid_form and (staff_email.length or task_rate.length)
       if !pattern.test(staff_email.val()) and staff_email.length
-        jQuery(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
-        jQuery(staff_email).qtip().show()
-        jQuery(staff_email).focus()
+        $(staff_email).qtip({content:  text: "Invalid Email",    show:  event: false, hide:  event: false})
+        $(staff_email).qtip().show()
+        $(staff_email).focus()
         valid_form = false
       else if staff_rate.length and staff_rate.val() < 0
-        jQuery(staff_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
-        jQuery(staff_rate).qtip().show()
-        jQuery(staff_rate).focus()
+        $(staff_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        $(staff_rate).qtip().show()
+        $(staff_rate).focus()
         valid_form = false
       else if task_rate.length and task_rate.val() < 0
-        jQuery(task_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
-        jQuery(task_rate).qtip().show()
-        jQuery(task_rate).focus()
+        $(task_rate).qtip({content:  text: "Invalid Rate per Hour value, should be greater or equal to 0",    show:  event: false, hide:  event: false})
+        $(task_rate).qtip().show()
+        $(task_rate).focus()
         valid_form = false
       else
         console.log "all valid"

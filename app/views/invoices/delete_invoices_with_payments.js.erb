@@ -1,23 +1,23 @@
-jQuery('.alert').hide();
-jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
-jQuery('#invoices_with_payments').modal('hide')
+$('.alert').hide();
+$('#active_links').html('<%= escape_javascript render("filter_links") %>');
+$('#invoices_with_payments').modal('hide')
 <%if !params[:invoice_ids].blank? %>
-jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
-jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+$('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>');
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 setTimeout(function(){
-    jQuery(".invoice_listing .text-overflow-class").ellipsis({row:1});
+    $(".invoice_listing .text-overflow-class").ellipsis({row:1});
 },100);
 
 <%end%>
-jQuery('.top_links').hide();
-jQuery('#active_links a').removeClass('active');
+$('.top_links').hide();
+$('#active_links a').removeClass('active');
 <% if params[:action_to_perform].present? and params[:action_to_perform] == 'destroy_archived' %>
-    jQuery('.send').parent("li").removeClass("grid_control_sep");
-    jQuery('.recover_archived,.destroy_archived,.send').show();
-    jQuery('#active_links a.get_archived').addClass('active');
+    $('.send').parent("li").removeClass("grid_control_sep");
+    $('.recover_archived,.destroy_archived,.send').show();
+    $('#active_links a.get_archived').addClass('active');
 <% else %>
-    jQuery('.archive,.destroy,.payment,.send').show();
-    jQuery('#active_links a.get_actives').addClass('active');
+    $('.archive,.destroy,.payment,.send').show();
+    $('#active_links a.get_actives').addClass('active');
 <% end  %>
 bind_deleted_entry();

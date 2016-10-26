@@ -7,7 +7,7 @@
 # itrate to line items
 window.taxByCategory = ->
   taxes = []
-  jQuery("table.invoice_grid_fields tr:visible, table.estimate_grid_fields tr:visible").each ->
+  $("table.invoice_grid_fields tr:visible, table.estimate_grid_fields tr:visible").each ->
     # TODO: apply discount on lineTotal
     discountPct = parseFloat($("#invoice_discount_percentage, #recurring_profile_discount_percentage, #estimate_discount_percentage").val())
     discountType = $("select#discount_type").val()
@@ -49,4 +49,4 @@ window.taxByCategory = ->
   for tax, amount of tlist
     lis += "<li><span class='grid_summary_title'>#{tax}</span> <span class='grid_summary_description tax_amount'>#{amount}</span></li>\n"
 
-  jQuery(".grid_summary_row.taxes_total").html("<ul>#{lis}</ul>").parents(".grid_summary").find("#invoice_sub_total_lbl, #invoice_discount_amount_lbl, #estimate_sub_total_lbl, #estimate_discount_amount_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});
+  $(".grid_summary_row.taxes_total").html("<ul>#{lis}</ul>").parents(".grid_summary").find("#invoice_sub_total_lbl, #invoice_discount_amount_lbl, #estimate_sub_total_lbl, #estimate_discount_amount_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});

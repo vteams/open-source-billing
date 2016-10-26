@@ -83,7 +83,7 @@
 
 
 
-jQuery(function () {
+$(function () {
 
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400,
@@ -103,39 +103,39 @@ jQuery(function () {
         }
     };
 
-    jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
+    $("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
 
-//    jQuery("#nav ul.select > li").mouseenter(function () {
-//        jQuery(".sub").hide();
-//        jQuery(".sub", jQuery(this)).show();
+//    $("#nav ul.select > li").mouseenter(function () {
+//        $(".sub").hide();
+//        $(".sub", $(this)).show();
 //    });
 
     // Show sub menu on mouseover
-    jQuery('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
-        jQuery(this).parents('li.dropdown').find('.dropdown-menu').show();
-        jQuery(".sub").hide();
-        jQuery('#nav .dropup, #nav .dropdown').css('position', 'relative');
+    $('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
+        $(this).parents('li.dropdown').find('.dropdown-menu').show();
+        $(".sub").hide();
+        $('#nav .dropup, #nav .dropdown').css('position', 'relative');
     }).mouseout(function () {
-            jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
-            jQuery('#nav .dropup, #nav .dropdown').css('position', 'static');
+            $(this).parents('li.dropdown').find('.dropdown-menu').hide();
+            $('#nav .dropup, #nav .dropdown').css('position', 'static');
         });
     // Hide other open header menu on mouseover
-    jQuery('.primary_menu .dropdown').mouseover(function () {
-        jQuery(this).siblings().removeClass('open');
+    $('.primary_menu .dropdown').mouseover(function () {
+        $(this).siblings().removeClass('open');
     });
 
-    jQuery("#nav").on("mouseleave", function (event) {
+    $("#nav").on("mouseleave", function (event) {
         if (event.pageY - $(window).scrollTop() <= 1) {
-            jQuery(".sub").hide();
-            jQuery("li a.active", jQuery(this)).next(".sub").show();
+            $(".sub").hide();
+            $("li a.active", $(this)).next(".sub").show();
         }
         try {
             var e = event.toElement || event.relatedTarget;
-            if (e.parentNode == jQuery(this).find('ul.select') || e == this)
+            if (e.parentNode == $(this).find('ul.select') || e == this)
                 return;
             else {
-                jQuery(".sub").hide();
-                jQuery("li a.active", jQuery(this)).next(".sub").show();
+                $(".sub").hide();
+                $("li a.active", $(this)).next(".sub").show();
             }
         }
         catch (e) {
@@ -143,8 +143,8 @@ jQuery(function () {
     });
 
     // toggle page effect by clicking on alpha tag
-    jQuery(".logo_tag").click(function () {
-        jQuery("#main-container").toggleClass("page-effect");
+    $(".logo_tag").click(function () {
+        $("#main-container").toggleClass("page-effect");
     }).qtip();
 
     (function ($) {
@@ -155,7 +155,7 @@ jQuery(function () {
         });
     })(jQuery);
 
-    //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
+    //$(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
 
 });
 
@@ -189,7 +189,7 @@ window.preventDeletedNavigation = function(){
     bind_deleted_entry = function(){
         $("a.deleted_entry").unbind('click');
         $("a.deleted_entry").click(function(e){
-            applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
+            applyPopover($(this),"bottomMiddle","topLeft","Please Recover to View Details");
             e.preventDefault();
             return false;
         });

@@ -26,16 +26,16 @@ square = new Sonic(
 )
 $ ->
   square.play()
-  jQuery("#progress_indicator").append square.canvas
+  $("#progress_indicator").append square.canvas
 
   $(document).ajaxStart ->
     $("#progress_indicator").show()
     $(".alert").hide()
 
   $(document).ajaxComplete ->
-    jQuery(".text-overflow-class").each ->
-      rows = jQuery(this).attr('data-overflow-rows') || 2
-      jQuery(this).ellipsis row:rows
+    $(".text-overflow-class").each ->
+      rows = $(this).attr('data-overflow-rows') || 2
+      $(this).ellipsis row:rows
     setTimeout (->
       $("#progress_indicator").hide()
     ), 100

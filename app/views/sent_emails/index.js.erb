@@ -1,6 +1,6 @@
-jQuery('thead#sent_emails_header').html('<%= escape_javascript render("sent_email_header") %>');
-jQuery('tbody#email_body').html('<%= escape_javascript render("sent_emails") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$('thead#sent_emails_header').html('<%= escape_javascript render("sent_email_header") %>');
+$('tbody#email_body').html('<%= escape_javascript render("sent_emails") %>');
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
 
-jQuery('#sort_direction').html('<%= params[:direction]%>');
+$('#sort_direction').html('<%= params[:direction]%>');
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")

@@ -1,7 +1,7 @@
-jQuery(".modal-body").html("<%= escape_javascript(render(:partial=>"unpaid_invoices")) %>");
+$(".modal-body").html("<%= escape_javascript(render(:partial=>"unpaid_invoices")) %>");
 
-jQuery('#invoice_selection').submit(function() {
+$('#invoice_selection').submit(function() {
     var flag, invoices;
-    invoices = jQuery("table.table_listing tbody");
-    return flag = invoices.find('tr.no-invoices').length ? (jQuery(".invoice_popup_error").show().find('span').html('There are no unpaid invoices to enter payment against.'), false) : invoices.find(":checked").length === 0 ? (jQuery(".invoice_popup_error").show().find('span').html("You haven't selected any invoice. Please select one or more invoices and try again."), false) : true;
+    invoices = $("table.table_listing tbody");
+    return flag = invoices.find('tr.no-invoices').length ? ($(".invoice_popup_error").show().find('span').html('There are no unpaid invoices to enter payment against.'), false) : invoices.find(":checked").length === 0 ? ($(".invoice_popup_error").show().find('span').html("You haven't selected any invoice. Please select one or more invoices and try again."), false) : true;
 });

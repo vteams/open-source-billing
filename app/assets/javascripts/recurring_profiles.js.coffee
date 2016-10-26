@@ -1,65 +1,65 @@
 jQuery ->
   # Add date picker to start date
-  jQuery("#recurring_profile_first_invoice_date").datepicker
+  $("#recurring_profile_first_invoice_date").datepicker
     dateFormat: DateFormats.format()
 
   # Validate recurring profile form
-  jQuery("form.form-recurring-profile").submit ->
-    discount_percentage = jQuery("#recurring_profile_discount_percentage").val()
-    discount_type = jQuery("select#discount_type").val()
-    sub_total = jQuery('#recurring_profile_sub_total').val()
+  $("form.form-recurring-profile").submit ->
+    discount_percentage = $("#recurring_profile_discount_percentage").val()
+    discount_type = $("select#discount_type").val()
+    sub_total = $('#recurring_profile_sub_total').val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
-    item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
-    first_invoice_date = jQuery("#recurring_profile_first_invoice_date").val()
-    current_date = jQuery("#recurring_profile_current_date").val()
+    item_rows = $("table#invoice_grid_fields tr.fields:visible")
+    first_invoice_date = $("#recurring_profile_first_invoice_date").val()
+    current_date = $("#recurring_profile_current_date").val()
     flag = true
     # Check if first invoice date is selected
-    if jQuery("#recurring_profile_first_invoice_date").val() is ""
-      applyPopover(jQuery("#recurring_profile_first_invoice_date"),"bottomMiddle","topLeft","Select first invoice date")
+    if $("#recurring_profile_first_invoice_date").val() is ""
+      applyPopover($("#recurring_profile_first_invoice_date"),"bottomMiddle","topLeft","Select first invoice date")
       flag = false
       # Check if client is selected
-    else if jQuery("#recurring_profile_client_id").val() is ""
-      applyPopover(jQuery("#recurring_profile_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+    else if $("#recurring_profile_client_id").val() is ""
+      applyPopover($("#recurring_profile_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
     # check if currency is not selected
-    else if jQuery("#recurring_profile_currency_id").val() is "" and jQuery("#recurring_profile_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#recurring_profile_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+    else if $("#recurring_profile_currency_id").val() is "" and $("#recurring_profile_currency_id").is( ":hidden" ) == false
+      applyPopover($("#recurring_profile_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
       # Check if payment term is selected
-    else if jQuery("#recurring_profile_payment_terms_id").val() is ""
-      applyPopover(jQuery("#recurring_profile_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+    else if $("#recurring_profile_payment_terms_id").val() is ""
+      applyPopover($("#recurring_profile_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
       flag = false
       # Check if discount is valid
-    else if jQuery("input#recurring_profile_discount_percentage").val()  isnt "" and isNaN(jQuery("input#recurring_profile_discount_percentage").val())
-      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+    else if $("input#recurring_profile_discount_percentage").val()  isnt "" and isNaN($("input#recurring_profile_discount_percentage").val())
+      applyPopover($("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
       flag = false
     # Check if no item is added
-    else if jQuery("tr.fields:visible").length < 1
-      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+    else if $("tr.fields:visible").length < 1
+      applyPopover($("#add_line_item"),"bottomMiddle","topLeft","Add line item")
       flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-      first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
+      first_item = $("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
     # check if discount is greater than sub-total
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      applyPopover($("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
       flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      applyPopover($("#recurring_profile_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
       # Item cost and quantity should be greater then 0
     else
-      jQuery("tr.fields:visible").each ->
-        row = jQuery(this)
+      $("tr.fields:visible").each ->
+        row = $(this)
         if row.find("select.items_list").val() isnt ""
           cost = row.find(".cost")
           qty =  row.find(".qty")
           tax1 = row.find("select.tax1")
           tax2 = row.find("select.tax2")
-          tax1_value = jQuery("option:selected",tax1).val()
-          tax2_value = jQuery("option:selected",tax2).val()
+          tax1_value = $("option:selected",tax1).val()
+          tax2_value = $("option:selected",tax2).val()
 
           if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
             applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
@@ -108,7 +108,7 @@ jQuery ->
         tip:
           corner: "bottomLeft"
     elem.qtip().show()
-    qtip = jQuery(".qtip.use_as_template")
+    qtip = $(".qtip.use_as_template")
     qtip.css("top",qtip.offset().top - qtip.height())
     qtip.attr('data-top',qtip.offset().top - qtip.height())
     elem.focus()
@@ -118,11 +118,11 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('.use_as_template').on "click",'.close_qtip', ->
-    hidePopover(jQuery("#recurring_profile_client_id_chzn"))
+  $('.use_as_template').on "click",'.close_qtip', ->
+    hidePopover($("#recurring_profile_client_id_chzn"))
 
-  jQuery("#recurring_profile_client_id_chzn,.chzn-container").on "click",null, ->
-    jQuery(this).qtip("hide")
+  $("#recurring_profile_client_id_chzn,.chzn-container").on "click",null, ->
+    $(this).qtip("hide")
 
   # Don't send an ajax request if an item is deselected.
   clearLineTotal = (elem) ->
@@ -134,18 +134,18 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links').on 'click','a', ->
-    jQuery('#active_links a').removeClass('active')
-    jQuery(this).addClass('active')
+  $('#active_links').on 'click','a', ->
+    $('#active_links a').removeClass('active')
+    $(this).addClass('active')
 
-  jQuery(".invoice_action_links input[type=submit]").click ->
-    jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
+  $(".invoice_action_links input[type=submit]").click ->
+    $(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
 
 
-  jQuery("#recurring_profile_client_id").change ->
-    client_id = jQuery(this).val()
-    hidePopover(jQuery("#recurring_profile_client_id_chzn")) if client_id is ""
-    jQuery("#last_invoice").hide()
+  $("#recurring_profile_client_id").change ->
+    client_id = $(this).val()
+    hidePopover($("#recurring_profile_client_id_chzn")) if client_id is ""
+    $("#last_invoice").hide()
     if not client_id? or client_id isnt ""
 
       jQuery.get('/clients/'+ client_id + '/default_currency')
@@ -161,35 +161,35 @@ jQuery ->
           id = jQuery.trim(data[0])
           client_name = data[1]
           unless id is "no invoice"
-            useAsTemplatePopover(jQuery("#recurring_profile_client_id_chzn"),id,client_name)
+            useAsTemplatePopover($("#recurring_profile_client_id_chzn"),id,client_name)
           else
-            hidePopover(jQuery(".hint_text:eq(0)"))
+            hidePopover($(".hint_text:eq(0)"))
 
   # Change currency of invoice
-  jQuery("#recurring_profile_currency_id").change ->
-    currency_id = jQuery(this).val()
-    hidePopover(jQuery("#recurring_profile_currency_id_chzn")) if currency_id is ""
+  $("#recurring_profile_currency_id").change ->
+    currency_id = $(this).val()
+    hidePopover($("#recurring_profile_currency_id_chzn")) if currency_id is ""
     if not currency_id? or currency_id isnt ""
       jQuery.get('/recurring_profiles/selected_currency?currency_id='+ currency_id)
 
 
-  jQuery("#recurring_profile_first_invoice_date").on "change keyup", ->
-    jQuery(this).qtip("hide")
+  $("#recurring_profile_first_invoice_date").on "change keyup", ->
+    $(this).qtip("hide")
 
   # Only numeric values(1-9) are allowed in occurrences(how many).
-  jQuery("#recurring_profile_occurrences").on "keyup keypress", ->
+  $("#recurring_profile_occurrences").on "keyup keypress", ->
     @value = @value.replace(/[^0-9]/g, "")
     @value = '' if @value is "0"
 
   # remove 'infinite' if click on how many.
-  jQuery("#recurring_profile_occurrences").on
+  $("#recurring_profile_occurrences").on
     click: ->
       @value = '' if @value is 'infinite'
     blur: ->
       @value = '1' if @value is ''
 
   # Don't allow paste and right click in occurrences field
-  jQuery("#recurring_profile_occurrences").bind "contextmenu", (e) ->
+  $("#recurring_profile_occurrences").bind "contextmenu", (e) ->
     e.preventDefault()
 
   applyTax = (line_total,elem) ->
@@ -203,8 +203,8 @@ jQuery ->
 
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->
-    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
-    discount_type = jQuery("select#discount_type").val()
+    discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
+    discount_type = $("select#discount_type").val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
@@ -213,33 +213,33 @@ jQuery ->
     total = 0
     tax_amount = 0
     discount_amount = 0
-    jQuery("table.invoice_grid_fields tr:visible .line_total").each ->
-      line_total = parseFloat(jQuery(this).text())
+    $("table.invoice_grid_fields tr:visible .line_total").each ->
+      line_total = parseFloat($(this).text())
       total += line_total
       #update invoice sub total lable and hidden field
-      jQuery("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
-      jQuery("#invoice_sub_total_lbl").text(total.toFixed(2))
+      $("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
+      $("#invoice_sub_total_lbl").text(total.toFixed(2))
 
       #update invoice total lable and hidden field
-      jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2))
-      jQuery("#invoice_total_lbl").text(total.toFixed(2))
+      $("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2))
+      $("#invoice_total_lbl").text(total.toFixed(2))
 
-      tax_amount += applyTax(line_total,jQuery(this))
+      tax_amount += applyTax(line_total,$(this))
 
     discount_amount = applyDiscount(total)
 
     #update tax amount label and tax amount hidden field
-    jQuery("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2))
-    jQuery("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
+    $("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2))
+    $("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
 
     #update discount amount lable and discount hidden field
-    #    jQuery("#invoice_discount_amount_lbl").text(discount_amount.toFixed(2))
-    jQuery("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
+    #    $("#invoice_discount_amount_lbl").text(discount_amount.toFixed(2))
+    $("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
 
-    total_balance = (parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount)
-    jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
-    jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
-    jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
+    total_balance = (parseFloat($("#invoice_total_lbl").text() - discount_amount) + tax_amount)
+    $("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
+    $("#invoice_total_lbl").text(total_balance.toFixed(2))
+    $("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
     window.taxByCategory()
   updateInvoiceTotal()
 

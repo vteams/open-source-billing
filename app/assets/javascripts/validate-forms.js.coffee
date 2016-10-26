@@ -2,7 +2,7 @@
 class window.validateForms
 
   constructor: (@formId) ->
-    @form = jQuery("##{@formId}")
+    @form = $("##{@formId}")
     @requiredFields = @form.find("input[required]")
     @password = @form.find("input[name=password][required]")
     @current_password = @form.find("#user_current_password")
@@ -118,7 +118,7 @@ class window.validateForms
 
   hideQtip: ->
     @inputs.keyup ->
-      jQuery(this).qtip("destroy") if jQuery(this).qtip()
+      $(this).qtip("destroy") if $(this).qtip()
 
   getMessage: (type) ->
     switch type

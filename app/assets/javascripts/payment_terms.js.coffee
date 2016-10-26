@@ -2,13 +2,13 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  jQuery("form#new_term, form.edit_term,form#create_term").submit ->
+  $("form#new_term, form.edit_term,form#create_term").submit ->
     flag = true
-    flag = if jQuery.trim(jQuery("#payment_term_number_of_days").val()) is ""
-      applyPopover(jQuery("#payment_term_number_of_days"),"Enter number of days")
+    flag = if jQuery.trim($("#payment_term_number_of_days").val()) is ""
+      applyPopover($("#payment_term_number_of_days"),"Enter number of days")
       false
-    else if jQuery.trim(jQuery("#payment_term_description").val()) is ""
-      applyPopover(jQuery("#payment_term_description"),"Enter description")
+    else if jQuery.trim($("#payment_term_description").val()) is ""
+      applyPopover($("#payment_term_description"),"Enter description")
       false
 
   applyPopover = (elem,message) ->

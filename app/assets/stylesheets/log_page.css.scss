@@ -8,7 +8,6 @@
     float: left;
     background-color: #ffffff;
     padding: 0 36px 16px;
-    width: 342px;
     &.change_password{
       width: 363px;
     }
@@ -37,7 +36,7 @@
   }
   .label_field {
     float: left;
-    min-width: 58px;
+    width: 75px;
     padding: 0 8px 0 7px;
     border: 1px solid #cccccc;
     border-radius: 3px 0 0 3px;
@@ -102,7 +101,6 @@
   }
   .field_row.checkbox input {
     float: left;
-    margin: 0;
   }
   .field_row.checkbox{
     label{

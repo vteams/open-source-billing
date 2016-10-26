@@ -1,30 +1,30 @@
-jQuery('thead#tax_head').html('<%= escape_javascript render("tax_header") %>');
-jQuery('tbody#tax_body').html('<%= escape_javascript render("taxes") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
-jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
-jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
-jQuery("table.table_listing").trigger('update');
-jQuery(".tax_listing .text-overflow-class").ellipsis({row:2});
+$('thead#tax_head').html('<%= escape_javascript render("tax_header") %>');
+$('tbody#tax_body').html('<%= escape_javascript render("taxes") %>');
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+$('#active_links').html('<%= escape_javascript render("filter_links") %>');
+$("table.table_listing").trigger('update');
+$(".tax_listing .text-overflow-class").ellipsis({row:2});
 
-jQuery('#sort_direction').html('<%= params[:direction]%>');
+$('#sort_direction').html('<%= params[:direction]%>');
 <% status = params[:status].present? ? params[:status] : 'active'%>
 
-jQuery('.top_links').hide();
-jQuery('#active_links a').removeClass('active');
-jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+$('.top_links').hide();
+$('#active_links a').removeClass('active');
+$('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 
 <%if status == "active" %>
-jQuery('.archive,.destroy,.payment,.send').show();
-jQuery('#active_links a.get_actives').addClass('active');
+$('.archive,.destroy,.payment,.send').show();
+$('#active_links a.get_actives').addClass('active');
 
 <% elsif status == "archived"%>
-jQuery('.send').parent("li").removeClass("grid_control_sep");
-jQuery('.recover_archived,.destroy_archived,.send').show();
-jQuery('#active_links a.get_archived').addClass('active');
+$('.send').parent("li").removeClass("grid_control_sep");
+$('.recover_archived,.destroy_archived,.send').show();
+$('#active_links a.get_archived').addClass('active');
 
 <% elsif status == "deleted"%>
-jQuery('.recover_deleted').show().parent('li').removeAttr('class');
-jQuery('#active_links a.get_deleted').addClass('active');
+$('.recover_deleted').show().parent('li').removeAttr('class');
+$('#active_links a.get_deleted').addClass('active');
 <%end%>
 
 window.preventDeletedNavigation()

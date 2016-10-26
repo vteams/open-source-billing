@@ -87,7 +87,7 @@ jQuery ->
   catch e
 
   # show chart details when chart bar is clicked
-  jQuery("#dashboard-chart").bind "jqplotDataClick", (ev, seriesIndex, pointIndex, data) ->
+  $("#dashboard-chart").bind "jqplotDataClick", (ev, seriesIndex, pointIndex, data) ->
     chart_for =  if seriesIndex == 0 then 'invoices' else 'payments'
     jQuery.ajax '/dashboard/chart_details',
                 type: 'POST'
@@ -96,17 +96,17 @@ jQuery ->
                 error: (jqXHR, textStatus, errorThrown) ->
                   alert "Error: #{textStatus}"
                 success: (data, textStatus, jqXHR) ->
-                  jQuery("#chart_details.modal").show().find(".modal-body").html(data)
+                  $("#chart_details.modal").show().find(".modal-body").html(data)
                     .find(".scrollContainer").mCustomScrollbar scrollInertia: 150
-                  jQuery("html, body").animate({ scrollTop: 0 }, 600);
+                  $("html, body").animate({ scrollTop: 0 }, 600);
 
   # hide chart details popup when clicked outside it
-  jQuery(document).click (e) ->
-    container = jQuery("#chart_details")
+  $(document).click (e) ->
+    container = $("#chart_details")
     container.hide()  if container.has(e.target).length is 0 and container.is(':visible')
 
-  jQuery('#chart_details .popup_close').click ->
-    jQuery("#chart_details").hide()
+  $('#chart_details .popup_close').click ->
+    $("#chart_details").hide()
 
   $('#cc_popup, #dispute_invoice_popup').mouseleave ->
     $('.qtip').hide()

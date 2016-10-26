@@ -1,9 +1,9 @@
 jQuery ->
 
   # Load Task data when an task is selected from dropdown list
-  jQuery(".project_grid_fields").on "change",'select.tasks_list', ->
+  $(".project_grid_fields").on "change",'select.tasks_list', ->
     # Add an empty line item row at the end if last task is changed.
-    elem = jQuery(this)
+    elem = $(this)
     if elem.val() is ""
       clearLineTotal(elem)
       false
@@ -11,7 +11,7 @@ jQuery ->
       addLineTaskRow(elem)
       jQuery.ajax '/tasks/load_task_data',
         type: 'POST'
-        data: "id=" + jQuery(this).val()
+        data: "id=" + $(this).val()
         dataType: 'html'
         error: (jqXHR, textStatus, errorThrown) ->
           alert "Error: #{textStatus}"
@@ -34,25 +34,25 @@ jQuery ->
 
   addLineTaskRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length is 0
-      jQuery(".project_grid_fields .add_nested_fields").click()
-      #jQuery("#add_task").click()
+      $(".project_grid_fields .add_nested_fields").click()
+      #$("#add_task").click()
 
-  jQuery(".project_team_member_fields").on "click",'.add_nested_fields', ->
-    setTimeout "window.applyChosen(jQuery('.project_team_member_fields tr.fields:last .chzn-select'))", 0
+  $(".project_team_member_fields").on "click",'.add_nested_fields', ->
+    setTimeout "window.applyChosen($('.project_team_member_fields tr.fields:last .chzn-select'))", 0
 
-  jQuery(".project_task_fields").on "click",'.add_nested_fields', ->
-    setTimeout "window.applyChosen(jQuery('.project_task_fields tr.fields:last .chzn-select'))", 0
+  $(".project_task_fields").on "click",'.add_nested_fields', ->
+    setTimeout "window.applyChosen($('.project_task_fields tr.fields:last .chzn-select'))", 0
 
-  jQuery("#add_task").on "click",null, ->
+  $("#add_task").on "click",null, ->
     options = $('.tasks_list:first').html()
     $('.tasks_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.tasks_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
 
 
   # Load Staff data when an staff is selected from dropdown list
-  jQuery(".project_grid_fields").on "change",'select.members_list', ->
+  $(".project_grid_fields").on "change",'select.members_list', ->
     # Add an empty line item row at the end if last task is changed.
-    elem = jQuery(this)
+    elem = $(this)
     if elem.val() is ""
       clearLineTotal(elem)
       false
@@ -60,7 +60,7 @@ jQuery ->
       addLineTaskRow(elem)
       jQuery.ajax '/staffs/load_staff_data',
         type: 'POST'
-        data: "id=" + jQuery(this).val()
+        data: "id=" + $(this).val()
         dataType: 'html'
         error: (jqXHR, textStatus, errorThrown) ->
           alert "Error: #{textStatus}"
@@ -71,20 +71,20 @@ jQuery ->
           container.find("input.description").val(item[0])
           container.find("input.rate").val(item[1])
 
-  jQuery(".project-submit-btn").on 'click',null, ->
+  $(".project-submit-btn").on 'click',null, ->
     flag = true
     if $("#project_project_name").val() is ""
       flag = false
-      applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft","Project Name field is required")
+      applyPopover($("#project_project_name"),"bottomMiddle","topLeft","Project Name field is required")
     else if ($("#project_total_hours").val() < 0)
-        hidePopover(jQuery("#project_project_name"))
+        hidePopover($("#project_project_name"))
         flag = false
-        applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
+        applyPopover($("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
     else
-      hidePopover(jQuery("#project_total_hours"))
+      hidePopover($("#project_total_hours"))
       flag = true
     if(flag)
-      jQuery("form.project-form").get(0).submit()
+      $("form.project-form").get(0).submit()
     else
       reture false
 

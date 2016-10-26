@@ -1,40 +1,40 @@
 # Staff form validation
 
-jQuery(".staff_form").on "click", ".staff-submit-btn", ->
-  name = jQuery("#staff_name").val()
-  email = jQuery("#staff_email").val()
-  rate = jQuery("#staff_rate").val()
-  association_name = jQuery('input[name=association]:checked').attr("id")
-  no_of_selected_companies = jQuery('.company_checkbox:checked').length
+$(".staff_form").on "click", ".staff-submit-btn", ->
+  name = $("#staff_name").val()
+  email = $("#staff_email").val()
+  rate = $("#staff_rate").val()
+  association_name = $('input[name=association]:checked').attr("id")
+  no_of_selected_companies = $('.company_checkbox:checked').length
   flag = true
   if name is ""
-    applyPopover(jQuery("#staff_name"),"bottomMiddle","topLeft","Enter a name for the staff")
+    applyPopover($("#staff_name"),"bottomMiddle","topLeft","Enter a name for the staff")
     flag = false
   else if email is ""
-    hidePopover(jQuery("#staff_name"))
-    applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft","Enter an email for the staff")
+    hidePopover($("#staff_name"))
+    applyPopover($("#staff_email"),"bottomMiddle","topLeft","Enter an email for the staff")
     flag = false
   else if !validateEmail(email)
-    hidePopover(jQuery("#staff_name"))
-    applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft","Enter a valid email for the staff")
+    hidePopover($("#staff_name"))
+    applyPopover($("#staff_email"),"bottomMiddle","topLeft","Enter a valid email for the staff")
     flag = false
   else if rate is ""
-    hidePopover(jQuery("#staff_email"))
-    applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft","Enter rate per hour for the staff")
+    hidePopover($("#staff_email"))
+    applyPopover($("#staff_rate"),"bottomMiddle","topLeft","Enter rate per hour for the staff")
     flag = false
   else if rate < 0
-    applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the staff")
+    applyPopover($("#staff_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the staff")
     flag = false
   else if (association_name == "company_association" and no_of_selected_companies == 0)
-    hidePopover(jQuery("#staff_rate"))
-    applyPopover(jQuery("input[name=association]:checked"),"topright","leftcenter","Select aleast one company for the staff")
+    hidePopover($("#staff_rate"))
+    applyPopover($("input[name=association]:checked"),"topright","leftcenter","Select aleast one company for the staff")
     flag = false
   else
-    hidePopover(jQuery("input[name=association]:checked"))
+    hidePopover($("input[name=association]:checked"))
     flag = true
   if(flag)
-    jQuery("#staff_user_attributes_email").val(jQuery("#staff_email").val())
-    jQuery("form#newStaff").get(0).submit()
+    $("#staff_user_attributes_email").val($("#staff_email").val())
+    $("form#newStaff").get(0).submit()
   else
     return false
 

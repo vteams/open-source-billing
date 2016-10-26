@@ -1,11 +1,11 @@
-jQuery('thead#payments_header').html('<%= escape_javascript render("payments_header") %>');
-jQuery('tbody#payment_body').html('<%= escape_javascript render("payment") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
-jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
-jQuery("table.table_listing").trigger('update');
-jQuery(".payment_listing .text-overflow-class").ellipsis({row:2});
+$('thead#payments_header').html('<%= escape_javascript render("payments_header") %>');
+$('tbody#payment_body').html('<%= escape_javascript render("payment") %>');
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+$("table.table_listing").trigger('update');
+$(".payment_listing .text-overflow-class").ellipsis({row:2});
 
-jQuery('#sort_direction').html('<%= params[:direction]%>');
+$('#sort_direction').html('<%= params[:direction]%>');
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
 bind_edit_payment_links();
 bind_edit_payment_links()
