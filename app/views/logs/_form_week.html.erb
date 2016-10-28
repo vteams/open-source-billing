@@ -21,7 +21,7 @@
             <% (1..7).each do |id| %>
                 <div class="form-group">
                     <div class="small_field">
-                        <%= number_field(:time, id, size: 20, min: 0, step: 0.01, class: 'bulk_hours_input') %>
+                        <%= number_field(:time, id, size: 20, min: 0, step: 0.01, class: 'bulk_hours_input form-control') %>
                       <%= hidden_field(:day,id) %>
                     </div>
                 </div>
