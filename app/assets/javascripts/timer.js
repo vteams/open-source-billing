@@ -13,10 +13,10 @@ $(document).ready(function() {
 });
 function start_timer(){
     if($('#log_hours').val() > 24 || $('#log_hours').val() < 0 ){
-        applyPopover(jQuery('#log_hours'), 'bottomLeft', 'topLeft', 'Please enter a value between 0 and 24');
+        applyPopover($('#log_hours'), 'bottomLeft', 'topLeft', 'Please enter a value between 0 and 24');
         return
     }
-    hidePopover(jQuery('#log_hours'));
+    hidePopover($('#log_hours'));
     clock.setTime(Math.abs($('#log_hours').val()* 3600));
     clock.start(function() {
         countdown: false

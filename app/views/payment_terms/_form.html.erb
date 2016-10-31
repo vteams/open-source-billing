@@ -14,12 +14,12 @@
     <div class="field">
       <%= f.label :number_of_days, t('views.payment_terms.number_of_days') %>
       <br/>
-      <%= f.number_field :number_of_days %>
+      <%= f.number_field :number_of_days, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :description, t('views.common.description') %>
       <br/>
-      <%= f.text_field :description %>
+      <%= f.text_field :description, :class => 'form-control' %>
     </div>
     <div class="actions">
       <%= f.submit %>

@@ -8,7 +8,7 @@
     <div class="field_row description">
       <div class="label_field left single">Amount  </div>
       <div class="small_field amount_div">
-        <%= text_field_tag :amount1, nil, class: 'text_field' , readonly: true, value: f.object.tax1_amount.round(2) %>
+        <%= text_field_tag :amount1, nil, class: 'form-control' , readonly: true, value: f.object.tax1_amount.round(2) %>
       </div>
     </div>
 </div>
@@ -23,7 +23,7 @@
     <div class="field_row description">
       <div class="label_field left single">Amount  </div>
       <div class="small_field amount_div">
-        <%= text_field_tag :amount2, nil, class: 'text_field', readonly: true, value: f.object.tax2_amount.round(2) %>
+        <%= text_field_tag :amount2, nil, class: 'form-control', readonly: true, value: f.object.tax2_amount.round(2) %>
       </div>
     </div>
 </div>

@@ -4,6 +4,6 @@
     <% flash[:notice] = @result[:message] %>
     window.location = "/invoices/preview/?inv_id=<%= params[:invoice_id] %>";
 <% else %>
-    jQuery("#cc_popup_error.alert.alert-error").show().find("span").html("<%= @result[:message]%>");
-    jQuery("#cc_popup input[type=submit]").removeAttr("disabled");
+    $("#cc_popup_error.alert.alert-error").show().find("span").html("<%= @result[:message]%>");
+    $("#cc_popup input[type=submit]").removeAttr("disabled");
 <% end %>

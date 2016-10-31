@@ -16,7 +16,7 @@
           <div class="field_row">
             <div class="label_field left"><span><%= t('views.staffs.name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "staff[name]", '', :required => 'required' %>
+              <%= text_field_tag "staff[name]", '', :required => 'required', class: 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -24,7 +24,7 @@
           <div class="field_row">
             <div class="label_field left single"><span><%= t('views.staffs.email') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "staff[email]", '', :required => 'required'%>
+              <%= text_field_tag "staff[email]", '', :required => 'required', class: 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -61,5 +61,3 @@
   </div>
   <!--tiny_create_form-->
 </div><!--tiny_form_container-->
-
-

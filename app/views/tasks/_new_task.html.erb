@@ -16,7 +16,7 @@
           <div class="field_row">
             <div class="label_field left"><span><%= t('views.tasks.name') %></span></div>
             <div class="small_field">
-              <%= text_field_tag "task[name]", '', :required => 'required', "data-unique" => "" %>
+              <%= text_field_tag "task[name]", '', :required => 'required', "data-unique" => "", class: 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -24,7 +24,7 @@
           <div class="field_row">
             <div class="label_field left single"><%= t('views.tasks.description') %></div>
             <div class="small_field">
-              <%= text_field_tag "task[description]", '' %>
+              <%= text_field_tag "task[description]", '', class: 'form-control' %>
             </div>
           </div>
           <!--field_row-->
@@ -32,7 +32,7 @@
           <div class="field_row">
             <div class="label_field left single"><%= t('views.tasks.rate') %></div>
             <div class="small_field">
-              <%= number_field_tag "task[rate]", 0.0, min: 0, :class => 'project_task_rate' %>
+              <%= number_field_tag "task[rate]", 0.0, min: 0, :class => 'project_task_rate form-control' %>
               <%= hidden_field_tag :quick_create %>
             </div>
           </div>
@@ -61,5 +61,3 @@
   </div>
   <!--tiny_create_form-->
 </div><!--tiny_form_container-->
-
-

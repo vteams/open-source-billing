@@ -17,7 +17,7 @@
             <div class="field_row" id="log_date_div">
               <div class="label_field left single"><%= t('views.common.date') %></div>
               <div class="small_field">
-                <%= f.text_field :date,:readonly => true  %>
+                <%= f.text_field :date,:readonly => true, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -39,13 +39,13 @@
             <div class="field_row">
 
               <div class="label_field left single"><span><%= t('views.logs.hours') %></span></div>
-              <div class="small_field"><%= f.number_field :hours, min: 0, step: "any" %></div>
+              <div class="small_field"><%= f.number_field :hours, min: 0, step: "any", class: 'form-control' %></div>
             </div>
             <!--field_row-->
             <div class="field_row">
               <div class="label_field left single"><%= t('views.logs.notes') %></div>
               <div class="small_field">
-                <%= f.text_area :notes,  maxlength: 400  %>
+                <%= f.text_area :notes,  maxlength: 400, :class => 'form-control'  %>
                 <ul class="field_description">
                   <li class="text-limit">
                   </li>
@@ -72,5 +72,3 @@
     </div>
 <% end %>
 <!--logs-->
-
-

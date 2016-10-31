@@ -96,7 +96,7 @@
             var $rowCopy = $sourceRow.clone();
 
             $rowCopy.find(".text-overflow-class").each(function () {
-                jQuery(this).text('a');
+                $(this).text('a');
             });
 
             $rowCopy.insertAfter($sourceRow);

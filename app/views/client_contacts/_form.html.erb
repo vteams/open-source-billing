@@ -15,32 +15,32 @@
     <div class="field">
       <%= f.label :client_id, t('views.clients.client_id') %>
       <br/>
-      <%= f.number_field :client_id %>
+      <%= f.number_field :client_id, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :first_name, t('views.clients.first_name') %>
       <br/>
-      <%= f.text_field :first_name %>
+      <%= f.text_field :first_name, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :last_name, t('views.clients.last_name') %>
       <br/>
-      <%= f.text_field :last_name %>
+      <%= f.text_field :last_name, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :email, t('views.common.email') %>
       <br/>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :phone1, t('views.common.phone') %>
       <br/>
-      <%= f.text_field :phone1 %>
+      <%= f.text_field :phone1, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :phone2, t('views.common.phone') %>
       <br/>
-      <%= f.text_field :phone2 %>
+      <%= f.text_field :phone2, :class => 'form-control' %>
     </div>
     <div class="actions">
       <%= f.submit %>

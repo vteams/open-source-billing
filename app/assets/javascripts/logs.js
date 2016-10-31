@@ -27,43 +27,43 @@ $(document).ready(function() {
     hidePopover = function (elem) {
         return elem.qtip("hide");
     };
-    jQuery('#log_project_id').live("click", function() {
-        return hidePopover(jQuery("#log_project_id"));
+    $('#log_project_id').on("click",null, function() {
+        return hidePopover($("#log_project_id"));
     });
-    jQuery('#log_task_id').live("click", function() {
-        return hidePopover(jQuery("#log_task_id"));
+    $('#log_task_id').on("click",null, function() {
+        return hidePopover($("#log_task_id"));
     });
-    jQuery('#log_hours').live("click", function() {
-        return hidePopover(jQuery("#log_hours"));
+    $('#log_hours').on("click",null, function() {
+        return hidePopover($("#log_hours"));
     });
 
-    jQuery("#log_notes").live('keypress',function(e) {
+    $("#log_notes").on('keypress',null, function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400, remain = parseInt(max - tlength);
         $('.text-limit').text(remain + "  characters remaining" );
     });
 
 
-    jQuery('.generate_invoice_btn').live("click", function (){
-        project_id = jQuery("#project_id").val();
+    $('.generate_invoice_btn').on("click",null, function (){
+        project_id = $("#project_id").val();
         flag = true;
         if (project_id === "") {
-            applyPopover(jQuery("#project_id"), "bottomMiddle", "topLeft", "Select a project");
+            applyPopover($("#project_id"), "bottomMiddle", "topLeft", "Select a project");
             flag = false;
         }
         else
-            hidePopover(jQuery("#project_id"));
+            hidePopover($("#project_id"));
 
         return flag;
 
     });
 
     $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()));
-    jQuery(".log-submit-btn").live("click", function () {
+    $(".log-submit-btn").on("click",null, function () {
         var date, project_id, task_id, hours;
-        date = jQuery("#log_date").val();
-        project_id = jQuery("#log_project_id").val();
-        task_id = jQuery("#log_task_id").val();
-        hours = jQuery("#log_hours").val();
+        date = $("#log_date").val();
+        project_id = $("#log_project_id").val();
+        task_id = $("#log_task_id").val();
+        hours = $("#log_hours").val();
         flag = true;
         window.valid = 0;
         $(".frm_week input[type=number]").filter(function () {
@@ -71,33 +71,33 @@ $(document).ready(function() {
         });
 
         if (window.valid == 7){
-            applyPopover(jQuery("#hours_div"), "bottomMiddle", "topLeft", "Enter hours");
+            applyPopover($("#hours_div"), "bottomMiddle", "topLeft", "Enter hours");
             flag = false;
         }else {
-            hidePopover(jQuery("#hours_div"))
+            hidePopover($("#hours_div"))
         }
         if (project_id === "") {
-            applyPopover(jQuery("#log_project_id"), "bottomMiddle", "topLeft", "Select a project");
+            applyPopover($("#log_project_id"), "bottomMiddle", "topLeft", "Select a project");
             flag = false;
         } else {
-            hidePopover(jQuery("#log_project_id"))
+            hidePopover($("#log_project_id"))
         }
         if (task_id === "") {
-            applyPopover(jQuery("#log_task_id"), "bottomMiddle", "topLeft", "Select a task");
+            applyPopover($("#log_task_id"), "bottomMiddle", "topLeft", "Select a task");
             flag = false;
         } else {
-            hidePopover(jQuery("#log_task_id"))
+            hidePopover($("#log_task_id"))
         }
         if (hours === "") {
-            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
+            applyPopover($("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
             flag = false;
         }
         else if(hours < 0){
-            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours value greater than or equal to 0");
+            applyPopover($("#log_hours"), "bottomMiddle", "topLeft", "Enter hours value greater than or equal to 0");
             flag = false;
         }
         else {
-            hidePopover(jQuery("#log_hours"))
+            hidePopover($("#log_hours"))
         }
         if (flag) {
             return true;

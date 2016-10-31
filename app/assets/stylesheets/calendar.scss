@@ -3,15 +3,12 @@
     .new_log,.edit_log{float: right;width: 40%}
     .fields_content_data, .fields_content{ width: 100% }
     .field_row{width: 100%}
-    //#calendar{ margin-top: 8%; float: right; }
-    .fc-day{ width: 100px}
     #calendar{  margin-top: 8%; float: left; width: 50% }
   }
 
   .basicWeek{
     .new_log,.edit_log{float: left;width: 100%}
     .fields_content_data, .fields_content{ width: 100%; padding-top: 5px; }
-    .fc-day{ width: 100px}
 
     #calendar{ padding-top: 5%; width: 90%;float: right}
     #calendar_form{clear: both}
@@ -24,13 +21,9 @@
     #hours_div .small_field {width: 14.287%; float: left}
     .fc-day-content{ height: 40px}
 
-//    .fc-view-container{width: 100%}
-//    .fc-sun, .fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri, .fc-sat{width: 100% !important;}
   }
   .grid_table thead tr th{width: 100%}
-  //.fields_content_data, .field_row{width: 100%}
    h1 span {    color: #00bde5; font-family: inherit; font-size: 24px;}
- // .fc-week, .fc-border-separate{height: 20px !important;}
 
 }
 

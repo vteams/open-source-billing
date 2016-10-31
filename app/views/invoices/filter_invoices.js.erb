@@ -1,34 +1,34 @@
-jQuery('thead#invoice_head').html('<%= escape_javascript render("invoice_header") %>')
-jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>').hide(300).show(300);
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
-jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
-jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+$('thead#invoice_head').html('<%= escape_javascript render("invoice_header") %>')
+$('tbody#invoice_body').html('<%= escape_javascript render("invoice") %>').hide(300).show(300);
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+$('#active_links').html('<%= escape_javascript render("filter_links") %>');
 
 <% status = params[:status]%>
 
-jQuery('.top_links').hide();
-jQuery('#active_links a').removeClass('active');
-jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+$('.top_links').hide();
+$('#active_links a').removeClass('active');
+$('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 
 <%if status == "active" %>
-    jQuery('.archive,.destroy,.payment,.send').show();
-    jQuery('#active_links a.get_actives').addClass('active');
+    $('.archive,.destroy,.payment,.send').show();
+    $('#active_links a.get_actives').addClass('active');
 
 <% elsif status == "archived"%>
-    jQuery('.send').parent("li").removeClass("grid_control_sep");
-    jQuery('.recover_archived,.destroy,.send').show();
-    jQuery('#active_links a.get_archived').addClass('active');
+    $('.send').parent("li").removeClass("grid_control_sep");
+    $('.recover_archived,.destroy,.send').show();
+    $('#active_links a.get_archived').addClass('active');
 
 <% elsif status == "deleted"%>
-    jQuery('.recover_deleted').show().parent('li').removeAttr('class');
-    jQuery('#active_links a.get_deleted').addClass('active');
+    $('.recover_deleted').show().parent('li').removeAttr('class');
+    $('#active_links a.get_deleted').addClass('active');
 <%end%>
-    jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+    $(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
 //setTimeout(function(){
-// jQuery(".invoice_listing .text-overflow-class").ellipsis({row:1});
+// $(".invoice_listing .text-overflow-class").ellipsis({row:1});
 //},100);
 
-jQuery('#select_all').attr('checked', false);
+$('#select_all').attr('checked', false);
 
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>")
 bind_deleted_entry();

@@ -12,7 +12,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.users.full_name') %></span></div>
                 <div class="large_field">
-                  <%= text_field_tag :user_name,'', required: '', autofocus: true %>
+                  <%= text_field_tag :user_name,'', required: '', autofocus: true, class: 'form-control' %>
                 </div>
               </div>
               <!--field_row-->
@@ -20,7 +20,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
                 <div class="large_field">
-                  <%= text_field_tag :email,'', :required => "" %>
+                  <%= text_field_tag :email,'', :required => "", class: 'form-control' %>
                 </div>
               </div>
               <!--field_row-->

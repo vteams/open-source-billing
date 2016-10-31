@@ -22,7 +22,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.items.item_name') %></span></div>
                 <div class="large_field">
-                  <%= f.text_field :item_name, :required => "" %>
+                  <%= f.text_field :item_name, :required => "", :class => 'form-control' %>
                 </div>
               </div>
               <!--field_row-->
@@ -30,16 +30,16 @@
               <div class="field_row textarea">
                 <div class="label_field left single"><%= t('views.items.Description') %></div>
                 <div class="large_field">
-                  <%= f.text_area :item_description, :required => "" %>
+                  <%= f.text_area :item_description, :required => "", :class => 'form-control' %>
                 </div>
               </div>
               <!--field_row-->
 
               <div class="field_row">
                 <div class="label_field left single"><%= f.label :Default_Unit_Cost %></div>
-                <div class="small_field"><%= f.text_field :unit_cost %></div>
+                <div class="small_field"><%= f.text_field :unit_cost, :class => 'form-control' %></div>
                 <div class="label_field right single"><%= f.label :Default_Quantity %></div>
-                <div class="small_field"><%= f.number_field :quantity %></div>
+                <div class="small_field"><%= f.number_field :quantity, :class => 'form-control' %></div>
               </div>
               <!--field_row-->
 

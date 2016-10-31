@@ -4,7 +4,7 @@
 
 jQuery ->
   $("a.deleted_entry").click (e)->
-    applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
+    applyPopover($(this),"bottomMiddle","topLeft","Please recover to view details")
     e.preventDefault()
     return false
 
@@ -17,12 +17,12 @@ jQuery ->
   # Calculate the line total for invoice
   updateLineTotal = (elem) ->
     container = elem.parents("tr.fields")
-    cost = jQuery(container).find("input.cost").val()
-    qty = jQuery(container).find("input.qty").val()
+    cost = $(container).find("input.cost").val()
+    qty = $(container).find("input.qty").val()
     cost = 0 if not cost? or cost is "" or not jQuery.isNumeric(cost)
     qty = 0 if not qty? or qty is "" or not jQuery.isNumeric(qty)
     line_total = ((parseFloat(cost) * parseFloat(qty))).toFixed(2)
-    jQuery(container).find(".line_total").text(line_total)
+    $(container).find(".line_total").text(line_total)
 
   # Calculate grand total from line totals
   updateInvoiceTotal = ->
@@ -30,33 +30,33 @@ jQuery ->
     total = 0
     tax_amount = 0
     discount_amount = 0
-    jQuery("table.estimate_grid_fields tr:visible .line_total").each ->
-      line_total = parseFloat(jQuery(this).text())
+    $("table.estimate_grid_fields tr:visible .line_total").each ->
+      line_total = parseFloat($(this).text())
       total += line_total
       #update invoice sub total lable and hidden field
-      jQuery("#estimate_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
-      jQuery("#estimate_sub_total_lbl").text(total.toFixed(2))
+      $("#estimate_sub_total, #recurring_profile_sub_total").val(total.toFixed(2))
+      $("#estimate_sub_total_lbl").text(total.toFixed(2))
 
       #update estimate total lable and hidden field
-      jQuery("#estimate_estimate_total, #recurring_profile_estimate_total").val(total.toFixed(2))
-      jQuery("#estimate_total_lbl").text(total.toFixed(2))
+      $("#estimate_estimate_total, #recurring_profile_estimate_total").val(total.toFixed(2))
+      $("#estimate_total_lbl").text(total.toFixed(2))
 
-      tax_amount += applyTax(line_total,jQuery(this))
+      tax_amount += applyTax(line_total,$(this))
 
     discount_amount = applyDiscount(total)
 
     #update tax amount label and tax amount hidden field
-    jQuery("#estimate_tax_amount_lbl").text(tax_amount.toFixed(2))
-    jQuery("#estimate_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
+    $("#estimate_tax_amount_lbl").text(tax_amount.toFixed(2))
+    $("#estimate_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2))
 
     #update discount amount lable and discount hidden field
-#    jQuery("#estimate_discount_amount_lbl").text(discount_amount.toFixed(2))
-    jQuery("#estimate_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
+#    $("#estimate_discount_amount_lbl").text(discount_amount.toFixed(2))
+    $("#estimate_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2))
 
-    total_balance = (parseFloat(jQuery("#estimate_total_lbl").text() - discount_amount) + tax_amount)
-    jQuery("#estimate_estimate_total, #recurring_profile_estimate_total").val(total_balance.toFixed(2))
-    jQuery("#estimate_total_lbl").text(total_balance.toFixed(2))
-    jQuery("#estimate_total_lbl").formatCurrency({symbol: window.currency_symbol})
+    total_balance = (parseFloat($("#estimate_total_lbl").text() - discount_amount) + tax_amount)
+    $("#estimate_estimate_total, #recurring_profile_estimate_total").val(total_balance.toFixed(2))
+    $("#estimate_total_lbl").text(total_balance.toFixed(2))
+    $("#estimate_total_lbl").formatCurrency({symbol: window.currency_symbol})
 
     window.taxByCategory()
 
@@ -74,35 +74,35 @@ jQuery ->
 
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->
-    discount_percentage = jQuery("#estimate_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
-    discount_type = jQuery("select#discount_type").val()
+    discount_percentage = $("#estimate_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
+    discount_type = $("select#discount_type").val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
   # Update line and grand total if line item fields are changed
-  jQuery("input.cost, input.qty").live "blur", ->
-    updateLineTotal(jQuery(this))
+  $("input.cost, input.qty").on "blur",null, ->
+    updateLineTotal($(this))
     updateInvoiceTotal()
 
-  jQuery("input.cost, input.qty").live "keyup", ->
-    updateLineTotal(jQuery(this))
+  $("input.cost, input.qty").on "keyup",null, ->
+    updateLineTotal($(this))
     updateInvoiceTotal()
-  #jQuery(this).popover "hide"
+  #$(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
-  jQuery("select.tax1, select.tax2").live "change", ->
+  $("select.tax1, select.tax2").on "change",null, ->
     updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
-  jQuery("input.cost, input.qty").live "keypress", (e) ->
+  $("input.cost, input.qty").on "keypress",null, (e) ->
     if e.which is 13
       e.preventDefault()
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".estimate_grid_fields select.items_list").live "change", ->
+  $(".estimate_grid_fields").on "change",'select.items_list', ->
     # Add an empty line item row at the end if last item is changed.
-    elem = jQuery(this)
+    elem = $(this)
     if elem.val() is ""
       clearLineTotal(elem)
       false
@@ -110,7 +110,7 @@ jQuery ->
       addLineItemRow(elem)
       jQuery.ajax '/items/load_item_data',
         type: 'POST'
-        data: "id=" + jQuery(this).val()
+        data: "id=" + $(this).val()
         dataType: 'html'
         error: (jqXHR, textStatus, errorThrown) ->
           alert "Error: #{textStatus}"
@@ -131,130 +131,130 @@ jQuery ->
   # Add empty line item row
   addLineItemRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length is 0
-      jQuery(".add_nested_fields").click()
-  #applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))
+      $(".add_nested_fields").click()
+  #applyChosen($('.estimate_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".add_nested_fields").live "click", ->
-    setTimeout "window.applyChosen(jQuery('.estimate_grid_fields tr.fields:last .chzn-select'))", 0
+  $(".add_nested_fields").on "click",null, ->
+    setTimeout "window.applyChosen($('.estimate_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total estimate balance if an item is removed
-  jQuery(".remove_nested_fields").live "click", ->
+  $(".remove_nested_fields").on "click",null, ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
 
   # Subtract discount percentage from subtotal
-  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
+  $("#estimate_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
     updateInvoiceTotal()
 
   # Subtract discount percentage from subtotal
-  jQuery("select#discount_type").change ->
+  $("select#discount_type").change ->
     updateInvoiceTotal()
 
   # Don't allow nagetive value for discount
-  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
+  $("#estimate_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
     if e.keyCode is 109 or e.keyCode is 13
       e.preventDefault()
       false
 
   # Don't allow paste and right click in discount field
-  jQuery("#estimate_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
+  $("#estimate_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
     e.preventDefault()
 
   # Add date picker to estimate date , estimate due date and payment date.
-  jQuery("#estimate_estimate_date, #estimate_due_date, .date_picker_class").datepicker
+  $("#estimate_estimate_date, #estimate_due_date, .date_picker_class").datepicker
     dateFormat: DateFormats.format()
     beforeShow: (input, inst) ->
-      widget = jQuery(inst).datepicker('widget')
-      widget.css('margin-left', jQuery(input).outerWidth() - widget.outerWidth())
+      widget = $(inst).datepicker('widget')
+      widget.css('margin-left', $(input).outerWidth() - widget.outerWidth())
 
   # Makes the estimate line item list sortable
-  jQuery("#estimate_grid_fields tbody").sortable
+  $("#estimate_grid_fields tbody").sortable
     handle: ".sort_icon"
     items: "tr.fields"
     axis: "y"
 
   # Calculate line total and estimate total on page load
-  jQuery(".estimate_grid_fields tr:visible .line_total").each ->
-    updateLineTotal(jQuery(this))
+  $(".estimate_grid_fields tr:visible .line_total").each ->
+    updateLineTotal($(this))
     # dont use decimal points in quantity and make cost 2 decimal points
-    container = jQuery(this).parents("tr.fields")
-    cost = jQuery(container).find("input.cost")
-    qty = jQuery(container).find("input.qty")
+    container = $(this).parents("tr.fields")
+    cost = $(container).find("input.cost")
+    qty = $(container).find("input.qty")
     cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
     qty.val(parseInt(qty.val())) if qty.val()
   updateInvoiceTotal()
 
   # dispute popup validation
-  jQuery("form.dispute_form").submit ->
+  $("form.dispute_form").submit ->
     flag = true
-    if jQuery("#reason_for_dispute").val() is ""
-      applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
+    if $("#reason_for_dispute").val() is ""
+      applyPopover($("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
       flag = false
     flag
-  jQuery("#reason_for_dispute").live "keyup", ->
-    jQuery(this).qtip("hide")
+  $("#reason_for_dispute").on "keyup",null, ->
+    $(this).qtip("hide")
 
   # Validate client, cost and quantity on estimate save
-  jQuery(".estimate-form.form-horizontal").submit ->
-    discount_percentage = jQuery("#estimate_discount_percentage").val()
-    discount_type = jQuery("select#discount_type").val()
-    sub_total = jQuery('#estimate_sub_total').val()
+  $(".estimate-form.form-horizontal").submit ->
+    discount_percentage = $("#estimate_discount_percentage").val()
+    discount_type = $("select#discount_type").val()
+    sub_total = $('#estimate_sub_total').val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
-    item_rows = jQuery("table#estimate_grid_fields tr.fields:visible")
+    item_rows = $("table#estimate_grid_fields tr.fields:visible")
 
     flag = true
     # Check if company is selected
-    if jQuery("#estimate_company_id").val() is ""
-      applyPopover(jQuery("#estimate_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+    if $("#estimate_company_id").val() is ""
+      applyPopover($("#estimate_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
       flag = false
       # Check if client is selected
-    else if jQuery("#estimate_client_id").val() is ""
-      applyPopover(jQuery("#estimate_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+    else if $("#estimate_client_id").val() is ""
+      applyPopover($("#estimate_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
       flag = false
       # if currency is not selected
-    else if jQuery("#estimate_currency_id").val() is "" and jQuery("#estimate_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#estimate_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+    else if $("#estimate_currency_id").val() is "" and $("#estimate_currency_id").is( ":hidden" ) == false
+      applyPopover($("#estimate_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
       # check if estimate date is selected
-    else if jQuery("#estimate_estimate_date").val() is ""
-      applyPopover(jQuery("#estimate_estimate_date"),"rightTop","leftMiddle","Select estimate date")
+    else if $("#estimate_estimate_date").val() is ""
+      applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle","Select estimate date")
       flag =false
-    else if jQuery("#estimate_estimate_date").val() isnt "" and !DateFormats.validate_date(jQuery("#estimate_estimate_date").val())
-      applyPopover(jQuery("#estimate_estimate_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+    else if $("#estimate_estimate_date").val() isnt "" and !DateFormats.validate_date($("#estimate_estimate_date").val())
+      applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
       flag = false
       # Check if discount percentage is an integer
-    else if jQuery("input#estimate_discount_percentage").val()  isnt "" and isNaN(jQuery("input#estimate_discount_percentage").val())
-      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+    else if $("input#estimate_discount_percentage").val()  isnt "" and isNaN($("input#estimate_discount_percentage").val())
+      applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
       flag = false
       # Check if no item is selected
-    else if jQuery("tr.fields:visible").length < 1
-      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+    else if $("tr.fields:visible").length < 1
+      applyPopover($("#add_line_item"),"bottomMiddle","topLeft","Add line item")
       flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-      first_item = jQuery("table#estimate_grid_fields tr.fields:visible:first").find("select.items_list").next()
+      first_item = $("table#estimate_grid_fields tr.fields:visible:first").find("select.items_list").next()
       applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
       flag = false
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
       flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#estimate_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
       flag = false
 
       # Item cost and quantity should be greater then 0
 
     else
-      jQuery("tr.fields:visible").each ->
-        row = jQuery(this)
+      $("tr.fields:visible").each ->
+        row = $(this)
         if row.find("select.items_list").val() isnt ""
           cost = row.find(".cost")
           qty =  row.find(".qty")
           tax1 = row.find("select.tax1")
           tax2 = row.find("select.tax2")
-          tax1_value = jQuery("option:selected",tax1).val()
-          tax2_value = jQuery("option:selected",tax2).val()
+          tax1_value = $("option:selected",tax1).val()
+          tax2_value = $("option:selected",tax2).val()
 
           if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
             applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
@@ -302,7 +302,7 @@ jQuery ->
         tip:
           corner: "bottomLeft"
     elem.qtip().show()
-    qtip = jQuery(".qtip.use_as_template")
+    qtip = $(".qtip.use_as_template")
     qtip.css("top",qtip.offset().top - qtip.height())
     qtip.attr('data-top',qtip.offset().top - qtip.height())
     elem.focus()
@@ -312,17 +312,17 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('.use_as_template .close_qtip').live "click", ->
-    hidePopover(jQuery("#estimate_client_id_chzn"))
+  $('.use_as_template').on "click",'.close_qtip', ->
+    hidePopover($("#estimate_client_id_chzn"))
 
-  jQuery("#estimate_client_id_chzn,.chzn-container").live "click", ->
-    jQuery(this).qtip("hide")
+  $("#estimate_client_id_chzn,.chzn-container").on "click",null, ->
+    $(this).qtip("hide")
 
-  jQuery("#add_line_item").live "click",->
-    jQuery(this).qtip('hide')
+  $("#add_line_item").on "click",null,->
+    $(this).qtip('hide')
 
-  jQuery(".line_item_qtip").live "change",->
-    jQuery(this).qtip('hide')
+  $(".line_item_qtip").on "change",null,->
+    $(this).qtip('hide')
 
   # Don't send an ajax request if an item is deselected.
   clearLineTotal = (elem) ->
@@ -334,19 +334,19 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links a').live 'click', ->
-    jQuery('#active_links a').removeClass('active')
-    jQuery(this).addClass('active')
+  $('#active_links a').on 'click',null, ->
+    $('#active_links a').removeClass('active')
+    $(this).addClass('active')
 
-  jQuery(".estimate_action_links input[type=submit]").click ->
-    jQuery(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
+  $(".estimate_action_links input[type=submit]").click ->
+    $(this).parents("FORM:eq(0)").find("table.table_listing").find(':checkbox').attr()
 
   # Load last estimate for client if any
-  jQuery("#estimate_client_id").unbind 'change'
-  jQuery("#estimate_client_id").change ->
-    client_id = jQuery(this).val()
-    hidePopover(jQuery("#estimate_client_id_chzn")) if client_id is ""
-    jQuery("#last_estimate").hide()
+  $("#estimate_client_id").unbind 'change'
+  $("#estimate_client_id").change ->
+    client_id = $(this).val()
+    hidePopover($("#estimate_client_id_chzn")) if client_id is ""
+    $("#last_estimate").hide()
     if not client_id? or client_id isnt ""
 
       jQuery.get('/clients/'+ client_id + '/default_currency')
@@ -362,15 +362,15 @@ jQuery ->
           id = jQuery.trim(data[0])
           client_name = data[1]
           unless id is "no estimate"
-            #useAsTemplatePopover(jQuery("#estimate_client_id_chzn"),id,client_name)
+            #useAsTemplatePopover($("#estimate_client_id_chzn"),id,client_name)
           else
-            hidePopover(jQuery(".hint_text:eq(0)"))
+            hidePopover($(".hint_text:eq(0)"))
 
   # Change currency of estimate
-  jQuery("#estimate_currency_id").unbind 'change'
-  jQuery("#estimate_currency_id").change ->
-    currency_id = jQuery(this).val()
-    hidePopover(jQuery("#estimate_currency_id_chzn")) if currency_id is ""
+  $("#estimate_currency_id").unbind 'change'
+  $("#estimate_currency_id").change ->
+    currency_id = $(this).val()
+    hidePopover($("#estimate_currency_id_chzn")) if currency_id is ""
     if not currency_id? or currency_id isnt ""
       jQuery.get('/estimates/selected_currency?currency_id='+ currency_id)
 
@@ -379,46 +379,46 @@ jQuery ->
     dateFormat: DateFormats.format()
 
   # Hide placeholder text on focus
-  jQuery("input[type=text],input[type=number]",".quick_create_wrapper").live("focus",->
+  $("input[type=text],input[type=number]",".quick_create_wrapper").on("focus",null,->
     @dataPlaceholder = @placeholder
     @removeAttribute "placeholder"
-  ).live("blur", ->
+  ).on("blur",null, ->
     @placeholder = @dataPlaceholder
     @removeAttribute "dataPlaceholder"
-  ).live "keypress", (e) ->
+  ).on "keypress",null, (e) ->
     if e.which is 13
       e.preventDefault()
-      jQuery(".active-form .btn_save").trigger("click")
-    hidePopover(jQuery(this))
+      $(".active-form .btn_save").trigger("click")
+    hidePopover($(this))
 
   # Show quick create popups under create buttons
-  jQuery(".quick_create").click ->
+  $(".quick_create").click ->
     pos = $(this).position()
     height = $(this).outerHeight()
-    jQuery('.quick_create_wrapper').hide()
-    jQuery("##{jQuery(this).attr('name')}").css(
+    $('.quick_create_wrapper').hide()
+    $("##{$(this).attr('name')}").css(
       position: "absolute"
       top: (pos.top + height) + "px"
       left: pos.left + "px"
     ).show()
 
-  jQuery(".close_btn").live "click", ->
-    jQuery(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
+  $(".close_btn").on "click",null, ->
+    $(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
 
   # Alert on dispute if estimate is paid
-  jQuery('#dispute_link').click ->
-    jQuery('#reason_for_dispute').val('')
+  $('#dispute_link').click ->
+    $('#reason_for_dispute').val('')
     flag = true
-    status = jQuery(this).attr "value"
+    status = $(this).attr "value"
     if status is "paid"
       alert "Paid estimate can not be disputed."
       flag = false
     flag
 
-  jQuery(".more").live "click", ->
-    jQuery(".toggleable").removeClass("collapse")
+  $(".more").on "click",null, ->
+    $(".toggleable").removeClass("collapse")
 
-  jQuery("#add_line_item").live "click", ->
+  $("#add_line_item").on "click",null, ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
@@ -430,17 +430,17 @@ jQuery ->
     $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
 
-  jQuery(".less").live "click", ->
-    jQuery(".toggleable").addClass("collapse")
+  $(".less").on "click",null, ->
+    $(".toggleable").addClass("collapse")
 
   #send only email to client on clicking send this note only link.
-  jQuery('#send_note_only').click ->
+  $('#send_note_only').click ->
     jQuery.ajax '/estimates/send_note_only',
       type: 'POST'
-      data: "response_to_client=" + jQuery("#response_to_client").val() + "&inv_id=" + jQuery("#inv_id").val()
+      data: "response_to_client=" + $("#response_to_client").val() + "&inv_id=" + $("#inv_id").val()
       dataType: 'html'
       error: (jqXHR, textStatus, errorThrown) ->
         alert "Error: #{textStatus}"
       success: () ->
-        jQuery('.alert').hide();
-        jQuery(".alert.alert-success").show().find("span").html "This note has been sent successfully"
+        $('.alert').hide();
+        $(".alert.alert-success").show().find("span").html "This note has been sent successfully"

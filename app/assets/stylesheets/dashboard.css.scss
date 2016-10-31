@@ -19,14 +19,13 @@
     overflow: hidden;
     ul li {
       float: left;
-      margin: 0 10px 0 0;
+      margin: 0 13px 0 0;
       &:last-child {
         margin: 0px;
       }
       a {
         display: block;
         min-width: 201px;
-        height: 28px;
         border: 1px solid #d7d7d7;
         border-radius: 4px;
         text-align: center;
@@ -34,7 +33,7 @@
         font-style: normal;
         font-size: 20px;
         color: #464646;
-        padding: 8px 0 0 0;
+        padding: 8px 0 8px 0;
         &.small {
           min-width: 200px;
         }
@@ -60,8 +59,8 @@
   }
   .dashboard_box {
     float: left;
-    width: 92.9%;
-    padding: 22px 29px 29px 28px;
+    width: 100%;
+    padding: 22px 20px 29px 28px;
     border: 1px solid #d7d7d7;
     border-radius: 4px;
     &.small {
@@ -171,7 +170,6 @@
   .grid_table {
     &.current_invoices {
       &.top {
-        padding-right: 29px;
         padding-top: 0px;
         width: 92.5%;
         table {
@@ -378,7 +376,7 @@
 
 .dashboard_box{
   &.custom{
-    width: 94.5%;
+    width: 100%;
     padding-right: 15px;
     .amount_box{
       width: 175px;
@@ -406,4 +404,3 @@
     }
   }
 }
-

@@ -188,11 +188,6 @@ table.task_grid_fields {
       top: 7px;
       right: 18px;
     }
-    .medium_field{
-      input[type="text"]{
-        width: 200px;
-      }
-    }
     select{
       width: 220px;
     }
@@ -203,11 +198,6 @@ table.task_grid_fields {
     .chzn-container-single .chzn-single abbr{
       top: 7px;
       right: 18px;
-    }
-    .medium_field{
-      input[type="text"], input[type="number"]{
-        width: 200px;
-      }
     }
     select{
       width: 220px;
@@ -282,7 +272,7 @@ table.task_grid_fields {
   .grid_table table col.four { /*unit cost*/
     width: 20%;
   }
-  
+
   input.grid_small,
   .blank_input {
     width: 60px;
@@ -313,14 +303,14 @@ table.task_grid_fields {
     //padding: 30px 0;
     float: right;
     margin: -26px 0 0;
-    padding: 0 0 30px;
+    padding: 0 12px 30px;
     width: 50%;
     &.custom{
       .grid_summary_content{
         width: 220px;
       }
       .grid_summary_title{
-        width: 120px;
+        width: 130px;
       }
       select{
         width: 60px;
@@ -396,13 +386,6 @@ table.task_grid_fields {
     margin: 0 5px 3px;
     padding: 4px 3px 4px 2px;
     width: 51px;
-  }
-  input.invoice_discount{
-    height: 28px;
-    line-height: 28px;
-    padding: 0 9px 0 9px;
-    text-align: right;
-    width: 42px;
   }
   .tasks_list, .members_list {
     width: 250px !important;

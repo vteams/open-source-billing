@@ -52,7 +52,7 @@ module ApplicationHelper
 
   # helper function make a link to submit its parent form
   def link_to_submit(*args, &block)
-    link_to_function (block_given? ? capture(&block) : args[0]), "jQuery(this).closest('form').submit();", args.extract_options!
+    link_to_function (block_given? ? capture(&block) : args[0]), "$(this).closest('form').submit();", args.extract_options!
   end
 
   def sortable(column, title = nil)

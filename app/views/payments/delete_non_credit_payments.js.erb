@@ -1,9 +1,9 @@
-jQuery(".alert").hide();
+$(".alert").hide();
 
 window.location.reload()
 
-jQuery('tbody#payment_body').html('<%= escape_javascript render("payment") %>');
-jQuery("table.table_listing").trigger('update');
-jQuery('#credit_payments').modal('hide');
+$('tbody#payment_body').html('<%= escape_javascript render("payment") %>');
+$("table.table_listing").trigger('update');
+$('#credit_payments').modal('hide');
 bind_deleted_entry();
 bind_edit_payment_links()

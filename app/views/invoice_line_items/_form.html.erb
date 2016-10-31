@@ -15,38 +15,38 @@
     <div class="field">
       <%= f.label :item_id, t('views.invoice_line_item.item') %>
       <br/>
-      <%= f.number_field :item_id %>
+      <%= f.number_field :item_id, :class => 'form-control' %>
       <%= collection_select :invoice_line_item, :item_id, Item.all, :id, :item_name, :prompt => "Select an item" %>
     </div>
     <div class="field">
       <%= f.label :item_name, t('views.invoice_line_item.name') %>
       <br/>
-      <%= f.text_field :item_name %>
+      <%= f.text_field :item_name, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :item_description, t('views.invoice_line_item.description') %>
       <br/>
-      <%= f.text_field :item_description %>
+      <%= f.text_field :item_description, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :item_unit_cost, t('views.invoice_line_item.unit_cost') %>
       <br/>
-      <%= f.text_field :item_unit_cost %>
+      <%= f.text_field :item_unit_cost, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :item_quantity, t('views.invoice_line_item.quantity') %>
       <br/>
-      <%= f.text_field :item_quantity %>
+      <%= f.text_field :item_quantity, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :tax_1, t('views.invoice_line_item.tax_1') %>
       <br/>
-      <%= f.number_field :tax_1 %>
+      <%= f.number_field :tax_1, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :tax_2, t('views.invoice_line_item.tax_2') %>
       <br/>
-      <%= f.number_field :tax_2 %>
+      <%= f.number_field :tax_2, :class => 'form-control' %>
     </div>
     <%= f.link_to_remove "x" %>
     <%= f.link_to_add "+", :invoice_line_items %>

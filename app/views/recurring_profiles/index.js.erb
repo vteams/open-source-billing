@@ -1,28 +1,28 @@
-jQuery('thead#recurring_profile_head').html('<%= escape_javascript render("recurring_profile_header") %>')
-jQuery('tbody#recurring_profile_body').html('<%= escape_javascript render("recurring_profile") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
-jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
-jQuery('#sort_direction').html('<%= params[:direction]%>');
+$('thead#recurring_profile_head').html('<%= escape_javascript render("recurring_profile_header") %>')
+$('tbody#recurring_profile_body').html('<%= escape_javascript render("recurring_profile") %>');
+$('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
+$('#active_links').html('<%= escape_javascript render("filter_links") %>');
+$('#sort_direction').html('<%= params[:direction]%>');
 window.preventDeletedNavigation();
 // Add page params in table listing headers
 <% status = params[:status]%>
 
-jQuery('.top_links').hide();
-jQuery('#active_links a').removeClass('active');
-jQuery('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
+$('.top_links').hide();
+$('#active_links a').removeClass('active');
+$('.primary_heading h1 span').html("&nbsp;/&nbsp;<%= status.capitalize%>");
 
 <%if status == "active" %>
-jQuery('.archive,.destroy,.payment,.send').show();
-jQuery('#active_links a.get_actives').addClass('active');
+$('.archive,.destroy,.payment,.send').show();
+$('#active_links a.get_actives').addClass('active');
 
 <% elsif status == "archived"%>
-jQuery('.send').parent("li").removeClass("grid_control_sep");
-jQuery('.recover_archived,.destroy_archived,.send').show();
-jQuery('#active_links a.get_archived').addClass('active');
+$('.send').parent("li").removeClass("grid_control_sep");
+$('.recover_archived,.destroy_archived,.send').show();
+$('#active_links a.get_archived').addClass('active');
 
 <% elsif status == "deleted"%>
-jQuery('.recover_deleted').show().parent('li').removeAttr('class');
-jQuery('#active_links a.get_deleted').addClass('active');
+$('.recover_deleted').show().parent('li').removeAttr('class');
+$('#active_links a.get_deleted').addClass('active');
 <%end%>
 
 window.history.pushState({html: $("body").html()},"","<%= request.original_url %>");

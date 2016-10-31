@@ -1,7 +1,7 @@
 Open Source Billing
 ===================
 
-A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.1.8. and Ruby v2.0.0. This document describe the OSB application setup on ubuntu 14.04 LTS  machine.
+A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.6 and Ruby v2.3.1. This document describe the OSB application setup on ubuntu 14.10 machine.
 
 Features
 ---------
@@ -38,9 +38,9 @@ MySql is an open-source relational database management system. Run the following
 
 #### 1.2 Git
 Git is version control system we used for OSB. Run the following command to install git.
-    
+
     sudo apt-get install git
-    
+
 ### Step-2. Ruby Installation Using RVM
 
 #### 2.1 Dependencies for Ruby
@@ -49,7 +49,7 @@ Run the following command to install ruby dependencies:
     sudo apt-get update
 
     sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev libncurses5-dev automake libtool bison libffi-dev imagemagick libmagickcore-dev libmagickwand-dev libicu-dev
-    
+
 #### 2.2 Ruby using RVM (development version)
 Run the following commands to install stable version:
 
@@ -57,9 +57,9 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.0.0
+    rvm install 2.3.1
 
-    rvm use 2.0.0 --default
+    rvm use 2.3.1 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
@@ -69,11 +69,11 @@ Bundler is a tool that allows you to install multiple gem versions, run this com
 #### 2.4 Installing Rails
 Run this command to install rails:
 
-    gem install rails -v 4.1.8
+    gem install rails -v 4.2.6
 ### Step-3. Configuration
 #### 3.1 Clone Application Code
 To clone project code from github, give your github account credential for authentication while cloning project.
-    
+
     git clone https://github.com/vteams/open-source-billing
 
 
@@ -101,7 +101,7 @@ Loading default values in database
 Copy config/config.yml.copy to config/config.yml and set your configuration
 
 Edit config/config.yml with your own paypal settings:
-    
+
     paypal_login: YOUR_PAYPAL_LOGIN
     paypal_password: YOUR_PAYPAL_PASSWORD
     paypal_signature: YOUR_PAYPAL_SIGNATURE
@@ -121,8 +121,8 @@ Using following command in terminal to get path of wkhtmltopdf library path that
 Edit config/config.yml with your own application wkhtmltopdf path.
 
 	wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
-	
-#### 3.9 SMTP configuration 
+
+#### 3.9 SMTP configuration
 Edit config/config.yml with your own application smtp settings.
 
      smtp_setting:

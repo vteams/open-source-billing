@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 #jQuery ->
-#  jQuery('.currency_select').change ->
+#  $('.currency_select').change ->
 #    status = $('.currency_select').attr('checked')=='checked'
 #    jQuery.ajax '/settings',
 #      type: 'POST'

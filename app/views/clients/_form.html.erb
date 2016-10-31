@@ -14,7 +14,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.clients.organization_name') %></div>
               <div class="large_field">
-                <%= f.text_field :organization_name %>
+                <%= f.text_field :organization_name, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -22,29 +22,29 @@
             <div class="field_row">
               <div class="label_field left single"><span><%= t('views.common.email') %></span></div>
               <div class="medium_field">
-                <%= f.text_field :email, required: true %>
+                <%= f.text_field :email, required: true, :class => 'form-control' %>
               </div>
               <div class="label_field right"><%= t('views.clients.business_phone') %></div>
-              <div class="small_field"><%= f.text_field :business_phone %></div>
+              <div class="small_field"><%= f.text_field :business_phone, :class => 'form-control' %></div>
             </div>
             <!--field_row-->
 
             <div class="field_row description">
               <div class="label_field left single"><span><%= t('views.clients.contact_name') %></span></div>
               <div class="small_field">
-                <%= f.text_field :first_name,required: true %>
+                <%= f.text_field :first_name,required: true, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.clients.first_name') %></li>
                 </ul>
               </div>
               <div class="small_field right">
-                <%= f.text_field :last_name %>
+                <%= f.text_field :last_name, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.clients.last_name') %></li>
                 </ul>
               </div>
               <div class="label_field right single"><%= t('views.common.mobile') %></div>
-              <div class="small_field"><%= f.text_field :mobile_number %></div>
+              <div class="small_field"><%= f.text_field :mobile_number, :class => 'form-control' %></div>
             </div>
             <!--field_row-->
 
@@ -53,13 +53,12 @@
               <div class="medium_field">
                 <div id="client_credit"></div>
                 <% @readonly = is_client_credit_payments @client %>
-                <%#= text_field_tag :available_credit_test, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly %>
 
                 <% if @client.new_record? %>
-                    <%= text_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= text_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :class => 'form-control', :readonly => @readonly%>
                 <% else %>
                     <%#= hidden_field_tag :available_credit, @client.available_credit %>
-                    <%= text_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= text_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :class => 'form-control', :readonly => @readonly %>
                 <% end %>
 
                 <ul class="field_description">
@@ -131,7 +130,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= t('views.common.address') %></div>
               <div class="large_field">
-                <%= f.text_field :address_street1 %>
+                <%= f.text_field :address_street1, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.street') %>#1</li>
                 </ul>
@@ -142,7 +141,7 @@
             <div class="field_row description">
               <div class="label_field left single">&nbsp;</div>
               <div class="large_field">
-                <%= f.text_field :address_street2 %>
+                <%= f.text_field :address_street2, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.street') %>#2</li>
                 </ul>
@@ -153,19 +152,19 @@
             <div class="field_row description">
               <div class="label_field left single">&nbsp;</div>
               <div class="small_field">
-                <%= f.text_field :city %>
+                <%= f.text_field :city, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.city') %></li>
                 </ul>
               </div>
               <div class="small_field right">
-                <%= f.text_field :province_state %>
+                <%= f.text_field :province_state, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.province') %> / <%= t('views.common.state') %></li>
                 </ul>
               </div>
               <div class="small_field right">
-                <%= f.text_field :postal_zip_code %>
+                <%= f.text_field :postal_zip_code, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.common.postal') %> / <%= t('views.common.zip_code') %></li>
                 </ul>
@@ -192,7 +191,7 @@
             <div class="field_row">
               <div class="label_field left single"><%= t('views.common.fax') %></div>
               <div class="small_field">
-                <%= f.text_field :fax %>
+                <%= f.text_field :fax, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->
@@ -200,7 +199,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= t('views.clients.internal_notes') %></div>
               <div class="large_field">
-                <%= f.text_area :internal_notes %>
+                <%= f.text_area :internal_notes, :class => 'form-control' %>
               </div>
             </div>
             <!--field_row-->

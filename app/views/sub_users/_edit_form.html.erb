@@ -11,7 +11,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span>Full Name</span></div>
                 <div class="large_field">
-                  <%= text_field_tag :user_name,"#{@sub_user.user_name}", :required => "" %>
+                  <%= text_field_tag :user_name,"#{@sub_user.user_name}", :required => "", class: 'form-control' %>
                 </div>
               </div>
               <!--field_row-->
@@ -19,7 +19,7 @@
               <div class="field_row">
                 <div class="label_field left single"><span>Email</span></div>
                 <div class="large_field">
-                  <%= text_field_tag :email,"#{@sub_user.email}", :required => "" %>
+                  <%= text_field_tag :email,"#{@sub_user.email}", :required => "", class: 'form-control' %>
                 </div>
               </div>
               <!--field_row-->

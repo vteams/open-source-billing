@@ -15,7 +15,6 @@
   .inovice_preview_contianer{
     margin: auto;
     width: 100%;
-    border: 1px solid #d7d7d7;
     overflow: hidden;
     border-radius: 4px;
     min-height: 90px;
@@ -29,8 +28,8 @@
   }
 
   .invoice_preview_content{
-    width: 95%;
-    padding: 65px 29px 0 29px;
+    width: 100%;
+    padding: 50px 0 0 0;
   }
   .preview_content_top{
     padding-bottom: 11px;
@@ -211,7 +210,7 @@
   .preview_btm_footer ul li{
     float: left;
     display: block;
-    padding: 0 0 0 4px;
+    padding: 0 0 0 0;
   }
   .footer_txt{
     font-size: 10px;
@@ -234,7 +233,6 @@
   .estimate_preview_contianer{
     margin: auto;
     width: 100%;
-    border: 1px solid #d7d7d7;
     overflow: hidden;
     border-radius: 4px;
     min-height: 90px;
@@ -248,8 +246,8 @@
   }
 
   .estimate_preview_content{
-    width: 95%;
-    padding: 65px 29px 0 29px;
+    width: 100%;
+    padding: 50px 0 0 0;
   }
   .preview_content_top{
     padding-bottom: 11px;

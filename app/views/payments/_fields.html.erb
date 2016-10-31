@@ -76,7 +76,7 @@
             <%= f.hidden_field :invoice_id %>
             <div class="label_field left single">Payment (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
             <div class="small_field">
-              <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount" %>
+              <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount form-control" %>
               <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
             </div>
             <div class="field_check">
@@ -108,7 +108,7 @@
             </div>
             <div class="label_field right single"><%= f.label "Date", :for => "payments_#{index}_payment_date" %></div>
             <div class="small_field">
-              <%= f.text_field :payment_date, value: f.object.payment_date ,:id => "payments_#{index}_payment_date",:class=>"date_picker_class payment_dates" %>
+              <%= f.text_field :payment_date, value: f.object.payment_date ,:id => "payments_#{index}_payment_date",:class=>"date_picker_class payment_dates form-control" %>
             </div>
           </div>
           <!--field_row-->
@@ -116,7 +116,7 @@
           <div class="field_row">
             <div class="label_field left single"><%= f.label :notes, :for => "payments_#{index}_notes" %></div>
             <div class="large_field">
-              <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
+              <%= f.text_area :notes, :id => "payments_#{index}_notes", :class => 'form-control' %>
             </div>
           </div>
           <!--field_row-->

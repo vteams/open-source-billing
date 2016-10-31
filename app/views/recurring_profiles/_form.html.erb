@@ -17,7 +17,7 @@
               <div class="label_field left single"><%= f.label :first_invoice_date, content_tag(:span, t('views.invoices.recurring.schedule')) %></div>
               <div class="small_field">
                 <%= hidden_field_tag :recurring_profile_current_date, Date.today %>
-                <%= f.text_field :first_invoice_date, :required => "", :value => start_date, :ignore_time => true %>
+                <%= f.text_field :first_invoice_date, :required => "", :value => start_date, :ignore_time => true, :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.start_date') %></li>
                 </ul>
@@ -29,7 +29,7 @@
                 </ul>
               </div>
               <div class="small_field">
-                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? 1 :  @recurring_profile.occurrences, :required => true %>
+                <%= f.text_field :occurrences, :value =>(@recurring_profile.occurrences.blank? || @recurring_profile.occurrences == 0) ? 1 :  @recurring_profile.occurrences, :required => true, :class => 'form-control' %>
                 <span id="how_many_symbol"></span>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.how_many') %></li>
@@ -40,7 +40,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
               <div class="medium_field">
-                <%= text_field_tag 'company', get_invoice_company_name(@recurring_profile), :readonly => '', :class => 'company_read_only' %>
+                <%= text_field_tag 'company', get_invoice_company_name(@recurring_profile), :readonly => '', :class => 'company_read_only form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.company_hint') %></li>
                 </ul>
@@ -90,7 +90,7 @@
             <div class="field_row description">
               <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, t('views.invoices.recurring.profile_id')) %></div>
               <div class="small_field">
-                <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
+                <%= f.text_field :invoice_number, :readonly => "", :required => "", :class => 'form-control' %>
                 <ul class="field_description">
                   <li><%= t('views.invoices.recurring.auto_generated') %></li>
                 </ul>
@@ -163,7 +163,7 @@
           <div class="grid_summary_description custom">
             <%= f.hidden_field :discount_amount %>
             <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-            <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip" %>
+            <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip form-control" %>
           </div>
         </div>
 
@@ -196,7 +196,7 @@
       <div class="field_row textarea">
         <div class="label_field textarea"><%= f.label :notes %></div>
         <div class="large_field">
-          <%= f.text_area :notes, maxlength: 400 %>
+          <%= f.text_area :notes, maxlength: 400, :class => 'form-control' %>
           <ul class="field_description">
             <li class="text-limit">
             </li>

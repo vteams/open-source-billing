@@ -3,11 +3,11 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   # Load Email template when a template type is selected from dropdown list
-  jQuery(".email_template_class select#email_template_template_type").live "change", ->
-      elem = jQuery(this)
+  $(".email_template_class").on "change",'select#email_template_template_type', ->
+      elem = $(this)
       jQuery.ajax '/email_templates/load_email_template',
         type: 'POST'
-        data: "id=" +  jQuery(this).find('option:selected').attr('value_id')
+        data: "id=" +  $(this).find('option:selected').attr('value_id')
         dataType: 'html'
         error: (jqXHR, textStatus, errorThrown) ->
           alert "Error: #{textStatus}"
