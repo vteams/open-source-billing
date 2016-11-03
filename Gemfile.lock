@@ -1,11 +1,4 @@
 GIT
-  remote: git@gitlab.vteamslabs.com:vteams/osbm.git
-  revision: 358c9cb7735bdece49aea74661b4d235b47441f3
-  specs:
-    osbm (0.0.8)
-      rails (~> 4.1.15)
-
-GIT
   remote: https://github.com/akshayrawat/dj_mon
   revision: b360a3a9ba225ff58b10bfa1cad5c8b4dfcd79d6
   specs:
@@ -23,6 +16,12 @@ PATH
       grape-rabl (~> 0.3.0)
       rack-cors
       rails (~> 4.1.8)
+
+PATH
+  remote: vendor/engines/osbm
+  specs:
+    osbm (0.0.8)
+      rails (~> 4.1.15)
 
 GEM
   remote: https://rubygems.org/

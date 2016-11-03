@@ -85,4 +85,12 @@ class User < ActiveRecord::Base
   def self.current
     Thread.current[:current_user]
   end
+
+  def name
+    user_name
+  end
+
+  def organization_name
+    accounts.first.org_name rescue nil
+  end
 end
