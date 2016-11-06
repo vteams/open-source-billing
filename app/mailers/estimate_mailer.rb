@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class EstimateMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'billing@proveric.com'
   layout 'email'
   @@response_to_client = ''
   @@reason_by_client =  ''
