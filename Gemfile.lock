@@ -363,9 +363,8 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
-    wicked_pdf (0.11.0)
-      rails
-    wkhtmltopdf-binary (0.9.9.3)
+    wicked_pdf (1.0.6)
+    wkhtmltopdf-binary (0.12.3.1)
     xlsx_writer (0.4.4)
       activesupport
       fast_xs
@@ -387,7 +386,7 @@ DEPENDENCIES
   better_errors (= 2.1.1)
   binding_of_caller (>= 0.6.9)
   browser (= 2.1.0)
-  bundler (= 1.12.5)
+  bundler
   cancancan (= 1.15.0)
   carrierwave (= 0.11.2)
   coffee-rails (= 4.1.1)
@@ -441,12 +440,12 @@ DEPENDENCIES
   turbo-sprockets-rails3 (= 0.2.9)
   twitter-bootstrap-rails (~> 2.1.9)
   uglifier (= 3.0.0)
-  wicked_pdf (~> 0.11.0)
-  wkhtmltopdf-binary (~> 0.9.9.3)
+  wicked_pdf (~> 1.0.6)
+  wkhtmltopdf-binary (~> 0.12.3.1)
   xlsx_writer (= 0.4.4)
 
 RUBY VERSION
-   ruby 2.0.0p451
+   ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

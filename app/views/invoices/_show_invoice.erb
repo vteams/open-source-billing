@@ -235,10 +235,6 @@
   </div>
   <!--preview_btm_top-->
   <div class="preview_btm_footer">
-    <ul>
-      <li class="footer_txt"><%= t('views.invoices.this_invoice_was_sent_using') %></li>
-      <li><%= request.format.pdf? ? (wicked_pdf_image_tag "payment_logo.png", :size => "74x13", :alt => "") : (image_tag "payment_logo.png", :size => "74x13", :alt => "") %></li>
-    </ul>
   </div>
   <!--preview_btm_footer-->
 </div>
