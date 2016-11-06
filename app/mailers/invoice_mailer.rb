@@ -22,9 +22,11 @@ class InvoiceMailer < ActionMailer::Base
   default :from => 'info@osb.com'
   @@response_to_client = ''
   @@reason_by_client =  ''
+
   def new_invoice_email(client, invoice, e_id , current_user)
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
-    @email_html_body = template.body
+    # @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
+    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -41,7 +43,7 @@ class InvoiceMailer < ActionMailer::Base
     @@response_to_client = response_to_client
    # @response_to_client, @invoice, @client, @current_user  = response_to_client, invoice , client, current_user
     template = replace_template_body(current_user, invoice, 'Dispute Reply') #(logged in user,invoice,email type)
-    @email_html_body = template.body
+    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
     invoice.sent_emails.create({
                                    :content => response_to_client,
                                    :sender => current_user.email, #User email
@@ -58,7 +60,7 @@ class InvoiceMailer < ActionMailer::Base
     invoice = Invoice.find(invoice_id)
     client = invoice.client
     template = replace_template_body(nil, invoice, template_type) #(logged in user,invoice,email type)
-    @email_html_body = template.body
+    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -74,7 +76,7 @@ class InvoiceMailer < ActionMailer::Base
     #@user, @invoice, @reason = user, invoice, reason
     @@reason_by_client = reason
     template = replace_template_body(user, invoice, 'Dispute Invoice') #(logged in user,invoice,email type)
-    @email_html_body = template.body
+    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
     mail(:to => user.email, :subject => template.subject)
     invoice.sent_emails.create({
                                    :content => reason,
@@ -112,9 +114,12 @@ class InvoiceMailer < ActionMailer::Base
 
   def replace_template_body(user = nil, invoice, template_type)
     template = get_email_template(user, invoice, template_type)
+    require 'byebug'; byebug
     param_values = {
         'sender_business_name' => 'OSB LLC',
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
+        'client_address1'=> (invoice.client.address_street1 rescue 'ERROR'),
+        'client_address2'=> (invoice.client.address_street2 rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'invoice_total' => (invoice.invoice_total.to_s  rescue 'ERROR'),
         'invoice_url' => "#{Account.url(invoice.try(:account_id))}/invoices/preview?inv_id=#{invoice.encrypted_id}",
