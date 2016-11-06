@@ -1,9 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-</head>
-<body>
-<%= @email_html_body.html_safe%>
-</body>
-</html>
+<table cellspacing="0" cellpadding="0" class="force-full-width">
+  <tr>
+    <td style="font-size:40px; font-weight: 600; color: #ffffff; text-align:center;" class="mobile-spacing">
+    <div class="mobile-br">&nbsp;</div>
+      Uh oh, there might be an error
+    <br>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size:24px; text-align:center; padding: 0 75px; color:#6f6f6f;" class="w320 mobile-spacing">
+      Your client has sent you a dispute on a recent invoice.
+    </td>
+  </tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td>
+      <img src="https://www.filepicker.io/api/file/GpfIo4fLSmOUlg8sU33n" style="max-width:100%; display:block;">
+    </td>
+  </tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" class="force-full-width" bgcolor="#ffffff" >
+<tr>
+<td style="background-color:#ffffff; padding-top: 15px;">
+
+<center>
+<table style="margin:0 auto;" cellspacing="0" cellpadding="0" class="force-width-80">
+  <tr>
+    <td style="text-align:left;">
+    <br>
+      <b><%= @invoice.client.first_name %></b> <br>
+      <%= @invoice.client.address_street1 unless @invoice.client.address_street1.empty? %> <br>
+      <%= @invoice.client.address_street2 unless @invoice.client.address_street2.empty? %> <br>
+      <%= "#{@invoice.client.city}, #{@invoice.client.province_state} #{@invoice.client.postal_zip_code}" unless @invoice.client.city.empty? %>
+    </td>
+    <td style="text-align:right; vertical-align:top;">
+    <br>
+    <b>Invoice: <%= @invoice.invoice_number %></b> <br>
+    <%= @invoice.invoice_date %>
+    </td>
+  </tr>
+</table>
+
+<table style="margin: 0 auto;" cellspacing="0" cellpadding="0" class="force-width-80">
+  <tr>
+    <td style="text-align: left;">
+    <br>
+      For your records, the dispute is as follows: <%= @reason_by_client%>
+    </td>
+  </tr>
+</table>
+</center>
+
+<table style="margin:0 auto;" cellspacing="0" cellpadding="10" width="100%">
+  <tr>
+    <td style="text-align:center; margin:0 auto;">
+    <br>
+      <div><!--[if mso]>
+        <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:45px;v-text-anchor:middle;width:180px;" stroke="f" fillcolor="#f5774e">
+          <w:anchorlock/>
+          <center>
+        <![endif]-->
+            <a href="<%= "#{Account.url(@invoice.try(:account_id))}/invoices/preview?inv_id=#{@invoice.encrypted_id}" %>" style="background-color:#f5774e;color:#ffffff;display:inline-block;font-family:'Source Sans Pro', Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:45px;text-align:center;text-decoration:none;width:180px;-webkit-text-size-adjust:none;">View Invoice</a>
+            <!--[if mso]>
+          </center>
+        </v:rect>
+      <![endif]--></div>
+      <br>
+    </td>
+  </tr>
+</table>

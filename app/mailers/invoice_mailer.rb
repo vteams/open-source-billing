@@ -20,13 +20,12 @@
 #
 class InvoiceMailer < ActionMailer::Base
   default :from => 'info@osb.com'
+  layout 'email'
   @@response_to_client = ''
   @@reason_by_client =  ''
 
   def new_invoice_email(client, invoice, e_id , current_user)
-    template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
-    # @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
-    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
+    template = process_template(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -41,9 +40,6 @@ class InvoiceMailer < ActionMailer::Base
 
   def send_note_email(response_to_client, invoice, client, current_user)
     @@response_to_client = response_to_client
-   # @response_to_client, @invoice, @client, @current_user  = response_to_client, invoice , client, current_user
-    template = replace_template_body(current_user, invoice, 'Dispute Reply') #(logged in user,invoice,email type)
-    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
     invoice.sent_emails.create({
                                    :content => response_to_client,
                                    :sender => current_user.email, #User email
@@ -59,8 +55,7 @@ class InvoiceMailer < ActionMailer::Base
   def late_payment_reminder_email(invoice_id, template_type)
     invoice = Invoice.find(invoice_id)
     client = invoice.client
-    template = replace_template_body(nil, invoice, template_type) #(logged in user,invoice,email type)
-    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
+    template = process_template(nil, invoice, template_type) #(logged in user,invoice,email type)
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -73,10 +68,9 @@ class InvoiceMailer < ActionMailer::Base
   end
 
   def dispute_invoice_email(user, invoice, reason)
-    #@user, @invoice, @reason = user, invoice, reason
     @@reason_by_client = reason
-    template = replace_template_body(user, invoice, 'Dispute Invoice') #(logged in user,invoice,email type)
-    @email_html_body = MainTemplate.email_html_header << template.body << MainTemplate.email_html_footer
+    @reason_by_client = reason
+    template = process_template(user, invoice, 'Dispute Invoice') #(logged in user,invoice,email type)
     mail(:to => user.email, :subject => template.subject)
     invoice.sent_emails.create({
                                    :content => reason,
@@ -88,6 +82,7 @@ class InvoiceMailer < ActionMailer::Base
                                    :date => Date.today
                                })
   end
+
   def response_to_client(user, invoice, response)
     @user, @invoice, @response = user, invoice, response
     mail(:to => @invoice.client.email, :subject => 'Invoice Undisputed')
@@ -112,9 +107,11 @@ class InvoiceMailer < ActionMailer::Base
     template
   end
 
-  def replace_template_body(user = nil, invoice, template_type)
+  def process_template(user = nil, invoice, template_type)
+    @invoice = invoice
+    @user = user
+
     template = get_email_template(user, invoice, template_type)
-    require 'byebug'; byebug
     param_values = {
         'sender_business_name' => 'OSB LLC',
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
@@ -136,9 +133,26 @@ class InvoiceMailer < ActionMailer::Base
         'company_signature' => (invoice.company.company_name  rescue 'ERROR'),
         'payment_amount_due' => (Payment.invoice_remaining_amount(invoice.id)  rescue 'ERROR')
     }
+
+    calculate_line_item_totals(invoice)
+
     template.body = template.body.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template
+  end
+
+  def calculate_line_item_totals(invoice)
+    @invoice_items = {}
+    invoice.invoice_line_items.map do |x|
+      calculated_cost = x.item_unit_cost * x.item_quantity
+      if @invoice_items[x.item_name]
+        @invoice_items[x.item_name] = @invoice_items[x.item_name] + calculated_cost
+      else
+        @invoice_items[x.item_name] = calculated_cost
+      end
+    end
+
+    @invoice_items = @invoice_items.to_a
   end
 
 end
