@@ -20,11 +20,11 @@
 #
 class EstimateMailer < ActionMailer::Base
   default :from => 'info@osb.com'
+  layout 'email'
   @@response_to_client = ''
   @@reason_by_client =  ''
   def new_estimate_email(client, estimate, e_id , current_user)
     template = replace_template_body(current_user, estimate, 'New Estimate') #(logged in user,invoice,email type)
-    @email_html_body = template.body
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     estimate.sent_emails.create({
                                    :content => email_body,
@@ -39,6 +39,8 @@ class EstimateMailer < ActionMailer::Base
 
   def replace_template_body(user = nil, estimate, template_type)
     template = get_email_template(user, estimate, template_type)
+    @estimate = estimate
+
     param_values = {
         'sender_business_name' => 'OSB LLC',
         'client_contact'=> (estimate.client.first_name rescue 'ERROR'),
@@ -57,11 +59,26 @@ class EstimateMailer < ActionMailer::Base
         'company_signature' => (estimate.company.company_name  rescue 'ERROR'),
 
     }
-    template.body = template.body.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
+
+    calculate_line_item_totals(estimate)
+
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template
   end
 
+  def calculate_line_item_totals(estimate)
+    @estimate_items = {}
+    estimate.estimate_line_items.map do |x|
+      calculated_cost = x.item_unit_cost * x.item_quantity
+      if @estimate_items[x.item_name]
+        @estimate_items[x.item_name] = @estimate_items[x.item_name] + calculated_cost
+      else
+        @estimate_items[x.item_name] = calculated_cost
+      end
+    end
+
+    @estimate_items = @estimate_items.to_a
+  end
 
   def get_email_template(user = nil, estimate, template_type)
     #find company level template of a template_type

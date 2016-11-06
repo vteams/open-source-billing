@@ -55,7 +55,7 @@ class InvoiceMailer < ActionMailer::Base
   def late_payment_reminder_email(invoice_id, template_type)
     invoice = Invoice.find(invoice_id)
     client = invoice.client
-    template = process_template(nil, invoice, template_type) 
+    template = process_template(nil, invoice, template_type)
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -136,7 +136,6 @@ class InvoiceMailer < ActionMailer::Base
 
     calculate_line_item_totals(invoice)
 
-    template.body = template.body.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template
   end
