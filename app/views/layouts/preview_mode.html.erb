@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Open Source Billing</title>
+    <title>Proveric Billing</title>
     <%= favicon_link_tag %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
@@ -13,14 +13,10 @@
 
         <div class="primary_header">
           <div class="logo">
-            <%= link_to image_tag("logo.png", :size => "218x30"), "/dashboard" %>
+            <h1><%= @invoice.company.company_name %></h1>
           </div>
         </div>
         <!--header-->
-
-        <div class="navigation pdf_preview">
-        </div>
-        <!-- NAVIGATION END -->
 
         <!-- CONTENT AREA START-->
         <div class="content <%= controller.controller_name %>-main">
@@ -54,7 +50,6 @@
                 </tbody>
               </table>
             </div>
-            <!-- <div class="notice"><%#= notice %></div> -->
             <%= yield %>
           </div>
         </div>
@@ -64,7 +59,7 @@
           <div class="footer_container">
             <div class="footer_content">
               <ul>
-                <li class="copy_right">Copyright © 2013 by <a href="#">vteams</a>. All rights reserved.</li>
+                <li class="copy_right">Copyright © <%= Date.today.year %> by <a href="#">vteams</a>. All rights reserved.</li>
                 <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
                 <li class="contact_us"><a href="#" class="no_links">Contact Us</a></li>
               </ul>
@@ -79,4 +74,3 @@
     <div id="progress_indicator" style="display: none;"></div>
   </body>
 </html>
-

@@ -76,7 +76,7 @@ html {
 }
 
 body {
-  background: asset-url('body-bg.png') repeat;
+  background: #f2f2f2;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   color: #464646;
@@ -192,6 +192,7 @@ h4 {
   width: 100%;
   background: white;
   overflow: hidden;
+  box-shadow: 0 -1px 0 #e0e0e0,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
 }
 
 /*General CSS Ends*/
@@ -207,6 +208,16 @@ h4 {
 .logo {
   float: left;
   padding: 29px 0 0 30px;
+
+  h1 {
+    color: #545454;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 80px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: center;
+  }
 }
 
 .primary_menu {
