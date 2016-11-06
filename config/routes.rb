@@ -57,6 +57,7 @@ Osb::Application.routes.draw do
 
     resources :accounts
     resources :help
+    resources :privacy
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#reports_data"
     get "reports" => "reports#index"
@@ -308,5 +309,5 @@ Osb::Application.routes.draw do
     # Note: This route will make all actions in every controller accessible via GET requests.
 
     get ':controller(/:action(/:id))(.:format)'
-  end  
+  end
 end
