@@ -35,7 +35,7 @@ GEM
       erubis (~> 2.7.0)
     active_link_to (1.0.3)
       actionpack
-    activemerchant (1.59.0)
+    activemerchant (1.60.0)
       activesupport (>= 3.2.14, < 5.1)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
@@ -82,6 +82,7 @@ GEM
       debug_inspector (>= 0.0.1)
     browser (2.1.0)
     builder (3.2.2)
+    byebug (9.0.6)
     cancancan (1.15.0)
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
@@ -168,7 +169,7 @@ GEM
     haml (4.0.7)
       tilt
     hashie (3.4.4)
-    hashie_rails (0.0.4)
+    hashie-forbidden_attributes (0.1.1)
       hashie (>= 3.0)
     hike (1.2.3)
     http-cookie (1.0.2)
@@ -378,7 +379,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to (= 1.0.3)
-  activemerchant (= 1.59.0)
+  activemerchant (= 1.60.0)
   activerecord-mysql-adapter (= 0.0.1)
   activerecord-session_store (= 1.0.0)
   acts_as_archival (= 1.1.1)
@@ -387,6 +388,7 @@ DEPENDENCIES
   binding_of_caller (>= 0.6.9)
   browser (= 2.1.0)
   bundler
+  byebug
   cancancan (= 1.15.0)
   carrierwave (= 0.11.2)
   coffee-rails (= 4.1.1)
@@ -401,7 +403,7 @@ DEPENDENCIES
   faker (~> 1.4.3)
   fullcalendar-rails (= 2.0.2.0)
   gon (= 6.0.1)
-  hashie_rails (= 0.0.4)
+  hashie-forbidden_attributes
   jbuilder (~> 2.0)
   jquery-rails (~> 2.1.4)
   kaminari (= 0.17.0)

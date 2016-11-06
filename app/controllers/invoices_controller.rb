@@ -1,4 +1,3 @@
-#
 # Open Source Billing - A super simple software to create & send invoices to your customers and
 # collect payments.
 # Copyright (C) 2013 Mark Mian <mark.mian@opensourcebilling.org>
@@ -104,7 +103,7 @@ class InvoicesController < ApplicationController
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to {|format| format.js; format.html}
-   end
+    end
   end
 
   def create
@@ -226,7 +225,7 @@ class InvoicesController < ApplicationController
     invoice = Invoice.find params[:invoice_id]
     user = invoice.creator
     @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], user)
-    org_name = current_user.accounts.first.org_name rescue or_name = ''
+    org_name = current_user.accounts.first.org_name rescue org_name = ''
     @message = dispute_invoice_message(org_name)
 
     respond_to { |format| format.js }
