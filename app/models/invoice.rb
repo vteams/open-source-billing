@@ -123,7 +123,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def dispute_history
-    sent_emails.where("type = 'Disputed'")
+    sent_emails.where("type = 'Disputed'").order(created_at: :desc)
   end
 
   def delete_credit_payments
