@@ -80,6 +80,7 @@
 //= require flipclock
 //= require hourlycounter
 //= require timer
+//= require_directory ./js
 
 
 

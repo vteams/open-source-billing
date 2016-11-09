@@ -1,0 +1,26 @@
+<div class="model_grey_container">
+  <%= form_for @account,url: create_account_admin_path,method: :post,remote: true do |f| %>
+      <div class="modal-header">
+        <h1>Create New Account.</h1>
+
+        <div class="cross_btn" style="margin:-50px -1px 0 0">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="field_row">
+          <div class="label_field left single"><%= f.label :org_name,'Company Name' %></div>
+          <div class="large_field">
+            <%= f.text_field :org_name,placeholder: 'Enter Company Name',required: true%>
+          </div>
+        </div>
+      </div>
+      <div class="footer ">
+        <%= f.submit "Create Account", :class => "btn_large submit" %>
+        <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
+      </div>
+  <% end %>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Users</h1>
+  </div>
+
+</div>
+<div class="content_middle">
+  <div class="grid_table">
+    <table>
+      <colgroup>
+        <col style="width: 10%">
+        <col style="width: 25%">
+        <col style="width: 25%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+      </colgroup>
+      <tr>
+        <th>Sr #</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created At</th>
+        <th>Account</th>
+      </tr>
+      <% @users.each_with_index do |user, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.created_at.to_date %></td>
+            <td><%= Account.unscoped.where(id: user.account_id).first.org_name %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<div id="new_account_modal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>

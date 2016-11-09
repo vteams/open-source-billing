@@ -1,0 +1,8 @@
+$('#new_account_modal').modal('hide');
+<% if @account_already.present? %>
+    $(".alert-error span").html("<%=@notice%>");
+    $(".alert-error").show();
+<% else %>
+    $(".alert-success span").html("<%=@notice%>");
+    $(".alert-success").show();
+<% end %>
