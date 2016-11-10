@@ -41,3 +41,7 @@ app/controllers/csv_files/*.txt
 /config/config.yml
 node_modules/*
 Gemfile.lock
+
+# Ignore application configuration
+/config/application.yml
+
