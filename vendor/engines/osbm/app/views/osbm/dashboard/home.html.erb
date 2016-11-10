@@ -335,97 +335,138 @@
     <div class="row">
       <div class="col-sm-12 text-center">
         <h2 class="wow fadeIn" data-wow-delay="0">
-          We Also Do Custom Configurations
+          All Plans Include
         </h2>
 
         <p class="wow fadeIn" data-wow-delay="0.3s">
-          We can setup OpenSourceBilling to suit your business processes and even can develop custom features to
-          facilitate your special needs.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis lectus metus, at posuere neque
         </p>
       </div>
     </div>
     <div class="row">
+      <% Plan.all.each do |plan| %>
       <div class="col-sm-4">
         <div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">
           <div class="config-box-head clearfix">
             <h5 class="v-align">
-              <span class="text-light">Basic Setup</span>
-              <span class="text-bold">$45</span>
+              <span class="text-light"><%= plan.name%></span>
+              <span class="text-bold">$<%= plan.amount %></span>
             </h5>
           </div>
           <div class="config-box-data">
             <ul class="config-box-list">
               <li>
-                Application Setup
+                Lorem ipsum dolor sit
               </li>
               <li>
-                Email Configuration
+                Lorem ipsum dolor sit
               </li>
               <li>
-                Paypal Configuration
+                Lorem ipsum dolor sit
               </li>
               <li class="hidden-xs">
                 &nbsp;
               </li>
+              <li>
+                <a href="#" target="_blank" class="btn-primary btn wow bounceInUp" data-wow-delay="0">
+                            <span>
+                                Subscribe
+                            </span>
+                </a>
+              </li>
             </ul>
+
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div class="config-box config-box-2 wow fadeIn" data-wow-delay="0.7s">
-          <div class="config-box-head clearfix">
-            <h5 class="v-align">
-                                    <span class="text-light">
-                                        Basic Setup <br>+ Support
-                                    </span>
-              <span class="text-bold">$75</span>
-            </h5>
-          </div>
-          <div class="config-box-data">
-            <ul class="config-box-list">
-              <li>
-                Application Setup
-              </li>
-              <li>
-                Email Configuration
-              </li>
-              <li>
-                Paypal Configuration
-              </li>
-              <li>
-                3 Months Support
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="config-box config-box-3 wow fadeIn" data-wow-delay="1s">
-          <div class="config-box-head clearfix">
-            <h5 class="v-align">
-                                    <span class="text-light">
-                                        Custom <br> Development
-                                    </span>
-            </h5>
-          </div>
-          <div class="config-box-data">
-            <ul class="config-box-list">
-              <li>
-                New Feature to Match your Unique Needs
-              </li>
-              <li>
-                Generate Custom Reports
-              </li>
-              <li>
-                Take and Restore Backups
-              </li>
-              <li>
-                Any Change in Existing System
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <% end %>
+      <%= content_tag :a, "Modal", href: "#modal", class: 'btn btn-primary ', data: {toggle: 'modal'} %>
+
+      <%= modal_dialog id: "modal",
+                       header: { show_close: true, dismiss: 'modal', title: 'Modal header' },
+                       body:   { content: 'This is the body' },
+                       footer: { content: content_tag(:button, 'Save', class: 'btn') } %>
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">Basic Setup</span>-->
+      <!--<span class="text-bold">$45</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--Application Setup-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Email Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Paypal Configuration-->
+      <!--</li>-->
+      <!--<li class="hidden-xs">-->
+      <!--&nbsp;-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-2 wow fadeIn" data-wow-delay="0.7s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">-->
+      <!--Basic Setup <br>+ Support-->
+      <!--</span>-->
+      <!--<span class="text-bold">$75</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--Application Setup-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Email Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Paypal Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--3 Months Support-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-3 wow fadeIn" data-wow-delay="1s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">-->
+      <!--Custom <br> Development-->
+      <!--</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--New Feature to Match your Unique Needs-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Generate Custom Reports-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Take and Restore Backups-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Any Change in Existing System-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="row">
       <div class="section-6-btns text-center col-sm-12">

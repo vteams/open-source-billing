@@ -9,19 +9,20 @@ namespace :stripe do
 
     ]
     plans.each do |plan|
-      @plan = Plan.create!
+      @plan = Plan.create!(plan)
       if @plan
         Stripe::Plan.create(
-            :amount   => plan[:amount]*100,
-            :interval => plan[:interval],
-            :name     => plan[:name],
+            :amount   => @plan[:amount]*100,
+            :interval => @plan[:interval],
+            :name     => @plan[:name],
             :currency => 'usd',
             :id       => @plan.id
         )
       end
+      puts "******************************************************"
+      puts "**************  #{@plan.name} has been created! ************"
+      puts "******************************************************"
     end
   end
-  puts "******************************************************"
-  puts "**************    PLANS CREATED ************"
-  puts "******************************************************"
+
 end

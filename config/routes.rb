@@ -1,4 +1,6 @@
 Osb::Application.routes.draw do
+  get 'plans/index'
+
   mount Osbm::Engine => "/osbm"
 
   mount OsbApi::Engine => "/api"

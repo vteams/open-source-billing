@@ -1,6 +1,9 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :plan do
+FactoryGirl.define do  factory :subscription do
+    
+  end
+  factory :plan do
     
   end
   factory :role do
