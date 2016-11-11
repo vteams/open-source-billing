@@ -1,0 +1,26 @@
+#subscribeModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" 
+  .modal-header
+    button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+    h3#myModalLabel Company Information
+  .modal-body
+    .fields_content
+
+      = form_for subscription, html: {class: "basic-grey"} do |f|
+        .fields_content_container
+          - if subscription.errors.any?
+            #error_explanation
+              h2
+                = pluralize(subscription.errors.count, "error")
+                | prohibited this registration from being saved:
+              ul
+                - subscription.errors.full_messages.each do |message|
+                  li= message
+        .fields_content_data
+          = f.hidden_field :plan_id, value: plan.id
+          .field_row
+            .label_field.left.single
+              = f.label :company
+            .large_field
+              = f.text_field :company
+        .modal-footer
+          script.stripe-button data-image= 'assets/payment_logo.png' data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"

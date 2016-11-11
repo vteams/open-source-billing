@@ -45,11 +45,15 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_account, if: :current_account_required?
   def set_current_account
     if request.subdomain.empty?
-      redirect_to '/osbm/home'
+      # redirect_to '/osbm/home'
+      if params[:controller]!= 'subscriptions'
+        redirect_to '/subscriptions'
+      end
     else
       unless Osbm::OPEN_ACCESS
         if Account.where(subdomain: request.subdomain).count == 0
-          redirect_to '/osbm/home'
+          # redirect_to '/osbm/home'
+          redirect_to '/subscriptions'
           return
         end
       end
@@ -64,7 +68,11 @@ class ApplicationController < ActionController::Base
           end
         end
       else
+        # if params[:controller]!= 'subscriptions'
+        #   redirect_to '/subscriptions'
+        # end
         redirect_to '/osbm/home'
+        #redirect_to '/subscriptions'
       end
     end
   end
@@ -213,7 +221,7 @@ class ApplicationController < ActionController::Base
 
   def is_home_page?
     if multi_tenant_enabled?
-      %w(home landing).include? params[:action]
+      %w(home landing index).include? params[:action]
     else
       false
     end

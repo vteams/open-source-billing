@@ -62,6 +62,10 @@ Osb::Application.routes.draw do
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#reports_data"
     get "reports" => "reports#index"
+    get "subscriptions" => "subscriptions#index"
+    get "subscribe(/:plan_id)" => "subscriptions#new", as: 'subscribe'
+    post "subscriptions" => "subscriptions#create"
+    post "subscriptions/hook"
 
     get "dashboard" => "dashboard#index"
     post 'dashboard/chart_details' => "dashboard#chart_details"

@@ -12,7 +12,7 @@ namespace :stripe do
       @plan = Plan.create!(plan)
       if @plan
         Stripe::Plan.create(
-            :amount   => @plan[:amount]*100,
+            :amount   => (@plan[:amount]*100),
             :interval => @plan[:interval],
             :name     => @plan[:name],
             :currency => 'usd',
