@@ -1,5 +1,5 @@
 # validate forms
-class window.validateForms
+class window.validateSubscription
 
   constructor: (@formId) ->
     @form = jQuery("##{@formId}")
@@ -95,10 +95,21 @@ class window.validateForms
       false
     else
       true
-
-  validatePassword: ->
-    @password = @form.find("#login_pswd") if @password?
-    @confirm_password = @form.find("#login_confrm_pswd") if @confirm_password?
+  validateCompany: ->
+    if @org.val() is ''
+      @showQtip(@org, @getMessage("required"))
+      false
+    else
+      true
+  validateUsername: ->
+    if @user_name.val() is ''
+      @showQtip(@user_name, @getMessage("required"))
+      false
+    else
+      true
+  validatePasswordMatch: ->
+    @password = @form.find("#login_pswd")
+    @confirm_password = @form.find("#login_confrm_pswd")
     if @password.val().length < 8
       @showQtip(@password, @getMessage('password_length'))
       false
@@ -129,3 +140,4 @@ class window.validateForms
       when "invalid_email" then "Email you have entered is invalid"
       else
         "This field is required"
+(global ? window).validateSubscription = validateSubscription

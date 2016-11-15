@@ -1,11 +1,10 @@
-#subscribeModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" 
+#subscribeModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
   .modal-header
     button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
     h3#myModalLabel Company Information
   .modal-body
     .fields_content
-
-      = form_for subscription, html: {class: "basic-grey"} do |f|
+      = form_for subscription, html: {class: "basic-grey", novalidate: ''} do |f|
         .fields_content_container
           - if subscription.errors.any?
             #error_explanation
@@ -19,8 +18,23 @@
           = f.hidden_field :plan_id, value: plan.id
           .field_row
             .label_field.left.single
-              = f.label :company
+              = f.label :company, 'Company'
             .large_field
-              = f.text_field :company
+              = f.text_field :company, autofocus: true, :id => "login_company", :class => 'sign_up', :required => ''
+          .field_row
+            .label_field.left.single
+              = label_tag 'username', 'User Name'
+            .large_field
+              = text_field_tag 'username', nil, {:id => "user_name", :class => 'sign_up', :required => '', name: 'user[user_name]'}
+          .field_row
+            .label_field.left.single
+              = label_tag 'password', 'Password'
+            .large_field
+              = password_field_tag 'password', nil, {:id => "login_pswd", :class => 'sign_up', :required => '',name: 'user[password]'}
+          .field_row
+            .label_field.left.single
+              = label_tag 'password_confirmation', 'Confirm Password'
+            .large_field
+              = password_field_tag 'password_confirmation', nil, {:id => "login_confrm_pswd", :class => 'sign_up', :required => '', name: 'user[password_confirmation]'}
         .modal-footer
           script.stripe-button data-image= 'assets/payment_logo.png' data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"

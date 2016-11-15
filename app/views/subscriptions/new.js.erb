@@ -1,2 +1,16 @@
-jQuery('#modalContainer').html('<%= j render(:partial => 'form', locals:{plan: @plan, subscription: @subscription}) %>');
+jQuery('#modalContainer').html('<%= j render(:partial => 'form', locals:{plan: @plan, subscription: @subscription,resource: @resource}) %>');
 jQuery('#subscribeModal').modal('show');
+setTimeout(function(){
+    document.getElementsByClassName("stripe-button-el")[0].disabled = true;
+}, 700);
+
+jQuery('#new_subscription').on('change', function () {
+    form = new validateSubscription(jQuery(this).attr('id'));
+    if (form.validateCompany() && form.validateUsername() && form.validatePasswordMatch()) {
+        document.getElementsByClassName("stripe-button-el")[0].disabled = false;
+        jQuery(this).preventDefault();
+    } else {
+        document.getElementsByClassName("stripe-button-el")[0].disabled = true;
+    }
+});
+

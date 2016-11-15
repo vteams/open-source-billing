@@ -14,5 +14,6 @@
 *= require twitter-bootstrap-static/bootstrap
 *= require css/bootstrap
 *= require css/style
+*= require css/jquery.qtip.min
 */
 
