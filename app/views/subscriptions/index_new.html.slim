@@ -1,0 +1,64 @@
+.log_page
+  .log_container
+    .log_content.subscription
+      .log_top
+        h1
+          | Sign up to Open
+          span> Source
+          | Billing
+      .tabbable.tabs-left
+        ul.nav.nav-tabs
+          li.active
+            a data-toggle="tab" href="#lA"  Section 1
+          li
+            a data-toggle="tab" href="#lB"  Section 2
+          li
+            a data-toggle="tab" href="#lC"  Section 3
+        .tab-content
+          #lA.tab-pane.active
+            == render partial: 'tab_form'
+          #lB.tab-pane
+            p Howdy, I'm in Section B.
+          #lC.tab-pane
+            p What up girl, this is Section C.
+
+      /= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {novalidate: ''}) do |f|
+      /  .notice= devise_error_messages!
+      /  .log_fields
+      /    .field_row
+      /      .label_field.sign_up= f.label :user_name, 'User Name'
+      /      .medium_field.sign_up
+      /        = f.text_field :user_name, :autofocus => true, :id => "user_name", :class => 'sign_up', :required => ''
+      /    /! field_row
+      /    .field_row
+      /      .label_field.sign_up= f.label :account, 'Organization'
+      /      .medium_field.sign_up
+      /        = f.text_field :account, :value => current_account.try(:org_name), :readonly => true, :autofocus => true, :id => "login_company", :class => 'sign_up', :required => ''
+      /    /! field_row
+      /    .field_row
+      /      .label_field.sign_up= f.label :email
+      /      .medium_field.sign_up
+      /        = f.email_field :email, :id => "email", :class => 'sign_up user_email', :required => ''
+      /    /! field_row
+      /    .field_row
+      /      .label_field.sign_up= f.label :password
+      /      .medium_field.sign_up
+      /        = f.password_field :password, :id => "login_pswd", :class => 'sign_up', :required => ''
+      /    /! field_row
+      /    .field_row.sign_up
+      /      .label_field.sign_up= f.label :confirmation
+      /      .medium_field.sign_up
+      /        = f.password_field :password_confirmation, :id => "login_confrm_pswd", :class => 'sign_up', :required => ''
+      /  /! field_row
+      /  /! log_fields
+      /  .log_btm
+      /    = f.submit "Sign up", :class => "btn_large submit"
+    /! log_btm
+    /! log_content
+    .log_footer
+      a.site_link href="http://opensourcebilling.org"  www.opensourcebilling.org
+      p.team_link
+        | powered by:
+        a href="http://vteams.com"  vteams.com
+          /! log_container
+          /! log_page

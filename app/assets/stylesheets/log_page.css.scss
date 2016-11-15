@@ -3,12 +3,23 @@
     width: 414px;
     margin: auto;
     padding: 20px 0 0 0;
+    &.subscription {
+      width: 700px;
+    }
   }
   .log_content {
     float: left;
     background-color: #ffffff;
     padding: 0 36px 16px;
     width: 342px;
+    &.subscription {
+      width: 650px;
+      form {
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
     &.change_password{
       width: 363px;
     }
@@ -71,6 +82,8 @@
     &.change_password_field{
       width: 261px;
     }
+    &.forgotpassword {
+    }
   }
   .medium_field.sign_up {
     width: 250px !important;
@@ -91,6 +104,9 @@
     width: 247px;
     &.confirm_field{
       width: 259px;
+    }
+    &.forgotpassword {
+      width: 202px;
     }
   }
   .medium_field input.sign_up {
@@ -219,4 +235,12 @@
   }
 
 
+}
+li.plan{
+  text-align: center;
+}
+
+li.plan.selected {
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 10px 10px 5px #d8d8d8
 }

@@ -1,11 +1,14 @@
 class SubscriptionsController < ApplicationController
   skip_before_filter :authenticate_user!
   before_action :set_subscription, only: [:show, :edit, :update, :destroy]
-  layout 'home'
+  layout :select_layout
 
   def index
     # @plan         = Plan.find_by( id: Plan.last.id)
     # @subscription = Subscription.new
+    @plan         = Plan.find_by id: Plan.first.id
+    @subscription = Subscription.new
+    @resource     ||= User.unscoped.new
   end
 
   def new
@@ -17,24 +20,24 @@ class SubscriptionsController < ApplicationController
 
   def create
     @subscription = Subscription.new subscription_params.merge(email: stripe_params["stripeEmail"], card_token: stripe_params["stripeToken"])
+    @plan    =Plan.find(params[:subscription][:plan_id])
     userparams = user_params.merge(email: params[:stripeEmail])
-    resource   = User.new(userparams)
-    resource.skip_confirmation!
-    account = Account.find_or_create_by(org_name: params[:subscription][:company],subdomain: params[:subscription][:company].try(:parameterize))
-    resource.account_id = account.id
-
-    if resource.save
-      resource.accounts << account
-      if resource.current_account.companies.empty?
-        company = resource.current_account.companies.create({company_name: params[:subscription][:company]})
+    @resource = User.new(userparams)
+    if @resource.valid? && @resource.save
+      @resource.skip_confirmation!
+      account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
+      @resource.account_id = account.id
+      @resource.accounts << account
+      if @resource.current_account.companies.empty?
+        company = @resource.current_account.companies.create({company_name: params[:subscription][:company]})
       else
-        company = resource.current_account.companies.first
+        company = @resource.current_account.companies.first
       end
-      resource.update(current_company: company.id)
+      @resource.update(current_company: company.id)
       #update email templates for first user
-      CompanyEmailTemplate.update_all(parent_id: resource.id) if User.count == 1
+      CompanyEmailTemplate.update_all(parent_id: @resource.id) if User.count == 1
 
-      if resource.active_for_authentication?
+      if @resource.active_for_authentication?
         # begin
         @subscription.process_payment
         @subscription.save
@@ -44,7 +47,7 @@ class SubscriptionsController < ApplicationController
         # end
         # set_flash_message :notice, :sig
         # ned_up if is_navigational_format?
-        sign_in(resource_name, resource)
+        sign_in(resource_name, @resource)
 
         if Rails.env.development?
           redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}:#{request.port}"
@@ -55,12 +58,10 @@ class SubscriptionsController < ApplicationController
       else
         # set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
         expire_session_data_after_sign_in!
-        redirect_to "subscriptions/#{params[:plan_id]}"
+        render :action => "new"
       end
     else
-      binding.pry
-      clean_up_passwords resource
-      respond_with resource
+      render :action => "new"
     end
     # begin
     #   @subscription.process_payment
@@ -111,6 +112,10 @@ class SubscriptionsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:user_name, :account, :email, :password, :password_confirmation, :current_password)
+  end
+
+  def select_layout
+    action_name =='index'? 'home': 'login'
   end
 
 end

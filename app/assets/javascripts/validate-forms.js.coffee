@@ -64,7 +64,29 @@ class window.validateForms
       false
     else
       true
-
+  validateCompany: ->
+    if @org.val() is ''
+      @showQtip(@org, @getMessage("required"))
+      false
+    else
+      true
+  validateUsername: ->
+    if @user_name.val() is ''
+      @showQtip(@user_name, @getMessage("required"))
+      false
+    else
+      true
+  validatePasswordMatch: ->
+    @password = @form.find("#login_pswd")
+    @confirm_password = @form.find("#login_confrm_pswd")
+    if @password.val().length < 8
+      @showQtip(@password, @getMessage('password_length'))
+      false
+    else if @password.val() != @confirm_password.val()
+      @showQtip(@confirm_password, @getMessage("confirm"))
+      false
+    else
+      true
   # validate update password
   validateUpdatePassword: ->
     if jQuery.trim(@user_name.val()) is ''

@@ -1,40 +1,34 @@
-#subscribeModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
-  .modal-header
-    button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
-    h3#myModalLabel Company Information
-  .modal-body
-    .fields_content
-      = form_for subscription, html: {class: "basic-grey", novalidate: ''} do |f|
-        .fields_content_container
-          - if subscription.errors.any?
-            #error_explanation
-              h2
-                = pluralize(subscription.errors.count, "error")
-                | prohibited this registration from being saved:
-              ul
-                - subscription.errors.full_messages.each do |message|
-                  li= message
-        .fields_content_data
-          = f.hidden_field :plan_id, value: plan.id
-          .field_row
-            .label_field.left.single
-              = f.label :company, 'Company'
-            .large_field
-              = f.text_field :company, autofocus: true, :id => "login_company", :class => 'sign_up', :required => ''
-          .field_row
-            .label_field.left.single
-              = label_tag 'username', 'User Name'
-            .large_field
-              = text_field_tag 'username', nil, {:id => "user_name", :class => 'sign_up', :required => '', name: 'user[user_name]'}
-          .field_row
-            .label_field.left.single
-              = label_tag 'password', 'Password'
-            .large_field
-              = password_field_tag 'password', nil, {:id => "login_pswd", :class => 'sign_up', :required => '',name: 'user[password]'}
-          .field_row
-            .label_field.left.single
-              = label_tag 'password_confirmation', 'Confirm Password'
-            .large_field
-              = password_field_tag 'password_confirmation', nil, {:id => "login_confrm_pswd", :class => 'sign_up', :required => '', name: 'user[password_confirmation]'}
-        .modal-footer
-          script.stripe-button data-image= 'assets/payment_logo.png' data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"
+= form_for subscription, html: {class: "basic-grey", novalidate: ''} do |f|
+  div
+    - if resource.errors.any?
+      #error_explanation
+        h6.text-error
+          = pluralize(resource.errors.count, "error ")
+          | prohibited this subscriptions from being saved:
+        ul
+          - resource.errors.full_messages.each do |message|
+            li.text-error= message
+  .log_fields
+    = f.hidden_field :plan_id, value: plan.id
+    .field_row
+      .label_field.sign_up
+        = f.label :company, 'Company'
+      .medium_field.sign_up
+        = f.text_field :company, autofocus: true, :id => "login_company", :class => 'sign_up', :required => '', autocomplete: "off"
+    .field_row
+      .label_field.sign_up
+        = label_tag 'username', 'User Name'
+      .medium_field.sign_up
+        = text_field_tag 'username', @resource.user_name, {:id => "user_name", :class => 'sign_up', :required => '', name: 'user[user_name]', autocomplete: "off"}
+    .field_row
+      .label_field.sign_up
+        = label_tag 'password', 'Password'
+      .medium_field.sign_up
+        = password_field_tag 'password', nil, {:id => "login_pswd", :class => 'sign_up', :required => '', name: 'user[password]'}
+    .field_row
+      .label_field.sign_up
+        = label_tag 'password_confirmation', 'Confirm Password'
+      .medium_field
+        = password_field_tag 'password_confirmation', nil, {:id => "login_confrm_pswd", :class => 'forgotpassword', :required => '', name: 'user[password_confirmation]'}
+  script.stripe-button data-image= 'assets/payment_logo.png' data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"
+    /! log_top
