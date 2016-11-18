@@ -18,14 +18,14 @@ jQuery ->
   jQuery('#forgot_password').submit ->
     new validateForms(jQuery(this).attr('id')).validatePassword()
 
+  stripe_button = (document.getElementsByClassName('stripe-button-el')[0])
   setTimeout (->
-    document.getElementsByClassName('stripe-button-el')[0].disabled = true
+    stripe_button?.disabled = true
   ), 500
 
   jQuery('#new_subscription').on 'change', ->
     form = new validateForms(jQuery(this).attr('id'))
     if form.validateCompany() and form.validateUsername() and form.validatePasswordMatch()
-      document.getElementsByClassName('stripe-button-el')[0].disabled = false
-      jQuery(this).preventDefault()
+      stripe_button?.disabled = false
     else
-      document.getElementsByClassName('stripe-button-el')[0].disabled = true
+      stripe_button?.disabled = true

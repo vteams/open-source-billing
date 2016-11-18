@@ -6,7 +6,7 @@ module Osbm
 
   ENABLED = true
   OPEN_ACCESS = true
-  SKIPPED_TABLES = ['accounts', 'account_users','company_entities', 'api_keys', 'delayed_jobs', 'oauth_access_grants', 'oauth_access_tokens', 'oauth_applications', 'schema_migrations', 'settings', 'versions','currencies', 'expense_categories', 'sessions', 'users_roles', 'plans', 'subscriptions']
+  SKIPPED_TABLES = ['accounts', 'account_users','company_entities', 'api_keys', 'delayed_jobs', 'oauth_access_grants', 'oauth_access_tokens', 'oauth_applications', 'schema_migrations', 'settings', 'versions','currencies', 'expense_categories', 'sessions', 'users_roles', 'plans', 'subscriptions','stripe_events']
 
   extend ActiveSupport::Concern
   included do

@@ -20,7 +20,7 @@
 #
 module ApplicationHelper
   def current_account
-    Account.find(session[:current_account])
+    Account.find(session[:current_account]) if !!session[:current_account]
   end
 
   def number_to_currency number,options = {}

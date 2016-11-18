@@ -154,7 +154,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_company_id
-    session['current_company'] || current_user.current_company || current_user.first_company_id
+    session['current_company'] || current_user.try(:current_company) || current_user.try(:first_company_id)
   end
 
   def get_clients_and_items
@@ -221,7 +221,7 @@ class ApplicationController < ActionController::Base
 
   def is_home_page?
     if multi_tenant_enabled?
-      %w(home landing index).include? params[:action]
+      %w(home landing index hook).include? params[:action]
     else
       false
     end

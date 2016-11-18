@@ -3,10 +3,8 @@
     - if resource.errors.any?
       #error_explanation
         h6.text-error
-          = pluralize(resource.errors.count, "error ")
-          | prohibited this subscriptions from being saved:
         ul
-          - resource.errors.full_messages.each do |message|
+          - resource.errors.full_messages.uniq.each do |message|
             li.text-error= message
   .log_fields
     = f.hidden_field :plan_id, value: plan.id
@@ -30,5 +28,5 @@
         = label_tag 'password_confirmation', 'Confirm Password'
       .medium_field
         = password_field_tag 'password_confirmation', nil, {:id => "login_confrm_pswd", :class => 'forgotpassword', :required => '', name: 'user[password_confirmation]'}
-  script.stripe-button data-image= 'assets/payment_logo.png' data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"
+  script.stripe-button data-amount=(plan.amount*100) data-description=("A month's subscription") data-key= Rails.configuration.stripe[:publishable_key] data-locale="auto" src="https://checkout.stripe.com/checkout.js"
     /! log_top

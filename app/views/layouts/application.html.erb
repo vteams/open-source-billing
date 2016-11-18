@@ -181,6 +181,8 @@
                 <% end %>
                 <li class="secondary_03"><%= link_to t("header.links.setting.basic_settings"), user_settings_sub_users_path,class: "#{'active' if params[:action]=='user_settings'}" %></li>
                 <li class="secondary_04"><%= active_link_to  t("header.links.setting.import_data"), import_data_path %></li>
+                <li class="secondary_05"><%= active_link_to  t("header.links.setting.pricing_plans"), my_subscriptions_path %></li>
+
               </ul>
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                 <ul>
@@ -192,6 +194,8 @@
 
                   <li><%= active_link_to  t("header.links.setting.basic_settings"), user_settings_sub_users_path %></li>
                   <li><%= active_link_to  t("header.links.setting.import_data"), import_data_path %></li>
+                  <li><%= active_link_to  t("header.links.setting.pricing_plans"), my_subscriptions_path %></li>
+
                 </ul>
               </div>
             </li>

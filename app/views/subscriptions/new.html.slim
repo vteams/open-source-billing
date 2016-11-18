@@ -1,6 +1,20 @@
 .log_page
   .log_container.subscription
     .log_content.subscription
+      .alert.alert-success style=("display:#{notice.blank? ? 'none' : 'block'}")
+        button.close type="button"  ×
+        table
+          tbody
+            tr
+              td
+                span= notice
+      .alert.alert-error style=("display:#{alert.blank? ? 'none' : 'block'}")
+        button.close type="button"  ×
+        table
+          tbody
+            tr
+              td
+                span= alert
       .log_top
         h1
           | Sign up to Open

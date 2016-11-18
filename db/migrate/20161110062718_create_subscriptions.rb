@@ -8,6 +8,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.string :card_token
       t.date :end_date
       t.string :customer_id
+      t.string :subscription_id
       t.timestamps
     end
   end

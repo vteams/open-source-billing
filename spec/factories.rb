@@ -1,6 +1,9 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :subscription do
+FactoryGirl.define do  factory :stripe_error do
+    
+  end
+  factory :subscription do
     
   end
   factory :plan do

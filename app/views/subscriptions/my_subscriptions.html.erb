@@ -1,0 +1,48 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Price Plans</h1>
+  </div>
+</div>
+<div class="content_middle">
+  <div class="row">
+    <% Plan.all.each do |plan| %>
+        <div class="span2">
+          <div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">
+            <div class="config-box-head clearfix">
+              <h5 class="v-align">
+                <span class="text-light"><%= plan.name %></span>
+                <span class="text-bold">$<%= plan.amount %></span>
+              </h5>
+            </div>
+            <div class="config-box-data">
+              <ul class="config-box-list">
+                <li>
+                  Lorem ipsum dolor sit
+                </li>
+                <li>
+                  Lorem ipsum dolor sit
+                </li>
+                <li>
+                  Lorem ipsum dolor sit
+                </li>
+                <li class="hidden-xs">
+                  &nbsp;
+                </li>
+                <li>
+                  <% if plan.id==@plan.id %>
+                      <span class="badge badge-success"> <%= "Your current plan ($#{plan.amount})" %></span>
+                  <% else %>
+                          <%= link_to "Upgrade", upgrade_path(plan.id, @plan.subscriptions.last.subscription_id), class: 'btn-info btn' %>
+                  <% end %>
+
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+        </div>
+    <% end %>
+  </div>
+</div>
+
