@@ -69,6 +69,7 @@ Osb::Application.routes.draw do
     post "subscriptions" => "subscriptions#create"
     post "subscriptions/hook"
     get "upgrade_plan/:plan_id/:subscription_id" => "subscriptions#upgrade", as: 'upgrade'
+    get "unsubscribe/:plan_id/:subscription_id" => "subscriptions#unsubscribe", as: 'unsubscribe'
 
     get "dashboard" => "dashboard#index"
     post 'dashboard/chart_details' => "dashboard#chart_details"

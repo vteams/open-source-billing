@@ -161,7 +161,7 @@ module ApplicationHelper
   #Get company name
   def get_company_name
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    Company.find(company_id).company_name
+    Company.unscoped.find(company_id).company_name
   end
 
   #get Company for invoices

@@ -29,10 +29,12 @@
                   &nbsp;
                 </li>
                 <li>
-                  <% if plan.id==@plan.id %>
+                  <% if plan == @plan %>
                       <span class="badge badge-success"> <%= "Your current plan ($#{plan.amount})" %></span>
+                      <br/>
+                      <%= link_to "Unsubscribe", unsubscribe_path(@plan.id, current_user.subscription.subscription_id), class: 'btn-info btn' unless @plan.is_free_plan? %>
                   <% else %>
-                          <%= link_to "Upgrade", upgrade_path(plan.id, @plan.subscriptions.last.subscription_id), class: 'btn-info btn' %>
+                      <%= link_to "Upgrade", upgrade_path(plan.id, current_user.subscription.subscription_id), class: 'btn-info btn' %>
                   <% end %>
 
                 </li>

@@ -20,7 +20,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     @subscription = Subscription.new subscription_params.merge(email: stripe_params["stripeEmail"], card_token: stripe_params["stripeToken"])
-    @plan    =Plan.find(params[:subscription][:plan_id])
+    @plan = Plan.find(params[:subscription][:plan_id])
     userparams = user_params.merge(email: params[:stripeEmail])
     @resource = User.new(userparams)
     ActiveRecord::Base.transaction do
@@ -68,7 +68,7 @@ class SubscriptionsController < ApplicationController
 
   def my_subscriptions
     @plans = Plan.all
-    @plan  = current_user.subscription.plan
+    @plan = current_user.my_plan
   end
 
   def upgrade
@@ -76,12 +76,28 @@ class SubscriptionsController < ApplicationController
       @subscription         = Stripe::Subscription.retrieve(params[:subscription_id])
       @plan                 = Plan.find(params[:plan_id])
       @subscription.prorate = true
-      @subscription.plan    = @plan.id
+      @subscription.plan = @plan.stripe_plan_id
       if @subscription.save
         Subscription.find_by_subscription_id(params[:subscription_id]).update_attribute('plan_id', @plan.id)
         # current_user.update_attribute('plan_id', @plan.id)
         redirect_to my_subscriptions_path, notice: 'You have successfully upgraded your plan'
       end
+    rescue Exception => e
+      redirect_to my_subscriptions_path, alert: e.message
+    end
+  end
+
+  def unsubscribe
+    begin
+      @subscription         = Stripe::Subscription.retrieve(params[:subscription_id])
+      @plan                 = Plan.find(params[:plan_id])
+      @subscription.prorate = true
+      @subscription.plan    = Plan.free_plan.stripe_plan_id
+      if @subscription.save
+        Subscription.find_by(subscription_id: @subscription.id).update_attribute('plan_id', Plan.free_plan.id)
+      end
+      # @subscription.delete(:at_period_end => true)
+      redirect_to my_subscriptions_path, notice: 'You have successfully unsubscribe! '
     rescue Exception => e
       redirect_to my_subscriptions_path, alert: e.message
     end
@@ -100,8 +116,8 @@ class SubscriptionsController < ApplicationController
     case event.type
       when "invoice.payment_succeeded" #renew subscription
         Subscription.unscoped.find_by_customer_id(event.data.object.customer).renew
-      when "customer.subscription.deleted"
-        Subscription.unscoped.find_by_customer_id(event.data.object.customer).cancel_subscription
+      when "customer.subscription.updated"
+        Subscription.unscoped.find_by_customer_id(event.data.object.customer).cancel_subscription(event.data.object.status)
     end
     render status: :ok, json: "success"
   end

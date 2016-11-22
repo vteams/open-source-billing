@@ -3,7 +3,7 @@ class Subscription < ActiveRecord::Base
   has_one :subscription
   def process_payment
     customer_data = {email: email, card: card_token}
-                        .merge((plan.blank?) ? {} : {plan: plan.id})
+                        .merge((plan.blank?) ? {} : {plan: plan.stripe_plan_id})
     # if plan.trial_period_days.present?
       customer_data = customer_data.merge(trial_end: (Time.now + 2.minute).to_time.to_i)
     # end

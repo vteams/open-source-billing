@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     User.where('email = ?',email).present?
   end
 
+  def my_plan
+    subscription.plan if subscription.status!='canceled'
+  end
+
   def current_account
     accounts.first
   end
