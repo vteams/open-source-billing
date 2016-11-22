@@ -6,6 +6,7 @@ class CreatePlans < ActiveRecord::Migration
       t.integer :amount
       t.string :interval
       t.integer :trial_period_days
+      t.integer :client_limit
       t.timestamps
     end
   end
