@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   has_one :staff
   has_many :logs, dependent: :destroy
-  belongs_to :plan , dependent: :destroy
+  belongs_to :subscription , dependent: :destroy
   attr_accessor :account,:login
 
   include RailsSettings::Extend

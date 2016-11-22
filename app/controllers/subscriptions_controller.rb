@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
   def index
     # @plan         = Plan.find_by( id: Plan.last.id)
     # @subscription = Subscription.new
-    @plan         = Plan.find_by id: Plan.first.id
+    # @plan         = Plan.find_by(id: Plan.first.id)
     @subscription = Subscription.new
     @resource     ||= User.unscoped.new
   end
@@ -21,13 +21,14 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new subscription_params.merge(email: stripe_params["stripeEmail"], card_token: stripe_params["stripeToken"])
     @plan    =Plan.find(params[:subscription][:plan_id])
-    userparams = user_params.merge(email: params[:stripeEmail], plan_id: @plan.id)
+    userparams = user_params.merge(email: params[:stripeEmail])
     @resource = User.new(userparams)
     ActiveRecord::Base.transaction do
       if @resource.valid?
         begin
           @subscription.process_payment
           @subscription.save
+          @resource.update_attribute('subscription_id', @subscription.id)
         rescue Exception => e
           flash[:alert]= e.message
           render :action => "new"
@@ -67,7 +68,7 @@ class SubscriptionsController < ApplicationController
 
   def my_subscriptions
     @plans = Plan.all
-    @plan  = current_user.plan
+    @plan  = current_user.subscription.plan
   end
 
   def upgrade
@@ -78,8 +79,8 @@ class SubscriptionsController < ApplicationController
       @subscription.plan    = @plan.id
       if @subscription.save
         Subscription.find_by_subscription_id(params[:subscription_id]).update_attribute('plan_id', @plan.id)
-        current_user.update_attribute('plan_id', @plan.id)
-        redirect_to my_subscriptions_path, notice: 'You have successfully upgraded you plan'
+        # current_user.update_attribute('plan_id', @plan.id)
+        redirect_to my_subscriptions_path, notice: 'You have successfully upgraded your plan'
       end
     rescue Exception => e
       redirect_to my_subscriptions_path, alert: e.message
@@ -99,6 +100,8 @@ class SubscriptionsController < ApplicationController
     case event.type
       when "invoice.payment_succeeded" #renew subscription
         Subscription.unscoped.find_by_customer_id(event.data.object.customer).renew
+      when "customer.subscription.deleted"
+        Subscription.unscoped.find_by_customer_id(event.data.object.customer).cancel_subscription
     end
     render status: :ok, json: "success"
   end
@@ -125,11 +128,11 @@ class SubscriptionsController < ApplicationController
   def select_layout
     case action_name
       when "index"
-        puts 'home'
+        "home"
       when "my_subscriptions"
-        puts 'application'
+        "application"
       else
-        puts "login"
+        "login"
     end
     # action_name =='index'? 'home': 'login'
   end

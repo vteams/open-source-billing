@@ -9,6 +9,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.date :end_date
       t.string :customer_id
       t.string :subscription_id
+      t.string :status
       t.timestamps
     end
   end
