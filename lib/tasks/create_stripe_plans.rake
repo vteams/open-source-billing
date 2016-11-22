@@ -6,9 +6,10 @@ namespace :stripe do
   desc "Create stripe plans"
   task :create_plans => :environment do
     plans = [
-        {name: 'Silver', amount: 50, interval: 'month'},
-        {name: 'Gold', amount: 100, interval: 'month'},
-        {name: 'Platinum', amount: 150, interval: 'month'}
+        {name: 'Free Trail', amount: 0, interval: 'month', client_limit: 5},
+        {name: 'Silver', amount: 50, interval: 'month', client_limit: 10},
+        {name: 'Gold', amount: 100, interval: 'month', client_limit: 25},
+        {name: 'Platinum', amount: 150, interval: 'month', client_limit: 1000}
 
     ]
     plans.each do |plan|

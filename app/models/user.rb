@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
 
   has_one :staff
   has_many :logs, dependent: :destroy
+  has_many :invoices
+
   belongs_to :subscription , dependent: :destroy
   attr_accessor :account,:login
 

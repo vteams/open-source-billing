@@ -23,6 +23,9 @@ class Osbm::AdminsController < ApplicationController
     @users = User.unscoped
   end
 
+  def plans
+    @plans = Plan.unscoped
+  end
 
   private
   def check_subdomain

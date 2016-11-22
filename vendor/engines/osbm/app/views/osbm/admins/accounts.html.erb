@@ -2,30 +2,16 @@
   <div class="primary_heading">
     <h1>Accounts</h1>
   </div>
-  <div class="primary_btn">
-    <%= link_to new_account_admin_path,remote: true, class: 'btn_large' do %>
-    <i class="fa fa-plus"></i>New Account
-  <% end %>
-  </div>
 </div>
 <div class="content_middle">
   <div class="grid_table">
-    <table>
-      <colgroup>
-        <col style="width: 10%">
-        <col style="width: 25%">
-        <col style="width: 25%">
-        <col style="width: 15%">
-        <col style="width: 15%">
-        <col style="width: 15%">
-      </colgroup>
+    <table class="full_width_table">
       <tr>
-        <th>Sr #</th>
+        <th class="serial_heading">Sr #</th>
         <th>Org Name</th>
         <th>Sub Domain</th>
         <th>Member Since</th>
-        <th>Users</th>
-        <th>Invoices Sent</th>
+        <th class="count_heading">Total Users</th>
       </tr>
       <% @accounts.each_with_index do |account, index| %>
         <tr>
@@ -33,12 +19,9 @@
           <td><%= account.org_name %></td>
           <td><%= account.subdomain %></td>
           <td><%= account.created_at.to_date %></td>
-          <td><%= User.unscoped.where(account_id: account.id).count %></td>
-          <td><%= Invoice.unscoped.where(account_id: account.id).count %></td>
+          <td class="text-center"><%= account.users.count  %></td>
         </tr>
       <% end %>
     </table>
   </div>
-</div>
-<div id="new_account_modal" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 </div>

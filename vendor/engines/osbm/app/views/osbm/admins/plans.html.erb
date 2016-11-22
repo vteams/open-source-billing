@@ -1,0 +1,29 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1>Plans</h1>
+  </div>
+
+</div>
+<div class="content_middle">
+  <div class="grid_table">
+    <table class="full_width_table">
+      <tr>
+        <th class="serial_heading">Sr #</th>
+        <th>Name</th>
+        <th>Charges</th>
+        <th>Interval</th>
+        <th>Client limit </th>
+      </tr>
+
+      <% @plans.each_with_index do |plan, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= plan.name %></td>
+            <td><%= number_to_currency(plan.amount) %></td>
+            <td><%= plan.interval %></td>
+            <td><%= plan.client_limit %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

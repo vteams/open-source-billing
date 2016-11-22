@@ -29,6 +29,7 @@ class Account < ActiveRecord::Base
   has_many :company_email_templates, :as => :parent
   has_many :email_templates, :through => :company_email_templates, :foreign_key => 'template_id'
   has_many :companies
+  has_many :users
 
   # callbacks
   before_save :change_currency_symbol
