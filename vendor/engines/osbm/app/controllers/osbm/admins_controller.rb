@@ -27,6 +27,10 @@ class Osbm::AdminsController < ApplicationController
     @plans = Plan.unscoped
   end
 
+  def user
+    @user = User.unscoped.find_by_id(params[:id])
+  end
+
   private
   def check_subdomain
     redirect_to main_app.root_path unless request.subdomain == 'admin'

@@ -22,7 +22,7 @@ class Osbm::MigrationGenerator < ::Rails::Generators::Base
     add_column :accounts, :pp_business, :text
 
     admin_account = Account.create(org_name: "admin", subdomain: "admin")
-    admin_user =  User.new(email: "admin@opensourcebilling.org", password: "word2pass", password_confirmation: "word2pass", account_id: admin_account.id) 
+    admin_user =  User.new(user_name: "admin", email: "admin@opensourcebilling.org", password: "word2pass", password_confirmation: "word2pass", account_id: admin_account.id)
     admin_user.skip_confirmation!  
     admin_user.save
 

@@ -17,7 +17,7 @@
         <tr>
           <td><%= index + 1 %></td>
           <td><%= account.org_name %></td>
-          <td><%= account.subdomain %></td>
+          <td><%= link_to account.subdomain, account.url, target: '_blank' %></td>
           <td><%= account.created_at.to_date %></td>
           <td class="text-center"><%= account.users.count  %></td>
         </tr>

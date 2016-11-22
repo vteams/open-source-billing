@@ -17,7 +17,7 @@
       <% @users.each_with_index do |user, index| %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= user.name %></td>
+            <td><%= link_to user.name, user_admin_path(user) %></td>
             <td><%= user.email %></td>
             <td><%= user.created_at.to_date %></td>
             <td><%= Account.unscoped.where(id: user.account_id).first.org_name %></td>
