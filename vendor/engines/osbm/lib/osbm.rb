@@ -6,7 +6,7 @@ module Osbm
 
   ENABLED = true
   OPEN_ACCESS = true
-  SKIPPED_TABLES = ['accounts', 'account_users','company_entities', 'api_keys', 'delayed_jobs', 'oauth_access_grants', 'oauth_access_tokens', 'oauth_applications', 'schema_migrations', 'settings', 'versions','currencies', 'expense_categories', 'sessions', 'users_roles', 'plans', 'subscriptions','stripe_events']
+  SKIPPED_TABLES = ['accounts', 'account_users','company_entities', 'api_keys', 'delayed_jobs', 'oauth_access_grants', 'oauth_access_tokens', 'oauth_applications', 'schema_migrations', 'settings', 'versions','currencies', 'expense_categories', 'sessions', 'users_roles', 'plans', 'subscriptions','stripe_events', 'roles']
 
   extend ActiveSupport::Concern
   included do
@@ -34,12 +34,12 @@ module ScopedMultiTenant
   class AccountTenant
 
     def self.include_scoped_account
-      ActiveRecord::Base.connection.tables.map do |table|
-        unless Osbm::SKIPPED_TABLES.include?(table)
-          model = table.capitalize.singularize.camelize.constantize
-          model.send(:include, Osbm)
-        end
-      end
+      # ActiveRecord::Base.connection.tables.map do |table|
+      #   unless Osbm::SKIPPED_TABLES.include?(table)
+      #     model = table.capitalize.singularize.camelize.constantize
+      #     model.send(:include, Osbm)
+      #   end
+      # end
 
       User.send(:extend, DeviseOverrides)
     end
