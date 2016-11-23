@@ -99,4 +99,39 @@ class User < ActiveRecord::Base
   def organization_name
     accounts.first.org_name rescue nil
   end
+
+  def plan_name
+    subscription.plan.name rescue nil
+  end
+
+  def site_url
+    accounts.first.url rescue nil
+  end
+
+  def clients
+    Client.unscoped.where(account_id: account_id)  rescue nil
+  end
+
+  def invoices
+    Invoice.unscoped.where(account_id: account_id)  rescue nil
+  end
+
+  def invoices_revenues
+    invoices.collect(&:total).sum rescue nil
+  end
+
+  def subscription_expire_on
+    interval = subscription.plan.interval
+    if interval.eql?("month")
+      (subscription.created_at + 30.days).to_date
+    elsif interval.eql?("week")
+      (subscription.created_at + 7.days).to_date
+    elsif interval.eql?("day")
+      (subscription.created_at + 1.days).to_date
+    end
+  end
+
+  def self.skip_admin_user
+    User.unscoped.where.not(email: "admin@opensourcebilling.org")
+  end
 end

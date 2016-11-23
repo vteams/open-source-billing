@@ -66,4 +66,7 @@ class Account < ActiveRecord::Base
     Account.find(account_id).payment_gateway
   end
 
+  def self.skip_admin_account
+    Account.unscoped.where.not(org_name: "admin")
+  end
 end

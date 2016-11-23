@@ -2,7 +2,7 @@ class Osbm::AdminsController < ApplicationController
   layout 'osbm/application'
   before_filter :check_subdomain
   def accounts
-    @accounts = Account.all
+    @accounts = Account.skip_admin_account
   end
 
   def new_account
@@ -20,7 +20,7 @@ class Osbm::AdminsController < ApplicationController
   end
 
   def users
-    @users = User.unscoped
+    @users = User.skip_admin_user
   end
 
   def plans

@@ -4,8 +4,51 @@
   </div>
 </div>
 
-  <div class="content_middle">
-    <div class="grid_table">
-      <p></p>
-    </div>
+<div class="content_middle">
+  <div class="grid_table">
+    <table class="full_width_table">
+      <tbody>
+        <tr>
+          <td> Email Address</td>
+          <td><%= @user.email %></td>
+        </tr>
+        <tr>
+          <td> Organization Name</td>
+          <td><%= @user.organization_name %></td>
+        </tr>
+
+        <tr>
+          <td> Site URL </td>
+          <td><%= link_to @user.site_url, @user.site_url, target: '_blank' %></td>
+        </tr>
+
+        <tr>
+          <td> Subscription Plan </td>
+          <td><%= @user.plan_name %></td>
+        </tr>
+
+        <tr>
+          <td> Subscription expire on </td>
+          <td><%= @user.subscription_expire_on %></td>
+        </tr>
+
+        <tr>
+          <td> Total Clients </td>
+          <td><%= @user.clients.count  %></td>
+        </tr>
+
+        <tr>
+          <td> Total Invoices </td>
+          <td><%= @user.invoices.count  %></td>
+        </tr>
+
+        <tr>
+          <td> Total Revenue </td>
+          <td><%= number_to_currency(@user.invoices_revenues)  %></td>
+        </tr>
+
+      </tbody>
+    </table>
   </div>
+ </div>
+</div>

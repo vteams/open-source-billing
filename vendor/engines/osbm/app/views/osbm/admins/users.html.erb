@@ -20,7 +20,7 @@
             <td><%= link_to user.name, user_admin_path(user) %></td>
             <td><%= user.email %></td>
             <td><%= user.created_at.to_date %></td>
-            <td><%= Account.unscoped.where(id: user.account_id).first.org_name %></td>
+            <td><%= user.organization_name %></td>
           </tr>
       <% end %>
     </table>
