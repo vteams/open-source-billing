@@ -66,4 +66,13 @@ class PaymentMailer < ActionMailer::Base
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template
   end
+
+  def payment_failure(stripe_data={})
+    @attempt = stripe_data[:attempt]
+    @user    = stripe_data[:customer_email]
+    @amount  = stripe_data[:amount]
+    @message  = stripe_data[:message]
+    mail(:to => @user, :subject => "Payment Failed")
+  end
+
 end

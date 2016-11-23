@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_date_format
   before_filter :set_current_user
 
-  before_action :set_locale
+  before_action :set_locale,:set_mailer_host
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to dashboard_url, :alert => exception.message
   end
@@ -77,7 +77,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  def set_mailer_host
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
   def _reload_libs
     if defined? RELOAD_LIBS
       RELOAD_LIBS.each do |lib|

@@ -29,7 +29,7 @@ namespace :stripe do
 
   desc "Create test plans to check events"
   task :create_free_plan => :environment do
-    plan = {stripe_plan_id: 'free', name: 'Free Plan', amount: 100, interval: 'day', client_limit: 5}
+    plan = {stripe_plan_id: 'free', name: 'Free Plan', amount: 0, interval: 'day', client_limit: 5}
     puts " Plans creation in progress..."
     Plan.create!(plan)
     Stripe::Plan.create(
@@ -38,7 +38,7 @@ namespace :stripe do
         :name     => plan[:name],
         :currency => 'usd',
         :id       => plan[:stripe_plan_id],
-        trial_period_days: 7
+        trial_period_days: 360
     )
     puts " Plans Created ..............................."
   end

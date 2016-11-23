@@ -23,9 +23,13 @@ jQuery ->
     stripe_button?.disabled = true
   ), 500
 
-  jQuery('#new_subscription').on 'change', ->
-    form = new validateForms(jQuery(this).attr('id'))
+  validate_form= ($this) ->
+    form = new validateForms(jQuery($this).parents('form:first').attr('id'))
     if form.validateCompany() and form.validateUsername() and form.validatePasswordMatch()
       stripe_button?.disabled = false
     else
       stripe_button?.disabled = true
+#  jQuery('#new_subscription').find("#login_confrm_pswd").on 'keypress', ->
+#    validate_form(this)
+  jQuery('#new_subscription input').on 'change', ->
+    validate_form(this)

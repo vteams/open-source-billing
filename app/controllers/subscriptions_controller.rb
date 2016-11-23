@@ -23,6 +23,8 @@ class SubscriptionsController < ApplicationController
     @plan = Plan.find(params[:subscription][:plan_id])
     userparams = user_params.merge(email: params[:stripeEmail])
     @resource = User.new(userparams)
+    @subscription.process_payment
+    @subscription.save
     ActiveRecord::Base.transaction do
       if @resource.valid?
         begin
@@ -35,34 +37,34 @@ class SubscriptionsController < ApplicationController
           return
         end
       end
-      if @resource.save
-      @resource.skip_confirmation!
-      account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
-      Thread.current[:current_account] = account.id
-      @resource.account_id = account.id
-      @resource.accounts << account
-      if @resource.current_account.companies.empty?
-        company = @resource.current_account.companies.create({company_name: params[:subscription][:company]})
-      else
-        company = @resource.current_account.companies.first
-      end
-      @resource.update(current_company: company.id)
-      #update email templates for first user
-      CompanyEmailTemplate.update_all(parent_id: @resource.id) if User.count == 1
-      if @resource.active_for_authentication?
-        if Rails.env.development?
-          redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}:#{request.port}"
+        if @resource.save
+        @resource.skip_confirmation!
+        account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
+        Thread.current[:current_account] = account.id
+        @resource.account_id = account.id
+        @resource.accounts << account
+        if @resource.current_account.companies.empty?
+          company = @resource.current_account.companies.create({company_name: params[:subscription][:company]})
         else
-          redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}"
+          company = @resource.current_account.companies.first
+        end
+        @resource.update(current_company: company.id)
+        #update email templates for first user
+        CompanyEmailTemplate.update_all(parent_id: @resource.id) if User.count == 1
+        if @resource.active_for_authentication?
+          if Rails.env.development?
+            redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}:#{request.port}"
+          else
+            redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}"
+          end
+        else
+          #  set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
+          expire_session_data_after_sign_in!
+          render :action => "new"
         end
       else
-        #  set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-        expire_session_data_after_sign_in!
         render :action => "new"
       end
-    else
-      render :action => "new"
-    end
     end
   end
 
@@ -79,7 +81,6 @@ class SubscriptionsController < ApplicationController
       @subscription.plan = @plan.stripe_plan_id
       if @subscription.save
         Subscription.find_by_subscription_id(params[:subscription_id]).update_attribute('plan_id', @plan.id)
-        # current_user.update_attribute('plan_id', @plan.id)
         redirect_to my_subscriptions_path, notice: 'You have successfully upgraded your plan'
       end
     rescue Exception => e
@@ -115,9 +116,26 @@ class SubscriptionsController < ApplicationController
     logger.info "---------------------------------"
     case event.type
       when "invoice.payment_succeeded" #renew subscription
-        Subscription.unscoped.find_by_customer_id(event.data.object.customer).renew
+        subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+        subscription.renew if subscription
       when "customer.subscription.updated"
-        Subscription.unscoped.find_by_customer_id(event.data.object.customer).cancel_subscription(event.data.object.status)
+        subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+        subscription.cancel_subscription(event.data.object.status) if subscription
+      when "charge.failed"
+        customer_email = event.data.object.source.name
+        amount         = event.data.object.amount/100
+        failure_message= event.data.object.failure_message
+        subscription   = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+        if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: failure_message}).deliver
+          subscription.move_to_free_plan if subscription
+        end
+      when 'invoice.payment_failed'
+        subscription  = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+        customer_email= Stripe::Customer.retrieve(event.data.object.customer).email
+        amount        = event.data.object.total
+        if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: 'Failed to process your payment'}).deliver
+          subscription.move_to_free_plan if subscription
+        end
     end
     render status: :ok, json: "success"
   end
