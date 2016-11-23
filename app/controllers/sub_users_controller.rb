@@ -4,7 +4,7 @@ class SubUsersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @sub_users = User.order(sort_column + " " + sort_direction)
+    @sub_users = User.where(account_id: current_account.id).order(sort_column + " " + sort_direction)
     respond_to do |format|
       format.html
       format.js
