@@ -1,5 +1,6 @@
 class Staff < ActiveRecord::Base
   include DateFormats
+  include Osbm
   paginates_per 10
 
   acts_as_archival

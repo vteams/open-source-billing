@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class User < ActiveRecord::Base
+  #include Osbm
   rolify
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
@@ -117,7 +118,7 @@ class User < ActiveRecord::Base
   end
 
   def invoices_revenues
-    invoices.collect(&:total).sum rescue nil
+    invoices.collect(&:invoice_total).sum rescue nil
   end
 
   def subscription_expire_on

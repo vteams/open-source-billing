@@ -1,4 +1,5 @@
 class TeamMember < ActiveRecord::Base
+  include Osbm
   belongs_to :staff
   belongs_to :project
 

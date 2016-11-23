@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class CreditPayment < ActiveRecord::Base
+  include Osbm
   # associations
   belongs_to :invoice
   belongs_to :payment

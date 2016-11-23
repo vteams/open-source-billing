@@ -1,1 +1,1 @@
-ScopedMultiTenant::AccountTenant.include_scoped_account
+#ScopedMultiTenant::AccountTenant.include_scoped_account

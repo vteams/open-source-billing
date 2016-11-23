@@ -1,4 +1,5 @@
 class RecurringProfileLineItem < ActiveRecord::Base
+  include Osbm
   # associations
   belongs_to :recurring_profile
   belongs_to :item

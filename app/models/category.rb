@@ -19,4 +19,5 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Category < ActiveRecord::Base
+  include Osbm
 end

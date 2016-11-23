@@ -19,6 +19,7 @@
 #
 class Client < ActiveRecord::Base
 
+  include Osbm
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
