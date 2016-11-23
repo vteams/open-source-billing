@@ -31,6 +31,10 @@ class Osbm::AdminsController < ApplicationController
     @user = User.unscoped.find_by_id(params[:id])
   end
 
+  def account
+    @account = Account.unscoped.find_by_id(params[:id])
+  end
+
   private
   def check_subdomain
     redirect_to main_app.root_path unless request.subdomain == 'admin'

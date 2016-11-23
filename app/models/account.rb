@@ -69,4 +69,28 @@ class Account < ActiveRecord::Base
   def self.skip_admin_account
     Account.unscoped.where.not(org_name: "admin")
   end
+
+  def clients
+    Client.unscoped.where(account_id: id)  rescue nil
+  end
+
+  def invoices
+    Invoice.unscoped.where(account_id: id)  rescue nil
+  end
+
+  def invoices_revenues
+    invoices.collect(&:invoice_total).sum rescue nil
+  end
+
+  def sign_up_user
+    User.unscoped.where(account_id: id).first rescue nil
+  end
+
+  def subscription_plan
+    sign_up_user.plan_name rescue nil
+  end
+
+  def subscription_expire_on
+    sign_up_user.subscription_expire_on rescue nil
+  end
 end

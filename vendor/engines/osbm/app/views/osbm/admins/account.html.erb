@@ -1,0 +1,58 @@
+<div class="content_top">
+  <div class="primary_heading">
+    <h1><%= @account.org_name %></h1>
+  </div>
+</div>
+
+<div class="content_middle">
+  <div class="grid_table">
+    <table class="full_width_table">
+      <tbody>
+
+      <tr>
+        <td>Organization Name </td>
+        <td><%=  @account.org_name %></td>
+      </tr>
+
+      <tr>
+        <td> Site URL </td>
+        <td><%= link_to @account.url, @account.url, target: '_blank' %></td>
+      </tr>
+
+      <tr>
+        <td> Account Owner </td>
+        <td><%= link_to @account.sign_up_user.name, user_admin_url(@account.sign_up_user)%></td>
+      </tr>
+
+      <tr>
+        <td> Subscription plan </td>
+        <td><%= @account.subscription_plan %></td>
+      </tr>
+
+      <tr>
+        <td> Subscription expire on </td>
+        <td><%= @account.subscription_expire_on %></td>
+      </tr>
+
+      <tr>
+        <td> Total Clients </td>
+        <td><%= @account.clients.count  %></td>
+      </tr>
+
+      <tr>
+        <td> Total Invoices </td>
+        <td><%= @account.invoices.count  %></td>
+      </tr>
+
+      <tr>
+        <td> Total Revenue </td>
+        <td><%= number_to_currency(@account.invoices_revenues)  %></td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+

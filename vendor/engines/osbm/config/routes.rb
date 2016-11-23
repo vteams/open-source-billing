@@ -12,6 +12,7 @@ Osbm::Engine.routes.draw do
   resources :admins, only: [] do
     member do
       get 'user'
+      get 'account'
     end
   end
 end
