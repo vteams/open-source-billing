@@ -1,7 +1,8 @@
+require 'capistrano/rails'
 module OSB
   module CONFIG
 
-    APP_CONFIG = HashWithIndifferentAccess.new(YAML.load_file(Rails.root.join('config',"#{shared_path}/config/config.yml"))[Rails.env])
+    APP_CONFIG = HashWithIndifferentAccess.new(YAML.load_file(Rails.root.join('config',"#{shared_path}/config.yml"))[Rails.env])
     APP_HOST ||= APP_CONFIG[:app_host]
     APP_PROTOCOL ||= APP_CONFIG[:app_protocol]
     ACTIVEMERCHANT_BILLING_MODE ||= APP_CONFIG[:activemerchant_billing_mode]
