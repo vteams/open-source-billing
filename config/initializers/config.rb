@@ -1,7 +1,7 @@
 module OSB
   module CONFIG
     require 'yaml'
-    config_yml = YAML.load_file('/home/shahroonali/multi_tenants/shared/config/config.yml')
+    config_yml = YAML.load_file('/home/deploy/multi_tenants/shared/config/config.yml')
     APP_CONFIG = HashWithIndifferentAccess.new(config_yml[Rails.env])
     APP_HOST ||= APP_CONFIG[:app_host]
     APP_PROTOCOL ||= APP_CONFIG[:app_protocol]
