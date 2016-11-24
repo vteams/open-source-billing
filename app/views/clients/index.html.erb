@@ -10,11 +10,13 @@
         <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t("header.links.clients.new"))),
-                  new_client_path,
-                  :class => 'btn_large' %>
-    </div>
+    <% unless current_user_client_limit_exceed? %>
+        <div class="primary_btn">
+          <%= link_to (content_tag(:span, t("header.links.clients.new"))),
+                      new_client_path,
+                      :class => 'btn_large' %>
+        </div>
+    <% end %>
   </div>
   <!--content_top-->
   <%= form_tag "clients/bulk_actions", {method: :get, :remote => true} do -%>
@@ -57,10 +59,13 @@
         <!--grid_table-->
       </div>
       <!--content_middle-->
+
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("header.links.clients.new"))),
+        <% unless current_user_client_limit_exceed? %>
+            <%= link_to (content_tag(:span, t("header.links.clients.new"))),
                     new_client_path,
                     :class => 'btn_large' %>
+        <% end %>
       </div>
       <!--content_bottom-->
       </div><!--clients-->

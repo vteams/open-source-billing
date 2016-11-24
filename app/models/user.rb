@@ -136,7 +136,24 @@ class User < ActiveRecord::Base
     User.unscoped.where.not(email: "admin@opensourcebilling.org")
   end
 
-  def account_org_name
-    Account.unscoped.where(id: account_id).first.org_name rescue nil
+  def parent_account
+    Account.unscoped.where(id: account_id).first
   end
+
+  def account_org_name
+    parent_account.org_name rescue nil
+  end
+
+  def parent
+    parent_account.users.first rescue nil
+  end
+
+  def client_limit
+    parent.subscription.plan.client_limit rescue nil
+  end
+
+  def god_user?
+    email.eql?("admin@opensourcebilling.org")
+  end
+
 end

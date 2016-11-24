@@ -32,7 +32,7 @@ class ClientsController < ApplicationController
     params[:status] = params[:status] || 'active'
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
+    @clients = Client.unscoped.get_clients(params.merge(get_args(method)))
     @status = params[:status]
     respond_to do |format|
       format.html # index.html.erb
@@ -63,9 +63,13 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client.client_contacts.build()
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @client }
+    if current_user_client_limit_exceed?
+      redirect_to :back
+    else
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render :json => @client }
+      end
     end
   end
 

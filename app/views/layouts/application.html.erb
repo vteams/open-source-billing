@@ -126,7 +126,7 @@
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                 <ul>
                   <li><%= active_link_to t("header.links.clients.listing"), clients_path %></li>
-                  <li><%= active_link_to t("header.links.clients.new"), new_client_path %></li>
+                  <li><%= active_link_to t("header.links.clients.new"), new_client_path unless current_user_client_limit_exceed?%></li>
                   <li><%= active_link_to t("header.links.clients.sent_emails"), sent_emails_path %></li>
                 </ul>
               </div>
@@ -194,7 +194,7 @@
 
                   <li><%= active_link_to  t("header.links.setting.basic_settings"), user_settings_sub_users_path %></li>
                   <li><%= active_link_to  t("header.links.setting.import_data"), import_data_path %></li>
-                  <li><%= active_link_to  t("header.links.setting.pricing_plans"), my_subscriptions_path %></li>
+                  <li><%= active_link_to  t("header.links.setting.pricing_plans"), my_subscriptions_path if current_user.eql?(current_user.parent)%></li>
 
                 </ul>
               </div>

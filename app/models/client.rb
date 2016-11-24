@@ -35,11 +35,16 @@ class Client < ActiveRecord::Base
   has_many :company_entities, :as => :entity
   has_many :expenses
   after_create :create_default_currency
-
+  #validate :verify_user_limit, on: :create
   acts_as_archival
   acts_as_paranoid
 
   paginates_per 10
+
+  def verify_user_limit
+    parent_user = User.where(account_id: account_id).first
+    errors.add(:base, 'Upgrade your plan, Client limit reached out.') if parent_user.client_limit <= parent_user.clients.count
+  end
 
   def organization_name
     self[:organization_name].blank? ? self.contact_name : self[:organization_name]
@@ -176,7 +181,7 @@ class Client < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the clients associated with companies
-    company_clients = Company.find(params[:company_id]).clients.send(params[:status])
+    company_clients = Company.unscoped.find(params[:company_id]).clients.send(params[:status])
     #company_clients
 
     # get the unique clients associated with companies and accounts
@@ -188,8 +193,8 @@ class Client < ActiveRecord::Base
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
-
-    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
+    limited_clients = clients.last(params[:user].client_limit)
+    Kaminari.paginate_array(limited_clients).page(params[:page]).per(params[:per])
 
   end
 

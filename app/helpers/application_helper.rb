@@ -152,7 +152,10 @@ module ApplicationHelper
 
     if %(clients items staffs tasks).include?(elem)
       account = params[:user].current_account
-      (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).send(params[:status])).size
+      count = (account.send(elem).send(params[:status]) + Company.unscoped.find(company_id).send(elem).send(params[:status])).size
+      if elem.eql?("clients")
+        current_user.client_limit <= count ? current_user.client_limit : count
+      end
     else
       model.where("company_id IN(?)", company_id).send(params[:status]).count
     end
@@ -278,4 +281,8 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def current_user_client_limit_exceed?
+    return false if current_user.blank? or current_user.god_user?
+    current_user.client_limit <= current_user.clients.count
+  end
 end

@@ -69,7 +69,7 @@
                   <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
                   <div class="small_field">
                     <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-                    <%= f.select :client_id, options_for_select(load_clients(action_name, @estimate.company_id), selected: selected_client),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "estimate_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
+                    <%= f.select :client_id, options_for_select(load_clients(action_name, @estimate.company_id), selected: selected_client),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "estimate_client medium chzn-select", "data-form-container" => "#{'clients_holder' unless current_user_client_limit_exceed? }", "data-dropdown-width" => "300"} %>
                     <ul class="field_description select">
                       <li><%= t('views.estimates.client_hint') %></li>
                       <span id="last_estimate" style="display: none;"></span>

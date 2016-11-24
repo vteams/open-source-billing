@@ -5,7 +5,7 @@
         <ul>
           <li><%= link_to t("header.links.invoices.new"), new_invoice_path %></li>
           <li><%= link_to t("header.links.items.new"), new_item_path, :class => "small" %></li>
-          <li><%= link_to t("header.links.clients.new"), new_client_path, :class => "small" %></li>
+          <li><%= link_to t("header.links.clients.new"), new_client_path, :class => "small" unless current_user_client_limit_exceed? %></li>
           <li><%= link_to t("header.links.payments.new"), '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
           <script>$("li").last().css('margin-right', '0px');</script>
         </ul>

@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_per_page
   before_filter :set_date_format
   before_filter :set_current_user
+  before_filter :upgrade_plan_alert
 
   before_action :set_locale,:set_mailer_host
   rescue_from CanCan::AccessDenied do |exception|
@@ -246,5 +247,9 @@ class ApplicationController < ActionController::Base
 
   def default_url_options(options = {})
     { locale: I18n.locale }.merge options
+  end
+
+  def upgrade_plan_alert
+    flash[:alert] = "Upgrade your plan, Client limit reached out," if current_user_client_limit_exceed?
   end
 end
