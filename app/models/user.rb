@@ -135,4 +135,8 @@ class User < ActiveRecord::Base
   def self.skip_admin_user
     User.unscoped.where.not(email: "admin@opensourcebilling.org")
   end
+
+  def account_org_name
+    Account.unscoped.where(id: account_id).first.org_name rescue nil
+  end
 end

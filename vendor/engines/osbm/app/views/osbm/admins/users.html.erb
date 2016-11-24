@@ -20,7 +20,7 @@
             <td><%= link_to user.name, user_admin_path(user) %></td>
             <td><%= user.email %></td>
             <td><%= user.created_at.to_date %></td>
-            <td><%= user.organization_name %></td>
+            <td><%= user.account_org_name %></td>
           </tr>
       <% end %>
     </table>
