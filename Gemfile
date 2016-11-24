@@ -42,7 +42,10 @@ group :development do
   gem 'awesome_print', '1.7.0'
   gem 'quiet_assets', '1.1.0'
   gem 'copyright-header', '1.0.15'
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.2'
 end
+gem 'capistrano-rvm'
 gem 'browser', '2.1.0'
 gem 'gon', '6.0.1'
 gem 'rest-client', '1.8.0'
