@@ -4,6 +4,7 @@ module OSB
     config_yml = YAML.load_file('/home/deploy/multi_tenants/shared/config/config.yml')
     APP_CONFIG = HashWithIndifferentAccess.new(config_yml[Rails.env])
     APP_HOST ||= APP_CONFIG[:app_host]
+    TLD_LENGTH ||= APP_CONFIG[:tld_length]
     APP_PROTOCOL ||= APP_CONFIG[:app_protocol]
     ACTIVEMERCHANT_BILLING_MODE ||= APP_CONFIG[:activemerchant_billing_mode]
 

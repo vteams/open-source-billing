@@ -1,0 +1,6 @@
+development:
+  test_stripe_publishable_key: pk_test_A4o0BGahyYnOLIJAUjUsWyBr
+  test_stripe_secret_key: sk_test_MvmuJRBqTx2UTH8Dksn1lkQW
+production:
+  stripe_api_key: sk_live_vWLadd945k8uxu3vyqpUKLds
+  stripe_publishable_key: pk_live_iPOFDWAy7kt6ZDttJjzFImmv
