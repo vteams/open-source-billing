@@ -77,7 +77,6 @@ end
 gem 'money', '~>  6.5.0'
 gem 'osb_api', path: 'vendor/engines/osb_api'
 
-
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
 
