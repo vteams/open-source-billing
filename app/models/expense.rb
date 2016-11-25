@@ -19,7 +19,7 @@ class Expense < ActiveRecord::Base
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    Expense.send(method).page(params[:page]).per(params[:per_page])
+    Expense.unscoped.send(method).page(params[:page]).per(params[:per_page])
   end
 
   def self.recover_archived(ids)

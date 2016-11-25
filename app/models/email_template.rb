@@ -10,7 +10,7 @@ class EmailTemplate < ActiveRecord::Base
   end
 
   def self.company_default_custom_templates(params)
-    custom_templates = Company.find(params[:company_id]).email_templates
+    custom_templates = Company.unscoped.find(params[:company_id]).email_templates
     default_templates = params[:user].current_account.email_templates
 
     # remove records from default, which have a custom templates
@@ -24,8 +24,8 @@ class EmailTemplate < ActiveRecord::Base
 
   #delete the account level email template if a custom level company email template update as account level
   def delete_account_template
-    company_id = CompanyEmailTemplate.where("template_id= ?", self.id).first.parent_id
-    account_template = Company.find(company_id).account.email_templates.where("template_type = ?", self.template_type).first
+    company_id = CompanyEmailTemplate.unscoped.where("template_id= ?", self.id).first.parent_id
+    account_template = Company.unscoped.find(company_id).account.email_templates.where("template_type = ?", self.template_type).first
     account_template.destroy
   end
 
@@ -34,7 +34,7 @@ class EmailTemplate < ActiveRecord::Base
     template = invoice.company.email_templates.where(:template_type => template_type).first
 
     #find account level template of template_type if no company level template
-    template = Account.first.email_templates.where(:template_type => template_type).first if template.blank?
+    template = Account.unscoped.first.email_templates.where(:template_type => template_type).first if template.blank?
     template
   end
 end
