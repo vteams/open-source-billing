@@ -491,9 +491,3 @@ DEPENDENCIES
   wicked_pdf (~> 0.11.0)
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer (= 0.4.4)
-
-RUBY VERSION
-   ruby 2.0.0p451
-
-BUNDLED WITH
-   1.13.6
