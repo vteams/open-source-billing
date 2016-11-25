@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
 
 
   before_filter :set_current_account, if: :current_account_required?
+
   def set_current_account
     if request.subdomain.empty?
       # redirect_to '/osbm/home'
@@ -230,7 +231,7 @@ class ApplicationController < ActionController::Base
 
   def is_home_page?
     if multi_tenant_enabled?
-      %w(home landing index hook accounts_hook).include? params[:action]
+      %w(index hook accounts_hook).include?(params[:action]) && controller_name == 'subscriptions'
     else
       false
     end
