@@ -94,8 +94,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(user)
-    #categories_path
-    dashboard_path
+    root_url_with_subdomain(current_account)
   end
 
   def encryptor
