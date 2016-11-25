@@ -7,7 +7,7 @@ class Subscription < ActiveRecord::Base
     # if plan.trial_period_days.present?
     #   customer_data = customer_data.merge(trial_end: (Time.now + 2.minute).to_time.to_i)
     # end
-    begin
+    #begin
       customer = Stripe::Customer.create(customer_data)
     Stripe::Charge.create(customer: customer.id,
                           amount: plan.amount*100,
@@ -16,8 +16,8 @@ class Subscription < ActiveRecord::Base
     )
     self.subscription_id= customer[:subscriptions][:data].last.id
     self.customer_id = customer.id
-    rescue Exception => e
-    end
+    #rescue Exception => e
+    #end
   end
 
   def renew
