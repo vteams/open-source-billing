@@ -109,11 +109,6 @@ class SubscriptionsController < ApplicationController
 
   def hook
     event = Stripe::Event.retrieve(params["id"])
-    logger.info "---------------------------------"
-    logger.info "---------------------------------"
-    logger.info "-------------#{event.inspect}--------------------"
-    logger.info "---------------------------------"
-    logger.info "---------------------------------"
     case event.type
       when "invoice.payment_succeeded" #renew subscription
         subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
@@ -154,7 +149,9 @@ class SubscriptionsController < ApplicationController
     render status: :ok, json: "success"
   end
 
+  def stripe_page
 
+  end
   def stripe_connect
     begin
       response = HTTParty.post("https://connect.stripe.com/oauth/token", body: {client_secret: Stripe.api_key, code: params[:code], grant_type: 'authorization_code'})
@@ -197,6 +194,8 @@ class SubscriptionsController < ApplicationController
     case action_name
       when "index"
         "home"
+      when "stripe_page"
+        "application"
       when "my_subscriptions"
         "application"
       else

@@ -114,3 +114,73 @@ td.payment_amount span{
     }
 
 }
+
+.stripe_page {
+  background-color: #fff;
+  margin: 20px 0;
+  .connect-button {
+    width: 200px;
+    margin: 0 auto;
+  }
+}
+
+.logo-container {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.logo-image {
+  height: 55px;
+  vertical-align: middle;
+  display: inline-block;
+  text-align: center;
+  margin: 0 40%;
+}
+
+.stripe-title {
+  color: #0D83DD;
+  text-align: center;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.stripe-features, .stripe-cost {
+  font-size: 15px;
+  list-style: circle;
+  float: left;
+  margin: 5px 20px;
+  li {
+    margin: 10px auto;
+    .card-list {
+      img {
+        width: 36px;
+        vertical-align: bottom;
+        margin: 1px;
+      }
+      display: inline-block;
+    }
+  }
+}
+
+.isconnected{
+  display: inline-block;
+  float: right;
+  margin-top: 5px;
+  padding: 15px 0 0 0;
+}
+.selected-plan{
+  -webkit-box-shadow: -1px 2px 5px 9px rgba(0,0,0,0.16);
+  -moz-box-shadow: -1px 2px 5px 9px rgba(0,0,0,0.16);
+  box-shadow: -1px 2px 5px 9px rgba(0,0,0,0.16);
+  //padding: 5px 5px 5px 10px;
+  margin-top: 10px;
+}
+.plans-list{
+  margin-top: 20px;
+}
+.config-box-list{
+  margin-bottom: 15px;
+}
+.center-align{
+  text-align: center;
+}

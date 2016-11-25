@@ -86,6 +86,7 @@ en:
         basic_settings: "Basic Settings"
         import_data: "Import Data"
         pricing_plans: "Price Plans"
+        stripe_page: "Accept Credit Cards"
       staffs:
         Staffs: "Staffs"
         listing: "Staffs Listing"

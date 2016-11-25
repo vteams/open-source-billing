@@ -52,6 +52,11 @@ class User < ActiveRecord::Base
   def connected?
      stripe_user_id.present?
   end
+
+  def current_plan
+    subscription.plan
+  end
+
   def currency_symbol
     "$"
   end
