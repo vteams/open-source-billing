@@ -440,4 +440,13 @@ class Invoice < ActiveRecord::Base
     return "Invoiced" if invoice_type.blank?
     invoice_type.underscore.humanize
   end
+
+  def account
+    Account.where(id: account_id).first if account_id.present?
+    Company.where(id: company_id).first.account if company_id.present?
+  end
+
+  def owner
+    account.owner
+  end
 end

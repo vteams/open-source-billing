@@ -93,4 +93,10 @@ class Account < ActiveRecord::Base
   def subscription_expire_on
     sign_up_user.subscription_expire_on rescue nil
   end
+
+  def owner
+    User.unscoped.where(account_id:  id).first rescue nil
+  end
+
 end
+

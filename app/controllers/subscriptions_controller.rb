@@ -38,6 +38,7 @@ class SubscriptionsController < ApplicationController
         end
       end
         if @resource.save
+        @resource.add_role :admin
         @resource.skip_confirmation!
         account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
         Thread.current[:current_account] = account.id
