@@ -2,6 +2,11 @@
   <div class="primary_heading">
     <h1>Price Plans</h1>
   </div>
+  <% if current_user.connected? %>
+      <p>Connected</p>
+  <% else %>
+      <%= link_to 'Connect to Stripe', "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{Rails.configuration.stripe[:client_id]}&scope=read_write&stripe_user[email]=#{current_user.email}", class: ' btn btn-primary stripe-connect' %>
+  <% end %>
 </div>
 <div class="content_middle">
   <div class="row">

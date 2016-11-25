@@ -66,10 +66,11 @@ Osb::Application.routes.draw do
     get "my_subscriptions" => "subscriptions#my_subscriptions", as: 'my_subscriptions'
     get "subscribe(/:plan_id)" => "subscriptions#new", as: 'subscribe'
     post "subscriptions" => "subscriptions#create"
-    post "subscriptions" => "subscriptions#create"
     post "subscriptions/hook"
+    post "subscriptions/accounts_hook"
     get "upgrade_plan/:plan_id/:subscription_id" => "subscriptions#upgrade", as: 'upgrade'
     get "unsubscribe/:plan_id/:subscription_id" => "subscriptions#unsubscribe", as: 'unsubscribe'
+    get "stripe_connect" => "subscriptions#stripe_connect", as: 'stripe_connect'
 
     get "dashboard" => "dashboard#index"
     post 'dashboard/chart_details' => "dashboard#chart_details"

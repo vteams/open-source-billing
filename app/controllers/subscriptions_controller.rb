@@ -105,7 +105,7 @@ class SubscriptionsController < ApplicationController
   end
 
 # POST /subscriptions/hook
-  protect_from_forgery except: :hook
+  protect_from_forgery except: [:hook, :accounts_hook]
 
   def hook
     event = Stripe::Event.retrieve(params["id"])
@@ -140,6 +140,40 @@ class SubscriptionsController < ApplicationController
     render status: :ok, json: "success"
   end
 
+  def accounts_hook
+    case params[:type]
+      when 'account.application.deauthorized'
+        @user = User.unscoped.find_by(stripe_user_id: params[:user_id])
+        @user.update_attributes({
+                                    stripe_user_id:         nil,
+                                    stripe_access_token:    nil,
+                                    stripe_refresh_token:   nil,
+                                    stripe_publishable_key: nil
+                                })
+    end
+    render status: :ok, json: "success"
+  end
+
+
+  def stripe_connect
+    begin
+      response = HTTParty.post("https://connect.stripe.com/oauth/token", body: {client_secret: Stripe.api_key, code: params[:code], grant_type: 'authorization_code'})
+      @user    = User.unscoped.find_by(email: Stripe::Account.retrieve(response['stripe_user_id']).email)
+      account  = Account.find(@user.account_id)
+      if @user.update_attributes({
+                                     stripe_user_id:         response['stripe_user_id'],
+                                     stripe_access_token:    response['access_token'],
+                                     stripe_refresh_token:   response['refresh_token'],
+                                     stripe_publishable_key: response['stripe_publishable_key']
+                                 })
+      end
+      flash[:notice]= 'You have successfully connect your stripe account!'
+      redirect_to root_url_with_subdomain(account)+'/my_subscriptions'
+    rescue Exception => e
+      flash[:alert]= e.message
+      redirect_to root_url_with_subdomain(account)+'/my_subscriptions'
+    end
+  end
   private
   def stripe_params
     params.permit :stripeEmail, :stripeToken

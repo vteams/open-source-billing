@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
-
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_default_role
 
@@ -50,7 +49,9 @@ class User < ActiveRecord::Base
     return self.add_role :staff if self.staff.present?
     self.add_role :admin if self.roles.blank?
   end
-
+  def connected?
+     stripe_user_id.present?
+  end
   def currency_symbol
     "$"
   end

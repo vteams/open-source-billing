@@ -138,6 +138,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def root_url_with_subdomain(account)
+    if Rails.env.development?
+      request.protocol.to_s + account.subdomain + '.' + request.domain + ':' + request.port.to_s
+    else
+      request.protocol.to_s + account.subdomain + '.' + request.domain
+    end
+  end
   def filter_by_company(elem, tbl=params[:controller])
     # set company dropdown session and save in database if company is changed
     unless params[:company_id].blank?
@@ -224,7 +231,7 @@ class ApplicationController < ActionController::Base
 
   def is_home_page?
     if multi_tenant_enabled?
-      %w(home landing index hook).include? params[:action]
+      %w(home landing index hook accounts_hook).include? params[:action]
     else
       false
     end
