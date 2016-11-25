@@ -24,7 +24,7 @@ set :rvm_ruby_version, '2.0.0-p648'
 # set :pty, true
 set :use_sudo,        false
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/config.yml'
+append :linked_files, 'config/database.yml', 'config/config.yml', 'config/application.yml'
 
 # Default value for linked_dirs is []
 # append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
