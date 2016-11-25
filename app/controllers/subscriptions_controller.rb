@@ -23,8 +23,6 @@ class SubscriptionsController < ApplicationController
     @plan = Plan.find(params[:subscription][:plan_id])
     userparams = user_params.merge(email: params[:stripeEmail])
     @resource = User.new(userparams)
-    @subscription.process_payment
-    @subscription.save
     ActiveRecord::Base.transaction do
       if @resource.valid?
         #begin
