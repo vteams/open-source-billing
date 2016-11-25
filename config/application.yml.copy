@@ -1,12 +1,12 @@
  development:
-   stripe_publishable_key: pk_test_1d1eXus5TCvCF9Rl6Z13svFJ
-   stripe_secret_key: sk_test_B2WX2LpUfdhXT3cEc3IoI9eY
-   stripe_client_id: ca_9WXQ8sPKjKB56qYo6U26VXdlWrK01ISC
+   stripe_publishable_key: pk_test_COH9u2RAeqNbHWZsnJjWFkS8
+   stripe_secret_key: sk_test_hsTkYtAvE7LfO7OUXNJcwf1o
+   stripe_client_id: ca_9cxkZ77UsKaNIAYzC7RP6w8wlCA8L8gN
  staging:
-   stripe_publishable_key: pk_test_1d1eXus5TCvCF9Rl6Z13svFJ
-   stripe_secret_key: sk_test_B2WX2LpUfdhXT3cEc3IoI9eY
-   stripe_client_id: ca_9WXQ8sPKjKB56qYo6U26VXdlWrK01ISC
+   stripe_publishable_key: pk_test_COH9u2RAeqNbHWZsnJjWFkS8
+   stripe_secret_key: sk_test_hsTkYtAvE7LfO7OUXNJcwf1o
+   stripe_client_id: ca_9cxkZ77UsKaNIAYzC7RP6w8wlCA8L8gN
  production:
-   stripe_api_key: sk_live_EQbpVXXheTT1gNnnDHM1BuQ9
+   stripe_secret_key: sk_live_cPP5ezakiKJUZFw26KqQS6KP
    stripe_publishable_key: pk_live_A2PfI57EOCJQLo92Sajt9LTX
-   stripe_client_id: ca_9WXQ4gMpQY7Y3S8Q1vz5WM2TvD0Vg8fd
+   stripe_client_id: ca_9cxkECfp2lRiiuIygjp8EsTjYcgYvXtz
