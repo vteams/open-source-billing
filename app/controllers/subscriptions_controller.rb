@@ -109,29 +109,31 @@ class SubscriptionsController < ApplicationController
   protect_from_forgery except: [:hook, :accounts_hook]
 
   def hook
-    event = Stripe::Event.retrieve(params["id"])
-    case event.type
-      when "invoice.payment_succeeded" #renew subscription
-        subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
-        subscription.renew if subscription
-      when "customer.subscription.updated"
-        subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
-        subscription.cancel_subscription(event.data.object.status) if subscription
-      when "charge.failed"
-        customer_email = event.data.object.source.name
-        amount         = event.data.object.amount/100
-        failure_message= event.data.object.failure_message
-        subscription   = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
-        if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: failure_message}).deliver
-          subscription.move_to_free_plan if subscription
-        end
-      when 'invoice.payment_failed'
-        subscription  = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
-        customer_email= Stripe::Customer.retrieve(event.data.object.customer).email
-        amount        = event.data.object.total
-        if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: 'Failed to process your payment'}).deliver
-          subscription.move_to_free_plan if subscription
-        end
+    event = Stripe::Event.retrieve(params["id"])  rescue nil
+    if event
+      case event.type
+        when "invoice.payment_succeeded" #renew subscription
+          subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+          subscription.renew if subscription
+        when "customer.subscription.updated"
+          subscription = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+          subscription.cancel_subscription(event.data.object.status) if subscription
+        when "charge.failed"
+          customer_email = event.data.object.source.name
+          amount         = event.data.object.amount/100
+          failure_message= event.data.object.failure_message
+          subscription   = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+          if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: failure_message}).deliver
+            subscription.move_to_free_plan if subscription
+          end
+        when 'invoice.payment_failed'
+          subscription  = Subscription.unscoped.find_by_customer_id(event.data.object.customer)
+          customer_email= Stripe::Customer.retrieve(event.data.object.customer).email
+          amount        = event.data.object.total
+          if PaymentMailer.payment_failure({customer_email: customer_email, amount: amount, message: 'Failed to process your payment'}).deliver
+            subscription.move_to_free_plan if subscription
+          end
+      end
     end
     render status: :ok, json: "success"
   end
