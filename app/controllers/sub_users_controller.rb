@@ -33,6 +33,8 @@ class SubUsersController < ApplicationController
         return
       elsif sub_user.save
         # assign current user's company to newly created user
+        sub_user.accounts << current_account
+        sub_user.update(current_company: get_user_current_company.id)
         current_user.accounts.first.users << sub_user
         UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
         redirect_to(edit_sub_user_url(sub_user), notice: 'User has been saved successfully')

@@ -442,7 +442,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def account
-    Account.where(id: account_id).first if account_id.present?
+    return Account.where(id: account_id).first if account_id.present?
     Company.where(id: company_id).first.account if company_id.present?
   end
 
