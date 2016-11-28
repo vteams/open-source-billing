@@ -6,16 +6,16 @@ namespace :stripe do
   desc "Create stripe plans"
   task :create_plans => :environment do
     plans = [
-        {name: 'Free Trail', amount: 0, interval: 'month', client_limit: 5},
-        {name: 'Silver', amount: 50, interval: 'month', client_limit: 10},
-        {name: 'Gold', amount: 100, interval: 'month', client_limit: 25},
-        {name: 'Platinum', amount: 150, interval: 'month', client_limit: 1000}
+        {stripe_plan_id: 'free', name: 'Free Plan', amount: 0, interval: 'day', client_limit: 5},
+        {stripe_plan_id: 'silver', name: 'Silver', amount: 4.99, interval: 'month', client_limit: 10},
+        {stripe_plan_id: 'gold', name: 'Gold', amount: 199.99, interval: 'month', client_limit: 25},
+        {stripe_plan_id: 'platinum', name: 'Platinum', amount: 99.99, interval: 'month', client_limit: 1000}
     ]
     puts " Plans creation in progress..."
     plans.each do |plan|
       if Plan.create!(plan)
         Stripe::Plan.create(
-            :amount   => (plan[:amount]*100),
+            :amount   => (plan[:amount]*100).to_i,
             :interval => plan[:interval],
             :name     => plan[:name],
             :currency => 'usd',

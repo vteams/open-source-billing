@@ -346,7 +346,7 @@
     <div class="row">
       <%#= render partial: 'subscriptions/form', locals:{subscription: @subscription, plan: @plan}%>
       <% Plan.all.each do |plan| %>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">
           <div class="config-box-head clearfix">
             <h5 class="v-align">
@@ -355,19 +355,13 @@
             </h5>
           </div>
           <div class="config-box-data">
+
             <ul class="config-box-list">
-              <li>
-                Lorem ipsum dolor sit
-              </li>
-              <li>
-                Lorem ipsum dolor sit
-              </li>
-              <li>
-                Lorem ipsum dolor sit
-              </li>
-              <li class="hidden-xs">
-                &nbsp;
-              </li>
+              <% eval(plan.name.gsub(" ", "").upcase).each do |feature|%>
+                  <li>
+                    <%= feature %>
+                  </li>
+              <% end %>
               <li>
                 <a href="/subscribe/<%= plan.id%>"  class="btn-success btn wow bounceInUp">
                   <span>
@@ -382,87 +376,6 @@
 
       </div>
       <% end %>
-      <!--<div class="col-sm-4">-->
-      <!--<div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">-->
-      <!--<div class="config-box-head clearfix">-->
-      <!--<h5 class="v-align">-->
-      <!--<span class="text-light">Basic Setup</span>-->
-      <!--<span class="text-bold">$45</span>-->
-      <!--</h5>-->
-      <!--</div>-->
-      <!--<div class="config-box-data">-->
-      <!--<ul class="config-box-list">-->
-      <!--<li>-->
-      <!--Application Setup-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Email Configuration-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Paypal Configuration-->
-      <!--</li>-->
-      <!--<li class="hidden-xs">-->
-      <!--&nbsp;-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="col-sm-4">-->
-      <!--<div class="config-box config-box-2 wow fadeIn" data-wow-delay="0.7s">-->
-      <!--<div class="config-box-head clearfix">-->
-      <!--<h5 class="v-align">-->
-      <!--<span class="text-light">-->
-      <!--Basic Setup <br>+ Support-->
-      <!--</span>-->
-      <!--<span class="text-bold">$75</span>-->
-      <!--</h5>-->
-      <!--</div>-->
-      <!--<div class="config-box-data">-->
-      <!--<ul class="config-box-list">-->
-      <!--<li>-->
-      <!--Application Setup-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Email Configuration-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Paypal Configuration-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--3 Months Support-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="col-sm-4">-->
-      <!--<div class="config-box config-box-3 wow fadeIn" data-wow-delay="1s">-->
-      <!--<div class="config-box-head clearfix">-->
-      <!--<h5 class="v-align">-->
-      <!--<span class="text-light">-->
-      <!--Custom <br> Development-->
-      <!--</span>-->
-      <!--</h5>-->
-      <!--</div>-->
-      <!--<div class="config-box-data">-->
-      <!--<ul class="config-box-list">-->
-      <!--<li>-->
-      <!--New Feature to Match your Unique Needs-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Generate Custom Reports-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Take and Restore Backups-->
-      <!--</li>-->
-      <!--<li>-->
-      <!--Any Change in Existing System-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
     </div>
     <div class="row">
       <div class="section-6-btns text-center col-sm-12">

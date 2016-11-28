@@ -389,3 +389,9 @@ CUSTOM_FIELDS = {
 ROLES = ['admin', 'manager', 'staff']
 
 ENTITIES = ['Account','Category', 'Client', 'Company', 'CompanyEmailTemplate', 'CompanyEntity', 'Currency', 'EmailTemplate', 'Estimate', 'ExpenseCategory', 'Expense', 'InvoiceLineItem', 'InvoiceTask', 'Invoice', 'Item', 'LineItemTax', 'Log', 'PaymentTerm', 'Payment', 'ProjectTask', 'Project', 'RecurringProfileLineItem', 'RecurringProfile', 'Role', 'SentEmail', 'Staff', 'Task', 'TeamMember']
+
+
+FREEPLAN = ['5 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+SILVER = ['10 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+GOLD = ['25 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+PLATINUM = ['Unlimited Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
