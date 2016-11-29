@@ -48,8 +48,6 @@ class SubscriptionsController < ApplicationController
           company = @resource.current_account.companies.first
         end
         @resource.update(current_company: company.id)
-        #update email templates for first user
-        CompanyEmailTemplate.update_all(parent_id: @resource.id) if User.count == 1
         if @resource.active_for_authentication?
           if Rails.env.development?
             redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}:#{request.port}"

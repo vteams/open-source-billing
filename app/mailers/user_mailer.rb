@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
    end
 
   def get_email_template(user, template_type)
-   user.accounts.first.email_templates.where(:template_type => template_type).first
+   EmailTemplate.unscoped.where(:template_type => template_type).first
   end
 
   def replace_template_body(current_user, sub_user, template_type)

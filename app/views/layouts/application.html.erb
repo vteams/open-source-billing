@@ -175,7 +175,6 @@
 
               <ul class="sub">
                 <li><%= active_link_to t("header.links.setting.companies"), companies_path %></li>
-                <li class="secondary"><%= active_link_to t("header.links.setting.email_templates"), email_templates_path %></li>
                 <% if has_access_right?(:manage, User) %>
                     <li class="secondary_02"><%= link_to t("header.links.setting.users"), sub_users_path,class: "#{'active' if params[:controller] == 'sub_users' and params[:action] != 'user_settings'}" %></li>
                 <% end %>
@@ -188,7 +187,6 @@
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                 <ul>
                   <li><%= active_link_to  t("header.links.setting.companies"), companies_path %></li>
-                  <li><%= active_link_to  t("header.links.setting.email_templates"), email_templates_path %></li>
                   <% if has_access_right?(:manage, User) %>
                       <li><%= active_link_to  t("header.links.setting.users"), sub_users_path %></li>
                   <% end %>

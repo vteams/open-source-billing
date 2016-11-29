@@ -42,7 +42,7 @@ class PaymentMailer < ActionMailer::Base
   def get_email_template(user = nil, invoice, template_type)
     #find company level template of a template_type
     get_user = user.is_a?(String)? User.find_by_email(user) : user
-    template = invoice.company.email_templates.where(:template_type => template_type).first
+    template = EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of a template_type if no company level template
     template  = get_user.accounts.first.email_templates.where(:template_type => template_type).first if template.blank? && user.present?
     template

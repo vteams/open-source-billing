@@ -35,7 +35,6 @@ class Account < ActiveRecord::Base
   before_save :change_currency_symbol
   after_create do
     Thread.current[:current_account] = self.id
-    Osbm::AccountEmailTemplate.generate(self.id)
   end
 
   def change_currency_symbol

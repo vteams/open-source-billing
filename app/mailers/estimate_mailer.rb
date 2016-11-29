@@ -65,7 +65,7 @@ class EstimateMailer < ActionMailer::Base
 
   def get_email_template(user = nil, estimate, template_type)
     #find company level template of a template_type
-    template = estimate.company.email_templates.where(:template_type => template_type).first
+    template =EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of template_type if no company level template
     if template.blank?
       template  = user.present? ? user.accounts.first.email_templates.where(:template_type => template_type).first : Account.first.email_templates.where(:template_type => template_type).first
