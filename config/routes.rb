@@ -11,11 +11,6 @@ Osb::Application.routes.draw do
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
   scope "(:locale)" do
-    resources :email_templates do
-      collection do
-        get 'bulk_actions'
-      end
-    end
 
     resources :tasks do
       collection do
