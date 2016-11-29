@@ -20,17 +20,4 @@
           | Sign up to Open
           span> Source
           | Billing
-      /.row-fluid
-      /  ul.thumbnails
-      /    - Plan.all.each do |plan|
-      /      li.span4.plan class=('selected' if(params["plan_id"]==plan.id.to_s))
-      /        .thumbnail
-      /          .caption
-      /            h3
-      /              = plan.name
-      /            p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-      /            p
-      /              a.btn.btn-success href="/subscribe/#{plan.id}"
-      /                = "Subscribe for($#{plan.amount})"
-            /= render :partial => 'tab_form', locals: {plan: @plan, subscription: @subscription, resource: @resource}
       = render :partial => 'form', locals: {plan: @plan, subscription: @subscription, resource: @resource}
