@@ -1,5 +1,4 @@
 class EmailTemplate < ActiveRecord::Base
-  include Osbm
   paginates_per 10
 
   has_many :company_email_templates, :foreign_key => "template_id", :dependent => :destroy

@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
         Thread.current[:current_account] = session[:current_account]
         Thread.current[:current_subdomain] = request.subdomain
         if request.subdomain == 'admin'
-          if params[:controller]!='osbm/admins' and params[:controller] !='devise/sessions'
+          if params[:controller]!='osbm/admins' and params[:controller] !='devise/sessions' and params[:controller]!='osbm/email_templates'
             redirect_to '/osbm/admin/accounts' and return
           end
         end

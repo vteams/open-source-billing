@@ -1,0 +1,6 @@
+<tr>
+  <th class="align_left sorting header <%= sortable_class('template_type') %>"><%= sortable('template_type', t('views.email_templates.template_type')) %></th>
+  <th class="align_left sorting header <%= sortable_class('subject') %>"><%= sortable('subject', t('views.email_templates.subject')) %></th>
+  <th class="align_left sorting header <%= sortable_class('status') %>"><%= sortable('status', t('views.email_templates.status')) %></th>
+  <th class="align_center not-sortable"><%= t '.actions', :default => t("helpers.actions") %></th>
+</tr>

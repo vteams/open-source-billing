@@ -1,0 +1,46 @@
+<div class="email_template_class">
+  <div class="content_top">
+    <div class="primary_heading">
+      <h1><%= t('views.email_templates.email_templates') %></h1>
+    </div>
+    <div class="primary_btn">
+      <%#= link_to 'New Email template', new_email_template_path, :class => 'btn_large' %>
+    </div>
+  </div>
+  <!--content_top-->
+
+  <!--<div class="company_select">-->
+    <!--<p>Select a Company</p>-->
+    <!--<%#= email_template_companies %>-->
+  <!--</div>-->
+<%= form_tag "email_templates/bulk_actions", {method: :get, :remote => true} do -%>
+  <div class="content_middle">
+    <div class="grid_table">
+      <table cellpadding="0" cellspacing="0" class="table table_listing company_listing">
+        <colgroup>
+          <!--<col class="one"/>-->
+          <col class="one"/>
+          <col class="two"/>
+          <col class="three"/>
+          <col class="four"/>
+        </colgroup>
+        <thead id="email_template_head">
+        <%= render 'email_template_header'%>
+        </thead>
+        <tbody id="template_body">
+        <%= render 'email_templates' %>
+        <tfoot id="paging_links">
+        <%#= render "paging" %>
+        </tfoot>
+        </tbody>
+      </table>
+    </div>
+    <!--grid_table-->
+  </div>
+  <!--content_middle-->
+  <div class="content_bottom">
+    <%#= link_to 'New Email template', new_email_template_path, :class => 'btn_large' %>
+  </div>
+<% end %>
+  <!--content_bottom-->
+</div>

@@ -7,7 +7,7 @@ Osbm::Engine.routes.draw do
     get 'users'
     get 'plans'
     post 'create_account'
-
+    resources :email_templates
   end
   resources :admins, only: [] do
     member do
