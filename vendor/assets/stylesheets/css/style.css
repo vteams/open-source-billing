@@ -333,14 +333,13 @@ header#main-header {
 }
 /*section-3 CSS*/
 .section-3 {
-/*    background: url(../images/section-3-bg.jpg) no-repeat;*/
+    background: url(../images/section-3-bg.jpg) no-repeat;
     padding: 95px 0;
     background-size: cover;
     -webkit-background-size: cover;
     height: 620px;
     
     background-position: 0 0;
-    background: #00AFF0 url(../images/blue-bg-00.jpg) repeat;
 }
 .section-3-img {
     position: absolute;
