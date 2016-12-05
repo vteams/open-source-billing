@@ -6240,6 +6240,10 @@ button.close {
 .carousel {
   position: relative;
 }
+.carousel .active{
+  left: auto !important;
+  display: inline-block !important;
+}
 .carousel-inner {
   position: relative;
   width: 100%;
