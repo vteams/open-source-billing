@@ -70,11 +70,11 @@ a:hover {
 .btn:hover {
     color: #fff;
 }
-.green-btn {
-    background: #7fba00;
+.green-btn, .green-btn:hover {
+    background: #7fba00 !important;
 }
-.blue-btn {
-    background: #00aff0;
+.blue-btn, .blue-btn:hover {
+    background: #00aff0 !important;
 }
 .white-btn {
     background: #fff;
