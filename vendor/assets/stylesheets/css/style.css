@@ -226,7 +226,7 @@ header#main-header {
     margin-right: 10px; 
 }
 .download-icon {
-    background: url(../images/download-icon.svg) no-repeat;
+    background: url(../assets/images/download-icon.svg) no-repeat;
     width: 24px;
     height: 24px;
     position: relative;
@@ -235,7 +235,7 @@ header#main-header {
     color: #fff;
 }
 .eye-icon {
-    background: url(../images/eye-icon.svg) no-repeat;
+    background: url(../assets/images/eye-icon.svg) no-repeat;
     width: 24px;
     height: 24px;
     position: relative;
@@ -333,7 +333,7 @@ header#main-header {
 }
 /*section-3 CSS*/
 .section-3 {
-    background: url(../images/section-3-bg.jpg) no-repeat;
+    background: url(../assets/images/section-3-bg.jpg) no-repeat;
     padding: 95px 0;
     background-size: cover;
     -webkit-background-size: cover;
@@ -533,7 +533,7 @@ header#main-header {
 }
 .testi-comma {
     display: inline-block;
-    background: url(../images/commas.png) no-repeat;
+    background: url(../assets/images/commas.png) no-repeat;
     width: 18px;
     height: 16px;
     margin:  0px 0 0 30px;
