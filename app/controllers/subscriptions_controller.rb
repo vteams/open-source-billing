@@ -25,15 +25,15 @@ class SubscriptionsController < ApplicationController
     @resource = User.new(userparams)
     ActiveRecord::Base.transaction do
       if @resource.valid?
-        begin
+        #begin
           @subscription.process_payment
           @subscription.save
           @resource.update_attribute('subscription_id', @subscription.id)
-        rescue Exception => e
-          flash[:alert]= e.message
-          render :action => "new"
-          return
-        end
+        # rescue Exception => e
+        #   flash[:alert]= e.message
+        #   render :action => "new"
+        #   return
+        # end
       end
         if @resource.save
         @resource.add_role :admin
