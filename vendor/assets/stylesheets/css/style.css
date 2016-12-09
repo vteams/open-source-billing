@@ -330,15 +330,15 @@ header#main-header {
     opacity: 0.8;
 }
 /*section-3 CSS*/
-/*.section-3 {*/
-    /*background: url(../images/section-3-bg.jpg) no-repeat;*/
-    /*padding: 95px 0;*/
-    /*background-size: cover;*/
-    /*-webkit-background-size: cover;*/
-    /*height: 620px;*/
-    /**/
-    /*background-position: 0 0;*/
-/*}*/
+.section-3 {
+    background: url(../images/section-3-bg.jpg) no-repeat;
+    padding: 95px 0;
+    background-size: cover;
+    -webkit-background-size: cover;
+    height: 620px;
+
+    background-position: 0 0;
+}
 .section-3-img {
     position: absolute;
     right: 0px;
@@ -773,6 +773,7 @@ ul.sponser-logos li:last-child {
         padding-right: 10%;
     }
     .section-3 {
+        background:  url(../images/section-3-bg.jpg) no-repeat;
         background-position: center bottom;
         background-size: contain;
         background-color: #00b6f2;
