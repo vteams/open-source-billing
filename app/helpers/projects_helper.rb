@@ -106,7 +106,11 @@ module ProjectsHelper
   end
 
   def load_managers_for_project(action , company_id, manager)
-    load_staffs_for_project(action , company_id, manager)
+    if action.eql?("new")
+      load_staffs_for_project(action , company_id, manager)
+    else
+      load_staff(action,company_id)
+    end
   end
 
   def projects_archived ids
