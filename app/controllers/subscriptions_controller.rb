@@ -23,42 +23,37 @@ class SubscriptionsController < ApplicationController
     @plan = Plan.find(params[:subscription][:plan_id])
     userparams = user_params.merge(email: params[:stripeEmail])
     @resource = User.new(userparams)
+    @resource.company_domain = params[:subscription][:company].try(:parameterize)
     ActiveRecord::Base.transaction do
       if @resource.valid?
-        #begin
+        begin
           @subscription.process_payment
           @subscription.save
           @resource.update_attribute('subscription_id', @subscription.id)
-        # rescue Exception => e
-        #   flash[:alert]= e.message
-        #   render :action => "new"
-        #   return
-        # end
+        rescue Exception => e
+          flash[:alert]= e.message
+          render :action => "new"
+          return
+        end
       end
         if @resource.save
-        @resource.add_role :admin
-        @resource.skip_confirmation!
-        account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
-        Thread.current[:current_account] = account.id
-        @resource.account_id = account.id
-        @resource.accounts << account
-        if @resource.current_account.companies.empty?
-          company = @resource.current_account.companies.create({company_name: params[:subscription][:company]})
-        else
-          company = @resource.current_account.companies.first
-        end
-        @resource.update(current_company: company.id)
-        if @resource.active_for_authentication?
-          if Rails.env.development?
-            redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}:#{request.port}"
+          @resource.add_role :admin
+          account             = Account.find_or_create_by(org_name: params[:subscription][:company], subdomain: params[:subscription][:company].try(:parameterize))
+          Thread.current[:current_account] = account.id
+          @resource.account_id = account.id
+          @resource.accounts << account
+          if @resource.current_account.companies.empty?
+            company = @resource.current_account.companies.create({company_name: params[:subscription][:company]})
           else
-            redirect_to "#{request.protocol}#{account.subdomain}.#{request.domain}"
+            company = @resource.current_account.companies.first
           end
-        else
-          #  set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-          expire_session_data_after_sign_in!
-          render :action => "new"
-        end
+          @resource.update(current_company: company.id)
+          if @resource.active_for_authentication?
+            sign_in(resource_name, @resource)
+            redirect_to root_url_with_subdomain(account)
+          else
+            redirect_to root_url_with_subdomain(account)
+          end
       else
         render :action => "new"
       end

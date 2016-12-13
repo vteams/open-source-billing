@@ -44,6 +44,7 @@ group :development do
   gem 'copyright-header', '1.0.15'
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.2'
+  gem 'pry-nav'
 end
 gem 'capistrano-rvm'
 gem 'browser', '2.1.0'

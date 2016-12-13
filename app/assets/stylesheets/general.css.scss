@@ -1094,7 +1094,7 @@ table.table_listing, table.report-data-table {
 /*-------------------------Calendar CSS Ends-------------------------*/
 
 .alert {
-  width: 400px;
+  width: auto;
   min-height: 42px;
   margin: auto;
   border: 1px solid #99e5f5;
@@ -1104,6 +1104,7 @@ table.table_listing, table.report-data-table {
   margin-bottom: 34px;
   margin-top: 12px;
   background-color: none;
+  text-align: center;
   &.alert-success {
     background: asset-url('success.png') no-repeat 19px 19px;
     border-color: #97c93c;

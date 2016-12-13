@@ -259,4 +259,8 @@ class ApplicationController < ActionController::Base
   def upgrade_plan_alert
     flash[:alert] = "Upgrade your plan, Client limit reached out," if current_user_client_limit_exceed?
   end
+
+  def user_for_paper_trail
+    nil # disable whodunnit tracking
+  end
 end

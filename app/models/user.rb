@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :invoices
 
   belongs_to :subscription , dependent: :destroy
-  attr_accessor :account,:login
+  attr_accessor :account,:login, :company_domain
 
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'

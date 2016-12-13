@@ -264,6 +264,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     public_suffix (2.0.4)
     pygments.rb (0.6.3)
       posix-spawn (~> 0.3.6)
@@ -463,6 +465,7 @@ DEPENDENCIES
   paranoia (= 2.1.5)
   paypal-sdk-rest (= 1.4.6)
   pry (= 0.10.3)
+  pry-nav
   quickbooks-ruby (= 0.4.4)
   quiet_assets (= 1.1.0)
   rails (~> 4.1.8)
@@ -491,3 +494,9 @@ DEPENDENCIES
   wicked_pdf (~> 0.11.0)
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer (= 0.4.4)
+
+RUBY VERSION
+   ruby 2.0.0p643
+
+BUNDLED WITH
+   1.12.5
