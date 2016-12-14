@@ -149,6 +149,11 @@ class SubscriptionsController < ApplicationController
   def stripe_connect
     begin
       response = HTTParty.post("https://connect.stripe.com/oauth/token", body: {client_secret: Stripe.api_key, code: params[:code], grant_type: 'authorization_code'})
+      puts response
+      if response['error'].present?
+        redirect_to root_url , alert: response['error_description']
+        return true
+      end
       @user    = User.unscoped.find_by(email: Stripe::Account.retrieve(response['stripe_user_id']).email)
       account  = Account.find(@user.account_id)
       if @user.update_attributes({
@@ -162,7 +167,7 @@ class SubscriptionsController < ApplicationController
       redirect_to root_url_with_subdomain(account)+'/my_subscriptions'
     rescue Exception => e
       flash[:alert]= e.message
-      redirect_to root_url_with_subdomain(account)+'/my_subscriptions'
+      redirect_to account.present? ? root_url_with_subdomain(account)+'/my_subscriptions' : root_url
     end
   end
   private
