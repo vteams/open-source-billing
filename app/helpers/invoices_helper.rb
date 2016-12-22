@@ -227,4 +227,12 @@ module InvoicesHelper
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
+
+  def amount_to_pay_by_client(invoice)
+    ((invoice.unpaid_amount || 0).to_f * 100).to_i
+  end
+
+  def invoice_owner_publish_key(invoice)
+    invoice.owner.stripe_publishable_key
+  end
 end

@@ -20,7 +20,7 @@
 #
 class InvoicesController < ApplicationController
   load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
-  before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice]
+  before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice, :payment_with_credit_card]
   before_filter :set_per_page_session
   protect_from_forgery :except => [:preview, :paypal_payments]
   helper_method :sort_column, :sort_direction
@@ -259,6 +259,24 @@ class InvoicesController < ApplicationController
     @result = paypal.process_payment
 
     respond_to { |format| format.js }
+  end
+
+  def payment_with_credit_card
+    begin
+      @invoice = Invoice.unscoped.where(id: params[:invoice_id]).first
+      @invoice.payments.create({
+                                  :payment_method => "Stripe",
+                                  :payment_amount => params[:amount].to_f/100,
+                                  :payment_date => Date.today,
+                                  :paid_full => 1,
+                                  :company_id => @invoice.company_id
+                              })
+      @invoice.update_attributes(status: 'paid')
+      flash[:notice] = "Invoice has been paid successfully"
+    rescue
+      flash[:alert] = "Something went wrong while payment"
+    end
+    redirect_to preview_invoices_url(inv_id: params[:inv_id])
   end
 
   def send_invoice

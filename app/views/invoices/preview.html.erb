@@ -22,13 +22,13 @@
   </div><!--content_top-->
 
   <div class="content_bottom top">
-    <% if @invoice.status != "paid" %>
-        <!--showing 2 payment options buttons -->
-        <script class="stripe-button" data-amount="<%= @invoice.invoice_total %>" data-image="<%= asset_url('logo_for_stripe.png')%>" data-description="(Invoice Payment )" data-key="<%= @invoice.owner.stripe_publishable_key %>" data-local="auto" src="https://checkout.stripe.com/checkout.js"></script>
-
-
-      <%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), :class => "btn_large big" %>
-      <%= link_to t("pay_by_credit_card"), "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
+    <% if @invoice.status != "paid" and invoice_owner_publish_key(@invoice).present?  %>
+        <%= form_tag '/invoices/payment_with_credit_card', method: 'post', id: 'cc_form', novalidate: "" do -%>
+            <%= hidden_field_tag :inv_id, params[:inv_id]%>
+            <%= hidden_field_tag :invoice_id, @invoice.id %>
+            <%= hidden_field_tag :amount, amount_to_pay_by_client(@invoice) %>
+            <script class="stripe-button" data-amount="<%= amount_to_pay_by_client(@invoice) %>" data-image="<%= asset_url('logo_for_stripe.png')%>" data-description="(Invoice Payment )" data-key="<%= invoice_owner_publish_key(@invoice)  %>"  data-local="auto" src="https://checkout.stripe.com/checkout.js"></script>
+        <% end %>
     <% else %>
       <div></div>
     <% end %>
@@ -92,6 +92,8 @@
   <% end %>
 </div><!--dispute_popup-->
 
-<!-- popup for credit card info -->
-
-  <%= render 'credit_card_info' %>
+<script>
+    setTimeout(function(){
+        document.getElementsByClassName("stripe-button-el")[0].disabled = false;
+    }, 700);
+</script>

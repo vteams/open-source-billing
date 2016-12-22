@@ -169,6 +169,7 @@ Osb::Application.routes.draw do
     post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
     post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
     post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
+    post '/invoices/payment_with_credit_card' => 'invoices#payment_with_credit_card'
 
     resources :recurring_profile_line_items
 
