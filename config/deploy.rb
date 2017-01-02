@@ -8,8 +8,9 @@ set :repo_url, 'git@gitlab.vteamslabs.com:vteams/v_billing.git'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/deploy/multi_tenants'
+#set :deploy_to, '/home/deploy/multi_tenants'
 
+set :deploy_to, '/home/osbstage/apps/multi_tenants'
 # Default value for :scm is :git
 # set :scm, :git
 set :rvm_ruby_version, '2.0.0-p648'
