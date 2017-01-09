@@ -267,6 +267,7 @@ GEM
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
     public_suffix (2.0.4)
+    puma (3.6.2)
     pygments.rb (0.6.3)
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
@@ -466,6 +467,7 @@ DEPENDENCIES
   paypal-sdk-rest (= 1.4.6)
   pry (= 0.10.3)
   pry-nav
+  puma
   quickbooks-ruby (= 0.4.4)
   quiet_assets (= 1.1.0)
   rails (~> 4.1.8)

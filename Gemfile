@@ -89,5 +89,5 @@ gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
 gem "letter_opener", :group => :development
-
 gem 'puma', '3.11.0'
+gem 'osbm', path: 'vendor/engines/osbm'
