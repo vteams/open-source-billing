@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class UserMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
 
    def new_user_account(current_user, sub_user)
      #@creator, @account, @sub_user = current_user.user_name || current_user.email , current_user.accounts.first.org_name, sub_user

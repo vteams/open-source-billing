@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoiceMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
   @@response_to_client = ''
   @@reason_by_client =  ''
   def new_invoice_email(client, invoice, e_id , current_user)

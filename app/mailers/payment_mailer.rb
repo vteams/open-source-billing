@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
 
   def payment_notification_email(current_user, payment)
    # @client, @invoice, @amount = client, invoice, payment.payment_amount
