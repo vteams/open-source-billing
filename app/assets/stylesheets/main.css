@@ -380,7 +380,7 @@ h6 {
     left: 0;
     right: 0;
     margin: 0 auto;
-    background: url("../images/top-arrow.png") no-repeat center center; }
+    background: url("../assets/top-arrow.png") no-repeat center center; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span {
     padding-left: 30px; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span:before {

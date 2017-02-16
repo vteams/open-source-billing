@@ -10,7 +10,7 @@
  *= require materialize
  *= require font-awesome
  *= require jquery.mCustomScrollbar.css
- *= require material-design-iconic-font.min
+ *= require material-design-iconic-font.css
  *= require_self
  *= general.css.scss
  *= require main.css
@@ -36,7 +36,6 @@
  *= payment_history.css.scss
  *= dispute_history.css.scss
  *= credit_card.css.scss
- *= jquery.customScrollbar.css
  *= edit_payment.css
  *= item_sales.css
  *= sub_users_form.css.scss
