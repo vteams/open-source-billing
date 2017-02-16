@@ -3,11 +3,35 @@
     <i class="material-icons">add</i>
   </a>
   <ul>
-    <li><a class="btn-floating info"  data-label="New Payments"><%= image_tag('ico-payments.svg' , alt: "Payments")%></a></li>
-    <li><a class="btn-floating grey"  data-label="New Items"><%= image_tag('ico-items.svg' , alt: "Items")%></a></li>
-    <li><a class="btn-floating purple"  data-label="New Clients"><%= image_tag('ico-clients.svg' , alt: "Clients")%></a></li>
-    <li><a class="btn-floating brown" data-label="New Expenses"><%= image_tag('ico-expenses.svg' , alt: "Expenses")%></a></li>
-    <li><a class="btn-floating green"  data-label="New Estimates"><%= image_tag('ico-estimates.svg' , alt: "Estimates")%></a></li>
-    <li><a class="btn-floating blue" data-label="New Invoice"><%= image_tag('ico-invoices.svg' , alt: "Invoices")%></a></li>
+    <li>
+      <%= link_to new_payment_path, class: 'btn-floating info', data:{label: 'New Payments'} do
+        image_tag('ico-payments.svg' , alt: 'Payments')
+      end %>
+    </li>
+    <li>
+      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: 'New Items'} do
+        image_tag('ico-items.svg' , alt: 'Items')
+      end %>
+    </li>
+    <li>
+      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: 'New Clients'} do
+        image_tag('ico-clients.svg' , alt: 'Clients')
+      end %>
+    </li>
+    <li>
+      <%= link_to new_expense_path, class: 'btn-floating brown', data:{label: 'New Expenses'} do
+        image_tag('ico-expenses.svg' , alt: 'Expenses')
+      end %>
+    </li>
+    <li>
+      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: 'New Estimates'} do
+        image_tag('ico-estimates.svg' , alt: 'Estimates')
+      end %>
+    </li>
+    <li>
+      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: 'New Invoices'} do
+        image_tag('ico-invoices.svg' , alt: 'Invoices')
+      end %>
+    </li>
   </ul>
 </div>
