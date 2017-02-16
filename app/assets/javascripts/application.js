@@ -15,7 +15,7 @@
 //= require jquery-ui.js
 //= require twitter/bootstrap
 //= require materialize.min
-//= require jquery.customScrollbar.min
+//= require jquery.mCustomScrollbar.min
 //= require custom
 //= require jquery.jqplot.js
 //= require jqplot.barRenderer.min.js
