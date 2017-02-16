@@ -35,6 +35,7 @@ class DashboardController < ApplicationController
     @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices(@currency, @current_company_id)
     @ytd_income = Reporting::Dashboard.get_ytd_income(@currency, @current_company_id)
     @unit_size='medium-unit'
+    @aged_invoices_total = @aged_invoices.attributes["thirty_one_to_sixty"] + @aged_invoices.attributes["zero_to_thirty"] + @aged_invoices.attributes["sixty_one_to_ninety"]
   end
 
   def chart_details

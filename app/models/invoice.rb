@@ -449,4 +449,8 @@ class Invoice < ActiveRecord::Base
   def owner
     account.owner
   end
+
+  def invoice_name
+    "#{unscoped_client.first_name.first.camelize} #{unscoped_client.last_name.first.camelize }"
+  end
 end
