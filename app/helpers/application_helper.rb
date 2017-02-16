@@ -126,6 +126,10 @@ module ApplicationHelper
     end
   end
 
+  def filter_select_by_companies
+    current_user.current_account.companies
+  end
+
   # generate drop down to filter listings by company
   def email_template_companies
     selected_option = session['current_company'] || current_user.current_company || current_user.current_account.companies.first.id
@@ -167,6 +171,9 @@ module ApplicationHelper
     Company.unscoped.find(company_id).company_name
   end
 
+  def get_company_id
+    session['current_company'] || current_user.current_company || current_user.first_company_id
+  end
   #get Company for invoices
   def get_invoice_company_name(invoice=nil)
     company = invoice.company

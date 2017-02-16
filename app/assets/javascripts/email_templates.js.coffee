@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   # Load Email template when a template type is selected from dropdown list
-  jQuery(".email_template_class").on "change", "select#email_template_template_type", ->
+  jQuery(".email_template_class select#email_template_template_type").on "change", ->
       elem = jQuery(this)
       jQuery.ajax '/email_templates/load_email_template',
         type: 'POST'

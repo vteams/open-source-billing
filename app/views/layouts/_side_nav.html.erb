@@ -1,0 +1,38 @@
+<nav id="side-nav">
+  <!--- profile information --->
+  <div class="profile-info">
+    <div class="profile-image">
+      <%= image_tag('img-user.png', alt: 'image')%>
+    </div>
+    <div class="profile-details">
+      <div class="dropdown">
+        <!-- Dropdown Trigger -->
+        <a id="dLabel" class='dropdown-button menudd' href='#' data-activates='dropdown1' data-beloworigin="true">
+          <span><%= current_user.user_name || current_user.email %></span>
+        </a>
+        <a  class="email-link" href="mailto:"><%= current_user.email %> </a>
+      </div>
+    </div>
+  </div>
+  <!--- side main menu --->
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><%= link_to raw("<i class='material-icons'>settings</i> <span>Settings</span>"), new_account_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), new_account_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span> Logout</span>"), destroy_user_session_path, method: :delete, class: 'logout' %></li>
+  </ul>
+  <div>
+      <ul class="side-menu mCustomScrollbar">
+          <li><a href="<%= dashboard_path %>"><%= image_tag('ico-dashboard.svg', alt: 'dashboard')%><span>Dashboard</span></a></li>
+          <li><a href="<%= invoices_path %>"><%= image_tag('ico-invoices.svg', alt: 'Invoices') %> <span>Invoices</span></a></li>
+          <li><a href="<%= estimates_path %>"><%= image_tag('ico-estimates.svg', alt: 'Estimates')%><span>Estimates</span></a></li>
+          <li><a href="<%= logs_path %>"><%= image_tag('ico-time.svg', alt: 'Time Tracking')%><span>Time Tracking</span></a></li>
+          <li><a href="<%= expenses_path %>"><%= image_tag('ico-expenses.svg', alt: 'Expenses')%><span>Expenses</span></a></li>
+          <li><a href="<%= clients_path %>"><%= image_tag('ico-clients.svg', alt: 'Clients')%><span>Clients</span></a></li>
+          <li><a href="<%= items_path %>"><%= image_tag('ico-items.svg', alt: 'Items')%><span>Items</span></a></li>
+          <li><a href="<%= payments_path %>"><%= image_tag('ico-payments.svg', alt: 'Payments')%><span>Payments</span></a></li>
+          <li><a href="<%= reports_path %>"><%= image_tag('ico-reports.svg', alt: 'Reports')%><span>Reports</span></a></li>
+      </ul>
+  </div>
+</nav>

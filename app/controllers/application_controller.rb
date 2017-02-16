@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_date_format
   before_filter :set_current_user
   before_filter :upgrade_plan_alert
+  before_filter :set_default_currency
 
   before_action :set_locale,:set_mailer_host
   rescue_from CanCan::AccessDenied do |exception|
@@ -44,6 +45,10 @@ class ApplicationController < ActionController::Base
 
 
   before_filter :set_current_account, if: :current_account_required?
+
+  def set_default_currency
+    @currency = currency_is_off? ? "" : params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
+  end
 
   def set_current_account
     if request.subdomain.empty?

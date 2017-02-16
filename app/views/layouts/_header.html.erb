@@ -1,0 +1,50 @@
+<!--- header --->
+<header id="header">
+  <div class="row">
+    <!--- header logo--->
+    <div class="col s12 m5 l4">
+      <a class="btn-menu" href="javascript:;"><i class="material-icons">menu</i></a>
+      <a class="logo" href="#">Open<span>Source</span>Billing</a>
+    </div>
+    <!--- header company name--->
+    <div class="col s9 m5 l4">
+      <div class="header-center">
+        <div class="hdr-select-holder">
+          <select>
+            <option value="" disabled selected><%= get_company_name%></option>
+            <% filter_select_by_companies.each do |company| %>
+                <option value="<%= company.id %>"><%= company.company_name %></option>
+            <% end %>
+            <optgroup label="">
+              <option class="waves-effect waves-light btn" value="3">&nbsp;Create New</option>
+            </optgroup>
+          </select>
+          <% if current_user.settings.currency.present? and current_user.settings.currency == "On" %>
+              <select class="currency">
+                <option value="" disabled selected><%= @currency.unit %></option>
+                <% currencies.each do |currency| %>
+                    <option value="<%= currency.id%> "><%= currency.unit %></option>
+                <% end %>
+              </select>
+         <% end %>
+        </div>
+      </div>
+
+    </div>
+    <!--- header search--->
+    <div class="col s3 m2 l4  header-right">
+      <div class="right">
+        <a class="btn-search" title="Search" href="#"><i class="material-icons">search</i></a>
+        <a class="help-search" title="Help" href="#"><i class="material-icons">help_outline</i></a>
+      </div>
+      <!--- header search holder--->
+      <div class="search-holder">
+        <a href="#" title="Back" class="btn-back"><i class="zmdi zmdi-arrow-left"></i> Back</a>
+        <form action="#">
+          <i class="zmdi zmdi-search"></i>
+          <input type="text" class="form-control" placeholder="" />
+        </form>
+      </div>
+    </div>
+  </div>
+</header>

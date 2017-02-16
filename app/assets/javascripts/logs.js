@@ -27,23 +27,23 @@ $(document).ready(function() {
     hidePopover = function (elem) {
         return elem.qtip("hide");
     };
-    jQuery('body').on("click", "#log_project_id", function() {
+    jQuery('#log_project_id').on("click", function() {
         return hidePopover(jQuery("#log_project_id"));
     });
-    jQuery('body').on("click", "#log_task_id", function() {
+    jQuery('#log_task_id').on("click", function() {
         return hidePopover(jQuery("#log_task_id"));
     });
-    jQuery('body').on("click", "#log_hours", function() {
+    jQuery('#log_hours').on("click", function() {
         return hidePopover(jQuery("#log_hours"));
     });
 
-    jQuery("body").on('keypress', "#log_notes",function(e) {
+    jQuery("#log_notes").on('keypress',function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400, remain = parseInt(max - tlength);
         $('.text-limit').text(remain + "  characters remaining" );
     });
 
 
-    jQuery('body').on("click", ".generate_invoice_btn", function (){
+    jQuery('.generate_invoice_btn').on("click", function (){
         project_id = jQuery("#project_id").val();
         flag = true;
         if (project_id === "") {
@@ -58,7 +58,7 @@ $(document).ready(function() {
     });
 
     $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()));
-    jQuery("body").on("click", ".log-submit-btn", function () {
+    jQuery(".log-submit-btn").on("click", function () {
         var date, project_id, task_id, hours;
         date = jQuery("#log_date").val();
         project_id = jQuery("#log_project_id").val();

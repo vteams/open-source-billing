@@ -3,11 +3,11 @@ jQuery ->
   window.creditPayment()
 
   flag = true
-  jQuery("body").on "click", "#close_popup", ->
+  jQuery("#close_popup").on "click", ->
     jQuery("#invoices_container").hide()
 
   #Autocomplete amount field on paid full checkbox
-  jQuery("body").on "click", ".paid_full", ->
+  jQuery(".paid_full").on "click", ->
     rem_value = parseFloat(jQuery(this).next('.rem_payment_amount').attr('value'))
     rem_value_id = jQuery(this).next('.rem_payment_amount').attr('id')
     if jQuery(this).is ":checked"
@@ -17,7 +17,7 @@ jQuery ->
       jQuery('#payments_' + rem_value_id + '_payment_amount').removeAttr('readonly')
       jQuery('#payments_' + rem_value_id + '_payment_amount').val('')
 
-#  jQuery('#submit_payment_form').live "click", ->
+#  jQuery('#submit_payment_form').on "click", ->
 #    console.log "test"
 #    flag = true
 #    jQuery(".apply_credit:checked").each ->
@@ -34,7 +34,7 @@ jQuery ->
 #        flag = true
 #    flag
 #  #edit payment form check if credit exceed available credit
-  jQuery('body').on "click", "#submit_payment_form", ->
+  jQuery('#submit_payment_form').on "click", ->
     pay_amount = parseFloat(jQuery("#payments_0_payment_amount").val())
     pay_method = jQuery("#payments_0_payment_method").val()
     rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
@@ -59,7 +59,7 @@ jQuery ->
     else
       return false
   # validate payments fields on enter payment form submit
-#  jQuery('#submit_payment_form').live "click", ->
+#  jQuery('#submit_payment_form').on "click", ->
 #    validate = true
 #    payment_fields = jQuery('.payment_amount')
 #
@@ -92,7 +92,7 @@ jQuery ->
     elem.qtip().show()
     elem.focus()
 
-  jQuery("body").on "change", ".line_item_qtip",->
+  jQuery(".line_item_qtip").on "change",->
     jQuery(this).qtip('hide')
   # hide qtip when enter some text in payment field
   jQuery(".payment_amount").keyup ->

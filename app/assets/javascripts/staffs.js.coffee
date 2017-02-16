@@ -1,7 +1,5 @@
 # Staff form validation
-
-jQuery(".staff_form").on "click", '.staff-submit-btn', ->
-
+jQuery(".staff_form .staff-submit-btn").on "click", ->
   name = jQuery("#staff_name").val()
   email = jQuery("#staff_email").val()
   rate = jQuery("#staff_rate").val()

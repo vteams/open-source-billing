@@ -88,7 +88,7 @@ jQuery ->
 
 
   # show details when client name is clicked.
-  jQuery('table.client_listing').on 'click', ".client_name", ->
+  jQuery('table.client_listing .client_name').on 'click', ->
     row = jQuery(this).parents('tr')
     detail_row = row.next('tr.client_detail_row')
 
@@ -109,7 +109,7 @@ jQuery ->
                     row.next().find(".scrollContainer").mCustomScrollbar scrollInertia: 150
 
   # remove client detail row by clicking cross
-  jQuery('.client_container_top').on 'click', ".cross_btn", ->
+  jQuery('.client_container_top .cross_btn').on 'click', ->
     jQuery(this).parents('tr').prev('tr').find('.client_name').click()
 
   jQuery('#account_association').change ->

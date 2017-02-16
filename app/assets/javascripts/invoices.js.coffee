@@ -20,7 +20,7 @@ window.applyChosen = (single_row) =>
   dropdowns.chosen({allow_single_deselect: true, disable_search_threshold: 10}).trigger("liszt:ready", this)
 
   # Add New click handler to show form inside the list
-  jQuery("body").on "click", '.add-new', (event) ->
+  jQuery(".add-new").on "click",(event) ->
     console.log jQuery(this).attr("data-dropdown-id")
     new InlineForms(jQuery(this).attr("data-dropdown-id")).showForm()
     event.stopImmediatePropagation()
@@ -103,27 +103,27 @@ jQuery ->
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
   # Update line and grand total if line item fields are changed
-  jQuery("body").on "blur", 'input.cost, input.qty', ->
+  jQuery("input.cost, input.qty").on "blur", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
 
-  jQuery("body").on "keyup", 'input.cost, input.qty', ->
+  jQuery("input.cost, input.qty").on "keyup", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
   #jQuery(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
-  jQuery("body").on "change", 'select.tax1, select.tax2', ->
+  jQuery("select.tax1, select.tax2").on "change", ->
     updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
-  jQuery("body").on "keypress", "input.cost, input.qty", (e) ->
+  jQuery("input.cost, input.qty").on "keypress", (e) ->
     if e.which is 13
       e.preventDefault()
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".invoice_grid_fields").on "change", "select.items_list", ->
+  jQuery(".invoice_grid_fields select.items_list").on "change", ->
     # Add an empty line item row at the end if last item is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -158,11 +158,11 @@ jQuery ->
       jQuery(".invoice_grid_fields .add_nested_fields").click()
   #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".invoice_grid_fields").on "click", ".add_nested_fields", ->
+  jQuery(".invoice_grid_fields .add_nested_fields").on "click", ->
     setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total invoice balance if an item is removed
-  jQuery("body").on "click", ".remove_nested_fields", ->
+  jQuery(".remove_nested_fields").on "click", ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
@@ -216,7 +216,7 @@ jQuery ->
       applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
       flag = false
     flag
-  jQuery("body").on "keyup", "#reason_for_dispute", ->
+  jQuery("#reason_for_dispute").on "keyup", ->
     jQuery(this).qtip("hide")
 
   # Validate client, cost and quantity on invoice save
@@ -341,17 +341,16 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('body').on "click", '.use_as_template .close_qtip', ->
-    jQuery("#invoice_client_id_chzn").qtip('hide')
-    jQuery("#recurring_profile_client_id_chzn").qtip('hide')
+  jQuery('.use_as_template .close_qtip').on "click", ->
+    hidePopover(jQuery("#invoice_client_id_chzn"))
 
-  jQuery("body").on "click", "#invoice_client_id_chzn,.chzn-container", ->
+  jQuery("#invoice_client_id_chzn,.chzn-container").on "click", ->
     jQuery(this).qtip("hide")
 
-  jQuery("body").on "click", "#add_line_item",->
+  jQuery("#add_line_item").on "click",->
     jQuery(this).qtip('hide')
 
-  jQuery("body").on "change", ".line_item_qtip",->
+  jQuery(".line_item_qtip").on "change",->
     jQuery(this).qtip('hide')
 
   # Don't send an ajax request if an item is deselected.
@@ -364,7 +363,7 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links').on 'click', 'a', ->
+  jQuery('#active_links a').on 'click', ->
     jQuery('#active_links a').removeClass('active')
     jQuery(this).addClass('active')
 
@@ -431,15 +430,13 @@ jQuery ->
   setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
   # Hide placeholder text on focus
-  jQuery('body').on "focus", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper", (e)->
+  jQuery("input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper").on("focus",->
     @dataPlaceholder = @placeholder
     @removeAttribute "placeholder"
-
-  jQuery('body').on "blur", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper",(e)->
+  ).on("blur", ->
     @placeholder = @dataPlaceholder
     @removeAttribute "dataPlaceholder"
-
-  jQuery('body').on "keypress", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper", (e) ->
+  ).on "keypress", (e) ->
     if e.which is 13
       e.preventDefault()
       jQuery(".active-form .btn_save").trigger("click")
@@ -456,7 +453,7 @@ jQuery ->
       left: pos.left + "px"
     ).show()
 
-  jQuery("body").on "click", ".close_btn", ->
+  jQuery(".close_btn").on "click", ->
     jQuery(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
 
   # Alert on dispute if invoice is paid
@@ -469,10 +466,10 @@ jQuery ->
       flag = false
     flag
 
-  jQuery("body").on "click", ".more", ->
+  jQuery(".more").on "click", ->
     jQuery(".toggleable").removeClass("collapse")
 
-  jQuery("body").on "click", "#add_line_item", ->
+  jQuery("#add_line_item").on "click", ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
@@ -484,7 +481,7 @@ jQuery ->
     $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
 
-  jQuery("body").on "click", ".less", ->
+  jQuery(".less").on "click", ->
     jQuery(".toggleable").addClass("collapse")
 
   #send only email to client on clicking send this note only link.
@@ -499,6 +496,6 @@ jQuery ->
         jQuery('.alert').hide();
         jQuery(".alert.alert-success").show().find("span").html "This note has been sent successfully"
 
-  jQuery("body").on "click", ".single-recover-link", ->
+  jQuery(".single-recover-link").on "click", ->
     $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
     $(".top_links.recover_deleted").click();
