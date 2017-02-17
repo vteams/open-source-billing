@@ -24,7 +24,7 @@ $(document).ready(function(){
     $('select').material_select();
     
     $('select').change(function () {
-        console.log($(this).val());
+        //console.log($(this).val());
         if ($(this).val() == 3) {
              console.log($(this).val());
             $('#CreatNewmodal').modal('open');

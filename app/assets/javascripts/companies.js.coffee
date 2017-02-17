@@ -1,19 +1,18 @@
 jQuery ->
   #/ Change selected company in companies list in header
-  jQuery("a.header_company_link").on "click", ->
-     link = jQuery(this)
-     company_id = link.attr('company_id')
-     controller = link.attr('controller')
-     action = link.attr('action')
+  $(".company_select").on "change", ->
+    company_id = $(this).find(':selected').data('company-id')
+    controller = $(this).find(':selected').data('controller')
+    action = $(this).find(':selected').data('action')
 
-     if action is 'new' or action is 'edit'
-       unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
-         return true
+    if action is 'new' or action is 'edit'
+      unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
+        return true
 
-     jQuery.get "/companies/#{company_id}/select", (response) ->
-       jQuery("#current_selected_company").text(response)
-       jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
-       window.location.reload()
+    jQuery.get "/companies/#{company_id}/select", (response) ->
+      jQuery("#current_selected_company").text(response)
+      jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
+      window.location.reload()
 
   # validate company on save and update
   jQuery("form#new_company,form.edit_company").submit ->

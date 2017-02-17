@@ -10,10 +10,10 @@
     <div class="col s9 m5 l4">
       <div class="header-center">
         <div class="hdr-select-holder">
-          <select>
+          <select class="company_select">
             <option value="" disabled selected><%= get_company_name%></option>
             <% filter_select_by_companies.each do |company| %>
-                <option value="<%= company.id %>"><%= company.company_name %></option>
+                <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>"><%= company.company_name %></option>
             <% end %>
             <optgroup label="">
               <option class="waves-effect waves-light btn" value="3">&nbsp;Create New</option>

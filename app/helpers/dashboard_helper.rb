@@ -32,4 +32,8 @@ module DashboardHelper
     ("#{old_currency} <#{options[:dom]}>#{symbol} </#{options[:dom]}>").html_safe
   end
 
+  def aged_progress_width(amount, total)
+    return 0 if total.eql?(0) or (amount == 0  or amount == nil)
+    ((amount * 100)/total).round
+  end
 end
