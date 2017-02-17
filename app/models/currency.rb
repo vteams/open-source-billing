@@ -11,7 +11,7 @@ class Currency < ActiveRecord::Base
   end
 
   def self.current_user_default_currency_code(user)
-    user.settings.default_currency
+    user.settings.default_currency rescue Currency.first
   end
 
 end

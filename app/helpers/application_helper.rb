@@ -212,7 +212,7 @@ module ApplicationHelper
   end
 
   def currency_is_off?
-    if current_user.settings.currency.present? and  current_user.settings.currency == "Off"
+    if current_user and current_user.settings.currency.present? and  current_user.settings.currency == "Off"
       true
     else
       false
