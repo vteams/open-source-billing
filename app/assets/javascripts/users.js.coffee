@@ -9,7 +9,7 @@ jQuery ->
   jQuery('#update_sub_user_form').submit ->
     new validateForms(jQuery(this).attr('id')).validateUpdatePassword()
 
-  jQuery('#send_password,#user_login').submit ->
+  jQuery('#send_password').submit ->
     new validateForms(jQuery(this).attr('id')).validateEmail()
 
   jQuery('#new_user').submit ->
