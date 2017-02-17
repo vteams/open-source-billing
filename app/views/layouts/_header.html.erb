@@ -19,8 +19,8 @@
               <option class="waves-effect waves-light btn" value="3">&nbsp;Create New</option>
             </optgroup>
           </select>
-          <% if current_user.settings.currency.present? and current_user.settings.currency == "On" %>
-              <select class="currency">
+          <% if current_user and current_user.settings.currency.present? and current_user.settings.currency == "On" %>
+              <select class="currency currency_select" data-user-id="<%= current_user.id %>">
                 <option value="" disabled selected><%= @currency.unit %></option>
                 <% currencies.each do |currency| %>
                     <option value="<%= currency.id%> "><%= currency.unit %></option>

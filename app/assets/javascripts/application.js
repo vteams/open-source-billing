@@ -78,7 +78,7 @@
 //= require bootstrap-switch
 //= require bootstrap-checkbox.min.js
 //= require bootstrap-checkbox.js
-//= require settings
+//= require settings.js
 //= require date_formats
 //= require flipclock
 //= require hourlycounter

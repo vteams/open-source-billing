@@ -22,4 +22,10 @@ class SettingsController < ApplicationController
     end
     respond_to { |format| format.js }
   end
+
+  def set_default_currency
+    currency = Currency.find(params[:currency_id])
+    current_user.settings.default_currency = currency.unit
+    render text: true
+  end
 end

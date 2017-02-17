@@ -48,7 +48,11 @@ Osb::Application.routes.draw do
       end
     end
 
-    resources :settings
+    resources :settings do
+      member do
+        get 'set_default_currency'
+      end
+    end
 
     resources :payment_terms
 
