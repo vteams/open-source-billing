@@ -380,7 +380,7 @@ h6 {
             left: 0;
             right: 0;
             margin: 0 auto;
-            background: url("../images/top-arrow.png") no-repeat center center; }
+            background: image-url("top-arrow.png") no-repeat center center; }
           #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span {
             padding-left: 30px; }
           #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span:before {
@@ -1790,9 +1790,9 @@ h6 {
   #login-section.sign-up .login-container .checkboxsection [type="checkbox"] + label, #login-section.sign-up .login-container .checkboxsection .forgetpass {
     color: #9d9d9d; }
   #login-section.sign-up .login-container .input-field input[type="email"] {
-    background: url(../images/username-signup.png) no-repeat left 2px; }
+    background: image-url('username-signup.png') no-repeat left 2px; }
   #login-section.sign-up .login-container .input-field input[type="password"] {
-    background: url(../images/password-signup.png) no-repeat left 2px; }
+    background: image-url('password-signup.png') no-repeat left 2px; }
   #login-section.sign-up .login-container .input-field input {
     border-color: #5b5b5b; }
   #login-section.sign-up .login-container .input-field label {
