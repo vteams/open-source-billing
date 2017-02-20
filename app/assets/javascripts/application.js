@@ -17,11 +17,8 @@
 //= require materialize.min
 //= require jquery.mCustomScrollbar.min
 //= require custom
-//= require jquery.jqplot.js
-//= require jqplot.barRenderer.min.js
-//= require jqplot.categoryAxisRenderer.min.js
-//= require jqplot.pointLabels.min.js
-//= require jqplot.highlighter.js
+//= require highcharts
+//= require exporting
 //= require jquery_nested_form
 //= require nav.js
 //= require chosen.jquery
