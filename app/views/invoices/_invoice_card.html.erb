@@ -1,4 +1,5 @@
 <div class="col s12 m6 l4">
+  <%= link_to '', invoice , remote: true, class: 'invoice_show_link', style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-invoice_id= <%=invoice.id %>>
     <div class="checkbox-item">
       <input type="checkbox" class="filled-in" id="chk1" />

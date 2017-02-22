@@ -1,0 +1,108 @@
+<%- model_class = Invoice -%>
+<%= nested_form_for invoice, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue">
+        <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                      :default => "New #{model_class.model_name.human}") %>:
+        <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+        <%= f.select :client_id, options_for_select(load_clients(action_name, invoice.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select content-select title-select" } %>
+      </h5>
+      <div class="modal-action-btn right">
+        <a href="#" class="modal-close" onclick="$('.simple_submit').click();"> <i class="material-icons" >done</i></a>
+        <a href="#"><i class="material-icons" onclick="$('.send_submit').click();">send</i></a>
+        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+        <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large simple_submit submit', :style => "display: none;"  %>
+        <%= f.submit "#{button_text}", :class => 'btn_large send_submit submit', :name => "save_as_draft", :style => "display: none;" %>
+      </div>
+    </div>
+    <div class="info-section clearfix">
+      <div class="info-left-section left">
+        <h6><%= invoice.invoice_number %></h6>
+        <span>Invoice: <small> <%= f.object.invoice_date %></small> <i class="material-icons">date_range</i></span>
+        <span class="text-blue"> Due: <small> <%= f.object.invoice_date %> </small> <i class="material-icons">date_range</i></span>
+        <%= f.text_field :invoice_date,value: f.object.invoice_date, :required => "" %>
+        <%= f.text_field :due_date, :placeholder => "TBD" %>
+        <div class="terms">
+          <span>Terms:</span>
+          <small>
+            <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select content-select'} %>
+          </small>
+        </div>
+        <div class="editPayementInfo">
+          <strong>312,000.00
+            <small>
+              <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+              <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
+            </small>
+          </strong>
+        </div>
+      </div>
+      <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
+          <div class="info-right-section right circle">
+            <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
+      <% end %>
+    </div>
+    <div class="modal-body">
+      <table class="bordered responsive-table invoice_grid_fields" id="invoice_grid_fields">
+        <thead>
+        <tr>
+          <th><%= t('item') %></th>
+          <th><%= t('views.common.description') %></th>
+          <th class="center-align"><%= t('views.common.unit_cost') %></th>
+          <th class="center-align"><%= t('views.common.qty') %></th>
+          <th class="center-align"><%= t('views.common.tax') %>1</th>
+          <th class="center-align"><%= t('views.common.tax') %>2</th>
+          <th class="right-align"><%= t('views.invoices.line_total') %></th>
+        </tr>
+        </thead>
+        <tbody>
+            <%= f.fields_for :invoice_line_items, :wrapper => false %>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer clearfix">
+      <div class="right-section left">
+        <!--<a href="#" class="addItemRow">Add line item</a>-->
+        <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'addItemRow add_line_item_row', id: 'add_line_item' %>
+      </div>
+      <div class="right-section right">
+        <div class="item-result">
+          <div class="table-row">
+            <span><strong>Subtotal</strong></span>
+            <span><strong>SGD 300,000.00</strong></span>
+          </div>
+          <div class="table-row">
+                        <span>
+                            Discount  &nbsp;&nbsp;
+                            <select class="inline-select small-select">
+                              <option value="1">SGD</option>
+                              <option value="2">USD</option>
+                              <option value="3">CSD</option>
+                            </select>
+                        </span>
+                        <span class="input-field">
+                            <input placeholder="00.00" id="editpayment" type="number" value="SGD 300.00" class="right-align">
+                            <label>SGD</label>
+                        </span>
+          </div>
+          <div class="table-row">
+            <span>Vat 4%</span>
+            <span>SGD 12,000.00</span>
+          </div>
+        </div>
+        <div class="item-total">
+          <div class="table-row">
+            <span><strong>Net Total</strong></span>
+            <span><strong>SGD 312,000.00</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="commentSection clearfix">
+      <div class="comments-content">
+        <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
+        <textarea id="textarea1" placeholder="Add description" disabled></textarea>
+      </div>
+    </div>
+<% end %>

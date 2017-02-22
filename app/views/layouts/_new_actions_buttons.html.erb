@@ -29,7 +29,7 @@
       end %>
     </li>
     <li>
-      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: 'New Invoices'} do
+      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: 'New Invoices'} , remote: true do
         image_tag('ico-invoices.svg' , alt: 'Invoices')
       end %>
     </li>

@@ -25,10 +25,10 @@ $(document).ready(function(){
     
     $('select').change(function () {
         //console.log($(this).val());
-        if ($(this).val() == 3) {
-             console.log($(this).val());
-            $('#CreatNewmodal').modal('open');
-        }   
+        //if ($(this).val() == 3) {
+        //     console.log($(this).val());
+        //    $('#CreatNewmodal').modal('open');
+        //}
     });
      $('.modal').modal();
     

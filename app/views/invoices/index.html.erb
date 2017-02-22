@@ -9,10 +9,13 @@
     </div>
     <div class="invoice-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
-      <p><span class="activity-date">Today</span></p>
-      <div class="clearfix">
-        <%= render partial: 'invoice_card', collection: @invoices, as: :invoice %>
-      </div>
+      <% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
+          <p><span class="activity-date"><%= date %></span></p>
+          <div class="clearfix">
+            <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
+          </div>
+      <% end %>
+
     </div>
   </div>
 </div>
