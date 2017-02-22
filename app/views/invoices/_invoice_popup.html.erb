@@ -1,0 +1,101 @@
+<div class="modal-header clearfix">
+  <h5 class="left">
+    <button id="enterPayment" class="btn btn-default modal-close" data-target="modal2">Enter Payment On Invoice</button>
+    <span><%= @client.organization_name %></span>
+  </h5>
+  <div class="modal-action-btn right">
+    <a href="#" class="modal-close" data-target="modal3"><i class="material-icons">create</i></a>
+    <a href="#"  class="modal-close"><i class="material-icons">send</i></a>
+    <a href="#"><i class="material-icons">print</i></a>
+  </div>
+</div>
+<div class="info-section clearfix">
+  <div class="info-left-section left">
+    <h6><%= invoice.invoice_number %></h6>
+    <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
+    <span class="text-blue"> Due: <small> <%= invoice.invoice_date rescue "" %></small></span>
+    <div class="terms">
+      <span>Terms:</span> <small><%= invoice.term %></small>
+    </div>
+    <div class="paymentInfo">
+      <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: '') %> <small><%= invoice.currency.unit %></small></strong>
+    </div>
+  </div>
+    <% unless invoice.company.logo_url.blank? %>
+      <div class="info-right-section right circle">
+        <<%= request.format.pdf? ? (wicked_pdf_image_tag  invoice.company.logo_url(:thumb)) : (image_tag invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="modal-body">
+  <table class="bordered responsive-table">
+    <thead>
+    <tr>
+      <th><%= t('views.common.item') %></th>
+      <th><%= t('views.common.description') %></th>
+      <th class="center-align"><%= t('views.common.unit_cost') %></th>
+      <th class="center-align"><%= t('views.items.quantity') %></th>
+      <th class="center-align">Tax 1</th>
+      <th class="center-align">Tax 2</th>
+      <th class="right-align"><%= t('views.invoices.line_total') %></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% invoice.invoice_line_items.each do |item|
+      item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+    %>
+        <tr>
+          <td><%= item.item_name rescue "" %></td>
+          <td><%= item.item_description %></td>
+          <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+          <td class="center-align"><%= item.item_quantity.to_i %></td>
+          <td class="center-align"><%= item.tax1.name rescue ''%></td>
+          <td class="center-align"><%= item.tax2.name rescue ''%></td>
+          <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer clearfix">
+  <div class="right-section right">
+    <div class="item-result">
+      <div class="table-row">
+        <span><strong><%= t('views.invoices.subtotal') %></strong></span>
+        <span><strong><%= number_to_currency(invoice.sub_total, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+      </div>
+      <div class="table-row">
+        <span><%= t('views.common.discount') %> <%= invoice.discount_percentage %><%= invoice.discount_type %></span>
+        <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+      </div>
+      <% unless invoice.tax_detail_with_discount.blank? %>
+          <%= taxes_list(invoice.tax_detail_with_discount,invoice) %>
+      <% end %>
+      <div class="table-row">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="item-total">
+      <div class="table-row">
+        <span><strong><%= t('views.common.total') %></strong></span>
+        <span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+      </div>
+      <div class="table-row">
+        <span class="text-blue"><strong><%= t('views.invoices.amount_paid') %></strong></span>
+        <span class="text-blue"><strong>-<%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+      </div>
+    </div>
+    <div class="item-due">
+      <div class="table-row">
+        <span><strong><%= t('views.invoices.amount_due') %></strong></span>
+        <span><strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+      </div>
+    </div>
+  </div>
+  <div class="left-section left">
+    <p><%= t('views.invoices.this_invoice_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
+  </div>
+</div>

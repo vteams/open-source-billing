@@ -89,7 +89,7 @@ module InvoicesHelper
     currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
     for tax, amount in list
       tax_list += <<-HTML
-      <div class="top_right_row"><div class="preview_right_label">#{tax}</div><div class="preview_right_description">#{number_to_currency(amount,unit: currency_unit)}</div></div>
+      <div class="table-row"><span>#{tax}</span><span>#{number_to_currency(amount,unit: currency_unit)}</span></div>
       HTML
     end
     tax_list.html_safe
@@ -234,5 +234,14 @@ module InvoicesHelper
 
   def invoice_owner_publish_key(invoice)
     invoice.owner.stripe_publishable_key
+  end
+
+  def random_card_color
+    %w(green-light orange-light blue-light purple-light).shuffle.first
+  end
+
+
+  def pick_status_color
+    {sent: 'text-blue', paid: 'text-green', partial: 'text-orange', draft: 'text-grey', viewed: 'text-green', draft_partial: 'text-orange', disputed: 'text-red'}
   end
 end

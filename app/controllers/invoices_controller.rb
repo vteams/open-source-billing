@@ -49,6 +49,7 @@ class InvoicesController < ApplicationController
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html # show.html.erb
+      format.js
     end
   end
 

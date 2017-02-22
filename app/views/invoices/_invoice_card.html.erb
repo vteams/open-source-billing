@@ -1,0 +1,31 @@
+<div class="col s12 m6 l4">
+  <div class="card-white-panel invoice-card" data-invoice_id= <%=invoice.id %>>
+    <div class="checkbox-item">
+      <input type="checkbox" class="filled-in" id="chk1" />
+      <label for="chk1"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= invoice.invoice_name%></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= invoice.client.organization_name %></h5>
+      <strong><%= invoice.invoice_number %></strong>
+      <em><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : "$")} " %><span><%= invoice.currency.unit%></span></em>
+    </div>
+    <div class="card-footer clearfix">
+      <span class="invoice-date"><small>Due</small> <%= invoice.due_date rescue "" %></span>
+      <span class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= invoice.status %></span>
+    </div>
+    <div class="action-btn-group">
+      <a href="#"><i class="material-icons">send</i></a>
+      <a href="#"  class="modal-close edit-modal" data-target="modal3"><i class="material-icons">create</i></a>
+      <a href="#"><i class="material-icons">delete</i></a>
+      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown2' data-alignment="right" data-beloworigin="true">
+        <i class="material-icons">more_vert</i>
+      </a>
+      <!-- Dropdown Structure -->
+      <ul id='dropdown2' class='dropdown-content z-depth-4'>
+        <li><a href="#!"><i class="material-icons">archive</i> Send to Archive</a></li>
+        <li><a href="#!"><i class="material-icons">payment</i> Enter Payment</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

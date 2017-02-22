@@ -453,4 +453,8 @@ class Invoice < ActiveRecord::Base
   def invoice_name
     "#{unscoped_client.first_name.first.camelize} #{unscoped_client.last_name.first.camelize }"
   end
+
+  def term
+    PaymentTerm.find(self.payment_terms_id).description rescue ''
+  end
 end
