@@ -19,7 +19,7 @@
 //= require custom
 //= require highcharts
 //= require exporting
-//= require jquery_nested_form
+//= require nested_fields
 //= require nav.js
 //= require chosen.jquery
 //= require jquery.css3caching.js
@@ -81,7 +81,8 @@
 //= require hourlycounter
 //= require timer
 //= require invoice_card
-
+//= require picker
+//= require picker.date
 
 
 jQuery(function () {

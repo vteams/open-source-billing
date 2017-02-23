@@ -1,18 +1,9 @@
-<tr class="elementsAction">
-  <td>
+<tr class=" fields">
+  <td class="elementsAction">
     <%= f.hidden_field :_destroy%>
     <a href="#" data-association="invoice_line_items" class="remove_item remove_nested_fields removeItem"><i class="material-icons">close</i></a>
     <a class="sort_icon sortable" href="javascript:" title="Drag this line item to your desired location in this invoice"><i class="material-icons">open_with</i></a>
   </td>
-</tr>
-<tr class="fields">
-  <!--<td class="align_center">-->
-    <!--<div class="action_links">-->
-      <!--<%= f.hidden_field :_destroy%>-->
-      <!--<a href="#" data-association="invoice_line_items" class="remove_item remove_nested_fields removeItem"><i class="material-icons">close</i></a>-->
-      <!--<a class="sort_icon sortable" href="javascript:" title="Drag this line item to your desired location in this invoice"><i class="material-icons">open_with</i></a>-->
-    <!--</div>-->
-  <!--</td>-->
   <td>
     <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
   </td>
