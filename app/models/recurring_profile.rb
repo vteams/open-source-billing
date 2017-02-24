@@ -164,4 +164,8 @@ class RecurringProfile < ActiveRecord::Base
     Client.unscoped.find_by_id self.client_id
   end
 
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
+
 end

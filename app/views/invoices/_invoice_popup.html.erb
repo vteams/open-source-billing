@@ -13,7 +13,7 @@
   <div class="info-left-section left">
     <h6><%= invoice.invoice_number %></h6>
     <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
-    <span class="text-blue"> Due: <small> <%= invoice.invoice_date rescue "" %></small></span>
+    <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
     <div class="terms">
       <span>Terms:</span> <small><%= invoice.term %></small>
     </div>

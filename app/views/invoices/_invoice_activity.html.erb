@@ -4,66 +4,49 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5><a href="#">Active </a><span>(20)</span></h5>
-      <div class="amount">$251,205.89</div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-            <span class="sr-only">60% Complete</span>
+      <h5><a href="#">Active </a><span>(<%= @invoice_activity[:count]%>)</span></h5>
+      <div class="amount"><%= number_to_currency(@invoice_activity[:total], unit: '$')%></div>
+      <% @invoice_activity[:invoice_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @invoice_activity[:total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-            <span class="sr-only">80% Complete</span>
+      <% end %>
+
+    </div>
+    <div class="status-info">
+      <h5><a href="#">Recurring </a><span>(<%= @recurring_profile_activity[:count] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@recurring_profile_activity[:total], unit: '$')%></div>
+      <% @recurring_profile_activity[:invoice_progress].each do |date, amount| %>
+          <div class="aged-ar">
+            <small><%= date %></small>
+            <span><%= number_to_currency(amount, unit: '')%><small>USD</small></span>
           </div>
-        </div>
-      </div>
+          <div class="progress">
+            <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @recurring_profile_activity[:total]) %>%;">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>
+          </div>
+      <% end %>
+    <div class="status-info">
+      <h5><a href="#">Deleted</a><span>(<%= get_count(params.merge(status: 'only_deleted', user: current_user, current_company: session['current_company'])) %>)</span></h5>
     </div>
     <div class="status-info">
-      <h5><a href="#">Recurring </a><span>(5)</span></h5>
-      <div class="amount">$251,205.89</div>
-      <div class="aged-ar">
-        <small>Dec, 16</small>
-        <span>1,646.38 <small>USD</small></span>
-      </div>
-      <div class="progress">
-        <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-          <span class="sr-only">60% Complete</span>
-        </div>
-      </div>
-      <div class="aged-ar">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-      </div>
-      <div class="progress">
-        <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-          <span class="sr-only">80% Complete</span>
-        </div>
-      </div>
-    </div>
-    <div class="status-info">
-      <h5><a href="#">Deleted</a><span>(12)</span></h5>
-    </div>
-    <div class="status-info">
-      <h5><a href="#">Archived</a><span>(20)</span></h5>
+      <h5><a href="#">Archived</a><span>(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
     </div>
     <div class="status-info actionState">
-      <h5 class="text-blue"><a href="#">Sent</a><span> (10)</span></h5>
-      <h5 class="text-green"><a href="#">Paid</a><span> (25)</span></h5>
-      <h5 class="text-orange"><a href="#">Partial</a><span> (15)</span></h5>
-      <h5 class="text-grey"><a href="#">Draft</a><span>(11)</span></h5>
+      <h5 class="text-blue"><a href="#">Sent</a><span> (<%= @invoice_activity[:sent] %>)</span></h5>
+      <h5 class="text-green"><a href="#">Paid</a><span> (<%= @invoice_activity[:paid] %>)</span></h5>
+      <h5 class="text-orange"><a href="#">Partial</a><span> (<%= @invoice_activity[:partial] %>)</span></h5>
+      <h5 class="text-grey"><a href="#">Draft</a><span>(<%= @invoice_activity[:draft]%>)</span></h5>
     </div>
   </div>
 </aside>
