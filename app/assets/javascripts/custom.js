@@ -81,7 +81,7 @@ $(document).ready(function(){
         $( ".chk-text" ).text(n + " Selected");
     });
     
-    $(".checkbox-item, .action-btn-group").on("click", function(e){
+    $(".checkbox-item").on("click", function(e){
         //e.preventDefault();
         e.stopImmediatePropagation();
         //alert("sdf");
