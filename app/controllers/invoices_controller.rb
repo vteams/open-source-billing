@@ -34,7 +34,7 @@ class InvoicesController < ApplicationController
     @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @recurring_profiles = RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").filter(params, @per_page).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(@invoices)
+    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     @recurring_profile_activity = Reporting::RecurringProfileActivity.get_recent_activity(@recurring_profiles)
     respond_to do |format|
       format.html # index.html.erb
