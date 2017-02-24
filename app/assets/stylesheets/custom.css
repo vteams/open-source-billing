@@ -1,26 +1,26 @@
-.modal.editInvoice table tbody td.elementsAction {
-    position: absolute;
-    left: 6px;
-    border: none; }
-.modal.editInvoice table thead th.elementsAction {
-    position: absolute;
-    left: 6px;
-    border: none; }
-.modal.editInvoice table tbody td.elementsAction a {
-    display: inline-block;
-    margin-top: 8px; }
-.modal.editInvoice table tbody td.elementsAction a i {
-    font-size: 13px;
-    color: #b5b5b5; }
-@media only screen and (max-width: 767px) {
-    .modal.editInvoice table tbody td.elementsAction {
-        position: static;
-        left: 0;
-        padding: 0; }
-    .modal.editInvoice table tbody td.elementsAction a {
-        margin-left: 10px; }
+/*.modal.editInvoice table tbody td.elementsAction {*/
+    /*position: absolute;*/
+    /*left: 6px;*/
+    /*border: none; }*/
+/*.modal.editInvoice table thead th.elementsAction {*/
+    /*position: absolute;*/
+    /*left: 6px;*/
+    /*border: none; }*/
+/*.modal.editInvoice table tbody td.elementsAction a {*/
+    /*display: inline-block;*/
+    /*margin-top: 8px; }*/
+/*.modal.editInvoice table tbody td.elementsAction a i {*/
+    /*font-size: 13px;*/
+    /*color: #b5b5b5; }*/
+/*@media only screen and (max-width: 767px) {*/
+    /*.modal.editInvoice table tbody td.elementsAction {*/
+        /*position: static;*/
+        /*left: 0;*/
+        /*padding: 0; }*/
+    /*.modal.editInvoice table tbody td.elementsAction a {*/
+        /*margin-left: 10px; }*/
 
-}
+/*}*/
 #side-nav .profile-info .profile-details .menudd:after{
     left: 116px;
 }

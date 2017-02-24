@@ -47,7 +47,7 @@
       <table class="bordered responsive-table invoice_grid_fields" id="invoice_grid_fields">
         <thead>
         <tr>
-          <th class="elementsAction"></th>
+          <th>&nbsp;</th>
           <th><%= t('item') %></th>
           <th><%= t('views.common.description') %></th>
           <th class="center-align"><%= t('views.common.unit_cost') %></th>
@@ -57,14 +57,15 @@
           <th class="right-align"><%= t('views.invoices.line_total') %></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="invoice_line_items_tbl">
             <%= f.fields_for :invoice_line_items, :wrapper => false %>
-
-            <tr style="border:none;" class="no_hover">
-              <td>&nbsp</td>
-              <td class="add_line_item_row" colspan="2"><%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item' %></td>
-            </tr>
         </tbody>
+        <tfoot>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="add_line_item_row"><%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
+        </tr>
+        </tfoot>
 
       </table>
     </div>

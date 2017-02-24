@@ -2178,3 +2178,27 @@ html {
   height: 100%; }
 
 /*# sourceMappingURL=main.css.map */
+
+.modal.editInvoice{
+  table{
+    tr{
+      th{
+        &:first-child{width: 33px; background-color: transparent;}
+      }
+      td{
+        &:first-child{border-bottom: 1px solid #fff;}
+      }
+    }
+  }
+  .elementsAction{
+    width: 28px;
+    a{
+      display: inline-block;color:#b5b5b5;
+      i{font-size: 10px;}
+    }
+
+  }
+  .modal-body{
+    padding: 20px 44px 10px 5px;
+  }
+}
