@@ -173,6 +173,12 @@ change_invoice_item = function(){
 
 change_invoice_item();
 
+jQuery("#invoice_grid_fields tbody").sortable({
+    handle: ".sort_icon",
+    items: "tr.fields",
+    axis: "y"
+});
+
 //jQuery("#add_line_item").on("click", function() {
 //    var options, tax1, tax2;
 //    options = $('.items_list:first').html();
