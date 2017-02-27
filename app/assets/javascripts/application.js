@@ -83,7 +83,7 @@
 //= require invoice_card
 //= require picker
 //= require picker.date
-
+//= require new_invoice
 
 jQuery(function () {
 

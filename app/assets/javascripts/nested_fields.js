@@ -55,7 +55,7 @@
                 .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
 
             $('select').material_select();
-            change_invoice_item();
+            Invoice.change_invoice_item();
             return false;
         },
         newId: function() {
