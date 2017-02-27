@@ -31,10 +31,10 @@ class InvoicesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,50).order("#{sort_column} #{sort_direction}")
+    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @recurring_profiles = RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").filter(params, 50).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, 50, params)
+    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     @recurring_profile_activity = Reporting::RecurringProfileActivity.get_recent_activity(@recurring_profiles)
     respond_to do |format|
       format.html # index.html.erb
@@ -196,7 +196,10 @@ class InvoicesController < ApplicationController
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
     @action = result[:action]
     @invoices_with_payments = result[:invoices_with_payments]
-    respond_to { |format| format.js }
+    respond_to do  |format|
+      format.js
+      format.html { redirect_to invoices_url }
+    end
   end
 
   def undo_actions

@@ -10,11 +10,17 @@
     </div>
     <div class="invoice-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
-      <% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
-          <p><span class="activity-date"><%= date %></span></p>
-          <div class="clearfix">
-            <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
-          </div>
+      <%= form_tag "invoices/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+          <% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
+              <p><span class="activity-date"><%= date %></span></p>
+              <div class="clearfix">
+                <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
+              </div>
+          <% end %>
+          <%= submit_tag t('views.common.archive'), name: "archive", class: "top_links archive hidden" %>
+          <%= submit_tag t('views.common.delete'), name: "destroy", class: "top_links destroy hidden" %>
+          <%= submit_tag t('views.common.send'), name: "send", class: "top_links send hidden" %>
+          <%= submit_tag t('views.invoices.enter_payment'), name: "payment", class: "top_links payment hidden" %>
       <% end %>
 
     </div>

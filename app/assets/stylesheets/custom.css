@@ -4,3 +4,7 @@
 #side-nav .profile-info .profile-details .menudd:after{
     left: 116px;
 }
+
+.hidden{
+    display: none;
+}

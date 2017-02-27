@@ -64,30 +64,30 @@ window.tableListing = ->
   jQuery("table.table_listing tbody td:empty").html("&nbsp;")
 
   # Alert on no record selection and confirm to delete forever payment
-  jQuery(".top_links").on "click", ->
-    title = jQuery(this).parents("ul").attr "value"
-    title = title.toLowerCase()
-    action = jQuery(this).val().toLowerCase()
-    selected_rows =  jQuery("table.table_listing tbody").find(":checked").length
-    flag = true
-
-    if jQuery(this).hasClass('new_invoice') and selected_rows is 0
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any client. Please select a client and try again."
-      flag = false
-    else if selected_rows is 0
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{if title is 'company' then 'companie' else title}s and try again."
-      flag = false
-    else if jQuery(this).hasClass('new_invoice') and selected_rows > 1
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You have selected multiple clients. Please select a single client to create new invoice."
-      flag = false
-    else if title is "payment" and action is "delete forever"
-      flag = confirm("Are you sure you want to delete these payment(s)?")
-    else if title is "invoice" and action is "send"
-      flag = confirm("Are you sure you want to send selected invoice(s)?")
-    flag
+#  jQuery(".top_links").on "click", ->
+#    title = jQuery(this).parents("ul").attr "value"
+#    title = title.toLowerCase()
+#    action = jQuery(this).val().toLowerCase()
+#    selected_rows =  jQuery("table.table_listing tbody").find(":checked").length
+#    flag = true
+#
+#    if jQuery(this).hasClass('new_invoice') and selected_rows is 0
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any client. Please select a client and try again."
+#      flag = false
+#    else if selected_rows is 0
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{if title is 'company' then 'companie' else title}s and try again."
+#      flag = false
+#    else if jQuery(this).hasClass('new_invoice') and selected_rows > 1
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You have selected multiple clients. Please select a single client to create new invoice."
+#      flag = false
+#    else if title is "payment" and action is "delete forever"
+#      flag = confirm("Are you sure you want to delete these payment(s)?")
+#    else if title is "invoice" and action is "send"
+#      flag = confirm("Are you sure you want to send selected invoice(s)?")
+#    flag
 
   #Add remove sortup sortdown icons in table listing
   jQuery('.table_listing a.sortable').parent('th').click (e) ->

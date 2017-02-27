@@ -53,13 +53,14 @@ $(document).ready(function(){
             $('.card-white-panel .action-btn-group').hide();
             $('.checkboxinfo').show();
             if (n > 1){
-                $('.checkboxinfo .action-btn-group .edit').hide();
-                $('.checkboxinfo .action-btn-group .send').hide();
+                //$('.checkboxinfo .action-btn-group .edit').hide();
+                //$('.checkboxinfo .action-btn-group .send').hide();
             }
+            $('.checkboxinfo .action-btn-group .send').show();
         }
         else{            
             $('#header').addClass("chkbox-content");
-            $('.action-btn-group').hide();   
+            $('.action-btn-group').hide();
             $('.checkboxinfo .action-btn-group').show();
             
             if(n == 0){
@@ -86,9 +87,9 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
         //alert("sdf");
     });
-    
-    $('#radioBtn a').on('click', function(){    
-        //Data Toggle 
+
+    $('#radioBtn a').on('click', function(){
+        //Data Toggle
         var ind = $(this).index();
 
         if($(this).hasClass('active')){
@@ -101,7 +102,28 @@ $(document).ready(function(){
             $(".data-wrapper > ul").hide();
             $(".data-wrapper > ul").eq(ind).show();
         }
-    }); 
+    });
+
+    $(".header.action-btn-group a.delete").on('click', function(){
+        $("input.top_links.destroy").click();
+    });
+
+    $(".header.action-btn-group a.send").on('click', function(){
+        $("input.top_links.send").click();
+    });
+
+    $(".header.action-btn-group a.archive").on('click', function(){
+        $("input.top_links.archive").click();
+    });
+
+    $(".header.action-btn-group a.payment").on('click', function(){
+        $("input.top_links.payment").click();
+    });
+
+    $(".action-btn-group .single_archive").on('click', function(){
+        $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.archive").click();
+    })
 });
 
 
@@ -110,3 +132,4 @@ $(document).ready(function(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
+
