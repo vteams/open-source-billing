@@ -31,10 +31,10 @@ class InvoicesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    @recurring_profiles = RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").filter(params, @per_page).order("#{sort_column} #{sort_direction}")
+    @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,50).order("#{sort_column} #{sort_direction}")
+    @recurring_profiles = RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").filter(params, 50).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
+    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, 50, params)
     @recurring_profile_activity = Reporting::RecurringProfileActivity.get_recent_activity(@recurring_profiles)
     respond_to do |format|
       format.html # index.html.erb
@@ -121,7 +121,7 @@ class InvoicesController < ApplicationController
       if @invoice.save
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
         new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
-        redirect_to(edit_invoice_url(@invoice), :notice => new_invoice_message)
+        redirect_to(invoices_url, :notice => new_invoice_message)
         return
       else
         format.html { render :action => 'new' }
@@ -145,7 +145,7 @@ class InvoicesController < ApplicationController
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
           @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-          redirect_to(edit_invoice_url(@invoice), notice: 'Your Invoice has been updated successfully.')
+          redirect_to(invoices_url, notice: 'Your Invoice has been updated successfully.')
           return
         else
           redirect_to(edit_invoice_url(@invoice), alert: invoice_not_updated)

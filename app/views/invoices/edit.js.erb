@@ -1,3 +1,4 @@
+$("#invoice_model").modal('close');
 $('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
 $(".editInvoice").modal('open');
 $('select').material_select();
