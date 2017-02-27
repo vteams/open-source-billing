@@ -141,8 +141,92 @@ class @Invoice
     else
       $('#invoice_due_date').val ''
 
+  applyPopover = (elem,position,corner,message) ->
+    elem.qtip
+      content:
+        text: message
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: position
+      style:
+        tip:
+          corner: corner
+    elem.qtip().show()
+    elem.focus()
+
+  useAsTemplatePopover = (elem,id,client_name) ->
+    elem.qtip
+      content:
+        text: "<a href='/en/invoices/new/#{id}'>To create new invoice use the last invoice sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: "rightTop"
+      style:
+        classes: 'use_as_template'
+        tip:
+          corner: "bottomLeft"
+    elem.qtip().show()
+    qtip = $(".qtip.use_as_template")
+    qtip.css("top",qtip.offset().top - qtip.height())
+    qtip.attr('data-top',qtip.offset().top - qtip.height())
+    elem.focus()
+
+  hidePopover = (elem) ->
+    #elem.next(".popover").hide()
+    elem.qtip("hide")
+
   @load_functions = ->
     $('select').material_select();
+
+    # Re calculate the total invoice balance if an item is removed
+    $(".remove_nested_fields").on "click", ->
+      setTimeout (->
+        updateInvoiceTotal()
+      ), 100
+
+    setDuedate($("#invoice_invoice_date").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
+
+    # Subtract discount percentage from subtotal
+    $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
+      updateInvoiceTotal()
+
+    # Subtract discount percentage from subtotal
+    $("select#discount_type").change ->
+      updateInvoiceTotal()
+
+    # Don't allow paste and right click in discount field
+    $("#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty").bind "paste contextmenu", (e) ->
+      e.preventDefault()
+
+    # Don't allow nagetive value for discount
+    $("#invoice_discount_percentage, #recurring_profile_discount_percentage,.qty").keydown (e) ->
+      if e.keyCode is 109 or e.keyCode is 13
+        e.preventDefault()
+        false
+
+    # re calculate invoice due date on invoice date change
+    $("#invoice_invoice_date").change ->
+      $(this).qtip("hide") if $(this).qtip()
+      term_days = $("#invoice_payment_terms_id option:selected").attr('number_of_days')
+      setDuedate($(this).val(),term_days)
+
+    # Calculate line total and invoice total on page load
+    $(".invoice_grid_fields tr:visible .line_total").each ->
+      updateLineTotal($(this))
+      # dont use decimal points in quantity and make cost 2 decimal points
+      container = $(this).parents("tr.fields")
+      cost = $(container).find("input.cost")
+      qty = $(container).find("input.qty")
+      cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
+      qty.val(parseInt(qty.val())) if qty.val()
+
+    updateInvoiceTotal()
     $('.remove_nested_fields').on 'click', ->
       setTimeout (->
         updateInvoiceTotal()
@@ -165,6 +249,17 @@ class @Invoice
       e.preventDefault()
     $('select.tax1, select.tax2').on 'change', ->
       updateInvoiceTotal()
+
+    $("#add_line_item").on "click", ->
+      options = $('.items_list:first').html()
+      $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
+      $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
+      tax1 = $('.tax1:first').html()
+      tax2 = $('.tax2:first').html()
+      $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')
+      $('.tax2:last').html(tax2).find('option:selected').removeAttr('selected')
+      $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
+      $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
     # Change currency of invoice
     $("#invoice_currency_id").unbind 'change'

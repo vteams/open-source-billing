@@ -155,7 +155,7 @@ class InvoicesController < ApplicationController
         @invoice.update_line_item_taxes()
         @invoice.notify(current_user, @invoice.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
+        redirect_to({:action => "index", :controller => "invoices"}, :notice => 'Your Invoice has been updated successfully.')
         return
       else
         format.html { render :action => "edit" }
