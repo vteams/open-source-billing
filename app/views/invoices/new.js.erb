@@ -1,8 +1,8 @@
 $('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
-$(".editInvoice").modal('open');
 
 // call Invoice coffee script functions
 Invoice.change_invoice_item();
 Invoice.changeTax();
 Invoice.load_functions();
 
+$(".editInvoice").modal('open');

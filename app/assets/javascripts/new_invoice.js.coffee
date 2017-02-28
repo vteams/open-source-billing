@@ -189,6 +189,10 @@ class @Invoice
       updateInvoiceTotal()
 
   @load_functions = ->
+
+    $('.modal').modal complete: ->
+      $('.qtip').remove()
+
     applyDatePicker();
     $('select').material_select();
 
