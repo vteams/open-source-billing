@@ -20,17 +20,17 @@
 #
 module Reporting
   module InvoiceActivity
-    def self.get_recent_activity(company_id,per_page, params)
+    def self.get_recent_activity(company_id,per_page, options)
         recent_activity = {}
         invoice_status = Invoice::STATUS_DESCRIPTION.keys
         all_invoices = Invoice.where("invoices.company_id IN(?)", company_id)
 
-        params[:status] = 'active'
-        active_invoices = all_invoices.filter(params,per_page)
-        params[:status] = 'deleted'
-        deleted_invoices = all_invoices.filter(params,per_page)
-        params[:status] = 'deleted'
-        archived_invoices = all_invoices.filter(params,per_page)
+        options[:status] = 'active'
+        active_invoices = all_invoices.filter(options,per_page)
+        options[:status] = 'deleted'
+        deleted_invoices = all_invoices.filter(options,per_page)
+        options[:status] = 'archived'
+        archived_invoices = all_invoices.filter(options,per_page)
 
         active_invoice_progress = {}
         active_invoices.group_by{|i| i.group_date}.each do |date, invoices|

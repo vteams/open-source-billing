@@ -31,6 +31,7 @@ class InvoicesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @recurring_profiles = RecurringProfile.joins("LEFT OUTER JOIN clients ON clients.id = recurring_profiles.client_id ").filter(params, 50).order("#{sort_column} #{sort_direction}")
     @invoices = filter_by_company(@invoices)

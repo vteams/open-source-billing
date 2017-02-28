@@ -4,7 +4,10 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5><a href="#">Active </a><span>(<%= get_count(params.merge(status: 'unarchived')) %>)</span></h5>
+      <h5>
+        <%= link_to t('views.common.active'), "invoices?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
+      </h5>
       <div class="amount"><%= number_to_currency(@invoice_activity[:active_invoices_total], unit: default_currency_unit) %></div>
       <% @invoice_activity[:active_invoice_progress].each do |date, amount| %>
           <div class="agedWrapper">
@@ -38,7 +41,10 @@
       <% end %>
     </div>
     <div class="status-info">
-      <h5><a href="#">Deleted</a><span>(<%= get_count(params.merge(status: 'only_deleted', user: current_user, current_company: session['current_company'])) %>)</span></h5>
+      <h5>
+        <%= link_to t('views.common.deleted'), "invoices?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+      </h5>
       <div class="amount"><%= number_to_currency(@recurring_profile_activity[:deleted_invoices_total], unit: default_currency_unit )%></div>
       <% @invoice_activity[:deleted_invoice_progress].each do |date, amount| %>
           <div class="agedWrapper">
@@ -55,7 +61,10 @@
       <% end %>
     </div>
     <div class="status-info">
-      <h5><a href="#">Archived</a><span>(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
+      <h5>
+        <%= link_to t('views.common.archived'), "invoices?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
+      </h5>
       <div class="amount"><%= number_to_currency(@recurring_profile_activity[:archived_invoices_total], unit: default_currency_unit )%></div>
       <% @invoice_activity[:archived_invoices_progress].each do |date, amount| %>
           <div class="agedWrapper">
