@@ -1,6 +1,6 @@
 class @Invoice
 
-  @applyDatePicker = ->
+  applyDatePicker = ->
     $('#invoice_date_picker').pickadate
       format: DateFormats.format()
       formatSubmit: DateFormats.format()
@@ -183,7 +183,13 @@ class @Invoice
     #elem.next(".popover").hide()
     elem.qtip("hide")
 
+  @changeTax = ->
+    $('select.tax1, select.tax2').on 'change', ->
+      hidePopover($('.select-wrapper.tax2'));
+      updateInvoiceTotal()
+
   @load_functions = ->
+    applyDatePicker();
     $('select').material_select();
 
     # Re calculate the total invoice balance if an item is removed
@@ -250,9 +256,7 @@ class @Invoice
       return
     $('#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty').bind 'paste contextmenu', (e) ->
       e.preventDefault()
-    $('select.tax1, select.tax2').on 'change', ->
-      hidePopover($('.select-wrapper.tax2'));
-      updateInvoiceTotal()
+
 
     $("#add_line_item").on "click", ->
       options = $('.items_list:first').html()

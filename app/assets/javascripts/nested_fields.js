@@ -54,8 +54,9 @@
                 .trigger({ type: 'nested:fieldAdded', field: field })
                 .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
 
-            $('select').material_select();
+            $("select.items_list:last, select.tax1, select.tax2").material_select();
             Invoice.change_invoice_item();
+            Invoice.changeTax();
             return false;
         },
         newId: function() {

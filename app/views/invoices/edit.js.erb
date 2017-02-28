@@ -2,7 +2,7 @@ $("#invoice_model").modal('close');
 $('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
 $(".editInvoice").modal('open');
 
-var invoice_obj = Invoice
-invoice_obj.applyDatePicker();
-invoice_obj.change_invoice_item();
-invoice_obj.load_functions();
+// call Invoice coffee script functions
+Invoice.change_invoice_item();
+Invoice.changeTax();
+Invoice.load_functions();
