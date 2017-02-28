@@ -102,6 +102,7 @@ class @Invoice
 
   @change_invoice_item  = ->
     $('.invoice_grid_fields select.items_list').on 'change', ->
+      hidePopover($("table#invoice_grid_fields tr.fields:visible:first"));
       elem = undefined
       elem = $(this)
       if elem.val() == ''
@@ -142,6 +143,7 @@ class @Invoice
       $('#invoice_due_date').val ''
 
   applyPopover = (elem,position,corner,message) ->
+    console.log message
     elem.qtip
       content:
         text: message
@@ -194,6 +196,7 @@ class @Invoice
 
     # Subtract discount percentage from subtotal
     $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
+      hidePopover($('#invoice_discount_percentage'));
       updateInvoiceTotal()
 
     # Subtract discount percentage from subtotal
@@ -248,6 +251,7 @@ class @Invoice
     $('#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty').bind 'paste contextmenu', (e) ->
       e.preventDefault()
     $('select.tax1, select.tax2').on 'change', ->
+      hidePopover($('.select-wrapper.tax2'));
       updateInvoiceTotal()
 
     $("#add_line_item").on "click", ->
@@ -261,6 +265,8 @@ class @Invoice
       $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
       $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
+    $("#invoice_client_id").change ->
+      hidePopover($("#invoice_client_id").parents('.select-wrapper'));
     # Change currency of invoice
     $("#invoice_currency_id").unbind 'change'
     $("#invoice_currency_id").change ->
@@ -283,7 +289,7 @@ class @Invoice
         flag = false
         # Check if client is selected
       else if $("#invoice_client_id").val() is ""
-        applyPopover($("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+        applyPopover($("#invoice_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
         flag = false
         # if currency is not selected
       else if $("#invoice_currency_id").val() is "" and $("#invoice_currency_id").is( ":hidden" ) == false
@@ -304,7 +310,7 @@ class @Invoice
         applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
         flag = false
         # Check if discount percentage is an integer
-      else if $("input#invoice_discount_percentage").val()  isnt "" and isNaN($("input#invoice_discount_percentage").val())
+      else if $("input#invoice_discount_percentage").val()  isnt "" and ($("input#invoice_discount_percentage").val() < 0)
         applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
         flag = false
         # Check if no item is selected
@@ -313,7 +319,7 @@ class @Invoice
         flag = false
         # Check if item is selected
       else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-        first_item = $("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
+        first_item = $("table#invoice_grid_fields tr.fields:visible:first")
         applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
         flag = false
       else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
@@ -344,7 +350,7 @@ class @Invoice
               applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
               flag = false
             else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-              applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+              applyPopover(tax2.parents('.select-wrapper.tax2'),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
               flag = false
             else hidePopover(qty)
       flag

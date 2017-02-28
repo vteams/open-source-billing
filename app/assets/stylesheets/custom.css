@@ -8,3 +8,6 @@
 .hidden{
     display: none;
 }
+#activity-sidebar .mCustomScrollBox{
+    padding-right: 10px;
+}
