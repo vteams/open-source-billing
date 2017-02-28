@@ -289,7 +289,7 @@ class InvoicesController < ApplicationController
   def send_invoice
     invoice = Invoice.find(params[:id])
     invoice.send_invoice(current_user, params[:id])
-    redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.')
+    redirect_to(invoices_url, notice: 'Invoice sent successfully.')
   end
 
 

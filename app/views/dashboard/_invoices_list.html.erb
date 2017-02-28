@@ -17,7 +17,7 @@
               <span class="invoice-date"><%= (current_invoice.due_date || current_invoice.invoice_date) rescue "" %></span>
               <div class="invoice-details">
                 <h5><%= current_invoice.unscoped_client.organization_name rescue "" %></h5>
-                <strong><%= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></strong>
+                <strong><%= link_to current_invoice.invoice_number, invoice_path(current_invoice), remote: true %></strong>
                 <% unit = current_invoice.currency.present? ? current_invoice.currency.code : "$"%>
                 <em><%= number_to_currency(current_invoice.invoice_total, unit: unit) %>
                   <span> <%= current_invoice.currency.unit rescue 'usd' %> </span>
@@ -34,7 +34,7 @@
               <span class="invoice-date"><%= (past_invoice.due_date || past_invoice.invoice_date) rescue "" %></span>
               <div class="invoice-details">
                 <h5><%= past_invoice.unscoped_client.organization_name rescue "" %></h5>
-                <strong><%= link_to past_invoice.invoice_number, invoice_path(past_invoice) %></strong>
+                <strong><%= link_to past_invoice.invoice_number, invoice_path(past_invoice), remote: true %></strong>
                 <% unit = past_invoice.currency.present? ? past_invoice.currency.code : "$" %>
                 <em><%= number_to_currency(past_invoice.invoice_total, unit: unit) %>
                   <span><%= past_invoice.currency.unit rescue 'usd' %></span>
