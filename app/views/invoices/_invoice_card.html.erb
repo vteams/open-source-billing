@@ -18,17 +18,25 @@
       <span class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= invoice.status %></span>
     </div>
     <div class="action-btn-group">
-      <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id) %>
-      <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), remote: true, class: 'edit_invoice_icon' %>
-      <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, method: :delete, data:{confirm: 'Are you sure?' } %>
-      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
-        <i class="material-icons">more_vert</i>
-      </a>
-      <!-- Dropdown Structure -->
-      <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
-        <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
-        <li><%= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id)  if !invoice.status.eql?("paid") %></li>
-      </ul>
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id) %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), remote: true, class: 'edit_invoice_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+            <li><%= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id)  if false and !invoice.status.eql?("paid") %></li>
+          </ul>
+      <% end %>
     </div>
   </div>
 </div>

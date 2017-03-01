@@ -296,4 +296,8 @@ module ApplicationHelper
     return false if current_user.blank? or current_user.god_user?
     current_user.client_limit <= current_user.clients.count
   end
+
+  def contain_bulk_actions
+    %w(invoices estimates)
+  end
 end

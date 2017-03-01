@@ -20,10 +20,8 @@
                 <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
               </div>
           <% end %>
-          <%= submit_tag t('views.common.archive'), name: "archive", class: "top_links archive hidden" %>
-          <%= submit_tag t('views.common.delete'), name: "destroy", class: "top_links destroy hidden" %>
-          <%= submit_tag t('views.common.send'), name: "send", class: "top_links send hidden" %>
-          <%= submit_tag t('views.invoices.enter_payment'), name: "payment", class: "top_links payment hidden" %>
+          <%= render partial: 'bulk_actions'%>
+
       <% end %>
 
     </div>

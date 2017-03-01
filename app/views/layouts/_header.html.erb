@@ -45,20 +45,30 @@
             <div class="left">
               <div class="chk-text"></div>
             </div>
-            <div class="right">
-              <div class="header action-btn-group">
-                <a href="javascript:;" class="send"><i class="material-icons">send</i></a>
-                <a href="javascript:;" class="delete"><i class="material-icons">delete</i></a>
-                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown13' data-alignment="right" data-beloworigin="true">
-                  <i class="material-icons">more_vert</i>
-                </a>
-                <!-- Dropdown Structure -->
-                <ul id='dropdown13' class='dropdown-content z-depth-4'>
-                  <li><a href="javascript:;" class="archive"><i class="material-icons">archive</i> Send to Archive</a></li>
-                  <li><a href="javascript:;" class="payment"><i class="material-icons">payment</i> Enter Payment</a></li>
-                </ul>
-              </div>
-            </div>
+            <% if contain_bulk_actions.include? controller_name %>
+                <div class="right">
+                  <div class="header action-btn-group">
+                    <% if @status.eql?('deleted') %>
+                        <a href="javascript:;" class="recover_deleted" title="Recover deleted"><i class="material-icons">unarchive</i></a>
+                    <% elsif @status.eql?('archived') %>
+                        <a href="javascript:;" class="recover_archived" title="Recover archived"><i class="material-icons">unarchive</i></a>
+                        <a href="javascript:;" class="send_archived" title="Send"><i class="material-icons">send</i></a>
+                        <a href="javascript:;" class="destroy_archived" title="Delete archived"><i class="material-icons">delete</i></a>
+                    <% else %>
+                        <a href="javascript:;" class="send_active" title="Send"><i class="material-icons">send</i></a>
+                        <a href="javascript:;" class="delete" title="Delete"><i class="material-icons">delete</i></a>
+                        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown13' data-alignment="right" data-beloworigin="true">
+                          <i class="material-icons">more_vert</i>
+                        </a>
+                        <!-- Dropdown Structure -->
+                        <ul id='dropdown13' class='dropdown-content z-depth-4'>
+                          <li><a href="javascript:;" class="archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+                          <li class="hidden"><a href="javascript:;" class="payment"><i class="material-icons">payment</i> Enter Payment</a></li>
+                        </ul>
+                    <% end %>
+                  </div>
+                </div>
+            <% end %>
           </div>
         </div>
         <form action="#">

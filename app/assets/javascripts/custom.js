@@ -23,13 +23,6 @@ $(document).ready(function(){
 
     $('select').material_select();
     
-    $('select').change(function () {
-        //console.log($(this).val());
-        //if ($(this).val() == 3) {
-        //     console.log($(this).val());
-        //    $('#CreatNewmodal').modal('open');
-        //}
-    });
      $('.modal').modal();
     
     $('#btn-help').click(function(){
@@ -52,10 +45,6 @@ $(document).ready(function(){
             $('.search-holder form').hide();        
             $('.card-white-panel .action-btn-group').hide();
             $('.checkboxinfo').show();
-            if (n > 1){
-                //$('.checkboxinfo .action-btn-group .edit').hide();
-                //$('.checkboxinfo .action-btn-group .send').hide();
-            }
             $('.checkboxinfo .action-btn-group .send').show();
         }
         else{            
@@ -83,9 +72,7 @@ $(document).ready(function(){
     });
     
     $(".checkbox-item").on("click", function(e){
-        //e.preventDefault();
         e.stopImmediatePropagation();
-        //alert("sdf");
     });
 
     $('#radioBtn a').on('click', function(){
@@ -108,8 +95,8 @@ $(document).ready(function(){
         $("input.top_links.destroy").click();
     });
 
-    $(".header.action-btn-group a.send").on('click', function(){
-        $("input.top_links.send").click();
+    $(".header.action-btn-group a.send_active").on('click', function(){
+        $("input.top_links.send_active").click();
     });
 
     $(".header.action-btn-group a.archive").on('click', function(){
@@ -123,7 +110,34 @@ $(document).ready(function(){
     $(".action-btn-group .single_archive").on('click', function(){
         $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
         $("input.top_links.archive").click();
-    })
+    });
+
+    $(".header.action-btn-group a.recover_deleted").on('click', function(){
+        $("input.top_links.recover_deleted").click();
+    });
+
+    $(".header.action-btn-group a.recover_archived").on('click', function(){
+        $("input.top_links.recover_archived").click();
+    });
+
+    $(".header.action-btn-group a.destroy_archived").on('click', function(){
+        $("input.top_links.destroy_archived").click();
+    });
+
+    $(".header.action-btn-group a.send_archived").on('click', function(){
+        $("input.top_links.send_archived").click();
+    });
+
+    $(".action-btn-group .single_recover").on('click', function(){
+        $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.recover_archived").click();
+    });
+
+    $(".action-btn-group .single_recover_deleted").on('click', function(){
+        $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.recover_deleted").click();
+    });
+
 });
 
 
