@@ -12,9 +12,10 @@ class EstimatesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    #@estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    @estimates = Estimate.all.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    #@estimates = filter_by_company(@estimates)
+    @status = params[:status]
+    @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @estimates = filter_by_company(@estimates)
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -31,6 +32,7 @@ class EstimatesController < ApplicationController
     @client = Client.unscoped.find_by_id @estimate.client_id
     respond_to do |format|
       format.html # show.html.erb
+      format.js
     end
   end
 

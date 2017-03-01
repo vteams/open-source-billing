@@ -33,7 +33,7 @@ module DashboardHelper
   end
 
   def aged_progress_width(amount, total)
-    return 0 if total.eql?(0) or (amount == 0  or amount == nil)
+    return 0 if total.to_i.eql?(0) or (amount == 0  or amount == nil)
     ((amount * 100)/total).round
   end
 end

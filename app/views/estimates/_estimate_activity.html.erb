@@ -1,0 +1,74 @@
+<!--- Activity sidebar --->
+<span class="btn-activity">Activities</span>
+<aside id="activity-sidebar">
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+    <div class="status-info active">
+      <h5>
+        <%= link_to t('views.common.active'), "estimates?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@estimate_activity[:active_estimates_total], unit: default_currency_unit) %></div>
+      <% @estimate_activity[:active_estimate_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @estimate_activity[:active_estimate_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.deleted'), "estimates?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@estimate_activity[:deleted_estimates_total], unit: default_currency_unit )%></div>
+      <% @estimate_activity[:deleted_estimate_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @estimate_activity[:deleted_estimates_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.archived'), "estimates?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@estimate_activity[:archived_estimates_total], unit: default_currency_unit )%></div>
+      <% @estimate_activity[:archived_estimates_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @estimate_activity[:archived_estimates_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="status-info actionState">
+      <h5 class="text-blue"><a href="#">Sent</a><span> (<%= @estimate_activity[:sent] %>)</span></h5>
+      <h5 class="text-green"><a href="#">Viewed</a><span> (<%= @estimate_activity[:viewed] %>)</span></h5>
+      <h5 class="text-orange"><a href="#">Invoiced</a><span> (<%= @estimate_activity[:invoiced] %>)</span></h5>
+      <h5 class="text-grey"><a href="#">Draft</a><span>(<%= @estimate_activity[:draft]%>)</span></h5>
+    </div>
+  </div>
+</aside>

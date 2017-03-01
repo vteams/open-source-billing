@@ -1,0 +1,42 @@
+<div class="col s12 m6 l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', estimate , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-estimate_id= <%= estimate.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in" %>
+      <label for="<%= "estimate_#{estimate.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= estimate.estimate_name %></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= estimate.client.organization_name %></h5>
+      <strong><%= estimate.estimate_number %></strong>
+      <em><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %><span><%= estimate.currency.unit%></span></em>
+    </div>
+    <div class="card-footer clearfix">
+      <span class="invoice-date"><small>Due</small> <%= estimate.due_date rescue "" %></span>
+      <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= estimate.status %></span>
+    </div>
+    <div class="action-btn-group">
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id) %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), remote: true, class: 'edit_estimate_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),estimate, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= estimate.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+            <li><%#= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id)  if false and !invoice.status.eql?("paid") %></li>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
