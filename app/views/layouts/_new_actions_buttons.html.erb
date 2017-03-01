@@ -24,7 +24,7 @@
       end %>
     </li>
     <li>
-      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: 'New Estimates'} do
+      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: 'New Estimates'}, remote: true    do
         image_tag('ico-estimates.svg' , alt: 'Estimates')
       end %>
     </li>

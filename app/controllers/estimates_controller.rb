@@ -59,7 +59,7 @@ class EstimatesController < ApplicationController
       if @estimate.save
         @estimate.notify(current_user, @estimate.id)  if params[:commit].present?
         new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft])
-        redirect_to(edit_estimate_url(@estimate), :notice => new_estimate_message)
+        redirect_to(estimates_url, :notice => new_estimate_message)
         return
       else
         format.html { render :action => 'new' }
@@ -85,7 +85,7 @@ class EstimatesController < ApplicationController
         @estimate.update_line_item_taxes()
         @estimate.notify(current_user, @estimate.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "estimates", :id => @estimate.id}, :notice => 'Your Estimate has been updated successfully.')
+        redirect_to({:action => "index", :controller => "estimates"}, :notice => 'Your Estimate has been updated successfully.')
         return
       else
         format.html { render :action => "edit" }
@@ -117,7 +117,7 @@ class EstimatesController < ApplicationController
   def send_estimate
     estimate = Estimate.find(params[:id])
     estimate.send_estimate(current_user, params[:id])
-    redirect_to(estimate_path(estimate), notice: 'Estimate sent successfully.')
+    redirect_to(estimates_url, notice: 'Estimate sent successfully.')
   end
 
   def bulk_actions
@@ -126,7 +126,10 @@ class EstimatesController < ApplicationController
     @estimate_has_deleted_clients = estimate_has_deleted_clients?(@estimates)
     @message = get_intimation_message(result[:action_to_perform], result[:estimate_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    respond_to do |format|
+      format.js
+      format.html {redirect_to estimate_url}
+    end
   end
 
   def undo_actions

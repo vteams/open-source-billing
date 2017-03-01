@@ -57,6 +57,8 @@
             $("select.items_list:last, select.tax1, select.tax2").material_select();
             Invoice.change_invoice_item();
             Invoice.changeTax();
+            Estimate.change_estimate_item();
+            Estimate.changeTax();
             return false;
         },
         newId: function() {
