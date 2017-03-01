@@ -14,7 +14,7 @@
       <em><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %><span><%= estimate.currency.unit%></span></em>
     </div>
     <div class="card-footer clearfix">
-      <span class="invoice-date"><small>Due</small> <%= estimate.due_date rescue "" %></span>
+      <span class="invoice-date"><small>Date</small> <%= estimate.estimate_date rescue "" %></span>
       <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= estimate.status %></span>
     </div>
     <div class="action-btn-group">
