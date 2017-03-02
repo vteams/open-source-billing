@@ -94,6 +94,16 @@ class EstimatesController < ApplicationController
     end
   end
 
+  def destroy
+    @estimate = Estimate.find(params[:id])
+    @estimate.destroy
+
+    respond_to do |format|
+      format.html { redirect_to estimates_url }
+      format.json { head :no_content }
+    end
+  end
+
   def estimate_pdf
     # to be used in invoice_pdf view because it requires absolute path of image
     @images_path = "#{request.protocol}#{request.host_with_port}/assets"
@@ -128,7 +138,7 @@ class EstimatesController < ApplicationController
     @action = result[:action]
     respond_to do |format|
       format.js
-      format.html {redirect_to estimate_url}
+      format.html {redirect_to estimates_url}
     end
   end
 
