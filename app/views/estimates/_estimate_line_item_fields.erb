@@ -6,13 +6,8 @@
       <a class="sort_icon sortable" href="javascript:" title="Drag this line item to your desired location in this invoice"><i class="material-icons">open_with</i></a>
     </div>
   </td>
-<<<<<<< HEAD
-  <td class="align_left">
-    <%= f.select :item_id, options_for_select(load_line_items(action_name, @estimate.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), :class => "items_list medium chzn-select grid_large_medium item_id", "data-form-container" => "items_holder", "data-dropdown-width" => "300", :required => ""} %>
-=======
   <td>
-    <%= f.select :item_id, options_for_select(load_line_items(action_name, @estimate.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.estimate_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
->>>>>>> Estimate new/edit popup
+    <%= f.select :item_id, options_for_select(load_line_items(action_name, @estimate.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <%= f.hidden_field :item_description, class: 'description' %>
