@@ -58,4 +58,13 @@ class Expense < ActiveRecord::Base
   def currency
     Currency.default_currency
   end
+
+  def tax1_name
+    Tax.unscoped.find_by_id(tax_1).name rescue ''
+  end
+
+  def tax2_name
+    Tax.unscoped.find_by_id(tax_2).name rescue ''
+  end
+
 end

@@ -21,6 +21,11 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/1
   def show
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: expenses }
+      format.js
+    end
   end
 
   # GET /expenses/new

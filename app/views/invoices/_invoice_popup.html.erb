@@ -23,7 +23,7 @@
   </div>
     <% unless invoice.company.logo_url.blank? %>
       <div class="info-right-section right circle">
-        <<%= request.format.pdf? ? (wicked_pdf_image_tag  invoice.company.logo_url(:thumb)) : (image_tag invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+        <%= request.format.pdf? ? (wicked_pdf_image_tag  invoice.company.logo_url(:thumb)) : (image_tag invoice.company.logo_url(:thumb), class: 'responsive-img') %>
       </div>
     <% end %>
   </div>
