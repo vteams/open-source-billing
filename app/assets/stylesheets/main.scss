@@ -211,10 +211,11 @@ h6 {
   position: absolute;
   top: 0;
   width: 100%;
-  padding: 12px 10px;
+  padding: 13px 10px;
   background: #f4f4f4;
   @inlude box-shadow;
-  left: -100%;
+  left: 0;
+  top: -200px;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -269,8 +270,23 @@ h6 {
 @media only screen and (max-width: 480px) {
   #header .header-right .search-holder .form-control {
     width: 70%; } }
+@media only screen and (max-width: 767px) {
+  #header .header-right .search-holder .btn-back {
+    padding-left: 0;
+    float: left;
+    line-height: 40px;
+    width: auto;
+    font-size: 14px;
+    padding-top: 2px;
+    cursor: pointer;
+    color: #454545;
+    font-family: Arial, Helvetica, sans-serif; }
+  #header .header-right .search-holder .btn-back:hover {
+    color: #09b8e2; }
+  #header .header-right .search-holder .btn-back i {
+    padding-right: 0; } }
 #header .header-right.search-show .form-control, #header .header-right.chekbox-show .form-control {
-  width: 61.4%;
+  width: 60%;
   margin-left: 165px;
   float: left; }
 #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search {
@@ -282,11 +298,15 @@ h6 {
   font-size: 18px;
   z-index: 2; }
 #header .header-right.search-show .search-holder, #header .header-right.chekbox-show .search-holder {
+  left: 0;
+  top: 0;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
-  transition: all 0.5s;
-  left: 0; }
+  transition: all 0.5s; }
+@media only screen and (max-width: 767px) {
+  #header .header-right.search-show .search-holder, #header .header-right.chekbox-show .search-holder {
+    padding: 15px 10px; } }
 @media only screen and (max-width: 480px) {
   #header .header-right.search-show .search-holder, #header .header-right.chekbox-show .search-holder {
     padding: 26px 10px; } }
@@ -335,17 +355,21 @@ h6 {
   padding: 3px 0 0 0;
   display: inline-block; }
 #header .header-center .hdr-select-holder .select-wrapper {
-  float: left; }
+  float: left;
+  margin-right: 14px; }
 #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
   position: relative;
   margin-bottom: 0;
-  height: 2rem;
-  line-height: 2rem;
+  height: auto;
   border-bottom: none;
   color: #909090;
   text-align: center;
   font-size: 19px;
+  line-height: 36px;
   font-weight: 400; }
+@media only screen and (max-width: 1199px) {
+  #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
+    margin-right: 3px; } }
 @media only screen and (max-width: 991px) {
   #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
     font-size: 14px; } }
@@ -440,7 +464,19 @@ h6 {
   font-family: FontAwesome; }
 @media only screen and (max-width: 767px) {
   #header {
-    padding: 13px 0; } }
+    padding: 13px 0; }
+  #header .btn-menu {
+    margin-left: 10px; } }
+@media only screen and (max-width: 600px) {
+  #header {
+    padding: 5px 0 0; }
+  #header .btn-menu {
+    margin-left: 10px; }
+  #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
+    margin-left: 15px;
+    text-align: left; }
+  #header .header-center .hdr-select-holder .currency input.select-dropdown {
+    margin-left: 0; } }
 @media only screen and (max-width: 480px) {
   #header .btn-menu {
     margin-left: 5px; } }
@@ -620,7 +656,7 @@ h6 {
   display: none; }
 #side-nav .side-menu li a span {
   padding-top: 3px; }
-#side-nav .side-menu li:hover a {
+#side-nav .side-menu li:hover a, #side-nav .side-menu li.active a {
   background: #05a4d8;
   text-decoration: none;
   transition: all 0.5s; }
@@ -667,7 +703,13 @@ h6 {
     margin-left: -300px;
     transition: all 0.5s;
     width: 250px;
-    z-index: 9; } }
+    z-index: 9;
+    position: fixed;
+    left: 0;
+    top: 72px;
+    height: 100%; }
+  #side-nav:after {
+    display: none; } }
 
 #activity-sidebar {
   height: calc(100vh - 122px);
@@ -826,24 +868,41 @@ h6 {
   height: 22px;
   border-radius: 22px;
   padding: 0 20px;
-  z-index: 99; }
+  z-index: -1; }
 .btn-activity:hover {
   background: #05a4d8;
   cursor: pointer; }
 @media only screen and (max-width: 767px) {
   .btn-activity {
     display: block;
-    right: 10px;
-    top: 122px;
     font-size: 12px;
-    line-height: 22px;
-    padding: 0 8px; } }
+    line-height: 20px;
+    padding: 0 8px;
+    position: absolute;
+    right: 74px;
+    top: 23px;
+    z-index: 0; } }
 
 @media only screen and (max-width: 767px) {
   .invoice-page .btn-activity {
     top: 134px;
     right: 20px; } }
 
+@media only screen and (max-width: 767px) {
+  #header .header-center {
+    margin-left: -40px; } }
+@media only screen and (max-width: 640px) {
+  #header .header-center {
+    margin-left: 0px; }
+
+  .btn-activity {
+    right: 8px; } }
+@media only screen and (max-width: 480px) {
+  #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
+    margin-left: 0; }
+
+  .btn-activity {
+    top: 16px; } }
 #invoices-list {
   background: #fff;
   height: calc(100vh - 122px);
@@ -1154,6 +1213,8 @@ h6 {
 
 .breadcrum-bar {
   margin-bottom: 18px; }
+.breadcrum-bar.flex-item {
+  flex: 1 0 auto; }
 .breadcrum-bar a {
   font-size: 15px;
   color: #8f8f8f;
@@ -1231,6 +1292,17 @@ h6 {
   font-weight: 400;
   font-size: 11px;
   text-transform: uppercase; }
+.card-white-panel .invoice-details .amount-box {
+  margin-top: 6px; }
+.card-white-panel .invoice-details .amount-box span {
+  display: block;
+  font-size: 11px;
+  line-height: 14px; }
+.card-white-panel .invoice-details .amount-box strong {
+  color: #454545;
+  font-size: 16px; }
+.card-white-panel .invoice-details .amount-box strong small {
+  font-size: 10px; }
 .card-white-panel .card-footer span {
   text-transform: uppercase; }
 .card-white-panel .card-footer span small {
@@ -1267,12 +1339,6 @@ h6 {
   background-color: transparent; }
 .card-white-panel .action-btn-group .dropdown-button.active {
   color: #09b8e2; }
-.card-white-panel:hover .action-btn-group {
-  margin-right: 0;
-  -moz-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  transition: all 0.5s; }
 .card-white-panel .dropdown-content {
   min-width: 132px;
   box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 8px -10px rgba(0, 0, 0, 0.12), 0 0px 1px -10px rgba(0, 0, 0, 0.3); }
@@ -1310,6 +1376,13 @@ h6 {
   opacity: 1; }
 .card-white-panel .checkbox-item input:checked ~ .invoice-name {
   opacity: 0; }
+.card-white-panel:hover .action-btn-group {
+  margin-right: 0;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: 5; }
 
 #header .header-right .right .action-btn-group a {
   color: #b9b9b9;
@@ -1451,7 +1524,7 @@ h6 {
   padding-right: 320px; }
 
 .modal {
-  width: 65%;
+  width: 86%;
   max-height: 77%;
   /*---Select in Modal box---*/ }
 .modal .modal-content {
@@ -1460,19 +1533,20 @@ h6 {
   border-bottom: 1px solid #dfdede;
   padding: 24px 44px 18px; }
 .modal .modal-header h5 {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   color: #454545;
   font-weight: 400; }
 .modal .modal-header h5.text-blue {
   color: #09b8e2; }
 .modal .modal-header h5.text-blue span {
   color: #454545;
-  margin-top: 0; }
+  margin-top: 0;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; }
 .modal .modal-header h5 span {
   display: inline-block;
   margin-top: 3px;
-  vertical-align: middle; }
+  vertical-align: middle;
+  font-size: 16px; }
 .modal .modal-header .btn {
   background-color: transparent;
   text-transform: capitalize;
@@ -1482,7 +1556,8 @@ h6 {
   box-shadow: none;
   border: 1px solid #dfdede;
   padding: 0 15px;
-  margin-right: 8px; }
+  margin-right: 8px;
+  font-size: 16px; }
 .modal .modal-header .modal-action-btn a {
   color: #b5b5b5;
   margin-left: 12px;
@@ -1499,6 +1574,8 @@ h6 {
   line-height: normal; }
 .modal .modal-header.text-content .modal-action-btn a i {
   font-size: 22px; }
+.modal .modal-header.text-content h5 span {
+  font-size: 16px; }
 .modal .info-section {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   padding: 20px 44px;
@@ -1533,6 +1610,7 @@ h6 {
 .modal .info-section .info-left-section strong {
   display: block;
   font-size: 24px;
+  line-height: 20px;
   color: #454545;
   font-weight: bold; }
 .modal .info-section .info-left-section strong small {
@@ -1540,7 +1618,7 @@ h6 {
   font-size: 10px;
   vertical-align: middle; }
 .modal .info-section .info-left-section .paymentInfo {
-  margin-top: 30px; }
+  margin-top: 43px; }
 .modal .info-section .info-left-section .paymentInfo span {
   margin-bottom: 0;
   min-width: 88px;
@@ -1549,13 +1627,19 @@ h6 {
 .modal .info-section .info-left-section .paymentInfo strong {
   display: inline-block;
   font-size: 18px;
-  line-height: 18px; }
+  line-height: 15px; }
+.modal .info-section .info-left-section .paymentInfo strong small {
+  vertical-align: baseline; }
 .modal .info-section .info-left-section .paymentInfo em {
   font-style: normal;
   float: right;
   margin-right: 5px; }
+@media only screen and (max-width: 767px) {
+  .modal .info-section .info-left-section .paymentInfo {
+    margin-top: 25px;
+    margin-bottom: 25px; } }
 .modal .info-section .info-left-section .editPayementInfo {
-  margin-top: 25px; }
+  margin-top: 56px; }
 .modal .info-section .info-left-section .date-invoice {
   margin-bottom: 0; }
 .modal .info-section .info-right-section {
@@ -1574,7 +1658,7 @@ h6 {
 .modal .modal-body table tr th {
   border-right: 1px solid #fff;
   background-color: #ececec;
-  padding: 10px;
+  padding: 10px 12px;
   font-weight: bold;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px; }
@@ -1582,7 +1666,8 @@ h6 {
   border: none; }
 .modal .modal-body table tr td {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 13px; }
+  font-size: 13px;
+  padding: 10px 12px; }
 @media only screen and (max-width: 992px) {
   .modal .modal-body table tr td {
     padding: 9px 10px 10px; }
@@ -1780,7 +1865,8 @@ h6 {
   padding-top: 5px;
   display: block; }
 .modal .modal-header .inline-select.select-wrapper .caret {
-  top: 7px; }
+  top: 7px;
+  font-size: 12px; }
 .modal .inline-select {
   /*---Title Select---*/ }
 .modal .inline-select.select-wrapper {
@@ -1876,7 +1962,7 @@ h6 {
   border: none; }
 .modal.editInvoice table tbody tr.elementsAction a {
   display: inline-block;
-  margin-top: 8px; }
+  margin-top: 5px; }
 .modal.editInvoice table tbody tr.elementsAction a i {
   font-size: 13px;
   color: #b5b5b5; }
@@ -1903,9 +1989,95 @@ h6 {
 @media only screen and (max-width: 767px) {
   .modal.editInvoice .modal-footer .right-section {
     min-width: 210px; } }
+.modal.editInvoice .info-section .info-left-section .editPayementInfo {
+  margin-top: 28px; }
 
 .modal.enterPayment {
   top: 20% !important; }
+
+.modal.editInvoice table tr th:first-child {
+  width: 33px;
+  background-color: transparent; }
+.modal.editInvoice table tr td:first-child {
+  border-bottom: 1px solid #fff;
+  padding: 10px 5px; }
+.modal.editInvoice .elementsAction {
+  width: 28px; }
+.modal.editInvoice .elementsAction a {
+  display: inline-block;
+  color: #b5b5b5; }
+.modal.editInvoice .elementsAction a i {
+  font-size: 10px; }
+.modal.editInvoice .modal-body {
+  padding: 20px 44px 10px 5px; }
+.modal.editInvoice td .inline-select.title-select {
+  width: 100%; }
+
+/*---Payment Modal Struture---*/
+.viewModal .info-section .info-left-section .paymentInfo {
+  margin-top: 56px; }
+.viewModal .info-section .info-left-section .paymentInfo strong {
+  font-size: 24px;
+  line-height: 18px; }
+.viewModal .info-right-section .field-block label + span {
+  display: block;
+  line-height: 14px;
+  font-size: 14px; }
+@media only screen and (max-width: 767px) {
+  .viewModal .info-left-section .paymentInfo {
+    margin-top: 25px; } }
+.viewModal .text-info p {
+  color: #454545;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  line-height: 18px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 4px; }
+.viewModal .text-info p strong {
+  display: block;
+  font-weight: bold; }
+
+.editPaymentModal .text-info p {
+  color: #454545;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  line-height: 18px;
+  border-bottom: 1px solid #82d1eb;
+  padding-bottom: 4px;
+  margin-bottom: 4px; }
+.editPaymentModal .text-info p strong {
+  display: block;
+  font-weight: bold; }
+
+.paymentModal .modal-footer, .editableModal.editPaymentModal .modal-footer {
+  margin-top: 42px;
+  padding-bottom: 30px; }
+
+/*---Expense Modal Styles---*/
+@media only screen and (max-width: 767px) {
+  .expenseModal .modal-header.text-content {
+    padding: 18px 15px; } }
+.expenseModal table tr td, .expenseModal table tr th {
+  padding: 10px; }
+@media only screen and (max-width: 992px) {
+  .expenseModal table tr td, .expenseModal table tr th {
+    width: auto; } }
+@media only screen and (max-width: 992px) {
+  .expenseModal table {
+    border-bottom: 1px solid #e5e5e5; }
+  .expenseModal table tr td, .expenseModal table tr th {
+    width: auto; } }
+.expenseModal .modal-footer {
+  padding: 0 54px 35px; }
+.expenseModal .modal-footer .item-total {
+  border-bottom-color: transparent; }
+.expenseModal .modal-footer .text-info {
+  margin-top: 24px; }
+.expenseModal .modal-footer .right-section {
+  min-width: 218px; }
+@media only screen and (max-width: 767px) {
+  .expenseModal .modal-footer {
+    padding: 0 15px 25px; } }
+.expenseModal .info-section .info-left-section h6 {
+  font-weight: 400; }
 
 /*---Modal Styles---*/
 .creatNewModal {
@@ -1954,6 +2126,110 @@ h6 {
 .creatNewModal .modal-body {
   padding: 0 30px 30px; }
 
+/*---Payment page --*/
+.payment-page #header .header-right .right .dropdown-content {
+  top: 62px !important; }
+.payment-page .editPaymentModal, .payment-page .paymentModal {
+  top: 18% !important; }
+
+/*---Expenses---*/
+.expense-box .card-white-panel .invoice-details em {
+  font-size: 11px;
+  line-height: 20px;
+  vertical-align: top; }
+.expense-box .card-white-panel .invoice-details em span {
+  font-size: 10px;
+  vertical-align: top; }
+
+.expense-page .invoice-box .card-white-panel {
+  min-height: 142px; }
+.expense-page .card-white-panel .card-footer .invoice-date {
+  padding-top: 3px; }
+
+.flex-wrapper {
+  display: flex;
+  margin: 0 -10px;
+  flex-wrap: wrap; }
+
+.flex-wrapper > .flex-item {
+  margin: 0 10px; }
+
+@media screen and (min-width: 1366px) {
+  .col-lg-3 {
+    width: calc(25% - 20px); }
+
+  .col-lg-4 {
+    width: calc(33.3333% - 20px); }
+
+  .col-lg-6 {
+    width: calc(50% - 20px); }
+
+  .col-lg-12 {
+    flex-flow: column;
+    width: 100%; } }
+@media screen and (min-width: 1200px) {
+  .col-md-3 {
+    width: calc(25% - 20px); }
+
+  .col-md-4 {
+    width: calc(33.3333% - 20px); }
+
+  .col-md-6 {
+    width: calc(50% - 20px); }
+
+  .col-md-12 {
+    flex-flow: column;
+    width: 100%; } }
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .col-sm-3 {
+    width: calc(25% - 20px); }
+
+  .col-sm-4 {
+    width: calc(33.3333% - 20px); }
+
+  .col-sm-6 {
+    width: calc(50% - 20px); }
+
+  .col-sm-12 {
+    flex-flow: column;
+    width: 100%; } }
+@media screen and (max-width: 767px) {
+  .col-sm-3 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-sm-4 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-sm-6 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-md-3 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-md-4 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-md-6 {
+    flex-flow: column;
+    width: 100%; }
+
+  .col-xs-3 {
+    width: calc(25% - 20px); }
+
+  .col-xs-4 {
+    width: calc(33.3333% - 20px); }
+
+  .col-xs-6 {
+    width: calc(50% - 20px); }
+
+  .col-xs-12 {
+    flex-flow: column;
+    width: 100%; } }
 .loginpage {
   padding-top: 0; }
 
@@ -2178,27 +2454,3 @@ html {
   height: 100%; }
 
 /*# sourceMappingURL=main.css.map */
-
-.modal.editInvoice{
-  table{
-    tr{
-      th{
-        &:first-child{width: 33px; background-color: transparent;}
-      }
-      td{
-        &:first-child{border-bottom: 1px solid #fff;}
-      }
-    }
-  }
-  .elementsAction{
-    width: 28px;
-    a{
-      display: inline-block;color:#b5b5b5;
-      i{font-size: 10px;}
-    }
-
-  }
-  .modal-body{
-    padding: 20px 44px 10px 5px;
-  }
-}

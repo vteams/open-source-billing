@@ -1,0 +1,45 @@
+<div class="col s12 m6 l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', invoice , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-expense_id= <%=expense.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "expense_ids[]", expense.id, false, :id => "expense_#{expense.id}", class: "filled-in" %>
+      <label for="<%= "invoice_#{invoice.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= invoice.invoice_name%></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= expense.client.organization_name %></h5>
+      <strong><%= expense.category.name %></strong>
+      <em><%= "#{number_to_currency(expense.amount, unit: expense.currency.present? ? expense.currency.code : "$")} " %><span><%= expense.currency.unit%></span></em>
+      <div class="amount-box">
+        <span>Total amount</span>
+        <strong><%= "#{number_to_currency(expense.total, unit: expense.currency.present? ? expense.currency.code : "$")} " %><span><%= expense.currency.unit%></span></strong>
+      </div>
+    </div>
+    <div class="card-footer clearfix">
+      <span class="invoice-date"> <%=  expense.expense_date %></span>
+
+
+    </div>
+    <div class="action-btn-group">
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_expense_path(expense), remote: true, class: 'edit_expense_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),expense, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= expense.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= expense.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

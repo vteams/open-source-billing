@@ -8,8 +8,10 @@ class ExpensesController < ApplicationController
   # GET /expenses
   def index
     params[:status] ||= 'active'
+    @status = params[:status]
     @expenses = Expense.joins(:client, :category).filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @expenses = filter_by_company(@expenses)
+    @expense_activity = Reporting::ExpenseActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: expenses }

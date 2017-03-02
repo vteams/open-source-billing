@@ -46,4 +46,13 @@ class Expense < ActiveRecord::Base
     tax2.present? ? amount * (tax2.percentage / 100.0) : 0.0
   end
 
+  def expense_name
+    "#{client.first_name.first.camelize}#{client.last_name.first.camelize }"
+  end
+
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
+
 end
