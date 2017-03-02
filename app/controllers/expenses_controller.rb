@@ -31,10 +31,19 @@ class ExpensesController < ApplicationController
   # GET /expenses/new
   def new
     @expense = Expense.new
+    @expense.company_id = get_company_id()
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /expenses/1/edit
   def edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /expenses

@@ -19,7 +19,7 @@
       end %>
     </li>
     <li>
-      <%= link_to new_expense_path, class: 'btn-floating brown', data:{label: 'New Expenses'} do
+      <%= link_to new_expense_path, class: 'btn-floating brown', data:{label: 'New Expenses'}, remote: true do
         image_tag('ico-expenses.svg' , alt: 'Expenses')
       end %>
     </li>

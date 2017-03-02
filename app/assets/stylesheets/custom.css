@@ -14,3 +14,11 @@
 .large_modal{
     width: 86%;
 }
+
+.editPaymentModal h6 .inline-select{
+    width: 100%;
+}
+
+input#expense_amount{
+    border: none;
+}

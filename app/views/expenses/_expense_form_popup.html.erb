@@ -1,0 +1,89 @@
+<%- model_class = Expense -%>
+<%= form_for expense, :html => {:class => 'expense-form form-horizontal', :id => 'newExpense', :novalidate => ""} do |f| %>
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue">
+        <% if f.object.persisted? %>
+            <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                          :default => "Edit #{model_class.model_name.human}") %>:
+        <% else %>
+            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                          :default => "New  #{model_class.model_name.human}") %>:
+        <% end %>
+        <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+        <%= f.select :client_id, options_for_select(load_clients(action_name, get_user_current_company.id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select content-select title-select" } %>
+      </h5>
+      <div class="modal-action-btn right">
+        <a href="#" onclick="$('.send_submit').click();"><i class="material-icons">send</i></a>
+        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+        <%= f.submit "#{button_text}", :class => 'send_submit submit hidden expense-submit-btn', :name => 'save_as_draft' %>
+      </div>
+    </div>
+
+    <div class="info-section clearfix">
+      <div class="info-left-section left">
+        <h6 class="title-heading">
+          <select class="inline-select large-select" id="expense_category_id" name="expense[category_id]">
+            <% unless  f.object.persisted? %><option value="" disabled selected>Select a category...</option><% end %>
+            <% ExpenseCategory.unscoped.each do |category|%>
+                <option value="<%=category.id%> <%= 'selected' if f.object.persisted? and f.object.category_id.eql?(category.id)%>"> <%= category.name %></option>
+            <% end %>
+          </select>
+        </h6>
+        <span>DATE: <small id="expense_date"> <%= f.object.expense_date.present? ? f.object.expense_date : Time.now.strftime('%y-%m-%d') %></small> <i class="material-icons" id="expense_date_picker">date_range</i></span>
+        <%= f.hidden_field :expense_date, value: f.object.expense_date.present? ? f.object.expense_date :  Time.now.strftime('%y-%m-%d')   %>
+        <div class="editPayementInfo">
+          <strong><strong class="expense_total_strong"><%= number_to_currency(f.object.total, unit: '') rescue 0.00 %></strong> <small> <%= default_currency_code %></small>
+          </strong>
+        </div>
+
+      </div>
+      <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
+          <div class="info-right-section right circle">
+            <%= image_tag(expense.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
+      <% end %>
+    </div>
+    <div class="modal-body">
+      <table class="bordered responsive-table">
+        <thead>
+        <tr>
+          <th>Amount</th>
+          <th width="25%">Tax 1</th>
+          <th width="25%">Tax 2</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <span class="input-field">
+               <%= f.number_field :amount,      :step => 'any', min: 0 %>
+            </span>
+          </td>
+          <td width="25%" class="clearfix">
+                      <span class="left">
+                        <%= f.select :tax_1, options_for_select(load_taxes_data, selected: f.object.tax1.try(:id)),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 inline-select table-select"} %>
+                        <%= hidden_field_tag :amount1, nil, value: f.object.tax1_amount.round(2) %>
+                      </span>
+            <span class="right tax1_amount"><%= f.object.tax2_amount.present? ? f.object.tax2_amount.round(2) : 0.0 %></span>
+          </td>
+          <td width="25%" class="clearfix">
+                      <span class="left">
+                        <%= f.select :tax_2, options_for_select(load_taxes_data, selected: f.object.tax2.try(:id)),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 inline-select table-select"} %>
+                        <%= hidden_field_tag :amount1, nil, value: f.object.tax2_amount.round(2) %>
+                      </span>
+            <span class="right tax2_amount"><%= f.object.tax2_amount.present? ? f.object.tax2_amount.round(2) : 0.0 %></span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="text-info col l6">
+          <strong>Note</strong>
+          <%= f.text_area :note,  maxlength: 400, class: 'materialize-textarea'%>
+        </div>
+      </div>
+    </div>
+
+<% end %>
