@@ -22,7 +22,7 @@ module Reporting
   module ExpenseActivity
     def self.get_recent_activity(company_id,per_page, options)
       recent_activity = {}
-      
+
       all_expenses = Expense.where("expenses.company_id IN(?)", company_id)
 
       options[:status] = 'active'

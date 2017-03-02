@@ -87,7 +87,10 @@ class ExpensesController < ApplicationController
       @message = get_intimation_message(result[:action_to_perform], result[:expense_ids])
       @action = result[:action]
     #end
-    respond_to { |format| format.js }
+      respond_to do |format|
+        format.html { redirect_to expenses_url }
+        format.js
+      end
   end
 
   def undo_actions

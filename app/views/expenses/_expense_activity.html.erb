@@ -37,7 +37,7 @@
               <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
             </div>
             <div class="progress">
-              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @expense_activity[:deleted_expense_progress]) %>%;">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @expense_activity[:deleted_expenses_total]) %>%;">
                 <span class="sr-only">60% Complete</span>
               </div>
             </div>

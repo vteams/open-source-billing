@@ -3,13 +3,10 @@
 <% elsif @status == 'archived' %>
     <%= submit_tag t('views.common.recover'), name: "recover_archived", class: "top_links recover_archived hidden" %>
     <%= submit_tag t('views.common.delete'), name: "destroy_archived", class: "top_links destroy_archived hidden" %>
-    <%= submit_tag t('views.common.send'), name: "send", class: "top_links send_archived hidden" %>
 <% else%>
     <%= submit_tag t('views.common.recover'), name: "recover_archived", class: "top_links recover_archived hidden"%>
     <%= submit_tag t('views.common.recover'), name: "recover_deleted", class: "top_links recover_deleted hidden" %>
     <%= submit_tag t('views.common.archive'), name: "archive", class: "top_links archive hidden" %>
     <%= submit_tag t('views.common.delete'), name: "destroy", class: "top_links destroy hidden" %>
     <%= submit_tag t('views.common.delete'), name: "destroy_archived", class: "top_links destroy_archived hidden" %>
-    <%= submit_tag t('views.common.send'), name: "send", class: "top_links send_active hidden" %>
-    <%= submit_tag t('views.invoices.enter_payment'), name: "payment", class: "top_links payment hidden" %>
 <% end %>
