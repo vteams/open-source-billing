@@ -63,6 +63,10 @@ class PaymentsController < ApplicationController
     if @payment.payment_method and @payment.payment_method == 'paypal'
       redirect_to payments_path,alert: "You can not edit payment with paypal!"
     end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+    end
   end
 
   def create
@@ -70,7 +74,8 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, :notice => 'The payment has been recorded successfully.' }
+        Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount)
+        format.html { redirect_to payments_path, :notice => 'The payment has been recorded successfully.' }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else
         format.html { render :action => "new" }
@@ -87,7 +92,7 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(payment_params)
         @payment.update_attribute(:send_payment_notification,params[:payments][0][:send_payment_notification]) if params[:payments] and params[:payments][0][:send_payment_notification]
         @payment.notify_client(current_user)  if params[:payments] and params[:payments][0][:send_payment_notification]
-        format.html { redirect_to(edit_payment_url(@payment), :notice => 'Your Payment has been updated successfully.') }
+        format.html { redirect_to(payments_url, :notice => 'Your Payment has been updated successfully.') }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

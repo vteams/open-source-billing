@@ -1,3 +1,64 @@
+class @Payment
+
+  applyPopover = (elem,position,corner,message) ->
+    elem.qtip
+      content:
+        text: message
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: position
+      style:
+        tip:
+          corner: corner
+    elem.qtip().show()
+    elem.focus()
+
+  hidePopover = (elem) ->
+    elem.qtip("hide")
+
+  @load_functions = ->
+
+    $('.modal').modal complete: ->
+      $('.qtip').remove()
+
+    $('select').material_select();
+
+    $('.payment_date_picker').pickadate
+      format: DateFormats.format()
+      formatSubmit: DateFormats.format()
+      onSet: (context) ->
+        value = @get('value')
+        $('.payment_date').html value
+        $('#payment_payment_date').val value
+
+    $("#payment_payment_amount").on "blur keyup", ->
+      hidePopover($('#payment_payment_amount'))
+
+    jQuery('.payment_form.form-horizontal').submit ->
+      pay_amount = parseFloat(jQuery("#payment_payment_amount").val())
+      pay_method = jQuery("#payment_payment_method").val()
+      rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
+      rem_credit = parseFloat(jQuery("#rem_credit").attr("value"))
+      if jQuery("#payment_payment_amount").val() is ""
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "Enter payment value greater than 0.")
+        flag = false
+      else if pay_amount <= 0
+        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", "Payments with 0 or negivate amount are not allowed. Enter a value greater than 0.")
+        flag = false
+      else if pay_amount > rem_amount
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "The payment amount cannot exceed the invoice balance.")
+        flag = false
+      else if pay_amount > rem_credit and rem_credit
+        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", "Payment from credit cannot exceed available credit.")
+        flag = false
+      else
+        flag = true
+      flag
+
+
 jQuery ->
 
   window.creditPayment()
@@ -34,30 +95,7 @@ jQuery ->
 #        flag = true
 #    flag
 #  #edit payment form check if credit exceed available credit
-  jQuery('#submit_payment_form').on "click", ->
-    pay_amount = parseFloat(jQuery("#payments_0_payment_amount").val())
-    pay_method = jQuery("#payments_0_payment_method").val()
-    rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
-    rem_credit = parseFloat(jQuery("#rem_credit_0").attr("value"))
-    if jQuery("#payments_0_payment_amount").val() is ""
-      applyPopover(jQuery("#payments_0_payment_amount"), "rightbottom", "leftMiddle", "Enter payment value greater than 0.")
-      flag = false
-    else if pay_amount <= 0
-      applyPopover(jQuery("#payments_0_payment_amount"), "rightbottom", "leftMiddle", "Payments with 0 or negivate amount are not allowed. Enter a value greater than 0.")
-      flag = false
-    else if pay_amount > rem_amount
-      applyPopover(jQuery("#payments_0_payment_amount"), "rightbottom", "leftMiddle", "The payment amount cannot exceed the invoice balance.")
-      flag = false
-    else if pay_amount > rem_credit and rem_credit
-      applyPopover(jQuery("#payments_0_payment_amount"), "rightbottom", "leftMiddle", "Payment from credit cannot exceed available credit.")
-      flag = false
-    else
-      flag = true
 
-    if(flag)
-      jQuery("form#payments_form").get(0).submit()
-    else
-      return false
   # validate payments fields on enter payment form submit
 #  jQuery('#submit_payment_form').on "click", ->
 #    validate = true
@@ -76,21 +114,7 @@ jQuery ->
 #            validate = false
 #    validate
 
-  applyPopover = (elem,position,corner,message) ->
-    elem.qtip
-      content:
-        text: message
-      show:
-        event: false
-      hide:
-        event: false
-      position:
-        at: position
-      style:
-        tip:
-          corner: corner
-    elem.qtip().show()
-    elem.focus()
+
 
   jQuery(".line_item_qtip").on "change",->
     jQuery(this).qtip('hide')

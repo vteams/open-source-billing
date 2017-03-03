@@ -1,1 +1,4 @@
-jQuery("#paymentModal .modal-body").html("<%= escape_javascript(render(:partial=>"payments/enter_payment")) %>");
+jQuery(".editPaymentModal .modal-content").html("<%= escape_javascript(render partial: 'payment_form_popup', locals:{ payment: @payments.first} ) %>");
+
+Payment.load_functions();
+jQuery(".editPaymentModal").modal('open');

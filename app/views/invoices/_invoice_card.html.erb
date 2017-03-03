@@ -34,7 +34,7 @@
             <% elsif @status.eql?('archived') %>
                 <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
             <% end %>
-            <li><%= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id)  if false and !invoice.status.eql?("paid") %></li>
+            <li><%= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id), remote: true  unless invoice.status.eql?("paid") %></li>
           </ul>
       <% end %>
     </div>
