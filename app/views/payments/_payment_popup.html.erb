@@ -1,0 +1,43 @@
+<div class="modal-header clearfix text-content">
+  <h5 class="left text-blue"><%= payment.unscoped_client.organization_name rescue ''%></h5>
+  <div class="modal-action-btn right">
+    <a href="#" class="modal-close"><i class="material-icons">done</i></a>
+  </div>
+</div>
+<div class="info-section clearfix">
+  <div class="info-left-section left">
+    <h6 class="text-grey"><%= payment.invoice.invoice_number %></h6>
+    <span>Invoice : <small> <%= payment.invoice.invoice_date rescue "" %> </small></span>
+    <span class="text-blue"> Due: <small> <%= payment.invoice.due_date rescue "" %></small></span>
+    <div class="paymentInfo">
+      <strong><%= "#{number_to_currency(payment.payment_amount, unit: '')} " %> <small><%= payment.invoice.currency.unit%></small></strong>
+    </div>
+  </div>
+  <% unless payment.invoice.company.logo_url.blank? %>
+      <div class="info-right-section right circle">
+        <%= image_tag(payment.invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+      </div>
+  <% end %>
+</div>
+<div class="modal-body">
+  <div class="info-right-section">
+    <div class="row">
+      <div class="field-block col s6">
+        <label>Payment (<%= payment.invoice.currency.unit%>)</label>
+        <span><%= "#{number_to_currency(payment.payment_amount, unit: '')} " %></span>
+      </div>
+      <div class="field-block col s6">
+        <label>Method</label>
+        <span><%= (payment.payment_method || payment.payment_type || "") %></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="row">
+    <div class="text-info col l6">
+      <p><strong>Note</strong><%= payment.notes %></p>
+    </div>
+  </div>
+
+</div>

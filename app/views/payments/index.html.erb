@@ -1,103 +1,28 @@
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%- model_class = Payment -%>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-<div class="payment">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => t("views.payments.payments") %>
-        <span></span>
-      </h1>
+<%= render 'payment_activity'%>
+<div id="main-content">
+  <!--- main content --->
+  <div class="row">
+    <!--- breadcrum Bar --->
+    <div class="col s12 breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3>
+          Payments
+        </h3>
+      </div>
     </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.payments.new'))),
-                  '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
-                  :class => 'btn_large', :remote => true %>
+    <div class="invoice-box mCustomScrollbar clearfix">
+      <!--- Invoices Card Title--->
+      <%= form_tag "ipayments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+          <% @payments.group_by { |d| d.group_date }.each do |date, payments| %>
+              <p><span class="activity-date"><%= date %></span></p>
+              <div class="clearfix">
+                <%= render partial: 'payment_card', collection: payments, as: :payment %>
+              </div>
+          <% end %>
+          <%= render partial: 'bulk_actions'%>
+
+      <% end %>
+
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "payments/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-
-          <div class="grid_control_right" id="active_links">
-            <%#= render 'filter_links' %>
-          </div>
-        </div>
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing payment_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-            </colgroup>
-            <thead id="payments_header">
-            <%= render 'payments_header'%>
-            </thead>
-            <tbody id="payment_body">
-            <%= render 'payment' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("views.payments.new"))),
-                    '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
-                    :class => 'btn_large', :remote => true %>
-      </div>
-      <!--content_bottom-->
-  <% end %>
-
-  <!-- START: Unpaid invoices popup -->
-
-  <!-- END: Unpaid invoices popup -->
-
-  <!-- START: Credit entries -->
-  <%= form_tag "/payments/delete_non_credit_payments", :id => "delete_non_credit_payments", :remote => true do %>
-      <div id="credit_payments" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="model_grey_container">
-          <div class="modal-header">
-            <h1>Following credit payments are applied to invoices and can't be deleted.</h1>
-
-            <div class="cross_btn" style="margin:-50px -1px 0 0">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
-              </button>
-            </div>
-          </div>
-          <div class="modal-body">
-
-          </div>
-          <p class="continue_delete_msg">To continue deleting other payments please press the Delete Payments button
-            below.</p>
-
-          <div class="footer ">
-            <%= hidden_field_tag :non_credit_payments %>
-            <%= submit_tag "Delete Payments", :class => "btn_large submit" %>
-            <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
-          </div>
-        </div>
-      </div>
-  <% end %>
-  <!-- END: Credit entries -->
-
-</div><!--payment-->
-
+</div>

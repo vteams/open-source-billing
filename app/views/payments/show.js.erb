@@ -1,0 +1,2 @@
+$('.paymentModal .modal-content').html("<%= escape_javascript render partial: 'payment_popup', locals: {payment: @payment}  %>");
+$(".paymentModal").modal('open');

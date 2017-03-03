@@ -1,0 +1,24 @@
+<div class="col s12 m6 l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', payment , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-payment_id= <%=payment.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}", class: "filled-in" %>
+      <label for="<%= "payment_#{payment.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= payment.payment_name%></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= payment.unscoped_client.organization_name rescue '' %></h5>
+      <strong><%= link_to payment.invoice.invoice_number, payment.invoice, remote: true %></strong>
+      <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.code : "$")} " %><span><%= payment.invoice.currency.unit%></span></em>
+    </div>
+    <div class="card-footer clearfix">
+      <span class="invoice-date"><small>Due</small> <%= payment.invoice.due_date rescue "" %></span>
+      <span class="invoice-action text-blue"><%= (payment.payment_method || payment.payment_type || "").capitalize %></span>
+    </div>
+    <div class="action-btn-group">
+      <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete, data:{confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

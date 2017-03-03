@@ -30,9 +30,9 @@ class PaymentsController < ApplicationController
     @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
     @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
     @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
-
     #filter invoices by company
     @payments = filter_by_company(@payments)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(@payments)
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -44,6 +44,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @payment }
     end
   end

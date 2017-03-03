@@ -184,13 +184,21 @@ class Payment < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+    Client.unscoped.find self.client_id rescue invoice.client
   end
 
   def add_company_id
     if self.company_id.blank?
       self.update_attribute(:company_id, self.invoice.company_id)
     end
+  end
+
+ def payment_name
+   "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
+ end
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
   end
 
 end
