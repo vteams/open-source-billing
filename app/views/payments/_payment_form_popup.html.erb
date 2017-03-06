@@ -11,7 +11,7 @@
         <% end %>
       </h5>
       <div class="modal-action-btn right">
-        <a href="#" onclick="$('.send_submit').click();"><i class="material-icons">send</i></a>
+        <a href="#" onclick="$('.send_submit').click();" title="Save"><i class="material-icons">send</i></a>
         <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
         <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
       </div>

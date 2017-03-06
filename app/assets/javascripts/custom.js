@@ -1,3 +1,17 @@
+removeSideNavTitle = function(){
+    $(".side-menu li > a").each(function(){
+        $(this).removeAttr('title');
+    });
+}
+
+addSideNavTitle = function(){
+    $(".side-menu li > a").each(function(){
+        var title = $(this).find('span').text()
+        $(this).attr('title', title);
+    });
+
+}
+
 $(document).ready(function(){
     $(".btn-search").click(function(){
         $(".header-right").addClass("search-show");
@@ -15,6 +29,10 @@ $(document).ready(function(){
       Dashboard.plot_graph();
       $("#activity-sidebar").removeClass("show-activity");
       $("#side-nav,#main-content,#activity-sidebar").toggleClass("side-show");
+      if($('#side-nav').hasClass('side-show'))
+          removeSideNavTitle();
+      else
+        addSideNavTitle();
 
 
     });
@@ -156,4 +174,3 @@ $(document).ready(function(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
-
