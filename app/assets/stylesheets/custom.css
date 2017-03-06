@@ -22,3 +22,12 @@
 input#expense_amount{
     border: none;
 }
+
+#graph_container{
+    height: 350px;
+    margin: 0 auto;
+    max-width: 750px;
+}
+.custom-graph{
+    max-width: 450px !important;
+}

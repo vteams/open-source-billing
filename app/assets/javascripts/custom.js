@@ -10,8 +10,13 @@ $(document).ready(function(){
     });
     //
     $(".btn-menu").click(function(){
+      $('#graph_container').toggleClass('custom-graph');
+      $('#graph_container').html('');
+      Dashboard.plot_graph();
       $("#activity-sidebar").removeClass("show-activity");
       $("#side-nav,#main-content,#activity-sidebar").toggleClass("side-show");
+
+
     });
     //
     $(".btn-activity").click(function(){
