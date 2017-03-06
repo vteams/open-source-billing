@@ -7,7 +7,7 @@
     </div>
   </td>
   <td>
-    <%= f.select :item_id, options_for_select(load_line_items(action_name, @estimate.company_id, f.object), selected: f.object.item_id),  {:prompt => "",:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
+    <%= f.select :item_id, options_for_select(load_line_items(action_name, @estimate.company_id, f.object), selected: f.object.item_id),  {:prompt => t('views.invoice_line_item.select_an_item'),:include_blank => ""}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <%= f.hidden_field :item_description, class: 'description' %>
@@ -17,10 +17,10 @@
   <td class="center-align cost"><%= f.object.item_unit_cost %></td>
   <td class="center-align qty"><%= f.object.item_quantity %></td>
   <td class="center-align">
-    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), :selected => f.object.tax_1), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 inline-select table-select"}) %>
+    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), :selected => f.object.tax_1), {:prompt => "Select ...",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax1 inline-select table-select"}) %>
   </td>
   <td class="center-align">
-    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), :selected => f.object.tax_2), {:prompt => "",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 inline-select table-select"}) %>
+    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), :selected => f.object.tax_2), {:prompt => "Select ...",:include_blank => ""}, {"data-placeholder" => "", :class => "tax tax2 inline-select table-select"}) %>
   </td>
   <td class="right-align"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
 </tr>
