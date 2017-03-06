@@ -1,3 +1,4 @@
+<div id="main-content">
 <%- model_class = Client -%>
 <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
 <%= hidden_field_tag :direction, params[:direction] %>
@@ -73,3 +74,4 @@
 
   <%= render 'payments/unpaid_invoices' %>
 
+</div>

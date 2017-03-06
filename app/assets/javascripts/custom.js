@@ -143,6 +143,11 @@ $(document).ready(function(){
         $("input.top_links.recover_deleted").click();
     });
 
+    $(".side-menu li > a").each(function(){
+            if($(this).hasClass('active'))
+                $(this).parent().addClass('active');
+        }
+    )
 });
 
 
