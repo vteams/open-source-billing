@@ -1,0 +1,46 @@
+<div class="col s12 m6 l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', client , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-client_id= <%=client.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}", class: "filled-in" %>
+      <label for="<%= "client_#{client.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= client.client_name%></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= client.contact_name  %></h5>
+      <strong><%= client.organization_name %></strong>
+      <div class="amount-box">
+        <strong>
+          <%= mail_to client.email, client.email , class: 'email-link' %>
+        </strong>
+        <span><%= client.business_phone %></span>
+      </div>
+      <div class="amount-box">
+        <span>Available credit</span>
+        <strong><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
+      </div>
+    </div>
+
+    <div class="action-btn-group">
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true, class: 'edit_invoice_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),client, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= client.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

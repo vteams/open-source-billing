@@ -156,10 +156,11 @@ module ApplicationHelper
 
     if %(clients items staffs tasks).include?(elem)
       account = params[:user].current_account
-      count = (account.send(elem).send(params[:status]) + Company.unscoped.find(company_id).send(elem).send(params[:status])).size
+      count = (account.send(elem).send(params[:status]) + Company.unscoped.find(company_id).send(elem).send(params[:status])).uniq.size
       if elem.eql?("clients")
         current_user.client_limit <= count ? current_user.client_limit : count
       end
+      count
     else
       model.where("company_id IN(?)", company_id).send(params[:status]).count
     end
@@ -298,6 +299,6 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments)
+    %w(invoices estimates expenses payments clients)
   end
 end

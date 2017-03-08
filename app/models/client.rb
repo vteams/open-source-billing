@@ -193,14 +193,21 @@ class Client < ActiveRecord::Base
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
-    limited_clients = clients.last(params[:user].client_limit)
+    limited_clients = clients#.last(params[:user].client_limit)
     Kaminari.paginate_array(limited_clients).page(params[:page]).per(params[:per])
-
   end
 
   def create_default_currency
     return true if self.currency.present?
     self.currency = Currency.default_currency
     self.save
+  end
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
+
+  def client_name
+    "#{first_name.first.capitalize}#{last_name.first.capitalize}"
   end
 end

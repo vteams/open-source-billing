@@ -30,10 +30,12 @@ class ClientsController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @clients = Client.unscoped.get_clients(params.merge(get_args(method)))
-    @status = params[:status]
+    @clients = Client.get_clients(params.merge(get_args(method)))
+    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params, current_user)
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -131,7 +133,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
-    @client = Client.find(params[:id])
+    @client = Client.unscoped.find(params[:id])
     @client.destroy
 
     respond_to do |format|
@@ -144,9 +146,12 @@ class ClientsController < ApplicationController
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform
     @clients = result[:clients]#.order("#{sort_column} #{sort_direction}")
-    @message = get_intimation_message(result[:action_to_perform], result[:client_ids])
-    @action = result[:action]
-    respond_to { |format| format.js }
+    #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
+    @action =  result[:action]
+    respond_to do |format|
+      format.html { redirect_to clients_url }
+      format.js
+    end
   end
 
 

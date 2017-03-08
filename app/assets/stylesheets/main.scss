@@ -82,16 +82,16 @@ h6 {
 
 /*---COlors property---*/
 .text-green {
-  color: #60c71a; }
+  color: #60c71a !important; }
 
 .text-blue {
-  color: #09b8e2; }
+  color: #09b8e2 !important; }
 
 .text-orange {
-  color: #f59210; }
+  color: #f59210 !important; }
 
 .text-grey {
-  color: #a7a7a7; }
+  color: #a7a7a7 !important; }
 
 /*---Floating btn---*/
 .btn-floating {
@@ -1802,7 +1802,7 @@ h6 {
   padding: 5px 16px;
   font-size: 14px;
   font-weight: 400; }
-.modal.editableModal .input-field input[type=text], .modal.editableModal .input-field input[type=number] {
+.modal.editableModal .input-field input[type=text], .modal.editableModal .input-field input[type=number], .modal.editableModal .input-field input[type=email] {
   font-size: 14px;
   color: #454545;
   line-height: 24px;
@@ -2167,6 +2167,131 @@ h6 {
 .clients-card .card-white-panel .card-footer .invoice-date {
   padding-top: 3px; }
 
+.invoice-box.client-box .card-white-panel {
+  padding-bottom: 10px;
+  min-height: 133px; }
+
+.clientsModal {
+  width: 72%; }
+.clientsModal .info-section .info-left-section a {
+  color: #454545; }
+.clientsModal .info-section .info-left-section a:hover {
+  color: #09b8e2; }
+.clientsModal .info-section .info-left-section .amount-wrapper {
+  display: block;
+  margin-top: 35px; }
+.clientsModal .info-section .info-left-section .amount-wrapper .amountInfo {
+  margin-right: 40px;
+  display: inline-block; }
+.clientsModal .info-section .info-left-section .amount-wrapper .amountInfo span {
+  text-transform: capitalize; }
+.clientsModal .info-section .info-left-section .amount-wrapper .amountInfo:last-child {
+  margin-right: 0; }
+@media screen and (max-width: 1366px) {
+  .clientsModal .info-section .info-left-section .amount-wrapper .amountInfo {
+    margin-right: 20px; } }
+@media screen and (max-width: 1199px) {
+  .clientsModal {
+    width: 88%; } }
+@media screen and (max-width: 991px) {
+  .clientsModal {
+    width: 88%; }
+  .clientsModal .info-section .info-left-section {
+    max-width: 400px; }
+  .clientsModal .info-section .info-left-section .amount-wrapper .amountInfo {
+    margin-right: 0;
+    width: 48%; }
+  .clientsModal .info-right-section {
+    margin-top: 44px; } }
+.clientsModal .panel-table {
+  display: inline-block;
+  margin-left: -2px;
+  width: 50%;
+  padding-bottom: 40px; }
+.clientsModal .panel-table h5 {
+  background-color: #ececec;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #454545; }
+.clientsModal .panel-table h5 a {
+  font-size: 12px;
+  font-weight: normal;
+  color: #05a4d8; }
+.clientsModal .panel-table h5 a i.material-icons {
+  font-size: 12px; }
+.clientsModal .panel-table table tr {
+  border-bottom-color: transparent; }
+.clientsModal .panel-table table tr:last-child {
+  border-bottom-color: #e5e5e5; }
+.clientsModal .panel-table table tr th {
+  border-color: transparent;
+  background-color: #f7f7f7;
+  font-weight: normal; }
+.clientsModal .panel-table table tr td {
+  border-color: transparent; }
+.clientsModal .panel-table table tr td a {
+  color: #05a4d8; }
+.clientsModal .panel-table table tr td, .clientsModal .panel-table table tr th {
+  font-size: 12px;
+  padding: 5px 14px; }
+.clientsModal .modal-header h5 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px; }
+@media screen and (max-width: 767px) {
+  .clientsModal .info-section {
+    text-align: center; }
+  .clientsModal .info-section .info-left-section {
+    max-width: 100%;
+    width: 100%;
+    text-align: center; }
+  .clientsModal .info-section .info-left-section strong {
+    font-size: 22px;
+    line-height: 18px; }
+  .clientsModal .info-section .info-left-section .amount-wrapper {
+    margin: 15px 0; }
+  .clientsModal .info-right-section {
+    float: none !important;
+    display: inline-block;
+    margin: 0 auto; } }
+@media screen and (max-width: 640px) {
+  .clientsModal .panel-table {
+    width: 100%;
+    margin-left: 0; } }
+
+/*---Client edit Modal-----*/
+.editClient .modal-header h5 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px; }
+.editClient .title-heading {
+  padding: 0 10px;
+  font-weight: normal;
+  margin-bottom: 6px; }
+.editClient .btn.moreBtn {
+  background-color: transparent;
+  border-radius: 22px;
+  box-shadow: none;
+  border: 1px solid #dfdede;
+  color: #8f8f8f;
+  font-size: 11px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: normal;
+  height: 20px;
+  min-width: 136px;
+  margin-bottom: 20px;
+  padding: 2px 10px; }
+.editClient .btn.moreBtn:hover {
+  background-color: #09b8e2;
+  color: #fff;
+  border-color: #09b8e2; }
+
+/*---Flex Box Styles---*/
 .flex-wrapper {
   display: flex;
   margin: 0 -10px;
