@@ -165,7 +165,9 @@ $(document).ready(function(){
             if($(this).hasClass('active'))
                 $(this).parent().addClass('active');
         }
-    )
+    );
+
+    $(".side-menu").mCustomScrollbar();
 });
 
 
