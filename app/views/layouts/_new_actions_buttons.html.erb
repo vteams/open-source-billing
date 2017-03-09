@@ -14,7 +14,7 @@
       end %>
     </li>
     <li>
-      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: 'New Clients'} do
+      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: 'New Clients'}, remote: true do
         image_tag('ico-clients.svg' , alt: 'Clients')
       end %>
     </li>

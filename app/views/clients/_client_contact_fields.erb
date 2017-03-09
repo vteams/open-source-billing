@@ -1,39 +1,31 @@
 <div class="client_contact">
   <div class="fields">
-    <div class="field_row">
-      <div class="label_field left single"><%= t('views.common.email') %></div>
-      <div class="medium_field">
-        <%= f.text_field :email %>
-      </div>
-      <div class="label_field right"><%= t('views.common.phone') %></div>
-      <div class="small_field"><%= f.text_field :home_phone %></div>
+    <div class="input-field col s6 m4">
+      <%= f.text_field :first_name %>
+      <%= f.label :first_name, t('views.clients.first_name') %>
     </div>
-    <!--field_row-->
-
-    <div class="field_row description">
-      <div class="label_field left single"><%= t('views.common.name') %></div>
-      <div class="small_field">
-        <%= f.text_field :first_name %>
-        <ul class="field_description">
-          <li><%= t('views.clients.first_name') %></li>
-        </ul>
-      </div>
-      <div class="small_field right">
-        <%= f.text_field :last_name %>
-        <ul class="field_description">
-          <li><%= t('views.clients.last_name') %></li>
-        </ul>
-      </div>
-      <div class="label_field right single"><%= t('views.common.mobile') %></div>
-      <div class="small_field"> <%= f.text_field :mobile_number %></div>
-    </div>
-    <div class="options_row">
-      <div class="options_content">
-        <div class="options_content_row">
-          <%= f.link_to_remove t("views.clients.remove_this_contact"), :class => 'remove' %>
-        </div>
-      </div>
+    <div class="input-field col s6 m4">
+      <%= f.text_field :last_name %>
+      <%= f.label :last_name, t('views.clients.last_name') %>
     </div>
 
+    <div class="input-field col s6 m4">
+      <%= f.text_field :email %>
+      <%= f.label :email, t('views.common.email') %>
+    </div>
+    <div class="input-field col s6 m4">
+      <%= f.text_field :home_phone %>
+      <%= f.label :home_phone, t('views.common.phone') %>
+    </div>
+
+    <div class="input-field col s6 m4">
+      <%= f.text_field :mobile_number %>
+      <%= f.label :mobile_number,  t('views.common.mobile') %>
+    </div>
+
+    <div class="input-field col s6 m4">
+      <%= f.link_to_remove t("views.clients.remove_this_contact"), :class => 'btn moreBtn remove' %>
+    </div>
   </div>
+
 </div>

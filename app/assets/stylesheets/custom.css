@@ -35,3 +35,7 @@ input#expense_amount{
 .custom-graph{
     max-width: 450px !important;
 }
+
+.newModel .input-field input+label{
+    top: 0px;
+}

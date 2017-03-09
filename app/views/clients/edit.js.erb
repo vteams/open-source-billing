@@ -1,0 +1,5 @@
+$('.editClient .modal-content').html("<%= escape_javascript render partial: 'client_form_popup', locals: {client: @client}  %>");
+$('.editClient .modal-content .input-field > label').addClass('active');
+Client.load_functions();
+
+$(".editClient").modal('open');

@@ -73,6 +73,7 @@ class ClientsController < ApplicationController
     else
       respond_to do |format|
         format.html # new.html.erb
+        format.js
         format.json { render :json => @client }
       end
     end
@@ -82,6 +83,11 @@ class ClientsController < ApplicationController
   def edit
     @client = Client.find(params[:id])
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
+    respond_to do |format|
+      format.html
+      format.js
+      format.json { render :json => @client }
+    end
   end
 
   # POST /clients
@@ -100,7 +106,7 @@ class ClientsController < ApplicationController
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
         new_client_message = new_client(@client.id)
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => new_client_message) unless params[:quick_create]
+        redirect_to(clients_path, :notice => new_client_message) unless params[:quick_create]
         return
       else
         format.html { render :action => "new" }
@@ -124,7 +130,7 @@ class ClientsController < ApplicationController
       if @client.update_attributes(client_params)
         format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => 'Your client has been updated successfully.')
+        redirect_to(clients_path, :notice => 'Your client has been updated successfully.')
         return
       else
         format.html { render :action => "edit" }
