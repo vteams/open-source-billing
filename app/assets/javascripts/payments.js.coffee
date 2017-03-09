@@ -1,6 +1,7 @@
 class @Payment
 
   applyPopover = (elem,position,corner,message) ->
+    console.log message
     elem.qtip
       content:
         text: message
@@ -52,7 +53,7 @@ class @Payment
         applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "The payment amount cannot exceed the invoice balance.")
         flag = false
       else if pay_amount > rem_credit and rem_credit
-        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", "Payment from credit cannot exceed available credit.")
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "Payment from credit cannot exceed available credit.")
         flag = false
       else
         flag = true

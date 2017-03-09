@@ -147,7 +147,7 @@ class InvoicesController < ApplicationController
           redirect_to(invoices_url, notice: 'Your Invoice has been updated successfully.')
           return
         else
-          redirect_to(edit_invoice_url(@invoice), alert: invoice_not_updated)
+          redirect_to(invoices_url, alert: invoice_not_updated)
           return
         end
       elsif @invoice.update_attributes(invoice_params)
