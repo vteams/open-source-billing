@@ -184,7 +184,12 @@ class Payment < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find self.client_id rescue invoice.client
+    Client.unscoped.find self.client_id rescue unscoped_invoice.client
+  end
+
+  def unscoped_invoice
+    return invoice if invoice.present?
+    Invoice.unscoped.find invoice_id
   end
 
   def add_company_id

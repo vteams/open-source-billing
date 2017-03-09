@@ -9,7 +9,7 @@
       <div class="invoice-name <%= random_card_color %>"><%= estimate.estimate_name %></div>
     </div>
     <div class="invoice-details">
-      <h5><%= estimate.client.organization_name %></h5>
+      <h5><%= estimate.unscoped_client.organization_name %></h5>
       <strong><%= estimate.estimate_number %></strong>
       <em><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %><span><%= estimate.currency.unit%></span></em>
     </div>
