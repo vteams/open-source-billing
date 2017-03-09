@@ -1,6 +1,10 @@
 .modal .info-section .info-left-section strong{
     display: inline-block;
 }
+
+.clientsModal .info-section .info-left-section strong{
+    display: block;
+}
 #side-nav .profile-info .profile-details .menudd:after{
     left: 116px;
 }

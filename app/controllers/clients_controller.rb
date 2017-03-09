@@ -53,9 +53,12 @@ class ClientsController < ApplicationController
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
-
+    @invoices = @client.invoices
+    @payments = Payment.payments_history(@client)
+    @detail = Services::ClientDetail.new(@client).get_detail
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @client }
     end
   end
