@@ -27,9 +27,9 @@ module Reporting
 
       options[:status] = 'unarchived'
       active_clients = Client.get_clients(options)
-      options[:status] = 'archived'
-      deleted_clients = Client.get_clients(options)
       options[:status] = 'only_deleted'
+      deleted_clients = Client.get_clients(options)
+      options[:status] = 'archived'
       archived_clients = Client.get_clients(options)
 
 

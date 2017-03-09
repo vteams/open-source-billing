@@ -185,7 +185,7 @@ class Client < ActiveRecord::Base
     #company_clients
 
     # get the unique clients associated with companies and accounts
-    clients = (account.clients.send(params[:status]) + company_clients).uniq
+    clients = (Client.where(account_id: account.id).send(params[:status]) + company_clients).uniq
 
     # sort clients in ascending or descending order
     clients.sort! do |a, b|
