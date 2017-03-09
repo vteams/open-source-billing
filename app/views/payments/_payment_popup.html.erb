@@ -4,18 +4,19 @@
     <a href="#" class="modal-close"><i class="material-icons">done</i></a>
   </div>
 </div>
+<% invoice = payment.unscoped_invoice %>
 <div class="info-section clearfix">
   <div class="info-left-section left">
-    <h6 class="text-grey"><%= payment.invoice.invoice_number %></h6>
-    <span>Invoice : <small> <%= payment.invoice.invoice_date rescue "" %> </small></span>
-    <span class="text-blue"> Due: <small> <%= payment.invoice.due_date rescue "" %></small></span>
+    <h6 class="text-grey"><%= invoice.invoice_number %></h6>
+    <span>Invoice : <small> <%= invoice.invoice_date rescue "" %> </small></span>
+    <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
     <div class="paymentInfo">
-      <strong><%= "#{number_to_currency(payment.payment_amount, unit: '')} " %> <small><%= payment.invoice.currency.unit%></small></strong>
+      <strong><%= "#{number_to_currency(payment.payment_amount, unit: '')} " %> <small><%= invoice.currency.unit%></small></strong>
     </div>
   </div>
-  <% unless payment.invoice.company.logo_url.blank? %>
+  <% unless invoice.company.logo_url.blank? %>
       <div class="info-right-section right circle">
-        <%= image_tag(payment.invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+        <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
       </div>
   <% end %>
 </div>
@@ -23,7 +24,7 @@
   <div class="info-right-section">
     <div class="row">
       <div class="field-block col s6">
-        <label>Payment (<%= payment.invoice.currency.unit%>)</label>
+        <label>Payment (<%= invoice.currency.unit%>)</label>
         <span><%= "#{number_to_currency(payment.payment_amount, unit: '')} " %></span>
       </div>
       <div class="field-block col s6">
