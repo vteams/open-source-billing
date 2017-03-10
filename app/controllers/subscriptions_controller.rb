@@ -197,6 +197,8 @@ class SubscriptionsController < ApplicationController
         "application"
       when "my_subscriptions"
         "application"
+      when "new"
+        "login"
       else
         "login"
     end
