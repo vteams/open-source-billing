@@ -27,7 +27,7 @@
         </div>
       <% end %>
       <p class='col s12'>www.opensourcebilling.org.  powered by: presstigers.com</p>
-      <a  href="<%=new_user_session_path() %>" class="btn-login-add btn-floating btn-large waves-effect "><i class="material-icons">close</i></a>
+      <%= link_to raw("<i class='material-icons'>close</i>"), new_user_session_url, class: 'btn-login-add btn-floating btn-large waves-effect' %>
     </div>
   </div>
 </section>
