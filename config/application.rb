@@ -44,6 +44,7 @@ module Osb
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
+    config.active_job.queue_adapter = :delayed_job
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
