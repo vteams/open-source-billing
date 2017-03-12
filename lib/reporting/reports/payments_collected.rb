@@ -50,8 +50,8 @@ module Reporting
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.created_at").joins(:company).joins(invoice: [:client,:currency]).
-            where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
+        payments.payment_date").joins(:company).joins(invoice: [:client,:currency]).
+            where("payments.payment_date" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
 
         payments = payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         payments = payments.where(["payments.payment_method = ?", @report_criteria.payment_method]) unless @report_criteria.payment_method == ""
@@ -70,8 +70,8 @@ module Reporting
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.created_at").where("payments.payment_type = 'credit'").joins(:company).joins(:client).joins(invoice: :currency).
-            where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
+        payments.payment_date").where("payments.payment_type = 'credit'").joins(:company).joins(:client).joins(invoice: :currency).
+            where("payments.payment_date" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         credit_payments = credit_payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         credit_payments = credit_payments.where(["payments.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
         payments + credit_payments
@@ -131,7 +131,7 @@ module Reporting
             object.client_name.to_s,
             (object.payment_type || object.payment_method || "").capitalize.to_s,
             object.notes.to_s,
-            object.created_at.to_date.strftime(get_date_format).to_s,
+            object.payment_date.to_date.strftime(get_date_format).to_s,
             object.payment_amount.to_f.round(2)
         ]
       end
