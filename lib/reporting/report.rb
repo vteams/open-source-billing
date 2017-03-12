@@ -42,6 +42,8 @@ module Reporting
           InvoiceMailer.delay(:run_at => email_reminder.no_of_days.days.from_now).late_payment_reminder_email(invoice.id, "#{reminder_number} Late Payment Reminder")  if invoice.late_payment_reminder(reminder_number).blank? && email_reminder.send_email
         end
       end
+      current_reminders = Delayed::Job.where("handler LIKE ?", "%#{'Reporting::Reminder'}%")
+      current_reminders.destroy_all if current_reminders.size != 0
       Reporting::Reminder.delay(:run_at => 1.day.from_now).late_payment_reminder
     end
   end
