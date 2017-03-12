@@ -163,7 +163,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total
-    self.invoice_line_items.sum { |li| (li.item_unit_cost || 0) *(li.item_quantity || 0) }
+    self.invoice_line_items.sum { |li| (li.item_unit_cost || 0) * (li.item_quantity || 0) }
   end
 
   def duplicate_invoice
