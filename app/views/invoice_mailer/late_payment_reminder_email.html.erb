@@ -80,7 +80,7 @@
         <% @invoice_items.each do |item| %>
         <tr>
           <td class="mobile-align">
-            <%= "#{@invoice.currency.code}#{item[1]}" %>
+            <%= "#{number_to_currency(item[1], unit: @invoice.currency.code)}" %>
           </td>
         </tr>
         <% end %>
@@ -94,7 +94,7 @@
   <tr>
     <td style="text-align: left;">
     <br>
-      The amount of <b><%= "#{@invoice.currency.code}#{@invoice.invoice_total} #{@invoice.currency.unit}" %></b> is currently outstanding on your account. You
+      The amount of <b><%= "#{number_to_currency(@invoice.invoice_total, unit: @invoice.currency.code)} #{@invoice.currency.unit}" %></b> is currently outstanding on your account. You
       can pay the amount due by clicking <a style="color: #f5774e; text-decoration: none;"href="<%= "#{Account.url(@invoice.try(:account_id))}/invoices/preview?inv_id=#{@invoice.encrypted_id}" %>">here</a> or on the button below.
       Please feel free to <a style="color: #f5774e; text-decoration: none;"href="mailto:billing@proveric.com">contact us</a> with any questions regarding this invoice.<br />
       If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible. <br><br>

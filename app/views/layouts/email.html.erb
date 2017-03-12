@@ -185,7 +185,7 @@
                 </tr>
                 <tr>
                   <td style="color:#f0f0f0; font-size: 14px; text-align:center; padding-bottom:4px;">
-                    © <%= Date.today.year %> All Rights Reserved
+                    © <%= Date.today.year %> <%= @invoice.nil? ? @estimate.company.company_name : @invoice.company.company_name %> All Rights Reserved
                   </td>
                 </tr>
                 <tr>

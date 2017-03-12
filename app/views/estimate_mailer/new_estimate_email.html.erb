@@ -80,7 +80,7 @@
         <% @estimate_items.each do |item| %>
         <tr>
           <td class="mobile-align">
-            <%= "#{@estimate.currency.code}#{item[1]}" %>
+            <%= "#{number_to_currency(item[1], unit: @estimate.currency.code)}" %>
           </td>
         </tr>
         <% end %>
