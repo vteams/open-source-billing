@@ -42,7 +42,7 @@ class EstimateMailer < ActionMailer::Base
     @estimate = estimate
 
     param_values = {
-        'sender_business_name' => 'OSB LLC',
+        'sender_business_name' => 'PROVERIC LLC',
         'client_contact'=> (estimate.client.first_name rescue 'ERROR'),
         'currency_symbol' => (estimate.currency_symbol  rescue 'ERROR'),
         'estimate_total' => (estimate.estimate_total.to_s  rescue 'ERROR'),
