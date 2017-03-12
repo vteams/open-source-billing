@@ -5,7 +5,6 @@ gem 'rails', '~> 4.2.5'
 gem 'bundler'
 gem 'railties'
 gem 'responders', '~> 2.0'
-gem 'web-console', '~> 2.0'
 gem 'sprockets', '~> 2.12.3'
 gem 'sprockets-rails', '~> 2.2.2'
 gem 'xlsx_writer', '0.4.4'
@@ -61,6 +60,7 @@ group :assets do
 end
 
 group :development do
+  gem 'web-console', '~> 2.0'
   gem 'better_errors'
   gem "binding_of_caller"
   gem 'pry'
