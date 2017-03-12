@@ -1,6 +1,7 @@
 # Ignore bundler config.
 /.bundle
 .idea
+.byebug_history
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
