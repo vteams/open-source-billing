@@ -134,7 +134,7 @@
             <td class="align_left"><%= item.item_name rescue "" %></td>
             <td class="align_left"><%= item.item_description %></td>
             <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-            <td class="align_right"><%= item.item_quantity.to_i %></td>
+            <td class="align_right"><%= item.item_quantity.to_f %></td>
             <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
           </tr>
       <% end %>

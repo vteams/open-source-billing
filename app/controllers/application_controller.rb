@@ -19,6 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ApplicationController < ActionController::Base
+  before_action :set_paper_trail_whodunnit
+
   #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
   #Time::DATE_FORMATS.merge!(:short=> "%d")
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")

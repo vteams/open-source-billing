@@ -114,7 +114,7 @@ module Reporting
       def get_data_row object
         [
             object.item_name.to_s,
-            object.item_quantity.to_i,
+            object.item_quantity.to_f,
             object.total_amount.to_f.round(2),
             object.discount_amount.to_f.round(2),
             object.net_total.to_f.round(2)
@@ -124,7 +124,7 @@ module Reporting
       def get_total_row report,sheet
         is_first=true
         report.report_total.each do |total|
-          row_total = ["#{is_first ? 'Total' : ''}",total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
+          row_total = ["#{is_first ? 'Total' : ''}",total["item_quantity"].to_f, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
           sheet.add_row(row_total)
           is_first=false
         end
