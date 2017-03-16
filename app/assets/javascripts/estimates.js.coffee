@@ -92,6 +92,12 @@ class @Estimate
     if elem.parents('tr.fields').next('tr.fields:visible').length == 1
       $('.estimate_grid_fields .add_nested_fields').click()
 
+  empty_tax_fields = (tax_container) ->
+    tax_container.find('input.tax1').val ''
+    tax_container.find('input.tax2').val ''
+    tax_container.find('td.tax1').html ''
+    tax_container.find('td.tax1').html ''
+    $('.taxes_total').remove()
 
   @change_estimate_item  = ->
     $('.estimate_grid_fields select.items_list').on 'change', ->
@@ -117,11 +123,13 @@ class @Estimate
             container.find('td.cost').html item[1].toFixed(2)
             container.find('input.qty').val item[2]
             container.find('td.qty').html item[2]
-            container.find('select.tax1,select.tax2').val ''
+            empty_tax_fields(container)
             if item[3] != 0
-              container.find('select.tax1').val item[3]
+              container.find('input.tax1').val item[3]
+              container.find('td.tax1').html item[6]
             if item[4] != 0
-              container.find('select.tax2').val item[4]
+              container.find('input.tax2').val item[4]
+              container.find('td.tax2').html item[7]
             container.find('input.item_name').val item[5]
             updateLineTotal elem
             updateInvoiceTotal()
@@ -341,9 +349,6 @@ class @Estimate
 
             if not $.isNumeric(qty.val())  and qty.val() isnt ""
               applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
-              flag = false
-            else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-              applyPopover(tax2.parents('.select-wrapper.tax2'),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
               flag = false
             else hidePopover(qty)
       flag
