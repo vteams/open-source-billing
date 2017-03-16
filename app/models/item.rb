@@ -90,4 +90,15 @@ class Item < ActiveRecord::Base
     Kaminari.paginate_array(items).page(params[:page]).per(params[:per])
 
   end
+
+  def tax1_name
+    return '' if tax_1.blank?
+    Tax.unscoped.find_by(id: tax_1).name
+  end
+
+  def tax2_name
+    return '' if tax_2.blank?
+    Tax.unscoped.find_by(id: tax_2).name
+  end
+
 end
