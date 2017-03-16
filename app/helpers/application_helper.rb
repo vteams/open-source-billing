@@ -300,6 +300,6 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments clients)
+    %w(invoices estimates expenses payments clients items taxes)
   end
 end

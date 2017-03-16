@@ -4,8 +4,8 @@
 
           <div class="card-white-panel invoice-card" data-taxis_id= <%=taxis.id %>>
             <div class="checkbox-item">
-              <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "chk1",class: 'filled-in' %>
-              <label for="chk1"></label>
+              <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "tax_#{taxis.id}", class: "filled-in" %>
+              <label for="<%= "tax_#{taxis.id}" %>"></label>
               <div class="invoice-name green-light"><%= taxis.name[0] %></div>
             </div>
             <div class="invoice-details">
