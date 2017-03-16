@@ -30,7 +30,7 @@
 
         <%= render 'layouts/header' %>
 
-        <main id="main">
+        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%>">
           <div class="container-fluid">
             <!--- side vertical menu --->
             <%= render 'layouts/side_nav'%>

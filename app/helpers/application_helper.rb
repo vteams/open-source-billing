@@ -235,7 +235,8 @@ module ApplicationHelper
 
   def get_report_clients
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    Company.find(company_id).clients
+    Company.unscoped.find(company_id).clients
+    current_user.current_account.clients.unarchived
   end
 
   def get_report_items

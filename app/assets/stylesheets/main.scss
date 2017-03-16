@@ -717,11 +717,11 @@ h6 {
   padding: 12px 20px 7px;
   font-size: 16px;
   line-height: 20px;
-  color: #09b8e2;
+  color: #fff;
   transition: all 1s;
   white-space: nowrap; }
 #side-nav .side-menu li a img {
-  margin: 0 24px 0 11px; }
+  margin: 0 26px 0 11px; }
 #side-nav .side-menu li a span {
   display: inline-block;
   vertical-align: top; }
@@ -768,12 +768,12 @@ h6 {
   left: 62px; }
 @media only screen and (max-width: 767px) {
   #side-nav.side-show {
-    margin-left: 0;
+    margin-left: 0px;
     transition: all 0.5s;
     z-index: 9; } }
 @media only screen and (max-width: 767px) {
   #side-nav {
-    margin-left: -300px;
+    margin-left: -330px;
     transition: all 0.5s;
     width: 250px;
     z-index: 9;
@@ -2116,6 +2116,14 @@ h6 {
 .viewModal .text-info p strong {
   display: block;
   font-weight: bold; }
+.viewModal .field-block {
+  margin-bottom: 15px; }
+.viewModal .field-block label + span {
+  display: block;
+  line-height: 14px;
+  font-size: 14px;
+  border-bottom: 1px solid  #dadada;
+  padding-bottom: 8px; }
 
 .editPaymentModal .text-info strong {
   display: block;
@@ -2364,6 +2372,30 @@ h6 {
   color: #fff;
   border-color: #09b8e2; }
 
+/*---Items Card---*/
+.items-box .invoice-details em {
+  font-weight: normal; }
+.items-box .invoice-details .item-description {
+  max-width: 208px;
+  font-size: 12px;
+  margin: 6px 0;
+  line-height: 16px; }
+.items-box .invoice-details .amount-box {
+  display: inline-block;
+  margin-right: 30px; }
+.items-box .invoice-details .amount-box:last-child {
+  margin-right: 0; }
+.items-box .invoice-details .amount-box strong {
+  font-size: 12px;
+  line-height: 12px; }
+
+.itemModal .modal-body, .edititemModal .modal-body {
+  padding: 20px 44px; }
+
+/*---Tax Styles--*/
+.invoice-box.tax-box .card-white-panel {
+  min-height: 70px; }
+
 /*---Flex Box Styles---*/
 .flex-wrapper {
   display: flex;
@@ -2449,6 +2481,197 @@ h6 {
   .col-xs-12 {
     flex-flow: column;
     width: 100%; } }
+/*---Reports Page Styles--**/
+#main {
+  height: 100%; }
+#main .container-fluid {
+  height: calc(100% - 30px); }
+#main #main-content {
+  height: 100%; }
+
+@media only screen and (max-width: 767px) {
+  .report-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content {
+    top: 54px !important; }
+  .report-page #activity-sidebar.show-activity {
+    position: fixed;
+    top: 55px;
+    height: 100%;
+    z-index: 9999; } }
+@media only screen and (max-width: 655px) {
+  .report-page #header .logo {
+    margin-left: 0; }
+  .report-page #activity-sidebar.show-activity {
+    top: 90px; }
+  .report-page #header .header-center .hdr-select-holder .select-wrapper.currency .dropdown-content {
+    top: 28px !important; }
+  .report-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content {
+    top: 40px !important; } }
+@media only screen and (max-width: 480px) {
+  .report-page #header .logo {
+    margin-left: 4px; }
+  .report-page #header .header-center .hdr-select-holder .select-wrapper:first-child {
+    width: 150px; }
+  .report-page #header .header-right .right a {
+    padding-right: 0; } }
+
+.report-section .breadcrum-bar {
+  padding: 7px 15px; }
+.report-section .breadcrum-bar h3 {
+  float: left; }
+.report-section .breadcrum-bar .select-wrapper {
+  float: left;
+  max-width: 200px;
+  transition: none; }
+.report-section .breadcrum-bar .select-wrapper .select-dropdown {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  border-bottom-color: transparent;
+  margin-bottom: 0;
+  line-height: 1.4; }
+.report-section .breadcrum-bar .select-wrapper .inputValue {
+  display: none; }
+.report-section .breadcrum-bar .select-wrapper .caret {
+  top: 0; }
+.report-section .breadcrum-bar .select-wrapper .dropdown-content {
+  top: 36px !important; }
+.report-section .breadcrum-bar .input-field {
+  margin-top: 0; }
+@media only screen and (max-width: 767px) {
+  .report-section .breadcrum-bar h3 {
+    padding-left: 6px; } }
+.report-section .input-field .select-wrapper .caret {
+  color: #b5b5b5; }
+.report-section .input-field .select-wrapper .dropdown-content {
+  top: 25px !important;
+  font-size: 14px;
+  color: #454545;
+  line-height: 24px;
+  height: auto;
+  margin-bottom: 0;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; }
+.report-section .input-field .select-wrapper .dropdown-content li span {
+  color: #454545;
+  display: block;
+  line-height: 22px;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 400; }
+.report-section .input-field input[type=text], .report-section .input-field input[type=number], .report-section .input-field input[type=email] {
+  font-size: 14px;
+  color: #454545;
+  line-height: 24px;
+  height: auto;
+  margin-bottom: 12px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  border-bottom-color: #dadada;
+  text-transform: capitalize; }
+.report-section .input-field input + label {
+  color: #aeaeae; }
+.report-section .input-field input:focus {
+  box-shadow: none; }
+.report-section .input-field input:focus + label {
+  color: #aeaeae; }
+.report-section .input-field.datepicker input {
+  padding-right: 12px;
+  position: relative; }
+.report-section .input-field.datepicker i.material-icons {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: #b5b5b5;
+  font-size: 14px; }
+.report-section table thead {
+  border-bottom: none; }
+.report-section table thead tr {
+  border-bottom: none; }
+.report-section table tr {
+  border-color: #e5e5e5; }
+.report-section table tr th {
+  border-right: 1px solid #fff;
+  background-color: #ececec;
+  padding: 10px 12px;
+  font-weight: bold;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px; }
+.report-section table tr th:last-child {
+  border: none; }
+.report-section table tr td {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 13px;
+  padding: 10px 12px; }
+.report-section table tfoot tr td span {
+  display: block; }
+.report-section table tfoot tr td:first-child {
+  vertical-align: top; }
+.report-section table tfoot tr td:first-child strong {
+  font-weight: bold; }
+.report-section .status-info {
+  padding-bottom: 8px; }
+.report-section .status-info h5 {
+  margin-bottom: 0; }
+.report-section .icon-done {
+  color: #b5b5b5; }
+.report-section .icon-done i {
+  line-height: 40px; }
+.report-section .simple-responsive {
+  max-width: 100%;
+  overflow: auto;
+  display: block; }
+.report-section .simple-responsive table {
+  min-width: 700px; }
+.report-section #main-content {
+  overflow-x: auto; }
+@media only screen and (max-width: 767px) {
+  .report-section #main-content {
+    overflow: auto; } }
+
+/*---report Page-close---*/
+.page-box {
+  padding: 30px;
+  background-color: #fff;
+  height: 100%;
+  margin-top: 20px; }
+.page-box .page-box-header {
+  padding: 14px 10px; }
+.page-box .page-box-header h6 {
+  color: #454545; }
+.page-box .page-box-header span {
+  font-size: 11px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #05a4d8; }
+.page-box .page-box-header span strong {
+  color: #454545;
+  font-weight: bold;
+  text-transform: uppercase; }
+.page-box .page-box-header .title-desc {
+  padding-bottom: 20px; }
+.page-box .page-box-header p {
+  font-size: 11px;
+  color: #454545;
+  float: left;
+  max-width: 400px; }
+.page-box .page-box-header .report-links {
+  text-align: right;
+  font-size: 11px;
+  vertical-align: middle; }
+.page-box .page-box-header .report-links a {
+  color: #05a4d8; }
+@media only screen and (max-width: 767px) {
+  .page-box .page-box-header .report-links {
+    text-align: left;
+    display: block; }
+  .page-box .page-box-header p {
+    max-width: 100%;
+    width: 100%; } }
+
+@media only screen and (max-width: 992px) {
+  table tr td {
+    padding: 9px 10px 10px; }
+  table tr th {
+    text-align: center; }
+  table tr:last-child {
+    border-right-color: transparent; } }
 .loginpage {
   padding-top: 0; }
 

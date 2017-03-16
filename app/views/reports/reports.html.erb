@@ -1,10 +1,26 @@
+<%= render 'report_activity'%>
 <div id="main-content">
-<% unless request.format.pdf? %>
-  <%= render "criteria_controls" %>
-<% end %>
-<div class="report_content">
-  <%#= render "#{@report.report_name}" %>
-  <%= render "report_body" %>
-</div>
+  <!--- main content --->
+  <!--- breadcrum Bar --->
+  <div class="breadcrum-bar card-white-panel clearfix">
+    <div class="input-field">
+      <h3> Reports: </h3>
+      <select onchange="location = this.value;">
+        <option value="<%= "/#{I18n.locale}/reports/payments_collected" %>" <%= "#{ 'selected' if @report.report_name.eql?('payments_collected')}"%>> Payment Collected</option>
+        <option value="<%= "/#{I18n.locale}/reports/revenue_by_client"%>" <%= "#{'selected' if @report.report_name.eql?('revenue_by_client') }"%>> Revenue by Client</option>
+        <option value="<%= "/#{I18n.locale}/reports/aged_accounts_receivable"%>" <%= "#{'selected' if @report.report_name.eql?('aged_accounts_receivable')}"%>> AG Receivable</option>
+        <option value="<%= "/#{I18n.locale}/reports/item_sales" %>" <%= "#{'selected' if @report.report_name.eql?('item_sales')}" %>> Items Sales</option>
+        <option value="<%= "/#{I18n.locale}/reports/invoice_detail" %>" <%= "#{'selected' if @report.report_name.eql?('invoice_detail')}" %>> Invoice Reports</option>
+      </select>
+    </div>
+  </div>
+  <div class="page-box mCustomScrollbar">
+      <% unless request.format.pdf? %>
+      <%= render "criteria_controls" %>
+      <% end %>
+        <div class="simple-responsive report_content">
+          <%= render "report_body" %>
+        </div>
+  </div>
 <!-- report_content -->
 </div>
