@@ -1,7 +1,7 @@
 
-$('.editClient .modal-content').html("<%=escape_javascript render 'form', locals: {item: @item} %>");
-
-$(".editClient").modal('open');
+$('.editItemModal .modal-content').html("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
+Item.load_functions();
+$(".editItemModal").modal('open');
 
 //if (confirm('Your changes will be discarded by switching company. Are you sure you want to switch company?')) {
 //    // Set the session and reload the new item page

@@ -1,0 +1,35 @@
+<div class="modal-header clearfix text-content">
+  <h5 class="left text-blue">Items</h5>
+  <div class="modal-action-btn right">
+    <a href="#" class="modal-close"><i class="material-icons">done</i></a>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="field-block col s12">
+      <label for="clientname"><%= t('views.items.item_name') %>:</label>
+      <span>  <%= item.item_name %></span>
+    </div>
+    <div class="field-block col s12">
+      <label for="desc"><%= t('views.items.description') %>:</label>
+      <span>  <%= item.item_description %></span>
+    </div>
+    <div class="field-block col s6">
+      <label for="defaultcost"><%= t('views.invoice_line_item.unit_cost') %>:</label>
+      <span> <%= item.unit_cost %></span>
+    </div>
+    <div class="field-block col s6">
+      <label for="defaultqty"><%= t('views.items.quantity') %>:</label>
+      <span> <%= item.quantity %></span>
+    </div>
+    <div class="field-block col s6">
+      <label for="tax1"><%= t('views.items.tax') %> 1:</label>
+      <span> <%= item.tax_1 %></span>
+    </div>
+    <div class="field-block col s6">
+      <label for="tax1"><%= t('views.items.tax') %> 2:</label>
+      <span> <%= item.tax_2 %></span>
+    </div>
+  
+  </div>
+</div>

@@ -1,0 +1,4 @@
+$('.edititemModal .modal-content').html("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
+$('.edititemModal .modal-content .input-field > label').addClass('active');
+
+$('.edititemModal').modal('open')

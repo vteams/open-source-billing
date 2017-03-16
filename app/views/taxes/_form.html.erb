@@ -1,54 +1,23 @@
-<%= form_for(@taxis, :html => {:novalidate => ""}) do |f| %>
-  <% if @taxis.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@taxis.errors.count, "error") %> prohibited this taxis from being saved:</h2>
 
-      <ul>
-        <% @taxis.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <%= form_for(taxis, :html => {:novalidate => ""}) do |f| %>
+
+      <div class="modal-header clearfix text-content">
+  <h5 class="left">Taxes</h5>
+  <div class="modal-action-btn right">
+    <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+    <%= f.submit class: 'btn_large submit hidden' %>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="input-field col s6">
+      <%= f.text_field :name, :required => "",id:'taxname' %>
+      <label for="taxname"><%= t('views.common.tax') %></label>
     </div>
-  <% end %>
-
-  <div class="new_item_form">
-    <div class="content_middle">
-
-      <div class="fields_content">
-        <div class="fields_content_container">
-
-          <div class="fields_content_data">
-
-            <div class="field_row">
-              <div class="label_field left single"><span><%= t('views.taxes.tax_name') %></span></div>
-              <div class="large_field">
-                <%= f.text_field :name, :required => "" %>
-              </div>
-            </div>
-            <!--field_row-->
-
-            <div class="field_row">
-              <div class="label_field left single"><span><%= t('views.common.percentage') %></span></div>
-              <div class="large_field">
-                <%= f.text_field :percentage, :required => "" %>
-              </div>
-            </div>
-            <!--field_row-->
-
-          </div>
-          <!--fields_content_data-->
-        </div>
-        <!--fields_content_container-->
-      </div>
-      <!--fields_content-->
-      <script>$(".fields_content").last().css('border-bottom', 'none');</script>
-
+    <div class="input-field col s6">
+      <%= f.text_field :percentage, :required => "",id:'percentage' %>
+      <label for="percentage"><%= t('views.common.percentage') %></label>
     </div>
-    <!--content_middle-->
-
-    <div class="content_bottom">
-      <%= f.submit(:class => "btn_large submit") %>
-    </div>
-    <!--content_bottom-->
-  </div><!--new_item_form-->
+  </div>
+</div>
 <% end %>

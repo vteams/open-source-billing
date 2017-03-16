@@ -1,6 +1,6 @@
 
 
-  <%= form_for(Item.new, :html => {:novalidate => ""}) do |f| %>
+  <%= form_for(item, :html => {:novalidate => ""}) do |f| %>
 
 <div class="modal-content">
     <div class="modal-header clearfix text-content">
@@ -29,24 +29,15 @@
           <%= f.number_field :quantity,id: 'defaultqty' %>
           <label for="defaultqty">Default Quantity</label>
         </div>
-        <div class="input-field col s6">
+        <div class=" col s6">
           <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
 
           <label>Tax 1</label>
         </div>
-        <div class="input-field col s6">
+        <div class=" col s6">
           <%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %>
-
           <label>Tax 2</label>
         </div>
-        <br>
-        <div class="input-field col s12  ">
-          <label><%= t('views.items.make_this_item_available_to') %>:</label>
-
-
-        </div>
-        <br>
-        <%= associate_account(controller_name, action_name, Item.new) %>
 
       </div>
     </div>

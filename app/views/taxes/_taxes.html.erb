@@ -1,39 +1,28 @@
 
-        <tr>
-          <td class="align_center" width=10></td>
-          <td class="align_left text-overflow-class" data-overflow-rows="2"></td>
-          <td class="align_left"></td>
-          <td class="align_center">
-
-          </td>
-        </tr>
-
         <div class="col s12 m6 l4">
-          <div class="card-white-panel" data-target="modal1">
+          <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+
+          <div class="card-white-panel invoice-card" data-taxis_id= <%=taxis.id %>>
             <div class="checkbox-item">
               <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "chk1",class: 'filled-in' %>
               <label for="chk1"></label>
-              <div class="invoice-name green-light"><%= taxis.name %></div>
+              <div class="invoice-name green-light"><%= taxis.name[0] %></div>
             </div>
             <div class="invoice-details">
-              <strong><%= taxis.percentage %></strong>
+              <h5><%= taxis.name%></h5>
+              <strong><%= taxis.percentage %>%</strong>
             </div>
             <div class="action-btn-group">
 
               <% if taxis.deleted_at.nil? %>
-                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_tax_path(taxis), class: "modal-close edit-modal" %>
+                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_tax_path(taxis), remote: true, class: 'edit_invoice_icon' %>
 
               <% else %>
                   <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
                               "javascript:;", class: "single-recover-link" %>
               <% end %>
-              <a href="#"><i class="material-icons">delete</i></a>
-              <a id="dLabel" class="dropdown-button" href="#" data-activates="dropdown12" data-alignment="right" data-beloworigin="true">
-                <i class="material-icons">more_vert</i>
-              </a><ul id="dropdown12" class="dropdown-content z-depth-4">
-              <li><a href="#!"><i class="material-icons">archive</i> Send to Archive</a></li>
-            </ul>
-              <!-- Dropdown Structure -->
+              <%= link_to raw("<i class='material-icons'>delete</i>"),taxis, method: :delete, data:{confirm: 'Are you sure?' } %>
+
 
             </div>
           </div>

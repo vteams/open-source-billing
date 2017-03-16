@@ -47,5 +47,16 @@ module ItemsHelper
     HTML
     notice = notice.html_safe
   end
+ def total_items_cost(items)
+ sum=0
+   items.each do |item|
+    quantity=item.quantity
+    per_unit_cost=item.unit_cost
+    total_item_cost=quantity*per_unit_cost
+     sum=sum+total_item_cost
+   end
+ return sum
 
+
+ end
 end

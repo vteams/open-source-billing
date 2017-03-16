@@ -1,4 +1,68 @@
-
+<!
+<span class="btn-activity">Activities</span>
+<aside id="activity-sidebar">
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+    <div class="status-info active">
+      <h5><a href="items.html">Items</a><span>(20)</span></h5>
+      <div class="amount">$<%= total_items_cost(@items)%></div>
+      <div class="agedWrapper">
+        <div class="aged-ar">
+          <small>Dec, 16</small>
+          <span>1,646.38 <small>USD</small></span>
+        </div>
+        <div class="progress">
+          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+            <span class="sr-only">60% Complete</span>
+          </div>
+        </div>
+      </div>
+      <div class="agedWrapper">
+        <div class="aged-ar">
+          <small>Dec, 16</small>
+          <span>1,646.38 <small>USD</small></span>
+        </div>
+        <div class="progress">
+          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+            <span class="sr-only">80% Complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="status-info">
+      <h5><a href="taxes.html">Taxes</a><span>(5)</span></h5>
+      <div class="amount">$51,230.00</div>
+      <div class="agedWrapper">
+        <div class="aged-ar">
+          <small>Dec, 16</small>
+          <span>1,646.38 <small>USD</small></span>
+        </div>
+        <div class="progress">
+          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
+            <span class="sr-only">60% Complete</span>
+          </div>
+        </div>
+      </div>
+      <div class="agedWrapper">
+        <div class="aged-ar">
+          <small>Dec, 16</small>
+          <span>1,646.38 <small>USD</small></span>
+        </div>
+        <div class="progress">
+          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+            <span class="sr-only">80% Complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="status-info">
+      <h5><a href="#">Deleted</a><span>(12)</span></h5>
+    </div>
+    <div class="status-info">
+      <h5><a href="#">Archived</a><span>(20)</span></h5>
+    </div>
+  </div>
+</aside>
     <!--- content --->
     <div id="main-content">
       <!--- main content --->
@@ -49,67 +113,7 @@
   </div>
 
 
-<!-- Small Modal Structure -->
-<div id="CreatNewmodal" class="modal creatNewModal">
-  <div class="modal-content">
-    <div class="modal-header clearfix">
-      <a href="#" class="right modal-close"><i class="material-icons">done</i></a>
-    </div>
-    <div class="modal-body">
-      <form class="">
-        <div class="input-field">
-          <input id="text1" type="email" class="validate">
-          <i class="material-icons">warning</i>
-          <label for="text1" data-error="wrong" data-success="right">Name</label>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
-<!-- View modal Structure -->
-<div id="modal1" class="modal viewModal itemModal">
-  <div class="modal-content">
-    <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">Items</h5>
-      <div class="modal-action-btn right">
-        <a href="#" class="modal-close"><i class="material-icons">done</i></a>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="field-block col s12">
-          <label for="clientname">Name</label>
-          <span>Internet + TV Bundle</span>
-        </div>
-        <div class="field-block col s12">
-          <label for="desc">Description</label>
-          <span>Sportkin Organisation & The Universal Sporting Process</span>
-        </div>
-        <div class="field-block col s6">
-          <label for="defaultcost">Default unit cost</label>
-          <span>110.00</span>
-        </div>
-        <div class="field-block col s6">
-          <label for="defaultqty">Default Quantity</label>
-          <span>110.00</span>
-        </div>
-        <div class="field-block col s6">
-          <label for="tax1">Tax 1</label>
-          <span>110.00</span>
-        </div>
-        <div class="field-block col s6">
-          <label for="tax1">Tax 2</label>
-          <span>110.00</span>
-        </div>
-        <div class="field-block col s12 m6">
-          <label for="availbility">Make this client available to</label>
-          <span>Option1</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Edit Payment Structure -->
 

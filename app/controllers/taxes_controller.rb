@@ -47,6 +47,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render json: @taxis }
     end
   end
@@ -58,6 +59,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render json: @taxis }
     end
   end

@@ -56,5 +56,8 @@ class Tax < ActiveRecord::Base
   def self.is_exits? tax_name
     where(name: tax_name).present?
   end
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
 
 end

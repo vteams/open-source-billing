@@ -59,6 +59,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @item }
     end
   end
@@ -78,6 +79,10 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
+    respond_to do |format|
+      format.js
+
+    end
   end
 
   # POST /items
@@ -98,7 +103,7 @@ class ItemsController < ApplicationController
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
         new_item_message = new_item(@item.id)
-        redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => new_item_message) unless params[:quick_create]
+        redirect_to({:action => "index", :controller => "items", :id => @item.id}, :notice => new_item_message) unless params[:quick_create]
         return
       else
         format.html { render :action => "new" }
