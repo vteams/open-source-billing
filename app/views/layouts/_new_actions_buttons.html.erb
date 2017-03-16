@@ -4,12 +4,12 @@
   </a>
   <ul>
     <li>
-      <%= link_to invoices_path, class: 'btn-floating info', data:{label: 'New Payments'} do
+      <%= link_to new_payment_path, class: 'btn-floating info', data:{label: 'New Payments'} do
         image_tag('ico-payments.svg' , alt: 'Payments')
       end %>
     </li>
     <li>
-      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: 'New Items'} do
+      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: 'New Items'}, remote: true do
         image_tag('ico-items.svg' , alt: 'Items')
       end %>
     </li>

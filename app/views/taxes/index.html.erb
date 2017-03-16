@@ -1,64 +1,119 @@
-<div id="main-content">
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
 
-<div class="taxes">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t('views.taxes.taxes') %><span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('views.taxes.new'))),
-                  new_tax_path,
-                  :class => 'btn_large' %>
+
+    <!--- content --->
+    <div id="main-content">
+      <!--- main content --->
+      <div class="row">
+        <!--- breadcrum Bar --->
+        <div class="col s12 breadcrum-bar">
+          <div class="card-white-panel ">
+            <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+            <%= hidden_field_tag :direction, params[:direction] %>
+            <%= hidden_field_tag :sort, params[:sort] %>
+            <h3><%= t('views.taxes.taxes') %> <a href="#"> / <%= t('views.common.active') %></a></h3>
+          </div>
+        </div>
+
+        <div class="invoice-box tax-box mCustomScrollbar clearfix">
+          <% @taxes.group_by { |d| d.group_date }.each do |date, taxes| %>
+
+        <p><span class="activity-date"><%=date%></span></p>
+
+          <div class="clearfix">
+            <%
+              no_record_message = "You haven't created any tax yet. Please click on New Tax button to create new tax."
+              if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+                no_record_message = "You haven't any archived tax."
+              elsif params[:status] == "deleted" || @action == "recovered from deleted"
+                no_record_message = "You haven't any deleted tax."
+              end
+            %>
+            <% if taxes.length > 0 %>
+                <%= render partial: 'taxes',:collection => taxes,as: :taxis %>
+            <% else %>
+                <tr>
+                  <td colspan="4">
+                    <div class="no_record_container"><%= no_record_message %></div>
+                  </td>
+                </tr>
+          <% end %>
+
+                </div>
+        <% end %>
+            </div>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "taxes/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='tax' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render 'filter_links' %>
-          </div>
-        </div>
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing tax_listing">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-            </colgroup>
-            <thead id="tax_head">
-            <%= render partial: 'tax_header' %>
-            </thead>
-            <tbody id="tax_body">
-            <%= render 'taxes' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('views.taxes.new'))),
-                    new_tax_path,
-                    :class => 'btn_large' %>
-      </div>
-      <!--content_bottom-->
-  <% end %>
-</div><!--taxes-->
+  </div>
+  </div>
+  </div>
 
+<!-- Small Modal Structure -->
+<div id="CreatNewmodal" class="modal creatNewModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix">
+      <a href="#" class="right modal-close"><i class="material-icons">done</i></a>
+    </div>
+    <div class="modal-body">
+      <form class="">
+        <div class="input-field">
+          <input id="text1" type="email" class="validate">
+          <i class="material-icons">warning</i>
+          <label for="text1" data-error="wrong" data-success="right">Name</label>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
+
+<!-- View modal Structure -->
+<div id="modal1" class="modal viewModal itemModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue">Taxes</h5>
+      <div class="modal-action-btn right">
+        <a href="#" class="modal-close"><i class="material-icons">done</i></a>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="field-block col s6">
+          <label for="taxname">Tax Name</label>
+          <span>Service Tax</span>
+        </div>
+        <div class="field-block col s6">
+          <label for="percentage">Percentage</label>
+          <span>14.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Payment Structure -->
+<div id="modal2" class="modal editableModal edititemModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left">Taxes</h5>
+      <div class="modal-action-btn right">
+        <a href="#" class="modal-close"><i class="material-icons" >done</i></a>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="input-field col s6">
+          <select>
+            <option value="1">Service Tax</option>
+            <option value="2">Income Tax</option>
+          </select>
+          <label>Tax Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="" id="taxname" value="14.0" type="text">
+          <label for="taxname">Percentage</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

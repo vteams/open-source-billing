@@ -1,0 +1,69 @@
+<div id="main-content">
+    <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <%= hidden_field_tag :sort, params[:sort] %>
+
+    <div class="items">
+        <div class="content_top">
+            <div class="primary_heading">
+                <h1>
+                    <%= t('header.links.items.items') %><span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
+                </h1>
+            </div>
+            <div class="primary_btn">
+                <%= link_to (content_tag(:span, t('header.links.items.new'))),
+                new_item_path,
+                :class => 'btn_large' %>
+            </div>
+        </div>
+        <!--content_top-->
+        <%= form_tag "items/bulk_actions", method: :get,  :remote => true do -%>
+        <div class="content_middle">
+
+            <div class="grid_control">
+                <div class="grid_control_left">
+                    <ul value='item' id="bulk_actions">
+                        <%= render "bulk_actions" %>
+                    </ul>
+                </div>
+
+                <div class="grid_control_right" id="active_links">
+                    <%= render 'items/filter_links' %>
+                </div>
+            </div>
+            <!--grid_control-->
+            <div class="grid_table">
+                <table cellpadding="0" cellspacing="0" class="table table_listing item_listing <%= I18n.locale %>">
+                    <colgroup>
+                        <col class="one"/>
+                        <col class="two"/>
+                        <col class="three"/>
+                        <col class="four"/>
+                        <col class="five"/>
+                        <col class="six"/>
+                        <col class="seven"/>
+                        <col class="eight"/>
+                    </colgroup>
+                    <thead id="item_head">
+                    <%= render 'item_header'%>
+                    </thead>
+                    <tbody id="item_body">
+                    <%= render 'items' %>
+                    <tfoot id="paging_links">
+                    <%= render "application_partials/paging" %>
+                    </tfoot>
+                    </tbody>
+                </table>
+            </div>
+            <!--grid_table-->
+        </div>
+        <!--content_middle-->
+        <div class="content_bottom">
+            <%= link_to (content_tag(:span,  t('header.links.items.new'))),
+            new_item_path,
+            :class => 'btn_large' %>
+        </div>
+        <!--content_bottom-->
+        <% end %>
+    </div><!--items-->
+</div>

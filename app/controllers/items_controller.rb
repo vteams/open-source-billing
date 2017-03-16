@@ -32,6 +32,7 @@ class ItemsController < ApplicationController
     set_company_session
     #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     @items = Item.get_items(params.merge(get_args(method)))
@@ -68,6 +69,7 @@ class ItemsController < ApplicationController
     @item = params[:id] ? Item.find_by_id(params[:id]).dup : Item.new
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render :json => @item }
     end
 

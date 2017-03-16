@@ -10,9 +10,11 @@
     </div>
     <div class="invoice-details">
       <h5><%= payment.unscoped_client.organization_name rescue '' %></h5>
+      <% if payment.unscoped_invoice.present? %>
       <strong><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></strong>
       <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
-    </div>
+    <% end %>
+          </div>
     <div class="card-footer clearfix">
       <span class="invoice-date"><small>Due</small> <%= payment.unscoped_invoice.due_date rescue "" %></span>
       <span class="invoice-action text-blue"><%= (payment.payment_method || payment.payment_type || "").capitalize %></span>

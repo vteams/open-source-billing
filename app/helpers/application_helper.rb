@@ -82,7 +82,7 @@ module ApplicationHelper
         association = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: item.id, parent_id: company.id) : CompanyEntity.where(entity_id: item.id, parent_id: company.id, entity_type: controller.classify)
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
-      list += "<div class='options_content_row'>
+      list += "<div class='input-field col s6'>
                   <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' class='company_checkbox'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
@@ -94,11 +94,12 @@ module ApplicationHelper
 
   def generate_radio_buttons(status, list)
     radio_buttons = <<-HTML
-              <div class="options_content_row">
+              <div class="input-field col s12 custom">
                   <input class='association' type = 'radio' value='company' name='association' id='account_association' />
                   <label for='account_association'> All companies</label>
               </div>
-              <div class="options_content_row">
+<br>
+              <div class="input-field col s6">
                   <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                   <label for='company_association'>Selected companies only</label>
               </div>

@@ -1,0 +1,71 @@
+<%= form_for(Item.new, :html => {:novalidate => ""}) do |f| %>
+
+    <div class="new_item_form">
+<div class="content_middle">
+
+<div class="fields_content">
+<div class="fields_content_container">
+
+
+<div class="fields_content_data">
+
+<div class="field_row">
+<div class="label_field left single"><span><%= t('views.items.item_name') %></span></div>
+                <div class="large_field">
+<%= f.text_field :item_name, :required => "" %>
+</div>
+              </div>
+<!--field_row-->
+
+<div class="field_row textarea">
+<div class="label_field left single"><%= t('views.items.Description') %></div>
+                <div class="large_field">
+<%= f.text_area :item_description, :required => "" %>
+</div>
+              </div>
+<!--field_row-->
+
+<div class="field_row">
+<div class="label_field left single"><%= f.label :Default_Unit_Cost %></div>
+                <div class="small_field"><%= f.text_field :unit_cost %></div>
+                <div class="label_field right single"><%= f.label :Default_Quantity %></div>
+                <div class="small_field"><%= f.number_field :quantity %></div>
+              </div>
+              <!--field_row-->
+
+              <div class="field_row">
+<div class="label_field left single">Taxes</div>
+                <div class="small_field">
+                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
+                  <%#= f.select(:tax_1, options_for_select(Tax.all.map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => ""}, {"data-placeholder" => "",:class => "tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
+                </div>
+<div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %></div>
+              </div>
+<div class="options_row clients">
+<div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
+                <div class="options_content">
+<%= associate_account(controller_name, action_name, Item.new) %>
+                </div>
+              </div>
+
+
+            </div>
+            <!--fields_content_data-->
+          </div>
+          <!--fields_content_container-->
+        </div>
+        <!--fields_content-->
+
+        <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+        <script>$(".fields_content").last().css('padding-bottom', '0');</script>
+
+
+      </div>
+      <!--content_middle-->
+
+      <div class="content_bottom">
+<%= f.submit(:class => "btn_large submit") %>
+    </div>
+      <!--content_bottom-->
+    </div><!--new_item_form-->
+<% end %>

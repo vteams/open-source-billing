@@ -100,5 +100,9 @@ class Item < ActiveRecord::Base
     return '' if tax_2.blank?
     Tax.unscoped.find_by(id: tax_2).name
   end
+  
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
 
 end

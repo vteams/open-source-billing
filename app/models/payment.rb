@@ -189,7 +189,7 @@ class Payment < ActiveRecord::Base
 
   def unscoped_invoice
     return invoice if invoice.present?
-    Invoice.unscoped.find invoice_id
+    Invoice.unscoped.find invoice_id if invoice_id.present?
   end
 
   def add_company_id

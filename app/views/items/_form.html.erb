@@ -1,81 +1,55 @@
-<%= form_for(@item, :html => {:novalidate => ""}) do |f| %>
-    <% if @item.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
-          <ul>
-            <% @item.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
+
+  <%= form_for(Item.new, :html => {:novalidate => ""}) do |f| %>
+
+<div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left"> Items</h5>
+      <div class="modal-action-btn right">
+        <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+        <%= f.submit class: 'btn_large submit hidden' %>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="input-field col s12">
+          <%= f.text_field :item_name, id:'clientname',:required => "" %>
+          <label for="clientname"> <%= t('views.items.item_name') %></label>
+
         </div>
-    <% end %>
-    <div class="new_item_form">
-      <div class="content_middle">
-
-        <div class="fields_content">
-          <div class="fields_content_container">
-
-
-            <div class="fields_content_data">
-
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.items.item_name') %></span></div>
-                <div class="large_field">
-                  <%= f.text_field :item_name, :required => "" %>
-                </div>
-              </div>
-              <!--field_row-->
-
-              <div class="field_row textarea">
-                <div class="label_field left single"><%= t('views.items.Description') %></div>
-                <div class="large_field">
-                  <%= f.text_area :item_description, :required => "" %>
-                </div>
-              </div>
-              <!--field_row-->
-
-              <div class="field_row">
-                <div class="label_field left single"><%= f.label :Default_Unit_Cost %></div>
-                <div class="small_field"><%= f.text_field :unit_cost %></div>
-                <div class="label_field right single"><%= f.label :Default_Quantity %></div>
-                <div class="small_field"><%= f.number_field :quantity %></div>
-              </div>
-              <!--field_row-->
-
-              <div class="field_row">
-                <div class="label_field left single">Taxes</div>
-                <div class="small_field">
-                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
-                  <%#= f.select(:tax_1, options_for_select(Tax.all.map { |tax| [tax.name, tax.id, {'data-tax_1' => tax.percentage}] }, :selected => f.object.tax_1), {:prompt => ""}, {"data-placeholder" => "",:class => "tax1 chzn-select grid_small", "data-form-container" => "taxes_holder", "data-dropdown-width" => "300"}) %>
-                </div>
-                <div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %></div>
-              </div>
-              <div class="options_row clients">
-                <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
-                <div class="options_content">
-                  <%= associate_account(controller_name, action_name, @item) %>
-                </div>
-              </div>
-
-
-            </div>
-            <!--fields_content_data-->
-          </div>
-          <!--fields_content_container-->
+        <div class="input-field col s12">
+          <%= f.text_field :item_description, id:'desc', :required => "" %>
+          <label for="desc"><%= t('views.items.Description') %></label>
         </div>
-        <!--fields_content-->
+        <div class="input-field col s6">
+          <%= f.text_field :unit_cost, id:'defaultcost' %>
+          <label for="defaultcost">Default unit cost</label>
+        </div>
+        <div class="input-field col s6">
+          <%= f.number_field :quantity,id: 'defaultqty' %>
+          <label for="defaultqty">Default Quantity</label>
+        </div>
+        <div class="input-field col s6">
+          <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
 
-        <script>$(".fields_content").last().css('border-bottom', 'none');</script>
-        <script>$(".fields_content").last().css('padding-bottom', '0');</script>
+          <label>Tax 1</label>
+        </div>
+        <div class="input-field col s6">
+          <%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %>
 
+          <label>Tax 2</label>
+        </div>
+        <br>
+        <div class="input-field col s12  ">
+          <label><%= t('views.items.make_this_item_available_to') %>:</label>
+
+
+        </div>
+        <br>
+        <%= associate_account(controller_name, action_name, Item.new) %>
 
       </div>
-      <!--content_middle-->
-
-      <div class="content_bottom">
-        <%= f.submit(:class => "btn_large submit") %>
-      </div>
-      <!--content_bottom-->
-    </div><!--new_item_form-->
+    </div>
+  </div>
 <% end %>
+

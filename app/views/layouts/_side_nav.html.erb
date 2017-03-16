@@ -65,10 +65,16 @@
           <% end %>
         </li>
         <li>
+          <%= active_link_to taxes_path, title: 'Taxes' do %>
+              <%= image_tag('ico-reports.svg', alt: 'Taxes')%><span>Taxes</span>
+          <% end %>
+        </li>
+        <li>
           <%= active_link_to reports_path, title: 'Reports' do %>
               <%= image_tag('ico-reports.svg', alt: 'Reports')%><span>Reports</span>
           <% end %>
         </li>
+
 
       </ul>
   </div>
