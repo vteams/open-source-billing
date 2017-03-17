@@ -13,17 +13,17 @@
     <div class="modal-body">
       <div class="row">
         <div class="input-field col s12">
-          <%= f.text_field :item_name, id:'clientname',:required => "" %>
-          <label for="clientname"> <%= t('views.items.item_name') %></label>
+          <%= f.text_field :item_name, id:'item_item_name',:required => "" %>
+          <label for="item_item_name"> <%= t('views.items.item_name') %></label>
 
         </div>
         <div class="input-field col s12">
-          <%= f.text_field :item_description, id:'desc', :required => "" %>
-          <label for="desc"><%= t('views.items.Description') %></label>
+          <%= f.text_field :item_description, id:'item_item_description', :required => "" %>
+          <label for="item_item_description"><%= t('views.items.Description') %></label>
         </div>
         <div class="input-field col s6">
-          <%= f.text_field :unit_cost, id:'defaultcost' %>
-          <label for="defaultcost">Default unit cost</label>
+          <%= f.text_field :unit_cost, id:'item_unit_cost' %>
+          <label for="item_unit_cost">Default unit cost</label>
         </div>
         <div class="input-field col s6">
           <%= f.number_field :quantity,id: 'defaultqty' %>
@@ -38,6 +38,12 @@
           <%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %>
           <label>Tax 2</label>
         </div>
+        <div class="options_row items">
+                          <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
+                          <div class="options_content">
+                            <%= associate_account(controller_name, action_name, @item) %>
+                          </div>
+                   </div>
 
       </div>
     </div>

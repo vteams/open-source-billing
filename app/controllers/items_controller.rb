@@ -32,10 +32,13 @@ class ItemsController < ApplicationController
     set_company_session
     #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
     params[:status] = params[:status] || 'active'
+    params[:user]=current_user
     @status = params[:status]
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     @items = Item.get_items(params.merge(get_args(method)))
+    @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params)
+
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
 
@@ -91,19 +94,18 @@ class ItemsController < ApplicationController
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     if Item.is_exists?(params[:item][:item_name], company_id)
       @item_exists = true
-      redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
+      redirect_to(items_path, :alert => "Item with same name already exists") unless params[:quick_create]
       return
     end
     @item = Item.new(item_params)
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
-
     respond_to do |format|
       if @item.save
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
         new_item_message = new_item(@item.id)
-        redirect_to({:action => "index", :controller => "items", :id => @item.id}, :notice => new_item_message) unless params[:quick_create]
+        redirect_to({:action => "index", :controller => "items"}, :notice => new_item_message) unless params[:quick_create]
         return
       else
         format.html { render :action => "new" }
@@ -159,7 +161,11 @@ class ItemsController < ApplicationController
     @message = get_intimation_message(result[:action_to_perform], result[:item_ids])
     @action = result[:action]
 
-    respond_to { |format| format.js }
+    respond_to do |format|
+      format.html { redirect_to items_url }
+      format.js
+      format.json
+    end
   end
 
   def undo_actions

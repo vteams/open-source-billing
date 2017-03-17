@@ -66,7 +66,8 @@ class Item < ActiveRecord::Base
     company_items = Company.find(company_id).items.send(params[:status])
 
     # get the unique items associated with companies and accounts
-    items = (account.items.send(params[:status]) + company_items).uniq
+     items = (account.items.send(params[:status]) + company_items).uniq
+    #items = (Item.where(account_id: account.id).send(params[:status]) + company_items).uniq
 
     # sort items in ascending or descending order
     items.sort! do |a, b|
@@ -105,4 +106,7 @@ class Item < ActiveRecord::Base
     created_at.strftime("%d/%m/%Y")
   end
 
+  def item_total
+    unit_cost * quantity rescue 0
+  end
 end

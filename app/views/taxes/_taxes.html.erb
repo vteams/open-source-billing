@@ -13,15 +13,26 @@
               <strong><%= taxis.percentage %>%</strong>
             </div>
             <div class="action-btn-group">
-
-              <% if taxis.deleted_at.nil? %>
+              <% if @status.eql?('deleted') %>
+                  <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+              <% else %>
+                  <%= link_to raw("<i class='material-icons'>delete</i>"),taxis, method: :delete, data:{confirm: 'Are you sure?' } %>
                   <%= link_to raw("<i class='material-icons'>create</i>"),edit_tax_path(taxis), remote: true, class: 'edit_invoice_icon' %>
 
-              <% else %>
-                  <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
-                              "javascript:;", class: "single-recover-link" %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= taxis.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= taxis.id %>" class='dropdown-content z-depth-4'>
+                    <% if @status.eql?('active') %>
+                        <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+                    <% elsif @status.eql?('archived') %>
+                        <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+                    <% end %>
+                  </ul>
               <% end %>
-              <%= link_to raw("<i class='material-icons'>delete</i>"),taxis, method: :delete, data:{confirm: 'Are you sure?' } %>
+
+
 
 
             </div>

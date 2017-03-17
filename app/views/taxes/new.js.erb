@@ -1,4 +1,4 @@
 $('.editTaxModal .modal-content').html("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
-$('.editTaxModal .modal-content .input-field > label').addClass('active');
+Tax.load_functions()
 
 $('.editTaxModal').modal('open')

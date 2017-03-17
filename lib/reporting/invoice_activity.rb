@@ -36,7 +36,6 @@ module Reporting
         active_invoices.group_by{|i| i.group_date}.each do |date, invoices|
           active_invoice_progress[date] = invoices.collect(&:invoice_total).sum rescue 0
         end
-
         deleted_invoice_progress = {}
         deleted_invoices.group_by{|i| i.group_date}.each do |date, invoices|
           deleted_invoice_progress[date] = invoices.collect(&:invoice_total).sum rescue 0

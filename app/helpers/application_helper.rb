@@ -156,11 +156,14 @@ module ApplicationHelper
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
     if %(clients items staffs tasks).include?(elem)
+
       account = params[:user].current_account
       count = (account.send(elem).send(params[:status]) + Company.unscoped.find(company_id).send(elem).send(params[:status])).uniq.size
       if elem.eql?("clients")
         current_user.client_limit <= count ? current_user.client_limit : count
       end
+
+
       count
     else
       model.where("company_id IN(?)", company_id).send(params[:status]).count

@@ -1,6 +1,5 @@
 
   <%= form_for(taxis, :html => {:novalidate => ""}) do |f| %>
-
       <div class="modal-header clearfix text-content">
   <h5 class="left">Taxes</h5>
   <div class="modal-action-btn right">
@@ -10,13 +9,13 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="input-field col s6">
-      <%= f.text_field :name, :required => "",id:'taxname' %>
-      <label for="taxname"><%= t('views.common.tax') %></label>
+    <div class="input-field col s12">
+      <%= f.text_field :name, :required => "",id:'tax_name' %>
+      <label for="tax_name"><%= t('views.common.tax') %></label>
     </div>
-    <div class="input-field col s6">
-      <%= f.text_field :percentage, :required => "",id:'percentage' %>
-      <label for="percentage"><%= t('views.common.percentage') %></label>
+    <div class="input-field col s12">
+      <%= f.text_field :percentage, :required => "",id:'tax_percentage' %>
+      <label for="tax_percentage"><%= t('views.common.percentage') %></label>
     </div>
   </div>
 </div>

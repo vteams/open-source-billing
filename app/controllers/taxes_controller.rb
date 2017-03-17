@@ -28,10 +28,12 @@ class TaxesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
+
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-
     @taxes = Tax.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+    # @tax_activity = Reporting::TaxActivity.get_recent_activity(params[:page],@per_page,sort_column,sort_direction)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -85,7 +87,7 @@ class TaxesController < ApplicationController
         format.html { redirect_to @taxis, notice: 'Tax was successfully created.' }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
-        redirect_to({:action => "edit", :controller => "taxes", :id => @taxis.id}, :notice => new_tax_message) unless params[:quick_create]
+        redirect_to({:action => "index", :controller => "taxes"}, :notice => new_tax_message) unless params[:quick_create]
         return
       else
         format.html { render action: "new" }
@@ -127,7 +129,10 @@ class TaxesController < ApplicationController
     @taxes = result[:taxes].order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:tax_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    respond_to { |format|
+      format.js
+      format.html {redirect_to taxes_url}
+    }
   end
 
   def filter_taxes

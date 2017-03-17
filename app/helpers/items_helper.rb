@@ -48,6 +48,7 @@ module ItemsHelper
     notice = notice.html_safe
   end
  def total_items_cost(items)
+   binding.pry
  sum=0
    items.each do |item|
     quantity=item.quantity
@@ -59,4 +60,5 @@ module ItemsHelper
 
 
  end
+
 end

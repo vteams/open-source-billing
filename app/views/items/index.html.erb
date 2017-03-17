@@ -4,62 +4,64 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5><a href="items.html">Items</a><span>(20)</span></h5>
-      <div class="amount">$<%= total_items_cost(@items)%></div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-            <span class="sr-only">60% Complete</span>
+      <h5> <%= link_to t('views.common.active'), "items?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span>(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
+      <div class="amount"><%= @items_activity[:active_items_total] %></div>
+      <% @items_activity[:active_items_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= amount %><small> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @items_activity[:active_items_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-            <span class="sr-only">80% Complete</span>
+      <% end %>
+
+    </div>
+
+
+    <div class="status-info">
+      <h5><%= link_to t('views.common.archived'), "items?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'archived'}" %>
+        <span>(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
+      <div class="amount"><%= @items_activity[:archived_items_total] %></div>
+      <% @items_activity[:archived_items_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= amount %><small> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @items_activity[:archived_items_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+      <% end %>
+
     </div>
     <div class="status-info">
-      <h5><a href="taxes.html">Taxes</a><span>(5)</span></h5>
-      <div class="amount">$51,230.00</div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-            <span class="sr-only">60% Complete</span>
+
+      <h5> <%= link_to t('views.common.deleted'), "items?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'deleted'}" %>
+        <span>(<%= get_count(params.merge(status: 'only_deleted', user: current_user, current_company: session['current_company'])) %>)</span></h5>
+      <div class="amount"><%= @items_activity[:deleted_items_total] %></div>
+      <% @items_activity[:deleted_items_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= amount %><small> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @items_activity[:deleted_items_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-            <span class="sr-only">80% Complete</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="status-info">
-      <h5><a href="#">Deleted</a><span>(12)</span></h5>
-    </div>
-    <div class="status-info">
-      <h5><a href="#">Archived</a><span>(20)</span></h5>
+      <% end %>
+
     </div>
   </div>
 </aside>
@@ -79,7 +81,9 @@
         </div>
         <div class="invoice-box items-box mCustomScrollbar clearfix">
           <!--- Invoices Card Title--->
-              <% @items.group_by { |d| d.group_date }.each do |date, items| %>
+          <%= form_tag "items/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+
+        <% @items.group_by { |d| d.group_date }.each do |date, items| %>
                   <p><span class="activity-date"><%= date %></span></p>
                   <div class="clearfix">
                     <%
@@ -103,6 +107,9 @@
                         <% end %>
                   </div>
               <% end %>
+              <%= render partial: 'bulk_actions'%>
+
+        <% end %>
 
 
         </div>
