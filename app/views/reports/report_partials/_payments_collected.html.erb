@@ -50,7 +50,9 @@
             </td>
             <td class="right-align currency" >
               <% payments.each do |payment| %>
-                <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %>
+                <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
+                  <%= payment.currency_code %>
+                  <%= number_to_currency(payment.payment_amount,unit: '') %>
                 <br>
               <% end %>
             </td>
@@ -62,8 +64,10 @@
         <td colspan="5"><strong><%= t('views.common.total') %></strong></td>
         <td class="right-align currency">
           <% @report.report_total.each do |total| %>
-            <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
-            <br>
+            <span>
+              <%= total[:currency_code] %>
+              <%= number_to_currency(total[:total],unit: '') %>
+            </span>
           <% end %>
         </td>
       </tr>

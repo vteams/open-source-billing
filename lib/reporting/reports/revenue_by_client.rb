@@ -45,7 +45,7 @@ module Reporting
         Payment.find_by_sql("
                 SELECT case when c.organization_name = '' then CONCAT(c.first_name,' ',c.last_name) else c.organization_name end as organization_name, #{month_wise_payment},
                 SUM(i.invoice_total) AS client_total,
-                IFNULL(cr.code,'$') AS currency_code,
+                IFNULL(cr.unit,'USD') AS currency_code,
                 IFNULL(i.currency_id,0) AS currency_id
                 FROM invoices i INNER JOIN clients c ON i.client_id = c.id INNER JOIN currencies cr ON i.currency_id = cr.id
                 WHERE YEAR(IFNULL(i.due_date, i.invoice_date)) = #{@report_criteria.year}

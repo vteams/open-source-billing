@@ -28,7 +28,7 @@
           <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
           <td class="center-align" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
           <td class="center-align <%= invoice.status %>" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" ><%= invoice.status %></td>
-          <td class="right-align" data-sort_val="<%= invoice.invoice_total %>" ><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : "$") %></td>
+          <td class="right-align" data-sort_val="<%= invoice.invoice_total %>" ><%= invoice.currency.present? ? invoice.currency.unit : "USD" %>  <%= number_to_currency(invoice.invoice_total, unit: '' ) %></td>
         </tr>
     <% end %>
     <tfoot>
@@ -39,7 +39,7 @@
       <td class="align_left"></td>
       <td class="right-align currency">
         <% @report.report_total.each do |total| %>
-            <span><%= number_to_currency(total[:total],unit: total[:currency_code]) %></span>
+            <span><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></span>
         <% end %>
       </td>
     </tr>

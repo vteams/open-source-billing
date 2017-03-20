@@ -65,7 +65,7 @@ aged_invoices = Invoice.find_by_sql(<<-SQL
               IFNULL(SUM(payments.payment_amount), 0) payment_received,
               DATEDIFF('#{@report_criteria.to_date}', DATE(IFNULL(invoices.due_date, invoices.invoice_date))) age,
               invoices.`status`,
-              IFNULL(currencies.code,'$') as currency_code,
+              IFNULL(currencies.unit,'USD') as currency_code,
               IFNULL(invoices.currency_id,0) as currency_id,
               invoices.id as id
             FROM `invoices`

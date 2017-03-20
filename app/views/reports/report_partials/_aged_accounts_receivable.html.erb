@@ -30,31 +30,36 @@
         </td>
         <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['zero_to_thirty'] }  %>">
           <% ages.each do |aged| %>
-            <%= number_to_currency(aged.attributes["zero_to_thirty"],unit: aged.attributes['currency_code']) %>
+            <%= aged.attributes['currency_code'] %>
+            <%= number_to_currency(aged.attributes["zero_to_thirty"],unit: '') %>
             <br>
           <% end %>
         </td>
         <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['thirty_one_to_sixty'] } %>">
           <% ages.each do |aged| %>
-            <%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: aged.attributes['currency_code']) %>
+            <%= aged.attributes['currency_code'] %>
+            <%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: '') %>
             <br>
           <% end %>
         </td>
         <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['sixty_one_to_ninety'] } %>" >
           <% ages.each do |aged| %>
-            <%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: aged.attributes['currency_code']) %>
+            <%= aged.attributes['currency_code'] %>
+            <%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: '') %>
             <br>
           <% end %>
         </td>
         <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['ninety_one_and_above'] } %>" >
           <% ages.each do |aged| %>
-            <%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %>
+            <%= aged.attributes['currency_code'] %>
+            <%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: '') %>
             <br>
           <% end %>
         </td>
         <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"]} %>" >
           <% ages.each do |aged| %>
-            <%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: aged.attributes['currency_code']) %>
+            <%= aged.attributes['currency_code'] %>
+            <%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: '') %>
             <br>
           <% end %>
         </td>
@@ -71,28 +76,43 @@
       <td><strong><%= t("views.common.total") %></strong></td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
-          <span><%= number_to_currency(total["zero_to_thirty"],unit:total["currency_code"]) %></span>
+          <span>
+            <%= total["currency_code"] %>
+            <%= number_to_currency(total["zero_to_thirty"], unit: '') %>
+          </span>
 
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
-          <span><%= number_to_currency(total["thirty_one_to_sixty"],unit:total["currency_code"]) %></span>
+          <span>
+            <%= total["currency_code"] %>
+            <%= number_to_currency(total["thirty_one_to_sixty"],unit:'') %>
+          </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
-          <span><%= number_to_currency(total["sixty_one_to_ninety"],unit:total["currency_code"]) %></span>
+          <span>
+            <%= total["currency_code"] %>
+            <%= number_to_currency(total["sixty_one_to_ninety"],unit:'') %>
+          </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
-          <span><%= number_to_currency(total["ninety_one_and_above"],unit:total["currency_code"]) %></span>
+            <span>
+              <%= total["currency_code"] %>
+              <%= number_to_currency(total["ninety_one_and_above"],unit:'') %>
+            </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
-           <span><%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %></span>
+           <span>
+             <%= total["currency_code"] %>
+             <%= number_to_currency(total["total_amount"],unit:'') %>
+           </span>
         <% end %>
       </td>
     </tr>
