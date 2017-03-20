@@ -1,134 +1,90 @@
-<div class="reports">
-  <div class="content_middle">
-
-    <div class="report_content_header">
-      <div class="report_content_heading">
-        <h1><%= t('views.reports.item_sales') %></h1>
-      </div>
-
-      <div class="content_header_data">
-        <div class="header_data_left">
-          <div class="header_data_detail">
-            <ul>
-              <li class="header_name"><%= @report.item_name %></li>
-              <li class="header_duration"><%= @report.period %></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- content_header_data -->
-    </div>
-    <!-- report_content_header -->
-
-    <%= render 'reports/report_partials/format_links'%>
-
-    <div class="item_sales">
-      <div class="grid_table">
-        <%# unless @report.report_data.blank? %>
-        <%# @report.report_data.each do |item| %>
-        <!--<h2><%#= item.item_name || '' %></h2>-->
-        <table cellpadding="0" cellspacing="0" class="table_listing item_sales_listing <%= I18n.locale %>">
-          <colgroup>
-            <col class="one"/>
-            <col class="two"/>
-            <col class="three"/>
-            <col class="four"/>
-            <col class="five"/>
-           </colgroup>
-          <thead>
-          <tr>
-            <th class="align_left"><%= t('views.items.item_name') %></th>
-            <th class="align_right"><%= t('views.reports.total_qty_sold') %></th>
-            <th class="align_right {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
-            <th class="align_right {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
-            <th class="align_right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
-          </tr>
-          </thead>
-          <tbody>
-          <% unless @report.report_data.blank? %>
-              <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
-                <tr>
-                  <td class="align_left" data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
-                  <td class="align_center" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
-                    <%  items.each do |item| %>
-                      <%= item.attributes["item_quantity"].to_i %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
-                    <%  items.each do |item| %>
-                      <%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency"  data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
-                    <%  items.each do |item| %>
-                      <%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency"  data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
-                    <%  items.each do |item| %>
-                      <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-              <tfoot>
-                <% border_class='test'%>
-                  <%# border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
-                <tr>
-                  <td class="align_left " ><%= t("views.common.total") %></td>
-                  <td class="align_center ">
-                    <% @report.report_total.each do |total| %>
-                      <%= total["item_quantity"].to_i %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency ">
-                    <% @report.report_total.each do |total| %>
-                      <%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency ">
-                    <% @report.report_total.each do |total| %>
-                      <%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                  <td class="align_right currency ">
-                    <% @report.report_total.each do |total| %>
-                      <%= number_to_currency(total["net_total"],unit:total["currency_code"]) %>
-                      <br>
-                    <% end %>
-                  </td>
-                </tr>
-              </tfoot>
-          <% else %>
-              <tr>
-                <td colspan="6"><%= t('views.reports.report_no_data') %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-        <%# end %>
-        <%# end %>
-      </div>
-      <!--grid_table-->
-    </div>
-    <!--revnue_by_client-->
-
-
-    <div class="content_bottom">
-      <div class="report_footer">
-
-      </div>
-      <!-- report_footer -->
-    </div>
-    <!--content_bottom-->
-
+<div class="col s12 page-box-header">
+  <div class="title-desc">
+    <h6><%= @report.client_name %></h6>
+    <span><%= @report.period %></span>
+    <!--<span>Between <strong> 02 jan, 17 </strong> And  <strong>03 Jan, 17</strong></span>-->
   </div>
-  <!--content_middle-->
-</div><!--reports-->
+
+  <%= render 'reports/report_partials/format_links'%>
+</div>
+<br/>
+
+<table cellpadding="0" cellspacing="0" class="table_listing item_sales_listing <%= I18n.locale %>">
+  <thead>
+  <tr>
+    <th width="40%"><%= t('views.items.item_name') %></th>
+    <th width="15%" class="right-align"><%= t('views.reports.total_qty_sold') %></th>
+    <th width="15%" class="right-align {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
+    <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
+    <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% unless @report.report_data.blank? %>
+      <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
+        <tr>
+          <td data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
+          <td class="right-align" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
+            <%  items.each do |item| %>
+              <%= item.attributes["item_quantity"].to_i %>
+              <br>
+            <% end %>
+          </td>
+          <td class="right-align currency" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
+            <%  items.each do |item| %>
+              <%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %>
+              <br>
+            <% end %>
+          </td>
+          <td class="right-align currency"  data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
+            <%  items.each do |item| %>
+              <%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %>
+              <br>
+            <% end %>
+          </td>
+          <td class="right-align currency"  data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
+            <%  items.each do |item| %>
+              <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
+              <br>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <tfoot>
+        <% border_class='test'%>
+          <%# border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
+        <tr>
+          <td><strong><%= t("views.common.total") %></strong></td>
+          <td class="right-align ">
+            <% @report.report_total.each do |total| %>
+              <span>
+                <%= total["item_quantity"].to_i %>
+              </span>
+            <% end %>
+          </td>
+          <td class="right-align currency ">
+            <% @report.report_total.each do |total| %>
+              <span>
+                <%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %>
+              </span>
+            <% end %>
+          </td>
+          <td class="right-align currency ">
+            <% @report.report_total.each do |total| %>
+              <span> <%= number_to_currency(total["discount_amount"],unit:total["currency_code"]) %> </span>
+            <% end %>
+          </td>
+          <td class="right-align currency ">
+            <% @report.report_total.each do |total| %>
+              <span><%= number_to_currency(total["net_total"],unit:total["currency_code"]) %></span>
+            <% end %>
+          </td>
+        </tr>
+      </tfoot>
+  <% else %>
+      <tr>
+        <td colspan="6"><%= t('views.reports.report_no_data') %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
