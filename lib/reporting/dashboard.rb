@@ -88,6 +88,16 @@ module Reporting
       ytd
     end
 
+    def self.get_ytd_payments_count(currency=nil, company=nil)
+      ytd = 0
+      currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
+      company_filter = company.present? ? "invoices.company_id=#{company}" : ""
+      Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).where(company_filter).each do |invoice|
+        ytd += invoice.payments.count
+      end
+      ytd
+    end
+
     def self.get_aging_data(currency=nil, company=nil)
       currency_filter = currency.present? ? " AND invoices.currency_id=#{currency.id} " : ""
       company_filter = company.present? ? "AND invoices.company_id=#{company}" : ""

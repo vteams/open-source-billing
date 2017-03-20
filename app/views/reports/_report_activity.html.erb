@@ -3,23 +3,24 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5><%= link_to t('views.reports.payments_collected'), "/#{I18n.locale}/reports/payments_collected" %><span>(300)</span></h5>
-      <div class="amount">$251,205.89</div>
+      <h5><%= link_to t('views.reports.payments_collected'), "/#{I18n.locale}/reports/payments_collected" %><span>(<%= @report_activity[:payments_collected][:total] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@report_activity[:payments_collected][:amount], unit: default_currency_unit )%></div>
     </div>
     <div class="status-info">
-      <h5><%= link_to t('views.reports.revenue_by_client'), "/#{I18n.locale}/reports/revenue_by_client", :class => 'invoices_link' %><span>(550)</span></h5>
-      <div class="amount">$681,084.96</div>
+      <h5><%= link_to t('views.reports.revenue_by_client'), "/#{I18n.locale}/reports/revenue_by_client", :class => 'invoices_link' %><span>(<%= @report_activity[:revenue_by_clients][:total] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@report_activity[:revenue_by_clients][:amount], unit: default_currency_unit )%></div>
     </div>
     <div class="status-info">
-      <h5><%= link_to t('views.reports.aged_accounts_receivable'), "/#{I18n.locale}/reports/aged_accounts_receivable", :class => 'invoices_link' %><span>(660)</span></h5>
-      <div class="amount">$2,547,988.51</div>
+      <h5><%= link_to t('views.reports.aged_accounts_receivable'), "/#{I18n.locale}/reports/aged_accounts_receivable", :class => 'invoices_link' %><span>(<%= @report_activity[:ag_receivable][:total] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@report_activity[:ag_receivable][:amount], unit: default_currency_unit )%></div>
     </div>
     <div class="status-info">
-      <h5><%= link_to t('views.reports.item_sales'), "/#{I18n.locale}/reports/item_sales", :class => 'invoices_link' %><span>(450)</span></h5>
-      <div class="amount">$300,000.00</div>
+      <h5><%= link_to t('views.reports.item_sales'), "/#{I18n.locale}/reports/item_sales", :class => 'invoices_link' %><span>(<%= @report_activity[:item_sales][:total] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@report_activity[:item_sales][:amount], unit: default_currency_unit )%></div>
     </div>
     <div class="status-info">
-      <h5><%= link_to t('views.reports.invoice_detail'), "/#{I18n.locale}/reports/invoice_detail", :class => 'invoices_link' %><span>(2050)</span></h5>
+      <h5><%= link_to t('views.reports.invoice_detail'), "/#{I18n.locale}/reports/invoice_detail", :class => 'invoices_link' %><span>(<%= @report_activity[:invoice_report][:total] %>)</span></h5>
+      <div class="amount"><%= number_to_currency(@report_activity[:invoice_report][:amount], unit: default_currency_unit )%></div>
     </div>
   </div>
 </aside>

@@ -1,4 +1,4 @@
-<%= render 'report_activity'%>
+<%= render 'report_activity' unless request.format.pdf? %>
 <div id="main-content">
   <!--- main content --->
   <!--- breadcrum Bar --->
