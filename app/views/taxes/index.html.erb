@@ -6,29 +6,8 @@
     <div class="status-info">
       <h5> <%= link_to t('views.common.active'), "?status=active&per=#{@per_page}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span class="item_counts" id="actives">(<%= Tax.unarchived.size %>)</span></h5>
-      <div class="amount">$51,230.00</div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-            <span class="sr-only">60% Complete</span>
-          </div>
-        </div>
-      </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <small>Dec, 16</small>
-          <span>1,646.38 <small>USD</small></span>
-        </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-            <span class="sr-only">80% Complete</span>
-          </div>
-        </div>
-      </div>
+
+
     </div>
     <div class="status-info">
       <h5> <%= link_to t('views.common.archived'), "?status=archived&per=#{@per_page}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
