@@ -6,7 +6,7 @@
     <div class="input-field">
       <h3> Reports: </h3>
       <select onchange="location = this.value;">
-        <option value="<%= "/#{I18n.locale}/reports/payments_collected" %>" <%= "#{ 'selected' if @report.report_name.eql?('payments_collected')}"%>> Payment Collected</option>
+        <option value="<%= "/#{I18n.locale}/reports/payments_collected" %>" <%= "#{ 'selected' if @report.report_name.eql?('payments_collected')}"%>> Payments Collected</option>
         <option value="<%= "/#{I18n.locale}/reports/revenue_by_client"%>" <%= "#{'selected' if @report.report_name.eql?('revenue_by_client') }"%>> Revenue by Client</option>
         <option value="<%= "/#{I18n.locale}/reports/aged_accounts_receivable"%>" <%= "#{'selected' if @report.report_name.eql?('aged_accounts_receivable')}"%>> AG Receivable</option>
         <option value="<%= "/#{I18n.locale}/reports/item_sales" %>" <%= "#{'selected' if @report.report_name.eql?('item_sales')}" %>> Items Sales</option>
