@@ -7,6 +7,12 @@ jQuery ->
 #  jQuery(".reports table.table_listing:not(.aged_accounts_listing, .client_report_listing, .item_sales_listing)").tablesorter()
 #  jQuery(".aged_accounts_listing, .client_report_listing, .item_sales_listing").tablesorter textExtraction: (node) ->
 #    node.getAttribute('data-sort_val')
+  $(".report-section #to_date").on 'click', ->
+    $('.report-section  #to_date_icon').trigger('click')
+
+  $(".report-section #from_date").on 'click', ->
+    $('.report-section  #from_date_icon').trigger('click')
+
   $('.report-section  #from_date_icon').pickadate
     format: "yyyy-mm-dd"
     formatSubmit: DateFormats.format()
@@ -14,9 +20,10 @@ jQuery ->
       value = @get('value')
       $('.report-section #from_date').val value
 
-    $('.report-section  #to_date_icon').pickadate
-      format: "yyyy-mm-dd"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('.report-section  #to_date').val value
+  $('.report-section  #to_date_icon').pickadate
+    format: "yyyy-mm-dd"
+    formatSubmit: DateFormats.format()
+    onSet: (context) ->
+      value = @get('value')
+      $('.report-section  #to_date').val value
+
