@@ -22,14 +22,17 @@
       <label for="defaultqty"><%= t('views.items.quantity') %>:</label>
       <span> <%= item.quantity %></span>
     </div>
+    <% if item.tax_1.present? %>
     <div class="field-block col s6">
       <label for="tax1"><%= t('views.items.tax') %> 1:</label>
-      <span> <%= item.tax_1 %></span>
+      <span> <%= item.tax1_name %></span>
     </div>
+    <% end %>
+    <% if item.tax_2.present? %>
     <div class="field-block col s6">
-      <label for="tax1"><%= t('views.items.tax') %> 2:</label>
-      <span> <%= item.tax_2 %></span>
+      <label for="tax2"><%= t('views.items.tax') %> 2:</label>
+      <span> <%= item.tax2_name %></span>
     </div>
-  
+    <% end %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 
 
-  <%= form_for(item, :html => {:novalidate => ""}) do |f| %>
+  <%= form_for(item, :html => {class: 'item_form'}) do |f| %>
 
 <div class="modal-content">
     <div class="modal-header clearfix text-content">
@@ -29,21 +29,18 @@
           <%= f.number_field :quantity,id: 'defaultqty' %>
           <label for="defaultqty">Default Quantity</label>
         </div>
-        <div class=" col s6">
-          <%= f.collection_select(:tax_1, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax1 small chzn-select"}) %>
-
-          <label>Tax 1</label>
+        <div class="input-field col s6">
+          <%= f.collection_select(:tax_1, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
         </div>
-        <div class=" col s6">
-          <%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %>
-          <label>Tax 2</label>
+        <div class="input-field col s6">
+          <%= f.collection_select(:tax_2, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
         </div>
         <div class="options_row items">
-                          <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
-                          <div class="options_content">
-                            <%= associate_account(controller_name, action_name, @item) %>
-                          </div>
-                   </div>
+          <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
+          <div class="options_content">
+            <%= associate_account(controller_name, action_name, @item) %>
+          </div>
+       </div>
 
       </div>
     </div>

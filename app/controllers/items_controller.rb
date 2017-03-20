@@ -91,7 +91,7 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    company_id = get_company_id()
     if Item.is_exists?(params[:item][:item_name], company_id)
       @item_exists = true
       redirect_to(items_path, :alert => "Item with same name already exists") unless params[:quick_create]
@@ -126,7 +126,7 @@ class ItemsController < ApplicationController
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
-        format.html { redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => 'Your item has been updated successfully.') }
+        format.html { redirect_to(items_path, :notice => 'Your item has been updated successfully.') }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

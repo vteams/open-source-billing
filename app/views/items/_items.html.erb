@@ -1,54 +1,56 @@
-
 <div class="col s12 m6 l4">
   <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' %>
-
   <div class="card-white-panel invoice-card" data-item_id= <%=item.id %>>
-            <div class="checkbox-item">
-              <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
-              <label for="<%= "item_#{item.id}" %>"></label>
-              <div class="invoice-name green-light"><%= item.item_name[0] %></div>
-            </div>
-            <div class="invoice-details">
-              <strong><%= item.item_name %></strong>
-              <em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em>
-              <div class="item-description">
-                <%= item.item_description %>
-              </div>
-              <div class="amount-box">
-                <span>Quantity</span>
-                <strong><%= item.quantity %></strong>
-              </div>
-              <div class="amount-box">
-                <span>Tax 1</span>
-                <strong><%= item.tax1.name rescue "" %>%</strong>
-              </div>
-              <div class="amount-box">
-                <span>Tax 2</span>
-                <strong><%= item.tax2.name rescue "" %>%</strong>
-              </div>
-            </div>
-            <div class="action-btn-group">
-              <% if @status.eql?('deleted') %>
-                  <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
-              <% else %>
-                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item), remote: true, class: 'edit_invoice_icon' %>
-                  <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete, data:{confirm: 'Are you sure?' } %>
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
-                    <i class="material-icons">more_vert</i>
-                  </a>
-                  <!-- Dropdown Structure -->
-                  <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
-                    <% if @status.eql?('active') %>
-                        <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
-                    <% elsif @status.eql?('archived') %>
-                        <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
-                    <% end %>
-                  </ul>
-              <% end %>
-
-
-            </div>
+    <div class="checkbox-item">
+      <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
+      <label for="<%= "item_#{item.id}" %>"></label>
+      <div class="invoice-name green-light"><%= item.item_name[0] %></div>
+    </div>
+    <div class="invoice-details">
+      <strong><%= item.item_name %></strong>
+      <em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em>
+      <div class="item-description">
+        <%= item.item_description %>
+      </div>
+      <div class="amount-box">
+        <span>Quantity</span>
+        <strong><%= item.quantity %></strong>
+      </div>
+      <% if item.tax_1.present? %>
+          <div class="amount-box">
+            <span>Tax 1</span>
+            <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
           </div>
-        </div>
+      <% end %>
+      <% if item.tax_2.present? %>
+          <div class="amount-box">
+            <span>Tax 2</span>
+            <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
+          </div>
+      <% end %>
+    </div>
+    <div class="action-btn-group">
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item), remote: true, class: 'edit_invoice_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+          </ul>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
 
 

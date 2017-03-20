@@ -1,5 +1,5 @@
 
-$('.editItemModal .modal-content').html("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
+$('.editItemModal').html("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
 
 Item.load_functions();
 $('.editItemModal .modal-content .input-field > label').addClass('active');

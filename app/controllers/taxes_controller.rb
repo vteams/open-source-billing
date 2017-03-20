@@ -45,12 +45,12 @@ class TaxesController < ApplicationController
   # GET /taxes/1
   # GET /taxes/1.json
   def show
-    @taxis = Tax.find(params[:id])
+    @tax = Tax.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.json { render json: @taxis }
+      format.json { render json: @tax }
     end
   end
 

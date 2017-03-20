@@ -36,10 +36,10 @@ class @Item
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    jQuery("#item_item_name").keypress ->
+    jQuery("#item_item_name, #item_item_description").keypress ->
       hidePopover(jQuery(this))
 
-    $("form#new_item , form#edit_item").submit ->
+    $("form.item_form").submit ->
       flag = true
       if $.trim($("#item_item_name").val()) is ""
         applyPopover($("#item_item_name"),"Item name is required")
@@ -53,12 +53,14 @@ class @Item
       else if $("#item_unit_cost").val() isnt "" and  isNaN($("#item_unit_cost").val())
         applyPopover($("#item_unit_cost"),"Must be numeric")
         flag = false
+      else if ($("#item_tax_1").val() != "" or $("#item_tax_2").val() != "") and ($("#item_tax_1").val() == $("#item_tax_2").val())
+        applyPopover($("#item_tax_2").parents('.select-wrapper'),"Same tax not applied on one item")
+        flag = false
       else if $('#company_association').is(':checked')
         if $('.options_content input[type=checkbox]:checked').length is 0
           applyPopover($("#company_association"),"Select a company")
           flag = false
       flag
-
 
 
 

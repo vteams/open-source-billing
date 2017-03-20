@@ -101,6 +101,16 @@ class Item < ActiveRecord::Base
     return '' if tax_2.blank?
     Tax.unscoped.find_by(id: tax_2).name
   end
+
+  def tax1_percentage
+    return '' if tax_1.blank?
+    Tax.unscoped.find_by(id: tax_1).percentage.to_s + "%"
+  end
+
+  def tax2_percentage
+    return '' if tax_2.blank?
+    Tax.unscoped.find_by(id: tax_2).percentage.to_s + "%"
+  end
   
   def group_date
     created_at.strftime("%d/%m/%Y")
