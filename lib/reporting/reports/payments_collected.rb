@@ -33,7 +33,7 @@ module Reporting
       end
 
       def period
-        "Between #{@report_criteria.from_date.strftime(get_date_format)} and #{@report_criteria.to_date.strftime(get_date_format)}"
+        "Between <strong>#{@report_criteria.from_date.strftime(get_date_format)}</strong> and <strong>#{@report_criteria.to_date.strftime(get_date_format)}</strong>"
       end
 
       def get_report_data

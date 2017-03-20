@@ -34,7 +34,7 @@ module Reporting
       HEADER_COLUMNS = ['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
 
       def period
-        "Between #{@report_criteria.from_date.to_date.strftime(get_date_format)} and #{@report_criteria.to_date.to_date.strftime(get_date_format)}"
+        "Between <strong>#{@report_criteria.from_date.to_date.strftime(get_date_format)}</strong> and <strong>#{@report_criteria.to_date.to_date.strftime(get_date_format)}</strong>"
       end
 
       def get_report_data

@@ -1,8 +1,7 @@
 <div class="col s12 page-box-header">
   <div class="title-desc">
     <h6><%= @report.client_name %></h6>
-    <span><%= @report.period %></span>
-    <!--<span>Between <strong> 02 jan, 17 </strong> And  <strong>03 Jan, 17</strong></span>-->
+    <span><%= raw @report.period %></span>
   </div>
   <p><%= t('views.reports.aged_accounts_receivable_dtl') %></p>
 
