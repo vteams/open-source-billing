@@ -13,7 +13,7 @@
                 <% end %>
                 <a href="javascript:;" class="destroy_archived" title="Delete archived"><i class="material-icons">delete</i></a>
             <% else %>
-                <% unless controller_name.eql?('expenses')  or controller_name.eql?('clients') or controller_name.eql?('items')  %>
+                <% unless controller_name.eql?('expenses')  or controller_name.eql?('clients') or controller_name.eql?('items') or controller_name.eql?('taxes')  %>
                     <a href="javascript:;" class="send_active" title="Send"><i class="material-icons">send</i></a>
                 <% end %>
                 <a href="javascript:;" class="delete" title="Delete"><i class="material-icons">delete</i></a>

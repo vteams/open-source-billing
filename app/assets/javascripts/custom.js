@@ -114,6 +114,8 @@ $(document).ready(function(){
         }
     });
 
+
+
     $(".header.action-btn-group a.delete").on('click', function(){
         $("input.top_links.destroy").click();
     });

@@ -32,12 +32,18 @@ class @Item
   @load_functions = ->
 
     $('select').material_select()
+    jQuery('#account_association').change ->
+      if jQuery(this).is ':checked'
+        $('.company_checkbox').prop('checked',true)
 
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
     jQuery("#item_item_name, #item_item_description").keypress ->
       hidePopover(jQuery(this))
+
+
+
 
     $("form.item_form").submit ->
       flag = true
@@ -47,7 +53,7 @@ class @Item
       else if $.trim($("#item_item_description").val()) is ""
         applyPopover($("#item_item_description"),"Description is required")
         flag = false
-      else if (jQuery('#company_association').is(':checked') is  false and $('#account_association').is(':checked') is  false)
+      else if ($('#company_association').is(':checked') is  false and $('#account_association').is(':checked') is  false)
         $("#company_association").prop('checked', true);
         flag = false
       else if $("#item_unit_cost").val() isnt "" and  isNaN($("#item_unit_cost").val())

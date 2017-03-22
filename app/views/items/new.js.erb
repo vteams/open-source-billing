@@ -1,4 +1,9 @@
 
 $('.editItemModal').html("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
 Item.load_functions();
+$("#account_association").change(function() {
+    if ($(this).is(':checked')) {
+        return $('.company_checkbox').prop('checked', true);
+    }
+});
 $(".editItemModal").modal('open');
