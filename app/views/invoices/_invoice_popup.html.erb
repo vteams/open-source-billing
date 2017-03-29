@@ -36,8 +36,7 @@
       <th><%= t('views.common.description') %></th>
       <th class="center-align"><%= t('views.common.unit_cost') %></th>
       <th class="center-align"><%= t('views.items.quantity') %></th>
-      <th class="center-align">Tax 1</th>
-      <th class="center-align">Tax 2</th>
+      <th class="center-align">Tax</th>
       <th class="right-align"><%= t('views.invoices.line_total') %></th>
     </tr>
     </thead>
@@ -52,7 +51,6 @@
           <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
           <td class="center-align"><%= item.item_quantity.to_i %></td>
           <td class="center-align"><%= item.tax1.name rescue ''%></td>
-          <td class="center-align"><%= item.tax2.name rescue ''%></td>
           <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
         </tr>
     <% end %>
@@ -70,6 +68,12 @@
         <span><%= t('views.common.discount') %> <%= invoice.discount_percentage %><%= invoice.discount_type %></span>
         <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
       </div>
+      <% if invoice.tax.present? %>
+      <div class="table-row">
+        <span>Invoice Tax: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
+        <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+      </div>
+      <% end %>
       <% unless invoice.tax_detail_with_discount.blank? %>
           <%= taxes_list(invoice.tax_detail_with_discount,invoice) %>
       <% end %>

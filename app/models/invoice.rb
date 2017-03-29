@@ -46,6 +46,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :company
   belongs_to :project
   belongs_to :currency
+  belongs_to :tax
 
   has_many :invoice_line_items, :dependent => :destroy
   has_many :payments

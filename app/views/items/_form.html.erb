@@ -29,12 +29,10 @@
           <%= f.number_field :quantity,id: 'defaultqty' %>
           <label for="defaultqty">Default Quantity</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s12">
           <%= f.collection_select(:tax_1, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
         </div>
-        <div class="input-field col s6">
-          <%= f.collection_select(:tax_2, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
-        </div>
+
         <div class="options_row items">
           <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
           <div class="options_content">

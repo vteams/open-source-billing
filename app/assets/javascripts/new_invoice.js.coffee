@@ -33,6 +33,7 @@ class @Invoice
     total = 0
     tax_amount = 0
     discount_amount = 0
+    invoice_tax_amount = 0.0
     $('table.invoice_grid_fields tr:visible .line_total').each ->
       line_total = parseFloat($(this).text())
       total += line_total
@@ -49,12 +50,25 @@ class @Invoice
     $('#invoice_discount_amount_lbl').text discount_amount.toFixed(2)
     $('#invoice_discount_amount').val (discount_amount * -1).toFixed(2)
     total_balance = parseFloat($('#invoice_total_lbl').text() - discount_amount) + tax_amount
+
+    if $('#invoice_tax_id').val() != ""
+      invoice_tax_amount = getInvoiceTax(total_balance).toFixed(2)
+      $("#invoice_invoice_tax_amount").val invoice_tax_amount
+    else
+      $("#invoice_invoice_tax_amount").val invoice_tax_amount
+
+    invoice_tax_amount = parseFloat(invoice_tax_amount)
+    total_balance += invoice_tax_amount
     $('#invoice_invoice_total').val total_balance.toFixed(2)
     $('#invoice_total_lbl').text total_balance.toFixed(2)
     $('.invoice_total_strong').html total_balance.toFixed(2)
     $('#invoice_total_lbl').formatCurrency symbol: window.currency_symbol
 
     window.taxByCategory()
+
+  getInvoiceTax = (total) ->
+    tax_percentage = parseFloat($("#invoice_tax_id option:selected").data('tax_percentage'))
+    total * (parseFloat(tax_percentage) / 100.0)
 
   # Apply Tax on totals
   applyTax = (line_total,elem) ->
@@ -215,6 +229,9 @@ class @Invoice
     # Subtract discount percentage from subtotal
     $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
       hidePopover($('#invoice_discount_percentage'));
+      updateInvoiceTotal()
+
+    $("#invoice_tax_id").on 'change', ->
       updateInvoiceTotal()
 
     # Subtract discount percentage from subtotal

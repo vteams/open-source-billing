@@ -5,4 +5,5 @@ $('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'in
 Invoice.change_invoice_item();
 Invoice.changeTax();
 Invoice.load_functions();
+$(".items_list").change();
 $(".editInvoice").modal('open');
