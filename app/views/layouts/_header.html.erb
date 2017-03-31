@@ -16,9 +16,9 @@
                 <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>"><%= company.company_name %></option>
             <% end %>
           </select>
-          <% if current_user and current_user.settings.currency.present? and current_user.settings.currency == "On" %>
+          <% if current_user and current_user.settings.currency.present? and current_user.settings.currency.eql?("On") %>
               <select class="currency currency_select" data-user-id="<%= current_user.id %>">
-                <option value="" disabled selected><%= @currency.unit if @currency.present? %></option>
+                <option value="" disabled selected><%= current_user.settings.default_currency %></option>
                 <% currencies.each do |currency| %>
                     <option value="<%= currency.id%> "><%= currency.unit %></option>
                 <% end %>

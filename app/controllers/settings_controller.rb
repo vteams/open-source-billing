@@ -25,11 +25,13 @@ class SettingsController < ApplicationController
 
   def index
     @email_templates = EmailTemplate.unscoped
+    @users = User.where(account_id: current_account.id)
+    @companies = current_account.companies
   end
 
   def set_default_currency
     currency = Currency.find(params[:currency_id]) rescue Currency.default_currency
     current_user.settings.default_currency = currency.unit
-    #render text: true
+    render text: true if request.xhr?
   end
 end

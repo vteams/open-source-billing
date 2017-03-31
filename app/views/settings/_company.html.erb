@@ -1,0 +1,21 @@
+<div class="list-item" id="company_<%= company.id %>">
+  <div class="checkbox-item">
+    <div class="invoice-name green-light"><%= company.image_name %></div>
+  </div>
+  <div class="invoice-details editContent">
+    <h5><%= company.company_name %></h5>
+    <div class="input-field">
+      <select disabled>
+        <option value="1"><%= company.contact_name %></option>
+      </select>
+    </div>
+    <div class="input-field">
+      <input type="email" value="<%= company.email %>" placeholder="" disabled>
+    </div>
+    <div class="input-field countries">
+      <select disabled>
+        <option value="1"><%= company.country %></option>
+      </select>
+    </div>
+  </div>
+</div>

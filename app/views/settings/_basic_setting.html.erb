@@ -11,10 +11,12 @@
             <div class="col s12 m6 xl6">
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
-                <input type="checkbox" name="multi_currency" data-off-title="Off" data-on-color="success" data-on-title="On"  id="multi_currency"  <%= "checked" if current_user.settings.currency.present? and current_user.settings.currency == "On" %>  />
+                <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
+                <%= check_box_tag "multi_currency", multi_currency,  checked: multi_currency %>
+
                 <div id="radioBtn" class="btn-group ">
-                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if current_user.settings.currency.present? and current_user.settings.currency == "Off"}" %>">Yes</a>
-                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' if current_user.settings.currency.present? and current_user.settings.currency == "On"}" %>">No</a>
+                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>">Yes</a>
+                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' unless multi_currency}" %>"> No</a>
                 </div>
               </div>
             </div>

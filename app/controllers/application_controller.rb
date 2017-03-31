@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_date_format
   before_filter :set_current_user
   before_filter :upgrade_plan_alert
-  before_filter :set_default_currency
+  before_filter :set_default_currency, unless: :is_setting_page?
 
   before_action :set_locale,:set_mailer_host
   rescue_from CanCan::AccessDenied do |exception|
@@ -45,6 +45,10 @@ class ApplicationController < ActionController::Base
 
 
   before_filter :set_current_account, if: :current_account_required?
+
+  def is_setting_page?
+    controller_name.eql?('settings') and action_name.eql?('create')
+  end
 
   def set_default_currency
     @currency = currency_is_off? ? "" : params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency

@@ -1,0 +1,20 @@
+<div class="list-item" id="user_<%= user.id %>">
+  <div class="checkbox-item">
+    <div class="invoice-name">
+      <img src="/assets/avatarimg1.jpg" alt="avatar" class="responsive-img circle"/>
+    </div>
+  </div>
+  <div class="invoice-details editContent">
+    <div class="input-field">
+      <select disabled>
+        <option value="1"><%= user.user_name %></option>
+      </select>
+    </div>
+    <div class="input-field">
+      <input type="text" value="<%= user.email %>" placeholder="" disabled>
+    </div>
+    <div class="input-field datepicker">
+      <input type="text" value="<%= user.created_at.strftime('%d %b, %Y')%>" placeholder="" disabled>
+    </div>
+  </div>
+</div>

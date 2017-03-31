@@ -38,4 +38,7 @@ class Company < ActiveRecord::Base
     multiple(ids).only_deleted.each { |company| company.restore; company.unarchive }
   end
 
+  def image_name
+    company_name.first.camelize
+  end
 end
