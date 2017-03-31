@@ -25,7 +25,7 @@
           </div>
           <% Services::Freshbook::DATA_MODULES.each do |a_value| %>
               <div class="data-import-module checkbox">
-                <%= f.check_box(:data_filters, {multiple: true}, a_value.downcase, nil) %>
+                <%= f.check_box(:data_filters, {multiple: true, class: "filled-in", checked: "checked"}, a_value.downcase, nil) %>
                 <%= label_tag "freshbooks_data_filters_#{a_value.downcase}", a_value %>
               </div>
           <% end %>

@@ -8,7 +8,7 @@
               <%= submit_tag t('views.common.save'), class:  "btn_large submit submit_currency hidden" %>
               <a href="#" onclick="$('.submit_currency').click();" class="icon-done"><i class="material-icons">done</i></a>
             </h5>
-            <div class="col s12 m6 xl6">
+            <div class="col s12 m12 xl12">
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
                 <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
@@ -25,18 +25,20 @@
               <label><%= t('views.settings.default_currency')  %></label>
             </div>
 
-            <div class="input-field col s12 m6 xl4">
-              <%= select_tag "date_format", options_for_select(DATE_FORMATS, :selected => current_user.settings.date_format) %>
-              <label><%= t('views.settings.date_format')  %></label>
-            </div>
-            <div class="input-field col s12 m6 xl3">
-              <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
-              <label><%= t('views.settings.records_per_page')  %></label>
-            </div>
-            <div class="input-field col s12 m6 xl5">
+            <div class="input-field col s12 m6 xl6">
               <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>
               <label><%= t('views.settings.language')  %></label>
             </div>
+
+            <div class="input-field col s12 m6 xl6">
+              <%= select_tag "date_format", options_for_select(DATE_FORMATS, :selected => current_user.settings.date_format) %>
+              <label><%= t('views.settings.date_format')  %></label>
+            </div>
+            <div class="input-field col s12 m6 xl6">
+              <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
+              <label><%= t('views.settings.records_per_page')  %></label>
+            </div>
+
           </div>
         </div>
         <div class="col s12 m12 xl4">
