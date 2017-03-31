@@ -54,6 +54,8 @@ Osb::Application.routes.draw do
       end
     end
 
+    resources :email_templates
+
     resources :payment_terms
 
     resources :accounts

@@ -84,7 +84,7 @@
 //= require picker
 //= require picker.date
 //= require new_invoice
-
+//= require import
 jQuery(function () {
 
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {

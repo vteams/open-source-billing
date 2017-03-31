@@ -170,6 +170,16 @@ $(document).ready(function(){
     );
 
     $(".side-menu").mCustomScrollbar();
+
+    $("a.multi_currency").click(function(){
+        console.log('true');
+        $("input#multi_currency").attr('checked', 'checked');
+    });
+
+    $("a.no_multi_currency").click(function(){
+        console.log('false');
+        $("input#multi_currency").attr('checked', false);
+    });
 });
 
 
@@ -177,4 +187,8 @@ $(document).ready(function(){
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
+});
+
+$('.list-buttons .addbtn').on('click',function(){
+    $(this).parents('.user-list').find('.addContent').slideToggle();
 });

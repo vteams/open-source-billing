@@ -26,11 +26,11 @@
       <%= csrf_meta_tags %>
       <%= include_gon %>
     </head>
-    <body currency-unit="<%= t("currency_unit") %>">
+    <body currency-unit="<%= t("currency_unit") %>" class="full-page">
 
         <%= render 'layouts/header' %>
 
-        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%>">
+        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%>">
           <div class="container-fluid">
             <!--- side vertical menu --->
             <%= render 'layouts/side_nav'%>
@@ -39,71 +39,8 @@
 
           </div>
         </main>
-
         <%= render 'layouts/new_actions_buttons'%>
-
-
-        <div id="CreatNewmodal" class="modal">
-          <div class="modal-content">
-            <form class="">
-              <div class="input-field">
-                <input id="text1" type="email" class="validate">
-                <i class="material-icons">warning</i>
-                <label for="text1" data-error="wrong" data-success="right">Name</label>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect  btn-flat">Cancel</a>
-            <a href="#!" class=" modal-action waves-effect  btn-flat">Save</a>
-          </div>
-        </div>
-        <div id="invoice_model" class="modal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal3" class="modal editableModal editInvoice large_modal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="expense_modal" class="modal viewModal expenseModal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal2" class="modal editableModal editPaymentModal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal1" class="modal viewModal paymentModal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="client_model" class="modal viewModal clientsModal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal2" class="modal editableModal editClient newModel large_modal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal2" class="modal editableModal editItemModal  newModel ">
-          <div class="modal-content">
-          </div>
-        </div>
-        <div id="modal1" class="modal viewModal itemModal">
-          <div class="modal-content">
-          </div>
-          </div>
-        <div id="modal2" class="modal editableModal edititemModal">
-        <div class="modal-content">
-
-         </div>
-        </div>
-        <div id="modal2" class="modal editableModal editTaxModal edititemModal">
-          <div class="modal-content">
-
-          </div>
-        </div>
+        <%= render 'layouts/modal_divs'%>
     </body>
 </html>
 

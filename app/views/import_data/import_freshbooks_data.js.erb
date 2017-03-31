@@ -1,0 +1,5 @@
+<% if @js_response %>
+ $("#freshModal").modal('close');
+<% else %>
+ $(".fb_error").text('Unable to connect Freshbooks, invalid account url/ api token')
+<% end %>

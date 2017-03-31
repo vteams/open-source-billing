@@ -383,7 +383,20 @@ CUSTOM_FIELDS = {
             {label: 'Company Phone', token: '{{company_phone}}'},
             {label: 'User Name', token: '{{user_email}}'},
             {label: 'User Password', token: '{{user_password}}'},
-        ]
+        ],
+    'New Estimate' =>
+        [
+            {label: 'Company Name', token: '{{company_name}}'},
+            {label: 'Client Company', token: '{{client_company}}'},
+            {label: 'Client Name', token: '{{client_contact}}'},
+            {label: 'Currency Symbol', token: '{{currency_symbol}}'},
+            {label: 'Invoice Total', token: '{{invoice_total}}'},
+            {label: 'Invoice Number', token: '{{invoice_number}}'},
+            {label: 'Company Contact', token: '{{company_contact}}'},
+            {label: 'Company Phone', token: '{{company_phone}}'},
+            {label: 'Company Signature', token: '{{company_signature}}'},
+            {label: 'Invoice URL', token: '{{invoice_url}}'}
+        ],
 }
 
 ROLES = ['admin', 'manager', 'staff']

@@ -1,0 +1,54 @@
+<div class="basic-setting">
+  <%= form_for(:settings, url: '/settings', remote: true ,novalidate: "", id: "sub_user_form") do %>
+      <div class="row">
+        <div class="col s12 m12 xl8">
+          <div class="card-white-panel clearfix">
+            <h5 class="text-blue">
+              Basic Settings
+              <%= submit_tag t('views.common.save'), class:  "btn_large submit submit_currency hidden" %>
+              <a href="#" onclick="$('.submit_currency').click();" class="icon-done"><i class="material-icons">done</i></a>
+            </h5>
+            <div class="col s12 m6 xl6">
+              <div class="setting-btns">
+                <span><%= t('views.settings.multi_currency')  %></span>
+                <input type="checkbox" name="multi_currency" data-off-title="Off" data-on-color="success" data-on-title="On"  id="multi_currency"  <%= "checked" if current_user.settings.currency.present? and current_user.settings.currency == "On" %>  />
+                <div id="radioBtn" class="btn-group ">
+                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if current_user.settings.currency.present? and current_user.settings.currency == "Off"}" %>">Yes</a>
+                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' if current_user.settings.currency.present? and current_user.settings.currency == "On"}" %>">No</a>
+                </div>
+              </div>
+            </div>
+            <div class="input-field col s12 m6 xl6">
+              <%= select_tag "default_currency", options_for_select(currency_list, :selected => current_user.settings.default_currency) %>
+              <label><%= t('views.settings.default_currency')  %></label>
+            </div>
+
+            <div class="input-field col s12 m6 xl4">
+              <%= select_tag "date_format", options_for_select(DATE_FORMATS, :selected => current_user.settings.date_format) %>
+              <label><%= t('views.settings.date_format')  %></label>
+            </div>
+            <div class="input-field col s12 m6 xl3">
+              <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
+              <label><%= t('views.settings.records_per_page')  %></label>
+            </div>
+            <div class="input-field col s12 m6 xl5">
+              <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>
+              <label><%= t('views.settings.language')  %></label>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m12 xl4">
+          <div class="card-white-panel importData">
+            <h5 class="text-blue">Import Data</h5>
+            <div class="importElement">
+              <%= link_to new_import_datum_path, remote: true do
+                image_tag('/assets/freshbooks.png', class: 'img-responsive')
+              end %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+

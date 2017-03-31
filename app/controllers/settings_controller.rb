@@ -2,7 +2,7 @@ class SettingsController < ApplicationController
   def create
     user = current_user
     @language_changed = false
-    if params[:currency_select].present?
+    if params[:multi_currency].present?
       user.settings.currency = "On"
     else
       user.settings.currency = "Off"
@@ -23,9 +23,13 @@ class SettingsController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def index
+    @email_templates = EmailTemplate.unscoped
+  end
+
   def set_default_currency
-    currency = Currency.find(params[:currency_id])
+    currency = Currency.find(params[:currency_id]) rescue Currency.default_currency
     current_user.settings.default_currency = currency.unit
-    render text: true
+    #render text: true
   end
 end
