@@ -12,6 +12,11 @@ class SubUsersController < ApplicationController
   end
 
   def new
+    @sub_user = User.new()
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -25,11 +30,9 @@ class SubUsersController < ApplicationController
     # skip email confirmation for login
     sub_user.skip_confirmation!
 
-
-
     respond_to do |format|
       if sub_user.already_exists?(params[:email])
-        redirect_to(new_sub_user_path, alert: 'User with same email already exists.')
+        redirect_to(sub_users_url, alert: 'User with same email already exists.')
         return
       elsif sub_user.save
         # assign current user's company to newly created user
@@ -37,7 +40,7 @@ class SubUsersController < ApplicationController
         sub_user.update(current_company: get_user_current_company.id)
         current_user.accounts.first.users << sub_user
         UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
-        redirect_to(edit_sub_user_url(sub_user), notice: 'User has been saved successfully')
+        redirect_to(sub_users_url, notice: 'User has been saved successfully')
         return
       else
         format.html { render action: 'new', alert: 'Failed to save user. Make sure you have entered correct record' }
@@ -47,6 +50,10 @@ class SubUsersController < ApplicationController
 
   def edit
     @sub_user = User.find_by_id(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def update
@@ -68,7 +75,7 @@ class SubUsersController < ApplicationController
                   {alert: 'User can not be updated'}
                 end
 
-      redirect_to(edit_sub_user_url(sub_user), message)
+      redirect_to(sub_users_url, message)
       return
     end
   end

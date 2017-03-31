@@ -162,4 +162,15 @@ class User < ActiveRecord::Base
     email.eql?("admin@opensourcebilling.org")
   end
 
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
+
+  def card_name
+    user_name.first.capitalize
+  end
+
+  def group_role
+    roles.first.name
+  end
 end

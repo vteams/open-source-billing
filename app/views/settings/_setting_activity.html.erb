@@ -5,14 +5,14 @@
     <div class="status-info active">
       <!--user listing-->
 
-      <h5><%= link_to 'USERS', 'javascript:;' %></h5>
+      <h5><%= link_to 'USERS', sub_users_path %></h5>
       <div class="user-list" id="users">
         <%= render partial: 'user', collection: @users %>
       </div>
     </div>
     <div class="status-info">
       <!--company listing-->
-      <h5><%= link_to 'COMPANIES', 'javascript:;' %></h5>
+      <h5><%= link_to 'COMPANIES', companies_path %></h5>
        <div class="user-list" id="companies">
          <%= render partial: 'company', collection: @companies %>
       </div>

@@ -1,0 +1,13 @@
+<span class="btn-activity">Activities</span>
+<aside id="activity-sidebar">
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
+        <div class="status-info active">
+        <h5>
+          <a href="javascript:;"><%= role %></a>
+          <span id="actives">(<%= users.length %>)</span>
+        </h5>
+        </div>
+    <% end %>
+  </div>
+</aside>
