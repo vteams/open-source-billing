@@ -39,7 +39,11 @@ class SubUsersController < ApplicationController
         sub_user.accounts << current_account
         sub_user.update(current_company: get_user_current_company.id)
         current_user.accounts.first.users << sub_user
-        UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
+        begin
+          UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
+        rescue => e
+          puts  e
+        end
         redirect_to(sub_users_url, notice: 'User has been saved successfully')
         return
       else
