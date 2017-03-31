@@ -171,6 +171,6 @@ class User < ActiveRecord::Base
   end
 
   def group_role
-    roles.first.name
+    roles.first.name rescue nil
   end
 end
