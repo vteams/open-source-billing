@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientContact < ActiveRecord::Base
-  include Osbm
   # associations
   belongs_to :client
 

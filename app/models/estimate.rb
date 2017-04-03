@@ -2,7 +2,6 @@ class Estimate < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
-  include Osbm
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   # constants
   STATUS_DESCRIPTION = {

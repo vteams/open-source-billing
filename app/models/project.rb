@@ -1,6 +1,5 @@
 class Project < ActiveRecord::Base
   include ::OSB
-  include Osbm
   include DateFormats
   include Trackstamps
 

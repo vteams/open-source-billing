@@ -1,5 +1,4 @@
 class CompanyEmailTemplate < ActiveRecord::Base
-  include Osbm
   belongs_to :parent, :polymorphic => true
   belongs_to :email_template, :foreign_key => 'template_id'
 end

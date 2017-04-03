@@ -3,12 +3,16 @@
     <div class="login-container z-depth-1">
       <span class="side-nav"></span>
       <a class="logo" href="#">Open<span>Source</span>Billing</a>
-      <h2>Sign.In</h2>
+      <h2>Sign.Up</h2>
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {novalidate: '' , class: 'col s12'}) do |f| %>
           <div class="notice"><%= devise_error_messages! %></div>
           <div class='input-field'>
-            <%= f.text_field :user_name, :type=> "email", :autofocus => true, :id => "email user_name", :class => 'validate sign_up', :required => '' %>
+            <%= f.text_field :user_name,  :autofocus => true, :id => "user_name", :class => 'sign_up', :required => '' %>
             <label for='email'>User name</label>
+          </div>
+          <div class="input-field">
+            <%= f.text_field :account, :autofocus => true, :id => "login_company", :class => 'sign_up', :required => '' %>
+            <label for='sign_up'>Organization</label>
           </div>
           <div class='input-field'>
             <%= f.email_field :email,:type=>'email', :id => "email", :class => 'sign_up user_email validate', :required => '' %>

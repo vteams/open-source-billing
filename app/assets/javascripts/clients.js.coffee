@@ -5,6 +5,10 @@ class @Client
 
   @load_functions = ->
 
+    jQuery('#account_association').change ->
+      if jQuery(this).is ':checked'
+        $('.company_checkbox').prop('checked',true)
+
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
@@ -35,6 +39,10 @@ class @Client
       else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
         applyQtip(jQuery("#client_mobile_number"), "Invalid mobile number", 'topRight')
         flag = false
+      else if $('#company_association').is(':checked')
+        if $('.options_content input[type=checkbox]:checked').length is 0
+          applyPopover($("#company_association"),"Select a company")
+          flag = false
       else
         flag
 

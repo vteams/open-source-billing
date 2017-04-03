@@ -89,7 +89,7 @@ module Reporting
       end
 
       def to_csv
-       payments_collected_csv self
+        payments_collected_csv self
       end
 
       def to_xls

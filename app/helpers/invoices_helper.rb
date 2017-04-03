@@ -107,7 +107,11 @@ module InvoicesHelper
 
   def load_clients(action,company_id)
     account_level = current_user.current_account.clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
-    clients = action == 'new' && company_id.blank? ? account_level  : Company.unscoped.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
+    id = session['current_company'] || current_user.current_company || current_user.first_company_id
+
+    clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
+
+    clients = action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
     if @recurring_profile.present? && action == 'edit'
       recurring_client = @recurring_profile.unscoped_client
       clients << [recurring_client.organization_name, recurring_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? recurring_client.id
@@ -122,7 +126,6 @@ module InvoicesHelper
     else
       clients
     end
-    clients.first(current_user.client_limit)
   end
 
   def load_items(action,company_id, line_item = nil)

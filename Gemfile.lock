@@ -17,12 +17,6 @@ PATH
       rack-cors
       rails (~> 4.1.8)
 
-PATH
-  remote: vendor/engines/osbm
-  specs:
-    osbm (0.0.8)
-      rails (~> 4.1.15)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -461,7 +455,6 @@ DEPENDENCIES
   nokogiri (= 1.6.8)
   oauth (= 0.4.7)
   osb_api!
-  osbm!
   paper_trail (= 5.1.1)
   paranoia (= 2.1.5)
   paypal-sdk-rest (= 1.4.6)
@@ -501,4 +494,4 @@ RUBY VERSION
    ruby 2.0.0p643
 
 BUNDLED WITH
-   1.12.5
+   1.14.6

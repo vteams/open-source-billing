@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class User < ActiveRecord::Base
-  #include Osbm
   rolify
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
@@ -31,9 +30,7 @@ class User < ActiveRecord::Base
   has_many :logs, dependent: :destroy
   has_many :invoices
 
-  belongs_to :subscription , dependent: :destroy
-  attr_accessor :account,:login, :company_domain
-
+  attr_accessor :account,:login
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'
 
@@ -49,13 +46,6 @@ class User < ActiveRecord::Base
     return self.add_role :staff if self.staff.present?
     self.add_role :admin if self.roles.blank?
   end
-  def connected?
-     stripe_user_id.present?
-  end
-
-  def current_plan
-    subscription.plan
-  end
 
   def currency_symbol
     "$"
@@ -67,10 +57,6 @@ class User < ActiveRecord::Base
 
   def already_exists?(email)
     User.where('email = ?',email).present?
-  end
-
-  def my_plan
-    subscription.plan if subscription.status!='canceled'
   end
 
   def current_account
@@ -103,18 +89,6 @@ class User < ActiveRecord::Base
     user_name
   end
 
-  def organization_name
-    accounts.first.org_name rescue nil
-  end
-
-  def plan_name
-    subscription.plan.name rescue nil
-  end
-
-  def site_url
-    accounts.first.url rescue nil
-  end
-
   def clients
     Client.unscoped.where(account_id: account_id)  rescue nil
   end
@@ -127,50 +101,20 @@ class User < ActiveRecord::Base
     invoices.collect(&:invoice_total).sum rescue nil
   end
 
-  def subscription_expire_on
-    interval = subscription.plan.interval
-    if interval.eql?("month")
-      (subscription.created_at + 30.days).to_date
-    elsif interval.eql?("week")
-      (subscription.created_at + 7.days).to_date
-    elsif interval.eql?("day")
-      (subscription.created_at + 1.days).to_date
-    end
-  end
-
-  def self.skip_admin_user
-    User.unscoped.where.not(email: "admin@opensourcebilling.org")
-  end
-
-  def parent_account
-    Account.unscoped.where(id: account_id).first
-  end
-
-  def account_org_name
-    parent_account.org_name rescue nil
-  end
-
-  def parent
-    parent_account.users.first rescue nil
-  end
-
-  def client_limit
-    parent.subscription.plan.client_limit rescue nil
-  end
-
-  def god_user?
-    email.eql?("admin@opensourcebilling.org")
-  end
 
   def group_date
     created_at.strftime("%d/%m/%Y")
   end
 
   def card_name
-    user_name.first.capitalize
+    user_name.first.capitalize rescue nil
   end
 
   def group_role
     roles.first.name rescue nil
+  end
+
+  def role_name
+    roles.first.try(:name).try(:humanize) rescue nil
   end
 end

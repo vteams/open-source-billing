@@ -4,7 +4,7 @@ class SubUsersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @sub_users = User.where(account_id: current_account.id).order(sort_column + " " + sort_direction)
+    @sub_users = User.order(sort_column + " " + sort_direction)
     respond_to do |format|
       format.html
       format.js
@@ -29,15 +29,13 @@ class SubUsersController < ApplicationController
     sub_user.role_ids = params[:role_ids]
     # skip email confirmation for login
     sub_user.skip_confirmation!
-
     respond_to do |format|
       if sub_user.already_exists?(params[:email])
         redirect_to(sub_users_url, alert: 'User with same email already exists.')
         return
       elsif sub_user.save
         # assign current user's company to newly created user
-        sub_user.accounts << current_account
-        sub_user.update(current_company: get_user_current_company.id)
+        sub_user.update(current_company: get_company_id)
         current_user.accounts.first.users << sub_user
         begin
           UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]

@@ -25,8 +25,8 @@ class SettingsController < ApplicationController
 
   def index
     @email_templates = EmailTemplate.unscoped
-    @users = User.where(account_id: current_account.id)
-    @companies = current_account.companies
+    @users = User.unscoped
+    @companies = Company.unscoped
   end
 
   def set_default_currency

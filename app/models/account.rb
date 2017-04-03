@@ -1,3 +1,4 @@
+
 #
 # Open Source Billing - A super simple software to create & send invoices to your customers and
 # collect payments.
@@ -29,13 +30,9 @@ class Account < ActiveRecord::Base
   has_many :company_email_templates, :as => :parent
   has_many :email_templates, :through => :company_email_templates, :foreign_key => 'template_id'
   has_many :companies
-  has_many :users
 
   # callbacks
   before_save :change_currency_symbol
-  after_create do
-    Thread.current[:current_account] = self.id
-  end
 
   def change_currency_symbol
     self.currency_symbol = CURRENCY_SYMBOL[self.currency_code]
@@ -54,48 +51,12 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def payment_gateway
+  def self.payment_gateway
     ActiveMerchant::Billing::PaypalGateway.new(
-        :login => self.pp_login,
-        :password => self.pp_password,
-        :signature => self.pp_signature
+        :login => OSB::CONFIG::PAYPAL_LOGIN,
+        :password => OSB::CONFIG::PAYPAL_PASSWORD,
+        :signature => OSB::CONFIG::PAYPAL_SIGNATURE
     )
-  end
-  def self.payment_gateway(account_id)
-    Account.find(account_id).payment_gateway
-  end
-
-  def self.skip_admin_account
-    Account.unscoped.where.not(org_name: "admin")
-  end
-
-  def clients
-    Client.unscoped.where(account_id: id)  rescue nil
-  end
-
-  def invoices
-    Invoice.unscoped.where(account_id: id)  rescue nil
-  end
-
-  def invoices_revenues
-    invoices.collect(&:invoice_total).sum rescue nil
-  end
-
-  def sign_up_user
-    User.unscoped.where(account_id: id).first rescue nil
-  end
-
-  def subscription_plan
-    sign_up_user.plan_name rescue nil
-  end
-
-  def subscription_expire_on
-    sign_up_user.subscription_expire_on rescue nil
-  end
-
-  def owner
-    User.unscoped.where(account_id:  id).first rescue nil
   end
 
 end
-

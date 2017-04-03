@@ -128,7 +128,7 @@ module ApplicationHelper
   end
 
   def filter_select_by_companies
-    current_user.current_account.companies
+    Company.unscoped
   end
 
   # generate drop down to filter listings by company
@@ -159,11 +159,6 @@ module ApplicationHelper
 
       account = params[:user].current_account
       count = (account.send(elem).send(params[:status]) + Company.unscoped.find(company_id).send(elem).send(params[:status])).uniq.size
-      if elem.eql?("clients")
-        current_user.client_limit <= count ? current_user.client_limit : count
-      end
-
-
       count
     else
       model.where("company_id IN(?)", company_id).send(params[:status]).count

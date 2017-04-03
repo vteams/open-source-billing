@@ -65,11 +65,21 @@
         </div>
 
         <div class="row">
-          <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
-          <div class="client_contact_container" id="client-contact-container">
-            <%= f.fields_for :client_contacts, :wrapper => false %>
+          <div class="col s12">
+            <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
+            <div class="client_contact_container" id="client-contact-container">
+              <%= f.fields_for :client_contacts, :wrapper => false %>
+            </div>
           </div>
+        </div>
 
+        <div class="row">
+          <div class="options_row items">
+            <div class="label_field left single options template"><%= t('views.items.make_this_client_available_to') %>:</div>
+            <div class="options_content">
+              <%= associate_account(controller_name, action_name, @item) %>
+            </div>
+          </div>
         </div>
 
       </div>

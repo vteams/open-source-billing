@@ -68,15 +68,12 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client.client_contacts.build()
-    if current_user_client_limit_exceed?
-      redirect_to :back
-    else
-      respond_to do |format|
-        format.html # new.html.erb
-        format.js
-        format.json { render :json => @client }
-      end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+      format.json { render :json => @client }
     end
+
   end
 
   # GET /clients/1/edit

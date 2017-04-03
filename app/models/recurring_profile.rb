@@ -1,6 +1,5 @@
 class RecurringProfile < ActiveRecord::Base
 
-  include Osbm
   include DateFormats
   include Trackstamps
   #scope

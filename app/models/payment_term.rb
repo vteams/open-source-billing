@@ -20,7 +20,6 @@
 #
 class PaymentTerm < ActiveRecord::Base
   # associations
-  include Osbm
   has_many :invoices
   has_many :recurring_profiles
 end

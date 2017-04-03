@@ -28,69 +28,20 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
-  before_filter :authenticate_user!, unless: :is_home_page?
+  before_filter :authenticate_user!
   before_filter :_reload_libs #reload libs on every request for dev environment only
-                              #layout :choose_layout
-                              #reload libs on every request for dev environment only
+  #layout :choose_layout
+  #reload libs on every request for dev environment only
   before_filter :set_per_page
   before_filter :set_date_format
   before_filter :set_current_user
-  before_filter :upgrade_plan_alert
-  before_filter :set_default_currency, unless: :is_setting_page?
 
-  before_action :set_locale,:set_mailer_host
+  before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to dashboard_url, :alert => exception.message
   end
 
 
-  before_filter :set_current_account, if: :current_account_required?
-
-  def is_setting_page?
-    controller_name.eql?('settings') and action_name.eql?('create')
-  end
-
-  def set_default_currency
-    @currency = currency_is_off? ? "" : params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
-  end
-
-  def set_current_account
-    if request.subdomain.empty?
-      # redirect_to '/osbm/home'
-      if params[:controller]!= 'subscriptions'
-        redirect_to '/subscriptions'
-      end
-    else
-      unless Osbm::OPEN_ACCESS
-        if Account.where(subdomain: request.subdomain).count == 0
-          # redirect_to '/osbm/home'
-          redirect_to '/subscriptions'
-          return
-        end
-      end
-      account = Account.find_by(subdomain: request.subdomain)
-      if account.present?
-        session[:current_account] = account.id
-        Thread.current[:current_account] = session[:current_account]
-        Thread.current[:current_subdomain] = request.subdomain
-        if request.subdomain == 'admin'
-          if params[:controller]!='osbm/admins' and params[:controller] !='devise/sessions' and params[:controller]!='osbm/email_templates'
-            redirect_to '/osbm/admin/accounts' and return
-          end
-        end
-      else
-        # if params[:controller]!= 'subscriptions'
-        #   redirect_to '/subscriptions'
-        # end
-        redirect_to '/osbm/home'
-        #redirect_to '/subscriptions'
-      end
-    end
-  end
-
-  def set_mailer_host
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
-  end
   def _reload_libs
     if defined? RELOAD_LIBS
       RELOAD_LIBS.each do |lib|
@@ -104,7 +55,8 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(user)
-    root_url_with_subdomain(current_account)
+    #categories_path
+    dashboard_path
   end
 
   def encryptor
@@ -147,13 +99,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def root_url_with_subdomain(account)
-    if Rails.env.development?
-      request.protocol.to_s + account.subdomain + '.' + request.domain + ':' + request.port.to_s
-    else
-      request.protocol.to_s + account.subdomain + '.' + request.domain
-    end
-  end
   def filter_by_company(elem, tbl=params[:controller])
     # set company dropdown session and save in database if company is changed
     unless params[:company_id].blank?
@@ -173,7 +118,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_company_id
-    session['current_company'] || current_user.try(:current_company) || current_user.try(:first_company_id)
+    session['current_company'] || current_user.current_company || current_user.first_company_id
   end
 
   def get_clients_and_items
@@ -203,10 +148,10 @@ class ApplicationController < ActionController::Base
 
   #set session of company_id
   def set_company_session
-   unless params[:company_id].blank?
-    session['current_company'] = params[:company_id]
-    current_user.update_attributes(current_company: params[:company_id])
-   end
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
+    end
   end
 
   def set_per_page
@@ -225,31 +170,7 @@ class ApplicationController < ActionController::Base
     User.current = current_user
   end
 
-
-  def multi_tenant_enabled?
-    if defined? Osbm
-      Osbm::ENABLED == true
-    else
-      false
-    end
-  end
-
-  helper_method :multi_tenant_enabled?
-
   protected
-
-  def is_home_page?
-    if multi_tenant_enabled?
-      %w(index hook accounts_hook).include?(params[:action]) && controller_name == 'subscriptions'
-    else
-      false
-    end
-  end
-
-  def current_account_required?
-    multi_tenant_enabled? and !is_home_page?
-  end
-
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:user_name, :account ,:email, :password, :password_confirmation, :remember_me) }
@@ -263,13 +184,5 @@ class ApplicationController < ActionController::Base
 
   def default_url_options(options = {})
     { locale: I18n.locale }.merge options
-  end
-
-  def upgrade_plan_alert
-    flash[:alert] = "Upgrade your plan, Client limit reached out," if current_user_client_limit_exceed?
-  end
-
-  def user_for_paper_trail
-    nil # disable whodunnit tracking
   end
 end

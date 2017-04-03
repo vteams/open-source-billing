@@ -3,7 +3,7 @@ module Reporting
 
     def self.get_activity(company_id, currency, account)
       payments_collected = get_payments_collected_data(currency,company_id)
-      revenue_by_clients = get_client_revenue_data(account)
+      revenue_by_clients = get_client_revenue_data(company_id)
       ag_receivable = get_age_account_receivable_data(currency, company_id)
       item_sales = get_item_sales_data(currency, company_id)
       invoice_report = get_invoice_report_data(currency, company_id)
@@ -22,12 +22,13 @@ module Reporting
       data
     end
 
-    def self.get_client_revenue_data(account)
+    def self.get_client_revenue_data(company_id)
       data = {total: 0, amount: 0.0}
-      clients = account.clients
+      company = Company.find company_id
+      clients = company.clients
       data[:total] = clients.count
       clients.each do |client|
-        data[:amount] += Payment.unscoped.where("payment_type is null or payment_type != 'credit' AND client_id = (?) AND account_id = (?) ", client.id, account.id).sum(:payment_amount).to_f
+        data[:amount] += Payment.where("payment_type is null or payment_type != 'credit' AND client_id = (?)", client.id).sum(:payment_amount).to_f
       end unless clients.blank?
       data
     end

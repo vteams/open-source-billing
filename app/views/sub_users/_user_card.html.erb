@@ -6,7 +6,7 @@
     </div>
     <div class="invoice-details">
       <h5><%= user.name %></h5>
-      <strong><%= user.roles.first.try(:name).try(:humanize) %></strong>
+      <strong><%= user.role_name  %></strong>
       <span><%= user.email %></span>
     </div>
     <div class="card-footer clearfix">

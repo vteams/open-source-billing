@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class SentEmail < ActiveRecord::Base
-  include Osbm
   # associations
   belongs_to :notification, :polymorphic => true
   belongs_to :company

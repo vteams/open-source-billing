@@ -47,11 +47,10 @@ module Reporting
               AND (DATE(IFNULL(invoices.due_date, invoices.invoice_date)) <= '#{@report_criteria.to_date}')
               AND (invoices.`status` != "paid")
               #{@report_criteria.client_id == 0 ? "" : "AND invoices.client_id = #{@report_criteria.client_id}"}
-              #{@report_criteria.company_id == "" ? "" : "AND invoices.company_id = #{@report_criteria.company_id}"}
+        #{@report_criteria.company_id == "" ? "" : "AND invoices.company_id = #{@report_criteria.company_id}"}
         SQL
 
-                condition +=  "AND invoices.account_id = #{Thread.current[:current_account]}"
-aged_invoices = Invoice.find_by_sql(<<-SQL
+        aged_invoices = Invoice.find_by_sql(<<-SQL
           SELECT aged.client_name,aged.currency_id,aged.currency_code,
             SUM(CASE WHEN aged.age BETWEEN 0 AND 30 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS zero_to_thirty,
             SUM(CASE WHEN aged.age BETWEEN 31 AND 60 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS thirty_one_to_sixty,
@@ -146,11 +145,11 @@ aged_invoices = Invoice.find_by_sql(<<-SQL
         is_first = true
         report.report_total.each do |total|
           row = ["#{is_first ? 'Total' : '' }",
-                       total["zero_to_thirty"].to_i,
-                       total["thirty_one_to_sixty"].to_f.round(2),
-                       total["sixty_one_to_ninety"].to_f.round(2),
-                       total["ninety_one_and_above"].to_f.round(2),
-                       total["total_amount"].to_f.round(2)
+                 total["zero_to_thirty"].to_i,
+                 total["thirty_one_to_sixty"].to_f.round(2),
+                 total["sixty_one_to_ninety"].to_f.round(2),
+                 total["ninety_one_and_above"].to_f.round(2),
+                 total["total_amount"].to_f.round(2)
           ]
           is_first=false
           sheet.add_row(row)

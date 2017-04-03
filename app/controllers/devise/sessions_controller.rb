@@ -40,23 +40,6 @@ class Devise::SessionsController < DeviseController
     resource = warden.authenticate!(auth_options)
     #set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
-    if multi_tenant_enabled? and current_user
-      account = Account.unscoped.find current_user.account_id
-      if account.subdomain == 'admin'
-        redirect_to '/osbm/admin/accounts'
-        return
-      else
-        unless current_user.account_id == Thread.current[:current_account]
-          sign_out
-          if Rails.env.development?
-            redirect_to request.protocol.to_s + account.subdomain + '.' + request.domain + ':' + request.port.to_s
-          else
-            redirect_to request.protocol.to_s + account.subdomain + '.' + request.domain
-          end
-          return
-        end
-      end
-    end
     respond_with resource, :location => after_sign_in_path_for(resource)
   end
 

@@ -20,7 +20,7 @@
 #
 class Payment < ActiveRecord::Base
  include DateFormats
- include Osbm
+
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
