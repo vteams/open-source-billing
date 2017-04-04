@@ -42,3 +42,55 @@ input#expense_amount{
 .editTaxModal .input-field input+label, .users .input-field input+label{
     top: 0px;
 }
+
+
+.modal.editProject table tbody tr {
+    position: relative; }
+.modal.editProject table tbody tr.elementsAction {
+    position: absolute;
+    left: 6px;
+    border: none; }
+.modal.editProject table tbody tr.elementsAction a {
+    display: inline-block;
+    margin-top: 5px; }
+.modal.editProject table tbody tr.elementsAction a i {
+    font-size: 13px;
+    color: #b5b5b5; }
+@media only screen and (max-width: 767px) {
+    .modal.editProject table tbody tr.elementsAction {
+        position: static;
+        left: 0;
+        padding: 0; }
+    .modal.editProject table tbody tr.elementsAction a {
+        margin-left: 10px; }
+    .modal.editProject table tbody tr.elementsAction a:first-child {
+        margin-left: 0; } }
+.modal.editProject .addTaskRow {
+    border-radius: 22px;
+    padding: 3px 8px;
+    font-size: 10px;
+    color: #8f8f8f;
+    border: 1px solid #dfdede;
+    display: inline-block; }
+@media only screen and (max-width: 767px) {
+    .modal.editProject .addTaskRow {
+        margin-left: -30px;
+        margin-bottom: 15px; } }
+
+
+.modal.editProject table tr th:first-child {
+    width: 33px;
+    background-color: transparent; }
+.modal.editProject table tr td:first-child {
+    border-bottom: 1px solid #fff;
+    padding: 10px 5px; }
+.modal.editProject .elementsAction {
+    width: 28px; }
+.modal.editProject .elementsAction a {
+    display: inline-block;
+    color: #b5b5b5; }
+.modal.editProject .elementsAction a i {
+    font-size: 10px; }
+
+.modal.editProject td .inline-select.title-select {
+    width: 100%; }

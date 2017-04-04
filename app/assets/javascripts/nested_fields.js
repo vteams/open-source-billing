@@ -54,11 +54,13 @@
                 .trigger({ type: 'nested:fieldAdded', field: field })
                 .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
 
-            $("select.items_list:last, select.tax1, select.tax2").material_select();
+            $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").material_select();
             Invoice.change_invoice_item();
             Invoice.changeTax();
             Estimate.change_estimate_item();
             Estimate.changeTax();
+            Project.change_project_task();
+            Project.change_project_staff();
             return false;
         },
         newId: function() {

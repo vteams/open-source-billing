@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     load_projects
     @projects = filter_by_company(@projects)
     respond_to do |format|
@@ -31,10 +32,20 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     3.times { @project.project_tasks.build(); @project.team_members.build() }
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+    end
   end
 
   # GET /projects/1/edit
   def edit
+    3.times { @project.project_tasks.build() } if @project.project_tasks.blank?
+    3.times { @project.team_members.build() } if @project.team_members.blank?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+    end
   end
 
   # POST /projects
@@ -80,7 +91,7 @@ class ProjectsController < ApplicationController
     @project_has_deleted_clients = project_has_deleted_clients?(@projects)
     @message = get_intimation_message(result[:action_to_perform], result[:project_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    redirect_to projects_path
   end
 
   def undo_actions

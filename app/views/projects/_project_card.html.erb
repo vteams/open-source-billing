@@ -1,0 +1,53 @@
+<div class="col s12 m6 l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', project , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-project_id= <%=project.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "project_ids[]", project.id, false, :id => "project_#{project.id}", class: "filled-in" %>
+      <label for="<%= "project_#{project.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= project.image_name %></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= project.unscoped_client.organization_name %></h5>
+      <strong><%= project.project_name %></strong>
+      <div class="amount-box">
+        <span>Manager</span>
+        <span class="usertitle"><%= project.manager.try(:name)%></span>
+      </div>
+      <div class="agedWrapper">
+        <div class="aged-ar">
+          <strong class="text-blue left">50% <small>Done</small></strong>
+          <strong class="text-content right"><%= project.total_hours %> <small>HRS</small></strong>
+        </div>
+        <div class="progress">
+          <div class="determinate" role="progressbar"
+               aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+          </div>
+        </div>
+      </div>
+      <div class="gen-invoice">Generate Invoice</div>
+    </div>
+
+
+    <div class="action-btn-group">
+      <% if @status.eql?('deleted') %>
+          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_project_path(project), remote: true, class: 'edit_invoice_icon' %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: 'Are you sure?' } %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= project.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= project.id %>" class='dropdown-content z-depth-4'>
+            <% if @status.eql?('active') %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+            <% elsif @status.eql?('archived') %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
