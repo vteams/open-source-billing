@@ -40,4 +40,8 @@ class Company < ActiveRecord::Base
   def image_name
     company_name.first.camelize
   end
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
 end

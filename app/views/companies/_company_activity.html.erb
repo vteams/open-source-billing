@@ -1,0 +1,26 @@
+<!--- Activity sidebar --->
+<span class="btn-activity">Activities</span>
+
+<aside id="activity-sidebar">
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <div class="status-info active">
+        <h5>
+          <%= link_to t('views.common.active'), "companies?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+          <span id="actives">(<%= get_companies_count('unarchived') %>)</span>
+        </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.archive'), "companies?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'archived'}" %>
+        <span id="actives">(<%= get_companies_count('archived') %>)</span>
+      </h5>
+    </div>
+    <div class="status-info active">
+      <h5>
+        <%= link_to t('views.common.deleted'), "companies?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'deleted'}" %>
+        <span id="actives">(<%= get_companies_count('only_deleted') %>)</span>
+      </h5>
+    </div>
+  </div>
+
+</aside>

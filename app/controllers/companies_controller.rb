@@ -7,7 +7,7 @@ class CompaniesController < ApplicationController
   # GET /companies.json
   def index
     params[:status] = params[:status] || 'active'
-    #@companies = current_user.current_account.companies.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
+    @status = params[:status]
     @companies = Company.filter(params.merge(per: @per_page, account: current_user.current_account)).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
@@ -35,6 +35,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render json: @company }
     end
   end
@@ -42,6 +43,11 @@ class CompaniesController < ApplicationController
   # GET /companies/1/edit
   def edit
     @company = Company.find(params[:id])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+      format.json { render json: @company }
+    end
   end
 
   # POST /companies
@@ -51,8 +57,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to edit_company_path(@company), notice: 'Company has been created successfully.' }
-        format.json { render json: @company, status: :created, location: @company }
+        format.html { redirect_to companies_path, notice: 'Company has been created successfully.' }
+        format.json { render json: companies_path, status: :created, location: @company }
       else
         format.html { render action: "new" }
         format.json { render json: @company.errors, status: :unprocessable_entity }
@@ -67,7 +73,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(company_params)
-        format.html { redirect_to edit_company_path(@company), notice: 'Your company has been updated successfully.' }
+        format.html { redirect_to companies_path, notice: 'Your company has been updated successfully.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -83,7 +89,7 @@ class CompaniesController < ApplicationController
     @company.destroy
 
     respond_to do |format|
-      format.html { redirect_to expenses_url }
+      format.html { redirect_to companies_path }
       format.json { head :no_content }
     end
   end
@@ -107,7 +113,7 @@ class CompaniesController < ApplicationController
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
     end
-    respond_to { |format| format.js }
+    redirect_to companies_path
   end
 
   def undo_actions

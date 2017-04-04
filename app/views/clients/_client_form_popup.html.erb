@@ -74,10 +74,11 @@
         </div>
 
         <div class="row">
-          <div class="options_row items">
-            <div class="label_field left single options template"><%= t('views.items.make_this_client_available_to') %>:</div>
-            <div class="options_content">
-              <%= associate_account(controller_name, action_name, @item) %>
+          <div class="col s12">
+            <h5 class="text-blue title-heading"><%= t('views.items.make_this_client_available_to') %></h5>
+
+            <div class="input-field col s12">
+              <%= associate_account(controller_name, action_name, @client) %>
             </div>
           </div>
         </div>

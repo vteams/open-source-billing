@@ -8,12 +8,12 @@
                 <a href="javascript:;" class="recover_deleted" title="Recover deleted"><i class="material-icons">unarchive</i></a>
             <% elsif @status.eql?('archived') %>
                 <a href="javascript:;" class="recover_archived" title="Recover archived"><i class="material-icons">unarchive</i></a>
-                <% unless controller_name.eql?('expenses') or controller_name.eql?('clients') or controller_name.eql?('items') %>
+                <% if controller_name.eql?('invoices') or controller_name.eql?('estimates') %>
                     <a href="javascript:;" class="send_archived" title="Send"><i class="material-icons">send</i></a>
                 <% end %>
                 <a href="javascript:;" class="destroy_archived" title="Delete archived"><i class="material-icons">delete</i></a>
             <% else %>
-                <% unless controller_name.eql?('expenses')  or controller_name.eql?('clients') or controller_name.eql?('items') or controller_name.eql?('taxes')  %>
+                <% if controller_name.eql?('invoices') or controller_name.eql?('estimates')  %>
                     <a href="javascript:;" class="send_active" title="Send"><i class="material-icons">send</i></a>
                 <% end %>
                 <a href="javascript:;" class="delete" title="Delete"><i class="material-icons">delete</i></a>

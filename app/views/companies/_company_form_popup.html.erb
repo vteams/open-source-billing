@@ -1,0 +1,105 @@
+<%- model_class = Company -%>
+<%= form_for @company, :html => {:id => 'companyForm', :multipart => true, :novalidate => ""} do |f| %>
+    <div class="modal-header clearfix text-content">
+      <h5 class="left">
+        <% if f.object.persisted? %>
+            <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                          :default => "Edit #{model_class.model_name.human}") %>
+        <% else %>
+            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                          :default => "New  #{model_class.model_name.human}") %>
+        <% end %>
+      </h5>
+      <div class="modal-action-btn right">
+        <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+        <%= f.submit class: 'btn_large submit hidden' %>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
+        <div class="input-field col s12">
+          <%= f.text_field :company_name %>
+          <%= f.label :company_name,  t('views.companies.name') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :contact_name %>
+          <%= f.label :contact_name,  t('views.clients.contact_name') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :contact_title %>
+          <%= f.label :contact_title,t('views.clients.contact_title') %>
+        </div>
+
+        <div class="input-field col s6 m4">
+          <%= f.text_field :email, required: true %>
+          <%= f.label :email,t('views.common.email') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :phone_number %>
+          <%= f.label :phone_number,t('views.common.phone') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :fax_number %>
+          <%= f.label :fax_number,t('views.common.fax') %>
+        </div>
+      </div>
+
+      <div class="row">
+        <h5 class="text-blue title-heading"><%= t('views.common.address') %></h5>
+        <div class="input-field col s6 m4">
+          <%= f.select :country, COUNTRY_LIST, {:prompt => t('views.common.country')} %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :street_address_1 %>
+          <%= f.label :street_address_1,"#{t('views.common.street')}#1" %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :street_address_2 %>
+          <%= f.label :street_address_2,"#{t('views.common.street')}#2" %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :city %>
+          <%= f.label :city,t('views.common.city') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :province_or_state %>
+          <%= f.label :province_or_state,t('views.common.province') %>
+        </div>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :postal_or_zipcode %>
+          <%= f.label :postal_or_zipcode,t('views.common.zip_code') %>
+        </div>
+      </div>
+
+      <div class="row">
+        <h5 class="text-blue title-heading"><%= t('views.companies.branding') %></h5>
+        <div class="file-field input-field col s6 m6">
+          <div class="btn">
+            <span>Logo</span>
+            <input type="file" name="company[logo]">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <div class="input-field col s6 m6">
+          <% if action_name == 'edit' %>
+              <%= image_tag @company.logo_url(:thumb) %>
+          <% end %>
+        </div>
+      </div>
+      <div  class="row">
+        <br/>
+        <div class="input-field col s6 m4">
+          <%= f.text_field :company_tag_line %>
+          <%= f.label :company_tag_line, t('views.companies.tag_line') %>
+        </div>
+
+        <div class="input-field col  s8 m8">
+          <%= f.text_field :memo %>
+          <%= f.label :memo, t('views.companies.memo') %>
+        </div>
+      </div>
+    </div>
+<% end %>

@@ -241,7 +241,7 @@ module ApplicationHelper
 
   def get_user_current_company
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    Company.find(company_id)
+    Company.unscoped.find(company_id)
   end
 
   def get_available_languages
@@ -299,6 +299,6 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments clients items taxes)
+    %w(invoices estimates expenses payments clients items taxes companies)
   end
 end
