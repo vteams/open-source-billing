@@ -40,8 +40,8 @@ class @Task
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
 
-    $('#task_name').on "change", ->
-      return hidePopover($("#task_name"))
+    $('#task_name, #task_rate').on "keypress", ->
+      return hidePopover($(this))
 
     $('.company_checkbox').on "change", ->
       return hidePopover($("#company_association"))

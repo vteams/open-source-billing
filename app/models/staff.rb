@@ -62,4 +62,12 @@ class Staff < ActiveRecord::Base
     Kaminari.paginate_array(staffs).page(params[:page]).per(params[:per])
 
   end
+
+  def image_name
+    name.first.camelize
+  end
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
+  end
 end

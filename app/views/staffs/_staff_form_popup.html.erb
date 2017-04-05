@@ -1,0 +1,50 @@
+<div class="modal-content">
+  <%- model_class = Staff -%>
+  <%= form_for staff, :html => { class: 'staff_form form-horizontal',:id => 'newStaff'} do |f| %>
+      <div class="modal-header clearfix text-content">
+        <h5 class="left">
+          <% if f.object.persisted? %>
+              <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                            :default => "Edit #{model_class.model_name.human}") %>
+          <% else %>
+              <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                            :default => "New  #{model_class.model_name.human}") %>
+          <% end %>
+        </h5>
+        <div class="modal-action-btn right">
+          <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+          <%= f.submit class: 'btn_large submit hidden' %>
+        </div>
+      </div>
+
+      <div class="modal-body users">
+        <div class="row">
+          <div class="input-field col s6  required">
+            <%= f.text_field :name  %>
+            <%= f.label :name, t('views.staffs.name') %>
+          </div>
+
+          <div class="input-field col s6 required">
+            <%= f.text_field :email  %>
+            <%= f.label :email, t('views.staffs.email') %>
+          </div>
+
+          <div class="input-field col s4 m4 required">
+            <%= f.number_field :rate, min: 0, step: "any" %>
+            <%= f.label :rate, t('views.staffs.rate') %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <h5 class="text-blue title-heading"><%= t('views.task.make_this_client_available_to') %></h5>
+            <div class="input-field col s12">
+              <%= associate_account(controller_name, action_name, staff) %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+  <% end %>
+</div>

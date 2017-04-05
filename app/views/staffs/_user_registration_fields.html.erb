@@ -1,23 +1,19 @@
 <%= f.fields_for :user do |f|%>
-    <div class="field_row">
-      <div class="label_field left single"><span><%= t('views.staffs.username') %></span></div>
-      <div class="medium_field">
-        <%= f.text_field :user_name %>
-      </div>
+
+    <div class="input-field col s4 m4 required">
+      <%= f.text_field :user_name%>
+      <%= f.label :user_name, t('views.staffs.username') %>
     </div>
 
-    <div class="field_row">
-      <div class="label_field left single"><span><%= t('views.staffs.password') %></span></div>
-      <div class="medium_field">
-        <%= f.password_field :password %>
-      </div>
+    <div class="input-field col s4 m4 required">
+      <%= f.password_field :password%>
+      <%= f.label :password, t('views.staffs.password') %>
     </div>
 
-    <div class="field_row">
-      <div class="label_field left single"><span><%= t('views.staffs.password_confirmation') %></span></div>
-      <div class="medium_field">
-        <%= f.password_field :password_confirmation %>
-      </div>
+    <div class="input-field col s4 m4 required">
+      <%= f.password_field :password_confirmation%>
+      <%= f.label :password_confirmation, t('views.staffs.password_confirmation') %>
     </div>
     <%= f.hidden_field :email %>
+
 <% end %>

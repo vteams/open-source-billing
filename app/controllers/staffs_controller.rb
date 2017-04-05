@@ -9,6 +9,7 @@ class StaffsController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     @staffs = Staff.get_staffs(params.merge(get_args(method)))
@@ -29,10 +30,20 @@ class StaffsController < ApplicationController
   def new
     @staff = Staff.new
     @staff.build_user
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @staffs }
+    end
   end
 
   # GET /staffs/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @staffs }
+    end
   end
 
   # POST /staffs
@@ -56,7 +67,7 @@ class StaffsController < ApplicationController
         current_user.accounts.first.users << @staff.user if @staff.user.present?
         format.js
         format.json { render :json => @staff, :status => :created, :location => @staff }
-        redirect_to @staff, notice: 'Staff was successfully created.' unless params[:quick_create]
+        redirect_to staffs_path, notice: 'Staff was successfully created.' unless params[:quick_create]
         return
       else
         format.js
@@ -69,7 +80,7 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1
   def update
     if @staff.update(staff_params)
-      redirect_to @staff, notice: 'Staff was successfully updated.'
+      redirect_to staffs_path, notice: 'Staff was successfully updated.'
     else
       render :edit
     end
@@ -96,8 +107,7 @@ class StaffsController < ApplicationController
     @staffs = result[:staffs]
     @message = get_intimation_message(result[:action_to_perform], result[:staff_ids])
     @action = result[:action]
-    #end
-    respond_to { |format| format.js }
+    redirect_to staffs_path
   end
 
   def undo_actions

@@ -1,0 +1,3 @@
+$('.importModal').html("<%= escape_javascript render partial: 'staff_form_popup', locals: {staff: @staff}  %>");
+Staff.load_functions();
+$(".importModal").modal('open');
