@@ -1,15 +1,15 @@
 <% if  @logs.length > 0 %>
     <% @logs.each do |log| %>
         <tr>
-          <td class="align_left"> <%= log.project.project_name %> </td>
-          <td class="align_left"> <%= log.task.present? ? log.task.name : 'N/A' %> </td>
-          <td class="align_left"> <%= log.notes %> </td>
-          <td class="align_center"> <%= log.hours %> </td>
-          <td class="align_center"> <%= log.user.try(:user_name) %> </td>
+          <td class="left-align"> <%= log.project.project_name %> </td>
+          <td class="left-align"> <%= log.task.present? ? log.task.name : 'N/A' %> </td>
+          <td class="left-align"> <%= log.notes %> </td>
+          <td class="center-align"> <%= log.hours %> </td>
+          <td class="center-align"> <%= log.user.try(:user_name) %> </td>
 
-          <td class="align_center">
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_log_path(log),remote: true %>
-            <%= link_to t('.delete', :default => t("helpers.links.delete")),log_path(log),:method => :delete,remote: true %>
+          <td class="center-align">
+            <%= link_to raw("<i class='tiny material-icons'>create</i>"),edit_log_path(log), remote: true, class: 'edit_log_icon', title: 'edit' %>
+            <%= link_to raw("<i class='tiny material-icons'>delete</i>"),log_path(log), method: :delete, remote: true, data:{confirm: 'Are you sure?' }, title: 'delete' %>
           </td>
         </tr>
     <% end %>
@@ -23,7 +23,7 @@
 <% end %>
 
 <tr>
-  <td colspan="8" class="align_center">
+  <td colspan="8" class="center-align">
     <%= paginate @logs, remote: true %>
     <%= page_entries_info @logs %>
   </td>

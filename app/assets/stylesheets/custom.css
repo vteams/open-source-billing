@@ -94,3 +94,16 @@ input#expense_amount{
 
 .modal.editProject td .inline-select.title-select {
     width: 100%; }
+
+.log-box{
+    padding: 0 10px;
+}
+#calendar_form .input-field{
+    margin-top: 0px !important;
+    width: 90%;
+}
+
+#calendar_form textarea.materialize-textarea{
+    padding: 0px !important;
+}
+

@@ -1,0 +1,27 @@
+<!--- Activity sidebar --->
+<span class="btn-activity">Activities</span>
+
+<aside id="activity-sidebar">
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <div class="status-info">
+      <h5>
+        <%= link_to 'Projects', projects_url %>
+        <span id="actives">(<%= get_project_count %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to 'Tasks', tasks_path %>
+        <span id="actives">(<%= get_task_count %>)</span>
+      </h5>
+    </div>
+
+    <div class="status-info">
+      <h5>
+        <%= link_to 'Staffs', staffs_path %>
+        <span id="actives">(<%= get_staff_count %>)</span>
+      </h5>
+    </div>
+  </div>
+
+</aside>

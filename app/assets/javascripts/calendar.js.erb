@@ -7,7 +7,7 @@ function init_fullcalendar(){
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,basicWeek'
+            right: false
         },
         buttonText: {
             today: 'Today',
@@ -82,5 +82,6 @@ function init_fullcalendar(){
 }
 
 $(document).ready(function() {
+    $('select').material_select();
     init_fullcalendar();
 });

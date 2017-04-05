@@ -1,5 +1,8 @@
+$('.qtip').remove();
 $('.logs_table').html('<%= escape_javascript render('logs/logs_table') %>');
 $('#calendar_form').html('<%= escape_javascript render("logs/#{@form_type}") %>');
+$('select').material_select();
+
 $(".alert.alert-success").show().find('span').html("Log(s) updated successfully.");
 
 var view = $('#calendar').fullCalendar('getView');

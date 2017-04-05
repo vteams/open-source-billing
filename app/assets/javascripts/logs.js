@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    $('select').material_select();
     var applyPopover, hidePopover;
     applyPopover = function (elem, position, corner, message) {
         elem.qtip({
@@ -27,13 +27,11 @@ $(document).ready(function() {
     hidePopover = function (elem) {
         return elem.qtip("hide");
     };
-    jQuery('#log_project_id').on("click", function() {
-        return hidePopover(jQuery("#log_project_id"));
-    });
-    jQuery('#log_task_id').on("click", function() {
+
+    jQuery('#log_task_id').on("change", function() {
         return hidePopover(jQuery("#log_task_id"));
     });
-    jQuery('#log_hours').on("click", function() {
+    jQuery('#log_hours').on("keypress", function() {
         return hidePopover(jQuery("#log_hours"));
     });
 
@@ -77,16 +75,16 @@ $(document).ready(function() {
             hidePopover(jQuery("#hours_div"))
         }
         if (project_id === "") {
-            applyPopover(jQuery("#log_project_id"), "bottomMiddle", "topLeft", "Select a project");
+            applyPopover(jQuery("#log_project_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", "Select a project");
             flag = false;
         } else {
-            hidePopover(jQuery("#log_project_id"))
+            hidePopover(jQuery("#log_project_id").parents('.select-wrapper'))
         }
         if (task_id === "") {
-            applyPopover(jQuery("#log_task_id"), "bottomMiddle", "topLeft", "Select a task");
+            applyPopover(jQuery("#log_task_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", "Select a task");
             flag = false;
         } else {
-            hidePopover(jQuery("#log_task_id"))
+            hidePopover(jQuery("#log_task_id").parents('.select-wrapper'))
         }
         if (hours === "") {
             applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
@@ -108,6 +106,7 @@ $(document).ready(function() {
     });
 
     return $(document).on('change', '#log_project_id', function (evt) {
+        hidePopover(jQuery("#log_project_id"));
         return $.ajax('/logs/update_tasks', {
             type: 'GET',
             dataType: 'script',

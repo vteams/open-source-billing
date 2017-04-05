@@ -66,7 +66,7 @@ class LogsController < ApplicationController
     if @log.update(log_params)
       @logs = get_logs(@log.date)
       @view = params[:view]
-      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'; @date=@log.date
+      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'new_form'; @date=@log.date
       @log = Log.new
       respond_to do |format|
         format.html
@@ -102,7 +102,7 @@ class LogsController < ApplicationController
       @logs = Log.where('company_id IN(?) AND project_id IN(?) AND date BETWEEN ? AND ?', get_company_id ,load_project_ids, Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
       @logs = filter_by_company(@logs)
     else
-      @form_type = 'form'
+      @form_type = 'new_form'
       @logs = get_logs(Date.today)
     end
     respond_to do |format|
