@@ -1,0 +1,4 @@
+$('.importModal').html("<%= escape_javascript render partial: 'task_form_popup', locals: {task: @task}  %>");
+Task.load_functions();
+$('div.required label').addClass('active');
+$(".importModal").modal('open');

@@ -15,10 +15,22 @@
         <span id="actives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
     </div>
-    <div class="status-info active">
+    <div class="status-info">
       <h5>
         <%= link_to t('views.common.deleted'), "projects?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'deleted'}" %>
         <span id="actives">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to 'Tasks', tasks_url %>
+        <span id="actives">(<%= get_task_count %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to 'Staff', staffs_path %>
+        <span id="actives">(<%= get_staff_count %>)</span>
       </h5>
     </div>
   </div>

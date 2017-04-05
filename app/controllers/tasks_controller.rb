@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     @tasks = Task.get_tasks(params.merge(get_args(method)))
@@ -29,10 +30,20 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @tasks }
+    end
   end
 
   # GET /tasks/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @tasks }
+    end
   end
 
   # POST /tasks
@@ -53,7 +64,7 @@ class TasksController < ApplicationController
       if @task.save
         format.js
         format.json { render :json => @task, :status => :created, :location => @task }
-        redirect_to @task, notice: 'Task was successfully created.' unless params[:quick_create]
+        redirect_to tasks_url, notice: 'Task was successfully created.' unless params[:quick_create]
         return
       else
         format.js
@@ -67,7 +78,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       associate_entity(params, @task)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to tasks_url, notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -94,8 +105,7 @@ class TasksController < ApplicationController
     @tasks = result[:tasks]
     @message = get_intimation_message(result[:action_to_perform], result[:task_ids])
     @action = result[:action]
-    #end
-    respond_to { |format| format.js }
+    redirect_to tasks_url
   end
 
   def undo_actions

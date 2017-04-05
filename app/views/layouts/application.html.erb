@@ -30,7 +30,7 @@
 
         <%= render 'layouts/header' %>
 
-        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if controller_name.eql?('projects')}"%> ">
+        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if ['projects', 'tasks', 'staffs'].include?(controller_name)}"%> ">
           <div class="container-fluid">
             <!--- side vertical menu --->
             <%= render 'layouts/side_nav'%>

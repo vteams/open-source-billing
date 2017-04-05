@@ -83,7 +83,7 @@ module ApplicationHelper
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
       list += "<div class='input-field col s6'>
-                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' class='company_checkbox'/>
+                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' class='company_checkbox filled-in'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
       checked = ''
@@ -99,10 +99,11 @@ module ApplicationHelper
                   <label for='account_association'> All companies</label>
               </div>
 <br>
-              <div class="input-field col s6">
+              <div class="input-field col s12">
                   <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                   <label for='company_association'>Selected companies only</label>
               </div>
+
               #{list}
     HTML
     radio_buttons.html_safe
@@ -299,6 +300,25 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments clients items taxes companies projects)
+    %w(invoices estimates expenses payments clients items taxes companies projects tasks)
+  end
+
+  def get_project_count
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    Project.where("company_id IN(?)", company_id).count
+  end
+
+  def get_staff_count
+    account = current_user.current_account
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    count = (account.staffs + Company.unscoped.find(company_id).staffs).uniq.size
+    count
+  end
+
+  def get_task_count
+    account = current_user.current_account
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+    count = (account.tasks + Company.unscoped.find(company_id).tasks).uniq.size
+    count
   end
 end

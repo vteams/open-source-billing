@@ -1,63 +1,27 @@
-<%- model_class = Task -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<div class="task">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
+<%= render 'task_activity'%>
+<div id="main-content">
+  <!--- main content --->
+  <div class="row">
+    <!--- breadcrum Bar --->
+    <div class="col s12 breadcrum-bar">
+      <div class="card-white-panel">
+        <%= link_to raw('<i class="material-icons">add</i>'), new_task_path, remote: true, class: 'pull-right', title: 'Add' %>
+        <h3>Time Tracking : <%= link_to raw('<span class="text-color">Tasks</span>'), tasks_url %></h3>
+      </div>
     </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.tasks.new'))),
-                  new_task_path,
-                  :class => 'btn_large' %>
-    </div>
-  </div>
-  <!--content_top-->
-  <%= form_tag bulk_actions_tasks_path, {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
 
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render "filter_links" %>
-          </div>
-        </div>
+    <div class="invoice-box task-box mCustomScrollbar clearfix">
+      <!--- Invoices Card Title--->
+      <%= form_tag bulk_actions_tasks_path, {method: :get, id: "bulk_action_form"} do -%>
+          <% @tasks.group_by { |d| d.group_date }.each do |date, tasks| %>
+              <p><span class="activity-date"><%= date %></span></p>
+              <div class="clearfix">
+                <%= render partial: 'task_card', collection: tasks, as: :task %>
+              </div>
+          <% end %>
+          <%= render partial: 'bulk_actions'%>
+      <% end %>
 
-    <!--grid_control-->
-    <div class="grid_table">
-      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %> tasks_listing">
-        <colgroup>
-          <col class="one"/>
-          <col class="two"/>
-          <col class="three"/>
-          <col class="four"/>
-          <col class="five"/>
-        </colgroup>
-        <thead id="task_head">
-        <%= render partial: 'tasks_header' %>
-        </thead>
-        <tbody id="task_body">
-        <%= render 'tasks' %>
-        <tfoot id="paging_links">
-        <%= render 'application_partials/paging' %>
-        </tfoot>
-        </tbody>
-      </table>
     </div>
-    <!--grid_table-->
   </div>
-  <!--content_middle-->
-  <div class="content_bottom">
-    <%= link_to (content_tag(:span, t('header.links.tasks.new'))),
-        new_task_path,
-        :class => 'btn_large' %>
-  </div>
-<% end %>
-  <!--content_bottom-->
 </div>

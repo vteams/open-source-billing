@@ -17,16 +17,15 @@
       </div>
       <div class="agedWrapper">
         <div class="aged-ar">
-          <strong class="text-blue left">50% <small>Done</small></strong>
+          <% random_progress = rand(0...100) %>
+          <strong class="text-blue left"><%= random_progress %>% <small>Done</small></strong>
           <strong class="text-content right"><%= project.total_hours %> <small>HRS</small></strong>
         </div>
         <div class="progress">
-          <div class="determinate" role="progressbar"
-               aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-          </div>
+          <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= random_progress %>%;"></div>
         </div>
       </div>
-      <div class="gen-invoice">Generate Invoice</div>
+      <div class="gen-invoice hidden">Generate Invoice</div>
     </div>
 
 
