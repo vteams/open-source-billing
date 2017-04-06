@@ -16,4 +16,20 @@ class Log < ActiveRecord::Base
     self.user = User.current
   end
 
+  def group_date
+    date.strftime('%Y-%m-%d')
+  end
+
+  def image_name
+    user.card_name.capitalize
+  end
+
+  def creator_name
+    user.name
+  end
+
+  def task_name
+    task.name
+  end
+
 end

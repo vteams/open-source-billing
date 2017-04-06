@@ -1,0 +1,19 @@
+<div class="col s12 m12 l6 xl4">
+  <div class="card-white-panel">
+    <div class="checkbox-item">
+      <div class="invoice-name green-light"><%= log.image_name %></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= log.creator_name %></h5>
+      <strong><%= log.task_name %></strong>
+      <div class="amount-box">
+        <span>Notes</span>
+        <span class="usertitle"><%= log.notes %></span>
+      </div>
+      <div class="card-footer clearfix">
+        <span class="invoice-date"> <%= log.hours %> <small>HRS</small> </span>
+        <span class="invoice-action text-grey"><%= "#{default_currency_unit}" "#{log.line_total}" %> <small><%= default_currency_code %></span>
+      </div>
+    </div>
+  </div>
+</div>

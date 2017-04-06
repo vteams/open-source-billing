@@ -62,4 +62,9 @@ class Project < ActiveRecord::Base
   def image_name
     "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }"
   end
+
+  def log_hours
+    logs.map(&:hours).sum rescue 0
+  end
+
 end

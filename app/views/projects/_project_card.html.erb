@@ -10,14 +10,14 @@
     </div>
     <div class="invoice-details">
       <h5><%= project.unscoped_client.organization_name %></h5>
-      <strong><%= project.project_name %></strong>
+      <strong><%= @status.eql?('deleted') ? project.project_name : (link_to project.project_name, project) %></strong>
       <div class="amount-box">
         <span>Manager</span>
         <span class="usertitle"><%= project.manager.try(:name)%></span>
       </div>
       <div class="agedWrapper">
         <div class="aged-ar">
-          <% random_progress = rand(0...100) %>
+          <% random_progress = aged_progress_width(project.log_hours, project.total_hours) %>
           <strong class="text-blue left"><%= random_progress %>% <small>Done</small></strong>
           <strong class="text-content right"><%= project.total_hours %> <small>HRS</small></strong>
         </div>

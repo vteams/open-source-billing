@@ -1,0 +1,58 @@
+<div class="content-detail">
+  <div class="card-white-panel clearfix">
+    <div class="left-content col s12 m12 l8 xl9">
+      <div class="text-wrapper">
+        <div class="checkbox-item">
+          <div class="invoice-name green-light"><%= @project.image_name %></div>
+        </div>
+        <div class="invoice-details">
+          <div class="editable-content">
+            <div class="input-field">
+              <span>Client <small>:</small></span>
+              <select class="clientselect" disabled>
+                <option value="1"><%= @project.unscoped_client.organization_name %></option>
+              </select>
+            </div>
+            <div class="text-field">
+              <span>Project <small>:</small> </span>
+              <strong class="text-blue"> <%= @project.project_name %></strong>
+            </div>
+            <div class="input-field"> Manager <small>:</small>
+              <select class="managerselect" disabled>
+                <option value="1"><%= @project.manager.try(:name)%></option>
+              </select>
+            </div>
+          </div>
+          <div class="amount-box">
+            <span class="usertitle"><%= @project.description %></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-wrapper row">
+        <div class="input-field col s12 m4 l4 xl4">
+          <label>Start Date</label>
+          <input type="text" value="<%= @project.created_at.strftime(get_date_format)%>" placeholder="" disabled>
+        </div>
+        <div class="input-field col s12 m4 l4 xl4">
+          <select disabled>
+            <option value="1"><%= @project.total_hours %></option>
+          </select>
+          <label>Estimated Time (hrs)</label>
+        </div>
+
+        <div class="input-field col s12 m4 l4 xl4">
+          <select disabled>
+            <option value="1"><%= @project.log_hours %></option>
+          </select>
+          <label>Time Logged (hrs)</label>
+        </div>
+      </div>
+
+    </div>
+    <div class="right-content col s12 m12 l4 xl3">
+      <div class="user-list staff-list" id="staff">
+        <%= render partial: 'staffs', collection: @staffs, as: :staff %>
+      </div>
+    </div>
+  </div>
+</div>

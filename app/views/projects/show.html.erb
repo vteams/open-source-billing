@@ -1,4 +1,42 @@
-<p id="notice"><%= notice %></p>
+<%= render 'project_activity'%>
+<div id="main-content" class="mCustomScrollbar">
+  <div class="row">
+    <div class="col s12 task-detail">
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar activebar">
+        <div class="card-white-panel">
+          <h3>Project Detail</h3>
+          <div class="page-action-btn-group">
+            <%= link_to raw("<i class='material-icons'>create</i>"), edit_project_path(@project), class: 'edit-detail', remote: true %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' } %>
+          </div>
+        </div>
+      </div>
+      <!--- breadcrum Bar --->
+      <%= render 'project_detail' %>
+    </div>
+  </div>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+  <div class="row">
+    <div class="col s12 task-detail">
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar activebar">
+        <div class="card-white-panel">
+          <h3><%= @project.project_name %> Time Logs </h3>
+        </div>
+      </div>
+      <!--- breadcrum Bar --->
+      <div class="task-box clearfix">
+        <!--- Invoices Card Title--->
+        <% @project_logs.group_by { |d| d.group_date }.each do |date, logs| %>
+            <div class="view-btn-group clearfix">
+              <span class="activity-date left"><%= date %></span>
+            </div>
+            <div class="clearfix">
+                <%= render partial: 'logs', collection: logs, as: :log %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

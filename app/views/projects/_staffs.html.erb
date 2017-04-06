@@ -1,0 +1,21 @@
+<div class="list-item">
+  <div class="checkbox-item">
+    <div class="invoice-name">
+      <%= image_tag('avatarimg1.jpg', alt: "avatar" ,class:"responsive-img circle")%>
+    </div>
+  </div>
+  <div class="invoice-details editContent">
+    <div class="input-field">
+      <select disabled>
+        <option value="1"><%= staff.name %></option>
+      </select>
+    </div>
+    <div class="input-field">
+      <input type="email" value="<%= staff.email %>" placeholder="" disabled>
+    </div>
+    <div class="input-field amount">
+      <strong><%= default_currency_unit %><em><%= staff.rate %></em></strong>
+      <span> <%= default_currency_code %> / <small class="text-blue">hr</small></span>
+    </div>
+  </div>
+</div>
