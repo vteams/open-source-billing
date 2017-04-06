@@ -39,7 +39,7 @@ input#expense_amount{
 .newModel .input-field input+label{
     top: 0px;
 }
-.editTaxModal .input-field input+label, .users .input-field input+label{
+.editTaxModal .input-field input+label, .users .input-field input+label, .edit_account .input-field input+label{
     top: 0px;
 }
 

@@ -19,7 +19,7 @@
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
     <li><%= link_to raw("<i class='material-icons'>settings</i> <span>Settings</span>"), settings_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), new_account_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), new_account_path, remote: true %></li>
     <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span> Logout</span>"), destroy_user_session_path, method: :delete, class: 'logout' %></li>
   </ul>
   <div>
