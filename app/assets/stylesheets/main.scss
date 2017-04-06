@@ -410,7 +410,7 @@ h6 {
   left: 0;
   right: 0;
   margin: 0 auto;
-  background: url("../images/top-arrow.png") no-repeat center center; }
+  background: image-url("top-arrow.png") no-repeat center center; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span {
   padding-left: 30px; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown .optgroup-option span:before {
@@ -2731,7 +2731,6 @@ h6 {
 .user-list .list-item .invoice-details {
   display: inline-block;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  width: 76%;
   vertical-align: top; }
 .user-list .list-item .invoice-details .select-wrapper .select-dropdown {
   font-size: 11px;
@@ -3550,6 +3549,5 @@ html {
   background: #f4f4f4;
   font-family: "Roboto", sans-serif;
   width: 100%;
-  height: 100%; }
-
-/*# sourceMappingURL=main.css.map */
+  height: 100%;
+}
