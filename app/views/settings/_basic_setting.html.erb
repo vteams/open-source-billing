@@ -8,15 +8,28 @@
               <%= submit_tag t('views.common.save'), class:  "btn_large submit submit_currency hidden" %>
               <a href="#" onclick="$('.submit_currency').click();" class="icon-done"><i class="material-icons">done</i></a>
             </h5>
-            <div class="col s12 m12 xl12">
+            <div class="col s12 m12 xl4">
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
                 <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
                 <%= check_box_tag "multi_currency", multi_currency,  checked: multi_currency %>
 
-                <div id="radioBtn" class="btn-group ">
+                <div id="radioBtn" class="btn-group mutli_currency_btn">
                   <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>">Yes</a>
                   <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' unless multi_currency}" %>"> No</a>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m12 xl4">
+              <div class="setting-btns">
+                <span>Side Navigation Open</span>
+
+                <% side_nav_opened = current_user.settings.side_nav_opened %>
+                <%= check_box_tag "side_nav_opened", side_nav_opened,  checked: side_nav_opened %>
+
+                <div id="radioBtn" class="btn-group side-nav_btn">
+                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active' if side_nav_opened}" %>">Yes</a>
+                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active' unless side_nav_opened }" %>">No</a>
                 </div>
               </div>
             </div>

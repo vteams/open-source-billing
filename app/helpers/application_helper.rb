@@ -321,4 +321,8 @@ module ApplicationHelper
     count = (account.tasks + Company.unscoped.find(company_id).tasks).uniq.size
     count
   end
+
+  def side_nav_opened?
+    current_user and current_user.settings.side_nav_opened
+  end
 end

@@ -1,5 +1,5 @@
 <span class="btn-activity">Activities</span>
-<aside id="activity-sidebar">
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
         <div class="status-info active">

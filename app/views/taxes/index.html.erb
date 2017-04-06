@@ -1,5 +1,5 @@
 <span class="btn-activity">Activities</span>
-<aside id="activity-sidebar">
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
 
@@ -21,7 +21,7 @@
   </div>
 </aside>
     <!--- content --->
-    <div id="main-content">
+    <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
       <!--- main content --->
       <div class="row">
         <!--- breadcrum Bar --->

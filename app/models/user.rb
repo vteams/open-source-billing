@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
     self.settings.currency = "On"
     self.settings.records_per_page = 5
     self.settings.default_currency = "USD"
+    self.settings.side_nav_opened = false
   end
 
   def set_default_role

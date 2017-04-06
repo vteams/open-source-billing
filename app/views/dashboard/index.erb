@@ -1,5 +1,5 @@
 <%= render "recent_activity" %>
-<div id="main-content">
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="row">
     <!--- main content --->
     <%= render 'widgets'%>

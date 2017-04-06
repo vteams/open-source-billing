@@ -1,5 +1,5 @@
 <%= render 'report_activity' unless request.format.pdf? %>
-<div id="main-content">
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
   <!--- breadcrum Bar --->
   <div class="breadcrum-bar card-white-panel clearfix">

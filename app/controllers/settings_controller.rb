@@ -7,6 +7,11 @@ class SettingsController < ApplicationController
     else
       user.settings.currency = "Off"
     end
+    if params[:side_nav_opened].present?
+      user.settings.side_nav_opened = true
+    else
+      user.settings.side_nav_opened = false
+    end
     if params[:date_format].present?
       user.settings.date_format = params[:date_format]
     end
