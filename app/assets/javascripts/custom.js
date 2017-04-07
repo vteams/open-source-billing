@@ -28,7 +28,7 @@ $(document).ready(function(){
       $('#graph_container').html('');
       Dashboard.plot_graph();
       $("#activity-sidebar").removeClass("show-activity");
-      $("#side-nav,#main-content,#activity-sidebar").toggleClass("side-show");
+      $("#side-nav,#main-content,#activity-sidebar, #flash_message").toggleClass("side-show");
       if($('#side-nav').hasClass('side-show'))
           removeSideNavTitle();
       else
@@ -38,7 +38,7 @@ $(document).ready(function(){
     });
     //
     $(".btn-activity").click(function(){
-      $("#side-nav,#main-content,#activity-sidebar").removeClass("side-show");
+      $("#side-nav,#main-content,#activity-sidebar, #flash_message").removeClass("side-show");
       $("#activity-sidebar").toggleClass("show-activity");
     });
     //

@@ -197,7 +197,7 @@ class InvoicesController < ApplicationController
     @invoices_with_payments = result[:invoices_with_payments]
     respond_to do  |format|
       format.js
-      format.html { redirect_to invoices_url }
+      format.html { redirect_to invoices_url, notice: "Invoice(s) are #{@action} successfully." }
     end
   end
 

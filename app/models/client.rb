@@ -156,7 +156,7 @@ class Client < ActiveRecord::Base
   end
 
   def add_available_credit(available_credit, company_id)
-    payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
+    #payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
   end
 
   def update_available_credit(available_credit)

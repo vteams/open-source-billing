@@ -118,3 +118,38 @@ input#expense_amount{
     width: 100px;
     z-index: 1060;
 }
+
+#card-alert button {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    font-size: 20px;
+    color: #fff;
+}
+
+#flash_message {
+    overflow: hidden;
+    padding-left: 107px;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-right: 330px; }
+#flash_message.side-show {
+    position: relative;
+    padding-left: 281px;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-right: 0;
+    padding-right: 330px; }
+
+@media only screen and (max-width: 992px) {
+    #flash_message.side-show {
+        padding-right: 0px;
+    }
+}
+
