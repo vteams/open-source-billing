@@ -1,11 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-$(document).ready ->
-  $('.invoice-card').on 'click', (e) ->
-    if e.target == e.currentTarget
-      $(this).parent().find('a.invoice_show_link').click()
-
 class @Tax
 
   applyPopover = (elem,message) ->

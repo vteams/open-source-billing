@@ -22,10 +22,6 @@ module TaxesHelper
   def new_tax id
     notice = <<-HTML
        <p>Tax has been created successfully.</p>
-       <ul>
-         <li><a href="/taxes/new">Create another tax</a></li>
-        <!-- <li><a href="/taxes/new?id=#{id}">Create another by duplicating this tax</a></li> -->
-       </ul>
     HTML
     notice.html_safe
   end

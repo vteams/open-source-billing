@@ -131,7 +131,7 @@ class TaxesController < ApplicationController
     @action = result[:action]
     respond_to { |format|
       format.js
-      format.html {redirect_to taxes_url}
+      format.html {redirect_to taxes_url, notice: "Tax(s) are #{@action} successfully."}
     }
   end
 

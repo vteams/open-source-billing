@@ -162,7 +162,7 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to do |format|
-      format.html { redirect_to items_url }
+      format.html { redirect_to items_url, notice: "Item(s) are #{@action} successfully." }
       format.js
       format.json
     end
