@@ -113,7 +113,7 @@ class CompaniesController < ApplicationController
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
     end
-    redirect_to companies_path
+    redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
   end
 
   def undo_actions
