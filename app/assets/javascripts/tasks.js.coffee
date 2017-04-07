@@ -29,11 +29,11 @@ class @Task
         applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
       else if (association_name == "company_association" and no_of_selected_companies == 0)
         hidePopover($("#task_rate"))
-        applyPopover($("input[name=association]:checked"),"topright","leftcenter","Select aleast one company for the task")
+        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
         flag = false
       else
         flag = true
-        hidePopover($("input[name=association]:checked"))
+        hidePopover($("input[name=association]"))
       flag
 
     jQuery('#account_association').change ->

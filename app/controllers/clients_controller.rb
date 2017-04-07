@@ -155,7 +155,7 @@ class ClientsController < ApplicationController
     #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
     @action =  result[:action]
     respond_to do |format|
-      format.html { redirect_to clients_url }
+      format.html { redirect_to clients_url, notice: "Client(s) are #{@action} successfully." }
       format.js
     end
   end

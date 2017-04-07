@@ -42,11 +42,10 @@ class @Item
     jQuery("#item_item_name, #item_item_description").keypress ->
       hidePopover(jQuery(this))
 
-
-
-
     $("form.item_form").submit ->
       flag = true
+      association_name = $('input[name=association]:checked').attr("id")
+      no_of_selected_companies = $('.company_checkbox:checked').length
       if $.trim($("#item_item_name").val()) is ""
         applyPopover($("#item_item_name"),"Item name is required")
         flag = false
@@ -62,10 +61,14 @@ class @Item
       else if ($("#item_tax_1").val() != "" or $("#item_tax_2").val() != "") and ($("#item_tax_1").val() == $("#item_tax_2").val())
         applyPopover($("#item_tax_2").parents('.select-wrapper'),"Same tax not applied on one item")
         flag = false
-      else if $('#company_association').is(':checked')
-        if $('.options_content input[type=checkbox]:checked').length is 0
-          applyPopover($("#company_association"),"Select a company")
-          flag = false
+      else if association_name == undefined
+        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+      else if (association_name == "company_association" and no_of_selected_companies == 0)
+        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        flag = false
+      else
+        flag = true
+        hidePopover($("input[name=association]"))
       flag
 
 

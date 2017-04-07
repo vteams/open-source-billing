@@ -21,6 +21,9 @@ class @Client
       client_phone = jQuery("#client_business_phone").val()
       client_mobile = jQuery("#client_mobile_number").val()
       pattern_phone = /^\d+$/
+      association_name = $('input[name=association]:checked').attr("id")
+      no_of_selected_companies = $('.company_checkbox:checked').length
+
       if jQuery("#client_organization_name").val() is ""
         applyQtip(jQuery("#client_organization_name"), "Orangization name is required", 'topRight')
         flag = false
@@ -39,12 +42,15 @@ class @Client
       else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
         applyQtip(jQuery("#client_mobile_number"), "Invalid mobile number", 'topRight')
         flag = false
-      else if $('#company_association').is(':checked')
-        if $('.options_content input[type=checkbox]:checked').length is 0
-          applyPopover($("#company_association"),"Select a company")
-          flag = false
+      else if association_name == undefined
+        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+      else if (association_name == "company_association" and no_of_selected_companies == 0)
+        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        flag = false
       else
-        flag
+        flag = true
+        hidePopover($("input[name=association]"))
+      flag
 
     jQuery('#calculated_credit').change ->
       client_credit = jQuery(this)
