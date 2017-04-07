@@ -2,12 +2,12 @@ class SettingsController < ApplicationController
   def create
     user = current_user
     @language_changed = false
-    if params[:multi_currency].present?
+    if params[:multi_currency].present? and params[:multi_currency].eql?('On')
       user.settings.currency = "On"
     else
       user.settings.currency = "Off"
     end
-    if params[:side_nav_opened].present?
+    if params[:side_nav_opened].present? and params[:side_nav_opened].eql?('Open')
       user.settings.side_nav_opened = true
     else
       user.settings.side_nav_opened = false

@@ -175,25 +175,25 @@ $(document).ready(function(){
     $("a.multi_currency").click(function(){
         $("a.no_multi_currency").removeClass('active');
         $(this).addClass('active');
-        $("input#multi_currency").attr('checked', 'checked');
+        $("input#multi_currency").attr('checked', 'checked').val('On');
     });
 
     $("a.no_multi_currency").click(function(){
         $("a.multi_currency").removeClass('active');
         $(this).addClass('active');
-        $("input#multi_currency").attr('checked', false);
+        $("input#multi_currency").attr('checked', false).val('Off');
     });
 
     $("a.side_nav_opened").click(function(){
         $("a.no_side_nav_opened").removeClass('active');
         $(this).addClass('active');
-        $("input#side_nav_opened").attr('checked', 'checked');
+        $("input#side_nav_opened").attr('checked', 'checked').val('Open');
     });
 
     $("a.no_side_nav_opened").click(function(){
         $("a.side_nav_opened").removeClass('active');
         $(this).addClass('active');
-        $("input#side_nav_opened").attr('checked', false);
+        $("input#side_nav_opened").attr('checked', false).val('Close');
     });
 
     $('#invoices-list #radioBtn a').on('click', function(){
@@ -217,11 +217,9 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $(document)
         .ajaxStart(function() {
-            console.log('Ajax started');
             $("#loading-indicator").removeClass('hidden'); // show on any Ajax event.
         })
         .ajaxStop(function() {
-            console.log('Ajax stopped');
             $("#loading-indicator").addClass('hidden'); // hide it when it is done.
         });
 });

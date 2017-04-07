@@ -12,7 +12,7 @@
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
                 <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
-                <%= check_box_tag "multi_currency", multi_currency,  checked: multi_currency %>
+                <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
 
                 <div id="radioBtn" class="btn-group mutli_currency_btn">
                   <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>">Yes</a>
@@ -25,7 +25,7 @@
                 <span>Side Navigation Open</span>
 
                 <% side_nav_opened = current_user.settings.side_nav_opened %>
-                <%= check_box_tag "side_nav_opened", side_nav_opened,  checked: side_nav_opened %>
+                <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
 
                 <div id="radioBtn" class="btn-group side-nav_btn">
                   <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active' if side_nav_opened}" %>">Yes</a>
