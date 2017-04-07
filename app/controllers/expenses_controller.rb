@@ -83,17 +83,7 @@ class ExpensesController < ApplicationController
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
-
-  def sort_column
-    params[:sort] ||= 'created_at'
-    sort_col = params[:sort]
-  end
-
-  def sort_direction
-    params[:direction] ||= 'desc'
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
+  
   def bulk_actions
       params[:sort] = params[:sort] || 'created_at'
       result = Services::ExpenseBulkActionsService.new(params.merge({current_user: current_user})).perform
@@ -102,7 +92,7 @@ class ExpensesController < ApplicationController
       @action = result[:action]
     #end
       respond_to do |format|
-        format.html { redirect_to expenses_url }
+        format.html { redirect_to expenses_url, notice: "Expense(s) are #{@action} successfully." }
         format.js
       end
   end

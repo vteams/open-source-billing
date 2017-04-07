@@ -107,7 +107,7 @@ class StaffsController < ApplicationController
     @staffs = result[:staffs]
     @message = get_intimation_message(result[:action_to_perform], result[:staff_ids])
     @action = result[:action]
-    redirect_to staffs_path
+    redirect_to staffs_path, notice: "Staff(s) are #{@action} successfully."
   end
 
   def undo_actions

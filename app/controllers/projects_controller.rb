@@ -94,7 +94,7 @@ class ProjectsController < ApplicationController
     @project_has_deleted_clients = project_has_deleted_clients?(@projects)
     @message = get_intimation_message(result[:action_to_perform], result[:project_ids])
     @action = result[:action]
-    redirect_to projects_path
+    redirect_to projects_path, notice: "Project(s) are #{@action} successfully."
   end
 
   def undo_actions

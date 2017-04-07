@@ -105,7 +105,7 @@ class TasksController < ApplicationController
     @tasks = result[:tasks]
     @message = get_intimation_message(result[:action_to_perform], result[:task_ids])
     @action = result[:action]
-    redirect_to tasks_url
+    redirect_to tasks_url, notice: "Task(s) are #{@action} successfully."
   end
 
   def undo_actions
