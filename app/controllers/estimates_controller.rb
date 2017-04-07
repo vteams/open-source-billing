@@ -138,7 +138,7 @@ class EstimatesController < ApplicationController
     @action = result[:action]
     respond_to do |format|
       format.js
-      format.html {redirect_to estimates_url}
+      format.html {redirect_to estimates_url, notice: "Estimate(s) are #{@action} successfully."}
     end
   end
 

@@ -24,27 +24,20 @@ module EstimatesHelper
     message = is_draft ? "The estimate has been saved as draft." : "Estimate has been created and sent to #{@estimate.client.organization_name}."
     notice = <<-HTML
        <p>#{message}.</p>
-       <ul>
-         <li><a href="/estimates/new">Create another estimate</a></li>
-       </ul>
     HTML
     notice.html_safe
   end
 
   def estimates_archived ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been archived. You can find them under
-     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='estimates/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived estimates back to active.</p>
+     <p>#{ids.size} estimate(s) have been archived.
     HTML
     notice.html_safe
   end
 
   def estimates_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been deleted. You can find them under
-     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='estimates/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted estimates back to active.</p>
+     <p>#{ids.size} estimate(s) have been deleted.
     HTML
     notice.html_safe
   end
