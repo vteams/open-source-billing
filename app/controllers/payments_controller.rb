@@ -60,9 +60,9 @@ class PaymentsController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
-    if @payment.payment_method and @payment.payment_method == 'paypal'
-      redirect_to payments_path,alert: "You can not edit payment with paypal!"
-    end
+    # if @payment.payment_method and @payment.payment_method == 'paypal'
+    #   redirect_to payments_path,alert: "You can not edit payment with paypal!"
+    # end
     respond_to do |format|
       format.html # new.html.erb
       format.js
