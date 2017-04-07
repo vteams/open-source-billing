@@ -20,8 +20,10 @@
       <span class="invoice-action text-blue"><%= (payment.payment_method || payment.payment_type || "").capitalize %></span>
     </div>
     <div class="action-btn-group">
-      <%= link_to raw("<i class='material-icons'>create</i>"),edit_payment_path(payment), remote: true, class: 'edit_invoice_icon' %>
-      <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete, data:{confirm: 'Are you sure?' } %>
+      <% unless payment.payment_type == "credit" %>
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_payment_path(payment), remote: true, class: 'edit_invoice_icon' %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete, data:{confirm: 'Are you sure?' } %>
+      <% end %>
     </div>
   </div>
 </div>

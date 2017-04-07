@@ -4,7 +4,8 @@
   <!--- breadcrum Bar --->
   <div class="breadcrum-bar card-white-panel clearfix">
     <div class="input-field">
-      <h3> Reports: </h3>
+      <h3> Reports: <%= @report.report_name.humanize if request.format.pdf? %></h3>
+
       <select onchange="location = this.value;">
         <option value="<%= "/#{I18n.locale}/reports/payments_collected" %>" <%= "#{ 'selected' if @report.report_name.eql?('payments_collected')}"%>> Payments Collected</option>
         <option value="<%= "/#{I18n.locale}/reports/revenue_by_client"%>" <%= "#{'selected' if @report.report_name.eql?('revenue_by_client') }"%>> Revenue by Client</option>
@@ -16,11 +17,11 @@
   </div>
   <div class="page-box mCustomScrollbar">
       <% unless request.format.pdf? %>
-      <%= render "criteria_controls" %>
+        <%= render "criteria_controls" %>
       <% end %>
-        <div class="simple-responsive report_content">
-          <%= render "report_body" %>
-        </div>
+      <div class="simple-responsive report_content">
+        <%= render "report_body" %>
+      </div>
   </div>
 <!-- report_content -->
 </div>

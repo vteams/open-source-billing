@@ -195,6 +195,19 @@ $(document).ready(function(){
         $(this).addClass('active');
         $("input#side_nav_opened").attr('checked', false);
     });
+
+    $('#invoices-list #radioBtn a').on('click', function(){
+        var ind = $(this).index();
+        if($(this).hasClass('active')){
+            return
+        }
+        else{
+            $("#invoices-list #radioBtn a").removeClass("active");
+            $(this).addClass('active');
+            $(".data-wrapper > ul").hide();
+            $(".data-wrapper > ul").eq(ind).show();
+        }
+    });
 });
 
 
@@ -202,6 +215,15 @@ $(document).ready(function(){
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    $(document)
+        .ajaxStart(function() {
+            console.log('Ajax started');
+            $("#loading-indicator").removeClass('hidden'); // show on any Ajax event.
+        })
+        .ajaxStop(function() {
+            console.log('Ajax stopped');
+            $("#loading-indicator").addClass('hidden'); // hide it when it is done.
+        });
 });
 
 $('.list-buttons .addbtn').on('click',function(){
