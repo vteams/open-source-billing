@@ -193,7 +193,7 @@ class InvoicesController < ApplicationController
     @invoices = filter_by_company(result[:invoices]).order("#{sort_column} #{sort_direction}")
     @invoice_has_deleted_clients = invoice_has_deleted_clients?(@invoices)
     @message = get_intimation_message(result[:action_to_perform], result[:invoice_ids])
-    @action = result[:action]
+    @action = result[:action].eql?("invoices_with_payments") ?  "deleted" : result[:action]
     @invoices_with_payments = result[:invoices_with_payments]
     respond_to do  |format|
       format.js
