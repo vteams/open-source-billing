@@ -1,2 +1,5 @@
 $('#invoice_model .modal-content').html("<%= escape_javascript render partial: 'estimate_popup', locals: {estimate: @estimate}  %>");
+$(".modal-close").on('click', function(){
+    $(this).parents(".modal").modal('close');
+});
 $("#invoice_model").modal('open');

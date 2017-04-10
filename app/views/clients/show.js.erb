@@ -1,2 +1,5 @@
 $('#client_model .modal-content').html("<%= escape_javascript render partial: 'client_popup', locals: {client: @client}  %>");
+$(".modal-close").on('click', function(){
+    $(this).parents(".modal").modal('close');
+});
 $("#client_model").modal('open');

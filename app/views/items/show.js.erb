@@ -1,2 +1,5 @@
 $('.itemModal .modal-content').html("<%= escape_javascript render partial: 'item_pop_up', locals: {item: @item}  %>");
+$(".modal-close").on('click', function(){
+    $(this).parents(".modal").modal('close');
+});
 $(".itemModal").modal('open');

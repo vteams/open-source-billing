@@ -208,6 +208,10 @@ $(document).ready(function(){
             $(".data-wrapper > ul").eq(ind).show();
         }
     });
+
+    $(".modal-close").on('click', function(){
+        $(this).parents(".modal").modal('close');
+    });
 });
 
 

@@ -1,4 +1,8 @@
 $('.editClient .modal-content').html("<%= escape_javascript render partial: 'company_form_popup', locals: {company: @company}  %>");
 Company.load_functions();
-$("label").addClass('active');
+$('input').each(function(){
+    if($(this).val() != ""){
+        $(this).parent().find('label').addClass('active');
+    }
+});
 $(".editClient").modal('open');

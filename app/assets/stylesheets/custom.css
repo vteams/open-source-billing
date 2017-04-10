@@ -153,3 +153,6 @@ input#expense_amount{
     }
 }
 
+a.modal-close i{
+    font-size: 22px !important;
+}

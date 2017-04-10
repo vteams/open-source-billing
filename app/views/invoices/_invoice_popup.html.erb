@@ -1,12 +1,13 @@
 <div class="modal-header clearfix">
   <h5 class="left">
-    <!--<button id="enterPayment" class="btn btn-default modal-close" data-target="modal2">Enter Payment On Invoice</button>-->
     <span><%= @client.organization_name %></span>
   </h5>
   <div class="modal-action-btn right">
+
     <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), remote: true, class: 'edit_invoice_icon' %>
     <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id) %>
     <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
+    <a href="javascript:;" class="modal-close"><i class="material-icons">done</i></a>
   </div>
 </div>
 <div class="info-section clearfix">

@@ -1,2 +1,5 @@
 $('#expense_modal .modal-content').html("<%= escape_javascript render partial: 'expense_popup', locals: {expense: @expense}  %>");
+$(".modal-close").on('click', function(){
+    $(this).parents(".modal").modal('close');
+});
 $("#expense_modal").modal('open');

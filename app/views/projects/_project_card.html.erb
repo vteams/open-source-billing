@@ -1,7 +1,7 @@
 <div class="col s12 m6 l4 box">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
-  <%= link_to '', project , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <%= link_to '', project , class: 'invoice_show_link', style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-project_id= <%=project.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "project_ids[]", project.id, false, :id => "project_#{project.id}", class: "filled-in" %>
