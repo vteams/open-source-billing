@@ -19,6 +19,7 @@
 #
 class Client < ActiveRecord::Base
 
+  include ClientSearch if OSB::CONFIG::ENABLE_SEARCH
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 
@@ -172,17 +173,28 @@ class Client < ActiveRecord::Base
   end
 
   def self.get_clients(params)
-    account = params[:user].current_account
+
+    # get the company
+    company =  Company.find_by(id: params[:company_id])
 
     # get the clients associated with companies
-    company_clients = Company.find(params[:company_id]).clients.send(params[:status])
-    #company_clients
+    company_clients = company.clients
+    company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
+    company_clients = company_clients.send(params[:status])
+
+    # get the account
+    account = params[:user].current_account
+
+    # get the clients associated with accounts
+    account_clients = account.clients
+    account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
+    account_clients = account_clients.send(params[:status])
 
     # get the unique clients associated with companies and accounts
-    clients = (account.clients.send(params[:status]) + company_clients).uniq
+    clients = ( account_clients + company_clients).uniq
 
     # sort clients in ascending or descending order
-    clients.sort! do |a, b|
+    clients = clients.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])

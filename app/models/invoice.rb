@@ -22,6 +22,7 @@ class Invoice < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
+  include InvoiceSearch if OSB::CONFIG::ENABLE_SEARCH
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
@@ -200,7 +201,8 @@ class Invoice < ActiveRecord::Base
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    invoices = params[:search].present? ? self.search(params[:search]).records : self
+    invoices.send(method).page(params[:page]).per(per_page)
   end
 
   def self.paid_full ids
@@ -433,7 +435,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+    client
   end
 
   def inv_type

@@ -19,6 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoiceLineItem < ActiveRecord::Base
+
+  include ItemSearch if OSB::CONFIG::ENABLE_SEARCH
   # associations
   belongs_to :invoice
   belongs_to :estimate

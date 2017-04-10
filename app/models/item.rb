@@ -20,6 +20,7 @@
 #
 class Item < ActiveRecord::Base
 
+  include ItemSearch if OSB::CONFIG::ENABLE_SEARCH
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
@@ -58,18 +59,31 @@ class Item < ActiveRecord::Base
   end
 
   def self.get_items(params)
-    account = params[:user].current_account
+
+
+    # get the company
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company = Company.find_by(id: company_id)
 
     # get the items associated with companies
-    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
-    company_items = Company.find(company_id).items.send(params[:status])
+    company_items = company.items
+    company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
+    company_items = company_items.send(params[:status])
+
+    # get the account
+    account = params[:user].current_account
+
+    # get the items associated with account
+    account_items = account.items
+    account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
+    account_items = account_items.send(params[:status])
 
     # get the unique items associated with companies and accounts
-     items = (account.items.send(params[:status]) + company_items).uniq
-    #items = (Item.where(account_id: account.id).send(params[:status]) + company_items).uniq
+
+    items = (account_items + company_items).uniq
 
     # sort items in ascending or descending order
-    items.sort! do |a, b|
+    items = items.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
 
       if %w(tax1.name tax2.name).include?(params[:sort_column])

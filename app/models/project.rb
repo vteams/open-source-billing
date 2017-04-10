@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
+  include ProjectSearch if OSB::CONFIG::ENABLE_SEARCH
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
@@ -52,7 +53,7 @@ class Project < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+    self.client
   end
 
   def group_date

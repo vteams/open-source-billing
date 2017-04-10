@@ -19,6 +19,7 @@ module OSB
     SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
 
     ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
+    ENABLE_SEARCH ||= APP_CONFIG[:enable_search]
 
   end
 end

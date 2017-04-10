@@ -14,12 +14,14 @@
     </div>
     <div class="invoice-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
+      <div class="search_result_container">
           <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
               <p><span class="activity-date"><%= role %></span></p>
               <div class="clearfix">
                 <%= render partial: 'user_card', collection: users, as: :user %>
               </div>
           <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 class Company < ActiveRecord::Base
+  include CompanySearch if OSB::CONFIG::ENABLE_SEARCH
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
   mount_uploader :logo, ImageUploader
@@ -26,7 +27,8 @@ class Company < ActiveRecord::Base
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    params[:account].companies.send(method).page(params[:page]).per(params[:per])
+    companies = params[:search].present? ? params[:account].companies.search(params[:search]).records : params[:account].companies
+    companies.send(method).page(params[:page]).per(params[:per])
   end
 
   def self.recover_archived(ids)

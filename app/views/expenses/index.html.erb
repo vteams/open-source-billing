@@ -15,12 +15,14 @@
     <div class="invoice-box expense-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
       <%= form_tag bulk_actions_expenses_path, {method: :get, id: "bulk_action_form"} do -%>
-          <% @expenses.group_by { |d| d.group_date }.each do |date, expenses| %>
-              <p><span class="activity-date"><%= date %></span></p>
-              <div class="clearfix">
-                <%= render partial: 'expense_card', collection: expenses, as: :expense %>
-              </div>
-          <% end %>
+          <div class="search_result_container">
+            <% @expenses.group_by { |d| d.group_date }.each do |date, expenses| %>
+                <p><span class="activity-date"><%= date %></span></p>
+                <div class="clearfix">
+                  <%= render partial: 'expense_card', collection: expenses, as: :expense %>
+                </div>
+            <% end %>
+          </div>
           <%= render partial: 'bulk_actions'%>
 
       <% end %>

@@ -32,8 +32,8 @@ class TaxesController < ApplicationController
 
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @taxes = Tax.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
-    # @tax_activity = Reporting::TaxActivity.get_recent_activity(params[:page],@per_page,sort_column,sort_direction)
+    @taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax
+    @taxes = @taxes.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
       format.html # index.html.erb

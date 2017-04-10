@@ -63,6 +63,7 @@
             <%= f.number_field :payment_amount, class: "payment_amount" %>
             <%= f.hidden_field :invoice_id, value: invoice.id %>
             <%= f.hidden_field :invoice_number, value: payment.invoice_number %>
+            <%= f.hidden_field :client_id, value: invoice.client_id %>
             <%= f.label :payment_amount, 'Amount', class: 'active' %>
           </div>
           <div class="input-field col s6">

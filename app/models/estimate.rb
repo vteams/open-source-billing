@@ -2,6 +2,7 @@ class Estimate < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
+  include EstimateSearch if OSB::CONFIG::ENABLE_SEARCH
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   # constants
   STATUS_DESCRIPTION = {
@@ -63,7 +64,8 @@ class Estimate < ActiveRecord::Base
   def self.filter(params, per_page)
     mappings = {active: 'unarchived_and_not_invoiced', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    estimates = params[:search].present? ? self.search(params[:search]).records : self
+    estimates.send(method).page(params[:page]).per(per_page)
   end
 
   def self.invoiced
@@ -75,7 +77,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+   client
   end
 
   def tooltip

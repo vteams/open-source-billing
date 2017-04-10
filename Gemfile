@@ -90,3 +90,10 @@ gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
 gem "letter_opener", :group => :development
 gem 'puma', '3.11.0'
+
+gem 'puma'
+
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
+gem 'exception_notification-rake'

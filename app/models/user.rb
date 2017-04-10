@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class User < ActiveRecord::Base
+  include UserSearch if OSB::CONFIG::ENABLE_SEARCH
   rolify
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,

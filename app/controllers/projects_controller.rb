@@ -147,6 +147,7 @@ class ProjectsController < ApplicationController
 
   def load_projects
     projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    projects = projects.search(params[:search]).records if params[:search].present?
     @projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
   end
 

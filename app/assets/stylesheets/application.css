@@ -48,4 +48,6 @@
  *= project.css.scss
  *= require fullcalendar
  *= require custom
+ *= require select2.min
+ *= require search
 */

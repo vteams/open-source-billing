@@ -1,5 +1,6 @@
 class Expense < ActiveRecord::Base
   include DateFormats
+  include ExpenseSearch if OSB::CONFIG::ENABLE_SEARCH
   belongs_to :client
   belongs_to :category, class_name: 'ExpenseCategory', foreign_key: 'category_id'
   belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
@@ -18,7 +19,8 @@ class Expense < ActiveRecord::Base
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(params[:per_page])
+    expenses = params[:search].present?  ? Expense.search(params[:search]).records : Expense
+    expenses.send(method).page(params[:page]).per(params[:per_page])
   end
 
   def self.recover_archived(ids)

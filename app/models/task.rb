@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   include DateFormats
+  include TaskSearch if OSB::CONFIG::ENABLE_SEARCH
   paginates_per 10
 
   acts_as_archival
@@ -43,17 +44,29 @@ class Task < ActiveRecord::Base
 
 
   def self.get_tasks(params)
-    account = params[:user].current_account
+
+    # get the company
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company =  Company.find_by(id: company_id)
 
     # get the tasks associated with companies
-    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
-    company_tasks = Company.find(company_id).tasks.send(params[:status])
+    company_tasks = company.tasks
+    company_tasks = company_tasks.search(params[:search]).records if params[:search].present? and company_tasks.present?
+    company_tasks = company_tasks.send(params[:status])
 
-    # get the unique tasks associated with companies and accounts
-    tasks = (account.tasks.send(params[:status]) + company_tasks).uniq
+    # get the account
+    account = params[:user].current_account
+
+    # get the tasks associated with accounts
+    account_tasks = account.tasks
+    account_tasks = account_tasks.search(params[:search]).records if params[:search].present? and account_tasks.present?
+    account_tasks = account_tasks.send(params[:status])
+
+    # get the unique clients associated with companies and accounts
+    tasks = ( account_tasks + company_tasks).uniq
 
     # sort tasks in ascending or descending order
-    tasks.sort! do |a, b|
+    tasks = tasks.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
 
       if a.send(params[:sort_column]).class.to_s == 'BigDecimal' and b.send(params[:sort_column]).class.to_s == 'BigDecimal'

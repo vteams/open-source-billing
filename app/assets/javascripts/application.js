@@ -86,6 +86,11 @@
 //= require new_invoice
 //= require import
 //= require sub_user
+//= require filter_bar
+//= require filter_box
+//= require select2.min
+//= require search
+//= require new_search
 
 
 jQuery(function () {

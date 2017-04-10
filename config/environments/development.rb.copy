@@ -40,6 +40,13 @@ Osb::Application.configure do
 
   config.action_dispatch.tld_length = OSB::CONFIG::TLD_LENGTH
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
-  config.address = "http://localhost:3000/"
-  config.action_mailer.delivery_method = :letter_opener
+  config.middleware.use ExceptionNotification::Rack,
+                            :ignore_if => lambda { |env, exception| !env.nil? },
+                            :email => {
+                                :sender_address => %{"notifier" <support@opensourcebilling.org>},
+                                :exception_recipients => %w{suneel.kumar@nxb.com.pk}
+                            }
+
+      ExceptionNotifier::Rake.configure
+  end
 end

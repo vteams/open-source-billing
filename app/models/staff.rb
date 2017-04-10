@@ -1,5 +1,6 @@
 class Staff < ActiveRecord::Base
   include DateFormats
+  include StaffSearch if OSB::CONFIG::ENABLE_SEARCH
   paginates_per 10
 
   acts_as_archival
@@ -39,14 +40,25 @@ class Staff < ActiveRecord::Base
   end
 
   def self.get_staffs(params)
-    account = params[:user].current_account
+    # get the company
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company =  Company.find_by(id: company_id)
 
     # get the staffs associated with companies
-    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
-    company_staffs = Company.find(company_id).staffs.send(params[:status])
+    company_staffs = company.staffs
+    company_staffs = company_staffs.search(params[:search]).records if params[:search].present? and company_staffs.present?
+    company_staffs = company_staffs.send(params[:status])
 
-    # get the unique staffs associated with companies and accounts
-    staffs = (account.staffs.send(params[:status]) + company_staffs).uniq
+    # get the account
+    account = params[:user].current_account
+
+    # get the staffs associated with accounts
+    account_staffs = account.staffs
+    account_staffs = account_staffs.search(params[:search]).records if params[:search].present? and account_staffs.present?
+    account_staffs = account_staffs.send(params[:status])
+
+    # get the unique clients associated with companies and accounts
+    staffs = ( account_staffs + company_staffs).uniq
 
     # sort staffs in ascending or descending order
     staffs.sort! do |a, b|

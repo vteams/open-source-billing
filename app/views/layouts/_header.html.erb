@@ -31,7 +31,7 @@
     <!--- header search--->
     <div class="col s3 m2 l4  header-right">
       <div class="right">
-        <!--<a class="btn-search" title="Search" href="#"><i class="material-icons">search</i></a>-->
+        <%= link_to raw('<i class="material-icons">search</i>'), "javascript:;" , class:'btn-search', title: 'Search' if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
         <a class="help-search" title="Help" href="#"><i class="material-icons">help_outline</i></a>
       </div>
       <!--- header search holder--->
@@ -45,10 +45,18 @@
             <%= render 'layouts/bulk_action_links'%>
           </div>
         </div>
-        <form action="#">
-          <i class="zmdi zmdi-search"></i>
-          <input type="text" class="form-control" placeholder="" />
-        </form>
+        <!--<form action="#">-->
+          <!--<i class="zmdi zmdi-search"></i>-->
+          <!--<input type="text" class="form-control" placeholder="" />-->
+        <!--</form>-->
+        <% if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
+            <div class="search">
+              <%= form_tag eval("#{controller_name}_path"), method: :get do %>
+                  <i class="zmdi zmdi-search"></i>
+                  <%= filter_box_for  %>
+              <% end %>
+            </div>
+        <% end %>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ development:
   app_host: 'lvh.me:3000'
   app_protocol: http
   tld_length: 1
+  enable_search: true
 
   activemerchant_billing_mode: test
 
@@ -29,6 +30,7 @@ staging:
   app_host: 'localhost:3000' # e.g. osb.mydomain.com
   app_protocol: http
   tld_length: 1
+  enable_search: true
 
   activemerchant_billing_mode: test
 
@@ -56,6 +58,7 @@ production:
   app_host: 'localhost:3000' # e.g. osb.mydomain.com
   app_protocol: http
   tld_length: 1
+  enable_search: true
 
   activemerchant_billing_mode: test
 
