@@ -234,6 +234,9 @@ Osb::Application.routes.draw do
         get 'undo_actions'
         get 'preview'
       end
+      member do
+        get 'convert_to_invoice'
+      end
     end
 
     #get 'calendar' => 'calendar#index'

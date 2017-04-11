@@ -153,7 +153,7 @@ class EstimatesController < ApplicationController
   def convert_to_invoice
     estimate = Estimate.find(params[:id])
     estimate.convert_to_invoice
-    redirect_to(estimate_path(estimate), notice: 'Estimate successfully converted to invoice.')
+    redirect_to(estimates_url, notice: 'Estimate successfully converted to invoice.')
   end
 
   def set_per_page_session
