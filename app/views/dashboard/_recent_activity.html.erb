@@ -14,7 +14,7 @@
                    <p>
                      <%= number_to_currency(activity[:amount], unit: activity[:code]) %> <span>(<%= activity[:unit] %>)</span>
                    </p>
-                   <em class="author"><%= "#{activity[:activity_action]} #{activity[:client]} on" %></em>
+                   <em class="author"><%= "#{activity[:activity_action]} #{activity[:client]}" %></em>
                  </div>
                </li>
             <% end %>

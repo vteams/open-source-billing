@@ -27,8 +27,8 @@ module Reporting
       company_filter = company.nil? ? "" : "company_id=#{company}"
       payment_company_filter = company.nil? ? "" : "payments.company_id=#{company}"
       currency_filter = currency.present? ?  "currency_id=#{currency.id}" : ""
-      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(5)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
+      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(10)
+      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit(100)
 
       # merge invoices and payments in activity array
       recent_activity = []
