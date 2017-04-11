@@ -305,7 +305,7 @@ COMPANY_SIZE = ['1-10 employees',
                 '101-500 employees',
                 'Over 500 employees']
 
-PAYMENT_METHODS = ['Cheque', 'Bank Transfer', 'Credit', 'Cash', 'Debit', 'Paypal']
+PAYMENT_METHODS = ['Cheque', 'Bank Transfer', 'Cash', 'Debit', 'Paypal']
 
 CURRENCY_CODE = [
     ['PKR Pakistan Rupee', 'PKR'],

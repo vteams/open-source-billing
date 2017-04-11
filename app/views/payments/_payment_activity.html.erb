@@ -25,7 +25,7 @@
     </div>
     <div class="status-info actionState">
       <% PAYMENT_METHODS.each do |method| %>
-          <h5 class="text-blue"><a href="#"><%= method.capitalize %></a><span> (<%= @payment_activity[method.to_s]%>)</span></h5>
+          <h5 class="text-blue"><%= method.capitalize %><span> (<%= @payment_activity[method.to_s]%>)</span></h5>
       <% end %>
     </div>
   </div>

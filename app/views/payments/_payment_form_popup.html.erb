@@ -38,17 +38,6 @@
             </small>
           </strong>
         </div>
-        <% if client_credit > 0 %>
-            <div class="field_row">
-              <div class="label_field left single">&nbsp;</div>
-              <div class="field_check btm">
-                <%= check_box " ", "apply_credit", :id => "0", :class => "apply_credit" %>
-                <p><label for="payment" id="rem_credit" value="<%= client_credit %>"><%= t('views.payments.apply_from_credit') %> <%= invoice.currency.present? ? invoice.currency.code : 'USD' %>
-                  <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: invoice.currency.present? ? invoice.currency.unit : '$') %>
-                  <%= t('views.common.available') %></label></p>
-              </div>
-            </div>
-        <% end %>
       </div>
       <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
           <div class="info-right-section right circle">

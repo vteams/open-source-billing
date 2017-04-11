@@ -21,7 +21,7 @@
     </div>
     <div class="action-btn-group">
       <% unless payment.payment_type == "credit" %>
-        <%= link_to raw("<i class='material-icons'>create</i>"),edit_payment_path(payment), remote: true, class: 'edit_invoice_icon' %>
+        <%#= link_to raw("<i class='material-icons'>create</i>"),edit_payment_path(payment), remote: true, class: 'edit_invoice_icon' %>
         <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete, data:{confirm: 'Are you sure?' } %>
       <% end %>
     </div>

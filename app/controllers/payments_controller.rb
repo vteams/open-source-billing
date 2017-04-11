@@ -75,7 +75,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount)
+        Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
         format.html { redirect_to payments_path, :notice => 'The payment has been recorded successfully.' }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else
