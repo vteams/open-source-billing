@@ -70,14 +70,14 @@ module ProjectSearch
           query << "projects.#{key} like '#{val}%'"
         end
         if key.eql?('client')
-          query << "(clients.first_name like '#{val}%' or clients.last_name like '#{val}%' or clients.email like '#{keyword[:client]}%' or clients.organization_name like '#{val}%')"
+          query << "(cc.first_name like '#{val}%' or cc.last_name like '#{val}%' or cc.email like '#{keyword[:client]}%' or cc.organization_name like '#{val}%')"
         end
         if key.eql?('manager')
           query << "(staffs.name like '#{val}%' or staffs.email like '#{val}%')"
         end
       end
       query = query.join(" AND ")
-      return Project.includes(:client).joins(:manager).where(query).uniq
+      return joins('LEFT OUTER JOIN clients as cc ON projects.client_id = cc.id').joins(:manager).where(query).uniq
     end
 
   end

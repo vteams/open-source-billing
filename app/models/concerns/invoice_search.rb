@@ -77,14 +77,14 @@ module InvoiceSearch
           query << "invoices.#{key} like '#{val}%'"
         end
         if key.eql?('client')
-          query << "(clients.first_name like '#{val}%' or clients.last_name like '#{val}%' or clients.email like '#{keyword[:client]}%' or clients.organization_name like '#{val}%')"
+          query << "(cc.first_name like '#{val}%' or cc.last_name like '#{val}%' or cc.email like '#{keyword[:client]}%' or cc.organization_name like '#{val}%')"
         end
         if key.eql?('invoice_line_items')
           query << "(invoice_line_items.item_name like '#{val}%' or invoice_line_items.item_description like '#{val}%')"
         end
       end
       query = query.join(" AND ")
-      return includes(:client).joins(:invoice_line_items).where(query).uniq
+      return joins('LEFT OUTER JOIN clients as cc ON invoices.client_id = cc.id').joins(:invoice_line_items).where(query).uniq
     end
 
   end
