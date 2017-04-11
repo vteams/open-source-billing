@@ -1,6 +1,10 @@
+$('select').material_select();
 $('.qtip').remove();
 $('#task_body').html('<%= escape_javascript render('logs/logs') %>');
 $('#calendar').fullCalendar( 'refetchEvents' );
 $(".alert.alert-success").show().find('span').html("Log(s) created successfully.");
 $('#new_log')[0].reset();
 $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
+var select = $('select');
+select.prop('selectedIndex', 0); //Sets the first option as selected
+select.material_select();        //Update material select

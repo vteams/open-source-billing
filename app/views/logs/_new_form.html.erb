@@ -10,7 +10,7 @@
       </div>
 
       <div class="input-field col s12 tasks_dropdown">
-        <%= f.select :task_id, options_for_select(load_tasks_for_log(@log),selected: f.object.task_id),include_blank: 'Select a task' %>
+        <%= f.select :task_id, options_for_select(load_tasks_for_log(@log),selected: f.object.task_id),{include_blank: 'Select a task'}, {disabled: true} %>
       </div>
 
       <div class="input-field col s12">

@@ -1,4 +1,4 @@
-$selectDropdown = $("#log_task_id").empty().html(' ');
+$selectDropdown = $("#log_task_id").empty().html(' ').prop("disabled", false);
 <% if @tasks %>
     $selectDropdown.append($("<option></option>").attr("value",'').text('Select a task'));
     <% @tasks.each do |task| %>

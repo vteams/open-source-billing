@@ -1,8 +1,8 @@
-$('.editPaymentModal .modal-content').html("<%= escape_javascript render partial: 'account_form_popup', locals: {account: @account}  %>");
+$('.editAccountModal .modal-content').html("<%= escape_javascript render partial: 'account_form_popup', locals: {account: @account}  %>");
 $('select').material_select();
 $('input').each(function(){
    if($(this).val() != ""){
        $(this).parent().find('label').addClass('active');
    }
 });
-$(".editPaymentModal").modal('open');
+$(".editAccountModal").modal('open');

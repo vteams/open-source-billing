@@ -156,3 +156,72 @@ input#expense_amount{
 a.modal-close i{
     font-size: 22px !important;
 }
+.inline_form input[type='submit']{
+    background-color: #09b8e2;
+    float: right;
+
+}
+.inline_form input[type='submit']{
+    background-color: #09b8e2;
+}
+
+.inline_form .input-field .select-wrapper .dropdown-content li span {
+    color: #454545;
+    display: block;
+    line-height: 22px;
+    padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.inline_form .input-field .select-wrapper .dropdown-content {
+    top: 36px !important;
+    font-size: 12px;
+    color: #454545;
+    line-height: 14px;
+    height: auto;
+    margin-bottom: 0;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.inline_form .input-field .select-wrapper .caret {
+    color: #b5b5b5;
+}
+
+.inline_form .input-field .select-wrapper .select-dropdown {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+    margin-bottom: 12px;
+    border-bottom-color: #dadada;
+    line-height: 24px;
+    height: auto;
+}
+
+.inline_form .input-field input[type='number']{
+    font-size: 14px;
+    color: #454545;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    border-bottom-color: #dadada;
+    line-height: 35px;
+    height: auto;
+    margin-bottom: 12px;
+}
+.inline_form .input-field textarea{
+    border-bottom-color: #DADADA;
+}
+.inline_form .input-field input[type='number']:focus, .inline_form .input-field textarea:focus{
+    border-bottom-color: #DADADA;
+    box-shadow: none;
+}
+.inline_form .input-field input+label.active{
+  top: 15px;
+  color: #b5b5b5;
+}
+
+.logs_table{
+    margin-top: 20px;
+}
+
+.editAccountModal .dropdown-content{
+    height: 180px!important;
+}
