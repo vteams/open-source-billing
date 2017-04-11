@@ -1,4 +1,4 @@
-<div id="flash_message" class="<%= "#{ 'side-show' if side_nav_opened?}"%>">
+<div id="flash_message" class="<%= "#{ 'side-show' if side_nav_opened?}"%> <%= "#{ 'hidden' if notice.blank? and alert.blank? }" %>">
   <div class="col s12 breadcrum-bar">
     <div id="card-alert" class="card green lighten-5" style="display:<%= notice.blank? ? 'none' : 'block' %>">
       <div class="card-content green-text"><p><%= notice %></p></div>
