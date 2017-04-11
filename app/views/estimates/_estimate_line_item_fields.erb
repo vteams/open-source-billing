@@ -14,15 +14,11 @@
   <%= f.hidden_field :item_unit_cost, class: 'cost'%>
   <%= f.hidden_field :item_quantity, class: 'qty' %>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
-  <%= f.hidden_field :tax_2, class: 'tax2' %>
   <td class="description"><%= f.object.item_description %></td>
   <td class="center-align cost"><%= f.object.item_unit_cost %></td>
   <td class="center-align qty"><%= f.object.item_quantity %></td>
   <td class="center-align tax1">
     <%= f.object.tax1.name rescue '' %>
-  </td>
-  <td class="center-align tax2">
-    <%= f.object.tax2.name rescue '' %>
   </td>
   <td class="right-align"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
 </tr>
