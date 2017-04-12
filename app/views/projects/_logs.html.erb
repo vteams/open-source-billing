@@ -8,7 +8,7 @@
       <strong><%= log.task_name %></strong>
       <div class="amount-box">
         <span>Notes</span>
-        <span class="usertitle"><%= truncate log.notes %></span>
+        <span class="usertitle"><%= truncate(log.notes, length: 50) %></span>
       </div>
       <div class="card-footer clearfix">
         <span class="invoice-date log_hours"> <%= log.hours %> <small>HRS</small> </span>

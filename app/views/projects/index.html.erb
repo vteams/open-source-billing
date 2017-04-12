@@ -5,8 +5,10 @@
     <!--- breadcrum Bar --->
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel">
-        <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, remote: true, class: 'right', title: 'Add' %>
-        <h3>Time Tracking : <%= link_to raw('<span class="text-color">Projects</span>'), projects_url %></h3>
+        <h3 class="heading_with_action">
+          Time Tracking : <%= link_to raw('<span class="text-color">Projects</span>'), projects_url %>
+          <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, remote: true, class: 'right', title: 'Add' %>
+        </h3>
       </div>
     </div>
   </div>

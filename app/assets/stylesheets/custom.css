@@ -231,10 +231,19 @@ a.modal-close i{
 }
 
 .project_log_details .amount-box{
-    height: 30px;
+    height: 50px;
 }
 
 input.filled-in:checked + label:after {
     background: #6a6a6a !important;
     border-color: #6a6a6a !important;
+}
+
+h3.heading_with_action{
+  display: block;
+  width: 100%;
+}
+
+.task-card .invoice-details .amount-box{
+    height: 30px;
 }

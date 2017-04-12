@@ -2,7 +2,7 @@
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <%= link_to '', task , remote: true, class: 'invoice_show_link', style: 'display: none' %>
-  <div class="card-white-panel invoice-card" data-task_id= <%=task.id %>>
+  <div class="card-white-panel invoice-card task-card" data-task_id= <%=task.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "task_ids[]", task.id, false, :id => "task_#{task.id}", class: "filled-in" %>
       <label for="<%= "task_#{task.id}" %>"></label>
@@ -11,7 +11,7 @@
     <div class="invoice-details task_details">
       <h5><%= task.name %></h5>
       <div class="amount-box">
-        <span class="usertitle"><%= truncate(task.description, length: 20) %></span>
+        <span class="usertitle"><%= truncate(task.description, length: 50) %></span>
       </div>
       <div class="card-footer clearfix">
           <span class="invoice-action text-grey task_rate"> <%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small> </span>
