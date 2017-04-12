@@ -17,7 +17,7 @@ class Log < ActiveRecord::Base
   end
 
   def group_date
-    date.strftime('%Y-%m-%d')
+    date.strftime('%B %Y')
   end
 
   def image_name

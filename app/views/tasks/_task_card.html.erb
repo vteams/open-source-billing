@@ -8,16 +8,13 @@
       <label for="<%= "task_#{task.id}" %>"></label>
       <div class="invoice-name <%= random_card_color %>"><%= task.image_name %></div>
     </div>
-    <div class="invoice-details">
+    <div class="invoice-details task_details">
       <h5><%= task.name %></h5>
       <div class="amount-box">
-        <span class="usertitle"><%= task.description %></span>
+        <span class="usertitle"><%= truncate(task.description, length: 50) %></span>
       </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <strong class="text-content right"><%= task.rate %></strong>
-        </div>
-
+      <div class="card-footer clearfix">
+          <span class="invoice-action text-grey task_rate"> <%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small> </span>
       </div>
     </div>
 

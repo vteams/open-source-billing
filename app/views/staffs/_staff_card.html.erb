@@ -13,11 +13,8 @@
       <div class="amount-box">
         <span class="usertitle"><%= staff.email %></span>
       </div>
-      <div class="agedWrapper">
-        <div class="aged-ar">
-          <strong class="text-content right"><%= staff.rate %></strong>
-        </div>
-
+      <div class="card-footer clearfix">
+        <span class="invoice-action text-grey staff_rate"> <%= "#{default_currency_unit}"  "#{staff.rate}" %> <small>HRS</small> </span>
       </div>
     </div>
 

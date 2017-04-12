@@ -225,3 +225,11 @@ a.modal-close i{
 .editAccountModal .dropdown-content{
     height: 180px!important;
 }
+
+.project_log_details .log_hours, .project_log_details .log_rate, .invoice-details .task_rate, .invoice-details .staff_rate{
+    padding: 0px !important;
+}
+
+.task_details .amount-box{
+    height: 15px;
+}
