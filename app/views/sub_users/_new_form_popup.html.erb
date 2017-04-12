@@ -35,8 +35,8 @@
         <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
         <label for="role_ids"> Assign Role </label>
       </div>
-      <div class="input-field col s6">
-        <%= check_box_tag :notify_user %>
+      <div class="input-field col s6 checkbox">
+        <%= check_box_tag :notify_user, nil, false ,class: "filled-in" %>
         <label for="notify_user"><%= t('views.users.notify_user') %></label>
       </div>
     </div>

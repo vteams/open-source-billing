@@ -233,3 +233,8 @@ a.modal-close i{
 .task_details .amount-box, .project_log_details .amount-box, .staff_details .amount-box{
     height: 30px;
 }
+
+input.filled-in:checked + label:after {
+    background: #6a6a6a !important;
+    border-color: #6a6a6a !important;
+}
