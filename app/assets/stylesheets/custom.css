@@ -230,6 +230,6 @@ a.modal-close i{
     padding: 0px !important;
 }
 
-.task_details .amount-box{
-    height: 15px;
+.task_details .amount-box, .project_log_details .amount-box, .staff_details .amount-box{
+    height: 30px;
 }

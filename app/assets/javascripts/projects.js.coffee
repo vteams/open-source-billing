@@ -101,3 +101,8 @@ class @Project
         hidePopover(jQuery("#project_total_hours"))
         flag = true
       flag
+
+    $('#project_grid_fields tbody').sortable
+      handle: '.sort_icon'
+      items: 'tr.fields'
+      axis: 'y'
