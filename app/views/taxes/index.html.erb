@@ -14,20 +14,12 @@
       </div>
     </div>
   </div>
+
   <div class="invoice-box tax-box mCustomScrollbar">
-      <!--- Invoices Card Title--->
       <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
-          <div class="search_result_container">
-            <% @taxes.group_by { |d| d.group_date }.each do |date, taxes| %>
-                <p><span class="activity-date"><%= date %></span></p>
-                <div class="flex-wrapper">
-                  <%= render partial: 'taxes',:collection => taxes, as: :taxis %>
-                </div>
-            <% end %>
-          </div>
+          <div class="search_result_container"><%= render 'taxes_container' %></div>
           <%= render partial: 'bulk_actions'%>
-
       <% end %>
-
   </div>
+
 </div>

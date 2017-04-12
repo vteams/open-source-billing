@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'estimate_card', collection: @estimates, as: :estimate)%>')
+$(".search_result_container").html('<%= escape_javascript(render 'estimates_container')%>')
 Search.LoadListingFunctions();

@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'taxes',:collection => @taxes, as: :taxis)%>');
+$(".search_result_container").html('<%= escape_javascript(render 'taxes_container')%>');
 Search.LoadListingFunctions();

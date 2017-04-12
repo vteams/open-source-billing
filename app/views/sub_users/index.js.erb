@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'user_card', collection: @sub_users, as: :user )%>');
+$(".search_result_container").html('<%= escape_javascript(render 'sub_users_container')%>');
 Search.LoadListingFunctions();

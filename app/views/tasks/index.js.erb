@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'task_card', collection: @tasks, as: :task )%>');
+$(".search_result_container").html('<%= escape_javascript(render 'tasks_container' )%>');
 Search.LoadListingFunctions();

@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'invoice_card', collection: @invoices, as: :invoice)%>')
+$(".search_result_container").html('<%= escape_javascript(render 'invoices_container')%>');
 Search.LoadListingFunctions();

@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'project_card', collection: @projects, as: :project)%>')
+$(".search_result_container").html('<%= escape_javascript(render 'projects_container')%>')
 Search.LoadListingFunctions();

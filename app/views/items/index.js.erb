@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'items', collection: @items, as: :item )%>');
+$(".search_result_container").html('<%= escape_javascript(render 'items_container' )%>');
 Search.LoadListingFunctions();

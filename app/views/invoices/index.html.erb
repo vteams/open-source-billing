@@ -12,21 +12,12 @@
       </div>
     </div>
   </div>
-    <div class="invoice-box mCustomScrollbar clearfix">
-      <!--- Invoices Card Title--->
-      <%= form_tag "invoices/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
-          <div class="search_result_container">
-            <% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
-                <p><span class="activity-date"><%= date %></span></p>
-                <div class="flex-wrapper">
-                  <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
-                </div>
-            <% end %>
-          </div>
 
-          <%= render partial: 'bulk_actions'%>
+  <div class="invoice-box mCustomScrollbar clearfix">
+    <%= form_tag "invoices/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render partial: 'invoices_container' %></div>
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
-      <% end %>
-
-    </div>
 </div>

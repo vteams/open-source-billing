@@ -12,15 +12,11 @@
       </div>
     </div>
   </div>
+
   <div class="invoice-box mCustomScrollbar">
-      <!--- Invoices Card Title--->
-      <div class="search_result_container">
-          <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
-              <p><span class="activity-date"><%= role %></span></p>
-              <div class="flex-wrapper">
-                <%= render partial: 'user_card', collection: users, as: :user %>
-              </div>
-          <% end %>
-      </div>
+    <div class="search_result_container">
+      <%= render 'sub_users_container'%>
+    </div>
   </div>
+
 </div>

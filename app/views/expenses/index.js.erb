@@ -1,2 +1,2 @@
-$(".search_result_container").html('<%= escape_javascript(render partial: 'expense_card', collection: @expenses, as: :expense )%>');
+$(".search_result_container").html('<%= escape_javascript(render 'expenses_container' )%>');
 Search.LoadListingFunctions();
