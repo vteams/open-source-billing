@@ -1,4 +1,4 @@
-$('.editPaymentModal .modal-content').html("<%= escape_javascript render partial: 'expense_form_popup', locals: {expense: @expense}  %>");
+$('#expenseModal .modal-content').html("<%= escape_javascript render partial: 'expense_form_popup', locals: {expense: @expense}  %>");
 
 Expense.load_functions();
-$(".editPaymentModal").modal('open');
+$("#expenseModal").modal('open');
