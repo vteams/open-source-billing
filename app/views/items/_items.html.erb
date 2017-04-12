@@ -1,4 +1,4 @@
-<div class="col s12 m6 l4">
+<div class="flex-item box">
   <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-item_id= <%=item.id %>>
     <div class="checkbox-item">
@@ -6,29 +6,33 @@
       <label for="<%= "item_#{item.id}" %>"></label>
       <div class="invoice-name green-light"><%= item.item_name[0] %></div>
     </div>
-    <div class="invoice-details">
+    <div class="invoice-details item-details">
       <strong><%= item.item_name %></strong>
       <em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em>
       <div class="item-description">
         <%= item.item_description %>
       </div>
-      <div class="amount-box">
-        <span>Quantity</span>
-        <strong><%= item.quantity %></strong>
+      <div class="card-footer">
+        <div class="amount-box">
+          <span>Quantity</span>
+          <strong><%= item.quantity %></strong>
+        </div>
+        <% if item.tax_1.present? %>
+            <div class="amount-box">
+              <span>Tax 1</span>
+              <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
+            </div>
+        <% end %>
+        <% if item.tax_2.present? %>
+            <div class="amount-box">
+              <span>Tax 2</span>
+              <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
+            </div>
+        <% end %>
       </div>
-      <% if item.tax_1.present? %>
-          <div class="amount-box">
-            <span>Tax 1</span>
-            <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
-          </div>
-      <% end %>
-      <% if item.tax_2.present? %>
-          <div class="amount-box">
-            <span>Tax 2</span>
-            <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
-          </div>
-      <% end %>
+
     </div>
+
     <div class="action-btn-group">
       <% if @status.eql?('deleted') %>
           <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>

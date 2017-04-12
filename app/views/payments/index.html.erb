@@ -1,22 +1,23 @@
 <%= render 'payment_activity'%>
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
-  <div class="row">
+  <div class="flex-wrapper">
     <!--- breadcrum Bar --->
-    <div class="col s12 breadcrum-bar">
+    <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <h3>
           Payments
         </h3>
       </div>
     </div>
-    <div class="invoice-box mCustomScrollbar clearfix">
+  </div>
+  <div class="invoice-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
       <%= form_tag "ipayments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
           <div class="search_result_container">
           <% @payments.group_by { |d| d.group_date }.each do |date, payments| %>
               <p><span class="activity-date"><%= date %></span></p>
-              <div class="clearfix">
+              <div class="flex-wrapper">
                 <%= render partial: 'payment_card', collection: payments, as: :payment %>
               </div>
           <% end %>
@@ -24,7 +25,5 @@
           <%= render partial: 'bulk_actions'%>
 
       <% end %>
-
-    </div>
   </div>
 </div>

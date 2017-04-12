@@ -2,9 +2,9 @@
 
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
-  <div class="row">
+  <div class="flex-wrapper">
     <!--- breadcrum Bar --->
-    <div class="col s12 breadcrum-bar">
+    <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <h3>
           Clients
@@ -12,13 +12,14 @@
         </h3>
       </div>
     </div>
-    <div class="invoice-box client-box mCustomScrollbar clearfix">
+  </div>
+  <div class="invoice-box client-box mCustomScrollbar clearfix">
       <!--- Invoices Card Title--->
       <%= form_tag "clients/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
           <div class="search_result_container">
               <% @clients.group_by { |d| d.group_date }.each do |date, clients| %>
                   <p><span class="activity-date"><%= date %></span></p>
-                  <div class="clearfix">
+                  <div class="flex-wrapper">
                     <%= render partial: 'client_card', collection: clients, as: :client %>
                   </div>
               <% end %>
@@ -27,6 +28,6 @@
 
       <% end %>
 
-    </div>
   </div>
+
 </div>

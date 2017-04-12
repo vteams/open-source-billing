@@ -1,4 +1,4 @@
-<div class="col s12 m6 l4 box">
+<div class="flex-item box">
   <%#= link_to '', sub_user_path(user) , remote: true, class: 'invoice_show_link', style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-user_id= <%=user.id %>>
     <div class="checkbox-item">
@@ -8,10 +8,11 @@
       <h5><%= user.name %></h5>
       <strong><%= user.role_name  %></strong>
       <span><%= user.email %></span>
+      <div class="card-footer clearfix">
+        <span class="invoice-date"><small>Date</small> <%= user.created_at.strftime(get_date_format) %></span>
+      </div>
     </div>
-    <div class="card-footer clearfix">
-      <span class="invoice-date"><small>Date</small> <%= user.created_at.strftime(get_date_format) %></span>
-    </div>
+
     <div class="action-btn-group">
       <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true, class: 'edit_invoice_icon' %>
     </div>

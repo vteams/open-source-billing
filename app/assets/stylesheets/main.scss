@@ -1277,7 +1277,9 @@ h6 {
   text-align: center;
   line-height: 40px;
   color: #fff;
-  margin: 0 10px 0 0; }
+  margin: 0 10px 0 0;
+  font-size: 14px;
+}
 .card-white-panel .invoice-details {
   overflow: hidden;
   line-height: 21px;
@@ -3528,6 +3530,37 @@ h6 {
   border-color: #09b8e2; }
 #login-section.sign-up .login-container p {
   color: #555555; }
+
+/*---Flex Box Styles---*/
+.flex-wrapper {
+  display: flex;
+  margin: 0 -10px;
+  flex-wrap: wrap; }
+
+.flex-wrapper > .flex-item {
+  margin: 0 10px;
+  width: calc(33% - 20px); }
+
+.flex-item .card-white-panel {
+  display: flex; }
+.flex-item .card-white-panel .invoice-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+.flex-item .card-white-panel .card-footer {
+  width: 100%;
+  padding-top: 10px; }
+.flex-item .card-white-panel .card-footer .invoice-date {
+  padding-left: 0; }
+.flex-item .card-white-panel .card-footer .amount-box span {
+  text-transform: capitalize; }
+
+@media screen and (max-width: 1366px) {
+  .flex-wrapper > .flex-item {
+    width: calc(50% - 20px); } }
+@media screen and (max-width: 1199px) {
+  .flex-wrapper > .flex-item {
+    width: calc(100% - 20px); } }
 
 body {
   background: #f4f4f4;

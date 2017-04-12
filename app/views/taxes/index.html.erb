@@ -2,9 +2,9 @@
     <!--- content --->
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
-  <div class="row">
+  <div class="flex-wrapper">
     <!--- breadcrum Bar --->
-    <div class="col s12 breadcrum-bar">
+    <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
         <%= hidden_field_tag :direction, params[:direction] %>
@@ -13,14 +13,14 @@
         <h3><%= t('views.taxes.taxes') %>  <%= link_to "/ #{@status.humanize}",taxes_url(status: @status) %></h3>
       </div>
     </div>
-
-    <div class="invoice-box tax-box mCustomScrollbar clearfix">
+  </div>
+  <div class="invoice-box tax-box mCustomScrollbar">
       <!--- Invoices Card Title--->
       <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
           <div class="search_result_container">
             <% @taxes.group_by { |d| d.group_date }.each do |date, taxes| %>
                 <p><span class="activity-date"><%= date %></span></p>
-                <div class="clearfix">
+                <div class="flex-wrapper">
                   <%= render partial: 'taxes',:collection => taxes, as: :taxis %>
                 </div>
             <% end %>
@@ -28,8 +28,6 @@
           <%= render partial: 'bulk_actions'%>
 
       <% end %>
-
-    </div>
 
   </div>
 </div>

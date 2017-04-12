@@ -1,27 +1,26 @@
 <%= render 'user_activity'%>
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
-  <div class="row">
+  <div class="flex-wrapper">
     <!--- breadcrum Bar --->
-    <div class="col s12 breadcrum-bar">
+    <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <%= link_to raw('<i class="material-icons">add</i>'), new_sub_user_path, remote: true, class: 'pull-right', title: 'Add' %>
         <h3>
           Users
         </h3>
-
       </div>
     </div>
-    <div class="invoice-box mCustomScrollbar clearfix">
+  </div>
+  <div class="invoice-box mCustomScrollbar">
       <!--- Invoices Card Title--->
       <div class="search_result_container">
           <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
               <p><span class="activity-date"><%= role %></span></p>
-              <div class="clearfix">
+              <div class="flex-wrapper">
                 <%= render partial: 'user_card', collection: users, as: :user %>
               </div>
           <% end %>
       </div>
-    </div>
   </div>
 </div>
