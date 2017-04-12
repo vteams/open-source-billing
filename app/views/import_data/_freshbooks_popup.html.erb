@@ -4,7 +4,7 @@
       <h5 class="left text-blue">Import data from your freshbooks account</h5>
       <div class="modal-action-btn right">
         <%= f.submit "Submit", :class => "btn_large submit model-submit-btn hidden" %>
-        <a href="#" onclick="$('.model-submit-btn').click();"><i class="material-icons" >done</i></a>
+        <a href="#" onclick="$('.model-submit-btn').click();" title="Import"><i class="material-icons" >done</i></a>
       </div>
     </div>
     <div class="modal-body">
@@ -20,12 +20,12 @@
           <%= f.text_field :api_token, required: true, placeholder: 'Freshbooks API TOKEN' %>
         </div>
         <div class="input-field col s12">
-          <div>
-            <span>  Select module(s) to import</span>
-          </div>
+          <h5 class="text-blue title-heading"><span>  Select module(s) to import</span></h5>
+        </div>
+        <div class="input-field">
           <% Services::Freshbook::DATA_MODULES.each do |a_value| %>
-              <div class="col s3 data-import-module checkbox">
-                <%= f.check_box(:data_filters, {multiple: true, class: "filled-in", checked: "checked"}, a_value.downcase, nil) %>
+              <div class="col s4 data-import-module checkbox">
+                <%= f.check_box(:data_filters, {multiple: true, class: "filled-in"}, a_value.downcase, nil) %>
                 <%= label_tag "freshbooks_data_filters_#{a_value.downcase}", a_value %>
               </div>
           <% end %>
