@@ -248,9 +248,11 @@ Osb::Application.routes.draw do
         get 'load_view'
         get 'timer'
         get 'invoice'
-        post 'invoice_form'
+        #post 'invoice_form'
         post 'create_invoice'
-
+      end
+      member do
+        get 'invoice_form'
       end
     end
 

@@ -1,0 +1,5 @@
+$("#invoice_model").modal('close');
+$('#ProjectInvoice .modal-content').html("<%= escape_javascript render partial: 'form_invoice'  %>");
+LogInvoice.load_functions();
+$("#ProjectInvoice").modal('open');
+$("#invoice_discount_percentage").keyup();

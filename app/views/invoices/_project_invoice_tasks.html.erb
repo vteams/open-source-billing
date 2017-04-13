@@ -1,0 +1,25 @@
+<table class="bordered responsive-table">
+  <thead>
+  <tr>
+    <th><%= t('views.common.task') %></th>
+    <th><%= t('views.common.description') %></th>
+    <th class="center-align"><%= t('views.tasks.rate') %></th>
+    <th class="center-align"><%= t('views.tasks.hours') %></th>
+    <th class="center-align"><%= t('views.tasks.line_total') %></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% invoice.invoice_tasks.each do |task|
+        task_total = (task.rate ||0) * (task.hours ||0)
+    %>
+      <tr>
+        <td><%= task.name rescue "" %></td>
+        <td><%= task.description %></td>
+        <td class="center-align"><%= number_to_currency(task.rate, unit: "") %></td>
+        <td class="center-align"><%= task.hours %></td>
+        <td class="center-align"><%= number_to_currency(task_total, unit: "") %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -15,9 +15,11 @@
     <h6><%= invoice.invoice_number %></h6>
     <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
     <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
+    <% if invoice.term.present? %>
     <div class="terms">
       <span>Terms:</span> <small><%= invoice.term %></small>
     </div>
+    <% end %>
     <div class="paymentInfo">
       <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: '') %> <small><%= invoice.currency.unit %></small></strong>
     </div>
@@ -30,33 +32,11 @@
   </div>
 </div>
 <div class="modal-body">
-  <table class="bordered responsive-table">
-    <thead>
-    <tr>
-      <th><%= t('views.common.item') %></th>
-      <th><%= t('views.common.description') %></th>
-      <th class="center-align"><%= t('views.common.unit_cost') %></th>
-      <th class="center-align"><%= t('views.items.quantity') %></th>
-      <th class="center-align">Tax</th>
-      <th class="right-align"><%= t('views.invoices.line_total') %></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% invoice.invoice_line_items.each do |item|
-      item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-    %>
-        <tr>
-          <td><%= item.item_name rescue "" %></td>
-          <td><%= item.item_description %></td>
-          <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-          <td class="center-align"><%= item.item_quantity.to_i %></td>
-          <td class="center-align"><%= item.tax1.name rescue ''%></td>
-          <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <% if invoice.invoice_type.eql?("ProjectInvoice")%>
+    <%= render partial: 'project_invoice_tasks', locals: {invoice: invoice} %>
+  <% else %>
+    <%= render partial: 'invoice_items', locals: {invoice: invoice} %>
+  <% end %>
 </div>
 <div class="modal-footer clearfix">
   <div class="right-section right">

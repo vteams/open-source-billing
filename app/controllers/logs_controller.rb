@@ -132,10 +132,14 @@ class LogsController < ApplicationController
   end
 
   def invoice_form
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:id])
     @client = @project.client
     @invoice = Services::InvoiceService.build_new_project_invoice(@project)
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+    respond_to do |format|
+      format.html{ render layout: 'timer' }
+      format.js
+    end
   end
 
   def create_invoice
@@ -146,7 +150,7 @@ class LogsController < ApplicationController
       if @invoice.save
         Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        redirect_to(invoice_url(@invoice), :notice => 'Invoice successfully created')
+        redirect_to(invoices_url, :notice => 'Invoice successfully created')
         return
       else
         format.html { render :action => 'invoice_form' }
@@ -174,7 +178,7 @@ class LogsController < ApplicationController
                                     :discount_percentage, :invoice_date, :invoice_number,
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :archive_number, :archived_at, :deleted_at,
-                                    :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,
+                                    :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,:tax_id,:invoice_tax_amount
 
     )
   end
