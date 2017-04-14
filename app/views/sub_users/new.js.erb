@@ -1,3 +1,5 @@
-$('.importModal').html("<%= escape_javascript render partial: 'new_form_popup', locals: {user: @sub_user}  %>");
+$('body').append("<%= escape_javascript render partial: 'new_form_popup', locals: {user: @sub_user}  %>");
 SubUser.load_functions();
-$(".importModal").modal('open');
+elem = $("#new_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

@@ -1,4 +1,6 @@
-$('.editTaxModal .modal-content').html("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
-$('.editTaxModal .modal-content .input-field > label').addClass('active');
-
-$('.editTaxModal').modal('open')
+$('body').append("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
+Tax.load_functions()
+$('#tax_form_popup .input-field > label').addClass('active');
+elem = $("#tax_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

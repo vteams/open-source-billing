@@ -1,3 +1,5 @@
-$("#emailTemplateModal").html("<%= escape_javascript(render partial: 'email_template_form_popup', locals: {email_template: @email_template})%>")
+$("body").append("<%= escape_javascript(render partial: 'email_template_form_popup', locals: {email_template: @email_template})%>")
 
-$("#emailTemplateModal").modal('open');
+elem = $("#emailTemplateModal");
+Popup.initialize(elem);
+Popup.open(elem)

@@ -1,4 +1,5 @@
-$('.editTaxModal .modal-content').html("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
+$('body').append("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
 Tax.load_functions()
-
-$('.editTaxModal').modal('open')
+elem = $("#tax_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

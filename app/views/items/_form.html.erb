@@ -1,46 +1,49 @@
-<%= form_for(item, :html => {class: 'item_form'}) do |f| %>
-    <div class="modal-content">
-        <div class="modal-header clearfix text-content">
-          <h5 class="left"> Items</h5>
-          <div class="modal-action-btn right">
-            <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
-            <%= f.submit class: 'btn_large submit hidden' %>
-          </div>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="input-field col s12">
-              <%= f.text_field :item_name, id:'item_item_name' %>
-              <label for="item_item_name"> <%= t('views.items.item_name') %></label>
+<div id="item_form_popup" class="modal editableModal editTaxModal edititemModal">
+  <div class="modal-content">
+    <%= form_for(item, :html => {class: 'item_form'}) do |f| %>
+        <div class="modal-content">
+            <div class="modal-header clearfix text-content">
+              <h5 class="left"> Items</h5>
+              <div class="modal-action-btn right">
+                <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+                <%= f.submit class: 'btn_large submit hidden' %>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="input-field col s12">
+                  <%= f.text_field :item_name, id:'item_item_name' %>
+                  <label for="item_item_name"> <%= t('views.items.item_name') %></label>
 
-            </div>
-            <div class="input-field col s12">
-              <%= f.text_field :item_description, id:'item_item_description' %>
-              <label for="item_item_description"><%= t('views.items.Description') %></label>
-            </div>
-            <div class="input-field col s6">
-              <%= f.text_field :unit_cost, id:'item_unit_cost' %>
-              <label for="item_unit_cost">Default unit cost</label>
-            </div>
-            <div class="input-field col s6">
-              <%= f.number_field :quantity,id: 'defaultqty' %>
-              <label for="defaultqty">Default Quantity</label>
-            </div>
-            <div class="input-field col s12">
-              <%= f.collection_select(:tax_1, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s12 items">
-              <h5 class="text-blue title-heading"><%= t('views.items.make_this_item_available_to') %></h5>
+                </div>
+                <div class="input-field col s12">
+                  <%= f.text_field :item_description, id:'item_item_description' %>
+                  <label for="item_item_description"><%= t('views.items.Description') %></label>
+                </div>
+                <div class="input-field col s6">
+                  <%= f.text_field :unit_cost, id:'item_unit_cost' %>
+                  <label for="item_unit_cost">Default unit cost</label>
+                </div>
+                <div class="input-field col s6">
+                  <%= f.number_field :quantity,id: 'defaultqty' %>
+                  <label for="defaultqty">Default Quantity</label>
+                </div>
+                <div class="input-field col s6">
+                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 items">
+                  <h5 class="text-blue title-heading"><%= t('views.items.make_this_item_available_to') %></h5>
 
-              <div class="input-field col s12">
-                <%= associate_account(controller_name, action_name, @item) %>
+                  <div class="input-field col s12">
+                    <%= associate_account(controller_name, action_name, @item) %>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
           </div>
-          </div>
-        </div>
-      </div>
-<% end %>
-
+    <% end %>
+  </div>
+</div>

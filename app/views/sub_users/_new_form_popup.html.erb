@@ -1,44 +1,46 @@
-<div class="modal-content">
-  <%= form_tag('/sub_users', novalidate: "", id: "sub_user_form")  %>
-  <div class="modal-header clearfix text-content">
-    <h5 class="left"> New User</h5>
-    <div class="modal-action-btn right">
-      <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
-      <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
+<div id="new_form_popup" class="modal editableModal importModal">
+    <div class="modal-content">
+      <%= form_tag('/sub_users', novalidate: "", id: "sub_user_form")  %>
+      <div class="modal-header clearfix text-content">
+        <h5 class="left"> New User</h5>
+        <div class="modal-action-btn right">
+          <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+          <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
+        </div>
+      </div>
+
+      <div class="modal-body users">
+        <div class="row">
+
+          <div class="input-field col s6">
+            <%= text_field_tag :user_name,'', required: '', autofocus: true  %>
+            <label for="username"> Full Name </label>
+          </div>
+
+          <div class="input-field col s6">
+            <%= text_field_tag :email,'', required: '', autofocus: true %>
+            <label for="email"> Email </label>
+          </div>
+
+          <div class="input-field col s6">
+            <%= password_field_tag :password %>
+            <label for="password"> Password </label>
+          </div>
+
+          <div class="input-field col s6">
+            <%= password_field_tag :password_confirmation %>
+            <label for="password_confirmation"> Confirmation </label>
+          </div>
+
+          <div class="input-field col s6">
+            <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
+            <label for="role_ids"> Assign Role </label>
+          </div>
+          <div class="input-field col s6 checkbox">
+            <%= check_box_tag :notify_user, nil, false ,class: "filled-in" %>
+            <label for="notify_user"><%= t('views.users.notify_user') %></label>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="modal-body users">
-    <div class="row">
-
-      <div class="input-field col s6">
-        <%= text_field_tag :user_name,'', required: '', autofocus: true  %>
-        <label for="username"> Full Name </label>
-      </div>
-
-      <div class="input-field col s6">
-        <%= text_field_tag :email,'', required: '', autofocus: true %>
-        <label for="email"> Email </label>
-      </div>
-
-      <div class="input-field col s6">
-        <%= password_field_tag :password %>
-        <label for="password"> Password </label>
-      </div>
-
-      <div class="input-field col s6">
-        <%= password_field_tag :password_confirmation %>
-        <label for="password_confirmation"> Confirmation </label>
-      </div>
-
-      <div class="input-field col s6">
-        <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
-        <label for="role_ids"> Assign Role </label>
-      </div>
-      <div class="input-field col s6 checkbox">
-        <%= check_box_tag :notify_user, nil, false ,class: "filled-in" %>
-        <label for="notify_user"><%= t('views.users.notify_user') %></label>
-      </div>
-    </div>
-  </div>
 </div>

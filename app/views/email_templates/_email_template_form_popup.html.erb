@@ -1,84 +1,86 @@
-<%= tinymce_assets %>
-<%= tinymce  :theme_advanced_buttons1 => "bold,italic,underline,separator,strikethrough,undo,redo,link", :content_css => '/assets/email_template_editor.css' %>
-<div class="modal-content">
-  <%= form_for(@email_template,:html=>{:class=>'email_template_class'}) do |f| %>
-  <div class="modal-header clearfix text-content">
-    <h5 class="left text-blue">Edit Email Template</h5>
-    <div class="modal-action-btn right">
-      <%= f.submit :class => 'btn_large big submit hidden' %>
-      <a href="#" onClick="$('input.submit').click();"><i class="material-icons">done</i></a>
-    </div>
-  </div>
-  <div class="modal-body">
-    <% if @email_template.errors.any? %>
-    <div id="error_explanation">
-        <h2><%= pluralize(@email_template.errors.count, "error") %> prohibited this email_template from being saved:</h2>
-        <ul>
-          <% @email_template.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-          <% end %>
-        </ul>
-    </div>
-    <% end %>
-    <%= f.hidden_field :torder %>
-    <%= f.hidden_field :is_late_payment_reminder %>
-    <div class="row">
-      <div class="col s12 m12 l9">
-        <div class="input-field temp-type col s12">
-          <%= f.text_field :template_type, readOnly: true %>
-          <label for="url" class="active">Template type</label>
-        </div>
-        <% if @email_template.is_late_payment_reminder %>
-            <div class="input-field col s12">
-              <div> Send_Reminder? </div>
-              <p>
-                <%= f.radio_button :send_email, true, id: 'yes'%>
-                <label for="yes"><%= t('views.common.yes') %></label>
-              </p>
-              <p>
-                <%= f.radio_button :send_email, false, id: 'no'%>
-                <label for="no"><%= t('views.common.no') %></label>
-              </p>
-            </div>
-            <!--field_row-->
-
-            <div class="input-field col s4">
-              <div> Send After</div>
-            </div>
-            <div class="input-field col s8">
-              <%= f.text_field :no_of_days, :class => 'after' %>
-              <%= f.label :no_of_days, t('views.email_templates.days_of_due_date'), class: 'active' %>
-            </div>
-        <% end%>
-
-        <div class="input-field col s12">
-          <%= f.text_field :email_from %>
-          <%= f.label :email_form, class: 'active' %>
-        </div>
-        <div class="input-field col s12">
-          <%= f.text_field :subject %>
-          <%= f.label :subject, t('views.clients.subject'), class: 'active' %>
-        </div>
-
-        <div class="input-field col s12">
-          <%= f.text_area :body, :class => "tinymce" %>
+<div id="emailTemplateModal" class="modal editableModal templateModal">
+    <%= tinymce_assets %>
+    <%= tinymce  :theme_advanced_buttons1 => "bold,italic,underline,separator,strikethrough,undo,redo,link", :content_css => '/assets/email_template_editor.css' %>
+    <div class="modal-content">
+      <%= form_for(@email_template,:html=>{:class=>'email_template_class'}) do |f| %>
+      <div class="modal-header clearfix text-content">
+        <h5 class="left text-blue">Edit Email Template</h5>
+        <div class="modal-action-btn right">
+          <%= f.submit :class => 'btn_large big submit hidden' %>
+          <a href="#" onClick="$('input.submit').click();"><i class="material-icons">done</i></a>
         </div>
       </div>
-      <aside class="col s12 m12 l3">
-        <nav class="templatsidebar">
-          <h5><%= t('views.email_templates.custom_fields') %>:</h5>
-          <% template_type = @email_template.is_late_payment_reminder ? "Late Payment Reminder" : @email_template.template_type%>
-          <ul>
-            <% CUSTOM_FIELDS[template_type].each do |cf|%>
-            <li>
-              <strong><%= cf[:label] %> </strong>
-              <span><%= cf[:token] %> </span>
-            </li>
-            <% end %>
-          </ul>
-        </nav>
-      </aside>
+      <div class="modal-body">
+        <% if @email_template.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@email_template.errors.count, "error") %> prohibited this email_template from being saved:</h2>
+            <ul>
+              <% @email_template.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+        </div>
+        <% end %>
+        <%= f.hidden_field :torder %>
+        <%= f.hidden_field :is_late_payment_reminder %>
+        <div class="row">
+          <div class="col s12 m12 l9">
+            <div class="input-field temp-type col s12">
+              <%= f.text_field :template_type, readOnly: true %>
+              <label for="url" class="active">Template type</label>
+            </div>
+            <% if @email_template.is_late_payment_reminder %>
+                <div class="input-field col s12">
+                  <div> Send_Reminder? </div>
+                  <p>
+                    <%= f.radio_button :send_email, true, id: 'yes'%>
+                    <label for="yes"><%= t('views.common.yes') %></label>
+                  </p>
+                  <p>
+                    <%= f.radio_button :send_email, false, id: 'no'%>
+                    <label for="no"><%= t('views.common.no') %></label>
+                  </p>
+                </div>
+                <!--field_row-->
+
+                <div class="input-field col s4">
+                  <div> Send After</div>
+                </div>
+                <div class="input-field col s8">
+                  <%= f.text_field :no_of_days, :class => 'after' %>
+                  <%= f.label :no_of_days, t('views.email_templates.days_of_due_date'), class: 'active' %>
+                </div>
+            <% end%>
+
+            <div class="input-field col s12">
+              <%= f.text_field :email_from %>
+              <%= f.label :email_form, class: 'active' %>
+            </div>
+            <div class="input-field col s12">
+              <%= f.text_field :subject %>
+              <%= f.label :subject, t('views.clients.subject'), class: 'active' %>
+            </div>
+
+            <div class="input-field col s12">
+              <%= f.text_area :body, :class => "tinymce" %>
+            </div>
+          </div>
+          <aside class="col s12 m12 l3">
+            <nav class="templatsidebar">
+              <h5><%= t('views.email_templates.custom_fields') %>:</h5>
+              <% template_type = @email_template.is_late_payment_reminder ? "Late Payment Reminder" : @email_template.template_type%>
+              <ul>
+                <% CUSTOM_FIELDS[template_type].each do |cf|%>
+                <li>
+                  <strong><%= cf[:label] %> </strong>
+                  <span><%= cf[:token] %> </span>
+                </li>
+                <% end %>
+              </ul>
+            </nav>
+          </aside>
+        </div>
+      </div>
+      <% end %>
     </div>
-  </div>
-  <% end %>
 </div>

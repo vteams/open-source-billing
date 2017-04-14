@@ -1,89 +1,93 @@
-<%- model_class = Client -%>
-<%= nested_form_for @client, :html => {:id => 'newClient', :novalidate => ""} do |f| %>
-    <% @parent_f = f %>
-    <div class="modal-header clearfix text-content">
-      <h5 class="left">
-        <% if f.object.persisted? %>
-            <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
-                                          :default => "Edit #{model_class.model_name.human}") %>
-        <% else %>
-            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                          :default => "New  #{model_class.model_name.human}") %>
-        <% end %>
-      </h5>
-      <div class="modal-action-btn right">
-        <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
-        <%= f.submit class: 'btn_large submit hidden' %>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div class="info-right-section">
-        <div class="row">
-          <h5 class="text-blue title-heading">Organization</h5>
-          <div class="input-field col s12">
-            <%= f.text_field :organization_name %>
-            <%= f.label :organization_name,  t('views.clients.organization_name') %>
-          </div>
-          <div class="input-field col s6 m4">
-            <%= f.text_field :first_name %>
-            <%= f.label :first_name,  t('views.clients.first_name') %>
-          </div>
-          <div class="input-field col s6 m4">
-            <%= f.text_field :last_name %>
-            <%= f.label :last_name,t('views.clients.last_name') %>
-          </div>
-
-          <div class="input-field col s6 m4">
-            <%= f.text_field :email, required: true %>
-            <%= f.label :email,t('views.common.email') %>
-          </div>
-          <div class="input-field col s6 m4">
-            <%= f.text_field :mobile_number %>
-            <%= f.label :mobile_number,t('views.common.invoiced.mobile') %>
-          </div>
-          <div class="input-field col s6 m4">
-            <%= f.text_field :business_phone %>
-            <%= f.label :business_phone,t('views.clients.business_phone') %>
-          </div>
-          <div id="client_credit"></div>
-          <div class="input-field col s12 m4">
-            <% @readonly = is_client_credit_payments @client %>
-
-
-            <% if @client.new_record? %>
-                <%= number_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
-                <%= label_tag :available_credit, t('views.clients.available_credit'), class: 'active' %>
+<div id="client_form_popup" class="modal editableModal editProject editClient newModel large_modal">
+  <div class="modal-content">
+    <%- model_class = Client -%>
+    <%= nested_form_for @client, :html => {:id => 'newClient', :novalidate => ""} do |f| %>
+        <% @parent_f = f %>
+        <div class="modal-header clearfix text-content">
+          <h5 class="left">
+            <% if f.object.persisted? %>
+                <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                              :default => "Edit #{model_class.model_name.human}") %>
             <% else %>
-                <%= number_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
-                <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
+                <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                              :default => "New  #{model_class.model_name.human}") %>
             <% end %>
-          </div>
-
-          <div class="col s12">
-            <%= f.link_to_add t("views.clients.add_new_contact"), :client_contacts, class: 'btn moreBtn add',  data: { target: '#client-contact-container' } %>
+          </h5>
+          <div class="modal-action-btn right">
+            <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+            <%= f.submit class: 'btn_large submit hidden' %>
           </div>
         </div>
+        <div class="modal-body">
+          <div class="info-right-section">
+            <div class="row">
+              <h5 class="text-blue title-heading">Organization</h5>
+              <div class="input-field col s12">
+                <%= f.text_field :organization_name %>
+                <%= f.label :organization_name,  t('views.clients.organization_name') %>
+              </div>
+              <div class="input-field col s6 m4">
+                <%= f.text_field :first_name %>
+                <%= f.label :first_name,  t('views.clients.first_name') %>
+              </div>
+              <div class="input-field col s6 m4">
+                <%= f.text_field :last_name %>
+                <%= f.label :last_name,t('views.clients.last_name') %>
+              </div>
 
-        <div class="row">
-          <div class="col s12">
-            <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
-            <div class="client_contact_container" id="client-contact-container">
-              <%= f.fields_for :client_contacts, :wrapper => false %>
+              <div class="input-field col s6 m4">
+                <%= f.text_field :email, required: true %>
+                <%= f.label :email,t('views.common.email') %>
+              </div>
+              <div class="input-field col s6 m4">
+                <%= f.text_field :mobile_number %>
+                <%= f.label :mobile_number,t('views.common.invoiced.mobile') %>
+              </div>
+              <div class="input-field col s6 m4">
+                <%= f.text_field :business_phone %>
+                <%= f.label :business_phone,t('views.clients.business_phone') %>
+              </div>
+              <div id="client_credit"></div>
+              <div class="input-field col s12 m4">
+                <% @readonly = is_client_credit_payments @client %>
+
+
+                <% if @client.new_record? %>
+                    <%= number_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= label_tag :available_credit, t('views.clients.available_credit'), class: 'active' %>
+                <% else %>
+                    <%= number_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
+                <% end %>
+              </div>
+
+              <div class="col s12">
+                <%= f.link_to_add t("views.clients.add_new_contact"), :client_contacts, class: 'btn moreBtn add',  data: { target: '#client-contact-container' } %>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col s12">
-            <h5 class="text-blue title-heading"><%= t('views.items.make_this_client_available_to') %></h5>
-
-            <div class="input-field col s12">
-              <%= associate_account(controller_name, action_name, @client) %>
+            <div class="row">
+              <div class="col s12">
+                <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
+                <div class="client_contact_container" id="client-contact-container">
+                  <%= f.fields_for :client_contacts, :wrapper => false %>
+                </div>
+              </div>
             </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5 class="text-blue title-heading"><%= t('views.items.make_this_client_available_to') %></h5>
+
+                <div class="input-field col s12">
+                  <%= associate_account(controller_name, action_name, @client) %>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-      </div>
-    </div>
-
-<% end %>
+    <% end %>
+  </div>
+</div>

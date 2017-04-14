@@ -1,9 +1,10 @@
-
-$('.editItemModal').html("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
+$('body').append("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
 Item.load_functions();
 $("#account_association").change(function() {
     if ($(this).is(':checked')) {
         return $('.company_checkbox').prop('checked', true);
     }
 });
-$(".editItemModal").modal('open');
+elem = $("#item_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);
