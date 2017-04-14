@@ -62,7 +62,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def self.filter(params, per_page)
-    mappings = {active: 'unarchived_and_not_invoiced', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     method = mappings[params[:status].to_sym]
     estimates = params[:search].present? ? self.search(params[:search]).records : self
     estimates.send(method).page(params[:page]).per(per_page)
