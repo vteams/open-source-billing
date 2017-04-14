@@ -1,4 +1,5 @@
-jQuery(".editPaymentModal .modal-content").html("<%= escape_javascript(render partial: 'payment_form_popup', locals:{ payment: @payments.first} ) %>");
-
+$("body").append("<%= escape_javascript(render partial: 'payment_form_popup', locals:{ payment: @payments.first} ) %>");
 Payment.load_functions();
-jQuery(".editPaymentModal").modal('open');
+elem = $("#payment_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

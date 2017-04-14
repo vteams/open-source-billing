@@ -1,9 +1,11 @@
-$("#invoice_model").modal('close');
-$('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
+$('body').append("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
 
 // call Invoice coffee script functions
 Invoice.change_invoice_item();
 Invoice.changeTax();
 Invoice.load_functions();
 $(".items_list").change();
-$(".editInvoice").modal('open');
+
+elem = $("#invoice_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

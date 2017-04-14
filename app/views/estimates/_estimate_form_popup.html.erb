@@ -1,116 +1,120 @@
-<%- model_class = Estimate -%>
-<%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
-    <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">
-        <% if f.object.persisted? %>
-            <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
-                                          :default => "Edit #{model_class.model_name.human}") %>:
-        <% else %>
-            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                          :default => "New  #{model_class.model_name.human}") %>:
-        <% end %>
-
-
-        <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-        <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select title-select" } %>
-      </h5>
-      <div class="modal-action-btn right">
-        <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
-        <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
-        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-        <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
-        <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
-      </div>
-    </div>
-    <div class="info-section clearfix">
-      <div class="info-left-section left">
-        <h6><%= estimate.estimate_number %></h6>
-        <span>Estimate: <small id="estimate_date"> <%= f.object.estimate_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
-        <%= f.hidden_field :estimate_date,value: f.object.estimate_date, :required => "" %>
-
-        <div class="editPayementInfo">
-          <strong><strong class="estimate_total_strong"></strong>
-            <small>
-              <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-              <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
-            </small>
-          </strong>
-        </div>
-      </div>
-      <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
-          <div class="info-right-section right circle">
-            <%= image_tag(estimate.company.logo_url(:thumb), class: 'responsive-img') %>
-          </div>
-      <% end %>
-    </div>
-    <div class="modal-body">
-      <table class="bordered responsive-table estimate_grid_fields" id="estimate_grid_fields">
-        <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th><%= t('item') %></th>
-          <th><%= t('views.common.description') %></th>
-          <th class="center-align"><%= t('views.common.unit_cost') %></th>
-          <th class="center-align"><%= t('views.common.qty') %></th>
-          <th class="center-align"><%= t('views.common.tax') %>1</th>
-          <th class="right-align"><%= t('views.estimates.line_total') %></th>
-        </tr>
-        </thead>
-        <tbody id="estimate_line_items_tbl">
-        <%= f.fields_for :estimate_line_items, :wrapper => false %>
-        </tbody>
-        <tfoot>
-        <tr>
-          <td>&nbsp;</td>
-          <td class="add_line_item_row"><%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %></td>
-        </tr>
-        </tfoot>
-
-      </table>
-    </div>
-    <div class="modal-footer clearfix">
-      <div class="right-section right grid_summary_description">
-        <div class="item-result">
-          <div class="table-row">
-            <%= f.hidden_field :sub_total %>
-            <span><strong>Subtotal</strong></span>
-            <span><strong><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></strong></span>
-          </div>
-          <div class="table-row">
-            <span>
-                Discount  &nbsp;&nbsp;
-              <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
-            </span>
-            <span class="input-field">
-              <%= f.hidden_field :discount_amount %>
-              <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip right-align", placeholder:  "00.00" %>
-              <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-            </span>
-          </div>
-          <%= f.hidden_field :tax_amount %>
-          <div class="taxes_total">
-            <% estimate.tax_detail_with_discount.map do |tax, amount| %>
-                <div class="table-row">
-                  <span><%= tax %></span>
-                  <span class="grid_summary_description tax_amount"><%= amount%></span>
-                </div>
+<div id="estimate_form_popup" class="modal editableModal editInvoice large_modal">
+  <div class="modal-content">
+    <%- model_class = Estimate -%>
+    <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
+        <div class="modal-header clearfix text-content">
+          <h5 class="left text-blue">
+            <% if f.object.persisted? %>
+                <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                              :default => "Edit #{model_class.model_name.human}") %>:
+            <% else %>
+                <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                              :default => "New  #{model_class.model_name.human}") %>:
             <% end %>
-          </div>
 
-        </div>
-        <div class="item-total net_total">
-          <div class="table-row">
-            <span><strong><%= t('views.estimates.net_total') %></strong></span>
-            <%= f.hidden_field :estimate_total %>
-            <span><strong><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></strong></span>
+
+            <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+            <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select title-select" } %>
+          </h5>
+          <div class="modal-action-btn right">
+            <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
+            <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
+            <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+            <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
+            <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="commentSection clearfix">
-      <div class="comments-content">
-        <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
-        <%= f.text_area :notes, maxlength: 400 %>
-      </div>
-    </div>
-<% end %>
+        <div class="info-section clearfix">
+          <div class="info-left-section left">
+            <h6><%= estimate.estimate_number %></h6>
+            <span>Estimate: <small id="estimate_date"> <%= f.object.estimate_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
+            <%= f.hidden_field :estimate_date,value: f.object.estimate_date, :required => "" %>
+
+            <div class="editPayementInfo">
+              <strong><strong class="estimate_total_strong"></strong>
+                <small>
+                  <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+                  <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
+                </small>
+              </strong>
+            </div>
+          </div>
+          <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
+              <div class="info-right-section right circle">
+                <%= image_tag(estimate.company.logo_url(:thumb), class: 'responsive-img') %>
+              </div>
+          <% end %>
+        </div>
+        <div class="modal-body">
+          <table class="bordered responsive-table estimate_grid_fields" id="estimate_grid_fields">
+            <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th><%= t('item') %></th>
+              <th><%= t('views.common.description') %></th>
+              <th class="center-align"><%= t('views.common.unit_cost') %></th>
+              <th class="center-align"><%= t('views.common.qty') %></th>
+              <th class="center-align"><%= t('views.common.tax') %>1</th>
+              <th class="right-align"><%= t('views.estimates.line_total') %></th>
+            </tr>
+            </thead>
+            <tbody id="estimate_line_items_tbl">
+            <%= f.fields_for :estimate_line_items, :wrapper => false %>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td>&nbsp;</td>
+              <td class="add_line_item_row"><%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %></td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+        <div class="modal-footer clearfix">
+          <div class="right-section right grid_summary_description">
+            <div class="item-result">
+              <div class="table-row">
+                <%= f.hidden_field :sub_total %>
+                <span><strong>Subtotal</strong></span>
+                <span><strong><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></strong></span>
+              </div>
+              <div class="table-row">
+                <span>
+                    Discount  &nbsp;&nbsp;
+                  <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                </span>
+                <span class="input-field">
+                  <%= f.hidden_field :discount_amount %>
+                  <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip right-align", placeholder:  "00.00" %>
+                  <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                </span>
+              </div>
+              <%= f.hidden_field :tax_amount %>
+              <div class="taxes_total">
+                <% estimate.tax_detail_with_discount.map do |tax, amount| %>
+                    <div class="table-row">
+                      <span><%= tax %></span>
+                      <span class="grid_summary_description tax_amount"><%= amount%></span>
+                    </div>
+                <% end %>
+              </div>
+
+            </div>
+            <div class="item-total net_total">
+              <div class="table-row">
+                <span><strong><%= t('views.estimates.net_total') %></strong></span>
+                <%= f.hidden_field :estimate_total %>
+                <span><strong><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="commentSection clearfix">
+          <div class="comments-content">
+            <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
+            <%= f.text_area :notes, maxlength: 400 %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

@@ -1,8 +1,10 @@
-$('.editInvoice .modal-content').html("<%= escape_javascript render partial: 'estimate_form_popup', locals: {estimate: @estimate}  %>");
+$('body').append("<%= escape_javascript render partial: 'estimate_form_popup', locals: {estimate: @estimate}  %>");
 
 // call Invoice coffee script functions
 Estimate.change_estimate_item();
 Estimate.changeTax();
 Estimate.load_functions();
 
-$(".editInvoice").modal('open');
+elem = $("#estimate_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);
