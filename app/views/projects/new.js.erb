@@ -1,7 +1,9 @@
-$('.editProject .modal-content').html("<%= escape_javascript render partial: 'project_form_popup', locals: {project: @project}  %>");
+$('body').append("<%= escape_javascript render partial: 'project_form_popup', locals: {project: @project}  %>");
 
 $('select').material_select();
 Project.change_project_task();
 Project.change_project_staff();
 Project.load_functions();
-$(".editProject").modal('open');
+elem = $("#project_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);
