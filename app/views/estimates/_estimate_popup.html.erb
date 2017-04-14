@@ -1,87 +1,89 @@
-<div class="modal-header clearfix">
-  <h5 class="left">
-    <!--<button id="enterPayment" class="btn btn-default modal-close" data-target="modal2">Enter Payment On Invoice</button>-->
-    <span><%= @client.organization_name %></span>
-  </h5>
-  <div class="modal-action-btn right">
-    <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), remote: true, class: 'edit_estimate_icon' %>
-    <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id) %>
-    <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates', :action => 'estimate_pdf', :id => estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
-    <a href="javascript:;" class="modal-close"><i class="material-icons">done</i></a>
-  </div>
-</div>
-<div class="info-section clearfix">
-  <div class="info-left-section left">
-    <h6><%= estimate.estimate_number %></h6>
-    <span><%= t('estimate') %>: <small> <%= estimate.estimate_date rescue "" %> </small></span>
-
-    <div class="paymentInfo">
-     <strong><%= number_to_currency(estimate.estimate_total, unit: '') %> <small><%= estimate.currency.unit %></small></strong>
+<div id="invoice_model" class="modal estimate_modal">
+  <div class="modal-content">
+    <div class="modal-header clearfix">
+      <h5 class="left">
+        <span><%= @client.organization_name %></span>
+      </h5>
+      <div class="modal-action-btn right">
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), remote: true, class: 'edit_estimate_icon' %>
+        <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id) %>
+        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates', :action => 'estimate_pdf', :id => estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
+        <a href="javascript:;" class="modal-close"><i class="material-icons">done</i></a>
+      </div>
     </div>
-  </div>
-  <% unless estimate.company.logo_url.blank? %>
-      <div class="info-right-section right circle">
-        <%= request.format.pdf? ? (wicked_pdf_image_tag  estimate.company.logo_url(:thumb)) : (image_tag estimate.company.logo_url(:thumb), class: 'responsive-img') %>
-      </div>
-  <% end %>
-</div>
-</div>
-<div class="modal-body">
-  <table class="bordered responsive-table">
-    <thead>
-    <tr>
-      <th><%= t('views.common.item') %></th>
-      <th><%= t('views.common.description') %></th>
-      <th class="center-align"><%= t('views.common.unit_cost') %></th>
-      <th class="center-align"><%= t('views.items.quantity') %></th>
-      <th class="center-align">Tax </th>
-      <th class="right-align"><%= t('views.estimates.line_total') %></th>
-    </tr>
-    </thead>
+    <div class="info-section clearfix">
+      <div class="info-left-section left">
+        <h6><%= estimate.estimate_number %></h6>
+        <span><%= t('estimate') %>: <small> <%= estimate.estimate_date rescue "" %> </small></span>
 
-    <tbody>
-    <% estimate.estimate_line_items.each do |item|
-      item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-    %>
-        <tr>
-          <td><%= item.item_name rescue "" %></td>
-          <td><%= item.item_description %></td>
-          <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-          <td class="center-align"><%= item.item_quantity.to_i %></td>
-          <td class="center-align"><%= item.tax1.name rescue ''%></td>
-          <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="modal-footer clearfix">
-  <div class="right-section right">
-    <div class="item-result">
-      <div class="table-row">
-        <span><strong><%= t('views.estimates.subtotal') %></strong></span>
-        <span><strong><%= number_to_currency(estimate.sub_total, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></strong></span>
+        <div class="paymentInfo">
+         <strong><%= number_to_currency(estimate.estimate_total, unit: '') %> <small><%= estimate.currency.unit %></small></strong>
+        </div>
       </div>
-      <div class="table-row">
-        <span><%= t('views.common.discount') %> <%= estimate.discount_percentage %><%= estimate.discount_type %></span>
-        <span><%= number_to_currency(estimate.discount_amount, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></span>
-      </div>
-      <% unless estimate.tax_detail_with_discount.blank? %>
-          <%= taxes_list(estimate.tax_detail_with_discount,estimate) %>
+      <% unless estimate.company.logo_url.blank? %>
+          <div class="info-right-section right circle">
+            <%= request.format.pdf? ? (wicked_pdf_image_tag  estimate.company.logo_url(:thumb)) : (image_tag estimate.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
       <% end %>
-      <div class="table-row">
-        <span></span>
-        <span></span>
+    </div>
+    <div class="modal-body">
+      <table class="bordered responsive-table">
+        <thead>
+        <tr>
+          <th><%= t('views.common.item') %></th>
+          <th><%= t('views.common.description') %></th>
+          <th class="center-align"><%= t('views.common.unit_cost') %></th>
+          <th class="center-align"><%= t('views.items.quantity') %></th>
+          <th class="center-align">Tax </th>
+          <th class="right-align"><%= t('views.estimates.line_total') %></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% estimate.estimate_line_items.each do |item|
+          item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+        %>
+            <tr>
+              <td><%= item.item_name rescue "" %></td>
+              <td><%= item.item_description %></td>
+              <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+              <td class="center-align"><%= item.item_quantity.to_i %></td>
+              <td class="center-align"><%= item.tax1.name rescue ''%></td>
+              <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer clearfix">
+      <div class="right-section right">
+        <div class="item-result">
+          <div class="table-row">
+            <span><strong><%= t('views.estimates.subtotal') %></strong></span>
+            <span><strong><%= number_to_currency(estimate.sub_total, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></strong></span>
+          </div>
+          <div class="table-row">
+            <span><%= t('views.common.discount') %> <%= estimate.discount_percentage %><%= estimate.discount_type %></span>
+            <span><%= number_to_currency(estimate.discount_amount, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></span>
+          </div>
+          <% unless estimate.tax_detail_with_discount.blank? %>
+              <%= taxes_list(estimate.tax_detail_with_discount,estimate) %>
+          <% end %>
+          <div class="table-row">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="item-total">
+          <div class="table-row">
+            <span><strong><%= t('views.common.total') %></strong></span>
+            <span><strong><%= number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="left-section left">
+        <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
       </div>
     </div>
-    <div class="item-total">
-      <div class="table-row">
-        <span><strong><%= t('views.common.total') %></strong></span>
-        <span><strong><%= number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></strong></span>
-      </div>
-    </div>
-  </div>
-  <div class="left-section left">
-    <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
   </div>
 </div>

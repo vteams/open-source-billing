@@ -91,7 +91,7 @@
 //= require select2.min
 //= require search
 //= require new_search
-
+//= require popup
 
 jQuery(function () {
 

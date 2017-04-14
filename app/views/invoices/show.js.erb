@@ -1,5 +1,4 @@
-$('#invoice_model .modal-content').html("<%= escape_javascript render partial: 'invoice_popup', locals: {invoice: @invoice}  %>");
-$(".modal-close").on('click', function(){
-    $(this).parents(".modal").modal('close');
-});
-$("#invoice_model").modal('open');
+$('body').append("<%= escape_javascript render partial: 'invoice_popup', locals: {invoice: @invoice}  %>");
+elem = $("#invoice_model");
+Popup.initialize(elem);
+Popup.open(elem);
