@@ -50,7 +50,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {render template: 'invoices/invoice_pdf.html.erb', layout:  'pdf_mode'}
       format.js
     end
   end

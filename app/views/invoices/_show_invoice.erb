@@ -112,32 +112,30 @@
 <div class="preview_content_middle">
   <div class="grid_table">
     <table cellpadding="0" cellspacing="0">
-      <colgroup>
-        <col class="one"/>
-        <col class="two"/>
-        <col class="three"/>
-        <col class="four"/>
-        <col class="five"/>
-
-      </colgroup>
+      <thead>
       <tr>
-        <th class="align_left"><%= t('views.common.item') %></th>
-        <th class="align_left"><%= t('views.common.description') %></th>
-        <th class="align_right"><%= t('views.common.unit_cost') %></th>
-        <th class="align_right"><%= t('views.items.quantity') %></th>
-        <th class="align_right"><%= t('views.invoices.line_total') %></th>
+        <th class="left-align"><%= t('views.common.item') %></th>
+        <th class="left-align"><%= t('views.common.description') %></th>
+        <th class="right-align"><%= t('views.common.unit_cost') %></th>
+        <th class="right-align"><%= t('views.items.quantity') %></th>
+        <th class="right-align"><%= t('views.invoices.line_total') %></th>
       </tr>
+      </thead>
+      <tbody>
+
+
       <% @invoice.invoice_line_items.each do |item|
         item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
       %>
           <tr>
-            <td class="align_left"><%= item.item_name rescue "" %></td>
-            <td class="align_left"><%= item.item_description %></td>
-            <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-            <td class="align_right"><%= item.item_quantity.to_i %></td>
-            <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+            <td class="left-align"><%= item.item_name rescue "" %></td>
+            <td class="left-align"><%= item.item_description %></td>
+            <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+            <td class="right-align"><%= item.item_quantity.to_i %></td>
+            <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
           </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
   <!--grid_table-->
@@ -147,32 +145,30 @@
       <div class="preview_content_middle">
         <div class="grid_table">
           <table cellpadding="0" cellspacing="0">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-
-            </colgroup>
+            <thead>
             <tr>
-              <th class="align_left"><%= t('views.common.task') %></th>
-              <th class="align_left"><%= t('views.common.description') %></th>
-              <th class="align_right"><%= t('views.tasks.rate') %></th>
-              <th class="align_right"><%= t('views.tasks.hours') %></th>
-              <th class="align_right"><%= t('views.tasks.line_total') %></th>
+              <th class="left-align"><%= t('views.common.task') %></th>
+              <th class="left-align"><%= t('views.common.description') %></th>
+              <th class="right-align"><%= t('views.tasks.rate') %></th>
+              <th class="right-align"><%= t('views.tasks.hours') %></th>
+              <th class="right-align"><%= t('views.tasks.line_total') %></th>
             </tr>
+            </thead>
+            <tbody>
+
+
             <% @invoice.invoice_tasks.each do |task|
               task_total = (task.rate ||0) * (task.hours ||0)
             %>
                 <tr>
-                  <td class="align_left"><%= task.name rescue "" %></td>
-                  <td class="align_left"><%= task.description %></td>
-                  <td class="align_right"><%= number_to_currency(task.rate, unit: "") %></td>
-                  <td class="align_right"><%= task.hours %></td>
-                  <td class="align_right"><%= number_to_currency(task_total, unit: "") %></td>
+                  <td class="left-align"><%= task.name rescue "" %></td>
+                  <td class="left-align"><%= task.description %></td>
+                  <td class="right-align"><%= number_to_currency(task.rate, unit: "") %></td>
+                  <td class="right-align"><%= task.hours %></td>
+                  <td class="right-align"><%= number_to_currency(task_total, unit: "") %></td>
                 </tr>
             <% end %>
+            </tbody>
           </table>
         </div>
         <!--grid_table-->
@@ -205,9 +201,14 @@
         <div class="preview_right_label"><%= t('views.common.discount') %> <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
+
+      <div class="top_right_row">
+        <div class="preview_right_label">Invoice Tax: <%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</div>
+        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_tax_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
+      </div>
       <!--top_right_row-->
       <% unless @invoice.tax_detail_with_discount.blank? %>
-          <%= taxes_list(@invoice.tax_detail_with_discount,@invoice) %>
+          <%= taxes_list_print(@invoice.tax_detail_with_discount,@invoice) %>
       <% end %>
 
       <!--top_right_row-->

@@ -84,6 +84,19 @@ module InvoicesHelper
     tax_list.html_safe
   end
 
+  def taxes_list_print list,invoice=nil
+    tax_list = ""
+    currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
+    for tax, amount in list
+      tax_list += <<-HTML
+      <div class="top_right_row"><div class="preview_right_label">#{tax}</div><div class="preview_right_description">#{number_to_currency(amount,unit: currency_unit)}</div></div>
+      HTML
+    end
+    tax_list.html_safe
+  end
+
+
+
   def invoice_not_updated
     notice = <<-HTML
        <ul>
