@@ -12,7 +12,7 @@
                                               :default => "New  #{model_class.model_name.human}") %>:
             <% end %>
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-            <%= f.select :client_id, options_for_select(load_clients(action_name, get_user_current_company.id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select title-select" } %>
+            <%= f.select :client_id, options_for_select(load_clients(action_name, get_user_current_company.id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select custom_select" } %>
           </h5>
           <div class="modal-action-btn right">
             <a href="#" onclick="$('.send_submit').click();" title="Save"><i class="material-icons">send</i></a>
