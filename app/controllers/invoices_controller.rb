@@ -104,6 +104,7 @@ class InvoicesController < ApplicationController
       redirect_to :back, alert:  "Project Invoice cannot be updated"
     else
       @invoice.invoice_line_items.build()
+      @invoice.build_recurring_schedule if @invoice.recurring_schedule.blank?
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to {|format| format.js; format.html}

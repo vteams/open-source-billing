@@ -8,6 +8,8 @@ class @Invoice
         value = @get('value')
         $('#invoice_date').html value
         $('#invoice_invoice_date').val value
+        $('#next_invoice_date').html value
+        $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
 
     $('#invoice_due_date_picker').pickadate
       format: "yyyy-mm-dd"
@@ -218,6 +220,14 @@ class @Invoice
       updateInvoiceTotal()
 
   @load_functions = ->
+
+    $('#recurring').on 'click', ->
+      if $(this).is(":checked")
+        $("#recurring_schedule_container").removeClass('hidden')
+        $("#invoice_recurring_schedule_attributes__destory").val false
+      else
+        $("#recurring_schedule_container").addClass('hidden')
+        $("#invoice_recurring_schedule_attributes__destory").val true
 
     $('.modal').modal complete: ->
       $('.qtip').remove()
