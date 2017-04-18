@@ -2,7 +2,7 @@ class @Invoice
 
   applyDatePicker = ->
     $('#invoice_date_picker').pickadate
-      format: DateFormats.format()
+      format: "yyyy-mm-dd"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -10,13 +10,20 @@ class @Invoice
         $('#invoice_invoice_date').val value
 
     $('#invoice_due_date_picker').pickadate
-      format: DateFormats.format()
+      format: "yyyy-mm-dd"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
         $('#invoice_due_date_text').html value
         $('#invoice_due_date').val value
 
+    $("#next_invoice_date_picker").pickadate
+      format: "yyyy-mm-dd"
+      formatSubmit: DateFormats.format()
+      onSet: (context) ->
+        value = @get('value')
+        $('#next_invoice_date').html value
+        $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
 
   # Calculate the line total for invoice
   updateLineTotal = (elem) ->

@@ -37,6 +37,7 @@ module Services
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }
       end
+      invoice.build_recurring_schedule
       invoice
     end
 

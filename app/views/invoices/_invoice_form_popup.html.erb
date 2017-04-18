@@ -46,6 +46,41 @@
               </strong>
             </div>
           </div>
+          <div class="info-center-section">
+            <%= f.fields_for :recurring_schedule do |rs| %>
+                <div class="row">
+                  <div class="col s12"><h6>Recurring Schedule</h6></div>
+                  <div class="col s12">
+                    <% next_invoice_date = @invoice.new_record? ? f.object.invoice_date : rs.object.next_invoice_date.strftime(get_date_format)  %>
+                    <span>Next Issue Date: <small id="next_invoice_date"> <%= next_invoice_date %></small> <i class="material-icons" id="next_invoice_date_picker">date_range</i></span>
+                    <%= rs.hidden_field :next_invoice_date, value: next_invoice_date, class: 'next_invoice_date' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <%= rs.select :frequency, Invoice_FREQUENCY, {include_blank: false}, {class: 'inline-select' }%>
+                    <%= rs.label :frequency, "How Often?"%>
+                  </div>
+                  <div class="input-field col s6">
+                    <%= rs.number_field :occurrences, min: 0 %>
+                    <%= rs.label :occurrences, "How Many?", class: 'active'%>
+                  </div>
+                </div>
+                <label>DELIVERY OPTIONS</label>
+                <div class="row">
+                  <div class="col s12">
+                    <%= rs.radio_button :delivery_option, 'send_invoice', id: 'send_invoice'%>
+                    <label for="send_invoice">Send invoices automatically</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice', checked: "#{'checked' if @invoice.new_record?}"%>
+                    <label for="draft_invoice">Create Draft invoices and send manually</label>
+                  </div>
+                </div>
+            <% end %>
+          </div>
           <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
               <div class="info-right-section right circle">
                 <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>

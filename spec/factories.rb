@@ -1,6 +1,13 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :stripe_error do
+FactoryGirl.define do  factory :recurring_schedule do
+    next_invoice_date "2017-04-18 14:04:42"
+frequency "MyString"
+occurrences 1
+delivery_option "MyString"
+invoice_id 1
+  end
+  factory :stripe_error do
     
   end
   factory :subscription do

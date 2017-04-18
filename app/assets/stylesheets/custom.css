@@ -247,3 +247,33 @@ h3.heading_with_action{
 .task-card .invoice-details .amount-box{
     height: 30px;
 }
+
+.editInvoice .info-center-section{
+    float: left;
+    padding: 0px 100px;
+}
+
+
+.editInvoice .info-center-section span i.material-icons {
+    font-size: 14px;
+    line-height: 11px;
+    vertical-align: bottom;
+    color: #b5b5b5;
+}
+
+.editInvoice .info-center-section span {
+    font-size: 11px;
+    display: inline-block;
+    text-transform: uppercase;
+    line-height: 11px;
+}
+
+.editInvoice .info-center-section span small {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.editInvoice .info-center-section .input-field input, .editInvoice .info-center-section .input-field select{
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+}
