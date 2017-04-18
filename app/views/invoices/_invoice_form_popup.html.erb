@@ -75,7 +75,7 @@
                 </div>
                 <div class="row">
                   <div class="col s12">
-                    <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice', checked: "#{'checked' if @invoice.new_record?}"%>
+                    <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice'%>
                     <label for="draft_invoice">Create Draft invoices and send manually</label>
                   </div>
                 </div>

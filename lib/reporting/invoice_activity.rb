@@ -31,6 +31,8 @@ module Reporting
         deleted_invoices = all_invoices.filter(options,per_page)
         options[:status] = 'archived'
         archived_invoices = all_invoices.filter(options,per_page)
+        options[:status] = 'recurring'
+        recurring_invoices = all_invoices.filter(options,per_page)
 
         active_invoice_progress = {}
         active_invoices.group_by{|i| i.group_date}.each do |date, invoices|
@@ -46,6 +48,11 @@ module Reporting
           archived_invoices_progress[date] = invoices.collect(&:invoice_total).sum rescue 0
         end
 
+        recurring_invoices_progress = {}
+        recurring_invoices.group_by{|i| i.group_date}.each do |date, invoices|
+          recurring_invoices_progress[date] = invoices.collect(&:invoice_total).sum rescue 0
+        end
+
         invoice_status.each do |status|
           recent_activity[status] = active_invoices.select{|i| i.status.eql?(status.to_s)}.count rescue 0
         end
@@ -53,9 +60,11 @@ module Reporting
         recent_activity.merge!(active_invoices_total: active_invoices.reject{|x| x.invoice_total.nil?}.collect(&:invoice_total).sum)
         recent_activity.merge!(deleted_invoices_total: deleted_invoices.reject{|x| x.invoice_total.nil?}.collect(&:invoice_total).sum)
         recent_activity.merge!(archived_invoices_total: archived_invoices.reject{|x| x.invoice_total.nil?}.collect(&:invoice_total).sum)
+        recent_activity.merge!(recurring_invoices_total: recurring_invoices.reject{|x| x.invoice_total.nil?}.collect(&:invoice_total).sum)
         recent_activity.merge!(active_invoice_progress: active_invoice_progress)
         recent_activity.merge!(deleted_invoice_progress: deleted_invoice_progress)
         recent_activity.merge!(archived_invoices_progress: archived_invoices_progress)
+        recent_activity.merge!(recurring_invoices_progress: recurring_invoices_progress)
 
         recent_activity
     end

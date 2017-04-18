@@ -208,10 +208,14 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.filter(params, per_page)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
     method = mappings[params[:status].to_sym]
     invoices = params[:search].present? ? self.search(params[:search]).records : self
     invoices.send(method).page(params[:page]).per(per_page)
+  end
+
+  def self.recurring
+    includes(:recurring_schedule).where.not(recurring_schedules: {id: nil })
   end
 
   def self.paid_full ids
@@ -470,6 +474,6 @@ class Invoice < ActiveRecord::Base
   end
 
   def group_date
-    created_at.strftime("%d/%m/%Y")
+    invoice_date.to_datetime.strftime('%B %Y')
   end
 end
