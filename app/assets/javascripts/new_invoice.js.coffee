@@ -221,6 +221,11 @@ class @Invoice
 
   @load_functions = ->
 
+    if $('#recurring').is(":checked")
+      $("#invoice_recurring_schedule_attributes__destory").val true
+    else
+      $("#invoice_recurring_schedule_attributes__destory").val false
+
     $('#recurring').on 'click', ->
       if $(this).is(":checked")
         $("#recurring_schedule_container").removeClass('hidden')
