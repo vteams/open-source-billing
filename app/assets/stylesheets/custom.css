@@ -277,3 +277,13 @@ h3.heading_with_action{
     border-bottom-color: transparent !important;
     box-shadow: none !important;
 }
+
+.editInvoice .invoice_grid_fields input, .editInvoice .invoice_grid_fields input:focus {
+    border-bottom: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0px !important;
+}
+
+.editInvoice .invoice_grid_fields tr td{
+    padding: 0px 12px !important;
+}

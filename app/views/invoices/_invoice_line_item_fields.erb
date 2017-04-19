@@ -10,13 +10,16 @@
     <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),  {:prompt => t('views.invoice_line_item.select_an_item') ,:include_blank => false}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
-  <%= f.hidden_field :item_description, class: 'description' %>
-  <%= f.hidden_field :item_unit_cost, class: 'cost'%>
-  <%= f.hidden_field :item_quantity, class: 'qty' %>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
-  <td class="description"><%= f.object.item_description %></td>
-  <td class="center-align cost"><%= f.object.item_unit_cost %></td>
-  <td class="center-align qty"><%= f.object.item_quantity %></td>
+  <td>
+    <%= f.text_field :item_description, class: 'description' %>
+  </td>
+  <td>
+    <%= f.text_field :item_unit_cost, class: 'cost center-align'%>
+  </td>
+  <td>
+    <%= f.number_field :item_quantity, class: 'qty center-align', min: 1 %>
+  </td>
   <td class="center-align tax1">
     <%= f.object.tax1.name rescue '' %>
   </td>

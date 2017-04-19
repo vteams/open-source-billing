@@ -229,6 +229,16 @@ class @Invoice
         $("#recurring_schedule_container").addClass('hidden')
         $("#invoice_recurring_schedule_attributes__destory").val true
 
+    # Update line and grand total if line item fields are changed
+    jQuery("input.cost, input.qty").on "blur", ->
+      updateLineTotal(jQuery(this))
+      updateInvoiceTotal()
+
+    jQuery("input.cost, input.qty").on "keyup", ->
+      updateLineTotal(jQuery(this))
+      updateInvoiceTotal()
+
+
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
