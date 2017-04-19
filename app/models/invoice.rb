@@ -484,4 +484,12 @@ class Invoice < ActiveRecord::Base
     return "Every #{recurring_schedule.frequency.split(".").last.camelize} (#{recurring_schedule.occurrences - recurring_schedule.generated_count} Remaining)"
   end
 
+  def recurring_parent
+    return self if parent_id.nil?
+    Invoice.find(self.parent_id)
+  end
+
+  def is_recurring_invoice?
+    parent_id.present? or recurring_schedule.present?
+  end
 end

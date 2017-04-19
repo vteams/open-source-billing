@@ -36,6 +36,7 @@
                 <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
             <% end %>
             <li><%= link_to raw("<i class='material-icons'>payment</i>Enter Payment"), enter_payment_payments_path(invoice_ids: invoice.id), remote: true  unless invoice.status.eql?("paid") %></li>
+            <li><%= link_to raw("<i class='material-icons'>close</i>Stop Recurring"), stop_recurring_invoice_path(invoice)  if invoice.is_recurring_invoice? %></li>
           </ul>
       <% end %>
     </div>

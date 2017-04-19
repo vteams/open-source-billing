@@ -292,6 +292,16 @@ class InvoicesController < ApplicationController
     redirect_to(invoices_url, notice: 'Invoice sent successfully.')
   end
 
+  def stop_recurring
+    invoice = Invoice.find(params[:id])
+    recurring = invoice.recurring_parent.recurring_schedule
+    if recurring.present?
+      recurring.update_attributes(enable_recurring: false)
+      redirect_to(invoices_url, notice: 'Invoice recurring stopped successfully.')
+    else
+      redirect_to(invoices_url, alert: 'Invoice recurring can not stopped.')
+    end
+  end
 
   private
 
