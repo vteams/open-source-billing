@@ -53,6 +53,7 @@ class Invoice < ActiveRecord::Base
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
   has_many :invoice_tasks, :dependent => :destroy
+  has_many :recurring_invoices, class_name: 'Invoice', foreign_key: 'parent_id'
   has_one  :recurring_schedule, dependent: :destroy
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
@@ -186,6 +187,7 @@ class Invoice < ActiveRecord::Base
     invoice = use_as_template
     invoice.status = recurring.delivery_option.eql?('draft_invoice') ? 'draft' : 'sent'
     invoice.due_date = Date.today + eval(recurring.frequency)
+    invoice.parent_id = self.id
     invoice.save
   end
 
