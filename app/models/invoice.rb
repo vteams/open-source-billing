@@ -217,7 +217,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.recurring
-    includes(:recurring_schedule).where.not(recurring_schedules: {id: nil })
+    joins('LEFT OUTER JOIN recurring_schedules as rs ON invoices.id = rs.invoice_id').where('rs.id is NOT NULL or invoices.parent_id is NOT NULL')
   end
 
   def self.paid_full ids
@@ -478,4 +478,10 @@ class Invoice < ActiveRecord::Base
   def group_date
     invoice_date.to_datetime.strftime('%B %Y')
   end
+
+  def recurring_status
+    return nil if recurring_schedule.blank?
+    return "Every #{recurring_schedule.frequency.split(".").last.camelize} (#{recurring_schedule.occurrences - recurring_schedule.generated_count} Remaining)"
+  end
+
 end

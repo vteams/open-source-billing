@@ -287,3 +287,8 @@ h3.heading_with_action{
 .editInvoice .invoice_grid_fields tr td{
     padding: 0px 12px !important;
 }
+
+span.invoice-recurring-status{
+    width: 100% !important;
+    text-transform: none !important;
+}
