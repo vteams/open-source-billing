@@ -4,7 +4,7 @@ module InvoiceSearch
   included do
     include Elasticsearch::Model
     include Searchable
-    after_update { self.client.try(:touch); self.invoice_line_items.map(&:touch)}
+    after_update { self.client.try(:touch);}
     settings index: { number_of_shards: 1 } do
       mappings dynamic: 'false' do
         indexes :invoice_number, analyzer: 'english'

@@ -5,7 +5,7 @@ module EstimateSearch
     include Elasticsearch::Model
     include Searchable
 
-    after_update { self.client.try(:touch); self.estimate_line_items.map(&:touch)}
+    after_update { self.client.try(:touch);}
     settings index: { number_of_shards: 1 } do
       mappings dynamic: 'false' do
         indexes :estimate_number, analyzer: 'english'
