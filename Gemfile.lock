@@ -110,6 +110,7 @@ GEM
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
     charlock_holmes (0.7.3)
+    chronic (0.10.2)
     coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -422,6 +423,8 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     wicked_pdf (0.11.0)
       rails
     wkhtmltopdf-binary (0.9.9.3)
@@ -510,6 +513,7 @@ DEPENDENCIES
   turbo-sprockets-rails3 (= 0.2.9)
   twitter-bootstrap-rails (~> 2.1.9)
   uglifier (= 3.0.0)
+  whenever
   wicked_pdf (~> 0.11.0)
   wkhtmltopdf-binary (~> 0.9.9.3)
   xlsx_writer (= 0.4.4)

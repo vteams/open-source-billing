@@ -97,3 +97,5 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'exception_notification-rake'
+
+gem 'whenever'
