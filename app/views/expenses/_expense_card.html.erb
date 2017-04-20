@@ -1,7 +1,7 @@
 <div class="flex-item box">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
-  <%= link_to '', expense , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <%= link_to '', expense , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
   <div class="card-white-panel invoice-card" data-expense_id= <%=expense.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "expense_ids[]", expense.id, false, :id => "expense_#{expense.id}", class: "filled-in" %>

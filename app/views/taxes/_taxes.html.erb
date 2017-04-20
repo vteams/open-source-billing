@@ -1,6 +1,6 @@
 
 <div class="flex-item">
-  <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
 
   <div class="card-white-panel invoice-card" data-taxis_id= <%=taxis.id %>>
     <div class="checkbox-item">

@@ -1,5 +1,5 @@
 <div class="flex-item box">
-  <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
   <div class="card-white-panel invoice-card" data-item_id= <%=item.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
