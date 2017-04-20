@@ -11,8 +11,8 @@
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <td><%= f.text_field :item_description, class: 'description' %></td>
-  <td><%= f.text_field :item_unit_cost, class: 'cost'%></td>
-  <td><%= f.number_field :item_quantity, class: 'qty', min: 1 %></td>
+  <td><%= f.text_field :item_unit_cost, class: 'cost center-align'%></td>
+  <td><%= f.number_field :item_quantity, class: 'qty center-align', min: 1 %></td>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
   <td class="center-align tax1">
     <%= f.object.tax1.name rescue '' %>
