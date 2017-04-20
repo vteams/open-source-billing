@@ -309,3 +309,12 @@ span.invoice-recurring-status{
     font-weight: 400;
     color: #09b8e2;
 }
+
+.time-tracking .breadcrum-bar .select-wrapper .select-dropdown{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+    border-bottom-color: transparent;
+    margin-bottom: 0;
+    line-height: 1.4;
+}

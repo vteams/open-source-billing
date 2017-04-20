@@ -21,24 +21,6 @@
         <span id="actives">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
     </div>
-    <div class="status-info">
-      <h5>
-        <%= link_to 'Tasks', tasks_url %>
-        <span id="actives">(<%= get_task_count %>)</span>
-      </h5>
-    </div>
-    <div class="status-info">
-      <h5>
-        <%= link_to 'Staffs', staffs_path %>
-        <span id="actives">(<%= get_staff_count %>)</span>
-      </h5>
-    </div>
-
-    <div class="status-info">
-      <h5>
-        <%= link_to 'Timesheet', logs_path %>
-      </h5>
-    </div>
   </div>
 
 </aside>
