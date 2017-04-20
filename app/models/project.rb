@@ -57,7 +57,7 @@ class Project < ActiveRecord::Base
   end
 
   def group_date
-    created_at.strftime("%d/%m/%Y")
+    created_at.strftime('%B %Y')
   end
 
   def image_name

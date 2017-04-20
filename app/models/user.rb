@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
 
 
   def group_date
-    created_at.strftime("%d/%m/%Y")
+    created_at.strftime('%B %Y')
   end
 
   def card_name

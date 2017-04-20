@@ -58,7 +58,7 @@ class Tax < ActiveRecord::Base
     where(name: tax_name).present?
   end
   def group_date
-    created_at.strftime("%d/%m/%Y")
+    created_at.strftime('%B %Y')
   end
 
 end
