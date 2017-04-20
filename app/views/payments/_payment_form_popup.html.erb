@@ -1,25 +1,18 @@
-<div id="payment_form_popup" class="modal editableModal editPaymentModal">
+<div id="payment_form_popup" class="modal editableModal enterPayment">
   <div class="modal-content">
 
     <%- model_class = Payment -%>
     <%= form_for payment, :html => {:class => 'payment_form form-horizontal', :novalidate => ""} do |f| %>
+        <% invoice = payment.invoice %>
         <div class="modal-header clearfix text-content">
-          <h5 class="left text-blue">
-            <% if f.object.persisted? %>
-                <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
-                                              :default => "Edit #{model_class.model_name.human}") %>:
-            <% else %>
-                <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                              :default => "New  #{model_class.model_name.human}") %>:
-            <% end %>
-          </h5>
+          <h5 class="left text-blue">Enter Payment: <span><%= invoice.client.organization_name %></span> </h5>
           <div class="modal-action-btn right">
-            <a href="#" onclick="$('.send_submit').click();" title="Save"><i class="material-icons">send</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="Save"><i class="material-icons">done</i></a>
             <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
             <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
           </div>
         </div>
-        <% invoice = payment.invoice %>
+
         <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
         <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
         <% client_credit = client_credit.present? ? client_credit : 0 %>
@@ -29,19 +22,28 @@
 
         <div class="info-section clearfix">
           <div class="info-left-section left">
-            <h6 class="text-grey"><%= invoice.invoice_number %></h6>
-            <span>Invoice : <small> <%= invoice.invoice_date %> </small> </span>
-            <span class="text-blue"> Due: <small> <%= invoice.due_date %></small></span>
-            <span class="text-grey"> Payment Date: <small class="payment_date"> <%= f.object.payment_date %> </small><i class="material-icons payment_date_picker">date_range</i></span>
-            <%= f.hidden_field :payment_date %>
-            <div class="editPayementInfo">
-              <strong><%= number_to_currency(due_amount, unit: '')%>
-                <small>
-                  <%= invoice.currency.unit %>
-                </small>
-              </strong>
+            <h6 class="text-orange"><%= invoice.invoice_number %> <span> <%= invoice.company.company_name %></span></h6>
+            <div class="date-invoice">
+              <span>Invoice: <small> <%= invoice.invoice_date %> </small></span>
+              <span class="text-blue"> Due: <small> <%= invoice.due_date %></small></span>
+            </div>
+            <div class="terms">
+              <span>Terms:</span> <small> <%= invoice.term %></small>
+            </div>
+            <div class="paymentInfo">
+              <div>
+                <span>Invoice Amount  <em>:</em></span><strong><%= number_to_currency(invoice.invoice_total) %> <small><%= invoice.currency.unit %></small></strong>
+              </div>
+              <div>
+                <span>Received  <em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id)) %> <small><%= invoice.currency.unit %></small></strong>
+              </div>
+              <div>
+                <span>Net Due <em>:</em></span><strong><%= number_to_currency(due_amount) %> <small><%= invoice.currency.unit %></strong>
+              </div>
             </div>
           </div>
+
+          
           <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
               <div class="info-right-section right circle">
                 <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
