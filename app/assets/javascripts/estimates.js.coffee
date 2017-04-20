@@ -196,6 +196,15 @@ class @Estimate
     applyDatePicker();
     $('select').material_select();
 
+    # Update line and grand total if line item fields are changed
+    jQuery("input.cost, input.qty").on "blur", ->
+      updateLineTotal(jQuery(this))
+      updateInvoiceTotal()
+
+    jQuery("input.cost, input.qty").on "keyup", ->
+      updateLineTotal(jQuery(this))
+      updateInvoiceTotal()
+
     # Re calculate the total estimate balance if an item is removed
     $(".remove_nested_fields").on "click", ->
       setTimeout (->
