@@ -6,7 +6,7 @@
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel">
         <h3>
-          Invoices
+          <span><%= link_to "Invoices",invoices_url %> </span>
           <%= link_to "/ #{@status.humanize}",invoices_url(status: @status) %>
         </h3>
       </div>

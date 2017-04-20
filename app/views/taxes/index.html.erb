@@ -10,7 +10,7 @@
         <%= hidden_field_tag :direction, params[:direction] %>
         <%= hidden_field_tag :sort, params[:sort] %>
 
-        <h3><%= t('views.taxes.taxes') %>  <%= link_to "/ #{@status.humanize}",taxes_url(status: @status) %></h3>
+        <h3><span><%= link_to 'Taxes', taxes_url %></span><%= link_to "/ #{@status.humanize}",taxes_url(status: @status) %></h3>
       </div>
     </div>
   </div>

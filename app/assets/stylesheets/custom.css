@@ -301,3 +301,11 @@ span.invoice-recurring-status{
     width: 100% !important;
     text-transform: none !important;
 }
+
+#main-content .breadcrum-bar h3 span a{
+    font-size: 20px;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+    color: #09b8e2;
+}
