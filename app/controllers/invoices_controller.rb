@@ -79,6 +79,10 @@ class InvoicesController < ApplicationController
   def preview
     @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
     render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
+    respond_to do |format|
+      format.html {render template: 'invoices/preview.html.erb', layout:  'pdf_mode'}
+      format.js
+    end
   end
 
   def invoice_deleted_message

@@ -22,26 +22,23 @@
   </div><!--content_top-->
 
   <div class="content_bottom top">
-    <% if @invoice.status != "paid" and invoice_owner_publish_key(@invoice).present?  %>
-        <%= form_tag '/invoices/payment_with_credit_card', method: 'post', id: 'cc_form', novalidate: "" do -%>
-            <%= hidden_field_tag :inv_id, params[:inv_id]%>
-            <%= hidden_field_tag :invoice_id, @invoice.id %>
-            <%= hidden_field_tag :amount, amount_to_pay_by_client(@invoice) %>
-            <script class="stripe-button" data-amount="<%= amount_to_pay_by_client(@invoice) %>" data-image="<%= asset_url('logo_for_stripe.png')%>" data-description="(Invoice Payment )" data-key="<%= invoice_owner_publish_key(@invoice)  %>"  data-local="auto" src="https://checkout.stripe.com/checkout.js"></script>
-        <% end %>
+    <% if @invoice.status != "paid" %>
+        <!--showing 2 payment options buttons -->
+        <%#= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), :class => "btn_large big" %>
+        <%= link_to t("pay_by_credit_card"), "javascript:", class: "btn_large big", "data-toggle" => "modal", "data-target" => "#cc_popup" %>
     <% else %>
-      <div></div>
+        <div></div>
     <% end %>
   </div><!--content_bottom-->
 
   <div class="content_middle">
     <div class="response_to_client">
       <% unless @invoice.dispute_history.blank?%>
-        <%= render :partial=>"dispute_history"%>
+          <%= render :partial=>"dispute_history"%>
       <% end %>
     </div>
     <div id="show_invoice_container">
-    <%= render :partial => "show_invoice" %>
+      <%= render :partial => "show_invoice" %>
     </div>
 
   </div>
@@ -50,50 +47,48 @@
 
 <div class="dispute_popup">
   <%= form_tag "/invoices/dispute_invoice",:class=>"dispute_form",:novalidate => "", :remote => true do %>
-    <div id="dispute_invoice_popup" class="modal hide fad" style="width:760px; min-height: 250px; left:43.4%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="model_grey_container">
-        <div class="modal-header">
-          <h1><%= t('views.invoices.dispute_invoice') %></h1>
-          <div class="cross_btn">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
-            </button>
+      <div id="dispute_invoice_popup" class="modal hide fad" style="width:760px; min-height: 250px; left:43.4%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="model_grey_container">
+          <div class="modal-header">
+            <h1><%= t('views.invoices.dispute_invoice') %></h1>
+            <div class="cross_btn">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
+              </button>
+            </div>
           </div>
-        </div>
-        <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
-          <button class="close" type="button" style="margin:0px;">×</button>
-          <table>
-            <tbody>
+          <div id="invoice_popup_error" class="alert alert-error popup" style="display:none;">
+            <button class="close" type="button" style="margin:0px;">×</button>
+            <table>
+              <tbody>
               <tr>
                 <td>
                   <span></span>
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-body">
-          <%= hidden_field_tag "invoice_id", @invoice.id %>
-          <div class="fields_content_data new_invoice_fields">
-            <div class="field_row textarea">
-              <div class="label_field textarea"><label><%= t('views.invoices.reason_for_dispute') %></label></div>
-              <div class="large_field" style="clear:both;">
-                <%= text_area_tag "reason_for_dispute" ,'',:required => ""%>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-body">
+            <%= hidden_field_tag "invoice_id", @invoice.id %>
+            <div class="fields_content_data new_invoice_fields">
+              <div class="field_row textarea">
+                <div class="label_field textarea"><label><%= t('views.invoices.reason_for_dispute') %></label></div>
+                <div class="large_field" style="clear:both;">
+                  <%= text_area_tag "reason_for_dispute" ,'',:required => ""%>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="footer ">
-          <%= submit_tag t("views.common.send"), :class => "btn_large submit" %>
-          <a class="btn_large grey" href="#" data-dismiss="modal"><%= t('views.common.cancel') %></a>
+          <div class="footer ">
+            <%= submit_tag t("views.common.send"), :class => "btn_large submit" %>
+            <a class="btn_large grey" href="#" data-dismiss="modal"><%= t('views.common.cancel') %></a>
+          </div>
         </div>
       </div>
-    </div>
   <% end %>
 </div><!--dispute_popup-->
 
-<script>
-    setTimeout(function(){
-        document.getElementsByClassName("stripe-button-el")[0].disabled = false;
-    }, 700);
-</script>
+<!-- popup for credit card info -->
+
+<%= render 'credit_card_info' %>

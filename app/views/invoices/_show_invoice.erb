@@ -202,10 +202,12 @@
         <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
 
+      <% if @invoice.tax.present? %>
       <div class="top_right_row">
         <div class="preview_right_label">Invoice Tax: <%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</div>
         <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_tax_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
       </div>
+      <% end %>
       <!--top_right_row-->
       <% unless @invoice.tax_detail_with_discount.blank? %>
           <%= taxes_list_print(@invoice.tax_detail_with_discount,@invoice) %>
