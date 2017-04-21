@@ -20,20 +20,30 @@ class @Payment
   hidePopover = (elem) ->
     elem.qtip("hide")
 
-  @load_functions = ->
+  applyDatePicker = ->
+    $('#payment_date, #payment_date_picker').pickadate
+      format: "yyyy-mm-dd"
+      formatSubmit: DateFormats.format()
+      onSet: (context) ->
+        value = @get('value')
+        $('#payment_payment_date,#payment_date').val value
 
+  @load_functions = ->
+    applyDatePicker();
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
     $('select').material_select();
 
-    $('.payment_date_picker').pickadate
-      format: DateFormats.format()
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('.payment_date').html value
-        $('#payment_payment_date').val value
+    #Autocomplete amount field on paid full checkbox
+    $("#payment_paid_full").on "click", ->
+      rem_value = parseFloat($('.rem_payment_amount').attr('value'))
+      if $(this).is ":checked"
+        $('#payment_payment_amount').val(rem_value)
+        $('#payment_payment_amount').attr('readonly', 'readonly')
+      else
+        $('#payment_payment_amount').removeAttr('readonly')
+        $('#payment_payment_amount').val('')
 
     $("#payment_payment_amount").on "blur keyup", ->
       hidePopover($('#payment_payment_amount'))

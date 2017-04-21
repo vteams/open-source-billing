@@ -17,6 +17,10 @@
         <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
         <% client_credit = client_credit.present? ? client_credit : 0 %>
 
+        <%= f.hidden_field :invoice_id, value: invoice.id %>
+        <%= f.hidden_field :invoice_number, value: payment.invoice_number %>
+        <%= f.hidden_field :client_id, value: invoice.client_id %>
+
         <div style="display:none" class="rem_payment_amount" value="<%= due_amount %>"></div>
 
 
@@ -42,41 +46,51 @@
               </div>
             </div>
           </div>
-
-          
-          <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
-              <div class="info-right-section right circle">
-                <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
-              </div>
-          <% end %>
-        </div>
-        <div class="modal-body">
-          <div class="info-right-section">
+          <div class="info-right-section right">
             <div class="row">
               <div class="input-field col s6">
-                <%= f.number_field :payment_amount, class: "payment_amount" %>
-                <%= f.hidden_field :invoice_id, value: invoice.id %>
-                <%= f.hidden_field :invoice_number, value: payment.invoice_number %>
-                <%= f.hidden_field :client_id, value: invoice.client_id %>
-                <%= f.label :payment_amount, 'Amount', class: 'active' %>
-              </div>
-              <div class="input-field col s6">
                 <%= f.select :payment_method, PAYMENT_METHODS, {} %>
-                <label>Payment Method </label>
+                <label>Method</label>
               </div>
-
+              <div class="input-field col s6 datepicker">
+                <%= f.hidden_field :payment_date, :value => f.object.payment_date %>
+                <%= text_field_tag :payment_date, f.object.payment_date %>
+                <i class="material-icons" id="payment_date_picker">date_range</i>
+                <label class="active">Date</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <%= f.number_field :payment_amount, class: "payment_amount", placeholder: 0 %>
+                <%= f.label :payment_amount, "Payment #{invoice.currency.unit}", class: 'active'%>
+              </div>
+              <div class="checkbox-field inline-checkbox col s6">
+                <input type="checkbox" name="payment_paid_full" class="filled-in pay_full" id="payment_paid_full" />
+                <label for="payment_paid_full">Pay Full</label>
+              </div>
+            </div>
+            <div class="checkbox-field row">
+              <% if client_credit > 0 %>
+                  <div class="col s12">
+                    <input type="checkbox" class="filled-in apply_credit" id="filled-in-box" />
+                    <label for="filled-in-box"> <%= t('views.payments.apply_from_credit') %> <%= payment.invoice.currency.present? ? payment.invoice.currency.code : 'USD' %>
+                      <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %>
+                      <%= t('views.common.available') %>
+                    </label>
+                  </div>
+              <% end %>
+              <div class="col s12">
+                <input type="checkbox" name="payment_send_payment_notification" class="filled-in" id="payment_send_payment_notification" />
+                <label for="payment_send_payment_notification">Send payment notification</label>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="modal-footer">
-          <div class="row">
-            <div class="text-info col l6">
-              <strong>Note</strong>
-              <%= f.text_area :notes,  maxlength: 400, class: 'materialize-textarea'%>
-            </div>
+        <div class="modal-footer commentSection">
+          <div class="comments-content">
+            <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
+            <%= f.text_area :notes,  maxlength: 400%>
           </div>
-
         </div>
     <% end %>
 

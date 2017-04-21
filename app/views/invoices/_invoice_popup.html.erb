@@ -2,6 +2,10 @@
   <div class="modal-content">
         <div class="modal-header clearfix">
           <h5 class="left">
+            <% unless invoice.status.eql?("paid") %>
+                <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
+                <button id="enterPayment" class="btn btn-default" onclick="$('.invoice_payment_link').click();">Enter Payment On Invoice</button>
+            <% end %>
             <span><%= @client.organization_name %></span>
           </h5>
           <div class="modal-action-btn right">
