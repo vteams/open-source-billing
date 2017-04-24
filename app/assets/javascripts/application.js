@@ -212,5 +212,8 @@ window.preventDeletedNavigation = function(){
 };
 window.preventDeletedNavigation();
 $(document).ready(function(){
+    setTimeout(function() {
+        $('#flash_message').fadeOut('slow');
+    }, 5000);
     bind_deleted_entry();
 });
