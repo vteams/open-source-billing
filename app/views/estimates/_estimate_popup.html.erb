@@ -5,10 +5,10 @@
         <span><%= @client.organization_name %></span>
       </h5>
       <div class="modal-action-btn right">
-        <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), remote: true, class: 'edit_estimate_icon' %>
-        <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id) %>
-        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates', :action => 'estimate_pdf', :id => estimate.encrypted_id, :format => "pdf"}, :target => '_blank' %>
-        <a href="javascript:;" class="modal-close"><i class="material-icons">done</i></a>
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), remote: true, class: 'edit_estimate_icon', title: 'Edit' %>
+        <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id), title: 'Send' %>
+        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates', :action => 'estimate_pdf', :id => estimate.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
+        <a href="javascript:;" class="modal-close" title="close"><i class="material-icons">done</i></a>
       </div>
     </div>
     <div class="info-section clearfix">
