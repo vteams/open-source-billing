@@ -95,6 +95,7 @@ class InvoicesController < ApplicationController
     @invoice.currency = @client.currency if @client.present?
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -104,6 +105,7 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find(params[:id])
+    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     if @invoice.invoice_type.eql?("ProjectInvoice")
       redirect_to :back, alert:  "Project Invoice cannot be updated"
     else

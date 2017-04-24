@@ -98,24 +98,6 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
     });
 
-    //$('#radioBtn a').on('click', function(){
-    //    //Data Toggle
-    //    var ind = $(this).index();
-    //
-    //    if($(this).hasClass('active')){
-    //        return
-    //    }
-    //    else{
-    //        $("#radioBtn a").removeClass("active");
-    //        $(this).addClass('active');
-    //
-    //        $(".data-wrapper > ul").hide();
-    //        $(".data-wrapper > ul").eq(ind).show();
-    //    }
-    //});
-
-
-
 
     $(".header.action-btn-group a.delete").on('click', function(){
         $("input.top_links.destroy").click();

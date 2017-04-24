@@ -251,6 +251,7 @@ h3.heading_with_action{
 .editInvoice .info-center-section{
     float: left;
     padding: 0px 100px;
+    height: 165px;
 }
 
 
@@ -324,7 +325,9 @@ span.invoice-recurring-status{
 }
 
 .inline_form.editInvoice .modal-footer {
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    height: 180px;
+}
 .inline_form.editInvoice table tbody tr {
     position: relative; }
 .inline_form.editInvoice table tbody tr.elementsAction {
@@ -344,7 +347,9 @@ span.invoice-recurring-status{
 
 .inline_form.editInvoice table tr th:first-child {
     width: 33px;
-    background-color: transparent; }
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+}
 .inline_form.editInvoice table tr td:first-child {
     border-bottom: 1px solid #fff;
     padding: 10px 5px; }
@@ -421,8 +426,8 @@ span.invoice-recurring-status{
     vertical-align: middle; }
 
 
-.inline_form.editInvoice.modal-footer {
-    padding: 0 44px 20px;
+.inline_form.editInvoice .modal-footer {
+    padding: 0 44px 40px;
     border-top-color: transparent;
     height: auto;
     position: relative; }
@@ -434,6 +439,8 @@ span.invoice-recurring-status{
     vertical-align: middle; }
 .inline_form.editInvoice .modal-footer .right-section {
     min-width: 286px; }
+.inline_form.editInvoice .modal-footer .right-section.left {
+    width: 50%; }
 .inline_form.editInvoice .modal-footer .right-section .item-result .input-field input {
     margin-bottom: 0;
     border: none;
@@ -445,23 +452,63 @@ span.invoice-recurring-status{
     right: 68px;
     color: #454545;
     font-size: 13px; }
-.inline_form.editInvoice .modal-footer .item-result, .modal .modal-footer .item-total, .modal .modal-footer .item-due {
+.inline_form.editInvoice .modal-footer .item-result, .inline_form.editInvoice .modal-footer .item-total, .inline_form.editInvoice .modal-footer .item-due {
     display: table;
     width: 100%; }
-.modal .modal-footer .item-result .table-row, .modal .modal-footer .item-total .table-row, .modal .modal-footer .item-due .table-row {
+.inline_form.editInvoice .modal-footer .item-result .table-row, .inline_form.editInvoice .modal-footer .item-total .table-row, .inline_form.editInvoice .modal-footer .item-due .table-row {
     display: table-row; }
-.inline_form.editInvoice .modal-footer .item-result .table-row > span, .modal .modal-footer .item-total .table-row > span, .modal .modal-footer .item-due .table-row > span {
+.inline_form.editInvoice .modal-footer .item-result .table-row > span, .inline_form.editInvoice .modal-footer .item-total .table-row > span, .inline_form.editInvoice .modal-footer .item-due .table-row > span {
     display: table-cell;
     width: 50%;
     font-size: 13px; }
-.inline_form.editInvoice .modal-footer .item-result .table-row > span:last-child, .modal .modal-footer .item-total .table-row > span:last-child, .modal .modal-footer .item-due .table-row > span:last-child {
+.inline_form.editInvoice .modal-footer .item-result .table-row > span:last-child, .inline_form.editInvoice .modal-footer .item-total .table-row > span:last-child, .inline_form.editInvoice .modal-footer .item-due .table-row > span:last-child {
     text-align: right; }
 .inline_form.editInvoice .modal-footer .item-result, .modal .modal-footer .item-total {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
     margin-bottom: 5px; }
+.inline_form.editInvoice .addItemRow {
+    border-radius: 22px;
+    padding: 3px 8px;
+    font-size: 10px;
+    color: #8f8f8f;
+    border: 1px solid #dfdede;
+    display: inline-block; }
 
-.site-btn{
+.inline_form.editInvoice .comments-content a {
+    position: absolute;
+    color: #b5b5b5;
+}
+.inline_form.editInvoice .comments-content a i {
+    font-size: 24px; }
+.inline_form.editInvoice .comments-content textarea {
+    border: none;
+    padding-left: 44px;
+    resize: none;
+    padding-top: 22px;
+    height: auto; }
+.inline_form.editInvoice .comments-content textarea:focus {
+    outline: none; }
+.inline_form.editInvoice .commentSection {
+    padding: 0 44px; }
+
+.inline_form.editInvoice .info-section .info-left-section span i.material-icons {
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: bottom;
+    color: #b5b5b5;
+}
+.inline_form.editInvoice .content_bottom{
+    padding: 0 44px 20px;
+}
+
+.site-btn, .site-btn:hover{
     background-color: #09b8e2;
+    color: white;
+}
+
+.btn-flat, .btn-flat:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: none;
     color: white;
 }

@@ -29,7 +29,7 @@
             </strong>
           </div>
         </div>
-        <div class="info-center-section right">
+        <div class="info-center-section">
           <% has_recurring = @invoice.new_record? ? false : !@invoice.recurring_schedule.new_record? %>
           <div class="col s12">
             <h6>
@@ -94,7 +94,7 @@
           <tfoot>
           <tr>
             <td>&nbsp;</td>
-            <td class="add_line_item_row"><%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
+            <td class="add_line_item_row"><%#= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
           </tr>
           </tfoot>
 
@@ -102,8 +102,11 @@
       </div>
       <div class="modal-footer clearfix">
         <div class="right-section left">
-          <!--<a href="#" class="addItemRow">Add line item</a>-->
-          <%#= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'addItemRow add_line_item_row', id: 'add_line_item' %>
+          <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %>
+          <div class="input-field col">
+            <%= f.label :notes %>
+            <%= f.text_area :notes, maxlength: 400, class: "materialize-textarea" %>
+          </div>
         </div>
         <div class="right-section right grid_summary_description">
           <div class="item-result">
@@ -153,12 +156,6 @@
           </div>
         </div>
       </div>
-      <div class="commentSection clearfix">
-        <div class="comments-content">
-          <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
-          <%= f.text_area :notes, maxlength: 400 %>
-        </div>
-      </div>
       <div class="content_bottom">
         <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
         <div class="right">
@@ -170,7 +167,7 @@
           </button>
         </div>
         <div class="left">
-          <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, class: 'waves-effect waves-teal btn-flat blue-grey' %>
+          <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, class: 'waves-effect waves-teal btn-flat' %>
         </div>
       </div>
   <% end %>
