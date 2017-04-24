@@ -54,7 +54,7 @@
                 <%= label_tag 'recurring', nil %>
               </h6>
             </div>
-           <div class='<%= "#{'hidden' unless has_recurring }" %>' id="recurring_schedule_container">
+           <div class='<%= "#{'hide_visibility' unless has_recurring }" %>' id="recurring_schedule_container">
              <%= f.fields_for :recurring_schedule do |rs| %>
                  <div class="row">
                    <div class="col s12">
