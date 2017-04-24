@@ -228,10 +228,10 @@ class @Invoice
 
     $('#recurring').on 'click', ->
       if $(this).is(":checked")
-        $("#recurring_schedule_container").removeClass('hidden')
+        $("#recurring_schedule_container").removeClass('hide_visibility')
         $("#invoice_recurring_schedule_attributes__destory").val false
       else
-        $("#recurring_schedule_container").addClass('hidden')
+        $("#recurring_schedule_container").addClass('hide_visibility')
         $("#invoice_recurring_schedule_attributes__destory").val true
 
     # Update line and grand total if line item fields are changed

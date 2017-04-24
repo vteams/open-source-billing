@@ -29,7 +29,7 @@
             </strong>
           </div>
         </div>
-        <div class="info-center-section">
+        <div class="info-center-section recurring_invoice_container">
           <% has_recurring = @invoice.new_record? ? false : !@invoice.recurring_schedule.new_record? %>
           <div class="col s12">
             <h6>
@@ -37,7 +37,7 @@
               <%= label_tag 'recurring', nil %>
             </h6>
           </div>
-          <div class='<%= "#{'hidden' unless has_recurring }" %>' id="recurring_schedule_container">
+          <div class='<%= "#{'hide_visibility' unless has_recurring }" %>' id="recurring_schedule_container">
             <%= f.fields_for :recurring_schedule do |rs| %>
                 <div class="row">
                   <div class="col s12">
