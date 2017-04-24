@@ -460,3 +460,8 @@ span.invoice-recurring-status{
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
     margin-bottom: 5px; }
+
+.site-btn{
+    background-color: #09b8e2;
+    color: white;
+}

@@ -161,9 +161,17 @@
       </div>
       <div class="content_bottom">
         <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-        <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit' %>
-        <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
-        <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, :class => 'btn_large grey' %>
+        <div class="right">
+          <button class="btn waves-effect waves-light site-btn" type="submit" name="save"><%= t('views.invoices.send_invoice') %>
+            <i class="material-icons right">send</i>
+          </button>
+          <button class="btn waves-effect waves-light site-btn" type="submit" name="save_as_draft"><%= button_text %>
+            <i class="material-icons right">save</i>
+          </button>
+        </div>
+        <div class="left">
+          <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, class: 'waves-effect waves-teal btn-flat blue-grey' %>
+        </div>
       </div>
   <% end %>
 </div>
