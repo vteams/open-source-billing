@@ -7,8 +7,8 @@
         <div class="card-white-panel">
           <h3>Project Detail</h3>
           <div class="page-action-btn-group">
-            <%= link_to raw("<i class='material-icons'>create</i>"), edit_project_path(@project), class: 'edit-detail', remote: true %>
-            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' } %>
+            <%= link_to raw("<i class='material-icons'>create</i>"), edit_project_path(@project), class: 'edit-detail', remote: true, title: 'Edit' %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
           </div>
         </div>
       </div>
