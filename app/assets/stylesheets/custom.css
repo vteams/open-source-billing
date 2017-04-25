@@ -524,3 +524,7 @@ span.invoice-recurring-status{
 .hide_visibility{
     visibility: hidden;
 }
+
+.flex-item .invoice.card-white-panel .card-footer {
+    height: 50px;
+}

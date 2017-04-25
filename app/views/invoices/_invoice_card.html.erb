@@ -2,7 +2,7 @@
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <%= link_to '', invoice , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
-  <div class="card-white-panel invoice-card" data-invoice_id= <%=invoice.id %>>
+  <div class="card-white-panel invoice-card invoice" data-invoice_id= <%=invoice.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in" %>
       <label for="<%= "invoice_#{invoice.id}" %>"></label>
