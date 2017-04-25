@@ -40,5 +40,9 @@
 }
 
 .select2-search-field input[type='text']{
-  height: 1.5rem !important;
+  height: 2rem !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice{
+  margin-top: 7px !important;
 }
