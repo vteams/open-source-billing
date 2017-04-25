@@ -343,7 +343,7 @@ span.invoice-recurring-status{
 .inline_form.editInvoice .info-section .info-left-section .editPayementInfo {
     margin-top: 28px; }
 
-.inline_form.editInvoice .info-section .info-left-section h6 , .inline_form.editInvoice .info-section .info-left-section div{
+.inline_form.editInvoice .info-section .info-left-section h6 {
     height: 30px;
 }
 
@@ -504,9 +504,9 @@ span.invoice-recurring-status{
     padding: 0 44px 20px;
 }
 
-.site-btn, .site-btn:hover{
-    background-color: #09b8e2;
-    color: white;
+.site-btn, .site-btn:hover, .site-btn:focus{
+    background-color: #09b8e2 !important;
+    color: white !important;
 }
 
 .btn-flat, .btn-flat:hover{

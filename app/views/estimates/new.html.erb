@@ -1,20 +1,22 @@
-<%- model_class = Estimate -%>
-
-<div class="content_top">
-  <div class="primary_heading">
-    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                      :default => "New #{model_class.model_name.human}") %></h1>
+<%= render 'estimate_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel">
+        <h3>
+          <h3>
+            <span><%= link_to "Estimates",invoices_url %> </span>
+            <%= link_to "/ New",new_estimate_url %>
+          </h3>
+        </h3>
+      </div>
+    </div>
   </div>
-</div><!--content_top-->
 
-<%= render :partial => 'form' %>
-<div id="clients_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'clients/new_client' %>
-</div>
-<div id="items_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'items/new_item' %>
+  <div class="invoice-box mCustomScrollbar clearfix">
+    <%= render :partial => 'form', locals: {estimate: @estimate} %>
+  </div>
 </div>
 
-<div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'taxes/new_tax' %>
-</div>

@@ -1,236 +1,121 @@
-<%= nested_form_for @estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
-    <% @parent_f = f %>
+<div class="editInvoice inline_form">
+    <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
+        <div class="info-section clearfix">
+          <div class="info-left-section left">
+            <h6>Estimate Number: <%= estimate.estimate_number %>
+              <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+              <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select custom_select" } %>
+            </h6>
+            <span>Estimate: <small id="estimate_date"> <%= f.object.estimate_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
+            <%= f.hidden_field :estimate_date,value: f.object.estimate_date, :required => "" %>
 
-    <div class="estimate_form">
-      <div class="content_middle">
-
-
-        <% unless @estimate.dispute_history.blank? %>
-            <div class="dispute_history">
-              <div class="dispute_wrapper">
-                <div class="dispute_container">
-                  <div class="dispute_heading">
-                    <h1><%= 'Dispute History' %></h1>
-                  </div>
-                  <% @estimate.dispute_history.each_with_index do |email_detail, i| %>
-                      <div class="dispute_content <%= i + 1 > 2 ? "toggleable collapse" : "" %>">
-                        <p><%= email_detail.content %></p>
-
-                        <div class="dispute_content_btm respone_by_client">
-                            <span class="<%= email_detail.subject == "Response to client" ? "response_by_client" : "response_by_us" %>">
-                              <%= email_detail.subject == "Response to client" ? "You" : email_detail.sender %>:
-                              <%= email_detail.date %>
-                            </span>
-                        </div>
-                      </div>
-                  <% end %>
-                  <script>$(".dispute_content").last().css('border-bottom', 'none');</script>
-                  <% if @estimate.dispute_history.length > 2 %>
-                      <div class="dispute_contorl">
-                        <ul>
-                          <li><a class="less" href="#"><%= t('views.common.less') %></a></li>
-                          <li><a class="more" href="#"><%= t('views.common.more') %></a></li>
-                        </ul>
-                      </div>
-                  <% end %>
-
-                  <div class="dispute_input">
-                    <h4><%= 'Response to Client' %></h4>
-                    <%= text_area_tag "response_to_client" %>
-                    <%= hidden_field_tag :est_id, @estimate.id %>
-                    <p><a href="javascript:" id="send_note_only"><%= t('views.estimates.send_this_note_only') %></a> <%= t('views.estimates.send_estimate_instructions') %></p>
-                  </div>
-
-                </div>
-                <!--dispute_container-->
-              </div>
-              <!--dispute_wrapper-->
+            <div class="editPayementInfo">
+              <strong><strong class="estimate_total_strong"></strong>
+                <small>
+                  <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+                  <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
+                </small>
+              </strong>
             </div>
-            <!--dispute_history-->
-        <% end %>
-
-        <script>window.currency_symbol = "<%= @estimate.currency.present? ? @estimate.currency.unit : "$" %>"</script>
-        <div class="fields_content">
-          <div class="fields_content_container">
-            <div class="fields_content_data new_estimate_fields custom_field">
-
-              <div class="fields_content_left">
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
-                  <div class="medium_field">
-                    <div> <%= text_field_tag 'company', get_estimate_company_name(@estimate), :readonly => '', :class => 'company_read_only' %> </div>
-                    <ul class="field_description">
-                      <li><%= t('views.estimates.company_hint') %></li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
-                  <div class="small_field">
-                    <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-                    <%= f.select :client_id, options_for_select(load_clients(action_name, @estimate.company_id), selected: selected_client),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "estimate_client medium chzn-select", "data-form-container" => "#{'clients_holder' unless current_user_client_limit_exceed? }", "data-dropdown-width" => "300"} %>
-                    <ul class="field_description select">
-                      <li><%= t('views.estimates.client_hint') %></li>
-                      <span id="last_estimate" style="display: none;"></span>
-                    </ul>
-                  </div>
-                </div>
-                <!--field_row-->
-                <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @estimate.currency.nil? or current_user.settings.currency.nil? or current_user.settings.currency == "Off" %>" id="estimate_currency">
-                  <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
-                  <div class="small_field">
-                    <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                    <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_estimate_currency"), :class => "estimate_currency medium chzn-select", "data-dropdown-width" => "300"} %>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="fields_content_right">
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :estimate_number,  'Estimate #' %></div>
-                  <div class="small_field">
-                    <%= f.text_field :estimate_number, :readonly => "", :required => "" %>
-                    <ul class="field_description">
-                      <li><%= t('views.estimates.auto_generated') %></li>
-                    </ul>
-                  </div>
-                </div>
-                <!--field_row-->
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :estimate_date, content_tag(:span, t('views.estimates.estimate_date')) %></div>
-                  <div class="small_field">
-                    <%= f.text_field :estimate_date,value: f.object.estimate_date, :required => "" %>
-                  </div>
-                </div>
-                <!--field_row-->
-
-
-
-                <script>$(".field_row.description").last().css('min-height', '46px');</script>
-
-              </div>
-              <!--fields_content_right-->
-
-            </div>
-            <!--fields_content_data-->
           </div>
-          <!--fields_content_container-->
+          <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
+              <div class="info-right-section right circle">
+                <%= image_tag(estimate.company.logo_url(:thumb), class: 'responsive-img') %>
+              </div>
+          <% end %>
         </div>
-        <!--fields_content-->
-        <script>$(".fields_content").last().css('border-bottom', 'none');</script>
-
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="estimate_grid_fields" id="estimate_grid_fields">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-              <col class="eight"/>
-            </colgroup>
+        <div class="modal-body">
+          <table class="bordered responsive-table estimate_grid_fields" id="estimate_grid_fields">
+            <thead>
             <tr>
-              <th class="align_center">&nbsp;</th>
-              <th class="align_center"><%= t('item') %></th>
-              <th class="align_center"><%= t('views.common.description') %></th>
-              <th class="align_center"><%= t('views.common.unit_cost') %></th>
-              <th class="align_center"><%= t('views.common.qty') %></th>
-              <th class="align_center"><%= t('views.common.tax') %>1</th>
-              <th class="align_center"><%= t('views.common.tax') %>2</th>
-              <th class="align_center"><%= t('views.estimates.line_total') %></th>
+              <th>&nbsp;</th>
+              <th><%= t('item') %></th>
+              <th><%= t('views.common.description') %></th>
+              <th class="center-align"><%= t('views.common.unit_cost') %></th>
+              <th class="center-align"><%= t('views.common.qty') %></th>
+              <th class="center-align"><%= t('views.common.tax') %>1</th>
+              <th class="right-align"><%= t('views.estimates.line_total') %></th>
             </tr>
+            </thead>
+            <tbody id="estimate_line_items_tbl">
             <%= f.fields_for :estimate_line_items, :wrapper => false %>
-            <tr style="border:none;" class="no_hover">
-              <td>&nbsp</td>
-              <td class="add_line_item_row" colspan="2"><%= f.link_to_add t('views.estimates.add_line_item'), :estimate_line_items, :class => "btn btn-mini", id: 'add_line_item' %></td>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td>&nbsp;</td>
+              <td class="add_line_item_row"><%#= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %></td>
             </tr>
+            </tfoot>
+
           </table>
-
         </div>
-        <!--grid_table-->
-
-        <div class="grid_summary custom">
-          <div class="grid_summary_content">
-            <div class="grid_summary_row">
-              <div class="grid_summary_title">
-                <%= t('views.estimates.subtotal') %>
-              </div>
-              <div class="grid_summary_description">
+        <div class="modal-footer clearfix">
+          <div class="right-section left">
+            <%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %>
+            <div class="input-field col">
+              <%= f.label :notes %>
+              <%= f.text_area :notes, maxlength: 400, class: "materialize-textarea" %>
+            </div>
+          </div>
+          <div class="right-section right grid_summary_description">
+            <div class="item-result">
+              <div class="table-row">
                 <%= f.hidden_field :sub_total %>
-                <%= label_tag '', '', :id => 'estimate_sub_total_lbl' %>
+                <span><strong>Subtotal</strong></span>
+                <span><strong><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></strong></span>
               </div>
-            </div>
-
-            <div class="grid_summary_row discount">
-              <div class="grid_summary_title">
-                <!--Discount <span class="discount_percentage_lbl"></span>%-->
-                Discount <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select chzn-select", :id => "discount_type"} %>
+              <div class="table-row">
+                <span>
+                    Discount  &nbsp;&nbsp;
+                  <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                </span>
+                <span class="input-field">
+                  <%= f.hidden_field :discount_amount %>
+                  <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip right-align", placeholder:  "00.00" %>
+                  <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                </span>
               </div>
-
-              <div class="grid_summary_description custom">
-                <%= f.hidden_field :discount_amount %>
-                <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-                <%= f.text_field :discount_percentage, :class => "estimate_discount line_item_qtip" %>
-              </div>
-            </div>
-
-            <%= f.hidden_field :tax_amount %>
-            <div class="grid_summary_row taxes_total">
-              <ul>
-                <% @estimate.tax_detail_with_discount.map do |tax, amount| %>
-                    <li><span class='grid_summary_title'><%= tax %></span>
-                      <span class='grid_summary_description tax_amount'></span>
-                    </li>
+              <%= f.hidden_field :tax_amount %>
+              <div class="taxes_total">
+                <% estimate.tax_detail_with_discount.map do |tax, amount| %>
+                    <div class="table-row">
+                      <span><%= tax %></span>
+                      <span class="grid_summary_description tax_amount"><%= amount%></span>
+                    </div>
                 <% end %>
-              </ul>
-            </div>
-
-            <div class="grid_summary_row net_total">
-              <div class="grid_summary_title">
-                <%= t('views.estimates.net_total') %>
               </div>
-              <div class="grid_summary_description">
+
+            </div>
+            <div class="item-total net_total">
+              <div class="table-row">
+                <span><strong><%= t('views.estimates.net_total') %></strong></span>
                 <%= f.hidden_field :estimate_total %>
-                <%= label_tag '', '', :id => 'estimate_total_lbl', :class => 'net_total_value' %>
+                <span><strong><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></strong></span>
               </div>
             </div>
           </div>
         </div>
-        <!--grid_summary-->
 
-        <div class="fields_content_data new_estimate_fields">
-
-          <div class="field_row textarea">
-            <div class="label_field textarea"><%= f.label :notes %></div>
-            <div class="large_field">
-              <%= f.text_area :notes, maxlength: 400 %>
-              <ul class="field_description">
-                <li class="text-limit"> </li>
-              </ul>
-            </div>
+        <div class="content_bottom">
+          <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+          <div class="right">
+            <button class="btn waves-effect waves-light site-btn" type="submit" name="save"><%= t('views.estimates.send_estimate') %>
+              <i class="material-icons right">send</i>
+            </button>
+            <button class="btn waves-effect waves-light site-btn" type="submit" name="save_as_draft"><%= button_text %>
+              <i class="material-icons right">save</i>
+            </button>
           </div>
-          <!--field_row-->
-
+          <div class="left">
+            <%= link_to t("views.common.cancel"), params[:estimate_for_client] ? clients_path : estimates_path, class: 'waves-effect waves-teal btn-flat' %>
+          </div>
         </div>
-        <!--fields_content_data-->
-
-      </div>
-      <!--content_middle-->
-
-      <div class="content_bottom">
-        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-        <%= f.submit t('views.estimates.send_estimate'), :class => 'btn_large submit' %>
-        <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
-        <%= link_to t("views.common.cancel"), params[:estimate_for_client] ? clients_path : estimates_path, :class => 'btn_large grey' %>
-      </div>
-      <!--content_bottom-->
-
-    </div>
-    <!--estimate_form-->
-<% end %>
+    <% end %>
+</div>
+<script>
+    $(document).ready(function (){
+        Estimate.change_estimate_item();
+        Estimate.changeTax();
+        Estimate.load_functions();
+    });
+</script>

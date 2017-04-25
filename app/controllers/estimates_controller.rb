@@ -43,6 +43,7 @@ class EstimatesController < ApplicationController
     @estimate.currency = @client.currency if @client.present?
     get_clients_and_items
     @discount_types = @estimate.currency.present? ? ['%', @estimate.currency.unit] : DISCOUNT_TYPE
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -73,6 +74,7 @@ class EstimatesController < ApplicationController
     @estimate.estimate_line_items.build()
     get_clients_and_items
     @discount_types = @estimate.currency.present? ? ['%', @estimate.currency.unit] : DISCOUNT_TYPE
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to {|format| format.js; format.html}
   end
 

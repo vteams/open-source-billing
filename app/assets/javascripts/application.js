@@ -16,6 +16,8 @@
 //= require jquery-ui.js
 //= require twitter/bootstrap
 //= require materialize.min
+//= require picker
+//= require picker.date
 //= require jquery.mCustomScrollbar.min
 //= require custom
 //= require highcharts
@@ -81,8 +83,6 @@
 //= require hourlycounter
 //= require timer
 //= require invoice_card
-//= require picker
-//= require picker.date
 //= require new_invoice
 //= require import
 //= require sub_user
