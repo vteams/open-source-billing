@@ -222,17 +222,17 @@ class @Invoice
   @load_functions = ->
 
     if $('#recurring').is(":checked")
-      $("#invoice_recurring_schedule_attributes__destory").val true
+      $("#invoice_recurring_schedule_attributes__destroy").val true
     else
-      $("#invoice_recurring_schedule_attributes__destory").val false
+      $("#invoice_recurring_schedule_attributes__destroy").val false
 
     $('#recurring').on 'click', ->
       if $(this).is(":checked")
         $("#recurring_schedule_container").removeClass('hide_visibility')
-        $("#invoice_recurring_schedule_attributes__destory").val false
+        $("#invoice_recurring_schedule_attributes__destroy").val false
       else
         $("#recurring_schedule_container").addClass('hide_visibility')
-        $("#invoice_recurring_schedule_attributes__destory").val true
+        $("#invoice_recurring_schedule_attributes__destroy").val true
 
     # Update line and grand total if line item fields are changed
     jQuery("input.cost, input.qty").on "blur", ->

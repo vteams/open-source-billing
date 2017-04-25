@@ -6,7 +6,8 @@
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel">
         <h3>
-          Edit Invoice
+          <span><%= link_to "Invoices",invoices_url %> </span>
+          <%= link_to "/ Edit",edit_invoice_url(@invoice) %>
         </h3>
       </div>
     </div>
