@@ -64,13 +64,16 @@
             <tfoot>
             <tr>
               <td>&nbsp;</td>
-              <td class="add_line_item_row"><%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %></td>
+              <td class="add_line_item_row"><%#= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %></td>
             </tr>
             </tfoot>
 
           </table>
         </div>
         <div class="modal-footer clearfix">
+          <div class="right-section left">
+            <%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %>
+          </div>
           <div class="right-section right grid_summary_description">
             <div class="item-result">
               <div class="table-row">

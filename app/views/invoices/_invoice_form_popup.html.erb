@@ -116,7 +116,7 @@
             <tfoot>
             <tr>
               <td>&nbsp;</td>
-              <td class="add_line_item_row"><%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
+              <td class="add_line_item_row"><%#= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
             </tr>
             </tfoot>
 
@@ -124,8 +124,7 @@
         </div>
         <div class="modal-footer clearfix">
           <div class="right-section left">
-            <!--<a href="#" class="addItemRow">Add line item</a>-->
-            <%#= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'addItemRow add_line_item_row', id: 'add_line_item' %>
+            <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %>
           </div>
           <div class="right-section right grid_summary_description">
             <div class="item-result">
