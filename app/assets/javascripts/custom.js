@@ -206,6 +206,7 @@ $(function () {
             $("#loading-indicator").removeClass('hidden'); // show on any Ajax event.
         })
         .ajaxStop(function() {
+            $("#page-box").mCustomScrollbar();
             $("#loading-indicator").addClass('hidden'); // hide it when it is done.
         });
 });

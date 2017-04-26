@@ -3,24 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-#  jQuery(".report-section  #from_date, .reports #to_date").datepicker dateFormat: DateFormats.format()
-#  jQuery(".reports table.table_listing:not(.aged_accounts_listing, .client_report_listing, .item_sales_listing)").tablesorter()
-#  jQuery(".aged_accounts_listing, .client_report_listing, .item_sales_listing").tablesorter textExtraction: (node) ->
-#    node.getAttribute('data-sort_val')
-  $(".report-section #to_date").on 'click', ->
-    $('.report-section  #to_date_icon').trigger('click')
-
-  $(".report-section #from_date").on 'click', ->
-    $('.report-section  #from_date_icon').trigger('click')
-
-  $('.report-section  #from_date_icon').pickadate
+  $('.report-section  #from_date_icon, .report-section #from_date').pickadate
     format: "yyyy-mm-dd"
     formatSubmit: DateFormats.format()
     onSet: (context) ->
       value = @get('value')
       $('.report-section #from_date').val value
 
-  $('.report-section  #to_date_icon').pickadate
+  $('.report-section  #to_date_icon, .report-section  #to_date').pickadate
     format: "yyyy-mm-dd"
     formatSubmit: DateFormats.format()
     onSet: (context) ->
