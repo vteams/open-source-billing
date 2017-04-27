@@ -195,10 +195,14 @@ $(document).ready(function(){
         $(this).parents(".modal").modal('close');
     });
 
-    $('.activebar .card-white-panel').on('click',function(){
-        $(this).parents('.task-detail').find('.content-detail').slideUp();
-        $(this).parent().slideUp();
-        $(this).parent().next().slideDown();
+    $('.activebar .card-white-panel').on('click',function(e){
+        target = $(e.target)
+        console.log(target)
+        if ((!target.is( "a" ) && !target.is("i")) ){
+            $(this).parents('.task-detail').find('.content-detail').slideUp();
+            $(this).parent().slideUp();
+            $(this).parent().next().slideDown();
+        }
     });
 
     $('.mainbar .card-white-panel').on('click',function(){
@@ -212,6 +216,18 @@ $(document).ready(function(){
         }
         $(this).parents('.task-detail').find('.content-detail').slideToggle();
     });
+
+    //project detail at task page
+    $('.edit-detail').on('click',function(){
+        $('.content-detail').find("input").removeAttr('disabled');
+        $('.content-detail').find(".initialized").removeAttr('disabled');
+        $('select').material_select();
+        $(".submitProject").removeClass('hidden')
+        $(this).addClass('hidden')
+        //$(this).find('i.material-icons').text('done').parent().addClass('submitProject').removeClass('edit-detail');
+        //$(this).toggleClass('active');
+    });
+
 });
 
 
