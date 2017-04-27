@@ -13,30 +13,48 @@
         </div>
       </div>
       <!--- breadcrum Bar --->
+      <div class="breadcrum-bar mainbar">
+        <div class="card-white-panel ">
+
+          <%= link_to raw('<i class="material-icons">arrow_back</i>'), projects_path %>
+          <h3>Time Tracking :
+            <select onchange="location = this.value;">
+              <% @projects.each do |project|%>
+                  <option value="<%= project_path(project) %>" <%= "#{ 'selected' if project.id.eql?(@project.id)}"%> ><%= project.project_name %></option>
+              <% end %>
+            </select>
+          </h3>
+          <a href="#" class="btn-slide right">
+            <i class="material-icons">keyboard_arrow_up</i>
+          </a>
+        </div>
+      </div>
       <%= render 'project_detail' %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col s12 task-detail">
-      <!--- breadcrum Bar --->
-      <div class="breadcrum-bar activebar">
-        <div class="card-white-panel">
-          <h3><%= @project.project_name %> Time Logs </h3>
+  <% if @project_logs.present?  %>
+      <div class="row">
+        <div class="col s12 task-detail">
+          <!--- breadcrum Bar --->
+          <div class="breadcrum-bar activebar">
+            <div class="card-white-panel">
+              <h3><%= @project.project_name %> Time Logs </h3>
+            </div>
+          </div>
+          <!--- breadcrum Bar --->
+          <div class="task-box clearfix">
+            <!--- Invoices Card Title--->
+            <% @project_logs.group_by { |d| d.group_date }.each do |date, logs| %>
+                <div class="view-btn-group clearfix">
+                  <span class="activity-date left"><%= date %></span>
+                </div>
+                <div class="clearfix">
+                    <%= render partial: 'logs', collection: logs, as: :log %>
+                </div>
+            <% end %>
+          </div>
         </div>
       </div>
-      <!--- breadcrum Bar --->
-      <div class="task-box clearfix">
-        <!--- Invoices Card Title--->
-        <% @project_logs.group_by { |d| d.group_date }.each do |date, logs| %>
-            <div class="view-btn-group clearfix">
-              <span class="activity-date left"><%= date %></span>
-            </div>
-            <div class="clearfix">
-                <%= render partial: 'logs', collection: logs, as: :log %>
-            </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <% end %>
 </div>
