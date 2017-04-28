@@ -59,39 +59,42 @@ $(document).ready(function(){
     
     //---Checkbox Items
     $('.checkbox-item > input[type="checkbox"]').on('change', function () {
-        var n = $( "input[type='checkbox']:checked" ).length;
-        if ($(this).is(':checked')){
-            $('#header').addClass("chkbox-content");
-            $(".header-right").addClass("chekbox-show");
-            $('.checkbox-item').find('.invoice-name').css('opacity', '0');
-            $('.checkbox-item').find('label').css('opacity', '1');
-            $('.search-holder form').hide();        
-            $('.card-white-panel .action-btn-group').hide();
-            $('.checkboxinfo').show();
-            $('.checkboxinfo .action-btn-group .send').show();
-        }
-        else{            
-            $('#header').addClass("chkbox-content");
-            $('.action-btn-group').hide();
-            $('.checkboxinfo .action-btn-group').show();
-            
-            if(n == 0){
-                $('.card-white-panel .action-btn-group').show();                
-                $('.checkbox-item').find('.invoice-name').css('opacity', '1');
-                $('.checkbox-item').find('label').css('opacity', '0');
-                $(".header-right").removeClass("chekbox-show");
-                $('#header').removeClass("chkbox-content");
-                
-                $('.checkboxinfo .action-btn-group .edit').show();
+        if(!$('.checkbox-item').hasClass('inline_team_member')){
+            var n = $( "input[type='checkbox']:checked" ).length;
+            if ($(this).is(':checked')){
+                $('#header').addClass("chkbox-content");
+                $(".header-right").addClass("chekbox-show");
+                $('.checkbox-item').find('.invoice-name').css('opacity', '0');
+                $('.checkbox-item').find('label').css('opacity', '1');
+                $('.search-holder form').hide();
+                $('.card-white-panel .action-btn-group').hide();
+                $('.checkboxinfo').show();
                 $('.checkboxinfo .action-btn-group .send').show();
             }
-            if(n == 1){
-                $('.checkboxinfo .action-btn-group .edit').show();
-                $('.checkboxinfo .action-btn-group .send').show();
+            else{
+                $('#header').addClass("chkbox-content");
+                $('.action-btn-group').hide();
+                $('.checkboxinfo .action-btn-group').show();
+
+                if(n == 0){
+                    $('.card-white-panel .action-btn-group').show();
+                    $('.checkbox-item').find('.invoice-name').css('opacity', '1');
+                    $('.checkbox-item').find('label').css('opacity', '0');
+                    $(".header-right").removeClass("chekbox-show");
+                    $('#header').removeClass("chkbox-content");
+
+                    $('.checkboxinfo .action-btn-group .edit').show();
+                    $('.checkboxinfo .action-btn-group .send').show();
+                }
+                if(n == 1){
+                    $('.checkboxinfo .action-btn-group .edit').show();
+                    $('.checkboxinfo .action-btn-group .send').show();
+                }
             }
+
+            $( ".chk-text" ).text(n + " Selected");
         }
-        
-        $( ".chk-text" ).text(n + " Selected");
+
     });
     
     $(".checkbox-item").on("click", function(e){
@@ -197,7 +200,6 @@ $(document).ready(function(){
 
     $('.activebar .card-white-panel').on('click',function(e){
         target = $(e.target)
-        console.log(target)
         if ((!target.is( "a" ) && !target.is("i")) ){
             $(this).parents('.task-detail').find('.content-detail').slideUp();
             $(this).parent().slideUp();
@@ -217,15 +219,18 @@ $(document).ready(function(){
         $(this).parents('.task-detail').find('.content-detail').slideToggle();
     });
 
+    $("#add_member").on('click',function (){
+        $('.edit-detail').click();
+    })
     //project detail at task page
     $('.edit-detail').on('click',function(){
-        $('.content-detail').find("input").removeAttr('disabled');
-        $('.content-detail').find(".initialized").removeAttr('disabled');
+        $('.content-detail, .staff-list').find("input").removeAttr('disabled');
+        $('.content-detail, .staff-list').find(".initialized").removeAttr('disabled');
+        $('.content-detail, .staff-list').find(".not-editable").attr('disabled', true);
         $('select').material_select();
-        $(".submitProject").removeClass('hidden')
+        $(".submitProject").removeClass('hidden');
         $(this).addClass('hidden')
-        //$(this).find('i.material-icons').text('done').parent().addClass('submitProject').removeClass('edit-detail');
-        //$(this).toggleClass('active');
+        $("strong.project_name, span.project_description").attr('contenteditable', true);
     });
 
 });

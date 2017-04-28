@@ -1,0 +1,24 @@
+<div class="list-item">
+  <div class="checkbox-item inline_team_member">
+    <input type="checkbox" class="filled-in" id="project_staff_<%= f.object.id %>" />
+    <label for="project_staff_<%= f.object.id %>"></label>
+    <div class="invoice-name">
+      <%= image_tag('avatarimg1.jpg', alt: "avatar" ,class:"responsive-img circle")%>
+    </div>
+    <%= f.hidden_field :_destroy, class: 'destroy_staff'%>
+  </div>
+  <div class="invoice-details editContent">
+    <div class="input-field">
+      <%= f.select :staff_id, options_for_select(load_staffs_for_project(action_name, @project.company_id, f.object), selected: f.object.staff_id),  {prompt: t('views.projects.select_a_member'), include_blank: ""}, {class: 'members_list', disabled: true} %>
+    </div>
+    <div class="input-field">
+      <%= f.email_field :email, disabled: true, class: 'email' %>
+    </div>
+    <div class="input-field amount">
+      <strong><%= default_currency_unit %><em class="staff_rate"><%= f.number_field :rate, disabled: true, class: 'rate' %></em></strong>
+      <span> <%= default_currency_code %> / <small class="text-blue">hr</small></span>
+
+    </div>
+    <%= f.hidden_field :name, class: 'name' %>
+  </div>
+</div>

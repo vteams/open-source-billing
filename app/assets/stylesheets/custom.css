@@ -10,7 +10,7 @@
 }
 
 .hidden{
-    display: none;
+    display: none !important;
 }
 #activity-sidebar .mCustomScrollBox{
     padding-right: 10px;
@@ -527,4 +527,7 @@ span.invoice-recurring-status{
 
 .flex-item .invoice.card-white-panel .card-footer {
     height: 50px;
+}
+.staff_rate input{
+    width: 38px !important;
 }

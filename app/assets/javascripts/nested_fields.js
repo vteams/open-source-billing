@@ -61,6 +61,8 @@
             Estimate.changeTax();
             Project.change_project_task();
             Project.change_project_staff();
+            Project.enable_staff_fields();
+            Project.toggleStaffRemoveButton();
             return false;
         },
         newId: function() {

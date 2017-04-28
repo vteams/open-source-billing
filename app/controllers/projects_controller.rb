@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   def show
     @status = @project.deleted_at.present? ? 'deleted' : ( @project.archived? ? 'archived?' : 'active' )
-    @staffs = @project.staffs
+    #@staffs = @project.staffs
     params[:status] = params[:status] || 'active'
     load_projects
     @project_logs = @project.logs.order('date desc')

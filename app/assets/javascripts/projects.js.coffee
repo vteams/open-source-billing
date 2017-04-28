@@ -36,7 +36,6 @@ class @Project
         clearLineTotal(elem)
         false
       else
-        addLineTaskRow(elem)
         jQuery.ajax '/staffs/load_staff_data',
           type: 'POST'
           data: "id=" + jQuery(this).val()
@@ -45,7 +44,7 @@ class @Project
             alert "Error: #{textStatus}"
           success: (data, textStatus, jqXHR) ->
             item = JSON.parse(data)
-            container = elem.parents("tr.fields")
+            container = elem.parents("tr.fields, .invoice-details")
             container.find("input.name").val(item[2])
             container.find("td.name").text(item[2])
             container.find("input.email").val(item[0])
@@ -82,6 +81,30 @@ class @Project
   hidePopover = (elem) ->
     elem.qtip("hide")
 
+  @validate_fields = ->
+    flag = true
+    if $("#project_project_name").val() is ""
+      flag = false
+      applyPopover($("strong.project_name"),"bottomMiddle","topLeft","Project Name field is required")
+    else if $("#project_client_id").val() is ""
+      hidePopover(jQuery("#project_project_name"))
+      applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
+      flag = false
+    else if ($("#project_total_hours").val() < 0)
+      hidePopover($("#project_client_id").parents('.select-wrapper'))
+      flag = false
+      applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
+    else
+      hidePopover(jQuery("#project_total_hours"))
+      flag = true
+    flag
+
+  @enable_staff_fields = ->
+    $('.content-detail, .staff-list').find("input").removeAttr('disabled');
+    $('.content-detail, .staff-list').find(".initialized").removeAttr('disabled');
+    $('.content-detail, .staff-list').find(".not-editable").attr('disabled', true);
+    $('select').material_select();
+
   @load_functions = ->
 
     jQuery('form.project-form').submit ->
@@ -106,3 +129,28 @@ class @Project
       handle: '.sort_icon'
       items: 'tr.fields'
       axis: 'y'
+
+  @toggleStaffRemoveButton = ->
+    $('.checkbox-item.inline_team_member > input[type="checkbox"]').on 'change', ->
+      n = $( ".checkbox-item.inline_team_member > input[type='checkbox']:checked" ).length
+      if n > 0
+        $('.edit-detail').click();
+        $("a.staff_remove_btn").removeClass('hidden');
+      else
+        $("a.staff_remove_btn").addClass('hidden');
+
+  @removeStaff = ->
+    $("a.staff_remove_btn").on 'click', ->
+      $( ".checkbox-item.inline_team_member > input[type='checkbox']:checked" ).each ->
+        $(this).parents('.fields').find('input.destroy_staff').val true
+        $(this).parents('.fields').addClass('hidden')
+      $('form.project-form-inline').submit()
+
+$(document).ready ->
+  Project.change_project_staff()
+  Project.toggleStaffRemoveButton()
+  Project.removeStaff()
+  jQuery('form.project-form-inline').submit ->
+    $("#project_project_name").val($("strong.project_name").text())
+    $("#project_description").val($("span.project_description").text())
+    Project.validate_fields()
