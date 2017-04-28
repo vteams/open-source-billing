@@ -35,6 +35,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+    params[:status] = params[:status] || 'active'
+    @status = params[:status]
+    load_projects
+    @projects = filter_by_company(@projects)
     @project = Project.new
     3.times { @project.project_tasks.build(); @project.team_members.build() }
     respond_to do |format|

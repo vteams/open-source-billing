@@ -531,3 +531,7 @@ span.invoice-recurring-status{
 .staff_rate input{
     width: 38px !important;
 }
+
+.new-project-page .input-field label{
+top: 0px;
+}

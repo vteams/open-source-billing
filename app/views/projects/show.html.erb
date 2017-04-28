@@ -39,12 +39,6 @@
       <div class="row">
         <div class="col s12 task-detail">
           <!--- breadcrum Bar --->
-          <div class="breadcrum-bar activebar">
-            <div class="card-white-panel">
-              <h3><%= @project.project_name %> Time Logs </h3>
-            </div>
-          </div>
-          <!--- breadcrum Bar --->
           <div class="task-box clearfix">
             <!--- Invoices Card Title--->
             <% @project_logs.group_by { |d| d.group_date }.each do |date, logs| %>

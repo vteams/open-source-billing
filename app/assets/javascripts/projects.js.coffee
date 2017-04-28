@@ -144,7 +144,6 @@ class @Project
       $( ".checkbox-item.inline_team_member > input[type='checkbox']:checked" ).each ->
         $(this).parents('.fields').find('input.destroy_staff').val true
         $(this).parents('.fields').addClass('hidden')
-      $('form.project-form-inline').submit()
 
 $(document).ready ->
   Project.change_project_staff()

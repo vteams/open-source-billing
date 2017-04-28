@@ -4,7 +4,7 @@
         <div class="left-content col s12 m12 l8 xl9">
           <div class="text-wrapper">
             <div class="checkbox-item">
-              <div class="invoice-name green-light"><%= @project.image_name %></div>
+              <div class="invoice-name green-light"><%= @project.image_name rescue nil %></div>
             </div>
             <div class="invoice-details">
               <div class="editable-content">
@@ -28,21 +28,24 @@
             </div>
           </div>
           <div class="form-wrapper row">
+            <% unless @project.new_record? %>
+                <div class="input-field col s12 m4 l4 xl4">
+                  <label>Start Date</label>
+                  <input type="text" value="<%= @project.created_at.strftime(get_date_format)%>" placeholder="" disabled class="not-editable">
+                </div>
+            <% end %>
             <div class="input-field col s12 m4 l4 xl4">
-              <label>Start Date</label>
-              <input type="text" value="<%= @project.created_at.strftime(get_date_format)%>" placeholder="" disabled class="not-editable">
-            </div>
-            <div class="input-field col s12 m4 l4 xl4">
-              <label>Estimated Time (hrs)</label>
+              <label class="active">Estimated Time (hrs)</label>
               <%= f.number_field :total_hours, disabled: true %>
             </div>
-
+            <% unless @project.new_record? %>
             <div class="input-field col s12 m4 l4 xl4">
               <select disabled class="not-editable">
                 <option><%= @project.log_hours %></option>
               </select>
               <label>Time Logged (hrs)</label>
             </div>
+            <% end %>
           </div>
 
         </div>

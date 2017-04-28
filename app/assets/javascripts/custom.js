@@ -200,7 +200,7 @@ $(document).ready(function(){
 
     $('.activebar .card-white-panel').on('click',function(e){
         target = $(e.target)
-        if ((!target.is( "a" ) && !target.is("i")) ){
+        if ((!target.is( "a" ) && !target.is("i")) && !$(this).hasClass('noCollapse')){
             $(this).parents('.task-detail').find('.content-detail').slideUp();
             $(this).parent().slideUp();
             $(this).parent().next().slideDown();
@@ -231,6 +231,7 @@ $(document).ready(function(){
         $(".submitProject").removeClass('hidden');
         $(this).addClass('hidden')
         $("strong.project_name, span.project_description").attr('contenteditable', true);
+        $('.activebar .card-white-panel').addClass('noCollapse');
     });
 
 });
