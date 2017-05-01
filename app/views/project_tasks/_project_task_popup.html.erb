@@ -1,0 +1,107 @@
+<div id="project_task_popup" class="modal viewModal taskModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue">Task Detail</h5>
+      <div class="modal-action-btn right">
+        <a href="#"  class="edit-detail"><i class="material-icons">create</i></a>
+        <a href="#"><i class="material-icons">delete</i></a>
+        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown20' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
+        <!-- Dropdown Structure -->
+        <ul id='dropdown20' class='dropdown-content z-depth-4'>
+          <li><a href="#!"><i class="material-icons">archive</i> Send to Archive</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col s12 m8 l9">
+          <div class="content-detail">
+            <div class="card-white-panel clearfix">
+              <div class="left-content">
+                <div class="text-wrapper">
+                  <div class="checkbox-item">
+                    <input type="checkbox" class="filled-in" id="chk102" />
+                    <label for="chk102"></label>
+                    <div class="invoice-name green-light"><%= @project.image_name%></div>
+                  </div>
+                  <div class="invoice-details">
+                    <div class="editable-content">
+                      <div class="text-field">
+                        <span>Task <small> : </small> </span>
+                        <strong class="text-blue"><%= task.name %></strong>
+                      </div>
+                    </div>
+                    <div class="amount-box">
+                      <span class="usertitle"><%= task.description %></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-wrapper row">
+                  <div class="input-field col s12 m9 l9 xl6  datepicker">
+                    <label class="active">Start Date</label>
+                    <input type="text" value="<%= task.start_date %>" placeholder="" disabled>
+                    <i class="material-icons">date_range</i>
+                  </div>
+
+                  <div class="input-field col s12 m9 l9 xl6 datepicker">
+                    <label class="active">Due Date</label>
+                    <input type="text" value="<%= task.due_date %>" placeholder="" disabled>
+                    <i class="material-icons">date_range</i>
+                  </div>
+
+                  <div class="input-field col s12 m9 xl4 titlebold">
+                    <label class="active">Hours</label>
+                    <input type="number" value="<%= task.hours %>" placeholder="" disabled>
+                  </div>
+                  <div class="range-input col s12 m6 l4 offset-l2">
+                    <label>Spent Time</label>
+                    <div class="rkmd-slider slider-discrete slider-lightBlue">
+                      <input type="range" min="0" max="<%= task.hours %>" value="<%= task.spent_time %>" disabled>
+                    </div>
+                  </div>
+                  <div class="input-field col s12 m9 xl4 clearfix titlebold">
+                    <label class="active">Rate</label>
+                    <input type="number" value="<%= task.rate %>" placeholder="" disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m4 l3">
+          <div class="right-content">
+            <div class="user-list staff-list" id="staff">
+              <% @project.staffs.each do |staff|%>
+                  <div class="list-item">
+                    <div class="checkbox-item">
+                      <input type="checkbox" class="filled-in" id="chk041" />
+                      <label for="chk041"></label>
+                      <div class="invoice-name">
+                        <%= image_tag('avatarimg1.jpg', alt: "avatar" ,class:"responsive-img circle")%>
+                      </div>
+                    </div>
+                    <div class="invoice-details editContent">
+                      <div class="input-field">
+                        <select disabled>
+                          <option value="01"><%= staff.name %></option>
+                        </select>
+                      </div>
+                      <div class="input-field">
+                        <input type="email" value="<%= staff.email %>" placeholder="" disabled>
+                      </div>
+                      <div class="input-field amount">
+                        <strong><%= default_currency_unit %><em><%= staff.rate %></em></strong>
+                        <span> <%= default_currency_code%> / <small class="text-blue">hr</small></span>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

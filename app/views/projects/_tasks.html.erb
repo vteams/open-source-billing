@@ -1,5 +1,6 @@
 <div class="flex-item">
-  <div class="card-white-panel"  data-target="modal1">
+  <%= link_to '', project_project_task_path(@project,task) , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card">
     <div class="checkbox-item">
       <div class="invoice-name green-light"><%= @project.image_name rescue nil %></div>
     </div>
@@ -14,23 +15,12 @@
           <strong class="text-blue left">50% <small>Done</small></strong>
           <strong class="text-content right">200 <small>HRS</small></strong>
         </div>
-        <div class="progress">
-          <div class="determinate" role="progressbar"
-               aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="action-btn-group">
-      <a href="#"  class="edit-modal"><i class="material-icons">create</i></a>
-      <a href="#"><i class="material-icons">delete</i></a>
-      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown12' data-alignment="right" data-beloworigin="true">
-        <i class="material-icons">more_vert</i>
-      </a>
-      <!-- Dropdown Structure -->
-      <ul id='dropdown12' class='dropdown-content z-depth-4'>
-        <li><a href="#!"><i class="material-icons">archive</i> Send to Archive</a></li>
-      </ul>
+      <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task), class: 'edit-modal', title: 'Edit', remote: true %>
+      <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task), method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
     </div>
   </div>
 </div>

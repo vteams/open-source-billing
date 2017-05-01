@@ -170,6 +170,7 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'undo_actions'
       end
+      resources :project_tasks
     end
 
     post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
