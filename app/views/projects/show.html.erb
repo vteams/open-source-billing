@@ -35,20 +35,33 @@
     </div>
   </div>
 
-  <% if @project_logs.present?  %>
+  <% if @project_tasks.present?  %>
       <div class="row">
         <div class="col s12 task-detail">
           <!--- breadcrum Bar --->
           <div class="task-box clearfix">
             <!--- Invoices Card Title--->
-            <% @project_logs.group_by { |d| d.group_date }.each do |date, logs| %>
-                <div class="view-btn-group clearfix">
-                  <span class="activity-date left"><%= date %></span>
+            <div class="view-btn-group clearfix">
+              <span class="activity-date left">Today</span>
+              <div class="btn-inline right">
+                <div class="btn-icons">
+                  <a href="#"><i class="material-icons">date_range</i></a>
+                  <a href="#" class="active"><i class="material-icons">view_module</i></a>
+                  <a href="#"><i class="material-icons">view_list</i></a>
                 </div>
-                <div class="clearfix">
-                    <%= render partial: 'logs', collection: logs, as: :log %>
+                <div class="btn-calender">
+                  <a href="#">Day</a>
+                  <a href="#">Week</a>
+                  <a href="#" class="active">Month</a>
                 </div>
-            <% end %>
+              </div>
+            </div>
+            <div class="flex-wrapper">
+              <!--- task Card --->
+              <% @project_tasks.group_by { |d| d.group_date }.each do |date, tasks| %>
+                  <%= render partial: 'tasks', collection: tasks, as: :task %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>

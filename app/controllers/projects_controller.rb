@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
     params[:status] = params[:status] || 'active'
     load_projects
     @project_logs = @project.logs.order('date desc')
+    @project_tasks = @project.project_tasks.order('updated_at desc')
   end
 
   # GET /projects/new

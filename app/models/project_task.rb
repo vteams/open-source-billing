@@ -6,4 +6,7 @@ class ProjectTask < ActiveRecord::Base
 
   acts_as_archival
 
+  def group_date
+    updated_at.strftime('%B %Y')
+  end
 end
