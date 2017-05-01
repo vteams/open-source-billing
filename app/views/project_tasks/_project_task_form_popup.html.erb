@@ -3,7 +3,7 @@
   <div class="modal-content">
     <%= form_for [@project,task], html: {class: 'project_task_form'} do |f|  %>
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">Task Edit</h5>
+      <h5 class="left text-blue"> <%= task.new_record? ? 'New' : 'Edit' %> Task</h5>
       <div class="modal-action-btn right">
         <a href="javascript:;" onclick="$('.simple_submit').click();"  class="edit-detail"><i class="material-icons">done</i></a>
         <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>

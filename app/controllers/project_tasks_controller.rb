@@ -1,8 +1,19 @@
 class ProjectTasksController < ApplicationController
   before_filter :find_project_task, only: [:show, :edit, :update, :destroy ]
 
-  def edit
+  def new
+    @project = Project.find(params[:project_id])
+    @project_task = @project.project_tasks.build
+  end
 
+  def create
+    @project = Project.find(params[:project_id])
+    @project_task = @project.project_tasks.new(project_task_params)
+    if @project_task.save
+      redirect_to project_path(@project), notice: 'Task was successfully created.'
+    else
+      redirect_to project_path(@project), alert: 'Task was not successfully created.'
+    end
   end
 
   def update

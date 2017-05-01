@@ -61,8 +61,11 @@
               <a href="#" class="staff_remove_btn removebtn hidden">Remove</a>
             </div>
           </div>
+
         </div>
+
       </div>
+      <%= link_to 'Add task', new_project_project_task_path(@project), remote: true unless @project.new_record? %>
     </div>
     <%= f.submit "submit", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
 <% end %>
