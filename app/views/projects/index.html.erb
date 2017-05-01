@@ -7,13 +7,8 @@
       <div class="card-white-panel">
         <h3 class="heading_with_action">
           Time Tracking :
-          <select onchange="location = this.value;">
-            <option value="<%= "/#{I18n.locale}/projects" %>" selected> Projects</option>
-            <option value="<%= "/#{I18n.locale}/tasks" %>">Tasks</option>
-            <option value="<%= "/#{I18n.locale}/staffs" %>">Staffs</option>
-            <option value="<%= "/#{I18n.locale}/logs" %>">TimeSheet</option>
-          </select><%= link_to "/ #{@status.humanize}",projects_path(status: @status) %>
-          <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, remote: true, class: 'right', title: 'Add' %>
+          <a href="<%= projects_url %>"><span class="text-color">Projects</span></a>
+          <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, class: 'right', title: 'Add' %>
         </h3>
       </div>
     </div>

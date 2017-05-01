@@ -1,18 +1,27 @@
-<%- model_class = Project -%>
+<%= render 'project_activity'%>
+<div id="main-content" class='mCustomScrollbar <%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="row new-project-page">
+    <div class="col s12 task-detail">
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar activebar">
+        <div class="card-white-panel noCollapse">
+          <h3>Edit Project </h3>
+          <div class="page-action-btn-group">
+            <a href="#" class="edit-detail"><i class="material-icons">create</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="Save" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-<div class="content_top">
-  <div class="primary_heading">
-    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                      :default => "Edit #{model_class.model_name.human}") %></h1>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+          </div>
+        </div>
+      </div>
+      <%= render 'project_detail' %>
+    </div>
   </div>
-</div><!--content_top-->
-
-<%= render :partial => 'form' %>
-
-<div id="tasks_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'tasks/new_task' %>
 </div>
 
-<div id="clients_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'clients/new_client' %>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".edit-detail").click();
+    })
+
+</script>
