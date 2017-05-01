@@ -234,9 +234,35 @@ $(document).ready(function(){
         $('.activebar .card-white-panel').addClass('noCollapse');
     });
 
+    $('.rkmd-slider input[type="range"] + span.thumb').remove();
+    if($('.slider-handle').hasClass('is-active')){
+        $('.slider-handle.is-active').parent().find('.slider-fill').addClass('a');
+    }
+
+    mobileSideMenu();
 });
 
+function mobileSideMenu(){
+    var width = $(window).width();
+    if (width <= 767) {
+        $("#side-nav").removeClass("side-show");
+    }
+}
 
+$(window).resize(function(){
+    $(".side-menu").mCustomScrollbar();
+    $(".activity-scroll-holder").mCustomScrollbar();
+    $(".invoice-box").mCustomScrollbar();
+
+    //mCustomScrollbar
+    var width = $(window).width();
+    if (width <= 767) {
+        $(".side-menu").mCustomScrollbar("disable",true);
+        $(".activity-scroll-holder").mCustomScrollbar("disable",true);
+        $(".invoice-box").mCustomScrollbar("disable",true);
+    }
+    mobileSideMenu();
+});
 
 
 $(function () {

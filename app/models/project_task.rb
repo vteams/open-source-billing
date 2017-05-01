@@ -9,4 +9,10 @@ class ProjectTask < ActiveRecord::Base
   def group_date
     updated_at.strftime('%B %Y')
   end
+
+  def spent_time_percentage
+    return 0 if hours.nil? or hours.zero?
+    ((spent_time * 100)/hours).round
+  end
+
 end

@@ -145,6 +145,28 @@ class @Project
         $(this).parents('.fields').find('input.destroy_staff').val true
         $(this).parents('.fields').addClass('hidden')
 
+  applyDatePicker = ->
+    $("#start_date_picker").pickadate
+      format: "yyyy-mm-dd"
+      formatSubmit: DateFormats.format()
+      onSet: (context) ->
+        value = @get('value')
+        $('#start_date_picker').parents('.datepicker').find('input').val value
+
+    $("#due_date_picker").pickadate
+      format: "yyyy-mm-dd"
+      formatSubmit: DateFormats.format()
+      onSet: (context) ->
+        value = @get('value')
+        $('#due_date_picker').parents('.datepicker').find('input').val value
+
+
+  @projectTaskForm = ->
+    applyDatePicker()
+    $(".project_task_form").submit ->
+      $("#project_task_name").val($(this).find('.task_name').text())
+      $("#project_task_description").val($(this).find('.task_description').text())
+
 $(document).ready ->
   Project.change_project_staff()
   Project.toggleStaffRemoveButton()
