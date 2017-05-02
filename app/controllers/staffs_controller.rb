@@ -30,6 +30,7 @@ class StaffsController < ApplicationController
   def new
     @staff = Staff.new
     @staff.build_user
+    @project_id = params[:project_id]
     respond_to do |format|
       format.js
       format.html # index.html.erb
@@ -54,6 +55,8 @@ class StaffsController < ApplicationController
       redirect_to(new_staff_path, :alert => "Staff with same email already exists") unless params[:quick_create]
       return
     end
+    @project = Project.find_by_id(params[:project_id])
+
     @staff = Staff.new(staff_params)
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     if staff_params.has_key? "user_attributes"
@@ -65,9 +68,10 @@ class StaffsController < ApplicationController
     respond_to do |format|
       if @staff.save
         current_user.accounts.first.users << @staff.user if @staff.user.present?
+        @project.add_to_team(@staff) if @project.present?
         format.js
         format.json { render :json => @staff, :status => :created, :location => @staff }
-        redirect_to staffs_path, notice: 'Staff was successfully created.' unless params[:quick_create]
+        redirect_to (@project.present? ? project_path(@project) : staffs_path) , notice: 'Staff was successfully created.' unless params[:quick_create]
         return
       else
         format.js

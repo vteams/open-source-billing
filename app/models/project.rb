@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
   has_many :project_tasks, dependent: :destroy
   has_many :logs, dependent: :destroy
   has_many :team_members, dependent: :destroy
-  has_many :staffs, through: :team_members
+  has_many :staffs, through:  :team_members
   has_many :logs, dependent: :destroy
   has_many :invoices, dependent: :destroy
 
@@ -65,7 +65,11 @@ class Project < ActiveRecord::Base
   end
 
   def log_hours
-    logs.map(&:hours).sum rescue 0
+    project_tasks.map(&:spent_time).sum rescue 0
+  end
+
+  def add_to_team(staff)
+    team_members.create(name: staff.name, email: staff.email, rate: staff.rate, staff_id: staff.id)
   end
 
 end

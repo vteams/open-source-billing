@@ -40,10 +40,8 @@
             </div>
             <% unless @project.new_record? %>
             <div class="input-field col s12 m4 l4 xl4">
-              <select disabled class="not-editable">
-                <option><%= @project.log_hours %></option>
-              </select>
-              <label class="active">Time Logged (hrs)</label>
+              <label class="active not-editable">Time Logged (hrs)</label>
+              <input type="text" value="<%= @project.log_hours %>" disabled/>
             </div>
             <% end %>
           </div>
@@ -65,8 +63,7 @@
         </div>
 
       </div>
-      <%= link_to 'Add task', new_project_project_task_path(@project), remote: true unless @project.new_record? %> |
-      <%= link_to 'New staff', new_staff_path, remote: true unless @project.new_record? %>
+
     </div>
     <%= f.submit "submit", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
 <% end %>

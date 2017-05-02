@@ -35,7 +35,7 @@
                 <%= f.label :rate, t('views.staffs.rate') %>
               </div>
             </div>
-
+            <%= hidden_field_tag :project_id, @project_id %>
             <div class="row">
               <div class="col s12">
                 <h5 class="text-blue title-heading"><%= t('views.task.make_this_client_available_to') %></h5>

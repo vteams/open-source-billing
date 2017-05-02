@@ -21,6 +21,12 @@
         <span id="actives">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
     </div>
+    <% if @project.present? %>
+    <div class="status-info actionState">
+      <h5 class="text-blue"><%= link_to 'Add Task', new_project_project_task_path(@project), remote: true unless @project.new_record? %></h5>
+      <h5 class="text-blue"><%= link_to 'New staff', new_staff_path(project_id: @project.id), remote: true unless @project.new_record? %></h5>
+    </div>
+    <% end %>
   </div>
 
 </aside>
