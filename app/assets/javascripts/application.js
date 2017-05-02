@@ -19,6 +19,7 @@
 //= require picker
 //= require picker.date
 //= require jquery.mCustomScrollbar.min
+//= require range-slider
 //= require custom
 //= require highcharts
 //= require exporting
@@ -205,7 +206,7 @@ window.preventDeletedNavigation = function(){
         });
         $("a.deleted_entry").unbind('mouseleave');
         $("a.deleted_entry").mouseleave(function(e){
-              $(this).qtip('hide')
+              $(this).qtip('hide');
               return false;
         });
     }

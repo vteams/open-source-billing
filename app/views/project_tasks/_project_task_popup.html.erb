@@ -46,11 +46,9 @@
                     <label class="active">Hours</label>
                     <input type="number" value="<%= task.hours %>" placeholder="" disabled>
                   </div>
-                  <div class="range-input col s12 m6 l4 offset-l2">
-                    <label>Spent Time</label>
-                    <div class="rkmd-slider slider-discrete slider-lightBlue">
-                      <input type="range" min="0" max="<%= task.hours %>" value="<%= task.spent_time %>" disabled>
-                    </div>
+                  <div class="input-field col s12 m6 l4 titlebold offset-l2 ">
+                    <label class="active">Spent Time</label>
+                    <input type="number" value="<%= task.spent_time %>" disabled>
                   </div>
                   <div class="input-field col s12 m9 xl4 clearfix titlebold">
                     <label class="active">Rate</label>

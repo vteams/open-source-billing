@@ -1,0 +1,120 @@
+/* ----------------------------------------------------------------------
+  Material Design Range Slider - by Ravikumar Chauhan
+------------------------------------------------------------------------- */
+.rkmd-slider {
+  display: block;
+  position: relative;
+  font-size: 16px;
+}
+.rkmd-slider input[type="range"] {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+    display: none;
+}
+.rkmd-slider input[type="range"] + .slider {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background-color: #dadada;
+}
+.rkmd-slider input[type="range"] + .slider .slider-fill {
+  display: block;
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  z-index: 1;
+}
+.rkmd-slider input[type="range"] + .slider .slider-handle {
+  cursor: pointer;
+  position: absolute;
+  top: -5.5px;
+  left: 0%;
+  width: 15px;
+  height: 15px;
+  margin-left: -8px;
+  border-radius: 50%;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  z-index: 2;
+}
+.rkmd-slider.slider-light input[type="range"] + .slider {
+  background-color: #5c5c5c;
+}
+/* ----------------------------------------------------------------------
+  Discrete Range Slider - by Ravikumar Chauhan
+------------------------------------------------------------------------- */
+.rkmd-slider.slider-discrete .slider .slider-handle {
+  position: relative;
+  z-index: 1;
+}
+.rkmd-slider.slider-discrete .slider .slider-handle .slider-label {
+  position: absolute;
+  top: -17.5px;
+  left: -2px;
+  width: 30px;
+  height: 30px;
+  -webkit-transform-origin: 50% 100%;
+          transform-origin: 50% 100%;
+  border-radius: 50%;
+  -webkit-transform: scale(0.5) rotate(-45deg);
+          transform: scale(0.5) rotate(-45deg);
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+.rkmd-slider.slider-discrete .slider .slider-handle .slider-label span {
+  position: absolute;
+  top: 7px;
+  left: 0px;
+  width: 100%;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  opacity: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.rkmd-slider.slider-discrete .slider .slider-handle.is-active {
+  top: 0px;
+  margin-left: -2px;
+  width: 6px;
+  height: 6px;
+}
+.rkmd-slider.slider-discrete .slider .slider-handle.is-active .slider-label {
+  top: -8px;
+  left: -2px;
+  border-radius: 15px 15px 15px 0;
+    -webkit-transform: rotate(-45deg) translate(23px, -25px);
+    transform: rotate(-45deg) translate(23px, -25px);
+}
+.rkmd-slider.slider-discrete .slider .slider-handle.is-active .slider-label span {
+  opacity: 1;
+}
+.rkmd-slider.slider-discrete.slider-lightBlue .slider-label {
+  background-color: #03a9f4;
+}
+.rkmd-slider.slider-discrete.slider-lightBlue .slider-label span{
+  opacity: 1
+}
+.rkmd-slider input[type="range"] + span.thumb{display: none;}
+/* ----------------------------------------------------------------------
+  Range Slider Color - by Ravikumar Chauhan
+------------------------------------------------------------------------- */
+.rkmd-slider.slider-lightBlue .slider-fill,
+.rkmd-slider.slider-lightBlue .slider-handle {background-color: #03a9f4;}
+

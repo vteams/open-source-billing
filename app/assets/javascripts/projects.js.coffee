@@ -163,6 +163,7 @@ class @Project
 
   @projectTaskForm = ->
     applyDatePicker()
+    $('.rkmd-slider').rkmd_rangeSlider()
     $(".project_task_form").submit ->
       $("#project_task_name").val($(this).find('.task_name').text())
       $("#project_task_description").val($(this).find('.task_description').text())

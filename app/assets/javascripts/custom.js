@@ -33,8 +33,6 @@ $(document).ready(function(){
           removeSideNavTitle();
       else
         addSideNavTitle();
-
-
     });
     //
     $(".btn-activity").click(function(){
@@ -239,6 +237,16 @@ $(document).ready(function(){
         $('.slider-handle.is-active').parent().find('.slider-fill').addClass('a');
     }
 
+    $(".breadcrum-bar select").on('change', function(e) {
+        var inputVal = $('.breadcrum-bar .select-wrapper input.select-dropdown').val();
+        $('.breadcrum-bar .select-wrapper > span.inputValue').remove();
+        $(this).parent().prepend("<span class='inputValue'>"+inputVal+"</span>");
+        var newInputValue = $('.inputValue').width();
+
+        $('.breadcrum-bar .select-wrapper input.select-dropdown').css("width" , newInputValue + 80 );
+        console.log(newInputValue );
+    });
+
     mobileSideMenu();
 });
 
@@ -251,15 +259,10 @@ function mobileSideMenu(){
 
 $(window).resize(function(){
     $(".side-menu").mCustomScrollbar();
-    $(".activity-scroll-holder").mCustomScrollbar();
-    $(".invoice-box").mCustomScrollbar();
-
     //mCustomScrollbar
     var width = $(window).width();
     if (width <= 767) {
         $(".side-menu").mCustomScrollbar("disable",true);
-        $(".activity-scroll-holder").mCustomScrollbar("disable",true);
-        $(".invoice-box").mCustomScrollbar("disable",true);
     }
     mobileSideMenu();
 });
