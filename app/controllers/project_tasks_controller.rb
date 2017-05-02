@@ -10,6 +10,7 @@ class ProjectTasksController < ApplicationController
     @project = Project.find(params[:project_id])
     @project_task = @project.project_tasks.new(project_task_params)
     if @project_task.save
+      @project_task.create_time_log(current_user)
       redirect_to project_path(@project), notice: 'Task was successfully created.'
     else
       redirect_to project_path(@project), alert: 'Task was not successfully created.'
@@ -18,6 +19,7 @@ class ProjectTasksController < ApplicationController
 
   def update
     if @project_task.update(project_task_params)
+      @project_task.update_time_log(current_user)
       redirect_to project_path(@project), notice: 'Task was successfully updated.'
     else
       redirect_to project_path(@project), alert: 'Task was not successfully updated.'
