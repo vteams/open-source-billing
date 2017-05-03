@@ -74,15 +74,16 @@
                    </div>
                  </div>
                  <label>DELIVERY OPTIONS</label>
+                 <% draft_invoice = @invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
                  <div class="row">
                    <div class="col s12">
-                     <%= rs.radio_button :delivery_option, 'send_invoice', id: 'send_invoice'%>
+                     <%= rs.radio_button :delivery_option, 'send_invoice', id: 'send_invoice', checked: !draft_invoice%>
                      <label for="send_invoice">Send invoices automatically</label>
                    </div>
                  </div>
                  <div class="row">
                    <div class="col s12">
-                     <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice'%>
+                     <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice', checked: draft_invoice %>
                      <label for="draft_invoice">Create Draft invoices and send manually</label>
                    </div>
                  </div>
