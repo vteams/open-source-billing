@@ -31,7 +31,7 @@ module Reporting
       end
 
       attr_accessor :item_quantity, :total_amount, :discount_pct, :net_total, :discount_amount
-      HEADER_COLUMNS = ['Item Name', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+      HEADER_COLUMNS = ['Item Name', 'Invoice Number', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
 
       def period
         "Between <strong>#{@report_criteria.from_date.to_date.strftime(get_date_format)}</strong> and <strong>#{@report_criteria.to_date.to_date.strftime(get_date_format)}</strong>"
@@ -39,6 +39,8 @@ module Reporting
 
       def get_report_data
         item_sales = Invoice.select("
+                      invoices.invoice_number as invoice_number,
+                      invoices.id as invoice_id,
                       items.item_name as item_name,
                       sum(invoice_line_items.item_quantity) as item_quantity,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity) as total_amount,
@@ -54,6 +56,7 @@ module Reporting
         item_sales = item_sales.where(["invoice_line_items.item_id = ?", @report_criteria.item_id]) unless @report_criteria.item_id == 0
         item_sales = item_sales.where(["invoices.status = ?", @report_criteria.invoice_status]) unless @report_criteria.invoice_status == ""
         item_sales = item_sales.where(["invoices.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
+        item_sales = item_sales.where(["invoices.client_id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         item_sales
       end
 
@@ -61,6 +64,7 @@ module Reporting
         @report_total = []
         @report_data.group_by{|x| x['currency_id']}.values.each do |row|
           total = Hash.new(0)
+          total["invoice_number"] = ''
           total["item_quantity"] += row.map{|x| x["item_quantity"]}.sum
           total["total_amount"] += row.map{|x| x["total_amount"]}.sum
           total["net_total"] += row.map{|x| x["net_total"]}.sum
@@ -114,6 +118,7 @@ module Reporting
       def get_data_row object
         [
             object.item_name.to_s,
+            object.invoice_number.to_s,
             object.item_quantity.to_i,
             object.total_amount.to_f.round(2),
             object.discount_amount.to_f.round(2),
@@ -124,7 +129,7 @@ module Reporting
       def get_total_row report,sheet
         is_first=true
         report.report_total.each do |total|
-          row_total = ["#{is_first ? 'Total' : ''}",total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
+          row_total = ["#{is_first ? 'Total' : ''}",total["invoice_number"], total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
           sheet.add_row(row_total)
           is_first=false
         end
