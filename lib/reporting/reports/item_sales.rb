@@ -49,7 +49,7 @@ module Reporting
                       IFNULL(invoices.currency_id,0) as currency_id,
                       IFNULL(currencies.unit,'USD') as currency_code
                        ").joins(:currency).joins(:invoice_line_items => :item).
-            group("items.item_name,currency_id").
+            group("items.item_name,currency_id, invoice_id").
             where("invoice_line_items.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day,
                   "invoice_line_items.deleted_at" => nil, "items.deleted_at" => nil)
 
