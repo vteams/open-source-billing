@@ -239,7 +239,7 @@ module ApplicationHelper
 
   def get_report_items
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    Company.find(company_id).items
+    (Company.find(company_id).items +  current_user.current_account.items.unarchived).uniq
   end
 
   def get_user_current_company
