@@ -13,7 +13,7 @@
       <strong><%= invoice.invoice_number %></strong>
       <em><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : "$")} " %><span><%= invoice.currency.unit%></span></em>
       <div class="card-footer clearfix">
-        <span class="invoice-recurring-status invoice-date"> <%= invoice.recurring_status %> </span>
+        <span class="invoice-recurring-status invoice-date <%= "mg-btm" unless invoice.recurring_status.present? %> "> <%= invoice.recurring_status %> </span>
         <span class="invoice-date"><small>Due</small> <%= invoice.due_date rescue "" %></span>
         <span class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= invoice.status %></span>
       </div>

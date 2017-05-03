@@ -67,23 +67,15 @@
             </div>
 
             <div class="row">
-              <div class="col s12">
                 <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
                 <div class="client_contact_container" id="client-contact-container">
                   <%= f.fields_for :client_contacts, :wrapper => false %>
                 </div>
-              </div>
             </div>
-
             <div class="row">
-              <div class="col s12">
                 <h5 class="text-blue title-heading"><%= t('views.items.make_this_client_available_to') %></h5>
-
-                <div class="input-field col s12">
-                  <%= associate_account(controller_name, action_name, @client) %>
-                </div>
-              </div>
             </div>
+            <%= associate_account(controller_name, action_name, @client) %>
 
           </div>
         </div>

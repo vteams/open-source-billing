@@ -535,3 +535,17 @@ span.invoice-recurring-status{
 .new-project-page .input-field label{
 top: 0px;
 }
+.mg-btm{
+    margin-bottom: 6px !important;
+}
+
+.invoice-card .invoice-details h5{
+    margin-bottom: 2px !important;
+}
+.invoice-card .invoice-details strong{
+    margin-bottom: 4px !important;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after{
+    background: #09b8e2 !important;
+}

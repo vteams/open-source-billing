@@ -1,5 +1,9 @@
 $('body').append("<%= escape_javascript render partial: 'client_form_popup', locals: {client: @client}  %>");
-$('#client_form_popup .input-field > label').addClass('active');
+$('#client_form_popup  input').each(function(){
+    if($(this).val() != ""){
+        $(this).parent().find('label').addClass('active');
+    }
+});
 Client.load_functions();
 elem = $("#client_form_popup");
 Popup.initialize(elem);

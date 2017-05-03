@@ -76,34 +76,37 @@ module ApplicationHelper
 
   def associate_account(controller, action, item)
     list, checked, global_status = '', '', ''
+    list = "<div class='row'>"
     # create checkbox for each companies and make it check if already associated with (items, clients)
     current_user.current_account.companies.all.each do |company|
       if action == 'edit'
         association = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: item.id, parent_id: company.id) : CompanyEntity.where(entity_id: item.id, parent_id: company.id, entity_type: controller.classify)
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
-      list += "<div class='input-field col s6'>
-                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' checked='true' class='company_checkbox filled-in'/>
+      list += "<div class='col s6'>
+                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' checked='true' class='company_checkbox filled-in' style='margin-bottom: 15px;'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
       checked = ''
     end
+    list += "</div>"
     # radio buttons for whole account and companies
     generate_radio_buttons(global_status, list)
   end
 
   def generate_radio_buttons(status, list)
     radio_buttons = <<-HTML
-              <div class="input-field col s12 custom">
-                  <input class='association' type = 'radio' value='company' checked=true name='association' id='account_association' />
-                  <label for='account_association'> All companies</label>
-              </div>
-<br>
-              <div class="input-field col s12">
-                  <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
-                  <label for='company_association'>Selected companies only</label>
-              </div>
+              <div class="row">
+                <div class="col s3 custom"  style="margin-bottom: 20px;">
+                    <input class='association' type = 'radio' value='company' checked=true name='association' id='account_association' />
+                    <label for='account_association'> All companies</label>
+                </div>
 
+                <div class="col s3"  style="margin-bottom: 20px;">
+                    <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
+                    <label for='company_association'>Selected companies only</label>
+                </div>
+              </div>
               #{list}
     HTML
     radio_buttons.html_safe
