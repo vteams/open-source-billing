@@ -549,3 +549,11 @@ top: 0px;
 [type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after{
     background: #09b8e2 !important;
 }
+
+form .select-wrapper .dropdown-content {
+    max-height: 200px !important;
+}
+
+form .select-wrapper .select-dropdown {
+    height: auto;
+}
