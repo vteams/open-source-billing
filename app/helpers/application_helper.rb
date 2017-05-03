@@ -98,11 +98,11 @@ module ApplicationHelper
     radio_buttons = <<-HTML
               <div class="row">
                 <div class="col s3 custom"  style="margin-bottom: 20px;">
-                    <input class='association' type = 'radio' value='company' checked=true name='association' id='account_association' />
+                    <input class='association' type = 'radio' value='account' checked=true name='association' id='account_association' />
                     <label for='account_association'> All companies</label>
                 </div>
 
-                <div class="col s3"  style="margin-bottom: 20px;">
+                <div class="col s3" style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                     <label for='company_association'>Selected companies only</label>
                 </div>
