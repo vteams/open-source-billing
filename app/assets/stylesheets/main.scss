@@ -2659,9 +2659,11 @@ h6 {
   border-color: transparent;
   min-width: 50px; }
 .basic-setting .card-white-panel.importData {
-  min-height: 185px; }
+  min-height: 220px; }
 .basic-setting .card-white-panel.importData .importElement {
-  padding: 24px 10px 0; }
+  padding: 25px;
+  text-align: center;
+}
 
 .setting-section .page-box {
   margin-top: 0;
