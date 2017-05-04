@@ -30,12 +30,16 @@
               <label for="url" class="active">Template type</label>
             </div>
             <% if @email_template.is_late_payment_reminder %>
-                <div class="input-field col s12">
+                <div class="col s3">
                   <div> Send_Reminder? </div>
+                </div>
+                <div class="col s2">
                   <p>
                     <%= f.radio_button :send_email, true, id: 'yes'%>
                     <label for="yes"><%= t('views.common.yes') %></label>
                   </p>
+                </div>
+                <div class="col s2">
                   <p>
                     <%= f.radio_button :send_email, false, id: 'no'%>
                     <label for="no"><%= t('views.common.no') %></label>
@@ -43,11 +47,11 @@
                 </div>
                 <!--field_row-->
 
-                <div class="input-field col s4">
+                <div class=" col s2">
                   <div> Send After</div>
                 </div>
-                <div class="input-field col s8">
-                  <%= f.text_field :no_of_days, :class => 'after' %>
+                <div class="input-field col s3">
+                  <%= f.number_field :no_of_days, :class => 'after' %>
                   <%= f.label :no_of_days, t('views.email_templates.days_of_due_date'), class: 'active' %>
                 </div>
             <% end%>
