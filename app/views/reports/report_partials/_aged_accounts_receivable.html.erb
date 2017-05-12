@@ -77,8 +77,10 @@
       <td class="right-align">
         <% @report.report_total.each do |total| %>
           <span>
-            <%= total["currency_code"] %>
-            <%= number_to_currency(total["zero_to_thirty"], unit: '') %>
+            <b>
+              <%= total["currency_code"] %>
+              <%= number_to_currency(total["zero_to_thirty"], unit: '') %>
+            </b>
           </span>
 
         <% end %>
@@ -86,32 +88,40 @@
       <td class="right-align">
         <% @report.report_total.each do |total| %>
           <span>
-            <%= total["currency_code"] %>
-            <%= number_to_currency(total["thirty_one_to_sixty"],unit:'') %>
+            <b>
+              <%= total["currency_code"] %>
+                <%= number_to_currency(total["thirty_one_to_sixty"],unit:'') %>
+            </b>
           </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
           <span>
-            <%= total["currency_code"] %>
-            <%= number_to_currency(total["sixty_one_to_ninety"],unit:'') %>
+            <b>
+              <%= total["currency_code"] %>
+              <%= number_to_currency(total["sixty_one_to_ninety"],unit:'') %>
+            </b>
           </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
             <span>
-              <%= total["currency_code"] %>
-              <%= number_to_currency(total["ninety_one_and_above"],unit:'') %>
+              <b>
+                <%= total["currency_code"] %>
+                <%= number_to_currency(total["ninety_one_and_above"],unit:'') %>
+              </b>
             </span>
         <% end %>
       </td>
       <td class="right-align">
         <% @report.report_total.each do |total| %>
            <span>
-             <%= total["currency_code"] %>
-             <%= number_to_currency(total["total_amount"],unit:'') %>
+             <b>
+               <%= total["currency_code"] %>
+               <%= number_to_currency(total["total_amount"],unit:'') %>
+             </b>
            </span>
         <% end %>
       </td>

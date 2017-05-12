@@ -47,8 +47,10 @@
             <td class="right-align">
               <% @report.report_total.each do |total| %>
                 <span>
-                  <%= total[:currency_code] %>
-                  <%= total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : number_to_currency(total["#{Date::MONTHNAMES[month]}"],unit: '')  %>
+                  <b>
+                    <%= total[:currency_code] %>
+                    <%= total["#{Date::MONTHNAMES[month]}"] == 0 ? "" : number_to_currency(total["#{Date::MONTHNAMES[month]}"],unit: '')  %>
+                  </b>
                 </span>
               <% end %>
             </td>
@@ -56,8 +58,10 @@
         <td class="right-align">
           <% @report.report_total.each do |total| %>
             <span>
-              <%= total[:currency_code] %>
-              <%= number_to_currency(total[:net_total] || 0 , unit: '') %>
+              <b>
+                <%= total[:currency_code] %>
+                <%= number_to_currency(total[:net_total] || 0 , unit: '') %>
+              </b>
             </span>
 
           <% end %>

@@ -34,12 +34,9 @@
     <tfoot>
     <tr>
       <td class="align_left"><strong><%= t('views.common.total') %></strong></td>
-      <td class="align_left"></td>
-      <td class="align_left"></td>
-      <td class="align_left"></td>
-      <td class="right-align currency">
+      <td colspan="4" class="right-align currency">
         <% @report.report_total.each do |total| %>
-            <span><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></span>
+            <span><b><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></b></span>
         <% end %>
       </td>
     </tr>

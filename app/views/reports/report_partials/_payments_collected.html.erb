@@ -26,7 +26,7 @@
             <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= payments.first[:client_name] %></td>
             <td class="align_left" >
               <% payments.each do |payment| %>
-                <%= payment.invoice.invoice_number rescue payment.invoice_number %>
+                <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
                 <br>
               <% end %>
             </td>
@@ -65,8 +65,10 @@
         <td class="right-align currency">
           <% @report.report_total.each do |total| %>
             <span>
-              <%= total[:currency_code] %>
-              <%= number_to_currency(total[:total],unit: '') %>
+              <b>
+                <%= total[:currency_code] %>
+                <%= number_to_currency(total[:total],unit: '') %>
+              </b>
             </span>
           <% end %>
         </td>
