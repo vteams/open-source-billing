@@ -11,9 +11,10 @@
 <table cellpadding="0" cellspacing="0" class="table_listing item_sales_listing <%= I18n.locale %>">
   <thead>
   <tr>
-    <th width="20%"><%= t('views.items.item_name') %></th>
-    <th width="20%" class="center-align">Invoice Number </th>
-    <th width="15%" class="right-align"><%= t('views.reports.total_qty_sold') %></th>
+    <th width="15%"><%= t('views.items.item_name') %></th>
+    <th width="15%" class="center-align">Invoice Number </th>
+    <th width="13%">Client</th>
+    <th width="12%" class="right-align"><%= t('views.reports.total_qty_sold') %></th>
     <th width="15%" class="right-align {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
     <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
     <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
@@ -25,9 +26,14 @@
         <tr>
           <td data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
           <td class="center-align">
-
             <%  items.each do |item| %>
                 <%= request.format.pdf? ? item.attributes["invoice_number"] : (link_to item.attributes["invoice_number"], invoice_path(item.invoice_id),remote: true) %>
+                <br>
+            <% end %>
+          </td>
+          <td>
+            <%  items.each do |item| %>
+                <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true) %>
                 <br>
             <% end %>
           </td>
@@ -62,46 +68,36 @@
         </tr>
       <% end %>
       <tfoot>
-        <% border_class='test'%>
-          <%# border_class= @report.report_total.last==total ? 'dark-border' : 'no-border' %>
         <tr>
           <td><strong><%= t("views.common.total") %></strong></td>
-          <td class="center-align ">
-            <% @report.report_total.each do |total| %>
-              <span>
-                <%= total["invoice_number"] %>
-              </span>
-            <% end %>
-          </td>
 
-          <td class="right-align ">
+          <td colspan="4" class="right-align currency ">
             <% @report.report_total.each do |total| %>
               <span>
-                <%= total["item_quantity"].to_i %>
+                <b>
+                  <%=total["currency_code"] %>
+                  <%= number_to_currency(total["total_amount"],unit:'') %>
+                </b>
               </span>
             <% end %>
           </td>
           <td class="right-align currency ">
             <% @report.report_total.each do |total| %>
               <span>
-                <%=total["currency_code"] %>
-                <%= number_to_currency(total["total_amount"],unit:'') %>
+                <b>
+                  <%=total["currency_code"] %>
+                  <%= number_to_currency(total["discount_amount"],unit:'') %>
+                </b>
               </span>
             <% end %>
           </td>
           <td class="right-align currency ">
             <% @report.report_total.each do |total| %>
               <span>
-                <%=total["currency_code"] %>
-                <%= number_to_currency(total["discount_amount"],unit:'') %>
-              </span>
-            <% end %>
-          </td>
-          <td class="right-align currency ">
-            <% @report.report_total.each do |total| %>
-              <span>
-                <%=total["currency_code"] %>
-                <%= number_to_currency(total["net_total"],unit:'') %>
+                <b>
+                  <%=total["currency_code"] %>
+                  <%= number_to_currency(total["net_total"],unit:'') %>
+                </b>
               </span>
             <% end %>
           </td>

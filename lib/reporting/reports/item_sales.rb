@@ -42,14 +42,16 @@ module Reporting
                       invoices.invoice_number as invoice_number,
                       invoices.id as invoice_id,
                       items.item_name as item_name,
+                      clients.organization_name as client_name,
+                      clients.id as client_id,
                       sum(invoice_line_items.item_quantity) as item_quantity,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity) as total_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0)) as discount_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity -  (invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0))) as net_total,
                       IFNULL(invoices.currency_id,0) as currency_id,
                       IFNULL(currencies.unit,'USD') as currency_code
-                       ").joins(:currency).joins(:invoice_line_items => :item).
-            group("items.item_name,currency_id, invoice_id").
+                       ").joins(:currency, :client).joins(:invoice_line_items => :item).
+            group("items.item_name,currency_id, invoice_id, client_id").
             where("invoice_line_items.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day,
                   "invoice_line_items.deleted_at" => nil, "items.deleted_at" => nil)
 
@@ -65,6 +67,7 @@ module Reporting
         @report_data.group_by{|x| x['currency_id']}.values.each do |row|
           total = Hash.new(0)
           total["invoice_number"] = ''
+          total["client_name"] = ''
           total["item_quantity"] += row.map{|x| x["item_quantity"]}.sum
           total["total_amount"] += row.map{|x| x["total_amount"]}.sum
           total["net_total"] += row.map{|x| x["net_total"]}.sum
@@ -119,6 +122,7 @@ module Reporting
         [
             object.item_name.to_s,
             object.invoice_number.to_s,
+            object.client_name.to_s,
             object.item_quantity.to_i,
             object.total_amount.to_f.round(2),
             object.discount_amount.to_f.round(2),
@@ -129,7 +133,7 @@ module Reporting
       def get_total_row report,sheet
         is_first=true
         report.report_total.each do |total|
-          row_total = ["#{is_first ? 'Total' : ''}",total["invoice_number"], total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
+          row_total = ["#{is_first ? 'Total' : ''}",total["invoice_number"], total["client_name"], total["item_quantity"].to_i, total["total_amount"].to_f.round(2), total["discount_amount"].to_f.round(2),total["net_total"].to_f.round(2)]
           sheet.add_row(row_total)
           is_first=false
         end
