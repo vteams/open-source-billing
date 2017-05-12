@@ -102,6 +102,7 @@ jQuery(function () {
        $('.text-limit').text(remain + "  characters remaining" );
     });
 
+    $(".tablesorter").tablesorter();
 
     //override default behavior of inserting new subforms into form
     window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
