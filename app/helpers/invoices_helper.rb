@@ -247,6 +247,6 @@ module InvoicesHelper
 
 
   def pick_status_color
-    {sent: 'text-blue', paid: 'text-green', partial: 'text-orange', draft: 'text-grey', viewed: 'text-green', draft_partial: 'text-orange', disputed: 'text-red', invoiced: 'text-orange'}
+    {sent: 'text-blue', paid: 'text-green', partial: 'text-orange', draft: 'text-grey', viewed: 'text-green', draft_partial: 'text-draft-partial', disputed: 'text-red', invoiced: 'text-orange'}
   end
 end

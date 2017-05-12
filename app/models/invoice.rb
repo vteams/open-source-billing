@@ -213,7 +213,9 @@ class Invoice < ActiveRecord::Base
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
     method = mappings[params[:status].to_sym]
     invoices = params[:search].present? ? self.search(params[:search]).records : self
-    invoices.send(method).page(params[:page]).per(per_page)
+    invoices = invoices.send(method)
+    invoices = invoices.where(status: params[:type]) if params[:type].present?
+    invoices = invoices.page(params[:page]).per(per_page)
   end
 
   def self.recurring
@@ -492,4 +494,14 @@ class Invoice < ActiveRecord::Base
   def is_recurring_invoice?
     parent_id.present? or recurring_schedule.present?
   end
+
+  class << self
+    # Invoice's status count dynamic methods
+    Invoice::STATUS_DESCRIPTION.each do |k,v|
+      define_method("#{k}_count") do
+        where(status: k).count
+      end
+    end
+  end
+
 end

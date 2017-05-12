@@ -557,3 +557,11 @@ form .select-wrapper .dropdown-content {
 form .select-wrapper .select-dropdown {
     height: auto;
 }
+
+.text-red{
+    color: red;
+}
+
+.text-draft-partial{
+    color: #f26522;
+}

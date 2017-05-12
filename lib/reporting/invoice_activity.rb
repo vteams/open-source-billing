@@ -24,6 +24,7 @@ module Reporting
         recent_activity = {}
         invoice_status = Invoice::STATUS_DESCRIPTION.keys
         all_invoices = Invoice.where("invoices.company_id IN(?)", company_id)
+        all_invoices = all_invoices.where(status: options[:type]) if options[:type].present?
 
         options[:status] = 'active'
         active_invoices = all_invoices.filter(options,per_page)
@@ -52,9 +53,8 @@ module Reporting
         recurring_invoices.group_by{|i| i.group_date}.each do |date, invoices|
           recurring_invoices_progress[date] = invoices.collect(&:invoice_total).sum rescue 0
         end
-
         invoice_status.each do |status|
-          recent_activity[status] = active_invoices.select{|i| i.status.eql?(status.to_s)}.count rescue 0
+          recent_activity[status] = eval("Invoice.#{status}_count") rescue 0
         end
 
         recent_activity.merge!(active_invoices_total: active_invoices.reject{|x| x.invoice_total.nil?}.collect(&:invoice_total).sum)

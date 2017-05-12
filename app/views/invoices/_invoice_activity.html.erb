@@ -73,10 +73,21 @@
     </div>
 
     <div class="status-info actionState">
-      <h5 class="text-blue">Sent<span> (<%= @invoice_activity[:sent] %>)</span></h5>
-      <h5 class="text-green">Paid<span> (<%= @invoice_activity[:paid] %>)</span></h5>
-      <h5 class="text-orange">Partial<span> (<%= @invoice_activity[:partial] %>)</span></h5>
-      <h5 class="text-grey">Draft<span>(<%= @invoice_activity[:draft]%>)</span></h5>
+      <%= form_tag '', method: :get, remote: true do %>
+         <div class="ui list">
+            <% Invoice::STATUS_DESCRIPTION.each do |status, description|%>
+                <div class="item">
+                  <div class="ui checkbox">
+                    <h5>
+                      <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
+                      <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= status.to_s.humanize %></label>
+                      <span>(<%= @invoice_activity[status]%>)</span>
+                    </h5>
+                  </div>
+                </div>
+            <% end %>
+         </div>
+     <% end %>
     </div>
   </div>
 </aside>

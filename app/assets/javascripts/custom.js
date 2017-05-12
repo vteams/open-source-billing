@@ -248,6 +248,10 @@ $(document).ready(function(){
     });
 
     mobileSideMenu();
+
+    $(".filter-status").on('change', function(){
+        $(this).parents("form").submit();
+    })
 });
 
 function mobileSideMenu(){
