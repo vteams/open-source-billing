@@ -1,15 +1,27 @@
-.header{
-  .fl{
-    float: left;
-  }
-  .fr{
-    float: right;
-  }
+.content_middle {
+  background: white;
 }
+
 .show_invoice{
+  .primary_links{
+    float:right;
+    min-height: 15px;
+    padding: 23px 0 0;
+  }
+  .links_dd{
+    background: asset-url('links_dd.png') no-repeat right;
+    padding: 0 12px 0 0;
+  }
+  .btn_large.big{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .content_bottom.top{
+    padding: 30px 0;
+  }
   .invoice_preview{
     float: left;
-    width: 100%;
+    width: 99%;
     padding: 0 0 60px 0;
   }
   .inovice_preview_contianer{
@@ -27,25 +39,49 @@
     height: 90px;
     *margin: -1px 0 0 -839px;
   }
-
+  .draft{
+    background: asset-url('draft.png') no-repeat;
+  }
+  .sent{
+    background: asset-url('sent.png') no-repeat;
+  }
+  .draft-partial{
+    background: asset-url('draft_partial.png') no-repeat;
+  }
+  .partial{
+    background: asset-url('partial.png') no-repeat;
+  }
+  .paid{
+    background: asset-url('paid.png') no-repeat;
+  }
+  .disputed{
+    background: asset-url('disputed.png') no-repeat;
+  }
+  .viewed{
+    background: asset-url('viewed.png') no-repeat;
+  }
   .invoice_preview_content{
-    width: 95%;
+    float: left;
+    position: relative;
+    width: 630px;
     padding: 65px 29px 0 29px;
   }
   .preview_content_top{
+    float: left;
+    width: 100%;
     padding-bottom: 11px;
   }
   .preview_top{
     padding-bottom: 25px !important;
-    float: left;
   }
   .preview_top, .preview_btm{
-    width: 95%;
+    float: left;
+    width: 100%;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 0 30px 0;
     .preview_top_left{
       float: left;
-      width: 60%;
+      width: 350px;
       padding-left: 10px;
       .invoice_date{
         float: left;
@@ -71,7 +107,7 @@
     }
     .preview_top_right, pr{
       float: right;
-      width: 40%;
+      width: 256px;
       padding: 5px 0 0 0;
       .company_logo{
         float: right;
@@ -90,6 +126,8 @@
       }
     }
   }
+
+
   .preview_btm{
     float: left;
     width: 100%;
@@ -144,18 +182,33 @@
   }
 
   .preview_content_middle{
-    width: 97%;
+    float: left;
+    width: 100%;
     padding: 0 0 25px 0;
   }
-
+  .grid_table table col.one{
+    width : 140px;
+  }
+  .grid_table table col.two{
+    width : 250px;
+  }
+  .grid_table table col.three{
+    width: 80px;
+  }
+  .grid_table table col.four{
+    width : 80px;
+  }
+  .grid_table table col.five{
+    width : 80px;
+  }
   .preview_content_btm{
     float: left;
     width: 100%;
-    padding: 25px 0 30px 0;
+    padding: 0 0 30px 0;
   }
   .preview_btm_top{
     float: left;
-    width: 95%;
+    width: 100%;
   }
   .preview_left.btm{
     padding-left: 0px;
@@ -202,7 +255,7 @@
   }
   .preview_btm_footer{
     float: left;
-    width: 95%;
+    width: 100%;
     padding: 90px 0 0 0;
   }
   .preview_btm_footer ul{
@@ -226,9 +279,25 @@
 }
 
 .show_estimate{
+  .primary_links{
+    float:right;
+    min-height: 15px;
+    padding: 23px 0 0;
+  }
+  .links_dd{
+    background: asset-url('links_dd.png') no-repeat right;
+    padding: 0 12px 0 0;
+  }
+  .btn_large.big{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .content_bottom.top{
+    padding: 30px 0;
+  }
   .estimate_preview{
     float: left;
-    width: 100%;
+    width: 99%;
     padding: 0 0 60px 0;
   }
   .estimate_preview_contianer{
@@ -238,6 +307,7 @@
     overflow: hidden;
     border-radius: 4px;
     min-height: 90px;
+    margin-top: 50px;
   }
   .estimate_tag{
     position: absolute;
@@ -246,25 +316,49 @@
     height: 90px;
     *margin: -1px 0 0 -839px;
   }
-
+  .draft{
+    background: asset-url('draft.png') no-repeat;
+  }
+  .sent{
+    background: asset-url('sent.png') no-repeat;
+  }
+  .draft-partial{
+    background: asset-url('draft_partial.png') no-repeat;
+  }
+  .partial{
+    background: asset-url('partial.png') no-repeat;
+  }
+  .paid{
+    background: asset-url('paid.png') no-repeat;
+  }
+  .disputed{
+    background: asset-url('disputed.png') no-repeat;
+  }
+  .viewed{
+    background: asset-url('viewed.png') no-repeat;
+  }
   .estimate_preview_content{
-    width: 95%;
+    float: left;
+    position: relative;
+    width: 630px;
     padding: 65px 29px 0 29px;
   }
   .preview_content_top{
+    float: left;
+    width: 100%;
     padding-bottom: 11px;
   }
   .preview_top{
     padding-bottom: 25px !important;
-    float: left;
   }
   .preview_top, .preview_btm{
-    width: 95%;
+    float: left;
+    width: 100%;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 0 30px 0;
     .preview_top_left{
       float: left;
-      width: 60%;
+      width: 350px;
       padding-left: 10px;
       .estimate_date{
         float: left;
@@ -290,7 +384,7 @@
     }
     .preview_top_right, pr{
       float: right;
-      width: 40%;
+      width: 256px;
       padding: 5px 0 0 0;
       .company_logo{
         float: right;
@@ -309,6 +403,8 @@
       }
     }
   }
+
+
   .preview_btm{
     float: left;
     width: 100%;
@@ -326,7 +422,7 @@
       }
       .preview_right_label{
         float: left;
-        width: 82px;
+        width: 90px;
         text-align: left;
         span{
           float: right;
@@ -334,7 +430,7 @@
       }
       .preview_right_description{
         float: left;
-        width: 152px;
+        width: 145px;
         text-align: right;
       }
     }
@@ -363,18 +459,33 @@
   }
 
   .preview_content_middle{
-    width: 97%;
+    float: left;
+    width: 100%;
     padding: 0 0 25px 0;
   }
-
+  .grid_table table col.one{
+    width : 140px;
+  }
+  .grid_table table col.two{
+    width : 250px;
+  }
+  .grid_table table col.three{
+    width: 80px;
+  }
+  .grid_table table col.four{
+    width : 80px;
+  }
+  .grid_table table col.five{
+    width : 80px;
+  }
   .preview_content_btm{
     float: left;
     width: 100%;
-    padding: 25px 0 30px 0;
+    padding: 0 0 30px 0;
   }
   .preview_btm_top{
     float: left;
-    width: 95%;
+    width: 100%;
   }
   .preview_left.btm{
     padding-left: 0px;
@@ -421,7 +532,7 @@
   }
   .preview_btm_footer{
     float: left;
-    width: 95%;
+    width: 100%;
     padding: 90px 0 0 0;
   }
   .preview_btm_footer ul{

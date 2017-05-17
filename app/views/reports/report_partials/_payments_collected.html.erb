@@ -68,7 +68,7 @@
                 </td>
                 <td class="align_center" >
                   <% payments.each do |payment| %>
-                    <%= payment.created_at.to_date.strftime(get_date_format) %>
+                    <%= payment.payment_date.to_date.strftime(get_date_format) %>
                     <br>
                   <% end %>
                 </td>

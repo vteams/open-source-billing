@@ -1,11 +1,123 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-</head>
-<body>
-<%= @email_html_body.html_safe%>
-</body>
-</html>
+<table cellspacing="0" cellpadding="0" class="force-full-width">
+  <tr>
+    <td style="font-size:40px; font-weight: 600; color: #ffffff; text-align:center;" class="mobile-spacing">
+    <div class="mobile-br">&nbsp;</div>
+      Your estimate is ready
+    <br>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size:24px; text-align:center; padding: 0 75px; color:#6f6f6f;" class="w320 mobile-spacing">
+     Looking forward to doing business! Here's what we think it will take.
+    </td>
+  </tr>
+</table>
 
+<table cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td>
+      <img src="https://www.filepicker.io/api/file/GpfIo4fLSmOUlg8sU33n" style="max-width:100%; display:block;">
+    </td>
+  </tr>
+</table>
 
+</td>
+</tr>
+</table>
+
+<table cellspacing="0" cellpadding="0" class="force-full-width" bgcolor="#ffffff" >
+<tr>
+<td style="background-color:#ffffff; padding-top: 15px;">
+
+<center>
+<table style="margin:0 auto;" cellspacing="0" cellpadding="0" class="force-width-80">
+  <tr>
+    <td style="text-align:left;">
+    <br>
+      <b><%= @estimate.client.first_name %></b> <br>
+      <%= @estimate.client.address_street1 unless @estimate.client.address_street1.empty? %> <br>
+      <%= @estimate.client.address_street2 unless @estimate.client.address_street2.empty? %> <br>
+      <%= "#{@estimate.client.city}, #{@estimate.client.province_state} #{@estimate.client.postal_zip_code}" unless @estimate.client.city.empty? %>
+    </td>
+    <td style="text-align:right; vertical-align:top;">
+    <br>
+    <b>Estimate: <%= @estimate.estimate_number %></b> <br>
+    <%= @estimate.estimate_date %>
+    </td>
+  </tr>
+</table>
+
+<table style="margin:0 auto;" cellspacing="0" cellpadding="0" class="force-width-80">
+  <tr>
+    <td class="mobile-block" >
+    <br>
+
+      <table cellspacing="0" cellpadding="0" class="force-full-width">
+        <tr>
+          <td style="border-bottom:1px solid #e3e3e3; font-weight: bold; text-align: left;">
+            Description
+          </td>
+        </tr>
+        <% @estimate_items.each do |item| %>
+        <tr>
+          <td style="text-align: left;">
+            <%= item[0] %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+
+    </td>
+
+    <td class="mobile-block">
+    <br>
+      <table cellspacing="0" cellpadding="0" class="force-full-width">
+        <tr>
+          <td style="border-bottom:1px solid #e3e3e3; font-weight: bold;" class="mobile-align">
+            Amount
+          </td>
+        </tr>
+        <% @estimate_items.each do |item| %>
+        <tr>
+          <td class="mobile-align">
+            <%= "#{number_to_currency(item[1], unit: @estimate.currency.code)}" %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+<table style="margin: 0 auto;" cellspacing="0" cellpadding="0" class="force-width-80">
+  <tr>
+    <td style="text-align: left;">
+    <br>
+      We are very excited you are planning on doing business with us. Above is a summary of what we think it will take to complete the project. For a more detailed summary, please
+      click <a style="color: #f5774e; text-decoration: none;"href="<%= "#{Account.url(@estimate.try(:account_id))}/estimates/preview?inv_id=#{@estimate.encrypted_id}" %>">here</a> or on the button below.<br /><br />
+      Truly, <br>
+      <%= @estimate.company.company_name %>
+    </td>
+  </tr>
+</table>
+</center>
+
+<table style="margin:0 auto;" cellspacing="0" cellpadding="10" width="100%">
+  <tr>
+    <td style="text-align:center; margin:0 auto;">
+    <br>
+      <div><!--[if mso]>
+        <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:45px;v-text-anchor:middle;width:180px;" stroke="f" fillcolor="#f5774e">
+          <w:anchorlock/>
+          <center>
+        <![endif]-->
+            <a href="<%= "#{Account.url(@estimate.try(:account_id))}/estimates/preview?inv_id=#{@estimate.encrypted_id}" %>" style="background-color:#f5774e;color:#ffffff;display:inline-block;font-family:'Source Sans Pro', Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:45px;text-align:center;text-decoration:none;width:180px;-webkit-text-size-adjust:none;">View Estimate</a>
+            <!--[if mso]>
+          </center>
+        </v:rect>
+      <![endif]--></div>
+      <br>
+    </td>
+  </tr>
+</table>

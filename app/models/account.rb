@@ -51,11 +51,18 @@ class Account < ActiveRecord::Base
   end
 
   def self.payment_gateway
-    ActiveMerchant::Billing::PaypalGateway.new(
+    case OSB::CONFIG::ACTIVEMERCHANT_BILLING_TYPE
+    when "paypal"
+      ActiveMerchant::Billing::PaypalGateway.new(
         :login => OSB::CONFIG::PAYPAL_LOGIN,
         :password => OSB::CONFIG::PAYPAL_PASSWORD,
         :signature => OSB::CONFIG::PAYPAL_SIGNATURE
-    )
+      )
+    when "stripe"
+      ActiveMerchant::Billing::StripeGateway.new(
+        :login => OSB::CONFIG::STRIPE_SECRET_KEY
+      )
+    end
   end
 
 end

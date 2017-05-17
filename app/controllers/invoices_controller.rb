@@ -1,23 +1,3 @@
-#
-# Open Source Billing - A super simple software to create & send invoices to your customers and
-# collect payments.
-# Copyright (C) 2013 Mark Mian <mark.mian@opensourcebilling.org>
-#
-# This file is part of Open Source Billing.
-#
-# Open Source Billing is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Open Source Billing is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
-#
 class InvoicesController < ApplicationController
   load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice]
@@ -104,12 +84,17 @@ class InvoicesController < ApplicationController
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to {|format| format.js; format.html}
-   end
+    end
   end
 
   def create
     @invoice = Invoice.new(invoice_params)
-    @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.status =
+      if params[:save_as_draft]
+        'draft'
+      else
+        @invoice.invoice_total.zero? ? 'paid' : 'sent'
+      end
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
@@ -133,6 +118,9 @@ class InvoicesController < ApplicationController
 
   def update
     @invoice = Invoice.find(params[:id])
+    if params[:commit] == "Send Invoice"
+      @invoice.status = @invoice.invoice_total.zero? ? 'paid' : 'sent'
+    end
     @invoice.company_id = get_company_id()
     notify = params[:commit].present? ? true : false
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], notify) unless params[:response_to_client].blank?
@@ -226,7 +214,7 @@ class InvoicesController < ApplicationController
     invoice = Invoice.find params[:invoice_id]
     user = invoice.creator
     @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], user)
-    org_name = current_user.accounts.first.org_name rescue or_name = ''
+    org_name = current_user.accounts.first.org_name rescue org_name = ''
     @message = dispute_invoice_message(org_name)
 
     respond_to { |format| format.js }

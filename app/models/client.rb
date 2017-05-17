@@ -72,7 +72,7 @@ class Client < ActiveRecord::Base
 
   def get_credit_card(options)
     ActiveMerchant::Billing::CreditCard.new(
-        :type => options[:cc_type] || 'visa',
+        :brand => options[:cc_type] || 'visa',
         :first_name => options[:first_name] ||'Arif',
         :last_name => options[:last_name] ||'Khan',
         :number => options[:cc_number] ||'4650161406428289',
@@ -119,7 +119,6 @@ class Client < ActiveRecord::Base
     client_total_credit = deleted_invoices_payments.sum(:payment_amount)
     update_payment_status(deleted_invoices_payments)
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
-    # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
     client_total_credit
   end
 
@@ -137,7 +136,6 @@ class Client < ActiveRecord::Base
     client_total_credit = deleted_invoices_payments.sum(:payment_amount)
 
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
-    # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
 
     client_payments = Payment.where("payment_method = 'credit'  AND invoice_id in (?)", client_invoice_ids).all
 

@@ -205,7 +205,7 @@ jQuery ->
     cost = jQuery(container).find("input.cost")
     qty = jQuery(container).find("input.qty")
     cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
-    qty.val(parseInt(qty.val())) if qty.val()
+    qty.val(parseFloat(qty.val())) if qty.val()
   updateInvoiceTotal()
 
   # dispute popup validation

@@ -1,5 +1,5 @@
 <div class="credit_card">
-  <%= form_tag '/invoices/pay_with_credit_card', method: 'post', id: 'cc_form', novalidate: "", :remote => true do -%>
+  <%= form_tag '/invoices/pay_with_credit_card', method: 'post', id: 'cc_form', novalidate: "", :remote => true do %>
       <div id="cc_popup" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="model_grey_container">
           <div class="modal-header">
@@ -110,14 +110,12 @@
                 <!--fields_content_container-->
               </div>
               <!--fields_content-->
-
-
             </div>
 
           </div>
           <div class="footer ">
             <%= submit_tag t('views.credit_card.pay_invoice'), :class => "btn_large submit" %>
-            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancal') %></a>
+            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancel') %></a>
           </div>
         </div>
       </div>

@@ -49,9 +49,9 @@
               <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
                 <tr>
                   <td class="align_left" data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
-                  <td class="align_center" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
+                  <td class="align_center" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_f}  %>">
                     <%  items.each do |item| %>
-                      <%= item.attributes["item_quantity"].to_i %>
+                      <%= item.attributes["item_quantity"].to_f %>
                       <br>
                     <% end %>
                   </td>
@@ -82,7 +82,7 @@
                   <td class="align_left " ><%= t("views.common.total") %></td>
                   <td class="align_center ">
                     <% @report.report_total.each do |total| %>
-                      <%= total["item_quantity"].to_i %>
+                      <%= total["item_quantity"].to_f %>
                       <br>
                     <% end %>
                   </td>

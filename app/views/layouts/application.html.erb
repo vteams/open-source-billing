@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Open Source Billing</title>
+  <title>Proveric Billing</title>
   <%= favicon_link_tag %>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -241,9 +241,9 @@
       <div class="footer_container">
         <div class="footer_content">
           <ul>
-            <li class="copy_right">Copyright © 2013 by <a href="http://vteams.com/">vteams</a>. All rights reserved.</li>
-            <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
-            <li class="contact_us"><a href="mailto:teena@vteams.com">Contact Us</a></li>
+            <li class="copy_right">Copyright © <%= Date.today.year %> by <a href="http://vteams.com/">vteams</a>. All rights reserved.</li>
+            <li class="privacy_policy"><a href="<%= privacy_index_path %>" class="">Privacy Policy</a></li>
+            <li class="contact_us"><a href="mailto:info@proveric.com">Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -256,4 +256,3 @@
 <div id="progress_indicator" style="display: none;"></div>
 </body>
 </html>
-

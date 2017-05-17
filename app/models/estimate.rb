@@ -124,7 +124,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def dispute_history
-    sent_emails.where("type = 'Disputed'")
+    sent_emails.where("type = 'Disputed'").order(created_at: :desc)
   end
 
   def load_deleted_tax1(line_item)
