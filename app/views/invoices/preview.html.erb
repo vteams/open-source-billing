@@ -1,5 +1,9 @@
 <%- model_class = Invoice -%>
-<div class="show_invoice">
+<div id="main-content" class="side-show">
+  <%= render :partial=>"show_invoice"%>
+</div><!--content_middle-->
+
+<div class="show_invoice hidden">
   <div class="content_top">
     <div class="primary_heading">
       <h1><%= t '.title', :default => t('invoice') %>:<%= @invoice.invoice_number %></h1>
