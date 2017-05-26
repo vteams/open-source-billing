@@ -162,8 +162,10 @@ class PaymentsController < ApplicationController
   end
 
   def payments_history
-    client = Invoice.find_by_id(params[:id]).unscoped_client
-    @payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
+    #client = Invoice.find_by_id(params[:id]).unscoped_client
+    #@payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
+    invoice = Invoice.find_by_id params[:id]
+    @payments = invoice.payments
   end
 
   def invoice_payments_history

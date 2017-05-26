@@ -96,6 +96,21 @@ module InvoicesHelper
   end
 
 
+  def taxes_latest_list_print list,invoice=nil
+    tax_list = '<div class="new-invoice-footer-row">'
+    currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
+    for tax, amount in list
+      tax_list += <<-HTML
+      <span>#{tax}</span>
+      <select class="inline-select small-select" disabled>
+        <option value="1">#{number_to_currency(amount,unit: currency_unit)}</option>
+      </select>
+      </div>
+      HTML
+    end
+    tax_list.html_safe
+  end
+
 
   def invoice_not_updated
     notice = <<-HTML

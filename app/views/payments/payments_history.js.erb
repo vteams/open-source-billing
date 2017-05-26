@@ -1,5 +1,5 @@
-jQuery('#payments_history_header').html('<%=escape_javascript(render :partial =>"payments_history_header")%>')
-jQuery('#payment_body').html('<%= escape_javascript(render :partial=>"payments_history") %>');
-jQuery('tfoot#paging_links').html('<%= escape_javascript render("application_partials/paging") %>');
-bind_edit_payment_links()
 
+$('body').append("<%= escape_javascript render partial: 'payment_history_popup', locals: {payments: @payments}  %>");
+elem = $("#modal-invoice-history");
+Popup.initialize(elem);
+Popup.open(elem);

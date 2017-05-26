@@ -1,255 +1,175 @@
-<div class="show_invoice">
-<div class="invoice_preview">
-<div class="inovice_preview_contianer">
-<div class="invoice_tag <%= @invoice.status %>"></div>
-
-<div class="invoice_preview_content">
-
-<div class="preview_content_top">
-
-  <div class="preview_top">
-
-    <div class="preview_top_left">
-      <div class="invoice_date">
-        <h2><%= t('invoice') %></h2>
-      </div>
-      <div class="invoice_name"><%= @invoice.company.company_name || '' %></div>
-
-      <div class="invoice_organization">
-        <p><%= @invoice.company.contact_name %></p>
-
-        <p><%= @invoice.company.street_address_1 %></p>
-
-        <p><%= @invoice.company.street_address_2 %></p>
-
-        <p><%= "#{@invoice.company.city}, #{@invoice.company.province_or_state } #{@invoice.company.postal_or_zipcode}" if @invoice.company.city %></p>
-
-        <p><%= @invoice.company.country %></p>
-      </div>
-
-    </div>
-
-    <div class="preview_top_right">
-      <% unless @invoice.company.logo_url.blank? %>
-
-          <div class="company_logo"><%= request.format.pdf? ? (wicked_pdf_image_tag  @invoice.company.logo_url(:thumb)) : (image_tag @invoice.company.logo_url(:thumb)) %></div>
-      <% end %>
-      <div class="company_logo"><%= @invoice.company.company_tag_line %></div>
-    </div>
-
-  </div>
-  <!--preview_top-->
-
-
-  <div class="preview_btm">
-
-    <!--<div class="preview_top_left">-->
-
-    <!--<div class="invoice_address">-->
-    <!--<p><%#= "#{Account.first.street_address_1} #{Account.first.street_address_2}" %></p>-->
-    <!--<p><%#= Account.first.province_or_state %></p>-->
-    <!--</div>-->
-
-    <!--</div>-->
-    <% if @client.present? %>
-        <div class="preview_top_left">
-          <div class="invoice_name"><%= @client.organization_name rescue '' %></div>
-
-          <div class="invoice_organization">
-            <p><%= @client.first_name.to_s + " " +@client.last_name.to_s %></p>
-
-            <p><%= @client.address_street1 %></p>
-
-            <p><%= @client.address_street2 %></p>
-
-            <p><%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %></p>
-
-            <p><%= @client.country %></p>
+<div>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-header clearfix">
+      <h5 class="left">
+        Invoice :
+        <span><%= @invoice.client.organization_name rescue '' %></span>
+      </h5>
+      <% unless  request.format.pdf? %>
+          <div class="new-invoice-action-btn right">
+            <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Pdf' %>
+            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
+            <%= link_to raw("<i class='material-icons'>history</i>"), {:controller => 'payments', :action => 'payments_history', id: @invoice.id, encrypted_id: params[:inv_id]}, remote: true unless @invoice.payments.blank? %>
           </div>
-
-        </div>
-    <% end %>
-    <div class="preview_top_right">
-
-      <div class="top_right_row">
-        <div class="preview_right_label"><%= t('invoice') %> # <span>:</span></div>
-        <div class="preview_right_description"><%= @invoice.invoice_number %></div>
-      </div>
-      <!--top_right_row-->
-
-      <div class="top_right_row">
-        <div class="preview_right_label"><%= t('views.invoices.invoice_date') %> <span>:</span></div>
-        <div class="preview_right_description"><%= @invoice.invoice_date rescue "" %></div>
-      </div>
-      <!--top_right_row-->
-
-      <div class="top_right_row">
-        <div class="preview_right_label"><%= t('amount') %> <span>:</span></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-      <!--top_right_row-->
-      <div class="top_right_row">
-        <div class="preview_right_label"><%= t('views.invoices.due_date') %> <span>:</span></div>
-        <div class="preview_right_description"><%= @invoice.due_date rescue "" %></div>
-      </div>
-      <!--top_right_row-->
-
+      <% end %>
     </div>
 
+    <div class="info-section clearfix">
+      <div class="info-left-section">
+        <h6><%= @invoice.invoice_number %></h6>
+        <span>Invoice: <small> <%= @invoice.invoice_date %> <i class="material-icons">date_range</i></small></span>
+        <span class="text-blue"> Due: <small> <%= @invoice.due_date %><i class="material-icons">date_range</i></small></span>
+        <div class="terms">
+          <span>Terms : </span> <em><%= @invoice.term %></em>
+        </div>
+        <div class="paymentInfo">
+          <strong><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.code ) %>
+            <select disabled>
+              <option value="1"><%= @invoice.currency.unit %></option>
+            </select>
+          </strong>
+        </div>
+      </div>
+      <div class="info-right-section">
+        <span class="btn-invoice-draft"><%= @invoice.status %></span>
+      </div>
+    </div>
 
-  </div>
-  <!--preview_btm-->
-
-  <div class="preview_right">
-
-
-  </div>
-  <!--preview_top_right-->
-
-</div>
-<!--preview_content_top-->
-<% if @invoice.invoice_line_items.present? %>
-<div class="preview_content_middle">
-  <div class="grid_table">
-    <table cellpadding="0" cellspacing="0">
-      <thead>
-      <tr>
-        <th class="left-align"><%= t('views.common.item') %></th>
-        <th class="left-align"><%= t('views.common.description') %></th>
-        <th class="right-align"><%= t('views.common.unit_cost') %></th>
-        <th class="right-align"><%= t('views.items.quantity') %></th>
-        <th class="right-align"><%= t('views.invoices.line_total') %></th>
-      </tr>
-      </thead>
-      <tbody>
-
-
-      <% @invoice.invoice_line_items.each do |item|
-        item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-      %>
-          <tr>
-            <td class="left-align"><%= item.item_name rescue "" %></td>
-            <td class="left-align"><%= item.item_description %></td>
-            <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-            <td class="right-align"><%= item.item_quantity.to_i %></td>
-            <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-  <!--grid_table-->
-</div>
-<% end %>
-<% if @invoice.invoice_tasks.present? %>
-      <div class="preview_content_middle">
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0">
+    <div class="new-invoice-table-holder">
+      <% if @invoice.invoice_line_items.present? %>
+          <table class="bordered responsive-table" cellpadding="0" cellspacing="0">
             <thead>
-            <tr>
-              <th class="left-align"><%= t('views.common.task') %></th>
-              <th class="left-align"><%= t('views.common.description') %></th>
-              <th class="right-align"><%= t('views.tasks.rate') %></th>
-              <th class="right-align"><%= t('views.tasks.hours') %></th>
-              <th class="right-align"><%= t('views.tasks.line_total') %></th>
-            </tr>
+                <tr>
+                  <th class="left-align"><%= t('views.common.item') %></th>
+                  <th class="left-align"><%= t('views.common.description') %></th>
+                  <th class="right-align"><%= t('views.common.unit_cost') %></th>
+                  <th class="right-align"><%= t('views.items.quantity') %></th>
+                  <th class="right-align"><%= t('views.invoices.line_total') %></th>
+                </tr>
             </thead>
             <tbody>
-
-
-            <% @invoice.invoice_tasks.each do |task|
-              task_total = (task.rate ||0) * (task.hours ||0)
-            %>
-                <tr>
-                  <td class="left-align"><%= task.name rescue "" %></td>
-                  <td class="left-align"><%= task.description %></td>
-                  <td class="right-align"><%= number_to_currency(task.rate, unit: "") %></td>
-                  <td class="right-align"><%= task.hours %></td>
-                  <td class="right-align"><%= number_to_currency(task_total, unit: "") %></td>
-                </tr>
-            <% end %>
+                <% @invoice.invoice_line_items.each do |item|
+                  item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+                %>
+                    <tr>
+                      <td class="left-align"><%= item.item_name rescue "" %></td>
+                      <td class="left-align"><%= item.item_description %></td>
+                      <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                      <td class="right-align"><%= item.item_quantity.to_i %></td>
+                      <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+                    </tr>
+                <% end %>
             </tbody>
           </table>
-        </div>
-        <!--grid_table-->
-      </div>
-<% end %>
-<!--preview_content_middle-->
-
-<div class="preview_content_btm">
-  <div class="preview_btm_top">
-
-    <% unless @invoice.notes.blank? %>
-        <div class="preview_left btm">
-          <div class="preview_notes">
-            <p class="preview_heading"><%= t('views.common.notes') %></p>
-
-            <p><%= @invoice.notes %></p>
-          </div>
-        </div>
-    <% end %>
-    <!--preview_top_left-->
-
-    <div class="preview_right btm">
-      <div class="top_right_row preview_heading">
-        <div class="preview_right_label"><%= t('views.invoices.subtotal') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.sub_total, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-      <!--top_right_row-->
-
-      <div class="top_right_row">
-        <div class="preview_right_label"><%= t('views.common.discount') %> <%= @invoice.discount_percentage %><%= @invoice.discount_type %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-
-      <% if @invoice.tax.present? %>
-      <div class="top_right_row">
-        <div class="preview_right_label">Invoice Tax: <%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_tax_amount, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
       <% end %>
-      <!--top_right_row-->
-      <% unless @invoice.tax_detail_with_discount.blank? %>
-          <%= taxes_list_print(@invoice.tax_detail_with_discount,@invoice) %>
+      <% if @invoice.invoice_tasks.present? %>
+          <table class="bordered responsive-table">
+            <thead>
+                <tr>
+                  <th class="left-align"><%= t('views.common.task') %></th>
+                  <th class="left-align"><%= t('views.common.description') %></th>
+                  <th class="right-align"><%= t('views.tasks.rate') %></th>
+                  <th class="right-align"><%= t('views.tasks.hours') %></th>
+                  <th class="right-align"><%= t('views.tasks.line_total') %></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @invoice.invoice_tasks.each do |task|
+                  task_total = (task.rate ||0) * (task.hours ||0)
+                %>
+                    <tr>
+                      <td class="left-align"><%= task.name rescue "" %></td>
+                      <td class="left-align"><%= task.description %></td>
+                      <td class="right-align"><%= number_to_currency(task.rate, unit: "") %></td>
+                      <td class="right-align"><%= task.hours %></td>
+                      <td class="right-align"><%= number_to_currency(task_total, unit: "") %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+          </table>
       <% end %>
-
-      <!--top_right_row-->
-
-      <div class="top_right_row preview_heading border-row">
-        <div class="preview_right_label"><%= t('views.common.total') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total, unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-      <!--top_right_row-->
-
-      <div class="top_right_row border amt_paid">
-        <div class="preview_right_label"><%= t('views.invoices.amount_paid') %></div>
-        <div class="preview_right_description">-<%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-      <!--top_right_row-->
-
-      <div class="top_right_row border preview_heading">
-        <div class="preview_right_label"><%= t('views.invoices.amount_due') %></div>
-        <div class="preview_right_description"><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.present? ? @invoice.currency.unit : '$') %></div>
-      </div>
-      <!--top_right_row-->
     </div>
-    <!--preview_top_right-->
+
+    <div class="new-invoice-footer">
+      <div class="right-section right">
+        <div class="invoice-total-left">
+          <strong class="invoice-total-title">Subtotal</strong>
+          <% if @invoice.discount_percentage.present? %>
+              <div class="new-invoice-footer-row">
+                <span>Discount</span>
+                <select class="inline-select small-select" disabled>
+                  <option value="1"><%= @invoice.discount_percentage %><%= @invoice.discount_type %></option>
+                </select>
+              </div>
+          <% end %>
+          <% if @invoice.tax.present? %>
+              <div class="new-invoice-footer-row">
+                <span>Invoice Tax</span>
+                <select class="inline-select small-select" disabled>
+                  <option value="1"><%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</option>
+                </select>
+              </div>
+          <% end %>
+
+          <% @invoice.tax_detail_with_discount.each do |tax, amount| %>
+              <div class="new-invoice-footer-row">
+                <span>Line Item Tax </span>
+                <select class="inline-select small-select" disabled>
+                  <option value="1"><%= tax %></option>
+                </select>
+              </div>
+          <% end %>
+
+          <div class="new-invoice-footer-row">
+            <span>Total</span>
+          </div>
+          <div class="new-invoice-footer-row">
+            <span>Amount Paid</span>
+          </div>
+          <strong class="invoice-total-title">Amount Due</strong>
+        </div>
+        <div class="invoice-total-right">
+          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.sub_total, unit: '' ) %></span></strong>
+
+          <% if @invoice.discount_percentage.present? %>
+              <div class="new-invoice-footer-row">
+                <span><%=  @invoice.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(@invoice.discount_amount, unit: '' )%></em>
+              </div>
+          <% end %>
+
+          <% if @invoice.tax.present? %>
+              <div class="new-invoice-footer-row">
+                <span><%=  @invoice.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_tax_amount, unit: '' )%></em>
+              </div>
+          <% end %>
+          <% @invoice.tax_detail_with_discount.each do |tax, amount| %>
+              <div class="new-invoice-footer-row">
+                <span><%=  @invoice.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(amount, unit: '' )%></em>
+              </div>
+          <% end %>
+
+          <div class="new-invoice-footer-row">
+            <span><%=  @invoice.currency.unit %></span>
+            <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_total, unit: '' )%></em>
+          </div>
+          <div class="new-invoice-footer-row">
+            <span><%=  @invoice.currency.unit %></span>
+            <em class="f-invoice-price"><%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit:  '' )%></em>
+          </div>
+
+          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: '') %></span></strong>
+        </div>
+
+      </div>
+
+
+    </div>
+    <p class="report-copyrights">This invoice was sent using <%= request.format.pdf? ? (wicked_pdf_image_tag "m-bottom-logo.jpg", class: 'responsive-img') : (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
+    <br/>
 
   </div>
-  <!--preview_btm_top-->
-  <div class="preview_btm_footer">
-    <ul>
-      <li class="footer_txt"><%= t('views.invoices.this_invoice_was_sent_using') %></li>
-      <li><%= request.format.pdf? ? (wicked_pdf_image_tag "payment_logo.png", :size => "74x13", :alt => "") : (image_tag "payment_logo.png", :size => "74x13", :alt => "") %></li>
-    </ul>
-  </div>
-  <!--preview_btm_footer-->
 </div>
-<!--preview_content_btm-->
-</div>
-<!--invoice_preview_content-->
-</div>
-<!--invoice_preview_container-->
-</div>
-<!--invoice_preview-->
-</div><!--show_invoice-->
+
