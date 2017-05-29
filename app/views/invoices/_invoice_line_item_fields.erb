@@ -7,7 +7,7 @@
     </div>
   </td>
   <td>
-    <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),  {:prompt => t('views.invoice_line_item.select_an_item') ,:include_blank => false}, {"data-placeholder" => t('views.invoice_line_item.select_an_item'), class: "items_list inline-select title-select", :required => ""} %>
+    <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),  {:prompt => 'Select item' ,:include_blank => false}, {"data-placeholder" => 'select item', class: "items_list inline-select title-select", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <%= f.hidden_field :tax_1, class: 'tax1' %>

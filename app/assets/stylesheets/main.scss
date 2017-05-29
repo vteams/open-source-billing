@@ -3669,7 +3669,6 @@ html {
 .new-invoice-holder .new-invoice-header .select-wrapper .caret {
   position: absolute;
   top: 0;
-  margin: 18px 0 0;
   color: #b5b5b5;
   font-size: 9px; }
 .new-invoice-holder .new-invoice-header .select-wrapper .dropdown-content {
@@ -3730,7 +3729,7 @@ html {
   font-size: 10px;
   vertical-align: middle; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo {
-  margin-top: 15px; }
+  margin: 15px 0; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo span {
   margin-bottom: 0;
   min-width: 88px;
@@ -3765,7 +3764,6 @@ html {
   display: none; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .caret {
   top: 0;
-  margin: 18px 0 0;
   color: #b5b5b5;
   font-size: 9px; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .dropdown-content {
