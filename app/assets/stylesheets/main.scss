@@ -4221,3 +4221,11 @@ html {
   top: 4px; }
 
 /*# sourceMappingURL=main.css.map */
+.scroll-area {
+  overflow: hidden;
+  max-height: 600px;
+  padding-bottom: 60px; }
+.scroll-area .mCSB_scrollTools .mCSB_draggerRail {
+  background: #fff; }
+.scroll-area:hover .mCSB_scrollTools .mCSB_draggerRail {
+  background-color: rgba(0, 0, 0, 0.4); }

@@ -23,7 +23,7 @@
           <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
       <% else %>
           <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id), title: "Send" %>
-          <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), remote: true, class: 'edit_invoice_icon', title: "Edit" unless invoice.invoice_type.eql?('ProjectInvoice') %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), class: 'edit_invoice_icon', title: "Edit" unless invoice.invoice_type.eql?('ProjectInvoice') %>
           <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, title: "Delete", method: :delete, data:{confirm: 'Are you sure?' } %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>

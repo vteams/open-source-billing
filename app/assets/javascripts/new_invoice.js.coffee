@@ -221,9 +221,9 @@ class @Invoice
   @load_functions = ->
 
     if $('#recurring').is(":checked")
-      $("#invoice_recurring_schedule_attributes__destroy").val true
-    else
       $("#invoice_recurring_schedule_attributes__destroy").val false
+    else
+      $("#invoice_recurring_schedule_attributes__destroy").val true
 
     $('#recurring').on 'click', ->
       if $(this).is(":checked")

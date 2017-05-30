@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="info-right-section" >
-            <% has_recurring = @invoice.new_record? ? false : !@invoice.recurring_schedule.new_record? %>
+            <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
             <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
             <label for="recurring"><h6>Recurring</h6></label>
             <div class="show-me" id="recurring_schedule_container">
@@ -66,10 +66,9 @@
                       <%= rs.label :occurrences, "How Many?", class: 'active'%>
                     </div>
                   </div>
-                  <% draft_invoice = @invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
+                  <% draft_invoice = invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
                   <div class="invoice-input-holder rad-holder">
                     <div class="inovice-rad-holder">
-                      <input type="radio" name="rad" class="filled-in" id="rad1" />
                       <%= rs.radio_button :delivery_option, 'send_invoice', class:'filled-in', id: 'send_invoice', checked: !draft_invoice%>
                       <label for="send_invoice">Send invoices automatically </label>
                     </div>
@@ -77,6 +76,7 @@
                       <%= rs.radio_button :delivery_option, 'draft_invoice', class:'filled-in', id: 'draft_invoice', checked: draft_invoice%>
                       <label for="draft_invoice">Create Draft invoices and send manually</label>
                     </div>
+                    <%= rs.hidden_field :_destroy %>
                   </div>
                 </div>
             <% end %>
