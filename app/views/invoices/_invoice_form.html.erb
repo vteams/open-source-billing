@@ -117,6 +117,7 @@
               <strong class="invoice-total-title bottom">New Total</strong>
             </div>
             <div class="invoice-total-right">
+              <%= f.hidden_field :sub_total %>
               <strong class="invoice-total-title"><%= invoice.currency.unit rescue 'USD' %> <span><%= label_tag '', '', :id => 'invoice_sub_total_lbl' %></span></strong>
               <div class="new-invoice-footer-row">
                 <span><%= invoice.currency.unit rescue 'USD' %></span>

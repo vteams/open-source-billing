@@ -1,22 +1,18 @@
 <%= render 'estimate_activity'%>
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
-  <!--- main content --->
   <div class="flex-wrapper">
-    <!--- breadcrum Bar --->
-    <div class="flex-item breadcrum-bar">
+    <div class="flex-item col-sm-12 breadcrum-bar">
       <div class="card-white-panel">
         <h3>
-          <h3>
-            <span><%= link_to "Estimates",invoices_url %> </span>
-            <%= link_to "/ Edit",edit_estimate_url(@estimate) %>
-          </h3>
+          <span><%= link_to "Estimates",estimates_url %> </span>
+          <%= link_to "/ Active",estimates_url %>
         </h3>
       </div>
     </div>
   </div>
 
-  <div class="invoice-box mCustomScrollbar clearfix">
-    <%= render :partial => 'form', locals: {estimate: @estimate} %>
+  <div class="invoice-box-holder">
+    <%= render partial: 'estimate_form', locals: {estimate: @estimate} %>
   </div>
 </div>
 
