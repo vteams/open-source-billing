@@ -56,7 +56,7 @@ module ProjectSearch
     def self.filter_options
       {
           filter_box: [
-              {key: :project_name, label: 'Project Number'},
+              {key: :project_name, label: 'Project Name'},
               {key: :client, label: 'Client'},
               {key: :manager, label: 'Manager'}
           ]
