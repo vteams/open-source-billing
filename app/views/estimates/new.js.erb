@@ -1,10 +1,14 @@
-$('body').append("<%= escape_javascript render partial: 'estimate_form_popup', locals: {estimate: @estimate}  %>");
+<% if params[:search].present? %>
+    window.location = '<%= estimates_url(search: params[:search]) %>'
+<% else %>
+    $('body').append("<%= escape_javascript render partial: 'estimate_form_popup', locals: {estimate: @estimate}  %>");
 
-// call Invoice coffee script functions
-Estimate.change_estimate_item();
-Estimate.changeTax();
-Estimate.load_functions();
+    // call Invoice coffee script functions
+    Estimate.change_estimate_item();
+    Estimate.changeTax();
+    Estimate.load_functions();
 
-elem = $("#estimate_form_popup");
-Popup.initialize(elem);
-Popup.open(elem);
+    elem = $("#estimate_form_popup");
+    Popup.initialize(elem);
+    Popup.open(elem);
+<% end %>
