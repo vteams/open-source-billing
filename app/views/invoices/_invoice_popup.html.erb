@@ -10,7 +10,7 @@
           </h5>
           <div class="modal-action-btn right">
 
-            <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), remote: true, title: 'Edit', class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
+            <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), title: 'Edit', class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
             <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id), title: 'Send' %>
             <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
             <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: "show", target: '_blank' %>
