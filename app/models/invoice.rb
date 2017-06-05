@@ -278,7 +278,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def paypal_business user
-     user.current_account.pp_business
+    OSB::CONFIG::PAYPAL_BUSINESS
   end
 
   def paypal_url(return_url, notify_url, user = nil)

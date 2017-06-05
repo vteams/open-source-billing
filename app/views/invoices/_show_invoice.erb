@@ -6,11 +6,16 @@
         <span><%= @invoice.client.organization_name rescue '' %></span>
       </h5>
       <% unless  request.format.pdf? %>
+
           <div class="new-invoice-action-btn right">
+
             <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Pdf' %>
             <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
             <%= link_to raw("<i class='material-icons'>history</i>"), {:controller => 'payments', :action => 'payments_history', id: @invoice.id, encrypted_id: params[:inv_id]}, remote: true unless @invoice.payments.blank? %>
           </div>
+          <% if @invoice.status != "paid" and action_name.eql?('preview') %>
+              <span class="pull-right"><%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), title: 'Paypal Payment', class: 'btn btn-draft' %></span>
+          <% end %>
       <% end %>
     </div>
 
@@ -32,6 +37,7 @@
       </div>
       <div class="info-right-section">
         <span class="btn-invoice-draft"><%= @invoice.status %></span>
+
       </div>
     </div>
 
