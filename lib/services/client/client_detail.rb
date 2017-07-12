@@ -32,7 +32,7 @@ module Services
       #@client.invoices.group(:currency_id).each
       #payments = 0
       #@client.invoices.each { |invoice| payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount) }
-      {outstanding_amount: outstanding_amount(@client.invoices), amount_billed: amount_billed(@client.invoices), payments: total_payments(invoices) }
+      {outstanding_amount: outstanding_amount(@client.invoices), amount_billed: amount_billed(@client.invoices), payments: total_payments(@client.invoices) }
     end
 
     def outstanding_amount invoices
