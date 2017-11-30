@@ -1,18 +1,16 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
-gem 'rails', '~> 4.1.8'
-
-gem 'railties', '4.1.15'
-gem 'sprockets', '~> 2.12.3'
-gem 'sprockets-rails', '~> 2.2.2'
+ruby '2.1.0'
+gem 'rails', '~> 4.2.7.1'
 
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.3.20'
-gem 'devise', '3.2.3'
+gem 'devise', '3.4.1'
 gem 'devise-encryptable', '0.2.0'
 gem 'slim-rails', '3.1.0'
 gem 'twitter-bootstrap-rails', '~> 2.1.9'
-gem 'rails-settings-cached', '0.4.1'
+gem 'rails-settings-cached'
+gem 'rake', '< 11.0'
+gem 'responders', '~> 2.0'
 
 group :assets do
   gem 'sass-rails', '5.0.4'
@@ -20,11 +18,10 @@ group :assets do
   gem 'coffee-rails', '4.1.1'
   gem 'therubyracer', '0.12.2', :platforms => :ruby
   gem 'uglifier', '3.0.0'
-  gem 'turbo-sprockets-rails3', '0.2.9'
 end
 
 gem 'active_link_to', '1.0.3'
-gem 'jquery-rails', '~> 2.1.4'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'nested_form', '0.3.2'
 gem 'kaminari', '0.17.0'
 gem 'acts_as_archival', '1.1.1'
@@ -68,7 +65,6 @@ group :test do
 end
 
 gem 'money', '~>  6.5.0'
-gem 'dj_mon', git: 'https://github.com/akshayrawat/dj_mon'
 gem 'osb_api', path: 'vendor/engines/osb_api'
 
 
