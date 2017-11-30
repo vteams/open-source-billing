@@ -2,25 +2,21 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '~> 4.1.8'
 
-gem 'bundler', '1.12.5'
 gem 'railties', '4.1.15'
 gem 'sprockets', '~> 2.12.3'
 gem 'sprockets-rails', '~> 2.2.2'
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.3.20'
 gem 'devise', '3.2.3'
 gem 'devise-encryptable', '0.2.0'
 gem 'slim-rails', '3.1.0'
-#gem 'doorkeeper', '~> 1.4.0'
-#gem 'grape-doorkeeper', '~> 0.0.2'
 gem 'twitter-bootstrap-rails', '~> 2.1.9'
 gem 'rails-settings-cached', '0.4.1'
-# Gems used only for assets and not required
-# in production environments by default.
+
 group :assets do
   gem 'sass-rails', '5.0.4'
+  gem 'yajl-ruby', '~>1.3.1'
   gem 'coffee-rails', '4.1.1'
   gem 'therubyracer', '0.12.2', :platforms => :ruby
   gem 'uglifier', '3.0.0'
@@ -33,14 +29,10 @@ gem 'nested_form', '0.3.2'
 gem 'kaminari', '0.17.0'
 gem 'acts_as_archival', '1.1.1'
 gem 'paranoia', '2.1.5'
-#gem "acts_as_paranoid", "~>0.4.0"
-#gem 'will_paginate', '~> 3.0'
 gem 'activerecord-mysql-adapter', '0.0.1'
 gem 'delayed_job_active_record', '4.1.1'
 gem 'daemons', '1.2.3'
-#gem 'grape', '~> 0.9.0'
 gem 'hashie_rails', '0.0.4'
-#gem 'grape-rabl', '~> 0.3.0'
 group :development do
   gem 'better_errors', '2.1.1'
   gem "binding_of_caller", ">= 0.6.9"
@@ -78,8 +70,7 @@ end
 gem 'money', '~>  6.5.0'
 gem 'dj_mon', git: 'https://github.com/akshayrawat/dj_mon'
 gem 'osb_api', path: 'vendor/engines/osb_api'
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+
 
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
@@ -88,17 +79,8 @@ gem 'oauth', '0.4.7'
 gem 'roxml', '3.3.1'
 gem 'nokogiri', '1.6.8'
 gem 'quickbooks-ruby', '0.4.4'
-
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
-
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
+
+gem 'puma'
