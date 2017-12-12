@@ -61,27 +61,27 @@ jQuery ->
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
   # Update line and grand total if line item fields are changed
-  jQuery("input.cost, input.qty").live "blur", ->
+  jQuery("body").on "blur", "input.cost, input.qty", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
 
-  jQuery("input.cost, input.qty").live "keyup", ->
+  jQuery("body").on "keyup", "input.cost, input.qty", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
   #jQuery(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
-  jQuery("select.tax1, select.tax2").live "change", ->
+  jQuery("body").on "change", "select.tax1, select.tax2", ->
     updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
-  jQuery("input.cost, input.qty").live "keypress", (e) ->
+  jQuery("body").on "keypress", "input.cost, input.qty", (e) ->
     if e.which is 13
       e.preventDefault()
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".log_invoice_grid_fields select.items_list").live "change", ->
+  jQuery(".log_invoice_grid_fields").on "change", "select.items_list", ->
     updateInvoiceTotal()
 
   # Add empty line item row
@@ -90,11 +90,11 @@ jQuery ->
 #      jQuery(".log_invoice_grid_fields .add_nested_fields").click()
 #  #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".log_invoice_grid_fields .add_nested_fields").live "click", ->
+  jQuery(".log_invoice_grid_fields").on "click", ".add_nested_fields", ->
     setTimeout "window.applyChosen(jQuery('.log_invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total invoice balance if an item is removed
-  jQuery(".remove_nested_fields").live "click", ->
+  jQuery("body").on "click", ".remove_nested_fields", ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
@@ -148,7 +148,7 @@ jQuery ->
       applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
       flag = false
     flag
-  jQuery("#reason_for_dispute").live "keyup", ->
+  jQuery("body").on "keyup", "#reason_for_dispute", ->
     jQuery(this).qtip("hide")
 
 

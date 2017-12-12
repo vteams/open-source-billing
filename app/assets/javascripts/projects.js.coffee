@@ -1,7 +1,7 @@
 jQuery ->
 
   # Load Task data when an task is selected from dropdown list
-  jQuery(".project_grid_fields select.tasks_list").live "change", ->
+  jQuery(".project_grid_fields").on "change", "select.tasks_list", ->
     # Add an empty line item row at the end if last task is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -37,20 +37,20 @@ jQuery ->
       jQuery(".project_grid_fields .add_nested_fields").click()
       #jQuery("#add_task").click()
 
-  jQuery(".project_team_member_fields .add_nested_fields").live "click", ->
+  jQuery(".project_team_member_fields").on "click", ".add_nested_fields", ->
     setTimeout "window.applyChosen(jQuery('.project_team_member_fields tr.fields:last .chzn-select'))", 0
 
-  jQuery(".project_task_fields .add_nested_fields").live "click", ->
+  jQuery(".project_task_fields").on "click", ".add_nested_fields", ->
     setTimeout "window.applyChosen(jQuery('.project_task_fields tr.fields:last .chzn-select'))", 0
 
-  jQuery("#add_task").live "click", ->
+  jQuery("body").on "click", "#add_task", ->
     options = $('.tasks_list:first').html()
     $('.tasks_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.tasks_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
 
 
   # Load Staff data when an staff is selected from dropdown list
-  jQuery(".project_grid_fields select.members_list").live "change", ->
+  jQuery(".project_grid_fields").on "change", "select.members_list", ->
     # Add an empty line item row at the end if last task is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -71,7 +71,7 @@ jQuery ->
           container.find("input.description").val(item[0])
           container.find("input.rate").val(item[1])
 
-  jQuery(".project-submit-btn").live 'click', ->
+  jQuery("body").on 'click', ".project-submit-btn", ->
     flag = true
     if $("#project_project_name").val() is ""
       flag = false

@@ -23,21 +23,21 @@ window.tableListing = ->
   #jQuery("select.per_page").val('10');
 
   # Check all checkboxes using from main checkbox
-  jQuery('#select_all').live "click", ->
+  jQuery('body').on "click", '#select_all', ->
     listing_table =  jQuery(this).parents('table.table_listing')
     selected = if @checked then "selected" else ""
-    listing_table.find(':checkbox').attr('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
+    listing_table.find(':checkbox').prop('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
 
   jQuery(".alert button.close").click ->
     jQuery(this).parent(".alert").hide()
 
 
   # Check/uncheck all invoice listing checkboxes using from main checkbox
-  jQuery('#main-invoice-checkbox').live "click", ->
+  jQuery('body').on "click", '#main-invoice-checkbox', ->
     jQuery(this).parents('table.table-striped').find(':checkbox').attr('checked', this.checked)
 
   # Check/uncheck main checkbox if all checkboxes are checked
-  jQuery('table.table_listing tbody :checkbox').live "click", ->
+  jQuery('table.table_listing').on "click", 'tbody :checkbox', ->
     if jQuery(this).is(":checked")
       jQuery(this).parents('tr').addClass('selected')
     else
@@ -64,7 +64,7 @@ window.tableListing = ->
   jQuery("table.table_listing tbody td:empty").html("&nbsp;")
 
   # Alert on no record selection and confirm to delete forever payment
-  jQuery(".top_links").live "click", ->
+  jQuery("body").on "click", '.top_links', ->
     title = jQuery(this).parents("ul").attr "value"
     title = title.toLowerCase()
     action = jQuery(this).val().toLowerCase()
@@ -110,6 +110,6 @@ window.tableListing = ->
     jQuery('#subfile').val(jQuery(this).val())
 
   #
-  jQuery('.options_content :checkbox').live "click", ->
+  jQuery('.options_content').on "click", ':checkbox', ->
     status = jQuery('.options_content input[type=checkbox]:not(:checked)').length
     jQuery('#company_association').attr('checked', status)

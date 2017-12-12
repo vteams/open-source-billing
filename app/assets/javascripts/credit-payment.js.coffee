@@ -1,6 +1,6 @@
 window.creditPayment = ->
   #Select credit from method dropdown if apply from credit checkbox is checked
-  jQuery(".apply_credit").live "click", ->
+  jQuery("body").on "click", ".apply_credit", ->
 
     apply_credit_id = jQuery(this).attr("id")
     parent = jQuery(this).parents(".pay_invoice")
