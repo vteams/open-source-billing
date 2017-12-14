@@ -8,7 +8,6 @@ jQuery ->
       clearLineTotal(elem)
       false
     else
-      addLineTaskRow(elem)
       jQuery.ajax '/tasks/load_task_data',
         type: 'POST'
         data: "id=" + jQuery(this).val()
@@ -22,7 +21,8 @@ jQuery ->
           container.find("input.task_name").val(item[2])
           container.find(".description").val(item[0])
           container.find("input.rate").val(item[1])
-
+          container.find("select.task_id").val(item[3])
+      addLineTaskRow(elem)
 
 
   clearLineTotal = (elem) ->

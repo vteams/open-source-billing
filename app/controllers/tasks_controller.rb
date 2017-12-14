@@ -106,7 +106,7 @@ class TasksController < ApplicationController
 
   def load_task_data
       task = Task.find_by_id(params[:id]).present? ?  Task.find(params[:id]) : Task.unscoped.find_by_id(params[:id])
-      render :text => [task.description || "", task.rate, task.name]
+      render :text => [task.description || "", task.rate, task.name, task.id]
   end
 
   private
