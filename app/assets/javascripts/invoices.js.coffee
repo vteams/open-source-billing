@@ -340,8 +340,9 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('.use_as_template').on "click", '.close_qtip', ->
-    hidePopover(jQuery("#invoice_client_id_chzn"))
+  jQuery('body').on "click", '.use_as_template .close_qtip', ->
+    jQuery("#invoice_client_id_chzn").qtip('hide')
+    jQuery("#recurring_profile_client_id_chzn").qtip('hide')
 
   jQuery("body").on "click", "#invoice_client_id_chzn,.chzn-container", ->
     jQuery(this).qtip("hide")
