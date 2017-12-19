@@ -1,7 +1,7 @@
 Open Source Billing
 ===================
 
-A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.1.8. and Ruby v2.0.0. This document describe the OSB application setup on ubuntu 14.04 LTS  machine.
+A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.1.0. This document describes OSB application setup on ubuntu 14.04 LTS  machine.
 
 Features
 ---------
@@ -61,20 +61,17 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.0.0
+    rvm install 2.1.0
 
-    rvm use 2.0.0 --default
+    rvm use 2.1.0 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
 
     gem install bundler
 
-#### 2.4 Installing Rails
-Run this command to install rails:
-
-    gem install rails -v 4.1.8
 ### Step-3. Configuration
+
 #### 3.1 Clone Application Code
 To clone project code from github, give your github account credential for authentication while cloning project.
     
@@ -90,7 +87,6 @@ To clone project code from github, give your github account credential for authe
     bundle install
 #### 3.4 Configuring Database
 Copy config/database.yml.sample to config/database.yml and set your mysql username/password. After that run following command from terminal to createMySQL database specified in database.yml file.
-
 
     rake db:create
 
@@ -114,8 +110,8 @@ Edit config/config.yml with your own paypal settings:
 #### 3.7 Configuration Application host and protocol
 Edit config/config.yml with your own application settings:
 
-	 app_host: 'APP_HOST_HERE' # e.g. osb.mydomain.com
-     app_protocol: http
+    app_host: 'APP_HOST_HERE' # e.g. osb.mydomain.com
+    app_protocol: http
 
 #### 3.8 PDF configuration
 Using following command in terminal to get path of wkhtmltopdf library path that is already installed on system.
@@ -124,7 +120,7 @@ Using following command in terminal to get path of wkhtmltopdf library path that
 
 Edit config/config.yml with your own application wkhtmltopdf path.
 
-	wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
+    wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
 	
 #### 3.9 SMTP configuration 
 Edit config/config.yml with your own application smtp settings.
