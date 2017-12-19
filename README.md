@@ -138,7 +138,12 @@ Edit config/config.yml with your own application smtp settings.
          password: 'YOUR_PASSWORD_HERE'
 
 ### Step-4. Run
-#### 4.1 Development Environment
+#### 4.1 Background Services
+You need to start delayed_job for email delivery and other background tasks required for properly functionality of Open Source Billing by using following command
+
+    RAILS_ENV=development  bin/delayed_job start
+
+#### 4.2 Development Environment
 Your application is ready to use.  Run rails server using following command:
 
     rails server
