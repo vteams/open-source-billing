@@ -165,10 +165,9 @@ Contributing
 
 Contact Information
 -------------------
-
-Teena Liberman
+Jane Cady
 +1 (858) 586 7777
 
-E-mail: <teena@vteams.com> | <support@opensourcebilling.org> | <feedback@opensourcebilling.org>
+E-mail: <jane@vteams.com> | <support@opensourcebilling.org> | <feedback@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>
