@@ -426,6 +426,12 @@ fr:
       select_an_item: "Sélectionnez un élément ..."
 
 
+    import_data:
+      import_data: "Importer des données"
+      fresh_books: "FreshBooks"
+      freshbooks:
+        freshbooks_subdomain: 'Sous-domaine Freshbooks'
+        freshbooks_subdomain_hint: "Indice: xy1234.freshbooks.com"
 
   number:
     currency:

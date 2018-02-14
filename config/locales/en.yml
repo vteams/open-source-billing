@@ -552,6 +552,9 @@ en:
     import_data:
       import_data: "Import Data"
       fresh_books: "FreshBooks"
+      freshbooks:
+        freshbooks_subdomain: 'Freshbooks Subdomain'
+        freshbooks_subdomain_hint: "Hint: xy1234.freshbooks.com"
 
   number:
     currency:
