@@ -432,6 +432,8 @@ fr:
       freshbooks:
         freshbooks_subdomain: 'Sous-domaine Freshbooks'
         freshbooks_subdomain_hint: "Indice: xy1234.freshbooks.com"
+      quickbooks:
+        create_sandbox_companies_first: "Créer des sociétés sandbox d'abord dans Quickbooks"
 
   number:
     currency:

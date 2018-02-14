@@ -431,6 +431,8 @@ de:
       freshbooks:
         freshbooks_subdomain: "Freshbooks Subdomein"
         freshbooks_subdomain_hint: "Hinweis: xy1234.freshbooks.com"
+      quickbooks:
+        create_sandbox_companies_first: "Maak eerst sandboxbedrijven in Quickbooks"
 
   number:
     currency:
