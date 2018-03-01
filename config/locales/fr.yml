@@ -409,6 +409,7 @@ fr:
 
     help:
       help: "aider"
+      email_suppoprt: "S'il vous plaît contacter notre équipe de support par email à "
       help_yourself: "Aide-toi, le ciel vous aidera aussi. :)"
       we_hope_you_donot_need_help: "Nous espérons que vous ne serez pas besoin d'aide pour utiliser ce logiciel."
       never_mind_just_kidding: "Peu importe, je plaisante ... Nous serons de retour avec l'aide détaillée. Actuellement, coincé dans quelques autres trucs de haute priorité."
