@@ -34,6 +34,7 @@ group :development do
   gem 'better_errors', '2.1.1'
   gem "binding_of_caller", ">= 0.6.9"
   gem 'pry', '0.10.3'
+  gem 'pry-nav', '0.2.4'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'awesome_print', '1.7.0'
   gem 'quiet_assets', '1.1.0'
@@ -79,4 +80,4 @@ gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
 
-gem 'puma'
+gem 'puma', '3.11.0'
