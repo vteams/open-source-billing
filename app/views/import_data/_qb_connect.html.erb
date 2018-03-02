@@ -1,8 +1,15 @@
 <div id='qb_link'>
-    <ipp:connectToIntuit></ipp:connectToIntuit>
+  <div class="field_row description">
+    <div class="label_field left single"><span><ipp:connectToIntuit></ipp:connectToIntuit></span></div>
+    <div class="large_field">
+      <ul class="field_description">
+        <li><%= t 'views.import_data.quickbooks.create_sandbox_companies_first' %></li>
+      </ul>
+    </div>
     <%= yield %>
     <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
     <script>
     intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_import_data_url %>'});
     </script>
+  </div>
 </div>

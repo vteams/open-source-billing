@@ -552,6 +552,11 @@ en:
     import_data:
       import_data: "Import Data"
       fresh_books: "FreshBooks"
+      freshbooks:
+        freshbooks_subdomain: 'Freshbooks Subdomain'
+        freshbooks_subdomain_hint: "Hint: xy1234.freshbooks.com"
+      quickbooks:
+        create_sandbox_companies_first: "Create sandbox companies first in Quickbooks"
 
   number:
     currency:

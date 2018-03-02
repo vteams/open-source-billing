@@ -14,10 +14,13 @@
           <div class="fields_content">
             <div class="fields_content_container">
               <div>
-                <div class="field_row">
-                  <div class="label_field left single"><span> Account URL </span></div>
+                <div class="field_row description">
+                  <div class="label_field left single"><span> <%= t 'views.import_data.freshbooks.freshbooks_subdomain' %> </span></div>
                   <div class="large_field">
                     <%= f.text_field :account_url, :required => "required"  %>
+                    <ul class="field_description">
+                      <li><%= t 'views.import_data.freshbooks.freshbooks_subdomain_hint' %></li>
+                    </ul>
                   </div>
                 </div>
                 <!--field_row-->

@@ -1,6 +1,8 @@
 class ImportDataController < ApplicationController
+  include ImportDataHelper
   #before_action :set_vendor, only: [:show, :edit, :update, :destroy]
   before_action :set_qb_service, only: [:oauth_callback]
+  before_action :verify_sub_domain_name, only: :import_freshbooks_data
 
   def index
 
@@ -10,6 +12,7 @@ class ImportDataController < ApplicationController
     if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
       redirect_to import_data_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else
+      remove_url_path_from_sub_domain(params)
       options = {}
       freshbooks_client = FreshBooks::Client.new(params[:freshbooks][:account_url], params[:freshbooks][:api_token])
       options[:company_ids] = Company.pluck(:id)
@@ -75,6 +78,12 @@ class ImportDataController < ApplicationController
 
     redirect_to import_data_url, notice: 'Your QuickBooks account has been successfully linked.'
 
+  end
+
+  def verify_sub_domain_name
+    if params[:freshbooks][:account_url].start_with?('http')
+      redirect_to import_data_url, alert: 'Please remove http(s) from your freshbooks subdomain'
+    end
   end
 
   private

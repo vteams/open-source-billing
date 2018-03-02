@@ -429,6 +429,14 @@ pt-BR:
       select_an_item: "Selecione um item.."
 
 
+    import_data:
+      import_data: "Datos de importacion"
+      fresh_books: "FreshBooks"
+      freshbooks:
+        freshbooks_subdomain: "Freshbooks Subdomain"
+        freshbooks_subdomain_hint: "Sugerencia: xy1234.freshbooks.com"
+      quickbooks:
+        create_sandbox_companies_first: "Crie companhias sandbox primeiro em Quickbooks"
 
   number:
     currency:

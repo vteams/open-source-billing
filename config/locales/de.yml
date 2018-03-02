@@ -425,6 +425,14 @@ de:
       select_an_item: "Wähle einen Gegenstand..."
 
 
+    import_data:
+      import_data: "Daten importieren"
+      fresh_books: "FreshBooks"
+      freshbooks:
+        freshbooks_subdomain: "Freshbooks Subdomein"
+        freshbooks_subdomain_hint: "Hinweis: xy1234.freshbooks.com"
+      quickbooks:
+        create_sandbox_companies_first: "Maak eerst sandboxbedrijven in Quickbooks"
 
   number:
     currency:
