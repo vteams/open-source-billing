@@ -520,6 +520,7 @@ en:
 
     help:
       help: "Help"
+      email_suppoprt: "Please contact our support team by email at "
       help_yourself: "Help yourself and Heaven will help you too. :)"
       we_hope_you_donot_need_help: "We hope you won't need any help to use this software."
       never_mind_just_kidding: "Never mind, just kidding... We'll be right back with detailed help. Currently, stuck in some other high priority stuff."
