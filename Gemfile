@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.1.0'
 gem 'rails', '~> 4.2.7.1'
-
-gem 'railties', '4.1.15'
-gem 'sprockets', '~> 2.12.3'
-gem 'sprockets-rails', '~> 2.2.2'
+gem 'railties', '4.2.7.1'
+gem 'sprockets', '3.7.1'
+gem 'sprockets-rails', '3.2.1'
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.3.20'
 gem 'devise', '3.4.1'
@@ -44,7 +43,6 @@ group :development do
   gem 'copyright-header', '1.0.15'
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.2'
-  gem 'pry-nav'
 end
 gem 'capistrano-rvm'
 gem 'browser', '2.1.0'
@@ -66,8 +64,8 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'faker', '~> 1.4.3'
 gem 'activerecord-session_store', '1.0.0'
-gem 'stripe'
-gem 'figaro'
+gem 'stripe', '1.56.0'
+gem 'figaro', '1.1.1'
 
 group :test do
   gem 'shoulda-matchers', '2.8.0'
@@ -88,14 +86,13 @@ gem 'quickbooks-ruby', '0.4.4'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
-gem "letter_opener", :group => :development
+gem "letter_opener", '1.4.1', :group => :development
 gem 'puma', '3.11.0'
 
-gem 'puma'
 
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+gem 'elasticsearch-model', '5.0.0'
+gem 'elasticsearch-rails', '5.0.0'
 
-gem 'exception_notification-rake'
+gem 'exception_notification-rake', '0.3.0'
 
-gem 'whenever'
+gem 'whenever', '0.9.7'

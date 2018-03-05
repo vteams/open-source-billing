@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817124148) do
+ActiveRecord::Schema.define(version: 20170501141525) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -307,6 +307,9 @@ ActiveRecord::Schema.define(version: 20160817124148) do
     t.integer  "updated_by",          limit: 4
     t.string   "provider",            limit: 255
     t.string   "provider_id",         limit: 255
+    t.integer  "tax_id",              limit: 4
+    t.decimal  "invoice_tax_amount",                precision: 10
+    t.integer  "parent_id",           limit: 4
   end
 
   create_table "items", force: :cascade do |t|
@@ -433,6 +436,10 @@ ActiveRecord::Schema.define(version: 20160817124148) do
     t.integer  "task_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "start_date"
+    t.datetime "due_date"
+    t.float    "hours",          limit: 24
+    t.float    "spent_time",     limit: 24
   end
 
   create_table "projects", force: :cascade do |t|
@@ -501,6 +508,18 @@ ActiveRecord::Schema.define(version: 20160817124148) do
     t.integer  "currency_id",         limit: 4
     t.integer  "created_by",          limit: 4
     t.integer  "updated_by",          limit: 4
+  end
+
+  create_table "recurring_schedules", force: :cascade do |t|
+    t.datetime "next_invoice_date"
+    t.string   "frequency",         limit: 255
+    t.integer  "occurrences",       limit: 4,   default: 0
+    t.string   "delivery_option",   limit: 255
+    t.integer  "invoice_id",        limit: 4
+    t.integer  "generated_count",   limit: 4,   default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "enable_recurring",              default: true
   end
 
   create_table "roles", force: :cascade do |t|
