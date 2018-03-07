@@ -4,8 +4,13 @@
       <div class="modal-header clearfix text-content">
         <h5 class="left"> New User</h5>
         <div class="modal-action-btn right">
-          <a href="#" onclick="$('.submit').click();" title="Save"><i class="material-icons" >done</i></a>
+          <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+            <i class="material-icons" >done</i>
+          </a>
           <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
+          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+            <i class="material-icons" >close</i>
+          </a>
         </div>
       </div>
 

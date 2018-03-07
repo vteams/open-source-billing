@@ -5,7 +5,12 @@
           <h5 class="left text-blue">Import data from your freshbooks account</h5>
           <div class="modal-action-btn right">
             <%= f.submit "Submit", :class => "btn_large submit model-submit-btn hidden" %>
-            <a href="#" onclick="$('.model-submit-btn').click();" title="Import"><i class="material-icons" >done</i></a>
+            <a href="javascript:void(0);" onclick="$('.model-submit-btn').click();" title="Import" class="modal-action waves-effect">
+              <i class="material-icons" >done</i>
+            </a>
+            <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+              <i class="material-icons" >close</i>
+            </a>
           </div>
         </div>
         <div class="modal-body">
