@@ -85,12 +85,29 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1
   # DELETE /companies/1.json
   def destroy
+    check_if_current_company
+    if @flag_current_company
+      user_message = "Sorry, Current Company cannot be #{@action_for_company}"
+      redirect_to companies_path, alert: user_message
+      return
+    end
     @company = Company.find(params[:id])
     @company.destroy
 
     respond_to do |format|
       format.html { redirect_to companies_path }
       format.json { head :no_content }
+    end
+  end
+
+  def check_if_current_company
+    if params[:id].eql?(get_user_current_company.id.to_s)
+      if params[:archive].present?
+        @action_for_company = "archived"
+      else
+        @action_for_company = "deleted"
+      end
+      @flag_current_company = true
     end
   end
 
@@ -112,6 +129,11 @@ class CompaniesController < ApplicationController
       @companies = result[:companies]
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
+    end
+    if @flag_current_company
+      user_message = "Sorry, Current Company cannot be #{@action_for_company}"
+      redirect_to companies_path, alert: user_message
+      return
     end
     redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
   end
