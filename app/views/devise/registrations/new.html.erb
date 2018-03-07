@@ -30,7 +30,10 @@
           <%= f.button "Done",:type=>'submit', :class => "btn_large submit col s4 btn waves-effect",:name=>'btn_login' %>
         </div>
       <% end %>
-      <p class='col s12'>www.opensourcebilling.org.  powered by: presstigers.com</p>
+      <p class='col s12'>
+        <%= link_to 'www.opensourcebilling.org', 'http://opensourcebilling.org/', target: '_blank' %>.
+        powered by: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
+      </p>
       <%= link_to raw("<i class='material-icons'>close</i>"), new_user_session_url, class: 'btn-login-add btn-floating btn-large waves-effect' %>
     </div>
   </div>
