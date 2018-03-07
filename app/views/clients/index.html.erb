@@ -8,7 +8,7 @@
       <div class="card-white-panel ">
         <h3>
           <span><%= link_to 'Clients', clients_url %></span>
-          <%= link_to "/ #{@status.humanize}",clients_url(status: @status) %>
+          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
         </h3>
       </div>
     </div>

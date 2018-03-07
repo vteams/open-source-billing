@@ -7,7 +7,7 @@
       <div class="card-white-panel">
         <h3>
           <span><%= link_to "Invoices",invoices_url %> </span>
-          <%= link_to "/ #{@status.humanize}",invoices_url(status: @status) %>
+          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
         </h3>
       </div>
     </div>

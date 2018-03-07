@@ -1227,7 +1227,7 @@ h6 {
   font-size: 15px;
   color: #8f8f8f;
   font-weight: 400; }
-.breadcrum-bar a:hover {
+.breadcrum-bar a:not(.active):hover {
   color: #09b8e2; }
 @media only screen and (max-width: 767px) {
   .breadcrum-bar a {
@@ -2466,7 +2466,6 @@ h6 {
   transition: none; }
 .report-section .breadcrum-bar .select-wrapper .select-dropdown, .setting-section .breadcrum-bar .select-wrapper .select-dropdown {
   font-size: 20px;
-  font-weight: bold;
   text-transform: capitalize;
   border-bottom-color: transparent;
   margin-bottom: 0;
@@ -4234,7 +4233,9 @@ html {
   padding-bottom: 10px;
   color:  red;
 }
-
 .input-field {
   .field_with_errors { padding-top: 20px; }
+}
+.text-uppercase {
+  text-transform: uppercase;
 }

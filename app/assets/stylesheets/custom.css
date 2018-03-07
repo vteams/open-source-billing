@@ -96,7 +96,7 @@ input#expense_amount{
     width: 100%; }
 
 .log-box{
-    padding: 0 10px;
+    padding: 20px;
 }
 #calendar_form .input-field{
     margin-top: 0px !important;
@@ -313,7 +313,6 @@ span.invoice-recurring-status{
 
 .time-tracking .breadcrum-bar .select-wrapper .select-dropdown{
     font-size: 20px;
-    font-weight: bold;
     text-transform: capitalize;
     border-bottom-color: transparent;
     margin-bottom: 0;

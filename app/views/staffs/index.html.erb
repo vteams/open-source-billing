@@ -12,7 +12,8 @@
             <option value="<%= "/#{I18n.locale}/tasks" %>">Tasks</option>
             <option value="<%= "/#{I18n.locale}/staffs" %>" selected>Staffs</option>
             <option value="<%= "/#{I18n.locale}/logs" %>">TimeSheet</option>
-          </select><%= link_to "/ #{@status.humanize}",staffs_url(status: @status) %>
+          </select>
+          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_staff_path, remote: true, class: 'right', title: 'Add' %>
         </h3>
       </div>
