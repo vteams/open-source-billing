@@ -21,6 +21,8 @@ $(document).ready(function(){
     $(".btn-back").click(function(){
         $(".header-right").removeClass("search-show");
         $(".chkbox-content .header-right").removeClass("chekbox-show");
+        $('.checkbox-item').find('input[type="checkbox"]').prop('checked', false);
+        $('.checkbox-item').find('label').css('opacity', '0');
     });
     //
     $(".btn-menu").click(function(){
