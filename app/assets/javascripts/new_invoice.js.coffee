@@ -366,9 +366,6 @@ class @Invoice
       else if $("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date($("#invoice_invoice_date").val())
         applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
         flag = false
-      else if $("#invoice_due_date").val() isnt "" and !DateFormats.validate_date($("#invoice_due_date").val())
-        applyPopover($("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-        flag = false
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
         applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")

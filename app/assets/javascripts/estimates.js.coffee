@@ -316,9 +316,6 @@ class @Estimate
       else if $("#estimate_estimate_date").val() is ""
         applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle","Select estimate date")
         flag =false
-      else if $("#estimate_estimate_date").val() isnt "" and !DateFormats.validate_date($("#estimate_estimate_date").val())
-        applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-        flag = false
         # Check if discount percentage is an integer
       else if $("input#estimate_discount_percentage").val()  isnt "" and ($("input#estimate_discount_percentage").val() < 0)
         applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
