@@ -38,10 +38,12 @@
           </div>
           <%= hidden_field_tag 'user_id',@sub_user.id %>
 
-          <div class="input-field col s12">
-            <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
-            <label for="role_ids"> Assign Role </label>
-          </div>
+          <% unless @sub_user.id == current_user.id %>
+            <div class="input-field col s12">
+              <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
+              <label for="role_ids"> Assign Role </label>
+            </div>
+          <% end %>
         </div>
       </div>
   </div>
