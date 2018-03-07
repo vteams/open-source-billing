@@ -1,6 +1,6 @@
 <div class="new-invoice-holder editInvoice">
   <%- model_class = Estimate -%>
-  <%= nested_form_for estimate, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
+  <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
       <div class="new-invoice-header clearfix">
         <h5 class="left">
           <% if f.object.persisted? %>
