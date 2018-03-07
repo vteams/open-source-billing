@@ -25,7 +25,7 @@
                   <label for="item_unit_cost">Default unit cost</label>
                 </div>
                 <div class="input-field col s6">
-                  <%= f.number_field :quantity,id: 'defaultqty' %>
+                  <%= f.number_field :quantity,id: 'defaultqty', min: 1 %>
                   <label for="defaultqty">Default Quantity</label>
                 </div>
                 <div class="input-field col s6">
