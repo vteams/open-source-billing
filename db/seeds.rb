@@ -174,7 +174,7 @@ templates = EmailTemplate.create(
             :status => 'Default',
             :template_type => 'New User',
             :email_from => 'nfor20@yahoo.com',
-            :subject => 'Important {{company_name}} invoicing details courtesy of Open Source Billing',
+            :subject => 'Welcome to {{company_name}}\'s invoicing services provided by Open Source Billing.',
             :body => '<p>Welcome to {{company_name}}\'s secure online services provided by Open Source Billing.</p>
            <p>To securely access your account information and invoices, go to: </p>
            <p><a href="{{app_url}}">{{app_url}}</a></p>
