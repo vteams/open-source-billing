@@ -4229,3 +4229,8 @@ html {
   background: #fff; }
 .scroll-area:hover .mCSB_scrollTools .mCSB_draggerRail {
   background-color: rgba(0, 0, 0, 0.4); }
+
+#error_explanation ul li {
+  font-size: 16px;
+  color: red !important;
+}
