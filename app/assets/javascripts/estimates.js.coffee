@@ -66,7 +66,7 @@ class @Estimate
     discount_percentage = $("#estimate_discount_percentage").val()
     discount_type = $("select#discount_type").val()
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
-    if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
+    if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else parseFloat(discount_percentage)
 
   updateLineTotal = (elem) ->
     container = elem.parents('tr.fields')
