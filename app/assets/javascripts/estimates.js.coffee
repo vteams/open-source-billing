@@ -2,7 +2,7 @@ class @Estimate
 
   applyDatePicker = ->
     $('#estimate_date_picker').pickadate
-      format: "yyyy-mm-dd"
+      format: "d mmm, yyyy"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')

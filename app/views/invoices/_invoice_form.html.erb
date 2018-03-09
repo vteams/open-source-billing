@@ -27,8 +27,8 @@
         <div class="info-section clearfix">
           <div class="info-left-section">
             <h6><%= invoice.invoice_number %></h6>
-            <span>Invoice: <small id="invoice_date"> <%= f.object.invoice_date %></small> <i class="material-icons" id="invoice_date_picker">date_range</i></span>
-            <span class="text-blue"> Due: <small id="invoice_due_date_text"> <%= f.object.due_date.present? ? f.object.due_date : 'TBD'   %> </small> <i class="material-icons" id="invoice_due_date_picker">date_range</i></span>
+            <span>Invoice: <small id="invoice_date"> <%= default_date(f.object.invoice_date.to_date) %></small> <i class="material-icons" id="invoice_date_picker">date_range</i></span>
+            <span class="text-blue"> Due: <small id="invoice_due_date_text"> <%= f.object.due_date.present? ? default_date(f.object.due_date.to_date) : 'TBD'   %> </small> <i class="material-icons" id="invoice_due_date_picker">date_range</i></span>
             <%= f.hidden_field :invoice_date,value: f.object.invoice_date, :required => "" %>
             <%= f.hidden_field :due_date, :placeholder => "TBD" %>
             <div class="terms ">

@@ -27,7 +27,7 @@
         <div class="info-section clearfix">
           <div class="info-left-section">
             <h6><%= estimate.estimate_number %></h6>
-            <span>Estimate: <small id="estimate_date"> <%= f.object.estimate_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
+            <span>Estimate: <small id="estimate_date"> <%= default_date f.object.estimate_date.to_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
             <%= f.hidden_field :estimate_date,value: f.object.estimate_date, :required => "" %>
             <div class="paymentInfo">
               <strong><strong class="estimate_total_strong"></strong>

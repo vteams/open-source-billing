@@ -2,7 +2,7 @@ class @Invoice
 
   applyDatePicker = ->
     $('#invoice_date_picker').pickadate
-      format: "yyyy-mm-dd"
+      format: "d mmm, yyyy"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -12,7 +12,7 @@ class @Invoice
         $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
 
     $('#invoice_due_date_picker').pickadate
-      format: "yyyy-mm-dd"
+      format: "d mmm, yyyy"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -20,7 +20,7 @@ class @Invoice
         $('#invoice_due_date').val value
 
     $("#next_invoice_date_picker").pickadate
-      format: "yyyy-mm-dd"
+      format: "d mmm, yyyy"
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -167,7 +167,7 @@ class @Invoice
   setDuedate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null
       invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
-      $('#invoice_due_date_text').html invoice_due_date
+      $('#invoice_due_date_text').html moment(invoice_due_date).format("DD MMM, YYYY")
       $('#invoice_due_date').val invoice_due_date
     else
       $('#invoice_due_date').val ''
@@ -363,9 +363,6 @@ class @Invoice
       else if $("#invoice_invoice_date").val() is ""
         applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
         flag =false
-      else if $("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date($("#invoice_invoice_date").val())
-        applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
-        flag = false
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
         applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
