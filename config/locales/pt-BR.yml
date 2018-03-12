@@ -398,6 +398,7 @@ pt-BR:
       password: "Senha"
       confirmation: "Confirmação"
       notify_user: "Notificar usuário"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"

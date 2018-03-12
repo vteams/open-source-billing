@@ -2,7 +2,7 @@
   <!--- profile information --->
   <div class="profile-info">
     <div class="profile-image">
-      <%= image_tag('img-user.png', alt: 'image')%>
+      <%= image_tag(current_user.avatar_url(:thumb) || 'img-user.png', alt: 'image')%>
     </div>
     <div class="profile-details">
       <div class="dropdown">
@@ -19,7 +19,7 @@
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
     <li><%= link_to raw("<i class='material-icons'>settings</i> <span>Settings</span>"), settings_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), new_account_path, remote: true %></li>
+    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), edit_sub_user_path(current_user), remote: true %></li>
     <li><%= link_to raw("<i class='material-icons'>group</i> <span>Users</span>"), sub_users_path %></li>
     <li><%= link_to raw("<i class='material-icons'>domain</i> <span>Companies</span>"), companies_path %></li>
     <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span> Logout</span>"), destroy_user_session_path, method: :delete, class: 'logout' %></li>

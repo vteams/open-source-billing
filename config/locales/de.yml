@@ -394,6 +394,7 @@ de:
       password: "Passwort"
       confirmation: "Bestätigung"
       notify_user: "Benachrichtige Nutzer"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"

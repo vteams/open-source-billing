@@ -508,6 +508,7 @@ en:
       password: "Password"
       confirmation: "Confirmation"
       notify_user: "Notify user"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

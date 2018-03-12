@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_default_role
 
+  mount_uploader :avatar, ImageUploader
+
   has_one :staff
   has_many :logs, dependent: :destroy
   has_many :invoices

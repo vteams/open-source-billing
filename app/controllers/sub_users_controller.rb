@@ -62,7 +62,8 @@ class SubUsersController < ApplicationController
     sub_user = User.find(params[:user_id])
     respond_to do |format|
       options = {user_name: params[:user_name], email: params[:email],
-                 password: params[:password], password_confirmation: params[:password]}
+                 password: params[:password], password_confirmation: params[:password],
+                 avatar: params[:avatar]}
 
       # don't update password if not provided
       if params[:password].blank?

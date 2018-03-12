@@ -395,6 +395,7 @@ fr:
       password: "mot de passe"
       confirmation: "confirmation"
       notify_user: "Notifier l'utilisateur"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"
