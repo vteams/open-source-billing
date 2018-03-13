@@ -100,6 +100,7 @@ class CompaniesController < ApplicationController
   end
 
   def bulk_actions
+    notice = ''
     if params[:company_ids].include? get_user_current_company.id.to_s
       if params[:archive].present?
         @action_for_company = "archived"
@@ -107,13 +108,15 @@ class CompaniesController < ApplicationController
         @action_for_company = "deleted"
       end
       @flag_current_company = true
+      notice = "Sorry, Current Company cannot be #{@action_for_company}."
     else
       result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
       @companies = result[:companies]
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
+      notice = "Company(s) are #{@action} successfully."
     end
-    redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
+    redirect_to companies_path, notice: notice
   end
 
   def undo_actions
