@@ -289,6 +289,9 @@ fr:
       no_deleted_client: "Vous ne l'avez pas tout client supprimé."
       add_new_client: "Ajouter un nouveau client"
       contact_title: "Contactez-titre"
+      active_clients_tooltip: "This is payments collected per month from active clients."
+      deleted_clients_tooltip: "These are payments collected per month from deleted clients."
+      archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
       name: "nom"

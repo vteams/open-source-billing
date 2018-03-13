@@ -291,6 +291,9 @@ de:
       no_deleted_client: "Es existieren keine gelöschten Kunden."
       add_new_client: "Neuen Kunden hinzufügen"
       contact_title: "Kontakt Titel"
+      active_clients_tooltip: "This is payments collected per month from active clients."
+      deleted_clients_tooltip: "These are payments collected per month from deleted clients."
+      archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
       name: "Name"
