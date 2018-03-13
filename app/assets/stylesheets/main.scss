@@ -2660,8 +2660,12 @@ h6 {
 .basic-setting .card-white-panel.importData {
   min-height: 220px; }
 .basic-setting .card-white-panel.importData .importElement {
-  padding: 25px;
+  padding: 35px 5px;
   text-align: center;
+}
+.basic-setting .card-white-panel.importData .importElement .field_description {
+  font-size: 12px;
+  color: grey;
 }
 
 .setting-section .page-box {

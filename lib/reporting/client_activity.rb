@@ -33,9 +33,9 @@ module Reporting
       archived_clients = Client.get_clients(options)
       current_company_id = current_user.current_company
 
-      active_client_progress = Payment.sum_per_month(active_clients.map(&:id), current_company)
-      deleted_client_progress = Payment.sum_per_month(deleted_clients.map(&:id), current_company)
-      archived_clients_progress = Payment.sum_per_month(archived_clients.map(&:id), current_company)
+      active_client_progress = Payment.sum_per_month(active_clients.map(&:id), current_company_id)
+      deleted_client_progress = Payment.sum_per_month(deleted_clients.map(&:id), current_company_id)
+      archived_clients_progress = Payment.sum_per_month(archived_clients.map(&:id), current_company_id)
 
       recent_activity.merge!(active_clients_total: active_client_progress.map{|key, val| val}.sum)
       recent_activity.merge!(deleted_clients_total: deleted_client_progress.map{|key, val| val}.sum)
