@@ -1,0 +1,15 @@
+<% if @sub_user.errors.present? %>
+<% binding.pry %>
+  applyPopover($("#user_save_btn"), 'bottomMiddle', "topLeft", "Failed to save user. Make sure you have entered correct record.");
+  setTimeout(function() {
+      hidePopover($("#user_save_btn"));
+  }, 2000);
+<% else %>
+  $('#users').html('<%= escape_javascript render(partial: 'user', collection: @users) %>');
+  initUserListingEvents();
+  $('.side-form,#btn_container').toggleClass('hidden');
+  applyPopover($("#user_add_btn"), 'bottomMiddle', "topLeft", "User has been saved successfully.");
+  setTimeout(function() {
+    hidePopover($("#user_add_btn"));
+  }, 2000);
+<% end %>

@@ -2,7 +2,7 @@
   <!--- profile information --->
   <div class="profile-info">
     <div class="profile-image">
-      <%= image_tag(current_user.avatar_url(:thumb) || 'img-user.png', alt: 'image')%>
+      <%= image_tag(current_user.profile_picture, alt: 'image')%>
     </div>
     <div class="profile-details">
       <div class="dropdown">

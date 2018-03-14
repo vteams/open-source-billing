@@ -42,6 +42,7 @@ Osb::Application.routes.draw do
     resources :sub_users do
       collection do
         get 'user_settings'
+        get :settings_listing
       end
     end
 

@@ -121,4 +121,8 @@ class User < ActiveRecord::Base
   def role_name
     roles.first.try(:name).try(:humanize) rescue nil
   end
+
+  def profile_picture
+    avatar_url(:thumb) || 'img-user.png'
+  end
 end

@@ -2684,7 +2684,7 @@ h6 {
 
 .user-list {
   margin-top: 11px; }
-.user-list .list-buttons a {
+.user-list .list-buttons a:not(.form-action) {
   color: #909090;
   padding: 4px 14px;
   font-size: 11px;
@@ -2698,7 +2698,17 @@ h6 {
   text-transform: uppercase;
   border-radius: 22px;
   border: 1px solid #dfdede; }
-.user-list .list-buttons a:hover, .user-list .list-buttons a:focus {
+.user-list .list-buttons a.sidebar-btn { min-width: 62px; }
+.user-list .side-form .input-field, .user-list .side-form .input-field input {
+  margin: 0;
+  font-size: 11px;
+}
+.user-list .side-form .input-field, .user-list .side-form .input-field input[type=password] {
+  height: 2.5em;
+  border-color: lightgrey;
+}
+.user-list .list-buttons a:not(.disabled):hover,
+.user-list .list-buttons a:not(.disabled):focus {
   background-color: #09b8e2;
   color: #fff;
   border-color: #09b8e2; }
