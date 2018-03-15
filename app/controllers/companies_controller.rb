@@ -124,18 +124,14 @@ class CompaniesController < ApplicationController
         @action_for_company = "deleted"
       end
       @flag_current_company = true
+      redirect_to companies_path, alert: "Sorry, Current Company cannot be #{@action_for_company}."
     else
       result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
       @companies = result[:companies]
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
+      redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
     end
-    if @flag_current_company
-      user_message = "Sorry, Current Company cannot be #{@action_for_company}"
-      redirect_to companies_path, alert: user_message
-      return
-    end
-    redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
   end
 
   def undo_actions

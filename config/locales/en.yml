@@ -378,6 +378,9 @@ en:
       no_deleted_client: "You haven't any deleted client."
       add_new_client: "Add New Client"
       contact_title: "Contact title"
+      active_clients_tooltip: "These are payments collected per month from active clients."
+      deleted_clients_tooltip: "These are payments collected per month from deleted clients."
+      archived_clients_tooltip: "These are payments collected per month from archived clients."
     expenses:
       expenses: "Expenses"
       listing: "Expenses Listing"
@@ -508,6 +511,7 @@ en:
       password: "Password"
       confirmation: "Confirmation"
       notify_user: "Notify user"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

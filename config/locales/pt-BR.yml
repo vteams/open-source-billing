@@ -290,6 +290,9 @@ pt-BR:
       no_deleted_client: "Você não possui nenhum cliente apagado"
       add_new_client: "Adicionar novo cliente"
       contact_title: "Título do contato"
+      active_clients_tooltip: "This is payments collected per month from active clients."
+      deleted_clients_tooltip: "These are payments collected per month from deleted clients."
+      archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
       add_new_item: 'Adicionar novo item'
@@ -398,6 +401,7 @@ pt-BR:
       password: "Senha"
       confirmation: "Confirmação"
       notify_user: "Notificar usuário"
+      avatar: "Avatar"
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"

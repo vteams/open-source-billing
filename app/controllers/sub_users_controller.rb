@@ -20,32 +20,38 @@ class SubUsersController < ApplicationController
   end
 
   def create
-    sub_user = User.new({user_name: params[:user_name], email: params[:email],
+    @sub_user = User.new({user_name: params[:user_name], email: params[:email],
                          password: params[:password],
                          password_confirmation: params[:password_confirmation]
                         })
 
-    sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
-    sub_user.role_ids = params[:role_ids]
+    @sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
+    @sub_user.role_ids = params[:role_ids]
     # skip email confirmation for login
-    sub_user.skip_confirmation!
+    @sub_user.skip_confirmation!
     respond_to do |format|
-      if sub_user.already_exists?(params[:email])
+      if @sub_user.already_exists?(params[:email])
         redirect_to(sub_users_url, alert: 'User with same email already exists.')
         return
-      elsif sub_user.save
+      elsif @sub_user.save
         # assign current user's company to newly created user
-        sub_user.update(current_company: get_company_id)
-        current_user.accounts.first.users << sub_user
+        @sub_user.update(current_company: get_company_id)
+        current_user.accounts.first.users << @sub_user
         begin
-          UserMailer.new_user_account(current_user, sub_user).deliver if params[:notify_user]
+          UserMailer.new_user_account(current_user, @sub_user).deliver if params[:notify_user]
         rescue => e
           puts  e
         end
-        redirect_to(sub_users_url, notice: 'User has been saved successfully')
+        if params[:setting_form] == '1'
+          @users = User.unscoped
+          format.js
+        else
+          redirect_to(sub_users_url, notice: 'User has been saved successfully')
+        end
         return
       else
-        format.html { render action: 'new', alert: 'Failed to save user. Make sure you have entered correct record' }
+        format.js {}
+        format.html { render action: 'new', alert: 'Failed to save user. Make sure you have entered correct record.' }
       end
     end
   end
@@ -59,26 +65,27 @@ class SubUsersController < ApplicationController
   end
 
   def update
-    sub_user = User.find(params[:user_id])
+    @sub_user = User.find(params[:user_id])
+    options = {user_name: params[:user_name], email: params[:email],
+               password: params[:password], password_confirmation: params[:password],
+               avatar: params[:avatar]}
+
+    # don't update password if not provided
+    if params[:password].blank?
+      options.delete(:password)
+      options.delete(:password_confirmation)
+    end
+
+    message = if @sub_user.update_attributes(options)
+                @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
+                {notice: 'User has been updated successfully'}
+              else
+                {alert: 'User can not be updated'}
+              end
+
     respond_to do |format|
-      options = {user_name: params[:user_name], email: params[:email],
-                 password: params[:password], password_confirmation: params[:password]}
-
-      # don't update password if not provided
-      if params[:password].blank?
-        options.delete(:password)
-        options.delete(:password_confirmation)
-      end
-
-      message = if sub_user.update_attributes(options)
-                  sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
-                  {notice: 'User has been updated successfully'}
-                else
-                  {alert: 'User can not be updated'}
-                end
-
-      redirect_to(sub_users_url, message)
-      return
+      format.js { @users = User.unscoped }
+      format.html { redirect_to(sub_users_url, message) }
     end
   end
 
@@ -87,7 +94,19 @@ class SubUsersController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def destroy_bulk
+    sub_user = User.where(id: params[:user_ids]).destroy_all
+    @users = User.unscoped
+    render json: {notice: 'User(s) has been deleted successfully.',
+                  html: render_to_string(action: :settings_listing, layout: false)}
+  end
+
   def user_settings
+  end
+
+  def settings_listing
+    @users = User.unscoped
+    render layout: false
   end
 
   private

@@ -216,4 +216,18 @@ class Payment < ActiveRecord::Base
     created_at.strftime('%B %Y')
   end
 
+ def self.sum_per_month(client_ids, company_id)
+   payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
+   payments_per_month = {}
+
+   payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
+     payments_per_month[date] = payments.map(&:payment_amount).sum
+   end
+
+   payments_per_month
+ end
+
+ def group_payment_date
+    payment_date.to_date.strftime('%B %Y')
+ end
 end

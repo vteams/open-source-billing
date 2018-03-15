@@ -22,8 +22,8 @@
     <div class="info-section clearfix">
       <div class="info-left-section">
         <h6><%= @invoice.invoice_number %></h6>
-        <span>Invoice: <small> <%= @invoice.invoice_date %> <i class="material-icons">date_range</i></small></span>
-        <span class="text-blue"> Due: <small> <%= @invoice.due_date %><i class="material-icons">date_range</i></small></span>
+        <span>Invoice: <small> <%= @invoice.invoice_date %></small></span>
+        <span class="text-blue"> Due: <small> <%= @invoice.due_date %></small></span>
         <div class="terms">
           <span>Terms : </span> <em><%= @invoice.term %></em>
         </div>
@@ -43,7 +43,7 @@
 
     <div class="new-invoice-table-holder">
       <% if @invoice.invoice_line_items.present? %>
-          <table class="bordered responsive-table" cellpadding="0" cellspacing="0">
+          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.item') %></th>
@@ -69,7 +69,7 @@
           </table>
       <% end %>
       <% if @invoice.invoice_tasks.present? %>
-          <table class="bordered responsive-table">
+          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.task') %></th>

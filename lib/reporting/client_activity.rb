@@ -31,27 +31,15 @@ module Reporting
       deleted_clients = Client.get_clients(options)
       options[:status] = 'archived'
       archived_clients = Client.get_clients(options)
+      current_company_id = current_user.current_company
 
+      active_client_progress = Payment.sum_per_month(active_clients.map(&:id), current_company_id)
+      deleted_client_progress = Payment.sum_per_month(deleted_clients.map(&:id), current_company_id)
+      archived_clients_progress = Payment.sum_per_month(archived_clients.map(&:id), current_company_id)
 
-      active_client_progress = {}
-      active_clients.group_by{|i| i.group_date}.each do |date, clients|
-        active_client_progress[date] = clients.collect(&:available_credit).sum rescue 0
-      end
-
-      deleted_client_progress = {}
-      deleted_clients.group_by{|i| i.group_date}.each do |date, clients|
-        deleted_client_progress[date] = clients.collect(&:available_credit).sum rescue 0
-      end
-
-      archived_clients_progress = {}
-      archived_clients.group_by{|i| i.group_date}.each do |date, clients|
-        archived_clients_progress[date] = clients.collect(&:available_credit).sum rescue 0
-      end
-
-
-      recent_activity.merge!(active_clients_total: active_clients.reject{|x| x.available_credit.nil?}.collect(&:available_credit).sum)
-      recent_activity.merge!(deleted_clients_total: deleted_clients.reject{|x| x.available_credit.nil?}.collect(&:available_credit).sum)
-      recent_activity.merge!(archived_clients_total: archived_clients.reject{|x| x.available_credit.nil?}.collect(&:available_credit).sum)
+      recent_activity.merge!(active_clients_total: active_client_progress.map{|key, val| val}.sum)
+      recent_activity.merge!(deleted_clients_total: deleted_client_progress.map{|key, val| val}.sum)
+      recent_activity.merge!(archived_clients_total: archived_clients_progress.map{|key, val| val}.sum)
       recent_activity.merge!(active_client_progress: active_client_progress)
       recent_activity.merge!(deleted_client_progress: deleted_client_progress)
       recent_activity.merge!(archived_clients_progress: archived_clients_progress)

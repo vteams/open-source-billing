@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_default_role
 
+  mount_uploader :avatar, ImageUploader
+
   has_one :staff
   has_many :logs, dependent: :destroy
   has_many :invoices
@@ -118,5 +120,9 @@ class User < ActiveRecord::Base
 
   def role_name
     roles.first.try(:name).try(:humanize) rescue nil
+  end
+
+  def profile_picture
+    avatar_url(:thumb) || 'img-user.png'
   end
 end

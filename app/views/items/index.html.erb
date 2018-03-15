@@ -5,10 +5,10 @@
   <div class="flex-wrapper">
     <!--- breadcrum Bar --->
     <div class="flex-item breadcrum-bar">
-      <div class="card-white-panel ">
+      <div class="card-white-panel">
         <h3>
           <span><%= link_to 'Items', items_url %></span>
-          <%= link_to "/ #{@status.humanize}",items_url(status: @status) %>
+          <a class="active"><%= "/ #{@status.humanize}" %></a>
         </h3>
       </div>
     </div>

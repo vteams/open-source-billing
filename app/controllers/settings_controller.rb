@@ -30,7 +30,6 @@ class SettingsController < ApplicationController
 
   def index
     @email_templates = EmailTemplate.unscoped
-    @users = User.unscoped
     @companies = Company.unscoped
   end
 

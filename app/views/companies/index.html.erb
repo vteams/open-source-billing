@@ -7,7 +7,7 @@
       <div class="card-white-panel ">
         <h3 class="heading_with_action">
           <span><%= link_to 'Companies', companies_url %></span>
-          <%= link_to "/ #{@status.humanize}",companies_url(status: @status) %>
+          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_company_path, remote: true, class: 'pull-right', title: 'Add' %>
         </h3>
       </div>

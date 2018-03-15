@@ -27,7 +27,10 @@
           <%= f.button 'Submit', type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
         </div>
       <%end%>
-      <p class='col s12'>www.opensourcebilling.org.  powered by: www.nextbridge.pk</p>
+      <p class='col s12'>
+        <%= link_to 'www.opensourcebilling.org', 'http://opensourcebilling.org/', target: '_blank' %>.
+        powered by: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
+      </p>
       <a href="<%= new_user_registration_path  %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
     </div>
   </div>

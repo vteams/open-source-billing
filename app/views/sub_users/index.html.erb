@@ -6,7 +6,7 @@
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <h3 class="heading_with_action">
-          <span><%= link_to 'Users', sub_users_path %></span>
+          <span><%= link_to 'Users', 'javascript:;', class: 'active' %></span>
           <%= link_to raw('<i class="material-icons">add</i>'), new_sub_user_path, remote: true, class: 'pull-right', title: 'Add' %>
         </h3>
       </div>

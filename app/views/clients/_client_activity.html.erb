@@ -3,9 +3,10 @@
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
-    <div class="status-info active">
+    <div class="status-info active" title="<%= t('views.payments.payments') %>">
       <h5>
         <%= link_to t('views.common.active'), "clients?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.active_clients_tooltip') %>">help_outline</i>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@client_activity[:active_clients_total], unit: default_currency_unit) %></div>
@@ -24,9 +25,10 @@
       <% end %>
 
     </div>
-    <div class="status-info">
+    <div class="status-info" title="<%= t('views.payments.payments') %>">
       <h5>
         <%= link_to t('views.common.deleted'), "clients?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.deleted_clients_tooltip') %>">help_outline</i>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted',  user: current_user, current_company: session['current_company'])) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@client_activity[:deleted_clients_total], unit: default_currency_unit )%></div>
@@ -47,6 +49,7 @@
     <div class="status-info">
       <h5>
         <%= link_to t('views.common.archived'), "clients?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.archived_clients_tooltip') %>">help_outline</i>
         <span id="archives">(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@client_activity[:archived_clients_total], unit: default_currency_unit )%></div>
@@ -64,6 +67,5 @@
           </div>
       <% end %>
     </div>
-
   </div>
 </aside>

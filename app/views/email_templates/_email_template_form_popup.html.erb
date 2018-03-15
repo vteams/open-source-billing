@@ -7,7 +7,12 @@
         <h5 class="left text-blue">Edit Email Template</h5>
         <div class="modal-action-btn right">
           <%= f.submit :class => 'btn_large big submit hidden' %>
-          <a href="#" onClick="$('input.submit').click();"><i class="material-icons">done</i></a>
+          <a href="javascript:void(0);" onclick="$('input.submit').click();" title="Save" class="modal-action waves-effect">
+            <i class="material-icons" >done</i>
+          </a>
+          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+            <i class="material-icons" >close</i>
+          </a>
         </div>
       </div>
       <div class="modal-body">

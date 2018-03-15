@@ -1227,7 +1227,7 @@ h6 {
   font-size: 15px;
   color: #8f8f8f;
   font-weight: 400; }
-.breadcrum-bar a:hover {
+.breadcrum-bar a:not(.active):hover {
   color: #09b8e2; }
 @media only screen and (max-width: 767px) {
   .breadcrum-bar a {
@@ -2466,7 +2466,6 @@ h6 {
   transition: none; }
 .report-section .breadcrum-bar .select-wrapper .select-dropdown, .setting-section .breadcrum-bar .select-wrapper .select-dropdown {
   font-size: 20px;
-  font-weight: bold;
   text-transform: capitalize;
   border-bottom-color: transparent;
   margin-bottom: 0;
@@ -2661,8 +2660,12 @@ h6 {
 .basic-setting .card-white-panel.importData {
   min-height: 220px; }
 .basic-setting .card-white-panel.importData .importElement {
-  padding: 25px;
+  padding: 35px 5px;
   text-align: center;
+}
+.basic-setting .card-white-panel.importData .importElement .field_description {
+  font-size: 12px;
+  color: grey;
 }
 
 .setting-section .page-box {
@@ -2681,7 +2684,7 @@ h6 {
 
 .user-list {
   margin-top: 11px; }
-.user-list .list-buttons a {
+.user-list .list-buttons a:not(.form-action) {
   color: #909090;
   padding: 4px 14px;
   font-size: 11px;
@@ -2695,7 +2698,17 @@ h6 {
   text-transform: uppercase;
   border-radius: 22px;
   border: 1px solid #dfdede; }
-.user-list .list-buttons a:hover, .user-list .list-buttons a:focus {
+.user-list .list-buttons a.sidebar-btn { min-width: 62px; }
+.user-list .side-form .input-field, .user-list .side-form .input-field input {
+  margin: 0;
+  font-size: 11px;
+}
+.user-list .side-form .input-field, .user-list .side-form .input-field input[type=password] {
+  height: 2.5em;
+  border-color: lightgrey;
+}
+.user-list .list-buttons a:not(.disabled):hover,
+.user-list .list-buttons a:not(.disabled):focus {
   background-color: #09b8e2;
   color: #fff;
   border-color: #09b8e2; }
@@ -4008,7 +4021,7 @@ html {
 .new-invoice-holder .new-invoice-table-holder .inline-select input:focus + label {
   color: #aeaeae; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select {
-  width: 78px;
+  width: 120px;
   vertical-align: middle; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select .dropdown-content {
   min-width: 100px; }
@@ -4233,4 +4246,15 @@ html {
 #error_explanation ul li {
   font-size: 16px;
   color: red !important;
+}
+.input-field {
+  .field_with_errors { padding-top: 20px; }
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.right-bar-help-icon {
+  cursor: pointer;
+  vertical-align: middle;
+  height: 28px;
 }
