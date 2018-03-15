@@ -166,9 +166,15 @@ class @Invoice
 
   setDuedate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null
-      invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
-      $('#invoice_due_date_text').html moment(invoice_due_date).format("DD MMM, YYYY")
-      $('#invoice_due_date').val invoice_due_date
+      if term_days == '0' and $('#invoice_due_date_picker').val() != null
+        invoice_due_date_custom = $('#invoice_due_date_picker').val()
+        if invoice_due_date_custom isnt ""
+          $('#invoice_due_date_text').html moment(invoice_due_date_custom).format("DD MMM, YYYY")
+          $('#invoice_due_date').val invoice_due_date_custom
+      else
+        invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
+        $('#invoice_due_date_text').html moment(invoice_due_date).format("DD MMM, YYYY")
+        $('#invoice_due_date').val invoice_due_date
     else
       $('#invoice_due_date').val ''
 
@@ -341,6 +347,8 @@ class @Invoice
 
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
+      invoice_date_value = moment(new Date($("#invoice_invoice_date").val())).format("L")
+      due_date_value = moment(new Date($("#invoice_due_date").val())).format("L")
       discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
       discount_type = $("select#discount_type").val()
       sub_total = $('#invoice_sub_total').val()
@@ -363,6 +371,9 @@ class @Invoice
       else if $("#invoice_invoice_date").val() is ""
         applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
         flag =false
+      else if invoice_date_value > due_date_value
+        applyPopover($("#invoice_due_date_text"),"bottomMiddle","topLeft","Due date should be equal or greater than invoice date")
+        flag = false
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
         applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
@@ -409,3 +420,15 @@ class @Invoice
               flag = false
             else hidePopover(qty)
       flag
+
+jQuery ->
+  $('#invoice_due_date_picker').pickadate onClose: ->
+    select_input = $('#invoice_payment_terms_id').prevAll('input')
+    select = document.getElementById(select_input.attr('data-activates'))
+    $(select).find('.active').removeClass 'active'
+    $(select).find('.selected').removeClass 'selected'
+    $($(select).children()[3]).addClass 'selected'
+    $($(select).children()[3]).addClass 'active'
+    select_input.val 'Custom'
+    $('#invoice_payment_terms_id').val('4').trigger 'change'
+    return
