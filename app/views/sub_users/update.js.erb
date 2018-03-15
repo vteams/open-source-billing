@@ -1,0 +1,9 @@
+<% if @sub_user.errors.present? %>
+  showErrorMsg("<%= @sub_user.errors.full_messages.join('.') %>.");
+<% else %>
+  $('#users').html('<%= escape_javascript render(partial: 'user', collection: @users) %>');
+  initUserListingEvents();
+  $('#user_edit_btn').addClass('disabled').attr('href', 'javascript:;');
+  $('#edit_form_popup').modal('close');
+  showSuccessMsg("User has been updated successfully.")
+<% end %>

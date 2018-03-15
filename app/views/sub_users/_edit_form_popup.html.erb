@@ -1,6 +1,7 @@
 <div id="edit_form_popup" class="modal editableModal importModal">
   <div class="modal-content">
-    <%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "sub_user_form", :multipart => true) %>
+    <%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "sub_user_form",
+                 :multipart => true, remote: params[:remote].to_i == 1) %>
       <div class="modal-header clearfix text-content">
         <h5 class="left"> Edit User</h5>
         <div class="modal-action-btn right">
@@ -44,23 +45,25 @@
               <label for="role_ids"> Assign Role </label>
             </div>
           <% end %>
-          <div class="row">
-            <h5 class="text-blue title-heading"><%= t('views.users.avatar') %></h5>
-            <div class="file-field input-field col s6 m6">
-              <div class="btn">
-                <span>Logo</span>
-                <input type="file" name="avatar">
+          <% unless params[:remote].to_i == 1 %>
+            <div class="row">
+              <h5 class="text-blue title-heading"><%= t('views.users.avatar') %></h5>
+              <div class="file-field input-field col s6 m6">
+                <div class="btn">
+                  <span>Logo</span>
+                  <input type="file" name="avatar">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+              <div class="input-field col s6 m6">
+                <% if action_name == 'edit' %>
+                    <%= image_tag @sub_user.avatar_url(:thumb) %>
+                <% end %>
               </div>
             </div>
-            <div class="input-field col s6 m6">
-              <% if action_name == 'edit' %>
-                  <%= image_tag @sub_user.avatar_url(:thumb) %>
-              <% end %>
-            </div>
-          </div>
+          <% end %>
         </div>
       </div>
   </div>

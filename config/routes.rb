@@ -43,6 +43,7 @@ Osb::Application.routes.draw do
       collection do
         get 'user_settings'
         get :settings_listing
+        delete :destroy_bulk
       end
     end
 

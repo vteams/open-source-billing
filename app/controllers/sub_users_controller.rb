@@ -65,33 +65,40 @@ class SubUsersController < ApplicationController
   end
 
   def update
-    sub_user = User.find(params[:user_id])
+    @sub_user = User.find(params[:user_id])
+    options = {user_name: params[:user_name], email: params[:email],
+               password: params[:password], password_confirmation: params[:password],
+               avatar: params[:avatar]}
+
+    # don't update password if not provided
+    if params[:password].blank?
+      options.delete(:password)
+      options.delete(:password_confirmation)
+    end
+
+    message = if @sub_user.update_attributes(options)
+                @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
+                {notice: 'User has been updated successfully'}
+              else
+                {alert: 'User can not be updated'}
+              end
+
     respond_to do |format|
-      options = {user_name: params[:user_name], email: params[:email],
-                 password: params[:password], password_confirmation: params[:password],
-                 avatar: params[:avatar]}
-
-      # don't update password if not provided
-      if params[:password].blank?
-        options.delete(:password)
-        options.delete(:password_confirmation)
-      end
-
-      message = if sub_user.update_attributes(options)
-                  sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
-                  {notice: 'User has been updated successfully'}
-                else
-                  {alert: 'User can not be updated'}
-                end
-
-      redirect_to(sub_users_url, message)
-      return
+      format.js { @users = User.unscoped }
+      format.html { redirect_to(sub_users_url, message) }
     end
   end
 
   def destroy
     sub_user = User.find_by_id(params[:id]).destroy
     respond_to { |format| format.js }
+  end
+
+  def destroy_bulk
+    sub_user = User.where(id: params[:user_ids]).destroy_all
+    @users = User.unscoped
+    render json: {notice: 'User(s) has been deleted successfully.',
+                  html: render_to_string(action: :settings_listing, layout: false)}
   end
 
   def user_settings
