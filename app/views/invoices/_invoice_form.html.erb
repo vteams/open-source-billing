@@ -122,7 +122,7 @@
               <div class="new-invoice-footer-row">
                 <span><%= invoice.currency.unit rescue 'USD' %></span>
                 <%= f.hidden_field :discount_amount %>
-                <%= f.number_field :discount_percentage, class: "input-inoive-number invoice_discount line_item_qtip right-align", placeholder:  "00.00" %>
+                <%= f.number_field :discount_percentage, class: "input-inoive-number invoice_discount line_item_qtip right-align", placeholder:  "00.00", min: 0 %>
                 <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
               </div>
               <div class="new-invoice-footer-row">
