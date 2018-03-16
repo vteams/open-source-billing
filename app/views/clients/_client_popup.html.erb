@@ -41,7 +41,7 @@
       <div class="panel-table">
         <h5>
           Invoice
-          <%= link_to '+ New Invoice', new_invoice_path, class: 'pull-right' %>
+          <%= link_to(("+ #{t('header.links.invoices.new')}") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right') %>
         </h5>
         <table class="bordered responsive-table">
           <thead>
