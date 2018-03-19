@@ -1,0 +1,8 @@
+<% if @company.errors.present? %>
+  showErrorMsg("<%= @company.errors.full_messages.join('.') %>.");
+<% else %>
+  $('#companies_listing').html('<%= escape_javascript render(template: 'companies/settings_listing',
+   layout: false, format: :html) %>');
+  initCompanyListingEvents();
+  showSuccessMsg('Company has been created successfully.')
+<% end %>

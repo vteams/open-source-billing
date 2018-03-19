@@ -2698,7 +2698,7 @@ h6 {
   text-transform: uppercase;
   border-radius: 22px;
   border: 1px solid #dfdede; }
-.user-list .list-buttons a.sidebar-btn { min-width: 62px; }
+.user-list .list-buttons a.sidebar-btn { min-width: 52px; }
 .user-list .side-form .input-field, .user-list .side-form .input-field input {
   margin: 0;
   font-size: 11px;
@@ -4257,4 +4257,7 @@ html {
   cursor: pointer;
   vertical-align: middle;
   height: 28px;
+}
+i.material-icons.close:hover {
+  color: red;
 }

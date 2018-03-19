@@ -30,7 +30,6 @@ class SettingsController < ApplicationController
 
   def index
     @email_templates = EmailTemplate.unscoped
-    @companies = Company.unscoped
   end
 
   def set_default_currency

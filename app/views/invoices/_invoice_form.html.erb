@@ -16,7 +16,7 @@
         <div class="new-invoice-action-btn right">
           <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
           <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
-          <%= link_to raw("<i class='material-icons'>close</i>"), invoices_path %>
+          <%= link_to raw("<i class='material-icons close'>close</i>"), invoices_path %>
           <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
           <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
           <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>

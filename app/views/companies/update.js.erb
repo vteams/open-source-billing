@@ -1,0 +1,9 @@
+<% if @company.errors.present? %>
+  showErrorMsg("<%= @company.errors.full_messages.join('.') %>.");
+<% else %>
+  $('#companies_listing').html('<%= escape_javascript render(template: 'companies/settings_listing',
+     layout: false, format: :html) %>');
+  initCompanyListingEvents();
+  $('#companyForm').modal('close');
+  showSuccessMsg('Company has been updated successfully.')
+<% end %>

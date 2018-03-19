@@ -162,7 +162,11 @@ jQuery(function () {
     (function ($) {
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
-                scrollInertia: 150
+                scrollInertia: 150,
+                advanced: {
+                    updateOnContentResize:true,
+                    autoScrollOnFocus: false
+                }
             });
         });
     })(jQuery);

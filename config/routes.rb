@@ -33,6 +33,8 @@ Osb::Application.routes.draw do
         post 'get_clients_and_items'
         get 'filter_companies'
         get 'undo_actions'
+        get :settings_listing
+        delete :destroy_bulk
       end
       member do
         get 'select'

@@ -1,7 +1,8 @@
 <div id="company_form_popup" class="modal editableModal editProject editClient newModel large_modal">
   <div class="modal-content">
     <%- model_class = Company -%>
-    <%= form_for @company, :html => {:id => 'companyForm', :multipart => true, :novalidate => ""} do |f| %>
+    <%= form_for @company, :html => {:id => 'companyForm', :multipart => true, :novalidate => "",
+    remote: params[:remote].to_i == 1} do |f| %>
         <div class="modal-header clearfix text-content">
           <h5 class="left">
             <% if f.object.persisted? %>
@@ -18,7 +19,7 @@
             </a>
             <%= f.submit class: 'btn_large submit hidden' %>
             <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
-              <i class="material-icons" >close</i>
+              <i class="material-icons close">close</i>
             </a>
           </div>
         </div>
