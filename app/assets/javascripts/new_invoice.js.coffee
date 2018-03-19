@@ -105,8 +105,11 @@ class @Invoice
       cost = 0
     if qty == null or qty == '' or !$.isNumeric(qty)
       qty = 0
-    line_total = (parseFloat(cost) * parseFloat(qty)).toFixed(2)
-    $(container).find('.line_total').text line_total
+    line_total = (parseFloat(cost) * parseFloat(qty))
+    tax = parseFloat($(container).find("input.tax1").val())
+    if tax > 0
+      line_total = line_total + (line_total * parseFloat($(container).find("input.tax-amount").val()) / 100.0)
+    $(container).find('.line_total').text line_total.toFixed(2)
 
   clearLineTotal = (elem) ->
     container = elem.parents('tr.fields')
@@ -156,9 +159,11 @@ class @Invoice
             empty_tax_fields(container)
             if item[3] != 0
               container.find('input.tax1').val item[3]
+              container.find('input.tax-amount').val item[8]
               container.find('td.tax1').html item[6]
             if item[4] != 0
               container.find('input.tax2').val item[4]
+              container.find('input.tax-amount').val item[9]
               container.find('td.tax2').html item[7]
             container.find('input.item_name').val item[5]
             updateLineTotal elem

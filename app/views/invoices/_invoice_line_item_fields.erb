@@ -11,6 +11,7 @@
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
+  <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
   <td>
     <%= f.text_field :item_description, class: 'description' %>
   </td>
