@@ -19,7 +19,7 @@
         </div>
         <div class="info-section clearfix">
           <div class="info-left-section left">
-            <h6><%= invoice.invoice_number %></h6>
+            <h6><%= invoice.invoice_number %>: <span><bold><%= invoice.company.company_name %></bold></span></h6>
             <span><%= t('invoice') %>: <small> <%= default_date invoice.invoice_date.to_date rescue "" %> </small></span>
             <span class="text-blue"> Due: <small> <%= default_date invoice.due_date.to_date rescue "" %></small></span>
             <% if invoice.term.present? %>
