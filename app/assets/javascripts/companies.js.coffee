@@ -48,6 +48,10 @@ class @Company
 jQuery ->
   #/ Change selected company in companies list in header
   $(".company_select").on "change", ->
+    if parseInt($(this).find(':selected').val()) == -1
+      $(this).val('')
+      $('#new_company_remote_link').click()
+
     company_id = $(this).find(':selected').data('company-id')
     controller = $(this).find(':selected').data('controller')
     action = $(this).find(':selected').data('action')

@@ -15,7 +15,9 @@
             <% filter_select_by_companies.each do |company| %>
                 <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>"><%= company.company_name %></option>
             <% end %>
+            <option value="-1"> + Create New </option>
           </select>
+          <%= link_to '', new_company_path(remote: 1, reload: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and current_user.settings.currency.present? and current_user.settings.currency.eql?("On") %>
               <select class="currency currency_select" data-user-id="<%= current_user.id %>">
                 <option value="" disabled selected><%= current_user.settings.default_currency %></option>

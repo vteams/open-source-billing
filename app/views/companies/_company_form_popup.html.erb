@@ -3,6 +3,7 @@
     <%- model_class = Company -%>
     <%= form_for @company, :html => {:id => 'companyForm', :multipart => true, :novalidate => "",
     remote: params[:remote].to_i == 1} do |f| %>
+        <%= hidden_field_tag :reload, params[:reload] %>
         <div class="modal-header clearfix text-content">
           <h5 class="left">
             <% if f.object.persisted? %>

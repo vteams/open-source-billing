@@ -132,7 +132,7 @@ module ApplicationHelper
   end
 
   def filter_select_by_companies
-    Company.unscoped
+    Company.all
   end
 
   # generate drop down to filter listings by company
