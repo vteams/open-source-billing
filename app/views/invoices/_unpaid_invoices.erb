@@ -3,55 +3,79 @@
         jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
     });
 </script>
-<div class="unpaid_invoice">
-  <div class="grid_table">
-    <table cellpadding="0" cellspacing="0" class="table_listing">
-      <colgroup>
-        <col class="one"/>
-        <col class="two"/>
-        <col class="three"/>
-        <col class="four"/>
-        <col class="five"/>
-        <col class="six"/>
-        <col class="seven"/>
-      </colgroup>
-      <thead>
-      <tr>
-        <th class="align_center"><%= check_box_tag 'select_all' %></th>
-        <th class="align_center"><%= t('invoice') %>#</th>
-        <th class="align_left"><%= t('views.common.notes') %></th>
-        <th class="align_left"><%= t('client') %></th>
-        <th class="align_center"><%= t('views.common.total') %></th>
-        <th class="align_center"><%= t('views.common.date') %></th>
-        <th class="align_center"><%= t('views.common.status') %></th>
-      </tr>
-      </thead>
-      <tbody>
-      <% unless @invoices.blank? %>
-          <% @invoices.each do |inv| %>
-              <tr>
-                <td class="align_center"><%= check_box_tag "invoice_ids[]", inv.id %>
-                <td class="align_center"><%= inv.invoice_number %></td>
-                <td class="align_left"><%= inv.notes %></td>
-                <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
-                <td class="align_center currency"><%= number_to_currency(inv.invoice_total, unit: inv.currency.present? ? inv.currency.unit : "$") %>
-                <td class="align_center"><%= inv.invoice_date rescue "" %></td>
-                <td class="align_center <%= inv.status %>" title="<%= inv.tooltip %>">
-            <span class="invoice-status invoice-sent">
-              <%= inv.status.downcase %>
-            </span>
-                </td>
+<%= form_tag "/payments/enter_payment", id: "invoice_selection" do %>
+    <div id="unpaid_invoices" class="modal editableModal editPayment newModel large_modal unpaid_invoice">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-content">
+          <h2 class="text-blue"><%= t('views.payments.which_invoices_have_you_received_payment_for') %>?</h2>
+            <%= t('views.payments.select_one_or_more_invoices_from_the_list_below_to_apply_payment') %>
+          <div class="modal-action-btn right">
+            <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+              <i class="material-icons" >done</i>
+            </a>
+            <%= submit_tag'', class: 'btn_large submit hidden' %>
+            <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+              <i class="material-icons" >close</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="panel-table">
+
+
+      <div class="grid_table">
+        <table class="bordered responsive-table table_listing">
+          <colgroup>
+            <col class="one"/>
+            <col class="two"/>
+            <col class="three"/>
+            <col class="four"/>
+            <col class="five"/>
+            <col class="six"/>
+            <col class="seven"/>
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="align_center"><%= check_box_tag 'select_all', '', false, class: 'fix-left-and-opacity'%></th>
+            <th class="align_center"><%= t('invoice') %>#</th>
+            <th class="align_left"><%= t('views.common.notes') %></th>
+            <th class="align_left"><%= t('client') %></th>
+            <th class="align_center"><%= t('views.common.total') %></th>
+            <th class="align_center"><%= t('views.common.date') %></th>
+            <th class="align_center"><%= t('views.common.status') %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% unless @invoices.blank? %>
+              <% @invoices.each do |inv| %>
+                  <tr>
+                    <td class="align_center"><%= check_box_tag "invoice_ids[]", inv.id, false, class: 'fix-left-and-opacity' %></td>
+                    <td class="align_center"><%= inv.invoice_number %></td>
+                    <td class="align_left"><%= inv.notes %></td>
+                    <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
+                    <td class="align_center currency"><%= number_to_currency(inv.invoice_total, unit: inv.currency.present? ? inv.currency.unit : "$") %>
+                    <td class="align_center"><%= inv.invoice_date rescue "" %></td>
+                    <td class="align_center <%= inv.status %>" title="<%= inv.tooltip %>">
+                <span class="invoice-status invoice-sent">
+                  <%= inv.status.downcase %>
+                </span>
+                    </td>
+                  </tr>
+              <% end %>
+          <% else %>
+              <tr class="no-invoices">
+                <td colspan="7"><%= t('views.invoices.no_unpaid_invoices') %></td>
               </tr>
           <% end %>
-      <% else %>
-          <tr class="no-invoices">
-            <td colspan="7"><%= t('views.invoices.no_unpaid_invoices') %></td>
-          </tr>
-      <% end %>
 
-      </tbody>
-    </table>
+          </tbody>
+        </table>
 
-  </div>
-  <!--grid_table-->
-</div><!--unpaid_invoices-->
+      </div>
+      <!--grid_table-->
+    </div><!--unpaid_invoices-->
+<% end %>
+</div>
+</div>

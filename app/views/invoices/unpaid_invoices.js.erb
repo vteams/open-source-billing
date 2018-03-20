@@ -1,4 +1,9 @@
-jQuery(".modal-body").html("<%= escape_javascript(render(:partial=>"unpaid_invoices")) %>");
+$('body').append("<%= escape_javascript render partial: 'unpaid_invoices' %>");
+
+Payment.load_functions();
+elem = $("#unpaid_invoices");
+Popup.initialize(elem);
+Popup.open(elem);
 
 jQuery('#invoice_selection').submit(function() {
     var flag, invoices;

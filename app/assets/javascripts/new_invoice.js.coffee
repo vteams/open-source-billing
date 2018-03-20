@@ -432,3 +432,9 @@ jQuery ->
     select_input.val 'Custom'
     $('#invoice_payment_terms_id').val('4').trigger 'change'
     return
+
+  jQuery('body').on "click", '#select_all', ->
+    listing_table =  jQuery(this).parents('table.table_listing')
+    selected = if @checked then "selected" else ""
+    window.listing_table = listing_table
+    listing_table.find(':checkbox').prop('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
