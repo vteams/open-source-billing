@@ -29,7 +29,7 @@
  *= invoice_form.css.scss
  *= estimate_form.css.scss
  *= tiny_form_container.css.scss
- *= pay_invoice.css.scss
+ *= require pay_invoice
  *= log_page.css.scss
  *= aged_accounts_receivable.css.scss
  *= revenue_by_client.css.scss
@@ -52,3 +52,8 @@
  *= require select2.min
  *= require search
 */
+
+.fix-left-and-opacity {
+    left: auto !important;
+    opacity: 1 !important;
+}

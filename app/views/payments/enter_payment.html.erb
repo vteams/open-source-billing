@@ -1,17 +1,10 @@
-<div class="content_top">
-  <div class="primary_heading">
-    <h1><%= t('views.invoices.enter_payment') %></h1>
-  </div>
-</div>
 <!--content_top-->
 <%= form_tag "update_individual_payment", :method => :put, :novalidate => "", :id => "payments_form" do %>
-    <%= render "enter_payment" %>
-    <div class="content_bottom">
-      <input type="submit" value="Save" name="commit" id="submit_payment_form" class="btn_large submit"/>
-    </div>
-    <% if params[:from_invoices] %>
-        <%= hidden_field_tag :from_invoices %>
-    <% end %>
+      <%= render "enter_payment" %>
+
+      <% if params[:from_invoices] %>
+          <%= hidden_field_tag :from_invoices %>
+      <% end %>
 <% end %>
 
 

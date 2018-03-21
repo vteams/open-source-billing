@@ -13,7 +13,7 @@
     float: left;
     border: 1px solid #D7D7D7;
     border-radius: 3px 3px 3px 3px;
-    width: 263px;
+    width: 280px;
     min-height: 234px;
   }
   .payment_serial {
@@ -73,7 +73,7 @@
   .invoice_label{
     font-family: 'Dosis Regular';
     float: left;
-    width: 99px;
+    width: 109px;
     font-size: 16px;
     color: #464646;
   }
@@ -154,4 +154,65 @@
       }
     }
   }
+}
+.heading-style{
+  padding-left: 30px;
+  padding-top: 20px;
+  font-size: 20px;
+}
+.text-field-height{
+  height: 1rem !important;
+}
+.floating-left{
+  float: left;
+}
+
+.checkbox-position{
+  position: relative !important;
+  margin-top: 2px !important;
+}
+.payment-method{
+  display: inline-flex;
+}
+
+.label-font{
+  font-size: 14px !important;
+  color: #454545 !important;
+}
+
+.date-align{
+  padding-left: 40px !important;
+}
+
+.container-block{
+  background: #ffffff;
+  margin-top: -30px;
+  height: 50px;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+
+}
+.payment-btn-style{
+  background-color: #00BDE5;
+  border-radius: 4px;
+  display: inline-block;
+  font-family: "Dosis Regular", sans-serif;
+  font-size: 20px;
+  min-width: 156px;
+  text-transform: capitalize;
+  border: none;
+  font-weight: normal;
+  min-height: 40px;
+  color: #FFFFFF;
+}
+
+.right-payment-container{
+  margin-right: -40px !important;
+}
+
+.checkbox-lable{
+  margin-bottom: 15px;
 }

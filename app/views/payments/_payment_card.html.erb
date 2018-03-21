@@ -15,7 +15,7 @@
       <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
     <% end %>
       <div class="card-footer clearfix">
-        <span class="invoice-date"><small>Due:</small> <%= default_date payment.unscoped_invoice.due_date.to_date rescue "" %></span>
+        <span class="invoice-date"><small>Payment Date:</small> <%= default_date payment.payment_date.to_date rescue "" %></span>
         <span class="invoice-action text-blue"><%= (payment.payment_method || payment.payment_type || "").capitalize %></span>
       </div>
     </div>

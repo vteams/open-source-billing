@@ -218,4 +218,8 @@ $(document).ready(function(){
         $('#flash_message').fadeOut('slow');
     }, 5000);
     bind_deleted_entry();
+
+    $('.date-picker').pickadate({
+        format: "d mmm, yyyy"
+    });
 });
