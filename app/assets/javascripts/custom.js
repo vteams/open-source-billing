@@ -31,15 +31,19 @@ $(document).ready(function(){
     });
     //
     $(".btn-menu").click(function(){
-      $('#graph_container').toggleClass('custom-graph');
-      $('#graph_container').html('');
-      Dashboard.plot_graph();
       $("#activity-sidebar").removeClass("show-activity");
       $("#side-nav,#main-content,#activity-sidebar, #flash_message").toggleClass("side-show");
-      if($('#side-nav').hasClass('side-show'))
-          removeSideNavTitle();
-      else
+      if($('#side-nav').hasClass('side-show')) {
+        removeSideNavTitle();
+        $('#graph_container').css('width',  '350px');
+      }
+      else {
+        $('#graph_container').css('width',  '450px');
         addSideNavTitle();
+      }
+
+      $('#graph_container').html('');
+      Dashboard.plot_graph();
     });
     //
     $(".btn-activity").click(function(){
