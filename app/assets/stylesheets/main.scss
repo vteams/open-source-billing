@@ -4264,3 +4264,34 @@ html {
 i.material-icons.close:hover {
   color: red;
 }
+
+.pagination {
+  background: transparent !important;
+  padding-left: 40px;
+}
+
+.pagination .page {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
+}
+
+.pagination .page:hover, .pagination .prev:hover, .pagination .next:hover {
+  background-color: #049bd3;
+}
+
+.pagination .page.current {
+  background-color: #10A2D7;
+}
+
+.pagination .prev {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
+}
+
+.pagination .next {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
+}
