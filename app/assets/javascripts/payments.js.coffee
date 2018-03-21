@@ -108,24 +108,24 @@ jQuery ->
 #  #edit payment form check if credit exceed available credit
 
   # validate payments fields on enter payment form submit
-#  jQuery('#submit_payment_form').on "click", ->
-#    validate = true
-#    payment_fields = jQuery('.payment_amount')
-#
-#    # show a message if 0 is entered in payment amount
-#    payment_fields.each ->
-#      if parseFloat(jQuery(this).val()) is 0
-#        jQuery(this).qtip({content: text: "Payments with 0 amount are not allowed. Either leave it blank to skip or enter a value greater than 0.", show: event: false, hide: event: false})
-#        jQuery(this).focus().qtip().show()
-#        validate = false
-#      else
-#        jQuery('.payment_dates').each ->
-#          if jQuery(this).val() isnt "" and !DateFormats.validate_date((jQuery(this).val()))
-#            applyPopover(jQuery(this), "rightTop", "leftMiddle", "Make sure date format is in '#{DateFormats.format()}' format")
-#            validate = false
-#    validate
 
 
+  jQuery('.submit_payment_form').on "click", ->
+    validate = true
+    payment_fields = jQuery('.payment_amount')
+
+    # show a message if 0 is entered in payment amount
+    payment_fields.each ->
+      if parseFloat(jQuery(this).val()) is 0
+        jQuery(this).qtip({content: text: "Payment with 0 amount is not allowed. Enter a value greater than 0.", show: event: false, hide: event: false})
+        jQuery(this).focus().qtip().show()
+        validate = false
+    payment_fields.each ->
+      if jQuery(this).val() is ""
+        jQuery(this).qtip({content: text: "Enter a value greater than 0", show: event: false, hide: event: false})
+        jQuery(this).focus().qtip().show()
+        validate = false
+    validate
 
   jQuery(".line_item_qtip").on "change",->
     jQuery(this).qtip('hide')

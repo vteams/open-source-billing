@@ -96,3 +96,4 @@ gem 'elasticsearch-rails', '5.0.0'
 gem 'exception_notification-rake', '0.3.0'
 
 gem 'whenever', '0.9.7'
+gem 'browser-timezone-rails'
