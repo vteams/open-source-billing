@@ -68,6 +68,7 @@
 
 @initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
+    $('#company_reset_form').click()
     $('.company-side-form,#company_btn_container').toggleClass('hidden')
 
   $('#company_save_btn').on "click", (event)->
