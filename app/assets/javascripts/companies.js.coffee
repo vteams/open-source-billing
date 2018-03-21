@@ -51,6 +51,7 @@ jQuery ->
     if parseInt($(this).find(':selected').val()) == -1
       $(this).val('')
       $('#new_company_remote_link').click()
+      return
 
     company_id = $(this).find(':selected').data('company-id')
     controller = $(this).find(':selected').data('controller')
