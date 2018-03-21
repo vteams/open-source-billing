@@ -111,6 +111,16 @@
 
   $('.company-side-form').addClass('hidden')
 
+@loadUsersActivitiesSection = () ->
+  $.get '/sub_users/settings_listing', (data) ->
+    $('#users_listing').append(data)
+    initUserListingEvents()
+
+@loadCompaniesActivitiesSection = () ->
+  $.get '/companies/settings_listing', (data) ->
+    $('#companies_listing').append(data)
+    initCompanyListingEvents()
+
 jQuery ->
   jQuery('.currency_select').on "change", ->
     currency_id = $(this).val()
@@ -118,12 +128,3 @@ jQuery ->
     url = "/settings/"+user_id+"/set_default_currency?currency_id="+currency_id
     jQuery.get url, (response) ->
       window.location.reload()
-
-  $(document).ready ->
-    $.get '/sub_users/settings_listing', (data) ->
-      $('#users_listing').append(data)
-      initUserListingEvents()
-
-    $.get '/companies/settings_listing', (data) ->
-      $('#companies_listing').append(data)
-      initCompanyListingEvents()
