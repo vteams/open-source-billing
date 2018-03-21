@@ -1,16 +1,5 @@
 class @Estimate
 
-  applyDatePicker = ->
-    $('#estimate_date_picker').pickadate
-      format: "d mmm, yyyy"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#estimate_date').html value
-        $('#estimate_estimate_date').val value
-
-
-
   # Calculate the line total for invoice
   updateLineTotal = (elem) ->
     container = elem.parents("tr.fields")
@@ -193,7 +182,6 @@ class @Estimate
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    applyDatePicker();
     $('select').material_select();
 
     # Update line and grand total if line item fields are changed

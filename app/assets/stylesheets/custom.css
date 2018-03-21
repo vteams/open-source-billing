@@ -606,3 +606,16 @@ form .select-wrapper .select-dropdown {
 .invoice_template .select-wrapper .caret{
     display: none !important;
 }
+
+.date-field-style{
+    font-size: 11px !important;
+    text-transform: uppercase;
+    margin: 0 !important;
+    width: 71px !important;
+    border-bottom: 0 !important;
+    height: 1rem !important;
+    box-shadow: none !important;
+}
+.date-wrapper{
+    font-family: "Roboto", sans-serif;
+}
