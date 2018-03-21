@@ -54,10 +54,10 @@
     if $('input[id^=user_ck_]:checked').length == 1
       $('#user_edit_btn').removeClass('disabled')
       url = '/sub_users/' + $('input[id^=user_ck_]:checked').val() + '/edit?remote=1'
-      $('#user_edit_btn').attr('href', url)
+      $('#user_edit_btn').attr('href', url).attr('data-remote', 'true')
     else
       $('#user_edit_btn').addClass('disabled')
-      $('#user_edit_btn').attr('href', 'javascript:;')
+      $('#user_edit_btn').attr('href', 'javascript:;').removeAttr('data-remote')
 
     if $('input[id^=user_ck_]:checked').length > 0
       $('#user_delete_btn').removeClass('disabled')
@@ -99,10 +99,10 @@
     if $('input[id^=company_ck_]:checked').length == 1
       $('#company_edit_btn').removeClass('disabled')
       url = '/companies/' + $('input[id^=company_ck_]:checked').val() + '/edit?remote=1'
-      $('#company_edit_btn').attr('href', url)
+      $('#company_edit_btn').attr('href', url).attr('data-remote', 'true')
     else
       $('#company_edit_btn').addClass('disabled')
-      $('#company_edit_btn').attr('href', 'javascript:;')
+      $('#company_edit_btn').attr('href', 'javascript:;').removeAttr('data-remote')
 
     if $('input[id^=company_ck_]:checked').length > 0
       $('#company_delete_btn').removeClass('disabled')

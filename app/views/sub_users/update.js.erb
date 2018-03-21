@@ -3,7 +3,7 @@
 <% else %>
   $('#users').html('<%= escape_javascript render(partial: 'user', collection: @users) %>');
   initUserListingEvents();
-  $('#user_edit_btn').addClass('disabled').attr('href', 'javascript:;');
+  $('#user_edit_btn').addClass('disabled').attr('href', 'javascript:;').removeAttr('data-remote');
   $('#edit_form_popup').modal('close');
   showSuccessMsg("User has been updated successfully.")
 <% end %>

@@ -81,23 +81,25 @@
             </div>
           </div>
 
-          <div class="row">
-            <h5 class="text-blue title-heading"><%= t('views.companies.branding') %></h5>
-            <div class="file-field input-field col s6 m6">
-              <div class="btn">
-                <span>Logo</span>
-                <input type="file" name="company[logo]">
+          <% unless params[:remote].to_i == 1 %>
+            <div class="row">
+              <h5 class="text-blue title-heading"><%= t('views.companies.branding') %></h5>
+              <div class="file-field input-field col s6 m6">
+                <div class="btn">
+                  <span>Logo</span>
+                  <input type="file" name="company[logo]">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+              <div class="input-field col s6 m6">
+                <% if action_name == 'edit' %>
+                    <%= image_tag @company.logo_url(:thumb) %>
+                <% end %>
               </div>
             </div>
-            <div class="input-field col s6 m6">
-              <% if action_name == 'edit' %>
-                  <%= image_tag @company.logo_url(:thumb) %>
-              <% end %>
-            </div>
-          </div>
+          <% end %>
           <div  class="row">
             <br/>
             <div class="input-field col s6 m4">
