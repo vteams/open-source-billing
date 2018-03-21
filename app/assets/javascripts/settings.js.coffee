@@ -23,6 +23,7 @@
 
 @initUserListingEvents = () ->
   $('#user_add_btn,#user_cancel_btn').on "click", ->
+    $('#user_reset_form').click()
     $('.user-side-form,#user_btn_container').toggleClass('hidden')
 
   $('#user_save_btn').on "click", (event)->
