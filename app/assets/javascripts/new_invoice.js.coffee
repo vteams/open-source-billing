@@ -340,7 +340,7 @@ class @Invoice
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
       invoice_date_value = moment(new Date($("#invoice_invoice_date").val())).format("L")
-      due_date_value = moment(new Date($("#invoice_due_date").val())).format("L")
+      due_date_value = moment(new Date($("#invoice_due_date_picker").val())).format("L")
       discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
       discount_type = $("select#discount_type").val()
       sub_total = $('#invoice_sub_total').val()
@@ -364,7 +364,7 @@ class @Invoice
         applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
         flag =false
       else if invoice_date_value > due_date_value
-        applyPopover($("#invoice_due_date_text"),"bottomMiddle","topLeft","Due date should be equal or greater than invoice date")
+        applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft","Due date should be equal or greater than invoice date")
         flag = false
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
