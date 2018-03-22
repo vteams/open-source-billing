@@ -6,7 +6,9 @@
     <div class="checkbox-item">
       <%= check_box_tag "company_ids[]", company.id, false, :id => "company_#{company.id}", class: "filled-in" %>
       <label for="<%= "company_#{company.id}" %>"></label>
-      <div class="invoice-name <%= random_card_color %>"><%= company.image_name %></div>
+      <div class="invoice-name <%= random_card_color %>">
+        <%= company.logo_url.present? ? image_tag(company.logo_url(:thumb), class: 'responsive-img circle') : company.image_name %>
+      </div>
     </div>
     <div class="invoice-details">
       <h5><%= company.company_name %></h5>
