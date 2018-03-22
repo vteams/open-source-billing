@@ -10,7 +10,8 @@
             <a href="#" class="edit-detail"><i class="material-icons">create</i></a>
             <a href="#" onclick="$('.send_submit').click();" title="Save" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+            <%= link_to raw("<i class='material-icons close'>close</i>"), projects_path, data:{confirm: 'Are you sure?'},
+                        title: 'Back' %>
           </div>
         </div>
       </div>
