@@ -27,14 +27,34 @@
         <div class="info-section clearfix">
           <div class="info-left-section">
             <h6><%= invoice.invoice_number %></h6>
-            <span>Invoice: <small id="invoice_date"> <%= default_date(f.object.invoice_date.to_date) %></small> <i class="material-icons" id="invoice_date_picker">date_range</i></span>
-            <span class="text-blue"> Due: <small id="invoice_due_date_text"> <%= f.object.due_date.present? ? default_date(f.object.due_date.to_date) : 'TBD'   %> </small> <i class="material-icons" id="invoice_due_date_picker">date_range</i></span>
-            <%= f.hidden_field :invoice_date,value: f.object.invoice_date, :required => "" %>
-            <%= f.hidden_field :due_date, :placeholder => "TBD" %>
+            <span>
+                <div class="date-wrapper">
+                    <span><%=t('invoice')%>:</span>
+                    <span>
+                      <small>
+                        <span><%= f.text_field :invoice_date, value: default_date(f.object.invoice_date.to_date), class: "date-picker date-field-style" %></span>
+                        <span><i class="material-icons">date_range</i></span>
+                      </small>
+                    </span>
+                </div>
+            </span>
+
+            <span>
+                <div class="date-wrapper text-blue">
+                    <span><%=t('view.invoices.due')%>:</span>
+                    <span>
+                      <small>
+                        <span><%= f.text_field :due_date, value: default_date(f.object.due_date.to_date), class: "date-field-style", id: "invoice_due_date_picker"%></span>
+                        <span><i class="material-icons">date_range</i></span>
+                      </small>
+                    </span>
+                </div>
+            </span>
+
             <div class="terms ">
               <span>Terms : </span>
               <small>
-                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select'} %>
+                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select payment-term-dropdown'} %>
               </small>
             </div>
             <div class="paymentInfo">

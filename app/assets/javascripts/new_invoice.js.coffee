@@ -11,14 +11,6 @@ class @Invoice
         $('#next_invoice_date').html value
         $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
 
-    $('#invoice_due_date_picker').pickadate
-      format: "d mmm, yyyy"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#invoice_due_date_text').html value
-        $('#invoice_due_date').val value
-
     $("#next_invoice_date_picker").pickadate
       format: "d mmm, yyyy"
       formatSubmit: DateFormats.format()
@@ -172,9 +164,10 @@ class @Invoice
           $('#invoice_due_date_text').html moment(invoice_due_date_custom).format("DD MMM, YYYY")
           $('#invoice_due_date').val invoice_due_date_custom
       else
-        invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
-        $('#invoice_due_date_text').html moment(invoice_due_date).format("DD MMM, YYYY")
-        $('#invoice_due_date').val invoice_due_date
+        invoice_due_date = DateFormats.add_days_in_formated_date((moment(new Date(invoice_date)).format('YYYY-MM-DD')), parseInt(term_days))
+        default_due_date_format = moment(invoice_due_date).format("DD MMM, YYYY")
+        $('#invoice_due_date_picker').html default_due_date_format
+        $('#invoice_due_date_picker').val default_due_date_format
     else
       $('#invoice_due_date').val ''
 
@@ -252,7 +245,6 @@ class @Invoice
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    applyDatePicker();
     $('select').material_select();
 
     # Re calculate the total invoice balance if an item is removed
@@ -422,16 +414,14 @@ class @Invoice
       flag
 
 jQuery ->
-  $('#invoice_due_date_picker').pickadate onClose: ->
-    select_input = $('#invoice_payment_terms_id').prevAll('input')
-    select = document.getElementById(select_input.attr('data-activates'))
-    $(select).find('.active').removeClass 'active'
-    $(select).find('.selected').removeClass 'selected'
-    $($(select).children()[3]).addClass 'selected'
-    $($(select).children()[3]).addClass 'active'
-    select_input.val 'Custom'
-    $('#invoice_payment_terms_id').val('4').trigger 'change'
-    return
+  # for custom payment term
+  $('#invoice_due_date_picker').pickadate
+    format: 'd mmm, yyyy'
+    onClose: ->
+      custom_option = $('.payment-term-dropdown').find('li:last')
+      custom_option.trigger('click') if custom_option.text() is "Custom"
+
+
 
   jQuery('body').on "click", '#select_all', ->
     listing_table =  jQuery(this).parents('table.table_listing')
