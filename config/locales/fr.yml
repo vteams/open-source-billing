@@ -184,6 +184,7 @@ fr:
     invoices:
       invoice: "factures"
       due_date: "date d'échéance"
+      due: "Dû"
       enter_payment: "Entrez paiement"
       enter_payment_on_invoice: "Entrez le paiement sur la facture"
       dispute_history: "Histoire des différends"

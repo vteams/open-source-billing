@@ -228,6 +228,7 @@ en:
     invoices:
       invoice: "Invoices"
       due_date: "Due date"
+      due: "Due"
       enter_payment: "Enter payment"
       enter_payment_on_invoice: "Enter payment on invoice"
       dispute_history: "Dispute History"

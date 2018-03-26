@@ -186,6 +186,7 @@ de:
 
     invoices:
       due_date: "Fälligkeitsdatum"
+      due: "fällig"
       enter_payment: "Bezahlung eingeben"
       enter_payment_on_invoice: "Bezahlung in Rechnung eingeben"
       dispute_history: "Disput Historie"

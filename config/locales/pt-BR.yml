@@ -185,6 +185,7 @@ pt-BR:
     invoices:
       invoice: "Faturas"
       due_date: "Data de vencimento"
+      due: "vencimento"
       enter_payment: "Digite o pagamento"
       enter_payment_on_invoice: "Digite o pagamento da fatura"
       dispute_history: "Histórico de disputa"
