@@ -258,6 +258,7 @@ INDUSTRY_LIST = ['Accommodation & Hospitality',
 DISCOUNT_TYPE = %w(% USD)
 
 DATE_FORMATS = [
+    ['dd-mon-yyyy', '%d %b, %Y'],
     ['mm/dd/yy', '%m/%d/%y'],
     ['mm/dd/yyyy', '%m/%d/%Y'],
     ['dd/mm/yy', '%d/%m/%y'],
