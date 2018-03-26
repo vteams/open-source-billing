@@ -226,9 +226,9 @@ module ApplicationHelper
   def get_date_format
     if current_user.present?
       user_format = current_user.settings.date_format
-      user_format.present? ?  user_format : '%Y-%m-%d'
+      user_format.present? ?  user_format : '%d %b, %Y'
     else
-      '%Y-%m-%d'
+      '%d %b, %Y'
     end
   end
 

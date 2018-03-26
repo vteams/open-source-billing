@@ -73,9 +73,16 @@
             <div class="show-me" id="recurring_schedule_container">
             <%= f.fields_for :recurring_schedule do |rs| %>
                 <div class="">
-                  <% next_invoice_date = has_recurring ? rs.object.next_invoice_date.strftime(get_date_format) :  f.object.invoice_date %>
-                  <p>Next Issue Date: <span id="next_invoice_date"> <%= next_invoice_date %></span> <i class="material-icons" id="next_invoice_date_picker">date_range</i></p>
-                  <%= rs.hidden_field :next_invoice_date, value: next_invoice_date, class: 'next_invoice_date' %>
+                  <% next_invoice_date = has_recurring ? rs.object.next_invoice_date.strftime(get_date_format) :  default_date(f.object.invoice_date.to_date) %>
+                  <div class="date-wrapper">
+                    <span class="next-invoice-date">Next Issue Date:</span>
+                    <span>
+                      <small>
+                        <span><%= rs.text_field :next_invoice_date, value: next_invoice_date, class: "date-picker date-field-style" %></span>
+                        <span><i class="material-icons calendar-icon">date_range</i></span>
+                      </small>
+                    </span>
+                  </div>
                   <div class="invoice-input-holder">
                     <div class="input-field">
                       <%= rs.select :frequency, Invoice_FREQUENCY, {include_blank: false}, {class: 'inline-select' }%>

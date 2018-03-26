@@ -612,7 +612,20 @@ form .select-wrapper .select-dropdown {
     border-bottom: 0 !important;
     height: 1rem !important;
     box-shadow: none !important;
+    font-weight: bold !important;
 }
 .date-wrapper{
     font-family: "Roboto", sans-serif;
+}
+.calendar-icon{
+    font-size: 18px !important;
+    vertical-align: bottom !important;
+    color: #b5b5b5 !important;
+    margin: 0 3px 0 -1px !important;
+    top: -1px !important;
+    position: relative !important;
+}
+.date-wrapper span.next-invoice-date{
+    font-size: 11px;
+    text-transform: uppercase;
 }
