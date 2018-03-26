@@ -4,4 +4,5 @@
       <%= render partial: 'taxes',:collection => taxes, as: :taxis %>
     </div>
 <% end %>
+<%= page_entries_info @taxes %>
 <%= paginate @taxes %>

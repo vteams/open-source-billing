@@ -4,4 +4,5 @@
     <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
   </div>
 <% end %>
+<%= page_entries_info @invoices %>
 <%= paginate @invoices %>

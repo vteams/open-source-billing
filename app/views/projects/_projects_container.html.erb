@@ -4,4 +4,5 @@
       <%= render partial: 'project_card', collection: projects, as: :project %>
     </div>
 <% end %>
+<%= page_entries_info @projects %>
 <%= paginate @projects %>
