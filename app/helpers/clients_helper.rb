@@ -52,4 +52,14 @@ module ClientsHelper
     flag
   end
 
+  def unpaid_invoice_exists?(client_id)
+    company = get_company_id
+    company_filter = company.present? ? "invoices.company_id=#{company}" : ''
+    for_client = "and client_id = #{client_id}"
+    Invoice.joins(:client).where("(status != 'paid' or status is null) #{for_client}").where(company_filter).exists?
+  end
+
+  def unpaid_client_invoices_path(client_id)
+    unpaid_invoice_exists?(client_id) ? invoices_unpaid_invoices_path(for_client: client_id) : 'javascript:void(0);'
+  end
 end
