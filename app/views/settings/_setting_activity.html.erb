@@ -1,17 +1,8 @@
 <!--- Activity sidebar --->
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
-  <div class="activity-scroll-holder mCustomScrollbar">
+  <div class="activity-scroll-holder scrollContainer">
     <!--- activities list--->
     <div class="status-info active" id="users_listing"></div>
-    <div class="status-info">
-      <!--company listing-->
-      <h5>
-        <%= link_to 'COMPANIES', companies_path %>
-        <span><%= "(#{@companies.count})" %></span>
-      </h5>
-       <div class="user-list" id="companies">
-         <%= render partial: 'company', collection: @companies %>
-      </div>
-    </div>
+    <div class="status-info" id="companies_listing"></div>
   </div>
 </aside>

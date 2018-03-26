@@ -6,8 +6,8 @@ class ProjectTask < ActiveRecord::Base
 
   acts_as_archival
 
-  def group_date
-    updated_at.strftime('%B %Y')
+  def group_date(format = '%B %Y')
+    updated_at.strftime(format)
   end
 
   def spent_time_percentage

@@ -2,7 +2,7 @@
   <td>
     <div class="elementsAction">
       <%= f.hidden_field :_destroy%>
-      <a href="#" data-association="estimate_line_items" class="remove_item remove_nested_fields removeItem"><i class="material-icons">close</i></a>
+      <a href="#" data-association="estimate_line_items" class="remove_item remove_nested_fields removeItem"><i class="material-icons close">close</i></a>
       <a class="sort_icon sortable" href="javascript:" title="Drag this line item to your desired location in this invoice"><i class="material-icons">open_with</i></a>
     </div>
   </td>
@@ -14,6 +14,7 @@
   <td><%= f.text_field :item_unit_cost, class: 'cost center-align'%></td>
   <td><%= f.number_field :item_quantity, class: 'qty center-align', min: 1 %></td>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
+  <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
   <td class="center-align tax1">
     <%= f.object.tax1.name rescue '' %>
   </td>

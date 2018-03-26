@@ -1,0 +1,25 @@
+<div class="side-form company-side-form">
+  <%= form_tag('/companies', novalidate: '', id: 'company_side_form', method: :post, remote: true)  %>
+  <%= hidden_field_tag :setting_form, 1, id: 'company_setting_form' %>
+  <div class="modal-body users">
+    <div class="input-field">
+      <%= text_field_tag :company_name, '', placeholder: 'Company Name', name: 'company[company_name]' %>
+    </div>
+    <div class="input-field">
+      <%= text_field_tag :contact_name,'', placeholder: 'Contact Name', name: 'company[contact_name]' %>
+    </div>
+    <div class="input-field">
+      <%= text_field_tag :contact_title, '', placeholder: 'Company Phone', name: 'company[contact_title]' %>
+    </div>
+    <div class="input-field">
+      <%= text_field_tag :email, '', placeholder: 'Company Email', name: 'company[email]', id: 'companies_email' %>
+    </div>
+    <div class="input-field">
+      <%= text_field_tag :phone_number, '', placeholder: 'Company Phone', name: 'company[phone_number]' %>
+    </div>
+  </div>
+  <a href="javascript:;" id="company_save_btn">Save</a>
+  <a href="javascript:;" id="company_cancel_btn">Cancel</a>
+  <%= submit_tag 'Save', class: 'submit-company-form hidden' %>
+  <%= submit_tag 'Clear', type: 'reset', id: 'company_reset_form', class: 'hidden' %>
+</div>

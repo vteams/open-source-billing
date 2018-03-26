@@ -13,6 +13,7 @@
   <tbody>
   <% invoice.invoice_line_items.each do |item|
     item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+    item_line_total+= (item_line_total * item.tax1.percentage.to_f / 100.0) if item.tax1
   %>
       <tr>
         <td><%= item.item_name rescue "" %></td>

@@ -13,7 +13,7 @@
     </div>
     <div class="info-section clearfix">
       <div class="info-left-section left">
-        <h6><%= estimate.estimate_number %></h6>
+        <h6><%= estimate.estimate_number %>: <span><bold><%= estimate.company.company_name %></bold></span></h6>
         <span><%= t('estimate') %>: <small> <%= default_date estimate.estimate_date.to_date rescue "" %> </small></span>
 
         <div class="paymentInfo">
@@ -42,6 +42,7 @@
         <tbody>
         <% estimate.estimate_line_items.each do |item|
           item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+          item_line_total += (item_line_total * item.tax1.percentage.to_f / 100.0) if item.tax1
         %>
             <tr>
               <td><%= item.item_name rescue "" %></td>

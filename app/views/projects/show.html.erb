@@ -42,26 +42,30 @@
           <div class="task-box clearfix">
             <!--- Invoices Card Title--->
             <div class="view-btn-group clearfix">
-              <span class="activity-date left">Today</span>
               <div class="btn-inline right">
-                <div class="btn-icons">
+                <!--ToDo-->
+                <!-- Followings action actions will be implements later. -->
+                <div class="btn-icons hidden">
                   <a href="#"><i class="material-icons">date_range</i></a>
                   <a href="#" class="active"><i class="material-icons">view_module</i></a>
                   <a href="#"><i class="material-icons">view_list</i></a>
                 </div>
                 <div class="btn-calender">
-                  <a href="#">Day</a>
-                  <a href="#">Week</a>
-                  <a href="#" class="active">Month</a>
+                  <a href='<%= project_path(@project, group: :day) %>' class="<%= 'active' if params[:group] == 'day' %>">Day</a>
+                  <a href="<%= project_path(@project, group: :week) %>" class="<%= 'active' if params[:group] == 'week' %>">Week</a>
+                  <a href="<%= project_path(@project) %>" class="<%= 'active' unless params[:group].present? %>">Month</a>
                 </div>
               </div>
             </div>
-            <div class="flex-wrapper">
-              <!--- task Card --->
-              <% @project_tasks.group_by { |d| d.group_date }.each do |date, tasks| %>
+            <!--- task Card --->
+            <% @project_tasks.group_by { |d| d.group_date(project_task_date_format) }.each do |date, tasks| %>
+                <p>
+                  <span class="activity-date"><%= params[:group] == 'week' ? month_date_range(date) : date %></span>
+                </p>
+                <div class="flex-wrapper">
                   <%= render partial: 'tasks', collection: tasks, as: :task %>
-              <% end %>
-            </div>
+                </div>
+            <% end %>
           </div>
         </div>
       </div>

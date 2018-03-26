@@ -50,8 +50,10 @@
         <div class="right-content col s12 m12 l4 xl3">
           <div class="user-list staff-list project_grid_fields" id="staff">
             <div id="staff_container">
+              <% count = 0 %>
               <%= f.fields_for :team_members do |f| %>
-                  <%= render partial: 'staff_fields', locals: {f: f} %>
+                  <%= render partial: 'staff_fields', locals: {f: f, count: count} %>
+                  <% count += 1 %>
               <% end %>
             </div>
             <div class="list-buttons">

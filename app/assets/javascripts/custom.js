@@ -19,22 +19,23 @@ $(document).ready(function(){
         $('.search-holder form').show();
     });
     $(".btn-back").click(function(){
-        $(".header-right").removeClass("search-show");
-        $(".chkbox-content .header-right").removeClass("chekbox-show");
-        $('.checkbox-item').find('input[type="checkbox"]').prop('checked', false);
-        $('.checkbox-item').find('label').css('opacity', '0');
+        window.location.reload();
     });
     //
     $(".btn-menu").click(function(){
-      $('#graph_container').toggleClass('custom-graph');
-      $('#graph_container').html('');
-      Dashboard.plot_graph();
       $("#activity-sidebar").removeClass("show-activity");
       $("#side-nav,#main-content,#activity-sidebar, #flash_message").toggleClass("side-show");
-      if($('#side-nav').hasClass('side-show'))
-          removeSideNavTitle();
-      else
+      if($('#side-nav').hasClass('side-show')) {
+        removeSideNavTitle();
+        $('#graph_container').css('width',  '350px');
+      }
+      else {
+        $('#graph_container').css('width',  '450px');
         addSideNavTitle();
+      }
+
+      $('#graph_container').html('');
+      Dashboard.plot_graph();
     });
     //
     $(".btn-activity").click(function(){

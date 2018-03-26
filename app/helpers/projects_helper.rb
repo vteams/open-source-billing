@@ -130,4 +130,20 @@ module ProjectsHelper
     HTML
     notice.html_safe
   end
+
+  def project_task_date_format
+    if params[:group] == 'day'
+      '%A %d-%b %Y'
+    elsif params[:group] == 'week'
+      '%W %Y'
+    else
+      '%B %Y'
+   end
+  end
+
+  def month_date_range(date)
+    start_date = Date.strptime(date, '%W %Y').strftime('%e %b %Y')
+    end_date = (Date.strptime(date, '%W %Y') + 6.days).strftime('%e %b %Y')
+    "(#{start_date} - #{end_date})"
+  end
 end

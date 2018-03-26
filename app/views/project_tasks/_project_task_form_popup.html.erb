@@ -5,8 +5,13 @@
     <div class="modal-header clearfix text-content">
       <h5 class="left text-blue"> <%= task.new_record? ? 'New' : 'Edit' %> Task</h5>
       <div class="modal-action-btn right">
-        <a href="javascript:;" onclick="$('.simple_submit').click();"  class="edit-detail"><i class="material-icons">done</i></a>
+        <a href="javascript:void(0);" onclick="$('.simple_submit').click();" title="Save" class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
         <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
+        <a href="javascript:void(0);" title="Cancel" class="modal-action waves-effect" onclick="$('#project_task_form_popup').modal('close');">
+          <i class="material-icons close">close</i>
+        </a>
       </div>
     </div>
     <div class="modal-body">

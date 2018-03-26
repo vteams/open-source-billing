@@ -1607,6 +1607,9 @@ h6 {
   color: #454545;
   font-size: 16px;
   text-transform: capitalize; }
+.modal .info-section .info-left-section h6 span bold {
+  font-weight: 600;
+}
 .modal .info-section .info-left-section span {
   font-size: 11px;
   display: inline-block;
@@ -2698,7 +2701,7 @@ h6 {
   text-transform: uppercase;
   border-radius: 22px;
   border: 1px solid #dfdede; }
-.user-list .list-buttons a.sidebar-btn { min-width: 62px; }
+.user-list .list-buttons a.sidebar-btn { min-width: 52px; }
 .user-list .side-form .input-field, .user-list .side-form .input-field input {
   margin: 0;
   font-size: 11px;
@@ -4257,4 +4260,38 @@ html {
   cursor: pointer;
   vertical-align: middle;
   height: 28px;
+}
+i.material-icons.close:hover {
+  color: red;
+}
+
+.pagination {
+  background: transparent !important;
+  padding-left: 40px;
+}
+
+.pagination .page {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
+}
+
+.pagination .page:hover, .pagination .prev:hover, .pagination .next:hover {
+  background-color: #049bd3;
+}
+
+.pagination .page.current {
+  background-color: #10A2D7;
+}
+
+.pagination .prev {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
+}
+
+.pagination .next {
+  padding: 10px;
+  background-color: #14B6E1;
+  border: 1px solid #14B6E1;
 }

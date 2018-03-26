@@ -1,4 +1,4 @@
-<div class="side-form hidden">
+<div class="side-form user-side-form">
   <%= form_tag('/sub_users', novalidate: '', id: 'user_side_form', method: :post, remote: true)  %>
   <%= hidden_field_tag :setting_form, 1 %>
   <div class="modal-body users">
@@ -21,4 +21,5 @@
   <a href="javascript:;" id="user_save_btn">Save</a>
   <a href="javascript:;" id="user_cancel_btn">Cancel</a>
   <%= submit_tag 'Save', class: 'submit-user-form hidden' %>
+  <%= submit_tag 'Clear', type: 'reset', id: 'user_reset_form', class: 'hidden' %>
 </div>

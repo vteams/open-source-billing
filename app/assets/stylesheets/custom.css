@@ -32,9 +32,6 @@ input#expense_amount{
     margin: 0 auto;
     max-width: 750px;
 }
-.custom-graph{
-    max-width: 450px !important;
-}
 
 .newModel .input-field input+label{
     top: 0px;

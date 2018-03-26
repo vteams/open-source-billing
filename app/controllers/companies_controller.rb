@@ -57,9 +57,11 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
+        format.js { @companies = Company.all }
         format.html { redirect_to companies_path, notice: 'Company has been created successfully.' }
         format.json { render json: companies_path, status: :created, location: @company }
       else
+        format.js {}
         format.html { render action: "new" }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -73,9 +75,11 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(company_params)
+        format.js { @companies = Company.all }
         format.html { redirect_to companies_path, notice: 'Your company has been updated successfully.' }
         format.json { head :no_content }
       else
+        format.js {}
         format.html { render action: "edit" }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -148,6 +152,19 @@ class CompaniesController < ApplicationController
     render :text => company.company_name
   end
 
+  def settings_listing
+    @companies = Company.all
+    render layout: false
+  end
+
+  def destroy_bulk
+    company = Company.where(id: params[:company_ids]).destroy_all
+
+    @companies = Company.all
+    render json: {notice: 'Companies has been deleted successfully.',
+                  html: render_to_string(action: :settings_listing, layout: false)}
+  end
+
   private
 
   def get_intimation_message(action_key, company_ids)
@@ -168,8 +185,6 @@ class CompaniesController < ApplicationController
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
-
-  private
 
   def company_params
     params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2)

@@ -1,0 +1,17 @@
+<h5>
+  <%= link_to 'COMPANIES', companies_path %>
+  <span><%= "(#{@companies.count})" %></span>
+</h5>
+<div class="user-list">
+  <div id="companies">
+    <%= render partial: 'company', collection: @companies %>
+  </div>
+  <div class="list-buttons">
+    <%= render 'settings_company_form' %>
+    <div id="company_btn_container">
+      <a href="javascript:;" id="company_add_btn" class="sidebar-btn">ADD</a>
+      <a href="javascript:;" id="company_edit_btn" class="sidebar-btn disabled">EDIT</a>
+      <a href="javascript:;" id="company_delete_btn" class="sidebar-btn disabled">REMOVE</a>
+    </div>
+  </div>
+</div>

@@ -34,7 +34,7 @@ class ClientsController < ApplicationController
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
     @clients = Client.get_clients(params.merge(get_args(method)))
-    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params, current_user)
+    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
 
     respond_to do |format|
       format.html # index.html.erb

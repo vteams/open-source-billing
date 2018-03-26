@@ -97,8 +97,11 @@ class @Invoice
       cost = 0
     if qty == null or qty == '' or !$.isNumeric(qty)
       qty = 0
-    line_total = (parseFloat(cost) * parseFloat(qty)).toFixed(2)
-    $(container).find('.line_total').text line_total
+    line_total = (parseFloat(cost) * parseFloat(qty))
+    tax = parseFloat($(container).find("input.tax1").val())
+    if tax > 0
+      line_total = line_total + (line_total * parseFloat($(container).find("input.tax-amount").val()) / 100.0)
+    $(container).find('.line_total').text line_total.toFixed(2)
 
   clearLineTotal = (elem) ->
     container = elem.parents('tr.fields')
@@ -148,9 +151,11 @@ class @Invoice
             empty_tax_fields(container)
             if item[3] != 0
               container.find('input.tax1').val item[3]
+              container.find('input.tax-amount').val item[8]
               container.find('td.tax1').html item[6]
             if item[4] != 0
               container.find('input.tax2').val item[4]
+              container.find('input.tax-amount').val item[9]
               container.find('td.tax2').html item[7]
             container.find('input.item_name').val item[5]
             updateLineTotal elem
@@ -314,18 +319,6 @@ class @Invoice
       return
     $('#invoice_discount_percentage, #recurring_profile_discount_percentage, .qty').bind 'paste contextmenu', (e) ->
       e.preventDefault()
-
-
-    $("#add_line_item").on "click", ->
-      options = $('.items_list:first').html()
-      $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
-      $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
-      tax1 = $('.tax1:first').html()
-      tax2 = $('.tax2:first').html()
-      $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')
-      $('.tax2:last').html(tax2).find('option:selected').removeAttr('selected')
-      $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
-      $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
     $("#invoice_client_id").change ->
       hidePopover($("#invoice_client_id").parents('.select-wrapper'));

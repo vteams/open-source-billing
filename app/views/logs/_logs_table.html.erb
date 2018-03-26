@@ -1,15 +1,14 @@
-<div class="grid_table">
-  <div class="primary_heading">
-    <h5>Time logs for <span id="logs_for"><%=@date%></span> </h5>
+<div class="page-box report-section">
+  <h5 class="text-blue">Time logs for <span id="logs_for"><%=@date%></span> </h5>
+  <div class="simple-responsive">
+    <table class="bordered">
+      <thead id="log_head">
+      <%= render partial: 'logs_header' %>
+      </thead>
+      <tbody id="task_body" class="table-panel">
+      <%= render 'logs' %>
+      </tbody>
+    </table>
   </div>
-  <table cellpadding="0" cellspacing="0" class="bordered striped responsive-table <%= I18n.locale %>">
-    <thead id="log_head">
-    <%= render partial: 'logs_header' %>
-    </thead>
-    <tbody id="task_body" class="table-panel">
-    <%= render 'logs' %>
-
-    </tbody>
-  </table>
 </div>
 <!--grid_table-->

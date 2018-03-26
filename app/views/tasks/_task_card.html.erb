@@ -9,7 +9,7 @@
       <div class="invoice-name <%= random_card_color %>"><%= task.image_name %></div>
     </div>
     <div class="invoice-details task_details">
-      <h5><%= task.name %></h5>
+      <h5 class="text-blue"><strong><%= task.name %></strong></h5>
       <div class="amount-box">
         <span class="usertitle"><%= truncate(task.description, length: 50) %></span>
       </div>
