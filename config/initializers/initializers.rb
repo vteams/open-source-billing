@@ -266,7 +266,7 @@ DATE_FORMATS = [
     ['yyyy-mm-dd', '%Y-%m-%d']
 ]
 
-LINES_PER_PAGE = %w(10 20 50 100)
+LINES_PER_PAGE = %w(9 21 51 99)
 
 LANGUAGES = [
     ['English', 'en'],
