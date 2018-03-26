@@ -8,6 +8,8 @@ class DateFormats
     format = 'yyyy-mm-dd'
     s_format = @server_format()
     switch s_format
+      when '%d %b, %Y'
+        format = 'dd-mon-yyyy'
       when '%m/%d/%y'
         format = 'mm/dd/y'
       when '%m/%d/%Y'
@@ -30,6 +32,8 @@ class DateFormats
     day = date.split('-')[2]
     format = @server_format()
     switch format
+      when '%d %b, %Y'
+        date = "#{day} #{moment(date).format('MMM')}, #{year}"
       when '%m/%d/%y'
         year = String(year).substr(2,3)
         date = "#{month}/#{day}/#{year}"
@@ -55,6 +59,11 @@ class DateFormats
     month = 4
     day = 15
     switch date_format
+      when '%d %b, %Y'
+        date = moment(date).format('YYYY-MM-DD')
+        month = date.split('-')[1]
+        year = date.split('-')[0]
+        day = date.split('-')[2]
       when '%m/%d/%y'
         day = date.split('/')[1]
         month = date.split('/')[0]

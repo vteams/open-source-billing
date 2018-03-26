@@ -169,7 +169,7 @@ class @Invoice
           $('#invoice_due_date_text').html moment(invoice_due_date_custom).format("DD MMM, YYYY")
           $('#invoice_due_date').val invoice_due_date_custom
       else
-        invoice_due_date = DateFormats.add_days_in_formated_date((moment(new Date(invoice_date)).format('YYYY-MM-DD')), parseInt(term_days))
+        invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
         default_due_date_format = moment(invoice_due_date).format("DD MMM, YYYY")
         $('#invoice_due_date_picker').html default_due_date_format
         $('#invoice_due_date_picker').val default_due_date_format
