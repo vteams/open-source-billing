@@ -629,3 +629,7 @@ form .select-wrapper .select-dropdown {
     font-size: 11px;
     text-transform: uppercase;
 }
+
+.date-wrapper span.payment-date{
+    margin-left: 20px;
+}

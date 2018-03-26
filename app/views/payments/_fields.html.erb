@@ -111,10 +111,19 @@
                     <div class="small_field">
                       <%= f.select :payment_method, PAYMENT_METHODS, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
                     </div>
-                    <div class="label_field right single"><%= f.label "Date", :for => "payments_#{index}_payment_date", :class=> 'label-font' %></div>
-                    <div class="small_field date-align">
-                      <%= f.text_field :payment_date, value: default_date(f.object.payment_date.to_date) , id: "payments_#{index}_payment_date", class: "date_picker_class payment_dates date-picker" %>
-                    </div>
+                    <span>
+                        <div class="date-wrapper">
+                          <span class="payment-date"><%=t('views.common.date')%>:</span>
+                            <span>
+                              <small>
+                                <span><%= f.text_field :payment_date, value: default_date(f.object.payment_date.to_date), class: "date-picker date-field-style" %></span>
+                                <span><i class="material-icons calendar-icon">date_range</i></span>
+                              </small>
+                            </span>
+                        </div>
+                    </span>
+
+
                   </div>
                   <!--field_row-->
 
