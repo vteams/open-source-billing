@@ -122,6 +122,8 @@ class PaymentsController < ApplicationController
       company_id = Invoice.find(inv_id).company_id
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
     end
+
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(Payment.unarchived)
   end
 
   def update_individual_payment
