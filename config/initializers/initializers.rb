@@ -258,13 +258,13 @@ INDUSTRY_LIST = ['Accommodation & Hospitality',
 DISCOUNT_TYPE = %w(% USD)
 
 DATE_FORMATS = [
-    ['dd-mon-yyyy', '%d %b, %Y'],
     ['mm/dd/yy', '%m/%d/%y'],
     ['mm/dd/yyyy', '%m/%d/%Y'],
     ['dd/mm/yy', '%d/%m/%y'],
     ['dd/mm/yyyy', '%d/%m/%Y'],
     ['yy-mm-dd', '%y-%m-%d'],
-    ['yyyy-mm-dd', '%Y-%m-%d']
+    ['yyyy-mm-dd', '%Y-%m-%d'],
+    ['dd-mon-yyyy', '%d %b, %Y'],
 ]
 
 LINES_PER_PAGE = %w(9 21 51 99)
