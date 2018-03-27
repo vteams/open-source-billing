@@ -1,5 +1,6 @@
 <p><span class="activity-date"></span>&nbsp;</p>
 <div class="flex-wrapper">
   <%= render partial: 'company_card', collection: @companies, as: :company %>
-  <%= paginate @companies %>
 </div>
+<%= page_entries_info @companies %>
+<%= paginate @companies %>

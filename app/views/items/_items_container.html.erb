@@ -4,4 +4,5 @@
       <%= render partial: 'items', collection: items, as: :item %>
     </div>
 <% end %>
+<%= page_entries_info @items %>
 <%= paginate @items %>

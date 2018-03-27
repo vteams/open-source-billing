@@ -67,6 +67,7 @@
       <div class="panel-table">
         <h5>
           Payments
+          <%= link_to('+ New Payments', unpaid_client_invoices_path(client.id), class: 'pull-right', remote: unpaid_invoice_exists?(client.id)) %>
         </h5>
         <table class="bordered responsive-table">
           <thead>
