@@ -55,6 +55,9 @@ module DateFormats
     month = 2
     year = 2015
     case user_date_format
+      when '%d %b, %Y'
+        updated_date = date.to_date.to_s
+        year, month, day = updated_date.split('-')[0],updated_date.split('-')[1],updated_date.split('-')[2]
       when '%m/%d/%y'
         month, day, year = date.split('/')[0],date.split('/')[1],date.split('/')[2]
       when '%m/%d/%Y'
