@@ -227,6 +227,6 @@ $(document).ready(function(){
     bind_deleted_entry();
 
     $('.date-picker').pickadate({
-        format: "d mmm, yyyy"
+        format: DateFormats.format()
     });
 });

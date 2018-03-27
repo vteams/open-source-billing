@@ -2,7 +2,7 @@ class @Invoice
 
   applyDatePicker = ->
     $('#invoice_date_picker').pickadate
-      format: "d mmm, yyyy"
+      format: DateFormats.format()
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -12,7 +12,7 @@ class @Invoice
         $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
 
     $("#next_invoice_date_picker").pickadate
-      format: "d mmm, yyyy"
+      format: DateFormats.format()
       formatSubmit: DateFormats.format()
       onSet: (context) ->
         value = @get('value')
@@ -166,13 +166,12 @@ class @Invoice
       if term_days == '0' and $('#invoice_due_date_picker').val() != null
         invoice_due_date_custom = $('#invoice_due_date_picker').val()
         if invoice_due_date_custom isnt ""
-          $('#invoice_due_date_text').html moment(invoice_due_date_custom).format("DD MMM, YYYY")
+          $('#invoice_due_date_text').html invoice_due_date_custom
           $('#invoice_due_date').val invoice_due_date_custom
       else
         invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
-        default_due_date_format = moment(invoice_due_date).format("DD MMM, YYYY")
-        $('#invoice_due_date_picker').html default_due_date_format
-        $('#invoice_due_date_picker').val default_due_date_format
+        $('#invoice_due_date_picker').html invoice_due_date
+        $('#invoice_due_date_picker').val invoice_due_date
     else
       $('#invoice_due_date').val ''
 
@@ -332,8 +331,8 @@ class @Invoice
 
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
-      invoice_date_value = moment(new Date($("#invoice_invoice_date").val())).format("L")
-      due_date_value = moment(new Date($("#invoice_due_date_picker").val())).format("L")
+      invoice_date_value = DateFormats.get_original_date($("#invoice_invoice_date").val())
+      due_date_value = DateFormats.get_original_date($("#invoice_due_date_picker").val())
       discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
       discount_type = $("select#discount_type").val()
       sub_total = $('#invoice_sub_total').val()
@@ -409,7 +408,7 @@ class @Invoice
 jQuery ->
   # for custom payment term
   $('#invoice_due_date_picker').pickadate
-    format: 'd mmm, yyyy'
+    format: DateFormats.format()
     onClose: ->
       custom_option = $('.payment-term-dropdown').find('li:last')
       custom_option.trigger('click') if custom_option.text() is "Custom"

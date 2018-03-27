@@ -17,7 +17,7 @@ class DateFormats
       when '%d/%m/%y'
         format = 'dd/mm/y'
       when '%d/%m/%Y'
-        format = 'dd/mm/yy'
+        format = 'dd/mm/yyyy'
       when '%y-%m-%d'
         format = 'y-mm-dd'
       when '%Y-%m-%d'
