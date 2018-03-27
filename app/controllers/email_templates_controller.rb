@@ -25,9 +25,9 @@ class EmailTemplatesController < ApplicationController
 
     respond_to do |format|
       if @email_template.update_attributes(email_template_params) or @email_template.save
-        format.html { redirect_to @email_template, notice: 'Email template was successfully updated.' }
+        format.html { redirect_to settings_path, notice: 'Email template was successfully updated.' }
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "email_templates", :id => @email_template.id}, :notice => 'Your Email Template has been updated successfully.')
+        redirect_to settings_path, notice: 'Email template was successfully updated.'
         return
       else
         format.html { render action: "edit" }
