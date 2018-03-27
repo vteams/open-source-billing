@@ -58,10 +58,10 @@
 
 
                 <% if @client.new_record? %>
-                    <%= number_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= number_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly, min: 0%>
                     <%= label_tag :available_credit, t('views.clients.available_credit'), class: 'active' %>
                 <% else %>
-                    <%= number_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly%>
+                    <%= number_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly, min: 0%>
                     <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
                 <% end %>
               </div>
