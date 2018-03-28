@@ -59,7 +59,9 @@ jQuery ->
     if action is 'new' or action is 'edit'
       unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
         return true
-    jQuery.get "/companies/#{company_id}/select", (response) ->
-      jQuery("#current_selected_company").text(response)
-      jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
-      window.location.reload()
+
+    if parseInt($(this).find(':selected').val()) && parseInt($(this).find(':selected').val()) != -1
+      jQuery.get "/companies/#{company_id}/select", (response) ->
+        jQuery("#current_selected_company").text(response)
+        jQuery('.company_read_only').val(response) if jQuery('.company_read_only').length > 0
+        window.location.reload()
