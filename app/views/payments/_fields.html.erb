@@ -31,7 +31,7 @@
 
                       <div class="invoice_data_row">
                         <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
-                        <div class="inovice_description"><%= (default_date(payment.invoice.due_date.to_date) || default_date(payment.invoice.invoice_date)) rescue "" %></div>
+                        <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date) rescue "" %></div>
                       </div>
 
                       <div class="invoice_data_row">
@@ -116,7 +116,7 @@
                           <span class="payment-date"><%=t('views.common.date')%>:</span>
                             <span>
                               <small>
-                                <span><%= f.text_field :payment_date, value: default_date(f.object.payment_date.to_date), class: "date-picker date-field-style" %></span>
+                                <span><%= f.text_field :payment_date, value: f.object.payment_date, class: "date-picker date-field-style" %></span>
                                 <span><i class="material-icons calendar-icon">date_range</i></span>
                               </small>
                             </span>

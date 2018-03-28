@@ -8,20 +8,20 @@ class DateFormats
     format = 'yyyy-mm-dd'
     s_format = @server_format()
     switch s_format
-      when '%d %b, %Y'
-        format = 'dd-mon-yyyy'
+      when '%d-%b-%Y'
+        format = 'dd-mmm-yyyy'
       when '%m/%d/%y'
-        format = 'mm/dd/y'
-      when '%m/%d/%Y'
         format = 'mm/dd/yy'
+      when '%m/%d/%Y'
+        format = 'mm/dd/yyyy'
       when '%d/%m/%y'
-        format = 'dd/mm/y'
+        format = 'dd/mm/yy'
       when '%d/%m/%Y'
         format = 'dd/mm/yyyy'
       when '%y-%m-%d'
-        format = 'y-mm-dd'
-      when '%Y-%m-%d'
         format = 'yy-mm-dd'
+      when '%Y-%m-%d'
+        format = 'yyyy-mm-dd'
       else
         format = 'yy-mm-dd'
     format

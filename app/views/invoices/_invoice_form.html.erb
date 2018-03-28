@@ -45,7 +45,7 @@
                     <span><%=t('view.invoices.due')%>:</span>
                     <span>
                       <small>
-                        <span><%= f.text_field :due_date, value: f.object.due_date.to_date, class: "date-field-style", id: "invoice_due_date_picker"%></span>
+                        <span><%= f.text_field :due_date, value: f.object.due_date, class: "date-field-style", id: "invoice_due_date_picker"%></span>
                         <span><i class="material-icons">date_range</i></span>
                       </small>
                     </span>
@@ -74,7 +74,7 @@
             <div class="show-me" id="recurring_schedule_container">
             <%= f.fields_for :recurring_schedule do |rs| %>
                 <div class="">
-                  <% next_invoice_date = has_recurring ? rs.object.next_invoice_date.strftime(get_date_format) :  f.object.invoice_date %>
+                  <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
                   <div class="date-wrapper">
                     <span class="next-invoice-date">Next Issue Date:</span>
                     <span>

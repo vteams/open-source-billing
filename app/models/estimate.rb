@@ -215,6 +215,6 @@ class Estimate < ActiveRecord::Base
   end
 
   def group_date
-    estimate_date.to_date.strftime('%B %Y')
+    Date.strptime(estimate_date, date_format).strftime('%B %Y')
   end
 end

@@ -327,35 +327,4 @@ module ApplicationHelper
   def side_nav_opened?
     current_user and current_user.settings.side_nav_opened
   end
-
-  date_formats = {default_date:               "%d %b, %Y",       # 07 Mar, 18
-                  short_date_with_dashes:     "%m-%d-%Y",        # 1-15-2011
-                  short_date:                 "%m/%d/%Y",        # 1/15/2011
-                  long_date:                  "%A, %B %-d, %Y",  # Monday, January 15, 2011
-                  month_and_day:              "%B %-d",          # January 15
-                  month_day_and_year:         "%B %-d, %Y",      # January 15, 2011
-                  month_day_year_and_weekday: "%B %-d, %Y, %A",  # January 15, 2011, Monday
-                  month_day_and_weekday:      "%B %-d, %A",      # January 15, Monday
-                  month_and_date:             "%m/%d",           # 1/15
-                  short_month_and_date:       "%-m/%d",          # 3/15 instead of 03/15
-                  weekday_month_date:         "%A, %B %-d",      # Monday, January 15
-                  ics_date:                   "%Y%m%d",          # 20110115
-                  month_name:                 "%B",              # January
-                  date_only:                  "%d",              # 15
-                  weekday:                    "%A" }             # Monday
-
-  date_formats.each do |format_name, format_string|
-    define_method(format_name) do |date|
-      format_date(date, format_string)
-    end
-  end
-
-  def format_date(date, format)
-    begin
-      date.strftime(format)
-    rescue
-      ""
-    end
-  end
-
 end

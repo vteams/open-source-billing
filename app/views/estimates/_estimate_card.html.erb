@@ -13,7 +13,7 @@
       <strong><%= estimate.estimate_number %></strong>
       <em><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %><span><%= estimate.currency.unit%></span></em>
       <div class="card-footer clearfix">
-        <span class="invoice-date"><small>Date:</small> <%= default_date estimate.estimate_date.to_date rescue "" %></span>
+        <span class="invoice-date"><small>Date:</small> <%= estimate.estimate_date rescue "" %></span>
         <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= estimate.status %></span>
       </div>
     </div>

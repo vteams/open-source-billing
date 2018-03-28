@@ -478,7 +478,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def group_date
-    invoice_date.to_datetime.strftime('%B %Y')
+    Date.strptime(invoice_date, date_format).strftime('%B %Y')
   end
 
   def recurring_status

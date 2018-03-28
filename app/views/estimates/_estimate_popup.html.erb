@@ -14,7 +14,7 @@
     <div class="info-section clearfix">
       <div class="info-left-section left">
         <h6><%= estimate.estimate_number %>: <span><bold><%= estimate.company.company_name %></bold></span></h6>
-        <span><%= t('estimate') %>: <small> <%= default_date estimate.estimate_date.to_date rescue "" %> </small></span>
+        <span><%= t('estimate') %>: <small> <%= estimate.estimate_date rescue "" %> </small></span>
 
         <div class="paymentInfo">
          <strong><%= number_to_currency(estimate.estimate_total, unit: '') %> <small><%= estimate.currency.unit %></small></strong>
