@@ -3,3 +3,21 @@ $("body").append("<%= escape_javascript(render partial: 'email_template_form_pop
 elem = $("#emailTemplateModal");
 Popup.initialize(elem);
 Popup.open(elem)
+
+$('#form_submit_btn').on('click', function () {
+  if ($("#email_template_email_from").val() === '') {
+    applyPopover($("#email_template_email_from"), "bottomMiddle", "topLeft", "From Email is required.");
+  }
+  else if($("#email_template_subject").val() === '') {
+    hidePopover($("#email_template_email_from"));
+    applyPopover($("#email_template_subject"), "bottomMiddle", "topLeft", "Subject is required.");
+  }
+  else if (tinyMCE.activeEditor.getContent() === '') {
+    hidePopover($("#email_template_subject"));
+    applyPopover($("#email_template_body_ifr"), "bottomMiddle", "topLeft", "Body is required.");
+  }
+  else {
+    hidePopover($("#email_template_body_ifr"));
+    $('input.submit').click();
+  }
+});
