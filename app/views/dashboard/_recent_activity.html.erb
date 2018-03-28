@@ -1,5 +1,5 @@
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
-  <h3>Activity</h3>
+  <h3><%= t('views.dashboard.recent_activity') %></h3>
   <div class="activity-scroll-holder mCustomScrollbar">
 
     <% @recent_activity.each do |date, activities| %>
@@ -8,13 +8,13 @@
             <% activities.each do |activity| %>
                <li>
                  <div class="activity-name <%= activity[:activity_type]%>">
-                   <%= activity[:activity_type].capitalize %>
+                   <%= t(activity[:activity_type]) %>
                  </div>
                  <div class="activity-details">
                    <p>
                      <%= number_to_currency(activity[:amount], unit: activity[:code]) %> <span>(<%= activity[:unit] %>)</span>
                    </p>
-                   <em class="author"><%= "#{activity[:activity_action]} #{activity[:client]}" %></em>
+                   <em class="author"><%= "#{t('views.invoices.' + activity[:activity_action].parameterize.underscore)} #{activity[:client]}" %></em>
                  </div>
                </li>
             <% end %>

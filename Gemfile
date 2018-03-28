@@ -97,3 +97,4 @@ gem 'exception_notification-rake', '0.3.0'
 
 gem 'whenever', '0.9.7'
 gem 'browser-timezone-rails'
+gem 'i18n-js', '~> 3.0', '>= 3.0.5'

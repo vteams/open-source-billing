@@ -1,3 +1,7 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# This file contains Portuguese translation
+
 pt-BR:
   currency_unit: "R$"
   currency_code: "BRL"
@@ -184,6 +188,8 @@ pt-BR:
 
     invoices:
       invoice: "Faturas"
+      invoice_chart: "Carta de fatura"
+      paid_invoices: "Faturas pagas"
       due_date: "Data de vencimento"
       due: "vencimento"
       enter_payment: "Digite o pagamento"
@@ -226,6 +232,8 @@ pt-BR:
       no_invoice_msg: "Você ainda não criou nenhuma fatura. Por favor clique no botão 'Nova Fatura' para criar uma nova fatura."
       no_archived_msg: "Você não possui nenhuma fatura arquivada."
       no_deleted_msg: "Você não possui nenhuma fatura apagada"
+      sent_to: "Enviado a"
+      received_from: "Recibido de"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"

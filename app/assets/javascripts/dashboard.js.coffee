@@ -17,7 +17,7 @@ class @Dashboard
 
       Highcharts.chart 'graph_container',
         chart: type: 'areaspline'
-        title: text: 'Invoice Graph  '
+        title: text: I18n.t("views.invoices.invoice_chart")
         legend:
           layout: 'vertical'
           align: 'left'
@@ -28,7 +28,7 @@ class @Dashboard
           borderWidth: 1
           backgroundColor: Highcharts.theme and Highcharts.theme.legendBackgroundColor or '#FFFFFF'
         xAxis: categories: chart_ticks
-        yAxis: title: text: 'Invoices'
+        yAxis: title: text: I18n.t("views.invoices.invoice")
         tooltip:
           shared: true
           valuePrefix: currency_code
@@ -36,12 +36,12 @@ class @Dashboard
         plotOptions: areaspline: fillOpacity: 0.5
         series: [
           {
-            name: 'Invoices'
+            name: I18n.t("views.invoices.invoice")
             data: invoices
             color: '#00BDE5'
           }
           {
-            name: 'Paid Invoices'
+            name: I18n.t("views.invoices.paid_invoices")
             data: payments
             color: '#8EC42A'
           }

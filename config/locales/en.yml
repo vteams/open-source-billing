@@ -227,6 +227,8 @@ en:
 
     invoices:
       invoice: "Invoices"
+      invoice_chart: "Invoice Chart"
+      paid_invoices: "Paid Invoices"
       due_date: "Due date"
       due: "Due"
       enter_payment: "Enter payment"
@@ -271,6 +273,8 @@ en:
       no_invoice_msg: "You haven't created any invoice yet. Please click on New Invoice button to create new invoice."
       no_archived_msg: "You haven't any archived invoice."
       no_deleted_msg: "You haven't any deleted invoice."
+      sent_to: "Sent To"
+      received_from: "Received From"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"

@@ -1,5 +1,6 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# This file contains German translation
 
 de:
   currency_unit: "€"
@@ -185,6 +186,9 @@ de:
       enter_payment: "Bezahlung eingeben"
 
     invoices:
+      invoice: "Rechnungen"
+      invoice_chart: "Rechnungsdiagramm"
+      paid_invoices: "Bezahlte Rechnungen"
       due_date: "Fälligkeitsdatum"
       due: "fällig"
       enter_payment: "Bezahlung eingeben"
@@ -227,6 +231,8 @@ de:
       no_invoice_msg: "Es wurden noch keine Rechnungen erstellt. Bitte klicke Neue Rechnung um eine neue zu erstellen."
       no_archived_msg: "Es existieren keine archivierten Rechnungen."
       no_deleted_msg: "Es existieren keine gelöschten Rechnungen"
+      sent_to: "Gesendet an"
+      received_from: "Erhalten von"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"

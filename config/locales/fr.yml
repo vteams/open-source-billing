@@ -1,5 +1,6 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# This file contains French translation
 
 fr:
   currency_unit: "$"
@@ -183,6 +184,8 @@ fr:
 
     invoices:
       invoice: "factures"
+      invoice_chart: "Tableau des factures"
+      paid_invoices: "Factures payées"
       due_date: "date d'échéance"
       due: "Dû"
       enter_payment: "Entrez paiement"
@@ -225,6 +228,8 @@ fr:
       no_invoice_msg: "Vous ne l'avez pas encore créé de la facture. S'il vous plaît cliquer sur le bouton Nouveau de la facture pour créer une nouvelle facture."
       no_archived_msg: "Vous avez pas de facture archivé."
       no_deleted_msg: "Vous avez pas de facture supprimé."
+      sent_to: "Envoyé à"
+      received_from: "Reçu de"
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"

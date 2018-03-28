@@ -22,7 +22,9 @@
       <![endif]-->
 
       <%= javascript_include_tag "application" %>
-
+      <script>
+          I18n.locale = "<%= I18n.locale %>";
+      </script>
       <%= csrf_meta_tags %>
       <%= include_gon %>
     </head>
