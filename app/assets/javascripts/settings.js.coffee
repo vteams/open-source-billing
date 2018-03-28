@@ -34,11 +34,17 @@
   $('#user_delete_btn').on "click", (event)->
     event.preventDefault()
     event.stopPropagation()
+
+    currentUserSelected = false
+    $('input[name^=user_ids].disabled:checked').each (index, element) =>
+      showErrorMsg("Current logged in user cannot be deleted.")
+      currentUserSelected = true
+
     userIds = []
-    $('input[name^=user_ids]:checked').each (index, element) =>
+    $('input[name^=user_ids]:not(.disabled):checked').each (index, element) =>
       userIds.push($(element).val())
 
-    if userIds.length > 0
+    if userIds.length > 0 && !currentUserSelected
       $.ajax '/sub_users/destroy_bulk',
         type: 'delete'
         data: {user_ids: userIds}
@@ -80,10 +86,15 @@
     event.preventDefault()
     event.stopPropagation()
     companyIds = []
+    currentCompanySelected = false
+    $('input[name^=company_ids].disabled:checked').each (index, element) =>
+      showErrorMsg("Current Company cannot be deleted.")
+      currentCompanySelected = true
+
     $('input[name^=company_ids]:not(.disabled):checked').each (index, element) =>
       companyIds.push($(element).val())
 
-    if companyIds.length > 0
+    if companyIds.length > 0 && !currentCompanySelected
       $.ajax '/companies/destroy_bulk',
         type: 'delete'
         data: {company_ids: companyIds}

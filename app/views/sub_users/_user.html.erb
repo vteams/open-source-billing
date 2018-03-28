@@ -1,6 +1,8 @@
-<div class="list-item" id="user_<%= user.id %>">
+<div class="list-item" id="user_<%= user.id %>"
+     title="<%= 'Current logged in user cannot be deleted.' if user.id == current_user.id %>">
   <div class="checkbox-item">
-    <%= check_box_tag 'user_ids[]', user.id, false, :id => "user_ck_#{user.id}", class: 'filled-in' %>
+    <%= check_box_tag 'user_ids[]', user.id, false, :id => "user_ck_#{user.id}",
+                      class: "filled-in#{ ' disabled' if user.id == current_user.id }" %>
     <label for="<%= "user_ck_#{user.id}" %>"></label>
     <div class="invoice-name">
       <%= image_tag(user.profile_picture, alt: 'user image', class: 'responsive-img circle') %>
