@@ -263,18 +263,6 @@ class @Estimate
     $('#estimate_discount_percentage, #recurring_profile_discount_percentage, .qty').bind 'paste contextmenu', (e) ->
       e.preventDefault()
 
-
-    $("#add_line_item").on "click", ->
-      options = $('.items_list:first').html()
-      $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
-      $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
-      tax1 = $('.tax1:first').html()
-      tax2 = $('.tax2:first').html()
-      $('.tax1:last').html(tax1).find('option:selected').removeAttr('selected')
-      $('.tax2:last').html(tax2).find('option:selected').removeAttr('selected')
-      $('.tax1:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
-      $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
-
     $("#estimate_client_id").change ->
       hidePopover($("#estimate_client_id").parents('.select-wrapper'));
     # Change currency of estimate
