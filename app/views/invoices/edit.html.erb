@@ -4,8 +4,8 @@
     <div class="flex-item col-sm-12 breadcrum-bar">
       <div class="card-white-panel">
         <h3>
-          <span><%= link_to "Invoices",invoices_url %> </span>
-          <%= link_to "/ Active",invoices_url %>
+          <span><%= link_to t('header.links.invoices.invoices'), invoices_url %> </span>
+          <%= link_to "/ #{t('views.common.active')}", invoices_url %>
         </h3>
       </div>
     </div>
