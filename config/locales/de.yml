@@ -328,6 +328,7 @@ de:
       archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
+      new: "Neuer Gegenstand"
       name: "Name"
       item_name: "Gegenstands Name"
       description: "Beschreibung"

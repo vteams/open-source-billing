@@ -329,6 +329,7 @@ pt-BR:
       archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
+      new: "Novo item"
       add_new_item: 'Adicionar novo item'
       name: "Nome"
       item_name: "Nome do Item"

@@ -406,6 +406,7 @@ en:
       no_deleted_expense: "You don't have any deleted expense."
 
     items:
+      new: "New Item"
       add_new_item: 'Add New Item'
       name: "Name"
       item_name: "Item Name"

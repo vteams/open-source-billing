@@ -4,33 +4,33 @@
   </a>
   <ul>
     <li>
-      <%= link_to new_tax_path, class: 'btn-floating grey', data:{label: 'New Tax'}, remote: true do
-        image_tag('ico-expenses.svg' , alt: 'Items')
+      <%= link_to new_tax_path, class: 'btn-floating grey', data:{ label: t('views.taxes.new') }, remote: true do
+        image_tag('ico-expenses.svg' , alt: t('views.taxes.taxes'))
       end %>
     </li>
     <li>
-      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: 'New Items'}, remote: true do
-        image_tag('ico-items.svg' , alt: 'Items')
+      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: t('views.items.new')}, remote: true do
+        image_tag('ico-items.svg' , alt: t('header.links.items.items'))
       end %>
     </li>
     <li>
-      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: 'New Clients'}, remote: true do
-        image_tag('ico-clients.svg' , alt: 'Clients')
+      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: t('views.clients.new_client')}, remote: true do
+        image_tag('ico-clients.svg' , alt: t('views.clients.clients'))
       end %>
     </li>
     <li>
-      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: 'New Estimates'}    do
-        image_tag('ico-estimates.svg' , alt: 'Estimates')
+      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: t('header.links.estimates.new')}    do
+        image_tag('ico-estimates.svg' , alt: t('header.links.estimates.estimates'))
       end %>
     </li>
     <li>
-      <%= link_to invoices_unpaid_invoices_path, class: 'btn-floating info', data:{label: 'New Payments'}, remote: true do
-        image_tag('ico-payments.svg' , alt: 'Payments')
+      <%= link_to invoices_unpaid_invoices_path, class: 'btn-floating info', data:{label: t('header.links.payments.new')}, remote: true do
+        image_tag('ico-payments.svg' , alt: t('header.links.payments.payments'))
       end %>
     </li>
     <li>
-      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: 'New Invoices'}  do
-        image_tag('ico-invoices.svg' , alt: 'Invoices')
+      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: t('header.links.invoices.new')}  do
+        image_tag('ico-invoices.svg' , alt: t('header.links.invoices.invoices'))
       end %>
     </li>
   </ul>

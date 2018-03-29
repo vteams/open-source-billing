@@ -325,6 +325,7 @@ fr:
       archived_clients_tooltip: "These are payments collected per month from archived clients."
 
     items:
+      new: "Nouvel article"
       name: "nom"
       item_name: "Nom de l'article "
       description: "description"
