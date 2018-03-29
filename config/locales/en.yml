@@ -38,7 +38,6 @@ en:
         listing: "Invoice Listing"
         new: "New Invoice"
         recurring: "Recurring"
-        time_tracking: "Time Tracking"
       time_tracking:
         time_tracking: "Time Tracking"
         time_sheet: "Timesheet"
@@ -96,6 +95,7 @@ en:
       help: "Help"
       applications: "Applications"
       api_docs: "API Documentation"
+      logout: "Logout"
 
   views:
     common:
@@ -517,6 +517,7 @@ en:
       confirmation: "Confirmation"
       notify_user: "Notify user"
       avatar: "Avatar"
+      profile: "Profile"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

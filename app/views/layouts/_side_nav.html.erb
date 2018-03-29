@@ -2,7 +2,7 @@
   <!--- profile information --->
   <div class="profile-info">
     <div class="profile-image">
-      <%= image_tag(current_user.profile_picture, alt: 'image')%>
+      <%= image_tag(current_user.profile_picture, alt: t('views.users.avatar'))%>
     </div>
     <div class="profile-details">
       <div class="dropdown">
@@ -18,62 +18,71 @@
 
   <!-- Dropdown Structure -->
   <ul id='dropdown1' class='dropdown-content'>
-    <li><%= link_to raw("<i class='material-icons'>settings</i> <span>Settings</span>"), settings_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>person</i> <span>Profile</span>"), edit_sub_user_path(current_user), remote: true %></li>
-    <li><%= link_to raw("<i class='material-icons'>group</i> <span>Users</span>"), sub_users_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>domain</i> <span>Companies</span>"), companies_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span> Logout</span>"), destroy_user_session_path, method: :delete, class: 'logout' %></li>
+    <li><%= link_to raw("<i class='material-icons'>settings</i> <span>#{t('views.settings.settings')}</span>"), settings_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>person</i> <span>#{t('views.users.profile')}</span>"), edit_sub_user_path(current_user), remote: true %></li>
+    <li><%= link_to raw("<i class='material-icons'>group</i> <span>#{t('header.links.setting.users')}</span>"), sub_users_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>domain</i> <span>#{t('header.links.setting.companies')}</span>"), companies_path %></li>
+    <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span>#{t('header.links.logout')}</span>"),
+                    destroy_user_session_path, method: :delete, class: 'logout' %></li>
   </ul>
   <div>
       <ul class="side-menu mCustomScrollbar">
         <li>
-          <%= active_link_to dashboard_path , title: 'Dashboard' do %>
-              <%= image_tag('ico-dashboard.svg', alt: 'dashboard')%><span>Dashboard</span>
+          <%= active_link_to dashboard_path , title: t('header.links.dashboard') do %>
+              <%= image_tag('ico-dashboard.svg', alt: t('header.links.dashboard'))%>
+              <span><%= t('header.links.dashboard') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to invoices_path, title: 'Invoices' do %>
-              <%= image_tag('ico-invoices.svg', alt: 'Invoices') %> <span>Invoices</span>
+          <%= active_link_to invoices_path, title: t('header.links.invoices.invoices') do %>
+              <%= image_tag('ico-invoices.svg', alt: t('header.links.invoices.invoices')) %>
+              <span><%= t('header.links.invoices.invoices') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to estimates_path, title: 'Estimates' do %>
-              <%= image_tag('ico-estimates.svg', alt: 'Estimates')%><span>Estimates</span>
+          <%= active_link_to estimates_path, title: t('header.links.estimates.estimates') do %>
+              <%= image_tag('ico-estimates.svg', alt: t('header.links.estimates.estimates'))%>
+              <span><%= t('header.links.estimates.estimates') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to projects_path, title: 'Time Tracking', class: "#{'active' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}" do %>
-              <%= image_tag('ico-time.svg', alt: 'Time Tracking')%><span>Time Tracking</span>
+          <%= active_link_to projects_path, title: t('header.links.time_tracking.time_tracking'),
+                             class: "#{'active' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}" do %>
+              <%= image_tag('ico-time.svg', alt: t('header.links.time_tracking.time_tracking'))%>
+              <span><%= t('header.links.time_tracking.time_tracking') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to payments_path, title: 'Payments' do %>
-              <%= image_tag('ico-payments.svg', alt: 'Payments')%><span>Payments</span>
+          <%= active_link_to payments_path, title: t('header.links.payments.payments') do %>
+              <%= image_tag('ico-payments.svg', alt: t('header.links.payments.payments'))%>
+              <span><%= t('header.links.payments.payments') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to clients_path, title: 'Clients' do %>
-              <%= image_tag('ico-clients.svg', alt: 'Clients')%><span>Clients</span>
+          <%= active_link_to clients_path, title: t('header.links.clients.clients') do %>
+              <%= image_tag('ico-clients.svg', alt: t('header.links.clients.clients'))%>
+              <span><%= t('header.links.clients.clients') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to items_path, title: 'Items' do %>
-              <%= image_tag('ico-items.svg', alt: 'Items')%><span>Items</span>
+          <%= active_link_to items_path, title: t('header.links.items.items') do %>
+              <%= image_tag('ico-items.svg', alt: t('header.links.items.items'))%>
+              <span><%= t('header.links.items.items') %></span>
           <% end %>
         </li>
         <li>
-          <%= active_link_to taxes_path, title: 'Taxes' do %>
-              <%= image_tag('ico-expenses.svg', alt: 'Taxes')%><span>Taxes</span>
+          <%= active_link_to taxes_path, title: t('header.links.items.taxes') do %>
+              <%= image_tag('ico-expenses.svg', alt: t('header.links.items.taxes'))%>
+              <span><%= t('header.links.items.taxes') %></span>
           <% end %>
         </li>
 
         <li>
-          <%= active_link_to "/reports/payments_collected", title: 'Reports' do %>
-              <%= image_tag('ico-reports.svg', alt: 'Reports')%><span>Reports</span>
+          <%= active_link_to "/reports/payments_collected", title: t('header.links.reports.reports') do %>
+              <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
+              <span><%= t('header.links.reports.reports') %></span>
           <% end %>
         </li>
-
-
       </ul>
   </div>
 </nav>

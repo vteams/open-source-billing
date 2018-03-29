@@ -34,6 +34,24 @@ pt-BR:
         listing: "Mostrando faturamento"
         new: "Nova Fatura"
         recurring: "Recorrente"
+      time_tracking:
+        time_tracking: "Rastreamento de tempo"
+        time_sheet: "Planilha de horário"
+        project: "Projetos"
+        staff: "Staffs"
+        task: "Tarefas"
+        invoice: "Gerar fatura"
+      projects:
+        new: "Novo projeto"
+        listing: "Listagem de projetos"
+      estimates:
+        estimates: "Estimativas"
+        listing:  "Listagem de Estimativa"
+        new:  "Nova estimativa"
+      expenses:
+        expenses: "Despesas"
+        listing: "Listagem de despesas"
+        new: "Nova Despesa"
       clients:
         clients: "Clientes"
         listing: "Mostrando Clientes"
@@ -61,6 +79,7 @@ pt-BR:
         users: "Usuários"
         basic_settings: "Configuração Básica"
       help: "Ajuda"
+      logout: "Sair"
 
   views:
     common:
@@ -411,6 +430,7 @@ pt-BR:
       confirmation: "Confirmação"
       notify_user: "Notificar usuário"
       avatar: "Avatar"
+      profile: "Perfil"
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"

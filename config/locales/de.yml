@@ -34,6 +34,24 @@ de:
         listing: "Rechnung Auflistung"
         new: "Neue Rechnung"
         recurring: "Wiederholende"
+      time_tracking:
+        time_tracking: "Zeiterfassung"
+        time_sheet: "Arbeitszeittabelle"
+        project: "Projekte"
+        staff: "Mitarbeiter"
+        task: "Aufgaben"
+        invoice: "Rechnung erstellen"
+      projects:
+        new: "Neues Projekt"
+        listing: "Projektliste"
+      estimates:
+        estimates: "Schätzungen"
+        listing:  "Listagem de Estimativa"
+        new:  "Neue Schätzung"
+      expenses:
+        expenses: "Kosten"
+        listing: "Kostenauflistung"
+        new: "Neue Ausgaben"
       clients:
         clients: "Kunde"
         listing: "Kunden Liste"
@@ -60,6 +78,7 @@ de:
         email_templates: "eMail Entwürfe"
         users: "Benutzer"
       help: "Hilfe"
+      logout: "Ausloggen"
 
   views:
     common:
@@ -405,6 +424,7 @@ de:
       confirmation: "Bestätigung"
       notify_user: "Benachrichtige Nutzer"
       avatar: "Avatar"
+      profile: "Profil"
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"

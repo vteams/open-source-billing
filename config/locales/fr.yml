@@ -34,6 +34,24 @@ fr:
         listing: "Annonce facture"
         new: "nouvelle facture"
         recurring: "récurrent"
+      time_tracking:
+        time_tracking: "Suivi du temps"
+        time_sheet: "Emploi du temps"
+        project: "Staffs"
+        staff: "Staffs"
+        task: "les tâches"
+        invoice: "Générer une facture"
+      projects:
+        new: "Nouveau projet"
+        listing: "Liste de projets"
+      estimates:
+        estimates: "Dépenses"
+        listing:  "Liste d'estimation"
+        new:  "Nouvelle estimation"
+      expenses:
+        expenses: "Dépenses"
+        listing: "Liste des dépenses"
+        new: "Nouvelle dépense"
       clients:
         clients: "Clients"
         listing: "clients signalétique"
@@ -61,6 +79,7 @@ fr:
         users: "utilisateurs"
         basic_settings: "Paramètres de base"
       help: "aider"
+      logout: "Connectez - Out"
 
   views:
     common:
@@ -405,6 +424,7 @@ fr:
       confirmation: "confirmation"
       notify_user: "Notifier l'utilisateur"
       avatar: "Avatar"
+      profile: "Profil"
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"
