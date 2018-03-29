@@ -4,27 +4,33 @@
           <h5 class="left">
             <% unless invoice.status.eql?("paid") %>
                 <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
-                <button id="enterPayment" class="btn btn-default" onclick="$('.invoice_payment_link').click();">Enter Payment On Invoice</button>
+                <button id="enterPayment" class="btn btn-default" onclick="$('.invoice_payment_link').click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
             <% end %>
             <span><%= @client.organization_name %></span>
           </h5>
           <div class="modal-action-btn right">
 
-            <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), title: 'Edit', class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
-            <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id), title: 'Send' %>
-            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
-            <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: "show", target: '_blank' %>
-            <a href="javascript:;" class="modal-close" title="Close"><i class="material-icons">done</i></a>
+            <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),
+                        class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
+            <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id),
+                        title: t('views.common.send') %>
+            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf',
+                         :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
+            <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
+                        target: '_blank' %>
+            <a href="javascript:;" class="modal-close" title="<%= t('helpers.links.close') %>">
+              <i class="material-icons">done</i>
+            </a>
           </div>
         </div>
         <div class="info-section clearfix">
           <div class="info-left-section left">
             <h6><%= invoice.invoice_number %>: <span><bold><%= invoice.company.company_name %></bold></span></h6>
             <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
-            <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
+            <span class="text-blue"> <%= t('views.invoices.due') %>:<small> <%= invoice.due_date rescue "" %></small></span>
             <% if invoice.term.present? %>
             <div class="terms">
-              <span>Terms:</span> <small><%= invoice.term %></small>
+              <span><%= t('views.invoices.terms') %>:</span> <small><%= invoice.term %></small>
             </div>
             <% end %>
             <div class="paymentInfo">
@@ -58,7 +64,7 @@
               </div>
               <% if invoice.tax.present? %>
               <div class="table-row">
-                <span>Invoice Tax: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
+                <span><%= t('views.common.tax') %>: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
                 <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
               </div>
               <% end %>

@@ -168,6 +168,9 @@ de:
       deleted: "Gelöscht"
       archived: "Archiviert"
       activities: "Aktivitäten"
+      select_item: "Menüpunkt wählen"
+      select: "Wählen"
+      add_notes: "Notizen hinzufügen"
 
     pagination:
       previous: "Vorherige"
@@ -272,6 +275,15 @@ de:
       every: "Jeden"
       remaining: "Verbleibend"
       stop_recurring: "Stoppen Sie Wiederkehrend"
+      select_client: "Wählen Sie Client"
+      10_days: "10 Tage"
+      weekly: "Wöchentlich"
+      monthly: "Monatlich"
+      yearly: "jährlich"
+      custom: "Brauch"
+      next_issue_date: "Nächstes Ausgabedatum"
+      send_invoice_automatically: "Rechnungen automatisch senden"
+      create_draft_and_send_manully: "Erstellen Sie Entwurfsrechnungen und senden Sie sie manuell"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -501,8 +513,14 @@ de:
         edit: "Bearbeiten"
         delete: "Löschen"
         recover: "Genesen"
+        close: "Schließen"
       messages:
         confirm: "Bist du sicher?"
+        how_ofter: "Wie oft?"
+        how_many: "Wie viele?"
+      titles:
+        new: "Neu %{model}"
+        edit: "bearbeiten %{model}"
       page_entries_info:
         more_pages:
           display_entries: "Anzeigen %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

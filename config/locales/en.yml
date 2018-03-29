@@ -189,6 +189,9 @@ en:
       deleted: "Deleted"
       archived: "Archived"
       activities: "Activities"
+      select_item: "Select item"
+      select: "Select"
+      add_notes: "Add Notes"
 
     pagination:
       previous: "Previous"
@@ -295,6 +298,15 @@ en:
       every: "Every"
       remaining: "Remaining"
       stop_recurring: "Stop Recurring"
+      select_client: "Select Client"
+      10_days: "10 Days"
+      weekly: "Weekly"
+      monthly: "Monthly"
+      yearly: "Yearly"
+      custom: "Custom"
+      next_issue_date: "Next Issue Date"
+      send_invoice_automatically: "Send invoices automatically"
+      create_draft_and_send_manully: "Create Draft invoices and send manually"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -606,8 +618,14 @@ en:
         edit: "Edit"
         delete: "Delete"
         recover: "Recover"
+        close: "Close"
       messages:
         confirm: "Are you sure?"
+        how_ofter: "How Often?"
+        how_many: "How Many?"
+      titles:
+        new: "New %{model}"
+        edit: "Edit %{model}"
       page_entries_info:
         more_pages:
             display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

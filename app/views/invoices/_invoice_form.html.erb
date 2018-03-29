@@ -4,19 +4,25 @@
       <div class="new-invoice-header clearfix">
         <h5 class="left">
           <% if f.object.persisted? %>
-              <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+              <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
                                             :default => "Edit #{model_class.model_name.human}") %>:
           <% else %>
-              <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+              <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
                                             :default => "New  #{model_class.model_name.human}") %>:
           <% end %>
           <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-          <%= f.select :client_id, options_for_select(load_clients(action_name, invoice.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}  %>
+          <%= f.select :client_id, options_for_select(load_clients(action_name, invoice.company_id),
+                                                      selected: selected_client),
+                       {prompt: t('views.invoices.select_client'), include_blank: false}  %>
         </h5>
         <div class="new-invoice-action-btn right">
-          <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
-          <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
-          <%= link_to raw("<i class='material-icons close'>close</i>"), invoices_path %>
+          <a href="#" onclick="$('.simple_submit').click();" title="<%= t('views.common.send') %>">
+            <i class="material-icons">send</i>
+          </a>
+          <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>">
+            <i class="material-icons" >done</i>
+          </a>
+          <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), invoices_path %>
           <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
           <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
           <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
@@ -42,7 +48,7 @@
 
             <span>
                 <div class="date-wrapper text-blue">
-                    <span><%=t('view.invoices.due')%>:</span>
+                    <span><%= t('views.invoices.due') %>:</span>
                     <span>
                       <small>
                         <span><%= f.text_field :due_date, value: f.object.due_date, class: "date-field-style", id: "invoice_due_date_picker"%></span>
@@ -53,9 +59,11 @@
             </span>
 
             <div class="terms ">
-              <span>Terms : </span>
+              <span><%= t('views.invoices.terms') %>: </span>
               <small>
-                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select payment-term-dropdown'} %>
+                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p|
+                  [t('views.invoices.' + p.description.parameterize.underscore), p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id),
+                             {:include_blank => false}, {class: 'inline-select payment-term-dropdown'} %>
               </small>
             </div>
             <div class="paymentInfo">
@@ -70,13 +78,13 @@
           <div class="info-right-section" >
             <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
             <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
-            <label for="recurring"><h6>Recurring</h6></label>
+            <label for="recurring"><h6><%= t('views.common.recurring') %></h6></label>
             <div class="show-me" id="recurring_schedule_container">
             <%= f.fields_for :recurring_schedule do |rs| %>
                 <div class="">
                   <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
                   <div class="date-wrapper">
-                    <span class="next-invoice-date">Next Issue Date:</span>
+                    <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
                     <span>
                       <small>
                         <span><%= rs.text_field :next_invoice_date, value: next_invoice_date, class: "date-picker date-field-style" %></span>
@@ -86,23 +94,24 @@
                   </div>
                   <div class="invoice-input-holder">
                     <div class="input-field">
-                      <%= rs.select :frequency, Invoice_FREQUENCY, {include_blank: false}, {class: 'inline-select' }%>
-                      <%= rs.label :frequency, "How Often?"%>
+                      <%= rs.select :frequency, Invoice_FREQUENCY.map{|key, val| [t('views.invoices.' + key.downcase), val]},
+                                    {include_blank: false}, {class: 'inline-select' }%>
+                      <%= rs.label :frequency, t('helpers.messages.how_ofter')%>
                     </div>
                     <div class="input-field">
                       <%= rs.number_field :occurrences, min: 0, class: 'recurring_occurrences' %>
-                      <%= rs.label :occurrences, "How Many?", class: 'active'%>
+                      <%= rs.label :occurrences, t('helpers.messages.how_many'), class: 'active'%>
                     </div>
                   </div>
                   <% draft_invoice = invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
                   <div class="invoice-input-holder rad-holder">
                     <div class="inovice-rad-holder">
                       <%= rs.radio_button :delivery_option, 'send_invoice', class:'filled-in', id: 'send_invoice', checked: !draft_invoice%>
-                      <label for="send_invoice">Send invoices automatically </label>
+                      <label for="send_invoice"><%= t('views.invoices.send_invoice_automatically') %></label>
                     </div>
                     <div class="inovice-rad-holder">
                       <%= rs.radio_button :delivery_option, 'draft_invoice', class:'filled-in', id: 'draft_invoice', checked: draft_invoice%>
-                      <label for="draft_invoice">Create Draft invoices and send manually</label>
+                      <label for="draft_invoice"><%= t('views.invoices.create_draft_and_send_manully') %></label>
                     </div>
                     <%= rs.hidden_field :_destroy %>
                   </div>
@@ -116,12 +125,12 @@
             <thead>
             <tr>
               <th>&nbsp;</th>
-              <th width="12%">Items</th>
-              <th>Description</th>
-              <th class="center-align">Unit Cost</th>
-              <th class="center-align">Quantity</th>
-              <th class="center-align">Tax</th>
-              <th class="right-align">Line Total</th>
+              <th width="12%"><%= t('views.common.item') %></th>
+              <th><%= t('views.common.description') %></th>
+              <th class="center-align"><%= t('views.common.unit_cost') %></th>
+              <th class="center-align"><%= t('views.items.quantity') %></th>
+              <th class="center-align"><%= t('views.common.tax') %></th>
+              <th class="right-align"><%= t('views.invoices.line_total') %></th>
             </tr>
             </thead>
             <tbody id="invoice_line_items_tbl">
@@ -130,19 +139,22 @@
           </table>
         </div>
         <div class="new-invoice-footer">
-          <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'invoice-add-items-button addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %>
+          <%= f.link_to_add t('views.invoices.add_line_item'), :invoice_line_items, class: 'invoice-add-items-button addItemRow',
+                            id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %>
           <div class="right-section right">
             <div class="invoice-total-left">
-              <strong class="invoice-total-title">Subtotal</strong>
+              <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
               <div class="new-invoice-footer-row">
-                <span>Discount</span>
-                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                <span><%= t('views.common.discount') %></span>
+                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type },
+                             {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
               </div>
               <div class="new-invoice-footer-row">
-                <span>Invoice Tax</span>
-                <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id), { prompt: 'Select', include_blank: true},{:class => "discount_select inline-select small-select"} %>
+                <span><%= t('views.common.tax') %></span>
+                <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id),
+                             { prompt: t('views.common.select'), include_blank: true},{:class => "discount_select inline-select small-select"} %>
               </div>
-              <strong class="invoice-total-title bottom">New Total</strong>
+              <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
             <div class="invoice-total-right">
               <%= f.hidden_field :sub_total %>
@@ -167,7 +179,7 @@
         <div class="invoice-add-notes">
           <a href="#"><i class="material-icons">chat</i> </a>
           <div class="invoice-add-notes-textare">
-            <%= f.text_area :notes, maxlength: 400, placeholder: 'Add Notes'%>
+            <%= f.text_area :notes, maxlength: 400, placeholder: t('views.common.add_notes') %>
           </div>
         </div>
       </div>

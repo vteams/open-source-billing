@@ -169,6 +169,9 @@ pt-BR:
       deleted: "Excluído"
       archived: "Arquivado"
       activities: "actividades"
+      select_item: "Selecionar item"
+      select: "Selecione"
+      add_notes: "Adicionar notas"
 
     pagination:
       previous: "Anterior"
@@ -273,6 +276,15 @@ pt-BR:
       every: "Cada"
       remaining: "Remanescente"
       stop_recurring: "Pare de Recorrente"
+      select_client: "Selecione o cliente"
+      10_days: "10 Dias"
+      weekly: "Semanal"
+      monthly: "Por mês"
+      yearly: "anual"
+      custom: "personalizadas"
+      next_issue_date: "Próxima data de emissão"
+      send_invoice_automatically: "Enviar faturas automaticamente"
+      create_draft_and_send_manully: "Criar faturas de rascunho e enviar manualmente"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -507,8 +519,14 @@ pt-BR:
         edit: "Editar"
         delete: "Excluir"
         recover: "Recuperar"
+        close: "Fechar"
       messages:
         confirm: "Você tem certeza?"
+        how_ofter: "Com que frequência?"
+        how_many: "Quantos?"
+      titles:
+        new: "Novo %{model}"
+        edit: "editar %{model}"
       page_entries_info:
         more_pages:
           display_entries: "Mostrando %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

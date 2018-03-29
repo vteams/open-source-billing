@@ -165,6 +165,9 @@ fr:
       deleted: "Supprimé"
       archived: "Archivé"
       activities: "Activités"
+      select_item: "Sélectionner un article"
+      select: "Sélectionner"
+      add_notes: "Ajouter des notes"
 
     pagination:
       previous: "précédent"
@@ -269,6 +272,15 @@ fr:
       every: "Chaque"
       remaining: "Restant"
       stop_recurring: "Arrêter de se reproduire"
+      select_client: "Sélectionner un client"
+      10_days: "10 Journées"
+      weekly: "Hebdomadaire"
+      monthly: "Mensuel"
+      yearly: "annuel"
+      custom: "Douane"
+      next_issue_date: "Prochaine date de publication"
+      send_invoice_automatically: "Envoyer des factures automatiquement"
+      create_draft_and_send_manully: "Créer des factures brouillon et envoyer manuellement"
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"
@@ -501,8 +513,14 @@ fr:
         edit: "éditer"
         delete: "Effacer"
         recover: "Récupérer"
+        close: "Fermer"
       messages:
         confirm: "Êtes-vous sûr?"
+        how_ofter: "À quelle fréquence?"
+        how_many: "Combien?"
+      titles:
+        new: "Nouveau %{model}"
+        edit: "modifier %{model}"
       page_entries_info:
         more_pages:
           display_entries: "visualisation %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

@@ -3664,7 +3664,7 @@ html {
 .new-invoice-holder .new-invoice-header .select-wrapper {
   float: none;
   display: inline-block;
-  max-width: 120px;
+  max-width: 150px;
   transition: none;
   position: relative;
   top: -1px;
@@ -3695,7 +3695,7 @@ html {
   border-bottom: 1px solid #dfdede; }
 .new-invoice-holder .info-section .info-left-section {
   float: left;
-  width: 36%; }
+  width: 37%; }
 .new-invoice-holder .info-section .info-left-section h6 {
   font-size: 16px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -4024,7 +4024,7 @@ html {
 .new-invoice-holder .new-invoice-table-holder .inline-select input:focus + label {
   color: #aeaeae; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select {
-  width: 120px;
+  width: 130px;
   vertical-align: middle; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select .dropdown-content {
   min-width: 100px; }
