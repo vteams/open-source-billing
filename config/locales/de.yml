@@ -79,6 +79,7 @@ de:
         users: "Benutzer"
       help: "Hilfe"
       logout: "Ausloggen"
+      search: "Suche"
 
   views:
     common:
@@ -158,6 +159,11 @@ de:
       yes: "Ja"
       no: "Nein"
       pdf: "PDF"
+      selected: "Ausgewählt"
+      recover_deleted: "Wiederherstellen gelöscht"
+      recover_archived: "Wiederherstellen archiviert"
+      delete_archived: "Löschen Sie archiviert"
+      send_to_archive: "Zum Archiv senden"
 
     pagination:
       previous: "Vorherige"
@@ -478,6 +484,7 @@ de:
       actions: "Actions"
       links:
         edit: "Bearbeiten"
+        delete: "Löschen"
       page_entries_info:
         more_pages:
           display_entries: "Anzeigen %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

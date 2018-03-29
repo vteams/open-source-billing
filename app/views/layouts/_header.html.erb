@@ -4,7 +4,7 @@
     <!--- header logo--->
     <div class="col s12 m5 l4">
       <a class="btn-menu" href="javascript:;"><i class="material-icons">menu</i></a>
-      <%= link_to raw("Open<span>Source</span>Billing"), dashboard_path, class: 'logo'%>
+      <%= link_to raw('Open<span>Source</span>Billing'), dashboard_path, class: 'logo'%>
     </div>
     <!--- header company name--->
     <div class="col s9 m5 l4">
@@ -16,7 +16,7 @@
                 <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>"><%= company.company_name %></option>
             <% end %>
             <optgroup label="">
-              <option value="-1"> Create New </option>
+              <option value="-1"><%= t('views.companies.new') %></option>
             </optgroup>
           </select>
           <%= link_to '', new_company_path(remote: 1, reload: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
@@ -35,12 +35,14 @@
     <!--- header search--->
     <div class="col s3 m2 l4  header-right">
       <div class="right">
-        <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search', title: 'Search' if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
-        <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search', title: 'Help', remote: true %>
+        <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
+                    title: t('header.links.search') if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
+        <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
+                    title: t('views.help.help'), remote: true %>
       </div>
       <!--- header search holder--->
       <div class="search-holder">
-        <a href="#" title="Back" class="btn-back"><i class="zmdi zmdi-arrow-left"></i> Back</a>
+        <a href="#" title="<%= t('views.common.back') %>" class="btn-back"><i class="zmdi zmdi-arrow-left"></i><%= t('views.common.back') %></a>
         <div class="container">
           <div class="checkboxinfo row">
             <div class="left">

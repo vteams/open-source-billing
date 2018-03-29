@@ -80,6 +80,7 @@ fr:
         basic_settings: "Paramètres de base"
       help: "aider"
       logout: "Connectez - Out"
+      search: "Chercher"
 
   views:
     common:
@@ -155,6 +156,11 @@ fr:
       yes: "oui"
       no: "aucun"
       pdf: "PDF"
+      selected: "Choisi"
+      recover_deleted: "Récupérer supprimé"
+      recover_archived: "Récupérer archivé"
+      delete_archived: "Supprimer archivé"
+      send_to_archive: "Envoyer à l'archive"
 
     pagination:
       previous: "précédent"
@@ -478,6 +484,7 @@ fr:
       actions: "actes"
       links:
         edit: "éditer"
+        delete: "Effacer"
       page_entries_info:
         more_pages:
           display_entries: "visualisation %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

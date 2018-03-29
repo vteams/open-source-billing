@@ -33,7 +33,7 @@ class @Search
         if n == 1
           $('.checkboxinfo .action-btn-group .edit').show()
           $('.checkboxinfo .action-btn-group .send').show()
-      $('.chk-text').text n + ' Selected'
+      $('.chk-text').text n + ' ' + I18n.t('views.common.selected')
       return
     $('.checkbox-item').on 'click', (e) ->
       e.stopImmediatePropagation()

@@ -80,6 +80,7 @@ pt-BR:
         basic_settings: "Configuração Básica"
       help: "Ajuda"
       logout: "Sair"
+      search: "Pesquisa"
 
   views:
     common:
@@ -159,6 +160,11 @@ pt-BR:
       yes: "Sim"
       no: "Não"
       pdf: "PDF"
+      selected: "Selecionado"
+      recover_deleted: "Recuperar excluído"
+      recover_archived: "Recuperar arquivado"
+      delete_archived: "Excluir arquivado"
+      send_to_archive: "Enviar para Arquivo"
 
     pagination:
       previous: "Anterior"
@@ -484,6 +490,7 @@ pt-BR:
       actions: "Ações"
       links:
         edit: "Editar"
+        delete: "Excluir"
       page_entries_info:
         more_pages:
           display_entries: "Mostrando %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

@@ -93,7 +93,7 @@ $(document).ready(function(){
                 }
             }
 
-            $( ".chk-text" ).text(n + " Selected");
+            $( ".chk-text" ).text(n + ' ' + I18n.t('views.common.selected'));
         }
 
     });

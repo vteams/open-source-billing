@@ -96,6 +96,7 @@ en:
       applications: "Applications"
       api_docs: "API Documentation"
       logout: "Logout"
+      search: "Search"
 
   views:
     common:
@@ -179,6 +180,11 @@ en:
       no: "No"
       pdf: "PDF"
       select_estimate_currency: "Select currency..."
+      selected: "Selected"
+      recover_deleted: "Recover deleted"
+      recover_archived: "Recover archived"
+      delete_archived: "Delete archived"
+      send_to_archive: "Send to Archive"
 
     pagination:
       previous: "Previous"
