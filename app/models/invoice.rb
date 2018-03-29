@@ -483,7 +483,7 @@ class Invoice < ActiveRecord::Base
 
   def recurring_status
     return nil if recurring_schedule.blank?
-    return "Every #{recurring_schedule.frequency.split(".").last.camelize} (#{recurring_schedule.occurrences - recurring_schedule.generated_count} Remaining)"
+    return "#{I18n.t('views.invoices.every')} #{recurring_schedule.frequency.split(".").last.camelize} (#{recurring_schedule.occurrences - recurring_schedule.generated_count} #{I18n.t('views.invoices.remaining')})"
   end
 
   def recurring_parent

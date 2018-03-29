@@ -164,6 +164,10 @@ de:
       recover_archived: "Wiederherstellen archiviert"
       delete_archived: "Löschen Sie archiviert"
       send_to_archive: "Zum Archiv senden"
+      recurring: "Wiederkehrend"
+      deleted: "Gelöscht"
+      archived: "Archiviert"
+      activities: "Aktivitäten"
 
     pagination:
       previous: "Vorherige"
@@ -258,6 +262,16 @@ de:
       no_deleted_msg: "Es existieren keine gelöschten Rechnungen"
       sent_to: "Gesendet an"
       received_from: "Erhalten von"
+      draft: "Entwurf"
+      sent: "Geschickt"
+      viewed: "Angesehen"
+      paid: "Bezahlt"
+      partial: "Teilweise"
+      draft_partial: "Entwurf teilweise"
+      disputed: "Umstritten"
+      every: "Jeden"
+      remaining: "Verbleibend"
+      stop_recurring: "Stoppen Sie Wiederkehrend"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -486,6 +500,9 @@ de:
       links:
         edit: "Bearbeiten"
         delete: "Löschen"
+        recover: "Genesen"
+      messages:
+        confirm: "Bist du sicher?"
       page_entries_info:
         more_pages:
           display_entries: "Anzeigen %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

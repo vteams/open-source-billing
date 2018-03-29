@@ -161,6 +161,10 @@ fr:
       recover_archived: "Récupérer archivé"
       delete_archived: "Supprimer archivé"
       send_to_archive: "Envoyer à l'archive"
+      recurring: "Récurrent"
+      deleted: "Supprimé"
+      archived: "Archivé"
+      activities: "Activités"
 
     pagination:
       previous: "précédent"
@@ -255,6 +259,16 @@ fr:
       no_deleted_msg: "Vous avez pas de facture supprimé."
       sent_to: "Envoyé à"
       received_from: "Reçu de"
+      draft: "Brouillon"
+      sent: "Envoyé"
+      viewed: "Vu"
+      paid: "Payé"
+      partial: "Partiel"
+      draft_partial: "Projet partiel"
+      disputed: "Contesté"
+      every: "Chaque"
+      remaining: "Restant"
+      stop_recurring: "Arrêter de se reproduire"
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"
@@ -486,6 +500,9 @@ fr:
       links:
         edit: "éditer"
         delete: "Effacer"
+        recover: "Récupérer"
+      messages:
+        confirm: "Êtes-vous sûr?"
       page_entries_info:
         more_pages:
           display_entries: "visualisation %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

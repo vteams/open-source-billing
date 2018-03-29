@@ -185,6 +185,10 @@ en:
       recover_archived: "Recover archived"
       delete_archived: "Delete archived"
       send_to_archive: "Send to Archive"
+      recurring: "Recurring"
+      deleted: "Deleted"
+      archived: "Archived"
+      activities: "Activities"
 
     pagination:
       previous: "Previous"
@@ -281,6 +285,16 @@ en:
       no_deleted_msg: "You haven't any deleted invoice."
       sent_to: "Sent To"
       received_from: "Received From"
+      draft: "Draft"
+      sent: "Sent"
+      viewed: "Viewed"
+      paid: "Paid"
+      partial: "Partial"
+      draft_partial: "Draft Partial"
+      disputed: "Disputed"
+      every: "Every"
+      remaining: "Remaining"
+      stop_recurring: "Stop Recurring"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -592,6 +606,8 @@ en:
         edit: "Edit"
         delete: "Delete"
         recover: "Recover"
+      messages:
+        confirm: "Are you sure?"
       page_entries_info:
         more_pages:
             display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"

@@ -165,6 +165,10 @@ pt-BR:
       recover_archived: "Recuperar arquivado"
       delete_archived: "Excluir arquivado"
       send_to_archive: "Enviar para Arquivo"
+      recurring: "Recorrente"
+      deleted: "Excluído"
+      archived: "Arquivado"
+      activities: "actividades"
 
     pagination:
       previous: "Anterior"
@@ -259,6 +263,16 @@ pt-BR:
       no_deleted_msg: "Você não possui nenhuma fatura apagada"
       sent_to: "Enviado a"
       received_from: "Recibido de"
+      draft: "Esboço, projeto"
+      sent: "Enviei"
+      viewed: "Visto"
+      paid: "Pago"
+      partial: "Parcial"
+      draft_partial: "Rascunho parcial"
+      disputed: "Disputado"
+      every: "Cada"
+      remaining: "Remanescente"
+      stop_recurring: "Pare de Recorrente"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -492,6 +506,9 @@ pt-BR:
       links:
         edit: "Editar"
         delete: "Excluir"
+        recover: "Recuperar"
+      messages:
+        confirm: "Você tem certeza?"
       page_entries_info:
         more_pages:
           display_entries: "Mostrando %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"

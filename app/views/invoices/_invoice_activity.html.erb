@@ -1,5 +1,5 @@
 <!--- Activity sidebar --->
-<span class="btn-activity">Activities</span>
+<span class="btn-activity"><%= t('views.common.activities') %></span>
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
@@ -87,7 +87,7 @@
 
     <div class="status-info">
       <h5>
-        <%= link_to 'Recurring', "invoices?status=recurring#{query_string(params.except(:page).merge(per: @per_page))}" %>
+        <%= link_to t('views.common.recurring'), "invoices?status=recurring#{query_string(params.except(:page).merge(per: @per_page))}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'recurring')) %>)</span>
       </h5>
     </div>
@@ -100,7 +100,7 @@
                       <div class="ui checkbox">
                         <h5>
                           <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
-                          <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= status.to_s.humanize %></label>
+                          <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
                           <span>(<%= @invoice_activity[status]%>)</span>
                         </h5>
                       </div>
