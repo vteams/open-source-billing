@@ -13,7 +13,12 @@ module Services
             if email.present? && ::Client.find_by_email(email).nil?
               hash = { provider: 'Quickbooks', provider_id: client['Id'].to_i, first_name: client['GivenName'],
                        last_name: client['FamilyName'], email: email, organization_name: client['CompanyName'],
-                       address_street1: (((client['BillAddr']['Line2']).to_s + (client.billing_address.try(:line2).to_s) + (client.billing_address.try(:line3).to_s) + (client.billing_address.try(:line4).to_s) + (client.billing_address.try(:line5).to_s)) if client['BillAddr'].present?),
+                       address_street1: ((
+                                          (client['BillAddr']['Line1']).to_s +
+                                              (client['BillAddr']['Line2']).to_s +
+                                              (client['BillAddr']['Line3'].to_s) +
+                                              (client['BillAddr']['Line4'].to_s) +
+                                              (client['BillAddr']['Line5'].to_s)) if client['BillAddr'].present?),
                        address_street2: nil, city: (client['BillAddr']['City'] if client['BillAddr'].present?),
                        province_state: nil, country: (client['BillAddr']['CountrySubDivisionCode'] if client['BillAddr'].present?),
                        postal_zip_code: (client['BillAddr']['PostalCode'] if client['BillAddr'].present?),
