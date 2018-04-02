@@ -7,7 +7,8 @@ module Services
       qbo_api = QboApi.new(access_token: options[:token], realm_id: options[:realm_id])
       if qbo_api.all(:invoices).count > 0
         qbo_api.all(:invoices) do |invoice|
-          if invoice.present?
+          begin
+            if invoice.present?
             unless ::Invoice.find_by_provider_id(invoice['Id'].to_i)
               if invoice['Line'].last['DetailType'].eql?('DiscountLineDetail')
                 discount_per =  invoice['Line'].last['DiscountLineDetail']['DiscountPercent'] if invoice['Line'].last['DiscountLineDetail']['PercentBased']
@@ -58,6 +59,9 @@ module Services
               osb_invoice.create_line_item_taxes
               osb_invoice.update_attributes(sub_total: amount)
             end
+            end
+          rescue Exception => e
+            p e.inspect
           end
         end
       end

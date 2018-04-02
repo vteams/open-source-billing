@@ -6,7 +6,8 @@ module Services
 
       qbo_api = QboApi.new(access_token: options[:token], realm_id: options[:realm_id])
       qbo_api.all(:estimates).each do |estimate|
-        if estimate.present?
+        begin
+          if estimate.present?
           unless ::Estimate.find_by_provider_id(estimate['Id'].to_i)
             if estimate['Line'].last['DetailType'].eql?('DiscountLineDetail')
               discount_per =  estimate['Line'].last['DiscountLineDetail']['DiscountPercent'] if estimate['Line'].last['DiscountLineDetail']['PercentBased']
@@ -56,6 +57,9 @@ module Services
             osb_estimate.create_line_item_taxes
             osb_estimate.update_attributes(sub_total: amount)
           end
+        end
+        rescue Exception => e
+          p e.inspect
         end
       end
       "Estimate #{counter} record(s) successfully imported."

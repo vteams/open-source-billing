@@ -8,7 +8,8 @@ module Services
       qbo_api = QboApi.new(access_token: options[:token], realm_id: options[:realm_id])
       if qbo_api.all(:customers).count > 0
         qbo_api.all(:customers) do |client|
-          if client.present?
+          begin
+            if client.present?
             email = client['PrimaryEmailAddr']['Address'] if client['PrimaryEmailAddr'].present? && client['PrimaryEmailAddr']['Address'].present?
             if email.present? && ::Client.find_by_email(email).nil?
               hash = { provider: 'Quickbooks', provider_id: client['Id'].to_i, first_name: client['GivenName'],
@@ -42,6 +43,9 @@ module Services
               entities << {entity_id: osb_client.id, entity_type: 'Client', parent_id: options[:current_company_id], parent_type: 'Company'}
 
             end
+          end
+          rescue Exception => e
+            p e.inspect
           end
         end
       end
