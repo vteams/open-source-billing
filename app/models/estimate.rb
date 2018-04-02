@@ -211,7 +211,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def estimate_name
-    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }"
+    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue ""
   end
 
   def group_date
