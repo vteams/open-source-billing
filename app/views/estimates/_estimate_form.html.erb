@@ -4,19 +4,25 @@
       <div class="new-invoice-header clearfix">
         <h5 class="left">
           <% if f.object.persisted? %>
-              <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+              <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
                                             :default => "Edit #{model_class.model_name.human}") %>:
           <% else %>
-              <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+              <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
                                             :default => "New  #{model_class.model_name.human}") %>:
           <% end %>
           <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-          <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}  %>
+          <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id),
+                                                      selected: selected_client),
+                       {prompt: t('views.invoices.select_client'), include_blank: false}  %>
         </h5>
         <div class="new-invoice-action-btn right">
-          <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
-          <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
-          <%= link_to raw("<i class='material-icons close'>close</i>"), estimates_url %>
+          <a href="#" onclick="$('.simple_submit').click();" title="<%= t('views.common.send') %>">
+            <i class="material-icons">send</i>
+          </a>
+          <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>">
+            <i class="material-icons" >done</i>
+          </a>
+          <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), estimates_url %>
           <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
           <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
           <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
@@ -28,7 +34,7 @@
           <div class="info-left-section">
             <h6><%= estimate.estimate_number %></h6>
             <div class="date-wrapper">
-                <span>Estimate:</span>
+                <span><%= t('estimate') %>:</span>
                 <span>
                   <small id="estimate_date">
                     <% estimate_date = f.object.estimate_date.empty? ? Date.today.strftime(get_date_format) : f.object.estimate_date %>
@@ -54,12 +60,12 @@
             <thead>
             <tr>
               <th>&nbsp;</th>
-              <th width="12%">Items</th>
-              <th>Description</th>
-              <th class="center-align">Unit Cost</th>
-              <th class="center-align">Quantity</th>
-              <th class="center-align">Tax</th>
-              <th class="right-align">Line Total</th>
+              <th width="12%"><%= t('header.links.items.items') %></th>
+              <th><%= t('views.common.description') %></th>
+              <th class="center-align"><%= t('views.common.unit_cost') %></th>
+              <th class="center-align"><%= t('views.items.quantity') %></th>
+              <th class="center-align"><%= t('views.common.tax') %></th>
+              <th class="right-align"><%= t('views.invoices.line_total') %></th>
             </tr>
             </thead>
             <tbody id="estimate_line_items_tbl">
@@ -68,15 +74,18 @@
           </table>
         </div>
         <div class="new-invoice-footer">
-          <%= f.link_to_add t("views.estimates.add_line_item"), :estimate_line_items, class: 'invoice-add-items-button addItemRow', id: 'add_line_item', data: { target: '#estimate_line_items_tbl' } %>
+          <%= f.link_to_add t('views.invoices.add_line_item'), :estimate_line_items,
+                            class: 'invoice-add-items-button addItemRow', id: 'add_line_item',
+                            data: { target: '#estimate_line_items_tbl' } %>
           <div class="right-section right">
             <div class="invoice-total-left">
-              <strong class="invoice-total-title">Subtotal</strong>
+              <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
               <div class="new-invoice-footer-row">
-                <span>Discount</span>
-                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                <span><%= t('views.common.discount') %></span>
+                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type },
+                             {:class => 'discount_select inline-select small-select', :id => 'discount_type'} %>
               </div>
-              <strong class="invoice-total-title bottom">New Total</strong>
+              <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
             <div class="invoice-total-right">
               <%= f.hidden_field :sub_total %>
@@ -96,7 +105,7 @@
         <div class="invoice-add-notes">
           <a href="#"><i class="material-icons">chat</i> </a>
           <div class="invoice-add-notes-textare">
-            <%= f.text_area :notes, maxlength: 400, placeholder: 'Add Notes'%>
+            <%= f.text_area :notes, maxlength: 400, placeholder: t('views.common.add_notes') %>
           </div>
         </div>
       </div>

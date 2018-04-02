@@ -18,6 +18,7 @@ de:
   current: "Aktuell"
   past: "Vergangenheit"
   edit: "Bearbeiten"
+  estimate: "Schätzen"
 
   date:
     formats:
@@ -312,6 +313,10 @@ de:
         prorate: "Aufteilung"
         prorate_for: "Aufteilung für"
         gateway: "Zugang"
+
+    estimates:
+      this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
+      estimate_date: "Schätzdatum"
 
     clients:
       client_name: "Kunden Name"

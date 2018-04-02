@@ -18,6 +18,7 @@ fr:
   current: "courant"
   past: "passé"
   edit: "éditer"
+  estimate: "Estimation"
 
   date:
     formats:
@@ -309,6 +310,10 @@ fr:
         prorate: "distribuer au prorata"
         prorate_for: "prorata pour"
         gateway: "porte"
+
+    estimates:
+      this_estimate_was_sent_using: "Cette estimation a été envoyée en utilisant"
+      estimate_date: "Date d'estimation"
 
     clients:
       client_name: "Nom du client"

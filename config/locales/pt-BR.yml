@@ -18,6 +18,7 @@ pt-BR:
   current: "Atual"
   past: "Anterior"
   edit: "Editar"
+  estimate: "Estimativa"
 
   date:
     formats:
@@ -313,6 +314,10 @@ pt-BR:
         prorate: "Ratear"
         prorate_for: "Ratear para"
         gateway: "Gateway"
+
+    estimates:
+      this_estimate_was_sent_using: "Esta estimativa foi enviada usando"
+      estimate_date: "Data estimada"
 
     clients:
       client_name: "Nome do Cliente"

@@ -5,10 +5,18 @@
         <span><%= @client.organization_name %></span>
       </h5>
       <div class="modal-action-btn right">
-        <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon', title: 'Edit' %>
-        <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id), title: 'Send' %>
-        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates', :action => 'estimate_pdf', :id => estimate.encrypted_id, :format => "pdf"}, :target => '_blank', title: 'Print' %>
-        <a href="javascript:;" class="modal-close" title="close"><i class="material-icons">done</i></a>
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate),
+                    class: 'edit_estimate_icon', title: t('helpers.links.edit') %>
+        <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id),
+                    title: t('views.common.send') %>
+        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates',
+                                                                 :action => 'estimate_pdf',
+                                                                 :id => estimate.encrypted_id,
+                                                                 :format => "pdf"},
+                    :target => '_blank', title: t('views.common.print') %>
+        <a href="javascript:;" class="modal-close" title="<%= t('helpers.links.close') %>">
+          <i class="material-icons">done</i>
+        </a>
       </div>
     </div>
     <div class="info-section clearfix">
@@ -34,8 +42,8 @@
           <th><%= t('views.common.description') %></th>
           <th class="center-align"><%= t('views.common.unit_cost') %></th>
           <th class="center-align"><%= t('views.items.quantity') %></th>
-          <th class="center-align">Tax </th>
-          <th class="right-align"><%= t('views.estimates.line_total') %></th>
+          <th class="center-align"><%= t('views.common.tax') %> </th>
+          <th class="right-align"><%= t('views.invoices.line_total') %></th>
         </tr>
         </thead>
 
