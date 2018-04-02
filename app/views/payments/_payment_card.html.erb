@@ -15,15 +15,15 @@
       <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
     <% end %>
       <div class="card-footer clearfix">
-        <span class="invoice-date"><small>Payment Date:</small> <%= payment.payment_date rescue "" %></span>
-        <span class="invoice-action text-blue"><%= (payment.payment_method || payment.payment_type || "").capitalize %></span>
+        <span class="invoice-date"><small><%= t('views.payments.payment_date') %>:</small> <%= payment.payment_date rescue "" %></span>
+        <span class="invoice-action text-blue"><%= (t('views.payments.' + payment.payment_method.parameterize.underscore) || payment.payment_type || "").capitalize %></span>
       </div>
     </div>
 
     <div class="action-btn-group">
       <% unless payment.payment_type == "credit" %>
-        <%#= link_to raw("<i class='material-icons'>create</i>"),edit_payment_path(payment), remote: true, class: 'edit_invoice_icon', title: 'Edit' %>
-        <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete,
+                    data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
       <% end %>
     </div>
   </div>

@@ -399,6 +399,13 @@ pt-BR:
       editing_payment: "Editando Pagamento"
       back_to_invoice: "Voltar para fatura"
       paid_full: "Pago integral"
+      cheque: "Verifica"
+      bank_transfer: "Transferência bancária"
+      credit: "Crédito"
+      cash: "Dinheiro"
+      debit: "Débito"
+      paypal: "Paypal"
+      payment_date: "Data de pagamento"
 
     payment_terms:
       number_of_days: "Número de dias"

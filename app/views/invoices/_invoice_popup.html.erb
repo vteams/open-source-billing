@@ -30,7 +30,8 @@
             <span class="text-blue"> <%= t('views.invoices.due') %>:<small> <%= invoice.due_date rescue "" %></small></span>
             <% if invoice.term.present? %>
             <div class="terms">
-              <span><%= t('views.invoices.terms') %>:</span> <small><%= invoice.term %></small>
+              <span><%= t('views.invoices.terms') %>:</span>
+              <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
             </div>
             <% end %>
             <div class="paymentInfo">

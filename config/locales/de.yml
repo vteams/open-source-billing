@@ -397,6 +397,13 @@ de:
       editing_payment: "Bezahlung am bearbeiten"
       back_to_invoice: "Zurück zur Rechnung"
       paid_full: "Voll bezahlt"
+      cheque: "Prüfen"
+      bank_transfer: "Banküberweisung"
+      credit: "Kredit"
+      cash: "Kasse"
+      debit: "Lastschrift"
+      paypal: "Paypal"
+      payment_date: "Zahlungsdatum"
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"

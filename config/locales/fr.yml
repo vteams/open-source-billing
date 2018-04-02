@@ -394,6 +394,13 @@ fr:
       editing_payment: "édition paiement"
       back_to_invoice: "Retour à facturer"
       paid_full: "A charge complète"
+      cheque: "Vérifier"
+      bank_transfer: "Virement"
+      credit: "Crédit"
+      cash: "En espèces"
+      debit: "Débit"
+      paypal: "Paypal"
+      payment_date: "Date de paiement"
 
     payment_terms:
       number_of_days: "Nombre de jours"
