@@ -19,13 +19,20 @@ module Services
                                               (client['BillAddr']['Line3'].to_s) +
                                               (client['BillAddr']['Line4'].to_s) +
                                               (client['BillAddr']['Line5'].to_s)) if client['BillAddr'].present?),
-                       address_street2: nil, city: (client['BillAddr']['City'] if client['BillAddr'].present?),
-                       province_state: nil, country: (client['BillAddr']['CountrySubDivisionCode'] if client['BillAddr'].present?),
+                       address_street2: ((
+                       (client['ShipAddr']['Line1']).to_s +
+                           (client['ShipAddr']['Line2']).to_s +
+                           (client['ShipAddr']['Line3'].to_s) +
+                           (client['ShipAddr']['Line4'].to_s) +
+                           (client['ShipAddr']['Line5'].to_s)) if client['ShipAddr'].present?),
+                       city: (client['BillAddr']['City'] if client['BillAddr'].present?),
+                       province_state: (client['BillAddr']['CountrySubDivisionCode'] if client['BillAddr'].present?),
+                       country: (client['BillAddr']['Country'] if client['BillAddr'].present?),
                        postal_zip_code: (client['BillAddr']['PostalCode'] if client['BillAddr'].present?),
                        business_phone: client['PrimaryPhone'].present? ? client['PrimaryPhone']['FreeFormNumber'] : nil,
-                       fax: client['FaxPhone'].present? ? client['FaxPhone']['FreeFormNumber'] : nil,
-                       home_phone: client['AlternatePhone'].present? ? client['AlternatePhone']['FreeFormNumber'] : nil,
-                       mobile_number: client['MobilePhone'].present? ? client['MobilePhone']['FreeFormNumber'] : nil
+                       fax: client['Fax'].present? ? client['Fax']['FreeFormNumber'] : nil,
+                       mobile_number: client['Mobile'].present? ? client['Mobile']['FreeFormNumber'] : nil,
+                       home_phone: client['AlternatePhone'].present? ? client['AlternatePhone']['FreeFormNumber'] : nil
                       }
 
               osb_client=  ::Client.new(hash)
