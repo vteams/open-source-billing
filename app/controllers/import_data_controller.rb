@@ -62,11 +62,9 @@ class ImportDataController < ApplicationController
     options[:current_company_id] = get_company_id
     data_import_response = []
     params[:quickbooks][:data_filters].each do |filter|
-      data_import_response <<  eval("Services::ImportQb#{filter.humanize}Service").new.import_data(options)
+      data_import_response <<  eval("Services::ImportQb#{filter.humanize}Service").new.delay.import_data(options)
     end
-
-    redirect_to import_data_url, notice: 'Your QuickBooks account has been successfully linked.'
-
+    redirect_to import_data_url, notice: 'Your Quickbooks data is being imported into the system in the background. Please verify your imported after few minutes.'
   end
 
   def verify_sub_domain_name
