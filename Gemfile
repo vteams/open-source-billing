@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.2.2'
 gem 'rails', '~> 4.2.7.1'
 
 gem 'xlsx_writer', '0.4.4'
@@ -72,10 +72,12 @@ gem 'osb_api', path: 'vendor/engines/osb_api'
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
 
-gem 'oauth', '0.4.7'
-gem 'roxml', '3.3.1'
-gem 'nokogiri', '~> 1.8.1'
-gem 'quickbooks-ruby', '0.4.4'
+gem 'oauth'
+gem 'oauth2'
+gem 'roxml'
+gem 'nokogiri'
+gem 'quickbooks-ruby'
+gem 'qbo_api'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'

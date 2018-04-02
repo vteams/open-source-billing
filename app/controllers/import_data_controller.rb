@@ -33,28 +33,20 @@ class ImportDataController < ApplicationController
   end
 
   def authenticate
-    callback = oauth_callback_import_data_url
-    token = QB_OAUTH_CONSUMER.get_request_token(:oauth_callback => callback)
-    session[:qb_request_token] = token
-    # If Rails >= 4.1 you need to do this => session[:qb_request_token] = Marshal.dump(token)
-    redirect_to("https://appcenter.intuit.com/Connect/Begin?oauth_token=#{token.token}") and return
+    redirect_uri = oauth_callback_import_data_url
+    grant_url = ::QB_OAUTH2_CONSUMER.auth_code.authorize_url(:redirect_uri => redirect_uri, :response_type => "code", :state => SecureRandom.hex(12), :scope => "com.intuit.quickbooks.accounting")
+    redirect_to grant_url
   end
 
   def oauth_callback
-    token_hash = session[:qb_request_token].get_access_token(:oauth_verifier => params[:oauth_verifier])
-    #at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
-    # If Rails >= 4.1 you need to do this =>  at = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
-    session[:token] = token_hash.token
-    session[:secret] = token_hash.secret
-    session[:realm_id] = params['realmId']
-    session[:token_hash] = token_hash
-    #options[:current_company_id] = get_company_id
-    #Services::ImportQbClientService.new.import_data(options)
-    #Services::ImportQbItemService.new.import_data(options)
-    #Services::ImportQbEstimateService.new.import_data(options)
-    #Services::ImportQbInvoiceService.new.import_data(options)
-    redirect_to select_qb_data_import_data_path
-    #redirect_to import_data_url, notice: 'Your QuickBooks account has been successfully linked.'
+    redirect_uri = oauth_callback_import_data_url
+    if resp = ::QB_OAUTH2_CONSUMER.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
+      session[:token] = resp.token
+      session[:secret] = resp.client.secret
+      session[:realm_id] = params['realmId']
+      session[:qb_request_token] = resp.token
+      redirect_to select_qb_data_import_data_path
+    end
   end
 
   def select_qb_data
@@ -66,11 +58,8 @@ class ImportDataController < ApplicationController
     options = {}
     options[:realm_id] = session[:realm_id]
     options[:token_hash] = session[:token_hash]
+    options[:token] = session[:token]
     options[:current_company_id] = get_company_id
-    #Services::ImportQbClientService.new.import_data(options)
-    #Services::ImportQbItemService.new.import_data(options)
-    #Services::ImportQbEstimateService.new.import_data(options)
-    #Services::ImportQbInvoiceService.new.import_data(options)
     data_import_response = []
     params[:quickbooks][:data_filters].each do |filter|
       data_import_response <<  eval("Services::ImportQb#{filter.humanize}Service").new.import_data(options)
