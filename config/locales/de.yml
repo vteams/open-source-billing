@@ -173,6 +173,8 @@ de:
       select_item: "Menüpunkt wählen"
       select: "Wählen"
       add_notes: "Notizen hinzufügen"
+      all_companies: "Alle Unternehmen"
+      selected_companies_only: "Nur ausgewählte Unternehmen"
 
     pagination:
       previous: "Vorherige"
@@ -356,9 +358,9 @@ de:
       no_deleted_client: "Es existieren keine gelöschten Kunden."
       add_new_client: "Neuen Kunden hinzufügen"
       contact_title: "Kontakt Titel"
-      active_clients_tooltip: "This is payments collected per month from active clients."
-      deleted_clients_tooltip: "These are payments collected per month from deleted clients."
-      archived_clients_tooltip: "These are payments collected per month from archived clients."
+      active_clients_tooltip: "Dies sind Zahlungen pro Monat von aktiven Kunden."
+      deleted_clients_tooltip: "Dies sind Zahlungen, die von gelöschten Clients pro Monat gesammelt werden."
+      archived_clients_tooltip: "Dies sind Zahlungen, die pro Monat von archivierten Clients gesammelt werden."
 
     items:
       new: "Neuer Gegenstand"
@@ -538,6 +540,8 @@ de:
       page_entries_info:
         more_pages:
           display_entries: "Anzeigen %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+        one_page:
+          display_entries: "Anzeige von <b>allen %{count}</b> Einträgen."
 #  activerecord:
 #    errors:
 #      messages:

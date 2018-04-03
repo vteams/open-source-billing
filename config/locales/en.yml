@@ -191,6 +191,8 @@ en:
       select_item: "Select item"
       select: "Select"
       add_notes: "Add Notes"
+      all_companies: "All Companies"
+      selected_companies_only: "Selected companies only"
 
     pagination:
       previous: "Previous"
@@ -636,6 +638,8 @@ en:
       page_entries_info:
         more_pages:
             display_entries: "Displaying %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+        one_page:
+          display_entries: "Displaying <b>all %{count}</b> entries."
 #  activerecord:
 #    errors:
 #      messages:

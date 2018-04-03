@@ -99,12 +99,12 @@ module ApplicationHelper
               <div class="row">
                 <div class="col s3 custom"  style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='account' checked=true name='association' id='account_association' />
-                    <label for='account_association'> All companies</label>
+                    <label for='account_association'>#{t('views.common.all_companies')}</label>
                 </div>
 
                 <div class="col s3" style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
-                    <label for='company_association'>Selected companies only</label>
+                    <label for='company_association'>#{t('views.common.selected_companies_only')}</label>
                 </div>
               </div>
               #{list}

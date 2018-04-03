@@ -6,19 +6,20 @@
         <div class="modal-header clearfix text-content">
           <h5 class="left">
             <% if f.object.persisted? %>
-                <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
                                               :default => "Edit #{model_class.model_name.human}") %>
             <% else %>
-                <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
                                               :default => "New  #{model_class.model_name.human}") %>
             <% end %>
           </h5>
           <div class="modal-action-btn right">
-            <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+            <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>"
+               class="modal-action waves-effect">
               <i class="material-icons" >done</i>
             </a>
             <%= f.submit class: 'btn_large submit hidden' %>
-            <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+            <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
               <i class="material-icons close">close</i>
             </a>
           </div>
@@ -26,7 +27,7 @@
         <div class="modal-body">
           <div class="info-right-section">
             <div class="row">
-              <h5 class="text-blue title-heading">Organization</h5>
+              <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
               <div class="input-field col s12">
                 <%= f.text_field :organization_name %>
                 <%= f.label :organization_name,  t('views.clients.organization_name') %>
@@ -46,7 +47,7 @@
               </div>
               <div class="input-field col s6 m4">
                 <%= f.text_field :mobile_number %>
-                <%= f.label :mobile_number,t('views.common.invoiced.mobile') %>
+                <%= f.label :mobile_number,t('views.common.mobile') %>
               </div>
               <div class="input-field col s6 m4">
                 <%= f.text_field :business_phone %>
@@ -67,7 +68,8 @@
               </div>
 
               <div class="col s12">
-                <%= f.link_to_add t("views.clients.add_new_contact"), :client_contacts, class: 'btn moreBtn add',  data: { target: '#client-contact-container' } %>
+                <%= f.link_to_add t('views.clients.add_new_contact'), :client_contacts, class: 'btn moreBtn add',
+                                  data: { target: '#client-contact-container' } %>
               </div>
             </div>
 
@@ -78,7 +80,7 @@
                 </div>
             </div>
             <div class="row">
-                <h5 class="text-blue title-heading"><%= t('views.items.make_this_client_available_to') %></h5>
+                <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
             </div>
             <%= associate_account(controller_name, action_name, @client) %>
 

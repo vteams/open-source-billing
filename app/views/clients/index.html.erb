@@ -7,8 +7,8 @@
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <h3>
-          <span><%= link_to 'Clients', clients_url %></span>
-          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
+          <span><%= link_to t('views.clients.clients'), clients_url %></span>
+          <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
         </h3>
       </div>
     </div>

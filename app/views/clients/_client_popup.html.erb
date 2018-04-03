@@ -4,7 +4,9 @@
     <div class="modal-header clearfix text-content">
       <h5 class="left text-blue"><%= client.organization_name%></h5>
       <div class="modal-action-btn right">
-        <a href="#" class="modal-close" title="Close"><i class="material-icons">done</i></a>
+        <a href="#" class="modal-close" title="<%= t('helpers.links.close') %>">
+          <i class="material-icons">done</i>
+        </a>
       </div>
     </div>
     <div class="info-section clearfix">
@@ -13,20 +15,20 @@
         <%= mail_to client.email, client.email , class: 'email-link' %>
         <div class="amount-wrapper">
           <div class="amountInfo">
-            <span>Available credit</span>
+            <span><%= t('views.clients.available_credit') %></span>
             <strong class="text-color"><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
           </div>
           <div class="amountInfo">
-            <span>Outstanding Amount</span>
+            <span><%= t('views.clients.outstanding_amount') %></span>
             <strong class="text-orange"><%= number_to_currency(@detail[:amount_billed], unit: '') %> <small><%= default_currency_code %></small></strong>
 
           </div>
           <div class="amountInfo">
-            <span>Total amount billed</span>
+            <span><%= t('views.clients.total_amount_billed') %></span>
             <strong class="text-blue"><%= number_to_currency(@detail[:outstanding_amount], unit: '') %> <small><%= default_currency_code %></small></strong>
           </div>
           <div class="amountInfo">
-            <span>Total payments received</span>
+            <span><%= t('views.clients.total_payments_received') %></span>
             <strong class="text-green"><%= number_to_currency(@detail[:payments], unit: '') %> <small><%= default_currency_code %></small></strong>
           </div>
         </div>
@@ -40,16 +42,16 @@
     <div class="modal-body">
       <div class="panel-table">
         <h5>
-          Invoice
+          <%= t('invoice') %>
           <%= link_to(("+ #{t('header.links.invoices.new')}") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right') %>
         </h5>
         <table class="bordered responsive-table">
           <thead>
           <tr>
-            <th>Invoice #</th>
-            <th>Due Date</th>
-            <th>Company</th>
-            <th class="right-align">Amount</th>
+            <th><%= t('invoice') %> #</th>
+            <th><%= t('views.dashboard.due_date') %></th>
+            <th><%= t('company') %></th>
+            <th class="right-align"><%= t('amount') %></th>
           </tr>
           </thead>
           <tbody>
@@ -66,16 +68,16 @@
       </div>
       <div class="panel-table">
         <h5>
-          Payments
-          <%= link_to('+ New Payments', unpaid_client_invoices_path(client.id), class: 'pull-right', remote: unpaid_invoice_exists?(client.id)) %>
+          <%= t('views.payments.payments') %>
+          <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: 'pull-right', remote: unpaid_invoice_exists?(client.id)) %>
         </h5>
         <table class="bordered responsive-table">
           <thead>
           <tr>
-            <th>Invoice #</th>
-            <th>Due Date</th>
-            <th>Company</th>
-            <th class="right-align">Amount</th>
+            <th><%= t('invoice') %> #</th>
+            <th><%= t('views.invoices.due_date') %></th>
+            <th><%= t('company') %></th>
+            <th class="right-align"><%= t('amount') %></th>
           </tr>
           </thead>
           <tbody>
