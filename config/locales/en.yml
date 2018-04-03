@@ -448,6 +448,8 @@ en:
       no_item_msg: "You haven't created any item yet. Please click on New Item button to create new item."
       no_archived_msg: "You haven't any archived item."
       no_deleted_msg: "You haven't any deleted item."
+      default_unit_cost: "Default unit cost"
+      default_quantity: "Default Quantity"
 
     taxes:
       taxes: "Taxes"

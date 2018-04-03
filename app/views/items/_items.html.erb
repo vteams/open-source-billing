@@ -14,47 +14,53 @@
       </div>
       <div class="card-footer">
         <div class="amount-box">
-          <span>Quantity</span>
+          <span><%= t('views.items.quantity') %></span>
           <strong><%= item.quantity %></strong>
         </div>
         <% if item.tax_1.present? %>
             <div class="amount-box">
-              <span>Tax 1</span>
+              <span><%= t('views.invoice_line_item.tax_1') %></span>
               <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
             </div>
         <% end %>
         <% if item.tax_2.present? %>
             <div class="amount-box">
-              <span>Tax 2</span>
+              <span><%= t('views.invoice_line_item.tax_2') %></span>
               <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
             </div>
         <% end %>
       </div>
-
     </div>
-
     <div class="action-btn-group">
       <% if @status.eql?('deleted') %>
-          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+        <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+          <i class="material-icons">unarchive</i>
+        </a>
       <% else %>
-          <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item), remote: true, class: 'edit_invoice_icon', title: 'Edit' %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Edit' %>
-          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
-            <i class="material-icons">more_vert</i>
-          </a>
-          <!-- Dropdown Structure -->
-          <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
-            <% if @status.eql?('active') %>
-                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
-            <% elsif @status.eql?('archived') %>
-                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
-            <% end %>
-          </ul>
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
+                    remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
+                    data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.edit') %>
+        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
+          <% if @status.eql?('active') %>
+            <li>
+              <a href="javascript:;" class="single_archive">
+                <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
+              </a>
+            </li>
+          <% elsif @status.eql?('archived') %>
+            <li>
+              <a href="javascript:;" class="single_recover">
+                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-
-
     </div>
   </div>
 </div>
-
-

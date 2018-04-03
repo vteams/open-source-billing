@@ -376,6 +376,8 @@ de:
       no_item_msg: "Es existieren noch keine Gegenstände. Bitte klicke Neuen Gegenstand um einen neuen zu erstellen."
       no_archived_msg: "Es existieren keine archivierten Gegenstände."
       no_deleted_msg: "Es existieren keine gelöschten Gegenstände."
+      default_unit_cost: "Standard-Stückkosten"
+      default_quantity: "Standardmenge"
 
     taxes:
       taxes: "Steuern"

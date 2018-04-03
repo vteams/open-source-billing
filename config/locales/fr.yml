@@ -373,6 +373,8 @@ fr:
       no_item_msg: "Vous ne l'avez pas encore créé de l'article. S'il vous plaît cliquer sur le bouton Nouvel élément pour créer un nouveau point."
       no_archived_msg: "Vous avez aucun article archivé."
       no_deleted_msg: "Vous ne l'avez pas tout élément supprimé."
+      default_unit_cost: "Coût unitaire par défaut"
+      default_quantity: "Quantité par défaut"
 
     taxes:
       taxes: "impôts"

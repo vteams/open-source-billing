@@ -378,6 +378,8 @@ pt-BR:
       no_item_msg: "Você ainda não criou nenhum Item, clique no botão Novo item para criar um item."
       no_archived_msg: "Você não possui nenhum item arquivado"
       no_deleted_msg: "Você não possui nenhum item apagado"
+      default_unit_cost: "Custo unitário padrão"
+      default_quantity: "Quantidade padrão"
 
     taxes:
       taxes: "Impostos"
