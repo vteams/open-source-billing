@@ -10,8 +10,8 @@
         <%= hidden_field_tag :direction, params[:direction] %>
         <%= hidden_field_tag :sort, params[:sort] %>
         <h3>
-          <span><%= link_to 'Taxes', taxes_url %></span>
-          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
+          <span><%= link_to t('views.taxes.taxes'), taxes_url %></span>
+          <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
         </h3>
       </div>
     </div>

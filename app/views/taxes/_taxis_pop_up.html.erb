@@ -1,16 +1,16 @@
 <div id="tax_modal" class="modal viewModal itemModal">
   <div class="modal-content">
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">Taxes</h5>
+      <h5 class="left text-blue"><%= t('views.taxes.taxes') %></h5>
       <div class="modal-action-btn right">
-        <a href="#" class="modal-close" title="Close"><i class="material-icons">done</i></a>
+        <a href="#" class="modal-close" title="<%= t('helpers.links.close') %>"><i class="material-icons">done</i></a>
       </div>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="field-block col s12">
           <label for="clientname"><%= t('views.common.name') %>:</label>
-          <span>   <%= tax.name %></span>
+          <span><%= tax.name %></span>
         </div>
         <div class="field-block col s12">
           <label for="desc"><%= t('views.common.percentage') %>:</label>

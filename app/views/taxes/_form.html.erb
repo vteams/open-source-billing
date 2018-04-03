@@ -2,23 +2,22 @@
   <div class="modal-content">
   <%= form_for(taxis, :html => {:novalidate => ""}) do |f| %>
       <div class="modal-header clearfix text-content">
-        <h5 class="left">Taxes</h5>
+        <h5 class="left"><%= t('views.taxes.taxes') %></h5>
         <div class="modal-action-btn right">
-          <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+          <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
             <i class="material-icons" >done</i>
           </a>
           <%= f.submit class: 'btn_large submit hidden' %>
-          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+          <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
             <i class="material-icons close">close</i>
           </a>
         </div>
       </div>
-
      <div class="modal-body">
       <div class="row">
         <div class="input-field col s12">
           <%= f.text_field :name, :required => "",id:'tax_name' %>
-          <label for="tax_name"><%= t('views.common.tax') %></label>
+          <label for="tax_name"><%= t('views.common.name') %></label>
         </div>
         <div class="input-field col s12">
           <%= f.text_field :percentage, :required => "",id:'tax_percentage' %>
