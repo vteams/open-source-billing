@@ -1,5 +1,7 @@
 module Services
   class ImportQbEstimateService
+    include ItemsHelper
+    include TaxesHelper
 
     def import_data(options)
       counter = 0
@@ -14,28 +16,33 @@ module Services
               discount_amount = estimate['Line'].last['Amount']
               discount_type = estimate['Line'].last['DiscountLineDetail']['PercentBased'] ? '%' : estimate['CurrencyRef']['value']
             end
-            hash = { provider: 'Quickbooks', provider_id: estimate['Id'].to_i,
-                     estimate_number: estimate['DocNumber'],
-                     po_number: nil,
-                     estimate_date: (estimate['ShipDate'] || estimate['MetaData']['CreateTime']).to_date,
-                     notes: estimate['PrivateNote'],
-                     terms: nil, status: estimate['EmailStatus'] == 'NotSet' ? 'Draft' : 'Sent',
-                     company_id: options[:current_company_id],
-                     discount_type: discount_type,
-                     estimate_total: estimate['TotalAmt'].to_f,
-                     discount_percentage: discount_per,
-                     discount_amount: discount_amount}
-            osb_estimate=  ::Estimate.new(hash)
-            osb_estimate.currency = ::Currency.find_by_unit(estimate['CurrencyRef']['value']) if estimate['CurrencyRef'].present? && estimate['CurrencyRef']['value'].present?
-            osb_estimate.client = ::Client.find_by_provider_id(estimate['CustomerRef']['value'].to_i) if estimate['CustomerRef'].present? && estimate['CustomerRef']['value'].present?
+            estimate_hash = {
+                               terms: nil,
+                               po_number: nil,
+                               provider: 'Quickbooks',
+                               discount_type: discount_type,
+                               notes: estimate['PrivateNote'],
+                               discount_amount: discount_amount,
+                               provider_id: estimate['Id'].to_i,
+                               discount_percentage: discount_per,
+                               estimate_number: estimate['DocNumber'],
+                               company_id: options[:current_company_id],
+                               estimate_total: estimate['TotalAmt'].to_f,
+                               status: estimate['EmailStatus'] == 'NotSet' ? 'Draft' : 'Sent',
+                               estimate_date: (estimate['ShipDate'] || estimate['MetaData']['CreateTime']).to_date,
+                            }
+            osb_estimate =  ::Estimate.new(estimate_hash)
+            qb_currency = estimate['CurrencyRef']
+            qb_client = estimate['CustomerRef']
+            osb_estimate.currency = ::Currency.find_by_unit(qb_currency['value']) if qb_currency.present? && qb_currency['value'].present?
+            osb_estimate.client = ::Client.find_by_provider_id(qb_client['value'].to_i) if qb_client.present? && qb_client['value'].present?
             osb_estimate.save
             counter+=1
             amount = 0
             estimate['Line'].each do |item|
-              if item['SalesItemLineDetail'].present? && item['SalesItemLineDetail']['ItemRef'].present? && item['SalesItemLineDetail']['ItemRef']['name'].present?
+              if qb_item_name?(item['SalesItemLineDetail'])
                 amount += item['Amount'].to_f
-                qb_tax_id = estimate['TxnTaxDetail']['TaxLine'][0]['TaxLineDetail']['TaxRateRef']['value'] if estimate['TxnTaxDetail'] && estimate['TxnTaxDetail']['TaxLine'].present? &&
-                    estimate['TxnTaxDetail']['TaxLine'][0]['TaxLineDetail']['TaxRateRef']
+                qb_tax_id = estimate['TxnTaxDetail']['TaxLine'][0]['TaxLineDetail']['TaxRateRef']['value'] if qb_tax_rate?(estimate['TxnTaxDetail'])
                 if qb_tax_id.present?
                   qb_tax = qbo_api.query(%{SELECT * FROM TaxRate  WHERE Id = '#{qb_tax_id.to_i}'}).first
                   osb_tax = ::Tax.find_by_name_and_percentage(qb_tax['Name'], qb_tax['RateValue'].to_f)
@@ -46,10 +53,13 @@ module Services
                     tax_1 = new_tax.id
                   end
                 end
-                item_hash = {item_name: item['SalesItemLineDetail']['ItemRef']['name'],
-                             item_description: item['Description'],
-                             item_unit_cost: item['SalesItemLineDetail']['UnitPrice'].to_f,
-                             item_quantity:  item['SalesItemLineDetail']['Qty'].to_i, tax_1: tax_1}
+                item_hash = {
+                              item_name:        item['SalesItemLineDetail']['ItemRef']['name'],
+                              item_description: item['Description'],
+                              item_unit_cost:   item['SalesItemLineDetail']['UnitPrice'].to_f,
+                              item_quantity:    item['SalesItemLineDetail']['Qty'].to_i,
+                              tax_1:            tax_1
+                            }
                 osb_item = osb_estimate.estimate_line_items.new(item_hash)
                 osb_item.save
               end

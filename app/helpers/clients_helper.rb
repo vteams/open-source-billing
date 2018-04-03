@@ -60,4 +60,11 @@ module ClientsHelper
     flag
   end
 
+  def qb_customer_payment?(customer_ref)
+    customer_ref.present? && customer_ref['value'].present?
+  end
+
+  def qb_client_email?(client_email)
+    client_email.present? && client_email['Address'].present?
+  end
 end

@@ -10,13 +10,15 @@ module Services
         begin
           if item.present?
           unless ::Item.find_by_provider_id(item['Id'].to_i)
-            hash = {  item_name: item['Name'],
-                      item_description: item['Description'],
-                      unit_cost: item['UnitPrice'].to_f,
-                      created_at: Time.now, provider: 'Quickbooks',
-                      provider_id: item['Id'].to_i,
-                      quantity: item['QtyOnHand'].to_i}
-            osb_item = ::Item.new (hash)
+            item_hash = {
+                          item_name:        item['Name'],
+                          item_description: item['Description'],
+                          unit_cost:        item['UnitPrice'].to_f,
+                          created_at:       Time.now, provider: 'Quickbooks',
+                          provider_id:      item['Id'].to_i,
+                          quantity:         item['QtyOnHand'].to_i
+                        }
+            osb_item = ::Item.new(item_hash)
             osb_item.save
             counter += 1
             entities << {entity_id: osb_item.id, entity_type: 'Item', parent_id: options[:current_company_id], parent_type: 'Company'}

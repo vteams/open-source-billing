@@ -48,4 +48,7 @@ module ItemsHelper
     notice = notice.html_safe
   end
 
+  def qb_item_name?(sales_item_line_detail)
+    sales_item_line_detail.present? && sales_item_line_detail['ItemRef'].present? && sales_item_line_detail['ItemRef']['name'].present?
+  end
 end
