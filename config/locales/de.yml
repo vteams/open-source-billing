@@ -22,6 +22,7 @@ de:
   estimate: "Schätzen"
   email_template: "E-Mail-Vorlage"
   user: "Benutzer"
+  task: "Aufgabe"
 
   date:
     formats:
@@ -331,6 +332,11 @@ de:
         prorate: "Aufteilung"
         prorate_for: "Aufteilung für"
         gateway: "Zugang"
+
+    tasks:
+      spent_time: "Verbrachte Zeit"
+      rate_: "Bewertung"
+      hours: "Std"
 
     staffs:
       password: "Passwort"

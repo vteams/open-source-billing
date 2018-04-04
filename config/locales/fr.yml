@@ -22,6 +22,7 @@ fr:
   estimate: "Estimation"
   email_template: "Modèle d'email"
   user: "Utilisateur"
+  task: "Tâche"
 
   date:
     formats:
@@ -327,6 +328,11 @@ fr:
         prorate: "distribuer au prorata"
         prorate_for: "prorata pour"
         gateway: "porte"
+
+    tasks:
+      spent_time: "Temps passé"
+      rate_: "taux"
+      hours: "Heures"
 
     staffs:
       password: "mot de passe"

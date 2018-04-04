@@ -22,6 +22,7 @@ pt-BR:
   estimate: "Estimativa"
   email_template: "Modelo de email"
   user: "Do utilizador"
+  task: "Tarefa"
 
   date:
     formats:
@@ -331,6 +332,11 @@ pt-BR:
         prorate: "Ratear"
         prorate_for: "Ratear para"
         gateway: "Gateway"
+
+    tasks:
+      spent_time: "Tempo gasto"
+      rate_: "taxa"
+      hours: "Horas"
 
     staffs:
       password: "senha"

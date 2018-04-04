@@ -7,20 +7,22 @@
     <div class="invoice-details">
       <strong><a href="#"><%= task.name %></a></strong>
       <div class="amount-box">
-        <span>Description</span>
+        <span><%= t('views.common.description') %></span>
         <span class="usertitle"><%= truncate task.description %></span>
       </div>
       <div class="agedWrapper">
         <div class="aged-ar">
-          <strong class="text-blue left"><%= task.spent_time_percentage %>% <small>Done</small></strong>
+          <strong class="text-blue left"><%= task.spent_time_percentage %>% <small><%= t('views.sessions.done') %></small></strong>
           <strong class="text-content right"><%= task.hours %> <small>HRS</small></strong>
         </div>
 
       </div>
     </div>
     <div class="action-btn-group">
-      <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task), class: 'edit-modal', title: 'Edit', remote: true %>
-      <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task), method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+      <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task),
+                  class: 'edit-modal', title: t('helpers.links.edit'), remote: true %>
+      <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task),
+                  method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
     </div>
   </div>
 </div>

@@ -24,6 +24,7 @@ en:
   estimate: "Estimate"
   email_template: "Email Template"
   user: "User"
+  task: "Task"
 
   date:
     formats:
@@ -357,6 +358,9 @@ en:
       edit_task: "Edit Task"
       add_new_task: "Add New Task"
       make_this_task_available_to: "Make this Task available to"
+      spent_time: "Spent Time"
+      rate_: "Rate"
+      hours: "Hours"
 
     staffs:
       name: "Staff Name"
