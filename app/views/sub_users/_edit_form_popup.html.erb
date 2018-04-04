@@ -3,46 +3,43 @@
     <%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "sub_user_form",
                  :multipart => true, remote: params[:remote].to_i == 1) %>
       <div class="modal-header clearfix text-content">
-        <h5 class="left"> Edit User</h5>
+        <h5 class="left">
+          <%= t '.title', :default => t('helpers.titles.edit', :model => t(User.model_name.singular),
+                                        :default => "Edit #{User.model_name.human}") %>
+        </h5>
         <div class="modal-action-btn right">
-          <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+          <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
             <i class="material-icons" >done</i>
           </a>
           <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
-          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+          <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
             <i class="material-icons close">close</i>
           </a>
         </div>
       </div>
-
       <div class="modal-body">
         <div class="row">
-
           <div class="input-field col s6">
             <%= text_field_tag :user_name,"#{@sub_user.user_name}", :required => "" %>
-            <label for="username" class="active"> Full Name </label>
+            <label for="username" class="active"><%= t('views.users.full_name') %></label>
           </div>
-
           <div class="input-field col s6">
             <%= text_field_tag :email,"#{@sub_user.email}", :required => "" %>
-            <label for="email" class="active"> Email </label>
+            <label for="email" class="active"><%= t('views.common.email') %></label>
           </div>
-
           <div class="input-field col s6 editMode">
             <%= password_field_tag :password %>
-            <label for="password"> Password </label>
+            <label for="password"><%= t('views.staffs.password') %></label>
           </div>
-
           <div class="input-field col s6 editMode">
             <%= password_field_tag :password_confirmation %>
-            <label for="password_confirmation"> Confirmation </label>
+            <label for="password_confirmation"><%= t('views.staffs.password_confirmation') %></label>
           </div>
           <%= hidden_field_tag 'user_id',@sub_user.id %>
-
           <% unless @sub_user.id == current_user.id %>
             <div class="input-field col s12">
               <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
-              <label for="role_ids"> Assign Role </label>
+              <label for="role_ids"><%= t('views.users.assign_role') %></label>
             </div>
           <% end %>
           <% unless params[:remote].to_i == 1 %>

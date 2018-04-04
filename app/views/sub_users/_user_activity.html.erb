@@ -1,13 +1,13 @@
-<span class="btn-activity">Activities</span>
+<span class="btn-activity"><%= t('views.common.activities') %></span>
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
-        <div class="status-info active">
+      <div class="status-info active">
         <h5>
-          <a href="javascript:;"><%= role %></a>
+          <a href="javascript:;"><%= t('views.users.' + role.downcase) rescue '' %></a>
           <span id="actives">(<%= users.length %>)</span>
         </h5>
-        </div>
+      </div>
     <% end %>
   </div>
 </aside>

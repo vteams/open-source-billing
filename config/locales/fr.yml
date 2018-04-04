@@ -20,6 +20,7 @@ fr:
   edit: "éditer"
   estimate: "Estimation"
   email_template: "Modèle d'email"
+  user: "Utilisateur"
 
   date:
     formats:
@@ -500,6 +501,10 @@ fr:
       notify_user: "Notifier l'utilisateur"
       avatar: "Avatar"
       profile: "Profil"
+      admin: "Admin"
+      manager: "Directeur"
+      staff: "Personnel"
+      assign_role: "Attribuer un rôle"
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

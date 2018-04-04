@@ -1,5 +1,5 @@
 <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
-    <p><span class="activity-date"><%= role %></span></p>
+    <p><span class="activity-date"><%= t('views.users.' + role) rescue '' %></span></p>
     <div class="flex-wrapper">
       <%= render partial: 'user_card', collection: users, as: :user %>
     </div>

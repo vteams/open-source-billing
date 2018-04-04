@@ -23,6 +23,7 @@ en:
   edit: "Edit"
   estimate: "Estimate"
   email_template: "Email Template"
+  user: "User"
 
   date:
     formats:
@@ -577,6 +578,10 @@ en:
       notify_user: "Notify user"
       avatar: "Avatar"
       profile: "Profile"
+      admin: "Admin"
+      manager: "Manager"
+      staff: "Staff"
+      assign_role: "Assign Role"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

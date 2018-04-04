@@ -2,44 +2,41 @@
     <div class="modal-content">
       <%= form_tag('/sub_users', novalidate: "", id: "sub_user_form")  %>
       <div class="modal-header clearfix text-content">
-        <h5 class="left"> New User</h5>
+        <h5 class="left">
+          <%= t '.title', :default => t('helpers.titles.new', :model => t(User.model_name.singular),
+                                        :default => "New  #{User.model_name.human}") %>
+        </h5>
         <div class="modal-action-btn right">
-          <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+          <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
             <i class="material-icons" >done</i>
           </a>
           <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
-          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+          <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
             <i class="material-icons close">close</i>
           </a>
         </div>
       </div>
-
       <div class="modal-body users">
         <div class="row">
-
           <div class="input-field col s6">
             <%= text_field_tag :user_name,'', required: '', autofocus: true  %>
-            <label for="username"> Full Name </label>
+            <label for="username"><%= t('views.users.full_name') %></label>
           </div>
-
           <div class="input-field col s6">
             <%= text_field_tag :email,'', required: '', autofocus: true %>
-            <label for="email"> Email </label>
+            <label for="email"><%= t('views.common.email') %></label>
           </div>
-
           <div class="input-field col s6">
             <%= password_field_tag :password %>
-            <label for="password"> Password </label>
+            <label for="password"><%= t('views.staffs.password') %></label>
           </div>
-
           <div class="input-field col s6">
             <%= password_field_tag :password_confirmation %>
-            <label for="password_confirmation"> Confirmation </label>
+            <label for="password_confirmation"><%= t('views.staffs.password_confirmation') %></label>
           </div>
-
           <div class="input-field col s6">
             <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
-            <label for="role_ids"> Assign Role </label>
+            <label for="role_ids"><%= t('views.users.assign_role') %></label>
           </div>
           <div class="input-field col s6 checkbox">
             <%= check_box_tag :notify_user, nil, false ,class: "filled-in" %>

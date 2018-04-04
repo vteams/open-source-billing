@@ -9,12 +9,13 @@
       <strong><%= user.role_name  %></strong>
       <span><%= user.email %></span>
       <div class="card-footer clearfix">
-        <span class="invoice-date"><small>Date</small> <%= user.created_at.strftime(get_date_format) %></span>
+        <span class="invoice-date"><small><%= t('views.common.date') %>:</small> <%= user.created_at.strftime(get_date_format) %></span>
       </div>
     </div>
 
     <div class="action-btn-group">
-      <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true, class: 'edit_invoice_icon', title: 'Edit' %>
+      <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true,
+                  class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
     </div>
   </div>
 

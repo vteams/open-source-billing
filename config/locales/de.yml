@@ -20,6 +20,7 @@ de:
   edit: "Bearbeiten"
   estimate: "Schätzen"
   email_template: "E-Mail-Vorlage"
+  user: "Benutzer"
 
   date:
     formats:
@@ -502,8 +503,12 @@ de:
       password: "Passwort"
       confirmation: "Bestätigung"
       notify_user: "Benachrichtige Nutzer"
-      avatar: "Avatar"
+      avatar: "Benutzerbild"
       profile: "Profil"
+      admin: "Administrator"
+      manager: "Manager"
+      staff: "Mitarbeiter"
+      assign_role: "Rolle zuweisen"
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"
