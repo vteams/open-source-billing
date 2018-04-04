@@ -12,38 +12,36 @@
       <h5><%= project.unscoped_client.organization_name %></h5>
       <strong><%= @status.eql?('deleted') ? project.project_name : (link_to project.project_name, project) %></strong>
       <div class="amount-box">
-        <span>Manager</span>
+        <span><%= t('views.users.manager') %></span>
         <span class="usertitle"><%= project.manager.try(:name)%></span>
       </div>
       <div class="agedWrapper">
         <div class="aged-ar">
           <% random_progress = aged_progress_width(project.log_hours, project.total_hours) %>
-          <strong class="text-blue left"><%= random_progress %>% <small>Done</small></strong>
+          <strong class="text-blue left"><%= random_progress %>% <small><%= t('views.sessions.done') %></small></strong>
           <strong class="text-content right"><%= project.total_hours %> <small>HRS</small></strong>
         </div>
         <div class="progress">
           <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= random_progress %>%;"></div>
         </div>
       </div>
-      <div class="gen-invoice"><%= link_to 'Generate Invoice', invoice_form_log_path(project), remote: true unless random_progress.zero? %></div>
+      <div class="gen-invoice"><%= link_to t('header.links.time_tracking.invoice'), invoice_form_log_path(project), remote: true unless random_progress.zero? %></div>
     </div>
-
-
     <div class="action-btn-group">
       <% if @status.eql?('deleted') %>
-          <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+          <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
       <% else %>
-          <%= link_to raw("<i class='material-icons'>create</i>"),edit_project_path(project), class: 'edit_invoice_icon', title: 'Edit' %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_project_path(project), class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= project.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>
           </a>
           <!-- Dropdown Structure -->
           <ul id="dropdown_<%= project.id %>" class='dropdown-content z-depth-4'>
             <% if @status.eql?('active') %>
-                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i> Send to Archive</a></li>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
             <% elsif @status.eql?('archived') %>
-                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i> Recover </a></li>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
             <% end %>
           </ul>
       <% end %>

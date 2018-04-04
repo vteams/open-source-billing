@@ -1,8 +1,6 @@
 <div class="list-item">
   <div class="checkbox-item inline_team_member">
-    <%
-       id = f.object.id ? f.object.id : count
-    %>
+    <% id = f.object.id ? f.object.id : count %>
     <input type="checkbox" class="filled-in" id="project_staff_<%= id %>" />
     <label for="project_staff_<%= id %>"></label>
     <div class="invoice-name">
@@ -12,7 +10,10 @@
   </div>
   <div class="invoice-details editContent">
     <div class="input-field">
-      <%= f.select :staff_id, options_for_select(load_staffs_for_project(action_name, @project.company_id, f.object), selected: f.object.staff_id),  {prompt: t('views.projects.select_a_member'), include_blank: ""}, {class: 'members_list', disabled: true} %>
+      <%= f.select :staff_id, options_for_select(load_staffs_for_project(
+                                                     action_name, @project.company_id, f.object),
+                                                 selected: f.object.staff_id
+      ), {prompt: t('views.projects.select_a_member')}, {class: 'members_list', disabled: true} %>
     </div>
     <div class="input-field">
       <%= f.email_field :email, disabled: true, class: 'email' %>

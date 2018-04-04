@@ -5,12 +5,12 @@
       <!--- breadcrum Bar --->
       <div class="breadcrum-bar activebar">
         <div class="card-white-panel">
-          <h3>Project Detail</h3>
+          <h3><%= t('views.projects.project_detail') %></h3>
           <div class="page-action-btn-group">
-            <a href="#" class="edit-detail"><i class="material-icons">create</i></a>
-            <a href="#" onclick="$('.send_submit').click();" title="Save" class="submitProject hidden"> <i class="material-icons" >done</i></a>
+            <a href="#" class="edit-detail"><i class="material-icons" title="<%= t('helpers.links.edit') %>">create</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="card-white-panel ">
 
           <%= link_to raw('<i class="material-icons">arrow_back</i>'), projects_path %>
-          <h3>Time Tracking :
+          <h3><%= t('header.links.time_tracking.time_tracking') %> :
             <select onchange="location = this.value;">
               <% @projects.each do |project|%>
                   <option value="<%= project_path(project) %>" <%= "#{ 'selected' if project.id.eql?(@project.id)}"%> ><%= project.project_name %></option>

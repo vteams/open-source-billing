@@ -5,12 +5,15 @@
       <!--- breadcrum Bar --->
       <div class="breadcrum-bar activebar">
         <div class="card-white-panel noCollapse">
-          <h3>Edit Project </h3>
+          <h3>
+            <%= t '.title', :default => t('helpers.titles.edit', :model => t(Project.model_name.singular),
+                                          :default => "Edit #{Project.model_name.human}") %>
+          </h3>
           <div class="page-action-btn-group">
             <a href="#" class="edit-detail"><i class="material-icons">create</i></a>
-            <a href="#" onclick="$('.send_submit').click();" title="Save" class="submitProject hidden"> <i class="material-icons" >done</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
           </div>
         </div>
       </div>

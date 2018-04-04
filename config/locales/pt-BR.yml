@@ -9,6 +9,7 @@ pt-BR:
   company: "Empresa"
   invoice: "Fatura"
   invoices: "Faturas"
+  project: "Projeto"
   payment: "Pagamento"
   client: "Cliente"
   clients: "Clientes"
@@ -541,6 +542,13 @@ pt-BR:
       tax_2: "Imposto 2"
       select_an_item: "Selecione um item.."
 
+    projects:
+      add_task: "Adicionar tarefa"
+      add_staff: "Adicionar pessoal"
+      select_a_member: "Selecione um membro.."
+      estimated_time: "Tempo estimado"
+      time_logged: "Tempo registrado"
+      project_detail: "Detalhe do Projeto"
 
     import_data:
       import_data: "Datos de importacion"
