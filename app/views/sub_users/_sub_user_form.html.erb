@@ -3,23 +3,24 @@
   <%= hidden_field_tag :setting_form, 1 %>
   <div class="modal-body users">
     <div class="input-field">
-      <%= text_field_tag :user_name, '', required: true, placeholder: 'Full Name', id: 'side_form_user_name' %>
+      <%= text_field_tag :user_name, '', required: true, placeholder: t('views.users.full_name'), id: 'side_form_user_name' %>
     </div>
     <div class="input-field">
-      <%= text_field_tag :email,'', required: true, placeholder: 'Email', id: 'side_form_user_email' %>
+      <%= text_field_tag :email,'', required: true, placeholder: t('views.common.email'), id: 'side_form_user_email' %>
     </div>
     <div class="input-field">
       <%= select_tag :role_ids, options_for_select(load_user_roles), id: 'side_form_role_ids' %>
     </div>
     <div class="input-field">
-      <%= password_field_tag :password, '', required: true, placeholder: 'Password', id: 'side_form_password' %>
+      <%= password_field_tag :password, '', required: true, placeholder: t('views.staffs.password'), id: 'side_form_password' %>
     </div>
     <div class="input-field">
-      <%= password_field_tag :password_confirmation, '', required: true, placeholder: 'Password Confirmation', id: 'side_form_password_confirmation' %>
+      <%= password_field_tag :password_confirmation, '', required: true, placeholder: t('views.staffs.password_confirmation'),
+                             id: 'side_form_password_confirmation' %>
     </div>
   </div>
-  <a href="javascript:;" id="user_save_btn">Save</a>
-  <a href="javascript:;" id="user_cancel_btn">Cancel</a>
+  <a href="javascript:;" id="user_save_btn"><%= t('views.common.save') %></a>
+  <a href="javascript:;" id="user_cancel_btn"><%= t('views.common.cancel') %></a>
   <%= submit_tag 'Save', class: 'submit-user-form hidden' %>
   <%= submit_tag 'Clear', type: 'reset', id: 'user_reset_form', class: 'hidden' %>
 </div>

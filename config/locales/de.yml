@@ -19,6 +19,7 @@ de:
   past: "Vergangenheit"
   edit: "Bearbeiten"
   estimate: "Schätzen"
+  email_template: "E-Mail-Vorlage"
 
   date:
     formats:
@@ -78,6 +79,7 @@ de:
         companies: "Unternehmen"
         email_templates: "eMail Entwürfe"
         users: "Benutzer"
+        basic_settings: "Grundeinstellungen"
       help: "Hilfe"
       logout: "Ausloggen"
       search: "Suche"
@@ -328,6 +330,10 @@ de:
         prorate_for: "Aufteilung für"
         gateway: "Zugang"
 
+    staffs:
+      password: "Passwort"
+      password_confirmation: "Bestätige das Passwort"
+
     estimates:
       this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
       estimate_date: "Schätzdatum"
@@ -455,6 +461,13 @@ de:
 
     settings:
       settings: "Einstellungen"
+      multi_currency: "Mehrfache Währung"
+      date_format: "Datumsformat"
+      records_per_page: "Einträge pro Seite"
+      side_nav_open: "Seitennavigation Öffnen"
+      default_currency: "Standardwährung"
+      language: "Sprache"
+      import_data: "Daten importieren"
 
     companies:
       companies: "Unternehmen"
@@ -480,6 +493,7 @@ de:
       custom_fields: "Benutzerdefinierte Felder"
       use_this_template_for: "Diesen Entwurf benutzen für"
       body: "Inhalt"
+      email_from: "E-Mail von"
 
     users:
       users: "Benutzer"
@@ -540,12 +554,14 @@ de:
         delimiter: ","
         precision: 2
   helpers:
-      actions: "Actions"
+      actions: "Aktionen"
       links:
         edit: "Bearbeiten"
         delete: "Löschen"
         recover: "Genesen"
         close: "Schließen"
+        add: "Hinzufügen"
+        remove: "Löschen"
       messages:
         confirm: "Bist du sicher?"
         how_ofter: "Wie oft?"

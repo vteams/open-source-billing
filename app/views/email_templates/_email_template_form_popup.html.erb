@@ -4,13 +4,16 @@
     <div class="modal-content">
       <%= form_for(@email_template,:html=>{:class=>'email_template_class'}) do |f| %>
       <div class="modal-header clearfix text-content">
-        <h5 class="left text-blue">Edit Email Template</h5>
+        <h5 class="left text-blue">
+          <%= t '.title', :default => t('helpers.titles.edit', :model => t(EmailTemplate.model_name.singular),
+                                        :default => "Edit #{EmailTemplate.model_name.human}") %>
+        </h5>
         <div class="modal-action-btn right">
           <%= f.submit :class => 'btn_large big submit hidden' %>
-          <a href="javascript:void(0);" title="Save" class="modal-action waves-effect" id="form_submit_btn">
+          <a href="javascript:void(0);" title="<%= t('views.common.save') %>" class="modal-action waves-effect" id="form_submit_btn">
             <i class="material-icons" >done</i>
           </a>
-          <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+          <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
             <i class="material-icons close">close</i>
           </a>
         </div>
@@ -32,7 +35,7 @@
           <div class="col s12 m12 l9">
             <div class="input-field temp-type col s12">
               <%= f.text_field :template_type, readOnly: true %>
-              <label for="url" class="active">Template type</label>
+              <label for="url" class="active"><%= t('views.email_templates.template_type') %></label>
             </div>
             <% if @email_template.is_late_payment_reminder %>
                 <div class="col s3">
@@ -63,7 +66,7 @@
 
             <div class="input-field col s12">
               <%= f.text_field :email_from %>
-              <%= f.label :email_form, class: 'active' %>
+              <%= f.label :email_form, t('views.email_templates.email_from'), class: 'active' %>
             </div>
             <div class="input-field col s12">
               <%= f.text_field :subject %>

@@ -22,6 +22,7 @@ en:
   past: "Past"
   edit: "Edit"
   estimate: "Estimate"
+  email_template: "Email Template"
 
   date:
     formats:
@@ -83,7 +84,6 @@ en:
         email_templates: "Email Templates"
         users: "Users"
         basic_settings: "Basic Settings"
-        import_data: "Import Data"
         pricing_plans: "Price Plans"
         stripe_page: "Accept Credit Cards"
       staffs:
@@ -362,7 +362,7 @@ en:
       email: "Email"
       username: "Username"
       password: "Password"
-      password_confirmation: "Confirmation"
+      password_confirmation: "Confirm Password"
       rate: "Rate per hour"
       new: "New Staff"
       edit_staff: "Edit Staff"
@@ -539,6 +539,8 @@ en:
       records_per_page: "Records per page"
       default_currency: "Default Currency"
       language: "Language"
+      side_nav_open: "Side Navigation Open"
+      import_data: "Import Data"
 
     companies:
       companies: "Companies"
@@ -564,6 +566,7 @@ en:
       custom_fields: "Custom fields"
       use_this_template_for: "Use this Template for"
       body: "Body"
+      email_from: "Email From"
 
     users:
       users: "Users"
@@ -642,6 +645,8 @@ en:
         delete: "Delete"
         recover: "Recover"
         close: "Close"
+        add: "Add"
+        remove: "Remove"
       messages:
         confirm: "Are you sure?"
         how_ofter: "How Often?"

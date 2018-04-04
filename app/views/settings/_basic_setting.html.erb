@@ -4,38 +4,39 @@
         <div class="col s12 m12 xl8">
           <div class="card-white-panel clearfix">
             <h5 class="text-blue">
-              Basic Settings
+              <%= t('header.links.setting.basic_settings') %>
               <%= submit_tag t('views.common.save'), class:  "btn_large submit_currency hidden" %>
-              <a href="#" onclick="$('.submit_currency').click();" class="icon-done" title="Save"><i class="material-icons">done</i></a>
+              <a href="#" onclick="$('.submit_currency').click();" class="icon-done" title="<%= t('views.common.save') %>">
+                <i class="material-icons">done</i>
+              </a>
             </h5>
             <div class="col s12 m12 xl4">
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
                 <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
                 <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
-
                 <div id="radioBtn" class="btn-group mutli_currency_btn">
-                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>">Yes</a>
-                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' unless multi_currency}" %>"> No</a>
+                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' unless multi_currency}" %>"><%= t('views.common.no') %></a>
                 </div>
               </div>
             </div>
             <div class="col s12 m12 xl4">
               <div class="setting-btns">
-                <span>Side Navigation Open</span>
+                <span><%= t('views.settings.side_nav_open') %></span>
 
                 <% side_nav_opened = current_user.settings.side_nav_opened %>
                 <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
 
                 <div id="radioBtn" class="btn-group side-nav_btn">
-                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active' if side_nav_opened}" %>">Yes</a>
-                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active' unless side_nav_opened }" %>">No</a>
+                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
                 </div>
               </div>
             </div>
             <div class="input-field col s12 m6 xl6">
               <%= select_tag "default_currency", options_for_select(currency_list, :selected => current_user.settings.default_currency) %>
-              <label><%= t('views.settings.default_currency')  %></label>
+              <label><%= t('views.settings.default_currency') %></label>
             </div>
 
             <div class="input-field col s12 m6 xl6">
@@ -56,7 +57,7 @@
         </div>
         <div class="col s12 m12 xl4">
           <div class="card-white-panel importData">
-            <h5 class="text-blue">Import Data</h5>
+            <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
             <div class="importElement">
               <div class="col s12 m12 xl6">
                 <%= link_to new_import_datum_path, remote: true do

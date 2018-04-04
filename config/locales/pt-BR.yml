@@ -19,6 +19,7 @@ pt-BR:
   past: "Anterior"
   edit: "Editar"
   estimate: "Estimativa"
+  email_template: "Modelo de email"
 
   date:
     formats:
@@ -329,6 +330,10 @@ pt-BR:
         prorate_for: "Ratear para"
         gateway: "Gateway"
 
+    staffs:
+      password: "senha"
+      password_confirmation: "Confirme a Senha"
+
     estimates:
       this_estimate_was_sent_using: "Esta estimativa foi enviada usando"
       estimate_date: "Data estimada"
@@ -460,7 +465,10 @@ pt-BR:
       multi_currency: "Multi moeda"
       date_format: "Formato da data"
       records_per_page: "Registros por página"
-      language: "Linguagem"
+      language: "Língua"
+      side_nav_open: "Navegação Lateral Aberta"
+      default_currency: "Moeda Padrão"
+      import_data: "Importar dados"
 
     companies:
       companies: "Empresas"
@@ -486,6 +494,7 @@ pt-BR:
       custom_fields: "Campos adicionais"
       use_this_template_for: "Usar este template para"
       body: "Corpo"
+      email_from: "E-mail de"
 
     users:
       users: "Usuários"
@@ -552,6 +561,8 @@ pt-BR:
         delete: "Excluir"
         recover: "Recuperar"
         close: "Fechar"
+        add: "Adicionar"
+        remove: "Remover"
       messages:
         confirm: "Você tem certeza?"
         how_ofter: "Com que frequência?"

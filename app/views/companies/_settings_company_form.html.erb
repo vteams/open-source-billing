@@ -3,23 +3,23 @@
   <%= hidden_field_tag :setting_form, 1, id: 'company_setting_form' %>
   <div class="modal-body users">
     <div class="input-field">
-      <%= text_field_tag :company_name, '', placeholder: 'Company Name', name: 'company[company_name]' %>
+      <%= text_field_tag :company_name, '', placeholder: t('views.companies.name'), name: 'company[company_name]' %>
     </div>
     <div class="input-field">
-      <%= text_field_tag :contact_name,'', placeholder: 'Contact Name', name: 'company[contact_name]' %>
+      <%= text_field_tag :contact_name,'', placeholder: t('views.clients.contact_name'), name: 'company[contact_name]' %>
     </div>
     <div class="input-field">
-      <%= text_field_tag :contact_title, '', placeholder: 'Company Phone', name: 'company[contact_title]' %>
+      <%= text_field_tag :contact_title, '', placeholder: t('views.clients.contact_title'), name: 'company[contact_title]' %>
     </div>
     <div class="input-field">
-      <%= text_field_tag :email, '', placeholder: 'Company Email', name: 'company[email]', id: 'companies_email' %>
+      <%= text_field_tag :email, '', placeholder: t('views.common.email'), name: 'company[email]', id: 'companies_email' %>
     </div>
     <div class="input-field">
-      <%= text_field_tag :phone_number, '', placeholder: 'Company Phone', name: 'company[phone_number]' %>
+      <%= text_field_tag :phone_number, '', placeholder: t('views.common.phone'), name: 'company[phone_number]' %>
     </div>
   </div>
-  <a href="javascript:;" id="company_save_btn">Save</a>
-  <a href="javascript:;" id="company_cancel_btn">Cancel</a>
+  <a href="javascript:;" id="company_save_btn"><%= t('views.common.save') %></a>
+  <a href="javascript:;" id="company_cancel_btn"><%= t('views.common.cancel') %></a>
   <%= submit_tag 'Save', class: 'submit-company-form hidden' %>
   <%= submit_tag 'Clear', type: 'reset', id: 'company_reset_form', class: 'hidden' %>
 </div>
