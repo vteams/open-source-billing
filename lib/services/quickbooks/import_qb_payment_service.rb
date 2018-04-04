@@ -28,6 +28,7 @@ module Services
                 osb_payment = ::Payment.new(payment_hash)
                 osb_payment.client = ::Client.find_by_provider_id(payment['CustomerRef']['value'].to_i) if qb_customer_payment?(payment['CustomerRef'])
                 osb_payment.save
+                counter += 1
               end
             end
           rescue Exception => e
@@ -35,7 +36,9 @@ module Services
           end
         end
       end
-      "payment #{counter} record(s) successfully imported."
+      data_import_result_message = "#{counter} record(s) successfully imported."
+      module_name = 'Payments'
+      ::UserMailer.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
     end
   end
 end

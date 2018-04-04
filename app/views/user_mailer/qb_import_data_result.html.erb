@@ -1,0 +1,9 @@
+<p>Dear <%=@user.user_name%>,</p>
+<p>Thank you for your continued service with <%= @company.company_name %>. You have successfully imported Quickbooks <%= @module_name %>'s module into OpenSourceBilling.</p>
+<p>Please see below for <strong><%= @module_name %></strong> import data results:</p>
+<p><strong><%= @module_name %></strong>: <%= @import_data_result_message %></p>
+<p>If you have any questions or comments please feel free to contact <%= @company.company_name %> at <%= @user.email %>.</p>
+<p>Thanks</p>
+
+<br/>
+<br/>

@@ -60,11 +60,11 @@ class ImportDataController < ApplicationController
     options[:token_hash] = session[:token_hash]
     options[:token] = session[:token]
     options[:current_company_id] = get_company_id
-    data_import_response = []
+    options[:user] = current_user
     params[:quickbooks][:data_filters].each do |filter|
-      data_import_response <<  eval("Services::ImportQb#{filter.humanize}Service").new.delay.import_data(options)
+      eval("Services::ImportQb#{filter.humanize}Service").new.delay.import_data(options)
     end
-    redirect_to import_data_url, notice: 'Your Quickbooks data is being imported into the system in the background. Please verify your imported after few minutes.'
+    redirect_to import_data_url, notice: 'Your Quickbooks data is being imported into the system in the background. You will be notified of import results via email soon.'
   end
 
   def verify_sub_domain_name

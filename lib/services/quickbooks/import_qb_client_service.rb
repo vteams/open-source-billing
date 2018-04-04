@@ -55,7 +55,9 @@ module Services
         end
       end
       ::CompanyEntity.create(entities)
-      "Client #{counter} record(s) successfully imported."
+      data_import_result_message = "#{counter} record(s) successfully imported."
+      module_name = 'Clients'
+      ::UserMailer.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
     end
   end
 end

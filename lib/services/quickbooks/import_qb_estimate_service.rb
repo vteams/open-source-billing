@@ -72,7 +72,9 @@ module Services
           p e.inspect
         end
       end
-      "Estimate #{counter} record(s) successfully imported."
+      data_import_result_message = "#{counter} record(s) successfully imported."
+      module_name = 'Estimates'
+      ::UserMailer.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
     end
   end
 end

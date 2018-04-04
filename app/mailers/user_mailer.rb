@@ -50,4 +50,13 @@ class UserMailer < ActionMailer::Base
     template
   end
 
+  def qb_import_data_result(import_data_result_message, module_name, current_user)
+    @user = current_user
+    @company = Company.find(current_user.current_company)
+    recipient = @user.email
+    @import_data_result_message = import_data_result_message
+    @module_name = module_name
+    mail(to: recipient, subject: "OpenSourceBilling: Quickbooks import data result for #{module_name} module")
+  end
+
 end
