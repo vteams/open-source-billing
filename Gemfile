@@ -71,15 +71,13 @@ gem 'osb_api', path: 'vendor/engines/osb_api'
 
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
-
-gem 'oauth'
-gem 'oauth2'
-gem 'roxml'
-gem 'nokogiri'
-gem 'quickbooks-ruby'
-gem 'qbo_api'
+gem 'oauth', '0.4.7'
+gem 'oauth2', '1.4.0'
+gem 'roxml', '4.0.0'
+gem 'nokogiri', '1.8.2'
+gem 'quickbooks-ruby', '0.6.1'
+gem 'qbo_api', '1.8.1'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
-
 gem 'puma', '3.11.0'
