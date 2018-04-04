@@ -546,6 +546,15 @@ fr:
       quickbooks:
         create_sandbox_companies_first: "Créer des sociétés sandbox d'abord dans Quickbooks"
 
+    sessions:
+      sign_in: "Se connecter"
+      keep_me_signed_in: "Tenez-moi connecté"
+      forgot_password: "Mot de passe oublié?"
+      submit: "Soumettre"
+      powered_by: "Alimenté par"
+      sign_up: "S'inscrire"
+      done: "Terminé"
+
   number:
     currency:
       format:

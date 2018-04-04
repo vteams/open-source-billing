@@ -4,32 +4,32 @@
       <span class="side-nav"></span>
       <a class="logo" href="#">Open<span>Source</span>Billing</a>
 
-      <h2>Sign In</h2>
+      <h2><%= t('views.sessions.sign_in') %></h2>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login' , class: 'col s12'}) do |f| %>
         <div class='input-field'>
           <%= f.email_field :email, :id => "email", :class => 'validate', required: '' %>
-          <label for='email'>Email</label>
+          <label for='email'><%= t('views.common.email') %></label>
         </div>
         <div class='input-field'>
           <%= f.password_field :password, :id => "password", :class => "validate" %>
-          <label for='password'>Password</label>
+          <label for='password'><%= t('views.staffs.password') %></label>
         </div>
           <% if devise_mapping.rememberable? -%>
         <div class="col s12 checkboxsection">
           <%= f.check_box :remember_me, :class=>'filled-in',:id=>'filled-in-box' %>
-          <label for="filled-in-box">Keep me Signed in</label>
+          <label for="filled-in-box"><%= t('views.sessions.keep_me_signed_in') %></label>
           <label class="right">
-            <%= link_to "Forgot Password?", new_password_path(resource_name), :class => 'forgetpass' %>
+            <%= link_to t('views.sessions.forgot_password'), new_password_path(resource_name), :class => 'forgetpass' %>
           </label>
         </div>
               <% end %>
         <div class="btn-content">
-          <%= f.button 'Submit', type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
+          <%= f.button t('views.sessions.submit'), type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
         </div>
       <%end%>
       <p class='col s12'>
         <%= link_to 'www.opensourcebilling.org', 'http://opensourcebilling.org/', target: '_blank' %>.
-        powered by: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
+        <%= t('views.sessions.powered_by') %>: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
       </p>
       <a href="<%= new_user_registration_path  %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
     </div>

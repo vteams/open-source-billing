@@ -550,6 +550,15 @@ de:
       quickbooks:
         create_sandbox_companies_first: "Maak eerst sandboxbedrijven in Quickbooks"
 
+    sessions:
+      sign_in: "Anmelden"
+      keep_me_signed_in: "Halten Sie mich angemeldet"
+      forgot_password: "Passwort vergessen?"
+      submit: "einreichen"
+      powered_by: "unterstützt von"
+      sign_up: "Anmelden"
+      done: "Erledigt"
+
   number:
     currency:
       format:

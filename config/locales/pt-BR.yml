@@ -551,6 +551,15 @@ pt-BR:
       quickbooks:
         create_sandbox_companies_first: "Crie companhias sandbox primeiro em Quickbooks"
 
+    sessions:
+      sign_in: "Assinar em"
+      keep_me_signed_in: "Mantenha-me assinado em"
+      forgot_password: "Esqueceu a senha?"
+      submit: "Enviar"
+      powered_by: "distribuído por"
+      sign_up: "Inscrever-se"
+      done: "Feito"
+
   number:
     currency:
       format:

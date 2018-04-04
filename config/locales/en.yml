@@ -635,6 +635,15 @@ en:
       quickbooks:
         create_sandbox_companies_first: "Create sandbox companies first in Quickbooks"
 
+    sessions:
+      sign_in: "Sign In"
+      keep_me_signed_in: "Keep me Signed in"
+      forgot_password: "Forgot Password?"
+      submit: "Submit"
+      powered_by: "powered by"
+      sign_up: "Sign Up"
+      done: "Done"
+
   number:
     currency:
       format:

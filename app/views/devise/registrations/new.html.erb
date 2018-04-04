@@ -3,36 +3,36 @@
     <div class="login-container z-depth-1">
       <span class="side-nav"></span>
       <a class="logo" href="#">Open<span>Source</span>Billing</a>
-      <h2>Sign Up</h2>
+      <h2><%= t('views.sessions.sign_up') %></h2>
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {novalidate: '' , class: 'col s12'}) do |f| %>
           <div class="notice"><%= devise_error_messages! %></div>
           <div class='input-field'>
             <%= f.text_field :user_name,  :autofocus => true, :id => "user_name", :class => 'sign_up', :required => '' %>
-            <label for='user_name'>User name</label>
+            <label for='user_name'><%= t('views.users.full_name') %></label>
           </div>
           <div class="input-field">
             <%= f.text_field :account, :id => "login_company", :class => 'sign_up', :required => '' %>
-            <label for='login_company'>Organization</label>
+            <label for='login_company'><%= t('views.clients.organization') %></label>
           </div>
           <div class='input-field'>
             <%= f.email_field :email,:type=>'email', :id => "email", :class => 'sign_up user_email validate', :required => '' %>
-          <label for='email'>Email</label>
+          <label for='email'><%= t('views.common.email') %></label>
         </div>
         <div class='input-field'>
           <%= f.password_field :password, :id => "password", :type=> 'password' ,:class => 'sign_up validate', :required => '' %>
-          <label for='password'>Password</label>
+          <label for='password'><%= t('views.staffs.password') %></label>
         </div>
         <div class='input-field'>
           <%= f.password_field :password_confirmation,:type=>'password', :id => "login_confrm_pswd password2", :class => 'sign_up', :required => '' %>
-          <label for='login_confrm_pswd password2'>Confirm Password</label>
+          <label for='login_confrm_pswd password2'><%= t('views.staffs.password_confirmation') %></label>
         </div>
         <div class="btn-content">
-          <%= f.button "Done",:type=>'submit', :class => "btn_large submit col s4 btn waves-effect",:name=>'btn_login' %>
+          <%= f.button t('views.sessions.done'), :type=>'submit', :class => "btn_large submit col s4 btn waves-effect",:name=>'btn_login' %>
         </div>
       <% end %>
       <p class='col s12'>
         <%= link_to 'www.opensourcebilling.org', 'http://opensourcebilling.org/', target: '_blank' %>.
-        powered by: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
+        <%= t('views.sessions.powered_by') %>: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
       </p>
       <%= link_to raw("<i class='material-icons close'>close</i>"), new_user_session_url, class: 'btn-login-add btn-floating btn-large waves-effect' %>
     </div>
