@@ -1,6 +1,6 @@
 <div class="col s12 page-box-header">
   <div class="title-desc">
-    <h6><%= @report.client_name %></h6>
+    <h6><%= t('views.common.' + @report.client_name.parameterize.underscore) %></h6>
     <span class="text-uppercase"><%= raw @report.period %></span>
   </div>
 
@@ -12,8 +12,8 @@
   <thead>
   <tr>
     <th width="15%"><%= t('views.items.item_name') %></th>
-    <th width="15%" class="center-align">Invoice Number </th>
-    <th width="13%">Client</th>
+    <th width="15%" class="center-align"><%= t('views.invoices.invoice_number') %></th>
+    <th width="13%"><%= t('client') %></th>
     <th width="12%" class="right-align"><%= t('views.reports.total_qty_sold') %></th>
     <th width="15%" class="right-align {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
     <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>

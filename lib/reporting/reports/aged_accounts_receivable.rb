@@ -37,7 +37,7 @@ module Reporting
       end
 
       def period
-        "As of <strong> #{@report_criteria.to_date.to_date.strftime(get_date_format)} </strong>"
+        "#{I18n.t('views.common.as_for')} <strong> #{@report_criteria.to_date.to_date.strftime(get_date_format)} </strong>"
       end
 
       def get_report_data

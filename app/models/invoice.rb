@@ -29,13 +29,13 @@ class Invoice < ActiveRecord::Base
 
   # constants
   STATUS_DESCRIPTION = {
-      draft: 'Invoice created, but you have not notified your client.',
-      sent: 'Invoice created and sent to your client.',
-      viewed: 'Client has clicked the invoice URL in the email and viewed the invoice in browser.',
-      paid: 'Client has made full payment against the invoice.',
-      partial: 'Client has made partial payment against the invoice.',
-      draft_partial: 'Payment received against the draft invoice.',
-      disputed: 'Client has disputed this invoice.',
+      draft: I18n.t('views.invoices.draft_tooltip'),
+      sent: I18n.t('views.invoices.sent_tooltip'),
+      viewed: I18n.t('views.invoices.viewed_tooltip'),
+      paid: I18n.t('views.invoices.paid_tooltip'),
+      partial: I18n.t('views.invoices.partial_tooltip'),
+      draft_partial: I18n.t('views.invoices.draft_partial_tooltip'),
+      disputed: I18n.t('views.invoices.disputed_invoice')
   }
 
 

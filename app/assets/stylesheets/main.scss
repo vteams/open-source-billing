@@ -2465,7 +2465,6 @@ h6 {
   float: left; }
 .report-section .breadcrum-bar .select-wrapper, .setting-section .breadcrum-bar .select-wrapper {
   float: left;
-  max-width: 200px;
   transition: none; }
 .report-section .breadcrum-bar .select-wrapper .select-dropdown, .setting-section .breadcrum-bar .select-wrapper .select-dropdown {
   font-size: 20px;
@@ -4298,4 +4297,7 @@ i.material-icons.close:hover {
 }
 #bulk_action_form .search_result_container{
   padding: 10px;
+}
+#main-content .breadcrum-bar.card-white-panel.clearfix .input-field .select-wrapper.initialized input.select-dropdown {
+  padding-left: 5px;
 }

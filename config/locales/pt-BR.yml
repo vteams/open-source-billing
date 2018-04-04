@@ -176,6 +176,10 @@ pt-BR:
       add_notes: "Adicionar notas"
       all_companies: "Todas as empresas"
       selected_companies_only: "Apenas empresas selecionadas"
+      all_clients: "Todos os clientes"
+      between: "Entre"
+      and: "e"
+      as_for: "A partir de"
 
     pagination:
       previous: "Anterior"
@@ -242,7 +246,7 @@ pt-BR:
       add_line_item: "Adicionar item"
       terms_hint: "Termos de pagamento para esta fatura"
       auto_generated: "Gerador automáticamente"
-      invoice_date: "Data da fatura"
+      paid_date: "Data de pagamento"
       terms: "Termos"
       subtotal: "Subtotal"
       net_total: "Net Total"
@@ -251,6 +255,7 @@ pt-BR:
       invoice_number: "Fatura #"
       invoice_amount: "Quantia da fatura"
       invoice_status: "Status da fatura"
+      date_to_use: "Data a usar"
       amount_paid: "Quantia paga"
       amount_due: "Quantia em dívida"
       this_invoice_was_sent_using: "Essa fatura foi enviada usando"
@@ -290,6 +295,13 @@ pt-BR:
       next_issue_date: "Próxima data de emissão"
       send_invoice_automatically: "Enviar faturas automaticamente"
       create_draft_and_send_manully: "Criar faturas de rascunho e enviar manualmente"
+      draft_tooltip: "Fatura criada, mas você não notificou seu cliente."
+      sent_tooltip: "Fatura criada e enviada ao seu cliente."
+      viewed_tooltip: "O cliente clicou no URL da fatura no e-mail e visualizou a fatura no navegador."
+      paid_tooltip: "Cliente fez pagamento integral contra a fatura."
+      partial_tooltip: "O cliente fez pagamento parcial contra a fatura."
+      draft_partial_tooltip: "Pagamento recebido contra o rascunho da fatura."
+      disputed_invoice: "O cliente contestou esta fatura."
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -426,6 +438,7 @@ pt-BR:
       aged_accounts_receivable: "Contas a receber antigas"
       aged_accounts_receivable_dtl: "Este relatório mostra um sumário do montante pendente contra faturas não pagas e / ou parcialmente pagos para cada cliente."
       item_sales: "Vendas de item"
+      invoice_detail: "Relatório de fatura"
       export_to: "Exportar para"
       print_report: "Imprimir relatório"
       report_no_data: "Não foram encontrados dados em função dos critérios selecionados. Por favor, altere os critérios e tente novamente."
@@ -440,6 +453,7 @@ pt-BR:
       net_total: "Net Total"
       period_ending: "Período em que termina"
       date_range: "Intervalo das datas"
+      to: "Para"
 
     settings:
       settings: "Configuração"

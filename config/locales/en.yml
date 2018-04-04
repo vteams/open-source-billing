@@ -193,6 +193,10 @@ en:
       add_notes: "Add Notes"
       all_companies: "All Companies"
       selected_companies_only: "Selected companies only"
+      all_clients: "All Clients"
+      between: "Between"
+      and: "And"
+      as_for: "As of"
 
     pagination:
       previous: "Previous"
@@ -259,7 +263,7 @@ en:
       add_line_item: "Add Line Item"
       terms_hint: "Payment terms for this invoice"
       auto_generated: "Auto Generated"
-      invoice_date: "Invoice Date"
+      paid_date: "Paid Date"
       terms: "Terms"
       subtotal: "Subtotal"
       net_total: "Net Total"
@@ -309,6 +313,13 @@ en:
       next_issue_date: "Next Issue Date"
       send_invoice_automatically: "Send invoices automatically"
       create_draft_and_send_manully: "Create Draft invoices and send manually"
+      draft_tooltip: "Invoice created, but you have not notified your client."
+      sent_tooltip: "Invoice created and sent to your client."
+      viewed_tooltip: "Client has clicked the invoice URL in the email and viewed the invoice in browser."
+      paid_tooltip: "Client has made full payment against the invoice."
+      partial_tooltip: "Client has made partial payment against the invoice."
+      draft_partial_tooltip: "Payment received against the draft invoice."
+      disputed_invoice: "Client has disputed this invoice."
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -519,6 +530,7 @@ en:
       net_total: "Net Total"
       period_ending: "Period Ending"
       date_range: "Date Range"
+      to: "To"
 
     settings:
       settings: "Settings"

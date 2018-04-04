@@ -8,7 +8,7 @@
       <div class="input-field col s12 m6 xl2 datepicker">
         <input name="criteria[to_date]" type="text" id="to_date" readonly value="<%= Date.today.strftime(get_date_format) %>"/>
         <i class="material-icons" id="to_date_icon">date_range</i>
-        <label for="to_date" class="active">To</label>
+        <label for="to_date" class="active"><%= t('views.reports.to') %></label>
       </div>
       <div class="input-field col s12 m6 xl2">
         <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + get_report_items, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item"} %>

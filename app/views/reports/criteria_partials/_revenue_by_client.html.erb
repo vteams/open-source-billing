@@ -1,10 +1,10 @@
 <%= form_tag "/reports/data/#{@report.report_name}", :method => :get, :remote => true do %>
   <div class="row">
-    <div class="input-field col s12 m6 xl2">
+    <div class="input-field col s12 m6 xl3">
       <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS), {:class => "payment-method"} %>
       <label><%= t('views.common.quarter') %> </label>
     </div>
-    <div class="input-field col s12 m6 xl2">
+    <div class="input-field col s12 m6 xl3">
       <%= select_tag "criteria[year]", options_for_select(((Date.today.year - 1)..(Date.today.year + 5)).each { |y| [y, y] }, Date.today.year), {:class => "payment-method"} %>
       <label><%= t('views.common.year') %></label>
     </div>

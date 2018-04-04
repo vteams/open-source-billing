@@ -34,7 +34,7 @@ module Reporting
       HEADER_COLUMNS = ['Invoice No','Client', 'Invoice Date', 'Status', 'Invoice Total']
 
       def period
-        "Between <strong> #{@report_criteria.from_date.strftime(get_date_format)} </strong> and <strong>#{@report_criteria.to_date.strftime(get_date_format)}</strong>"
+        "#{I18n.t('views.common.between')} <strong> #{@report_criteria.from_date.strftime(get_date_format)} </strong> #{I18n.t('views.common.and')} <strong>#{@report_criteria.to_date.strftime(get_date_format)}</strong>"
       end
 
       def get_report_data

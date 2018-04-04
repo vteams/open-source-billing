@@ -175,6 +175,10 @@ de:
       add_notes: "Notizen hinzufügen"
       all_companies: "Alle Unternehmen"
       selected_companies_only: "Nur ausgewählte Unternehmen"
+      all_clients: "Alle Kunden"
+      between: "Zwischen"
+      and: "und"
+      as_for: "Ab"
 
     pagination:
       previous: "Vorherige"
@@ -241,7 +245,7 @@ de:
       add_line_item: "Füge Auftragsposition hinzu"
       terms_hint: "Bezahlungsbedingungen für diese Rechnung"
       auto_generated: "Automatisch Generiert"
-      invoice_date: "Rechnungsdatum"
+      paid_date: "Bezahlt Datum"
       terms: "Bedingungen"
       subtotal: "Zwischensumme"
       net_total: "Netto"
@@ -250,6 +254,7 @@ de:
       invoice_number: "Rechnung #"
       invoice_amount: "Rechnungsbetrag"
       invoice_status: "Rechnungs Status"
+      date_to_use: "Datum zu verwenden"
       amount_paid: "Betrag bezahlt"
       amount_due: "Betrag fällig"
       this_invoice_was_sent_using: "Diese Rechnung wurde gesendet von"
@@ -289,6 +294,13 @@ de:
       next_issue_date: "Nächstes Ausgabedatum"
       send_invoice_automatically: "Rechnungen automatisch senden"
       create_draft_and_send_manully: "Erstellen Sie Entwurfsrechnungen und senden Sie sie manuell"
+      draft_tooltip: "Rechnung erstellt, aber Sie haben Ihren Kunden nicht benachrichtigt."
+      sent_tooltip: "Rechnung erstellt und an Ihren Kunden gesendet."
+      viewed_tooltip: "Der Kunde hat auf die Rechnungs-URL in der E-Mail geklickt und die Rechnung im Browser angesehen."
+      paid_tooltip: "Der Kunde hat die vollständige Zahlung gegen die Rechnung geleistet."
+      partial_tooltip: "Der Kunde hat die Rechnung teilweise bezahlt."
+      draft_partial_tooltip: "Zahlung gegen den Rechnungsentwurf."
+      disputed_invoice: "Der Kunde hat diese Rechnung bestritten."
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -424,6 +436,7 @@ de:
       aged_accounts_receivable: "Veraltete Debitorenkonten"
       aged_accounts_receivable_dtl: "Dieser Bericht zeigt eine Zusammenfassung von ausstehenden Beträgen gegen unbezahlte oder teils bezahlte Rechnungen für einzelne Kunden"
       item_sales: "Gegenstandsverkäufe"
+      invoice_detail: "Rechnungsbericht"
       export_to: "Exportieren nach"
       print_report: "Druck Bericht"
       report_no_data: "Keine Daten für das angegebene Kriterium gefunden. Bitte Kriterium ändern und erneut versuchen."
@@ -438,6 +451,7 @@ de:
       net_total: "Netto Insgesamt"
       period_ending: "Phasen Ende"
       date_range: "Zeitspanne"
+      to: "Zu"
 
     settings:
       settings: "Einstellungen"
