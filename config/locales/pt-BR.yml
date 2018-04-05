@@ -23,6 +23,7 @@ pt-BR:
   email_template: "Modelo de email"
   user: "Do utilizador"
   task: "Tarefa"
+  staff: "Funcionários"
 
   date:
     formats:
@@ -347,8 +348,10 @@ pt-BR:
       month: "Mês"
 
     staffs:
+      name: "Nome da equipe"
       password: "senha"
       password_confirmation: "Confirme a Senha"
+      make_this_staff_available_to: "Disponibilize esta equipe para"
 
     estimates:
       this_estimate_was_sent_using: "Esta estimativa foi enviada usando"

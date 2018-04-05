@@ -23,6 +23,7 @@ fr:
   email_template: "Modèle d'email"
   user: "Utilisateur"
   task: "Tâche"
+  staff: "Personnel"
 
   date:
     formats:
@@ -343,8 +344,10 @@ fr:
       month: "Mois"
 
     staffs:
+      name: "Nom du personnel"
       password: "mot de passe"
       password_confirmation: "Confirmez le mot de passe"
+      make_this_staff_available_to: "Rendre ce personnel disponible pour"
 
     estimates:
       this_estimate_was_sent_using: "Cette estimation a été envoyée en utilisant"
