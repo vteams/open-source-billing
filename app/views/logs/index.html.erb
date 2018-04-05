@@ -5,12 +5,13 @@
     <!--- breadcrum Bar --->
     <div class="col s12 breadcrum-bar">
       <div class="card-white-panel">
-        <h3>Time Tracking:
+        <h3>
+          <%= t('header.links.time_tracking.time_tracking') %>:
           <select onchange="location = this.value;">
-            <option value="<%= "/#{I18n.locale}/projects" %>"> Projects</option>
-            <option value="<%= "/#{I18n.locale}/tasks" %>">Tasks</option>
-            <option value="<%= "/#{I18n.locale}/staffs" %>">Staffs</option>
-            <option value="<%= "/#{I18n.locale}/logs" %>" selected >TimeSheet</option>
+            <option value="<%= "/#{I18n.locale}/projects" %>"> <%= t('header.links.time_tracking.project') %></option>
+            <option value="<%= "/#{I18n.locale}/tasks" %>"><%= t('header.links.time_tracking.task') %></option>
+            <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
+            <option value="<%= "/#{I18n.locale}/logs" %>" selected><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
         </h3>
       </div>

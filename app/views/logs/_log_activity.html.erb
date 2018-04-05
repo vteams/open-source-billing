@@ -1,24 +1,24 @@
 <!--- Activity sidebar --->
-<span class="btn-activity">Activities</span>
+<span class="btn-activity"><%= t('views.common.activities') %></span>
 
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <div class="activity-scroll-holder mCustomScrollbar">
     <div class="status-info">
       <h5>
-        <%= link_to 'Projects', projects_url %>
+        <%= link_to t('projects'), projects_url %>
         <span id="actives">(<%= get_project_count %>)</span>
       </h5>
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to 'Tasks', tasks_path %>
+        <%= link_to t('header.links.time_tracking.task'), tasks_path %>
         <span id="actives">(<%= get_task_count %>)</span>
       </h5>
     </div>
 
     <div class="status-info">
       <h5>
-        <%= link_to 'Staffs', staffs_path %>
+        <%= link_to t('header.links.time_tracking.staff'), staffs_path %>
         <span id="actives">(<%= get_staff_count %>)</span>
       </h5>
     </div>

@@ -1,32 +1,27 @@
 <%= form_for(@log ,remote: true, class: 'form-horizontal', autocomplete: 'off'  ) do |f| %>
     <div class="row">
-
       <div class="input-field col s12">
         <%= f.text_field :date,:readonly => true  %>
       </div>
-
       <div class="input-field col s12">
-        <%= f.select :project_id, options_for_select(load_projects_for_log, selected: f.object.project_id), include_blank: 'Select a Project'   %>
+        <%= f.select :project_id, options_for_select(load_projects_for_log, selected: f.object.project_id),
+                     include_blank: t('views.logs.project') %>
       </div>
-
       <div class="input-field col s12 tasks_dropdown">
-        <%= f.select :task_id, options_for_select(load_tasks_for_log(@log),selected: f.object.task_id),{include_blank: 'Select a task'}, {disabled: true} %>
+        <%= f.select :task_id, options_for_select(load_tasks_for_log(@log),selected: f.object.task_id),
+                     {include_blank: t('views.logs.task')}, {disabled: true} %>
       </div>
-
       <div class="input-field col s12">
         <%= f.number_field :hours, min: 0, step: "any" %>
-        <%= f.label :hours, t('views.logs.hours') %>
+        <%= f.label :hours, t('views.tasks.hours') %>
       </div>
-
       <div class="input-field col s12">
-        <%= f.label :notes, t('views.logs.notes') %>
+        <%= f.label :notes, t('views.common.notes') %>
         <%= f.text_area :notes, maxlength: 400, class: "materialize-textarea" %>
       </div>
-
       <div class="input-field col s12">
         <%= hidden_field_tag :view,'month' %>
-        <%= f.submit class: "btn submit log-submit-btn" %>
+        <%= f.submit value: t('views.logs.create'), class: "btn submit log-submit-btn" %>
       </div>
-
     </div>
 <% end %>

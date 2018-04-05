@@ -9,6 +9,7 @@ fr:
   company: "société"
   invoice: "facture"
   invoices: "factures"
+  projects: "Projets"
   project: "Projet"
   payment: "paiement"
   client: "Client"
@@ -418,6 +419,14 @@ fr:
       tax_name: "Nom d'impôt"
       add_new_tax: "Ajouter nouvelle taxe"
       select_a_tax: "Sélectionnez une taxe ..."
+
+    logs:
+      project: "Sélectionner un projet"
+      task: "Sélectionnez une tâche"
+      create: "Créer un journal"
+      time_logs: "Journaux de temps pour"
+      no_log_exist: "Aucun journal n'existe pour"
+      create_by: "Créé par"
 
     payments:
       payments: "paiement"

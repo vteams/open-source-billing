@@ -485,6 +485,10 @@ en:
       hours: "Hours"
       notes: "Notes"
       info: "Select date from calendar to enter time log.."
+      create: "Create Log"
+      time_logs: "Time logs for"
+      no_log_exist: "No Logs exist for"
+      create_by: "Created By"
 
     payments:
       payments: "Payment"

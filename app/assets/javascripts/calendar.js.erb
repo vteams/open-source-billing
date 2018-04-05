@@ -20,7 +20,7 @@ function init_fullcalendar(){
                 dataType: 'script',
                 type: 'GET',
                 data:{date:date.format()},
-                url: '/en/logs'
+                url: '/' + I18n.locale + '/logs'
             });
             $('#log_date').val(date.format());
             $('#logs_for').html(date.format());

@@ -9,6 +9,7 @@ de:
   company: "Unternehmen"
   invoice: "Rechnung"
   invoices: "Rechnungen"
+  projects: "Projekte"
   project: "Projekt"
   payment: "Bezahlung"
   client: "Kunde"
@@ -422,6 +423,14 @@ de:
       tax_name: "Steuer Name"
       add_new_tax: "Neue Steuer hinzufügen"
       select_a_tax: "Wähle eine Steuer..."
+
+    logs:
+      project: "Wählen Sie Projekt"
+      task: "Wählen Sie Aufgabe"
+      create: "Erstellen Sie ein Protokoll"
+      time_logs: "Zeitprotokolle für"
+      no_log_exist: "Keine Protokolle existieren für"
+      create_by: "Erstellt von"
 
     payments:
       payments: "Bezahlung"
