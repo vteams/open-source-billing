@@ -334,9 +334,17 @@ pt-BR:
         gateway: "Gateway"
 
     tasks:
+      name: "Nome da tarefa"
+      description: "Descrição"
+      rate: "Taxa por hora"
+      make_this_task_available_to: "Tornar esta Tarefa disponível para"
       spent_time: "Tempo gasto"
       rate_: "taxa"
       hours: "Horas"
+      task_detail: "Detalhe da Tarefa"
+      day: "Dia"
+      week: "Semana"
+      month: "Mês"
 
     staffs:
       password: "senha"

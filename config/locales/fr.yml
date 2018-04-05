@@ -330,9 +330,17 @@ fr:
         gateway: "porte"
 
     tasks:
+      name: "Nom de la tâche"
+      description: "La description"
+      rate: "Taux par heure"
+      make_this_task_available_to: "Rendre cette tâche disponible pour"
       spent_time: "Temps passé"
       rate_: "taux"
       hours: "Heures"
+      task_detail: "Détail de la tâche"
+      day: "journée"
+      week: "La semaine"
+      month: "Mois"
 
     staffs:
       password: "mot de passe"

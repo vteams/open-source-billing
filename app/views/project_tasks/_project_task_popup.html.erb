@@ -1,10 +1,12 @@
 <div id="project_task_popup" class="modal viewModal taskModal">
   <div class="modal-content">
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">Task Detail</h5>
+      <h5 class="left text-blue"><%= t('views.tasks.task_detail') %></h5>
       <div class="modal-action-btn right">
-        <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task), class: 'edit-modal', title: 'Edit', remote: true %>
-        <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task), method: :delete, data:{confirm: 'Are you sure?' }, title: 'Delete' %>
+        <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task),
+                    class: 'edit-modal', title: t('helpers.links.edit'), remote: true %>
+        <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task),
+                    method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
       </div>
     </div>
     <div class="modal-body">
@@ -20,7 +22,7 @@
                   <div class="invoice-details">
                     <div class="editable-content">
                       <div class="text-field">
-                        <span>Task <small> : </small> </span>
+                        <span><%= t('task') %> <small>: </small> </span>
                         <strong class="text-blue"><%= task.name %></strong>
                       </div>
                     </div>
@@ -31,27 +33,27 @@
                 </div>
                 <div class="form-wrapper row">
                   <div class="input-field col s12 m9 l9 xl6  datepicker">
-                    <label class="active">Start Date</label>
+                    <label class="active"><%= t('views.invoices.recurring.start_date') %></label>
                     <input type="text" value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled>
                     <i class="material-icons">date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 l9 xl6 datepicker">
-                    <label class="active">Due Date</label>
+                    <label class="active"><%= t('views.invoices.due_date') %></label>
                     <input type="text" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled>
                     <i class="material-icons">date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 xl4 titlebold">
-                    <label class="active">Hours</label>
+                    <label class="active"><%= t('views.tasks.hours') %></label>
                     <input type="number" value="<%= task.hours %>" placeholder="" disabled>
                   </div>
                   <div class="input-field col s12 m6 l4 titlebold offset-l2 ">
-                    <label class="active">Spent Time</label>
+                    <label class="active"><%= t('views.tasks.spent_time') %></label>
                     <input type="number" value="<%= task.spent_time %>" disabled>
                   </div>
                   <div class="input-field col s12 m9 xl4 clearfix titlebold">
-                    <label class="active">Rate</label>
+                    <label class="active"><%= t('views.tasks.rate_') %></label>
                     <input type="number" value="<%= task.rate %>" placeholder="" disabled>
                   </div>
                 </div>

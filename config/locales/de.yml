@@ -334,9 +334,17 @@ de:
         gateway: "Zugang"
 
     tasks:
+      name: "Aufgabennname"
+      description: "Beschreibung"
+      rate: "Rate pro Stunde"
+      make_this_task_available_to: "Stellen Sie diese Aufgabe für verfügbar zur Verfügung"
       spent_time: "Verbrachte Zeit"
       rate_: "Bewertung"
       hours: "Std"
+      task_detail: "Aufgabendetail"
+      day: "Tag"
+      week: "Woche"
+      month: "Monat"
 
     staffs:
       password: "Passwort"

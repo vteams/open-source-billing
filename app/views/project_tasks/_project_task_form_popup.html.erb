@@ -2,7 +2,13 @@
   <div class="modal-content">
     <%= form_for [@project,task], html: {class: 'project_task_form'} do |f|  %>
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue"> <%= task.new_record? ? 'New' : 'Edit' %> <%= t('task') %></h5>
+      <h5 class="left text-blue">
+        <% if task.new_record? %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
+        <% end %>
+      </h5>
       <div class="modal-action-btn right">
         <a href="javascript:void(0);" onclick="$('.simple_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
           <i class="material-icons" >done</i>

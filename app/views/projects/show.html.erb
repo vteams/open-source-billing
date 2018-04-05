@@ -51,9 +51,9 @@
                   <a href="#"><i class="material-icons">view_list</i></a>
                 </div>
                 <div class="btn-calender">
-                  <a href='<%= project_path(@project, group: :day) %>' class="<%= 'active' if params[:group] == 'day' %>">Day</a>
-                  <a href="<%= project_path(@project, group: :week) %>" class="<%= 'active' if params[:group] == 'week' %>">Week</a>
-                  <a href="<%= project_path(@project) %>" class="<%= 'active' unless params[:group].present? %>">Month</a>
+                  <a href='<%= project_path(@project, group: :day) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
+                  <a href="<%= project_path(@project, group: :week) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
+                  <a href="<%= project_path(@project) %>" class="<%= 'active' unless params[:group].present? %>"><%= t('views.tasks.month') %></a>
                 </div>
               </div>
             </div>

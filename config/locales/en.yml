@@ -361,6 +361,10 @@ en:
       spent_time: "Spent Time"
       rate_: "Rate"
       hours: "Hours"
+      task_detail: "Task Detail"
+      day: "Day"
+      week: "Week"
+      month: "Month"
 
     staffs:
       name: "Staff Name"
