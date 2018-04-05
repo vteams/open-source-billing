@@ -8,7 +8,7 @@ window.applyChosen = (single_row) =>
   jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select, .invoice_currency, .recurring_profile_currency, .report_billing_method, .expense_category')",'.estimates-main, .projects-main, .invoices-main,.recurring_profiles-main, .expenses-main').on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
-      chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
+      chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>" + I18n.t('views.common.add_new') + "</div>")
   #remove identical line items
   identical_line_items = jQuery('.invoice_grid_fields tr.fields:last .chzn-select:first option, .task_grid_fields tr.fields:last .chzn-select:first option, .estimate_grid_fields tr.fields:last .chzn-select:first option')
   identical_line_items.each ->
@@ -27,7 +27,7 @@ window.applyChosen = (single_row) =>
 
 jQuery ->
   $("a.deleted_entry").click (e)->
-    applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
+    applyPopover(jQuery(this), "bottomMiddle", "topLeft", I18n.t('views.invoices.recover_to_view_detail'))
     e.preventDefault()
     return false
 
@@ -213,7 +213,7 @@ jQuery ->
   jQuery("form.dispute_form").submit ->
     flag = true
     if jQuery("#reason_for_dispute").val() is ""
-      applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
+      applyPopover(jQuery("#reason_for_dispute"), "bottomMiddle", "topLeft", I18n.t("views.invoices.reason_for_dispute"))
       flag = false
     flag
   jQuery("#reason_for_dispute").on "keyup", ->
@@ -229,48 +229,48 @@ jQuery ->
     flag = true
     # Check if company is selected
     if jQuery("#invoice_company_id").val() is ""
-      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+      applyPopover(jQuery("#invoice_company_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_company"))
       flag = false
       # Check if client is selected
     else if jQuery("#invoice_client_id").val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+      applyPopover(jQuery("#invoice_client_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_client"))
       flag = false
       # if currency is not selected
     else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+      applyPopover(jQuery("#invoice_currency_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_currency"))
       flag = false
       # check if invoice date is selected
     else if jQuery("#invoice_invoice_date").val() is ""
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+      applyPopover(jQuery("#invoice_invoice_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.select_invoice_date"))
       flag =false
     else if jQuery("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_invoice_date").val())
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+      applyPopover(jQuery("#invoice_invoice_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.make_sure_date_format", date_format: DateFormats.format()))
       flag = false
     else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
-       applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+       applyPopover(jQuery("#invoice_due_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.make_sure_date_format", date_format: DateFormats.format()))
        flag = false
       # Check if payment term is selected
     else if jQuery("#invoice_payment_terms_id").val() is ""
-      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+      applyPopover(jQuery("#invoice_payment_terms_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_payment_term"))
       flag = false
       # Check if discount percentage is an integer
     else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.enter_valid_discount"))
       flag = false
       # Check if no item is selected
     else if jQuery("tr.fields:visible").length < 1
-      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+      applyPopover(jQuery("#add_line_item"), "bottomMiddle", "topLeft", I18n.t("views.estimates.add_line_item"))
       flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
-      applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+      applyPopover(first_item, "bottomMiddle", "topLeft", I18n.t("views.common.select_item"))
       flag = false
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.percentage_must_be_hundred_or_less"))
       flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.discount_must_be_less_than_sub_total"))
       flag = false
 
       # Item cost and quantity should be greater then 0
@@ -286,15 +286,15 @@ jQuery ->
           tax2_value = jQuery("option:selected",tax2).val()
 
           if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
-            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+            applyPopover(cost, "bottomLeft", "topLeft", I18n.t("views.invoices.enter_valid_item_cost"))
             flag = false
           else hidePopover(cost)
 
           if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
-            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+            applyPopover(qty, "bottomLeft", "topLeft", I18n.t("views.invoices.enter_valid_item_quantity"))
             flag = false
           else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+            applyPopover(tax2.next(), "bottomLeft", "topLeft", I18n.t("views.invoices.tax1_and_tax2_should_be_diff"))
             flag = false
           else hidePopover(qty)
     flag
@@ -319,7 +319,7 @@ jQuery ->
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/en/invoices/new/#{id}'>To create new invoice use the last invoice sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/en/invoices/new/#{id}'>" + I18n.t('views.invoices.to_create_use_last_sent_invoice') + "</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -462,7 +462,7 @@ jQuery ->
     flag = true
     status = jQuery(this).attr "value"
     if status is "paid"
-      alert "Paid invoice can not be disputed."
+      alert I18n.t("views.invoices.paid_cannot_disputed")
       flag = false
     flag
 

@@ -195,7 +195,7 @@ class @Invoice
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/en/invoices/new/#{id}'>To create new invoice use the last invoice sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/en/invoices/new/#{id}'> "  + I18n.t('views.invoices.to_create_use_last_sent_invoice',client_name: client_name)+ "</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -341,45 +341,45 @@ class @Invoice
       flag = true
       # Check if company is selected
       if $("#invoice_company_id").val() is ""
-        applyPopover($("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+        applyPopover($("#invoice_company_id_chzn"),"bottomMiddle","topLeft", I18n.t("views.invoices.select_a_company"))
         flag = false
         # Check if client is selected
       else if $("#invoice_client_id").val() is ""
-        applyPopover($("#invoice_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
+        applyPopover($("#invoice_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft",I18n.t("views.invoices.select_a_client"))
         flag = false
         # if currency is not selected
       else if $("#invoice_currency_id").val() is "" and $("#invoice_currency_id").is( ":hidden" ) == false
-        applyPopover($("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+        applyPopover($("#invoice_currency_id_chzn"),"bottomMiddle","topLeft",I18n.t("views.invoices.select_currency"))
         flag = false
         # check if invoice date is selected
       else if $("#invoice_invoice_date").val() is ""
-        applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+        applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle",I18n.t("views.invoices.select_invoice_date"))
         flag =false
       else if invoice_date_value > due_date_value
-        applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft","Due date should be equal or greater than invoice date")
+        applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft",I18n.t("views.invoices.due_date_should_equal_or_greater"))
         flag = false
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
-        applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+        applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft",I18n.t("views.invoices.select_a_payment_term"))
         flag = false
         # Check if discount percentage is an integer
       else if $("input#invoice_discount_percentage").val()  isnt "" and ($("input#invoice_discount_percentage").val() < 0)
-        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft", I18n.t("views.invoices.enter_valid_discount"))
         flag = false
         # Check if no item is selected
       else if $("tr.fields:visible").length < 1
-        applyPopover($("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+        applyPopover($("#add_line_item"),"bottomMiddle","topLeft",I18n.t("views.invoices.add_line_item"))
         flag = false
         # Check if item is selected
       else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
         first_item = $("table#invoice_grid_fields tr.fields:visible:first")
-        applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+        applyPopover(first_item,"bottomMiddle","topLeft",I18n.t("views.invoice_line_item.select_an_item"))
         flag = false
       else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft",I18n.t("views.invoices.percentage_must_be_hundred_or_less"))
         flag = false
       else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+        applyPopover($("#invoice_discount_percentage"),"bottomMiddle","topLeft",I18n.t("views.invoices.discount_must_be_less_than_sub_total"))
         flag = false
 
         # Item cost and quantity should be greater then 0
@@ -395,12 +395,12 @@ class @Invoice
             tax2_value = $("option:selected",tax2).val()
 
             if not $.isNumeric(cost.val()) and cost.val() isnt ""
-              applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+              applyPopover(cost,"bottomLeft","topLeft",I18n.t("views.invoices.enter_valid_item_cost"))
               flag = false
             else hidePopover(cost)
 
             if not $.isNumeric(qty.val())  and qty.val() isnt ""
-              applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+              applyPopover(qty,"bottomLeft","topLeft",I18n.t("views.invoices.enter_valid_item_quantity"))
               flag = false
             else hidePopover(qty)
       flag
