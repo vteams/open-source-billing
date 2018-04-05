@@ -21,7 +21,7 @@
 module EstimatesHelper
   include ApplicationHelper
   def new_estimate id, is_draft
-    message = is_draft ? "The estimate has been saved as draft." : "Estimate has been created and sent to #{@estimate.client.organization_name}."
+    message = is_draft ? t('views.estimates.saved_draft_msg') : t('views.estimates.saved_and_sent_msg', org_name: @estimate.client.organization_name)
     notice = <<-HTML
        <p>#{message}.</p>
     HTML
@@ -30,36 +30,36 @@ module EstimatesHelper
 
   def estimates_archived ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been archived.
+     <p>#{ids.size} #{t('views.invoices.bulk_archived_msg')}
     HTML
     notice.html_safe
   end
 
   def estimates_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been deleted.
+     <p>#{ids.size} #{t('views.estimates.bulk_deleted')}
     HTML
     notice.html_safe
   end
 
   def send_estimate _message
     notice = <<-HTML
-     <p>Estimate sent successfully.</p>
+     <p>#{t('views.invoices.sent_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def convert_to_invoices
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been converted to invoice. You can find them in Invoices section</p>
+     <p>#{ids.size} #{t('views.estimates.converted_to_invoice_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def dispute_estimate_message company_name
     notice = <<-HTML
-     <p>Estimate disputed.</p>
-     <p> #{company_name} has been notified of the dispute.</p>
+     <p>#{t('views.estimates.disputed_msg')}</p>
+     <p> #{t('views.estimates.disputed_detail_msg', company_name: company_name)}</p>
     HTML
     notice.html_safe
   end
@@ -87,8 +87,8 @@ module EstimatesHelper
   def estimate_not_updated
     notice = <<-HTML
        <ul>
-         <li>You cannot reduce the estimate total below the amount paid.</li>
-         <li>If you entered a payment by mistake, you can edit it in your payment history.</li>
+         <li>#{t('views.estimates.cannot_reduce_amount_msg')}</li>
+         <li>#{t('views.estimates.cannot_reduce_amount_detail_msg')}</li>
        </ul>
     HTML
     notice.html_safe

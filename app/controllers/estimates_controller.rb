@@ -87,7 +87,7 @@ class EstimatesController < ApplicationController
         @estimate.update_line_item_taxes()
         @estimate.notify(current_user, @estimate.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "index", :controller => "estimates"}, :notice => 'Your Estimate has been updated successfully.')
+        redirect_to({:action => "index", :controller => "estimates"}, :notice => t('views.estimates.saved_msg'))
         return
       else
         format.html { render :action => "edit" }
@@ -129,7 +129,7 @@ class EstimatesController < ApplicationController
   def send_estimate
     estimate = Estimate.find(params[:id])
     estimate.send_estimate(current_user, params[:id])
-    redirect_to(estimates_url, notice: 'Estimate sent successfully.')
+    redirect_to(estimates_url, notice: t('views.estimates.sent_msg'))
   end
 
   def bulk_actions
@@ -140,7 +140,7 @@ class EstimatesController < ApplicationController
     @action = result[:action]
     respond_to do |format|
       format.js
-      format.html {redirect_to estimates_url, notice: "Estimate(s) are #{@action} successfully."}
+      format.html {redirect_to estimates_url, notice: t('views.estimates.bulk_action_msg', action: @action)}
     end
   end
 
@@ -155,7 +155,7 @@ class EstimatesController < ApplicationController
   def convert_to_invoice
     estimate = Estimate.find(params[:id])
     estimate.convert_to_invoice
-    redirect_to(estimates_url, notice: 'Estimate successfully converted to invoice.')
+    redirect_to(estimates_url, notice: t('views.estimates.converted_to_invoice_msg'))
   end
 
   def set_per_page_session
@@ -178,7 +178,7 @@ class EstimatesController < ApplicationController
 
   def preview
     @estimate = Services::EstimateService.get_estimate_for_preview(params[:inv_id])
-    render action: 'estimate_deleted_message', notice: "This estimate has been deleted." if @estimate == 'Estimate deleted'
+    render action: 'estimate_deleted_message', notice: t('views.estimates.estimate_deleted_msg') if @estimate == 'Estimate deleted'
   end
 
   private

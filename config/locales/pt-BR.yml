@@ -394,6 +394,22 @@ pt-BR:
     estimates:
       this_estimate_was_sent_using: "Esta estimativa foi enviada usando"
       estimate_date: "Data estimada"
+      saved_draft_msg: "A estimativa foi salva como rascunho."
+      saved_and_sent_msg: "A estimativa foi criada e enviada para %{org_name}."
+      bulk_archived_msg: "estimativa (s) foram arquivadas."
+      bulk_deleted: "estimativa (s) foram eliminadas."
+      sent_msg: "Estimativa enviada com sucesso."
+      converted_to_invoice_msg: "estimativa (s) foram convertidas em fatura. Você pode encontrá-los na seção Faturas"
+      disputed_msg: "Estimativa disputada."
+      disputed_detail_msg: "%{company_name} foi notificado da disputa."
+      cannot_reduce_amount_msg: "Você não pode reduzir o total estimado abaixo do valor pago."
+      cannot_reduce_amount_detail_msg: "Se você inseriu um pagamento por engano, pode editá-lo no seu histórico de pagamentos."
+      saved_msg: "Sua estimativa foi atualizada com sucesso."
+      bulk_action_msg: "Estimativa (s) são %{action} com sucesso."
+      converted_to_invoice_msg: "Estimativa convertida com sucesso em fatura."
+      estimate_deleted_msg: "Estimation convertie avec succès en facture."
+      use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
+      select_estimate_date: "Selecione data estimada"
 
     clients:
       client_name: "Nome do Cliente"

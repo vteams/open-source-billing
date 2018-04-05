@@ -394,6 +394,22 @@ de:
     estimates:
       this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
       estimate_date: "Schätzdatum"
+      saved_draft_msg: "Die Schätzung wurde als Entwurf gespeichert."
+      saved_and_sent_msg: "Die Schätzung wurde erstellt und an %{org_name} gesendet."
+      bulk_archived_msg: "Schätzung (en) wurden archiviert."
+      bulk_deleted: "Schätzung (en) wurden gelöscht."
+      sent_msg: "Die Schätzung wurde erfolgreich gesendet."
+      converted_to_invoice_msg: "Schätzung (en) wurden in Rechnung umgerechnet. Sie finden sie im Abschnitt Rechnungen"
+      disputed_msg: "Schätzung umstritten."
+      disputed_detail_msg: "%{company_name} wurde über den Konflikt benachrichtigt."
+      cannot_reduce_amount_msg: "Sie können die geschätzte Summe nicht unter den bezahlten Betrag reduzieren."
+      cannot_reduce_amount_detail_msg: "Wenn Sie versehentlich eine Zahlung eingegeben haben, können Sie sie in Ihrem Zahlungsverlauf bearbeiten."
+      saved_msg: "Ihre Schätzung wurde erfolgreich aktualisiert."
+      bulk_action_msg: "Die Schätzungen sind %{action} erfolgreich."
+      converted_to_invoice_msg: "Schätzung erfolgreich in Rechnung konvertiert"
+      estimate_deleted_msg: "Diese Schätzung wurde gelöscht."
+      use_last_estimate_to_create: "Um eine neue Schätzung zu erstellen, verwenden Sie die letzte Schätzung, die an '%{client_name}' gesendet wurde."
+      select_estimate_date: "Wählen Sie das geschätzte Datum aus"
 
     clients:
       client_name: "Kunden Name"

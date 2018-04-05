@@ -156,7 +156,7 @@ class @Estimate
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/en/estimates/new/#{id}'>To create new estimate use the last estimate sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/en/estimates/new/#{id}'>" + I18n.t('views.estimates.use_last_estimate_to_create', client_name: client_name) + "</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -283,38 +283,38 @@ class @Estimate
       flag = true
       # Check if company is selected
       if $("#estimate_company_id").val() is ""
-        applyPopover($("#estimate_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+        applyPopover($("#estimate_company_id_chzn"),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_company'))
         flag = false
         # Check if client is selected
       else if $("#estimate_client_id").val() is ""
-        applyPopover($("#estimate_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
+        applyPopover($("#estimate_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft",I18n.t('views.invoices.select_a_client'))
         flag = false
         # if currency is not selected
       else if $("#estimate_currency_id").val() is "" and $("#estimate_currency_id").is( ":hidden" ) == false
-        applyPopover($("#estimate_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+        applyPopover($("#estimate_currency_id_chzn"),"bottomMiddle","topLeft",I18n.t('views.invoices.select_currency'))
         flag = false
         # check if estimate date is selected
       else if $("#estimate_estimate_date").val() is ""
-        applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle","Select estimate date")
+        applyPopover($("#estimate_estimate_date"),"rightTop","leftMiddle",I18n.t('views.estimates.select_estimate_date'))
         flag =false
         # Check if discount percentage is an integer
       else if $("input#estimate_discount_percentage").val()  isnt "" and ($("input#estimate_discount_percentage").val() < 0)
-        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft",I18n.t('views.invoices.enter_valid_discount'))
         flag = false
         # Check if no item is selected
       else if $("tr.fields:visible").length < 1
-        applyPopover($("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+        applyPopover($("#add_line_item"),"bottomMiddle","topLeft",I18n.t('views.invoices.add_line_item'))
         flag = false
         # Check if item is selected
       else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
         first_item = $("table#estimate_grid_fields tr.fields:visible:first")
-        applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+        applyPopover(first_item,"bottomMiddle","topLeft",I18n.t('views.invoice_line_item.select_an_item'))
         flag = false
       else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft",I18n.t('views.invoices.percentage_must_be_hundred_or_less'))
         flag = false
       else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+        applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft",I18n.t('views.invoices.discount_must_be_less_than_sub_total'))
         flag = false
 
         # Item cost and quantity should be greater then 0
@@ -330,12 +330,12 @@ class @Estimate
             tax2_value = $("option:selected",tax2).val()
 
             if not $.isNumeric(cost.val()) and cost.val() isnt ""
-              applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+              applyPopover(cost,"bottomLeft","topLeft",I18n.t('views.invoices.enter_valid_item_cost'))
               flag = false
             else hidePopover(cost)
 
             if not $.isNumeric(qty.val())  and qty.val() isnt ""
-              applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+              applyPopover(qty,"bottomLeft","topLeft",I18n.t('views.invoices.enter_valid_item_quantity'))
               flag = false
             else hidePopover(qty)
       flag
