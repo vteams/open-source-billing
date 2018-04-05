@@ -21,7 +21,7 @@
 module InvoicesHelper
   include ApplicationHelper
   def new_invoice id, is_draft
-    message = is_draft ? "The invoice has been saved as draft." : "Invoice has been created and sent to #{@invoice.client.organization_name}."
+    message = is_draft ? t('views.invoices.saved_as_draft_msg') : t('views.invoices.created_and_sent_msg', org_name: @invoice.client.organization_name)
     notice = <<-HTML
        <p>#{message}.</p>
     HTML
@@ -30,36 +30,36 @@ module InvoicesHelper
 
   def invoices_archived ids
     notice = <<-HTML
-     <p>#{ids.size} invoice(s) have been archived. You can find them under
+     <p>#{ids.size} #{t('views.invoices.bulk_archived_msg')}
     HTML
     notice.html_safe
   end
 
   def invoices_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} invoice(s) have been deleted. You can find them under
+     <p>#{ids.size} #{t('views.invoices.bulk_deleted_msg')}
     HTML
     notice.html_safe
   end
 
   def payment_for_invoices ids
     notice = <<-HTML
-     <p>Payments of ${amount} against <a>N invoices</a> have been recorded successfully.
+     <p>#{t('views.invoices.bulk_payment_msg', amount: amount)}
     HTML
     notice.html_safe
   end
 
   def send_invoice _message
     notice = <<-HTML
-     <p>Invoice sent successfully.</p>
+     <p>#{t('views.invoices.sent_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def dispute_invoice_message company_name
     notice = <<-HTML
-     <p>Invoice disputed.</p>
-     <p> #{company_name} has been notified of the dispute.</p>
+     <p>#{t('views.invoices.disputed_msg')}</p>
+     <p>#{t('views.invoices.disputed_detail_msg', company_name: company_name)}</p>
     HTML
     notice.html_safe
   end
@@ -115,8 +115,8 @@ module InvoicesHelper
   def invoice_not_updated
     notice = <<-HTML
        <ul>
-         <li>You cannot reduce the invoice total below the amount paid.</li>
-         <li>If you entered a payment by mistake, you can edit it in your payment history.</li>
+         <li>#{t('views.invoices.cannot_reduce_total_msg')}</li>
+         <li>#{t('views.invoices.cannot_reduce_total_detail_msg')}</li>
        </ul>
     HTML
     notice.html_safe

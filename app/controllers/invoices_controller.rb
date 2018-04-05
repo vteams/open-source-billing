@@ -78,7 +78,7 @@ class InvoicesController < ApplicationController
 
   def preview
     @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
-    render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
+    render :action => 'invoice_deleted_message', :notice => t('views.invoices.invoice_deleted') if @invoice == 'invoice deleted'
     respond_to do |format|
       format.html {render template: 'invoices/preview.html.erb', layout:  'pdf_mode'}
       format.js
@@ -107,7 +107,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     if @invoice.invoice_type.eql?("ProjectInvoice")
-      redirect_to :back, alert:  "Project Invoice cannot be updated"
+      redirect_to :back, alert:  t('views.invoices.project_invoice_cannot_updated')
     else
       @invoice.invoice_line_items.build()
       @invoice.build_recurring_schedule if @invoice.recurring_schedule.blank?
@@ -151,7 +151,7 @@ class InvoicesController < ApplicationController
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
           @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-          redirect_to(invoices_url, notice: 'Your Invoice has been updated successfully.')
+          redirect_to(invoices_url, notice: t('views.invoices.updated_msg'))
           return
         else
           redirect_to(invoices_url, alert: invoice_not_updated)
@@ -161,7 +161,7 @@ class InvoicesController < ApplicationController
         @invoice.update_line_item_taxes()
         @invoice.notify(current_user, @invoice.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "index", :controller => "invoices"}, :notice => 'Your Invoice has been updated successfully.')
+        redirect_to({:action => "index", :controller => "invoices"}, :notice => t('views.invoices.updated_msg'))
         return
       else
         format.html { render :action => "edit" }
@@ -204,7 +204,7 @@ class InvoicesController < ApplicationController
     @invoices_with_payments = result[:invoices_with_payments]
     respond_to do  |format|
       format.js
-      format.html { redirect_to invoices_url, notice: "Invoice(s) are #{@action} successfully." }
+      format.html { redirect_to invoices_url, notice: t('views.invoices.bulk_action_msg', action: @action) }
     end
   end
 
@@ -230,7 +230,7 @@ class InvoicesController < ApplicationController
     @action_to_perform = action_to_perform
     @invoices = filter_by_company(@invoices)
     @message = invoices_deleted(invoices_ids) unless invoices_ids.blank?
-    @message += convert_to_credit ? 'Corresponding payments have been converted to client credit.' : 'Corresponding payments have been deleted.'
+    @message += convert_to_credit ? t('views.invoices.payment_converted_msg') : t('views.invoices.payment_deleted')
 
     respond_to { |format| format.js }
   end
@@ -285,9 +285,9 @@ class InvoicesController < ApplicationController
                                   :company_id => @invoice.company_id
                               })
       @invoice.update_attributes(status: 'paid')
-      flash[:notice] = "Invoice has been paid successfully"
+      flash[:notice] = t('views.invoices.paid_msg')
     rescue
-      flash[:alert] = "Something went wrong while payment"
+      flash[:alert] = t('views.invoices.payment_error_msg')
     end
     redirect_to preview_invoices_url(inv_id: params[:inv_id])
   end
@@ -295,7 +295,7 @@ class InvoicesController < ApplicationController
   def send_invoice
     invoice = Invoice.find(params[:id])
     invoice.send_invoice(current_user, params[:id])
-    redirect_to(invoices_url, notice: 'Invoice sent successfully.')
+    redirect_to(invoices_url, notice: t('views.invoices.sent_msg'))
   end
 
   def stop_recurring
@@ -303,9 +303,9 @@ class InvoicesController < ApplicationController
     recurring = invoice.recurring_parent.recurring_schedule
     if recurring.present?
       recurring.update_attributes(enable_recurring: false)
-      redirect_to(invoices_url, notice: 'Invoice recurring stopped successfully.')
+      redirect_to(invoices_url, notice: t('views.invoices.recurring_stopped_msg'))
     else
-      redirect_to(invoices_url, alert: 'Invoice recurring can not stopped.')
+      redirect_to(invoices_url, alert: t('views.invoices.recurring_cannot_stopped_msg'))
     end
   end
 
