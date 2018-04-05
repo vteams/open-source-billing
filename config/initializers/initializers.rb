@@ -288,7 +288,8 @@ LANGUAGES = [
     ['Slovak', 'sk'],
     ['Italian', 'it'],
     ['Arabic', 'ar'],
-    ['Urdu', 'ur']
+    ['Urdu', 'ur'],
+    ['Brazilian Portuguese', 'pt-BR']
 ]
 
 RECURRING_FREQUENCY = [['weekly', '1.week'], ['2 weeks', '2.weeks'], ['4 weeks', '4.weeks'], ['monthly', '1.month'], ['2 months', '2.months'], ['4 months','4.months'], ['6 months', '6.months'], ['yearly', '1.year'], ['2 years', '2.years'], ['3 years', '3.years']]

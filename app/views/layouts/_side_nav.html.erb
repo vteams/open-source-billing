@@ -78,7 +78,7 @@
         </li>
 
         <li>
-          <%= active_link_to "/reports/payments_collected", title: t('header.links.reports.reports') do %>
+          <%= active_link_to "/#{locale}/reports/payments_collected", title: t('header.links.reports.reports') do %>
               <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
               <span><%= t('header.links.reports.reports') %></span>
           <% end %>
