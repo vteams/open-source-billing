@@ -53,7 +53,7 @@
                           remote: true  unless invoice.status.eql?("paid") %>
             </li>
             <li>
-              <%= link_to raw("<i class='material-icons close'>close</i>"),
+              <%= link_to raw("<i class='material-icons close'>close</i>#{t('views.invoices.stop_recurring')}"),
                           stop_recurring_invoice_path(invoice) if invoice.is_recurring_invoice? %>
             </li>
           </ul>
