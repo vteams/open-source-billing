@@ -52,7 +52,7 @@ class TasksController < ApplicationController
 
     if Task.is_exists?(params[:task][:name], company_id)
       @task_exists = true
-      redirect_to(new_task_path, :alert => "Task with same name already exists") unless params[:quick_create]
+      redirect_to(new_task_path, :alert => t('views.tasks.duplicate_name')) unless params[:quick_create]
       return
     end
     @task = Task.new(task_params)
@@ -64,7 +64,7 @@ class TasksController < ApplicationController
       if @task.save
         format.js
         format.json { render :json => @task, :status => :created, :location => @task }
-        redirect_to tasks_url, notice: 'Task was successfully created.' unless params[:quick_create]
+        redirect_to tasks_url, notice: t('views.tasks.created_msg') unless params[:quick_create]
         return
       else
         format.js
@@ -78,7 +78,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       associate_entity(params, @task)
-      redirect_to tasks_url, notice: 'Task was successfully updated.'
+      redirect_to tasks_url, notice: t('views.tasks.updated_msg')
     else
       render :edit
     end
@@ -87,7 +87,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to tasks_url, notice: t('views.tasks.destroyed_msg')
   end
 
   def filter_tasks
@@ -105,7 +105,7 @@ class TasksController < ApplicationController
     @tasks = result[:tasks]
     @message = get_intimation_message(result[:action_to_perform], result[:task_ids])
     @action = result[:action]
-    redirect_to tasks_url, notice: "Task(s) are #{@action} successfully."
+    redirect_to tasks_url, notice: t('views.tasks.bulk_action_msg', action: @action)
   end
 
   def undo_actions

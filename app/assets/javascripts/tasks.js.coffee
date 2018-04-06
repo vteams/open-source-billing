@@ -14,22 +14,22 @@ class @Task
 
       flag = false
       if name is ""
-        applyPopover($("#task_name"),"bottomMiddle","topLeft","Enter a name for the task")
+        applyPopover($("#task_name"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_name'))
         flag = false
       else if rate is ""
-        applyPopover($("#task_rate"),"bottomMiddle","topLeft","Enter rate per hour for the task")
+        applyPopover($("#task_rate"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_rate'))
         flag = false
         hidePopover($("#task_name"))
       else if rate < 0
-        applyPopover($("#task_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the task")
+        applyPopover($("#task_rate"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_positive_rate'))
         flag = false
         hidePopover($("#task_name"))
       else if association_name == undefined
         hidePopover($("#task_rate"))
-        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.tasks.atleast_one_company_selected'))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
         hidePopover($("#task_rate"))
-        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.tasks.atleast_one_company_selected'))
         flag = false
       else
         flag = true
