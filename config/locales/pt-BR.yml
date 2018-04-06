@@ -681,6 +681,16 @@ pt-BR:
       estimated_time: "Tempo estimado"
       time_logged: "Tempo registrado"
       project_detail: "Detalhe do Projeto"
+      created_msg: "Projeto foi criado com sucesso."
+      updated_msg: "Projeto foi atualizado com sucesso."
+      destroyed_msg: "Projeto foi destruído com sucesso."
+      bulk_action_msg: "Project(s) são %{action} com sucesso."
+      bulk_archived_msg: "projeto (s) foram arquivados. Você pode encontrá-los sob"
+      to_move_archive: "para mover projetos arquivados de volta para ativos."
+      bulk_deleted_msg: "projeto (s) foram excluídos. Você pode encontrá-los sob"
+      to_move_deleted: "para mover os projetos excluídos de volta para ativos."
+      name_required: "Campo Nome do Projeto é obrigatório"
+      estimate_should_be_greater_than_zero: "O tempo estimado deve ser maior que zero"
 
     import_data:
       import_data: "Datos de importacion"

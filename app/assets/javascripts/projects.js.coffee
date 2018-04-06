@@ -85,15 +85,15 @@ class @Project
     flag = true
     if $("#project_project_name").val() is ""
       flag = false
-      applyPopover($("strong.project_name"),"bottomMiddle","topLeft","Project Name field is required")
+      applyPopover($("strong.project_name"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
     else if $("#project_client_id").val() is ""
       hidePopover(jQuery("#project_project_name"))
-      applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
+      applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_client'))
       flag = false
     else if ($("#project_total_hours").val() < 0)
       hidePopover($("#project_client_id").parents('.select-wrapper'))
       flag = false
-      applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
+      applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
     else
       hidePopover(jQuery("#project_total_hours"))
       flag = true
@@ -111,15 +111,15 @@ class @Project
       flag = true
       if $("#project_project_name").val() is ""
         flag = false
-        applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft","Project Name field is required")
+        applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
       else if $("#project_client_id").val() is ""
         hidePopover(jQuery("#project_project_name"))
-        applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft","Select a client")
+        applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_client'))
         flag = false
       else if ($("#project_total_hours").val() < 0)
         hidePopover($("#project_client_id").parents('.select-wrapper'))
         flag = false
-        applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft","Time Estimate should be greater than zero")
+        applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
       else
         hidePopover(jQuery("#project_total_hours"))
         flag = true

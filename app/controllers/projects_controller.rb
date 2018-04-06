@@ -62,7 +62,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.company_id = get_company_id
     if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
+      redirect_to @project, notice: t('views.projects.created_msg')
     else
       render :new
     end
@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to @project , notice: 'Project was successfully updated.'
+      redirect_to @project , notice: t('views.projects.updated_msg')
     else
       render :edit
     end
@@ -80,14 +80,13 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+    redirect_to projects_url, notice: t('views.projects.destroyed_msg')
   end
 
   def sort_column
     params[:sort] ||= 'created_at'
     Project.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
   end
-
 
   def sort_direction
     params[:direction] ||= 'desc'
@@ -100,7 +99,7 @@ class ProjectsController < ApplicationController
     @project_has_deleted_clients = project_has_deleted_clients?(@projects)
     @message = get_intimation_message(result[:action_to_perform], result[:project_ids])
     @action = result[:action]
-    redirect_to projects_path, notice: "Project(s) are #{@action} successfully."
+    redirect_to projects_path, notice: t('views.projects.bulk_action_msg', action: @action)
   end
 
   def undo_actions

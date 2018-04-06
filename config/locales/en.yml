@@ -749,6 +749,16 @@ en:
       estimated_time: "Estimated Time"
       time_logged: "Time Logged"
       project_detail: "Project Detail"
+      created_msg: "Project was successfully created."
+      updated_msg: "Project was successfully updated."
+      destroyed_msg: "Project was successfully destroyed."
+      bulk_action_msg: "Project(s) are %{action} successfully."
+      bulk_archived_msg: "project(s) have been archived. You can find them under"
+      to_move_archive: "to move archived projects back to active."
+      bulk_deleted_msg: "project(s) have been deleted. You can find them under"
+      to_move_deleted: "to move deleted projects back to active."
+      name_required: "Project Name field is required"
+      estimate_should_be_greater_than_zero: "Time Estimate should be greater than zero"
 
     import_data:
       import_data: "Import Data"

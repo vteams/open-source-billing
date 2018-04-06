@@ -55,7 +55,6 @@ module ProjectsHelper
     end
   end
 
-
   def staff_in_other_company?(company_id, staff)
     flag = false
     if company_id.present? and staff.present?
@@ -67,7 +66,6 @@ module ProjectsHelper
     end
     flag
   end
-
 
   def load_staff(action,company_id, staff = nil)
     account_level = current_user.current_account.staffs.unarchived
@@ -94,7 +92,6 @@ module ProjectsHelper
     staffs + load_staff('edit',company_id)
   end
 
-
   def load_staffs_for_project(action , company_id, staff)
     if staff.present? and staff.staff_id.present? and staff.staff.nil?
       load_deleted_staff(staff, company_id)
@@ -115,18 +112,18 @@ module ProjectsHelper
 
   def projects_archived ids
     notice = <<-HTML
-     <p>#{ids.size} project(s) have been archived. You can find them under
-     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='projects/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived projects back to active.</p>
+     <p>#{ids.size} #{t('views.projects.bulk_archived_msg')}
+     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">#{t('views.common.archived')}</a> #{t('views.items.section_on_page')}</p>
+     <p><a href='projects/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">#{t('views.items.undo_action')}</a> #{t('views.projects.to_move_archive')}</p>
     HTML
     notice.html_safe
   end
 
   def projects_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} project(s) have been deleted. You can find them under
-     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='projects/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted projects back to active.</p>
+     <p>#{ids.size} #{t('views.projects.bulk_deleted_msg')}
+     <a href="?status=deleted" data-remote="true">#{t('views.common.deleted')}</a> #{t('views.items.section_on_page')}</p>
+     <p><a href='projects/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">#{t('views.items.undo_action')}</a> #{t('views.projects.to_move_deleted')}</p>
     HTML
     notice.html_safe
   end
