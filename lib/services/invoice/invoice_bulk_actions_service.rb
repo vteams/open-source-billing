@@ -41,8 +41,10 @@ module Services
     end
 
     def destroy
-      invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
-      invoices_for_delete = @invoices - invoices_with_payments
+      # invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
+      # invoices_for_delete = @invoices - invoices_with_payments
+      invoices_for_delete = @invoices
+      invoices_with_payments = nil
       invoices_for_delete.each do |invoice|
         invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
       end
@@ -54,8 +56,10 @@ module Services
     end
 
     def destroy_archived
-      invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
-      invoices_for_delete = @invoices - invoices_with_payments
+      # invoices_with_payments = @invoices.select { |invoice| invoice.has_payment? }
+      # invoices_for_delete = @invoices - invoices_with_payments
+      invoices_for_delete = @invoices
+      invoices_with_payments = nil
       invoices_for_delete.each do |invoice|
         invoice.invoice_line_items.only_deleted.map(&:really_destroy!)
       end
