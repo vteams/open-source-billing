@@ -23,21 +23,21 @@ module ClientsHelper
 
   def new_client id
     notice = <<-HTML
-     <p>Client has been created successfully.</p>
+     <p>#{t('views.clients.created_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def clients_archived ids
     notice = <<-HTML
-     <p>#{ids.size} client(s) have been archived. You can find them under
+     <p>#{ids.size} #{t('views.clients.bulk_archived_msg')}
     HTML
     notice.html_safe
   end
 
   def clients_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} client(s) have been deleted. You can find them under
+     <p>#{ids.size} #{t('views.clients.bulk_deleted_msg')}
     HTML
     notice.html_safe
   end

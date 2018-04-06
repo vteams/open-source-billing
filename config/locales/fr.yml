@@ -448,6 +448,18 @@ fr:
       active_clients_tooltip: "Ce sont des paiements collectés par mois auprès de clients actifs."
       deleted_clients_tooltip: "Ce sont des paiements collectés par mois auprès des clients supprimés."
       archived_clients_tooltip: "Ce sont des paiements collectés par mois auprès des clients archivés."
+      created_msg: "Le client a été créé avec succès."
+      bulk_archived_msg: "client (s) ont été archivés. Vous pouvez les trouver sous"
+      bulk_deleted_msg: "le (s) client (s) ont été supprimés. Vous pouvez les trouver sous"
+      updated_msg: "Le client a été mis à jour avec succès."
+      bulk_action_msg: "Les clients sont %{action} réussis."
+      org_name_required: "Le nom de l'organisation est requis"
+      first_or_last_name_required: "Prénom ou Nom est requis"
+      email_required: "Le courriel est requis"
+      invalid_email: "Email invalide"
+      invalid_business_phone: "Numéro de téléphone professionnel incorrect"
+      invalid_mobile_number: "Numéro de portable invalide"
+      atleast_one_company_required: "Sélectionnez au moins une entreprise pour la tâche"
 
     items:
       new: "Nouvel article"

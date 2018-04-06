@@ -125,9 +125,9 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes(client_params)
-        format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
+        format.html { redirect_to @client, :notice => t('views.clients.updated_msg') }
         format.json { head :no_content }
-        redirect_to(clients_path, :notice => 'Your client has been updated successfully.')
+        redirect_to(clients_path, :notice => t('views.clients.updated_msg'))
         return
       else
         format.html { render :action => "edit" }
@@ -155,7 +155,7 @@ class ClientsController < ApplicationController
     #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
     @action =  result[:action]
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: "Client(s) are #{@action} successfully." }
+      format.html { redirect_to clients_url, notice: t('views.clients.bulk_action_msg', action: @action) }
       format.js
     end
   end

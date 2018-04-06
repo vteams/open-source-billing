@@ -25,27 +25,27 @@ class @Client
       no_of_selected_companies = $('.company_checkbox:checked').length
 
       if jQuery("#client_organization_name").val() is ""
-        applyQtip(jQuery("#client_organization_name"), "Orangization name is required", 'topRight')
+        applyQtip(jQuery("#client_organization_name"), I18n.t("views.clients.org_name_required"), 'topRight')
         flag = false
       else if client_fname is "" and client_lname is ""
-        applyQtip(jQuery("#client_first_name"), "First or Last Name is required", 'topRight')
+        applyQtip(jQuery("#client_first_name"), I18n.t("views.clients.first_or_last_name_required"), 'topRight')
         flag = false
       else if client_email is ""
-        applyQtip(jQuery("#client_email"), "Email is required", 'topRight')
+        applyQtip(jQuery("#client_email"), I18n.t("views.clients.email_required"), 'topRight')
         flag = false
       else unless pattern.test(client_email)
-        applyQtip(jQuery("#client_email"), "Invalid email", 'topRight')
+        applyQtip(jQuery("#client_email"), I18n.t("views.clients.invalid_email"), 'topRight')
         flag = false
       else if client_phone isnt "" and !pattern_phone.test(client_phone)
-        applyQtip(jQuery("#client_business_phone"), "Invalid business phone number", 'topRight')
+        applyQtip(jQuery("#client_business_phone"), I18n.t("views.clients.invalid_business_phone"), 'topRight')
         flag = false
       else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
-        applyQtip(jQuery("#client_mobile_number"), "Invalid mobile number", 'topRight')
+        applyQtip(jQuery("#client_mobile_number"), I18n.t("views.clients.invalid_mobile_number"), 'topRight')
         flag = false
       else if association_name == undefined
-        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        applyPopover($("input[name=association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
-        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the task")
+        applyPopover($("input[name=association]"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
         flag = false
       else
         flag = true
