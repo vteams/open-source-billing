@@ -94,7 +94,7 @@ class ItemsController < ApplicationController
     company_id = get_company_id()
     if Item.is_exists?(params[:item][:item_name], company_id)
       @item_exists = true
-      redirect_to(items_path, :alert => "Item with same name already exists") unless params[:quick_create]
+      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:quick_create]
       return
     end
     @item = Item.new(item_params)
@@ -126,7 +126,7 @@ class ItemsController < ApplicationController
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
-        format.html { redirect_to(items_path, :notice => 'Your item has been updated successfully.') }
+        format.html { redirect_to(items_path, :notice => t('views.items.item_updated')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
@@ -162,7 +162,7 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item(s) are #{@action} successfully." }
+      format.html { redirect_to items_url, notice: t('views.clients.bulk_action_msg') }
       format.js
       format.json
     end
