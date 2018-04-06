@@ -79,7 +79,7 @@
 
                   <div class="field_row">
                     <%= f.hidden_field :invoice_id %>
-                    <div class="label_field left single">Payment (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
+                    <div class="label_field left single"><%= t('payment') %> (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
                     <div class="small_field floating-left">
                       <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount text-field-height" %>
                       <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
@@ -88,7 +88,7 @@
                       <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full fix-left-and-opacity checkbox-position" name="payments[][paid_full]"/>
 
                       <div id="<%= index %>" style="display:none" class="rem_payment_amount " value="<%= Payment.invoice_remaining_amount(payment.invoice.id) %>"></div>
-                      <p><%= f.label(:paid_full, :class => 'text-left paid_full_label', :for => "payments_#{index}_paid_full") { "Pay Full" } %></p>
+                      <p><%= f.label(:paid_full, :class => 'text-left paid_full_label', :for => "payments_#{index}_paid_full") { t('views.payments.payfull') } %></p>
                     </div>
                   </div>
 
@@ -107,9 +107,9 @@
                   <!--field_row-->
 
                   <div class="field_row payment-method">
-                    <div class="label_field left single"><%= f.label "Method", :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
+                    <div class="label_field left single"><%= f.label t('views.common.method'), :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
                     <div class="small_field">
-                      <%= f.select :payment_method, PAYMENT_METHODS, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
+                      <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
                     </div>
                     <span>
                         <div class="date-wrapper">
@@ -128,7 +128,7 @@
                   <!--field_row-->
 
                   <div class="field_row">
-                    <div class="label_field left single"><%= f.label :notes, :for => "payments_#{index}_notes", :class=> 'label-font'  %></div>
+                    <div class="label_field left single"><%= f.label :notes, t('views.common.notes'), :for => "payments_#{index}_notes", :class=> 'label-font'  %></div>
                     <div class="large_field">
                       <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
                     </div>
@@ -140,7 +140,7 @@
                     <div class="field_check btm">
                       <input type="checkbox" name="payments[][send_payment_notification]" id="payments_<%= index %>_send_payment_notification", class="fix-left-and-opacity checkbox-position"/>
 
-                      <p><%= f.label :send_payment_notification, :for => "payments_#{index}_send_payment_notification" %></p>
+                      <p><%= f.label :send_payment_notification, t('views.payments.send_payment_notification'), :for => "payments_#{index}_send_payment_notification" %></p>
                     </div>
                   </div>
                   <!--field_row-->

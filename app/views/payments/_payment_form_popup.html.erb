@@ -5,11 +5,10 @@
     <%= form_for payment, :html => {:class => 'payment_form form-horizontal', :novalidate => ""} do |f| %>
         <% invoice = payment.invoice %>
         <div class="modal-header clearfix text-content">
-          <h5 class="left text-blue">Enter Payment: <span><%= invoice.client.organization_name %></span> </h5>
+          <h5 class="left text-blue"><%= t('views.dashboard.enter_payment') %>: <span><%= invoice.client.organization_name %></span> </h5>
           <div class="modal-action-btn right">
-            <a href="#" onclick="$('.send_submit').click();" title="Save"><i class="material-icons">done</i></a>
-            <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-            <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
+            <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>"><i class="material-icons">done</i></a>
+            <%= f.submit '', :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
           </div>
         </div>
 
@@ -25,63 +24,65 @@
 
 
         <div class="info-section clearfix">
-          <div class="info-left-section left">
-            <h6 class="text-orange"><%= invoice.invoice_number %> <span> <%= invoice.company.company_name %></span></h6>
-            <div class="date-invoice">
-              <span>Invoice: <small> <%= invoice.invoice_date %> </small></span>
-              <span class="text-blue"> Due: <small> <%= invoice.due_date %></small></span>
-            </div>
-            <div class="terms">
-              <span>Terms:</span> <small> <%= invoice.term %></small>
-            </div>
-            <div class="paymentInfo">
-              <div>
-                <span>Invoice Amount  <em>:</em></span><strong><%= number_to_currency(invoice.invoice_total) %> <small><%= invoice.currency.unit %></small></strong>
+          <div class="row">
+            <div class="info-left-section left col m4">
+              <h6 class="text-orange"><%= invoice.invoice_number %> <span> <%= invoice.company.company_name %></span></h6>
+              <div class="date-invoice">
+                <span><%= t('invoice') %>: <small> <%= invoice.invoice_date %> </small></span>
+                <span class="text-blue"> <%= t('views.invoices.due') %>: <small> <%= invoice.due_date %></small></span>
               </div>
-              <div>
-                <span>Received  <em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id)) %> <small><%= invoice.currency.unit %></small></strong>
+              <div class="terms">
+                <span><%= t('views.common.terms') %>:</span> <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
               </div>
-              <div>
-                <span>Net Due <em>:</em></span><strong><%= number_to_currency(due_amount) %> <small><%= invoice.currency.unit %></strong>
-              </div>
-            </div>
-          </div>
-          <div class="info-right-section right">
-            <div class="row">
-              <div class="input-field col s6">
-                <%= f.select :payment_method, PAYMENT_METHODS, {} %>
-                <label>Method</label>
-              </div>
-              <div class="input-field col s6 datepicker">
-                <%= f.hidden_field :payment_date, :value => f.object.payment_date %>
-                <%= text_field_tag :payment_date, f.object.payment_date %>
-                <i class="material-icons" id="payment_date_picker">date_range</i>
-                <label class="active">Date</label>
+              <div class="paymentInfo">
+                <div>
+                  <span><%= t('views.invoices.invoice_amount') %><em>:</em></span><strong><%= number_to_currency(invoice.invoice_total) %> <small><%= invoice.currency.unit %></small></strong>
+                </div>
+                <div>
+                  <span><%= t('views.common.received') %><em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id)) %> <small><%= invoice.currency.unit %></small></strong>
+                </div>
+                <div>
+                  <span><%= t('views.payments.net_due') %><em>:</em></span><strong><%= number_to_currency(due_amount) %> <small><%= invoice.currency.unit %></strong>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s6">
-                <%= f.number_field :payment_amount, class: "payment_amount", placeholder: 0 %>
-                <%= f.label :payment_amount, "Payment #{invoice.currency.unit}", class: 'active'%>
+            <div class="info-right-section right col m7">
+              <div class="row">
+                <div class="input-field col s6">
+                  <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {} %>
+                  <label><%= t('views.common.method') %></label>
+                </div>
+                <div class="input-field col s6 datepicker">
+                  <%= f.hidden_field :payment_date, :value => f.object.payment_date %>
+                  <%= text_field_tag :payment_date, f.object.payment_date %>
+                  <i class="material-icons" id="payment_date_picker">date_range</i>
+                  <label class="active"><%= t('views.common.date') %></label>
+                </div>
               </div>
-              <div class="checkbox-field inline-checkbox col s6">
-                <input type="checkbox" name="payment_paid_full" class="filled-in pay_full" id="payment_paid_full" />
-                <label for="payment_paid_full">Pay Full</label>
+              <div class="row">
+                <div class="input-field col s6">
+                  <%= f.number_field :payment_amount, class: "payment_amount", placeholder: 0 %>
+                  <%= f.label :payment_amount, "#{t('payment')} #{invoice.currency.unit}", class: 'active'%>
+                </div>
+                <div class="checkbox-field inline-checkbox col s6">
+                  <input type="checkbox" name="payment_paid_full" class="filled-in pay_full" id="payment_paid_full" />
+                  <label for="payment_paid_full"><%= t('views.payments.payfull') %></label>
+                </div>
               </div>
-            </div>
-            <div class="checkbox-field row">
-              <% if client_credit > 0 %>
-                  <div class="col s12">
-                    <input type="checkbox" class="filled-in apply_credit" id="filled-in-box" />
-                    <label for="filled-in-box"> <%= t('views.payments.apply_from_credit') %> <%= payment.invoice.currency.present? ? payment.invoice.currency.code : 'USD' %>
-                      <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %>
-                      <%= t('views.common.available') %>
-                    </label>
-                  </div>
-              <% end %>
-              <div class="col s12">
-                <input type="checkbox" name="payment_send_payment_notification" class="filled-in" id="payment_send_payment_notification" />
-                <label for="payment_send_payment_notification">Send payment notification</label>
+              <div class="checkbox-field row">
+                <% if client_credit > 0 %>
+                    <div class="col s12">
+                      <input type="checkbox" class="filled-in apply_credit" id="filled-in-box" />
+                      <label for="filled-in-box"> <%= t('views.payments.apply_from_credit') %> <%= payment.invoice.currency.present? ? payment.invoice.currency.code : 'USD' %>
+                        <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %>
+                        <%= t('views.common.available') %>
+                      </label>
+                    </div>
+                <% end %>
+                <div class="col s12">
+                  <input type="checkbox" name="payment_send_payment_notification" class="filled-in" id="payment_send_payment_notification" />
+                  <label for="payment_send_payment_notification"><%= t('views.payments.send_payment_notification') %></label>
+                </div>
               </div>
             </div>
           </div>
@@ -93,6 +94,5 @@
           </div>
         </div>
     <% end %>
-
   </div>
 </div>

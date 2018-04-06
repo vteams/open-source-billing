@@ -54,16 +54,16 @@ class @Payment
       rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
       rem_credit = parseFloat(jQuery("#rem_credit").attr("value"))
       if jQuery("#payment_payment_amount").val() is ""
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "Enter payment value greater than 0.")
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.value_greater_than_zero_msg"))
         flag = false
       else if pay_amount <= 0
-        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", "Payments with 0 or negivate amount are not allowed. Enter a value greater than 0.")
+        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.negative_value_not_allowed_msg"))
         flag = false
       else if pay_amount > rem_amount
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "The payment amount cannot exceed the invoice balance.")
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.exceeded_payment_amount_msg"))
         flag = false
       else if pay_amount > rem_credit and rem_credit
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "Payment from credit cannot exceed available credit.")
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.credit_exceeded_msg"))
         flag = false
       else
         flag = true
@@ -117,12 +117,12 @@ jQuery ->
     # show a message if 0 is entered in payment amount
     payment_fields.each ->
       if parseFloat(jQuery(this).val()) is 0
-        jQuery(this).qtip({content: text: "Payment with 0 amount is not allowed. Enter a value greater than 0.", show: event: false, hide: event: false})
+        jQuery(this).qtip({content: text: I18n.t("views.payments.negative_value_not_allowed_msg"), show: event: false, hide: event: false})
         jQuery(this).focus().qtip().show()
         validate = false
     payment_fields.each ->
       if jQuery(this).val() is ""
-        jQuery(this).qtip({content: text: "Enter a value greater than 0", show: event: false, hide: event: false})
+        jQuery(this).qtip({content: text: I18n.t("views.payments.value_greater_than_zero_msg"), show: event: false, hide: event: false})
         jQuery(this).focus().qtip().show()
         validate = false
     validate
@@ -137,10 +137,10 @@ jQuery ->
   jQuery('#invoice_selection').submit ->
     invoices = jQuery("table.table_listing tbody")
     flag = if invoices.find('tr.no-invoices').length
-      jQuery("#invoice_popup_error").show().find('span').html('There are no unpaid invoices to enter payment against.')
+      jQuery("#invoice_popup_error").show().find('span').html(I18n.t('views.payments.no_unpaid_invoice_msg'))
       false
     else if invoices.find(":checked").length is 0
-      jQuery("#invoice_popup_error").show().find('span').html("You haven't selected any invoice. Please select one or more invoices and try again.")
+      jQuery("#invoice_popup_error").show().find('span').html(I18n.t("views.dashboard.selected_amount_detail"))
       false
     else
       true
@@ -153,12 +153,12 @@ jQuery ->
          flag = false
          if jQuery('.alert-success').length > 0
            jQuery('.alert-success').hide()
-         jQuery(".alert.alert-error").show().find('span').html("You cannot edit credit payment")
+         jQuery(".alert.alert-error").show().find('span').html(I18n.t('views.payments.cannot_edit_msg'))
       if jQuery(this).hasClass 'disabled'
         flag = false
         if jQuery('.alert-success').length > 0
           jQuery('.alert-success').hide()
-        jQuery(".alert.alert-error").show().find('span').html("You cannot edit payment with paypal")
+        jQuery(".alert.alert-error").show().find('span').html(I18n.t('views.payments.connot_edit_paypal_msg'))
       flag
   window.bind_edit_payment_links()
 

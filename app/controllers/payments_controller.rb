@@ -76,7 +76,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.save
         Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
-        format.html { redirect_to payments_path, :notice => 'The payment has been recorded successfully.' }
+        format.html { redirect_to payments_path, :notice => t('views.payments.saved_msg') }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else
         format.html { render :action => "new" }
@@ -93,7 +93,7 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(payment_params)
         @payment.update_attribute(:send_payment_notification,params[:payments][0][:send_payment_notification]) if params[:payments] and params[:payments][0][:send_payment_notification]
         @payment.notify_client(current_user)  if params[:payments] and params[:payments][0][:send_payment_notification]
-        format.html { redirect_to(payments_url, :notice => 'Your Payment has been updated successfully.') }
+        format.html { redirect_to(payments_url, :notice => t('views.payments.updated_msg')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
@@ -132,10 +132,10 @@ class PaymentsController < ApplicationController
     notice = ""
     alert = ""
     if paid_invoice_ids.present?
-      notice =  "Payment(s) against invoice(s) with invoice # #{paid_invoice_ids.join(",")} have been recorded successfully."
+      notice =  t('views.payments.bulk_payment_recorded_msg', paid_ids: paid_invoice_ids.join(','))
     end
     if unpaid_invoice_ids.present?
-      alert = "Payment(s) against invoice(s) with invoice # #{unpaid_invoice_ids.join(",")} have failed due to client's insufficiant credit balance."
+      alert = t('views.payments.bulk_payment_failed_msg', unpaid_ids: unpaid_invoice_ids.join(','))
     end
     redirect_to(where_to_redirect, :notice => notice , :alert => alert)
   end
@@ -187,7 +187,7 @@ class PaymentsController < ApplicationController
     @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
     #filter invoices by company
     @payments = filter_by_company(@payments)
-    flash[:notice] = 'Payment(s) are deleted successfully'
+    flash[:notice] = t('views.payments.bulk_deleted_msg')
     respond_to { |format| format.js }
   end
 
