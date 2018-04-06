@@ -28,16 +28,16 @@ class @Tax
     jQuery("form#new_tax, form.edit_tax,form#create_tax").submit ->
       flag = true
       flag = if jQuery.trim(jQuery("#tax_name").val()) is ""
-        applyPopover(jQuery("#tax_name"),"Enter tax name")
+        applyPopover(jQuery("#tax_name"), I18n.t('views.taxes.enter_name'))
         false
       else if jQuery.trim(jQuery("#tax_percentage").val()) is ""
-        applyPopover(jQuery("#tax_percentage"),"Enter tax percentage")
+        applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.enter_percentage'))
         false
       else if isNaN(jQuery("#tax_percentage").val())
-        applyPopover(jQuery("#tax_percentage"),"Percentage must be numeric value")
+        applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.percentage_must_be_numeric'))
         false
       else if parseFloat(jQuery("#tax_percentage").val()) > 100
-        applyPopover(jQuery("#tax_percentage"),"Percentage must be hundred or less")
+        applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.percentage_must_be_numeric'))
         false
       flag
 

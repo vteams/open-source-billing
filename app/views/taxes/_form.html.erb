@@ -1,6 +1,6 @@
 <div id="tax_form_popup" class="modal editableModal editTaxModal edititemModal">
   <div class="modal-content">
-  <%= form_for(taxis, :html => {:novalidate => ""}) do |f| %>
+  <%= form_for(@taxis, :html => {:novalidate => ""}) do |f| %>
       <div class="modal-header clearfix text-content">
         <h5 class="left"><%= t('views.taxes.taxes') %></h5>
         <div class="modal-action-btn right">

@@ -76,7 +76,7 @@ class TaxesController < ApplicationController
   def create
     if Tax.is_exits?(params[:tax][:name])
       @tax_exists = true
-      redirect_to(new_tax_path, :alert => "Tax with same name already exists") unless params[:quick_create]
+      redirect_to(taxes_path, :alert => t('views.taxes.duplicate_name')) unless params[:quick_create]
       return
     end
     @taxis = Tax.new(taxes_params)
@@ -84,7 +84,7 @@ class TaxesController < ApplicationController
     respond_to do |format|
       if @taxis.save
         format.js
-        format.html { redirect_to @taxis, notice: 'Tax was successfully created.' }
+        format.html { redirect_to @taxis, notice: t('views.taxes.created_msg') }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
         redirect_to({:action => "index", :controller => "taxes"}, :notice => new_tax_message) unless params[:quick_create]
@@ -103,7 +103,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       if @taxis.update_attributes(taxes_params)
-        format.html { redirect_to taxes_url, notice: 'Tax was successfully updated.' }
+        format.html { redirect_to taxes_url, notice: t('views.taxes.updated_msg') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -131,7 +131,7 @@ class TaxesController < ApplicationController
     @action = result[:action]
     respond_to { |format|
       format.js
-      format.html {redirect_to taxes_url, notice: "Tax(s) are #{@action} successfully."}
+      format.html {redirect_to taxes_url, notice: t('views.taxes.bulk_action_msg', action: @action)}
     }
   end
 
