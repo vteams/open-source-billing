@@ -750,6 +750,17 @@ en:
       staff: "Staff"
       assign_role: "Assign Role"
       saved_msg: "User has been saved successfully."
+      duplicate_email: "User with same email already exists."
+      unable_to_save: "Failed to save user. Make sure you have entered correct record."
+      updated_msg: "User has been updated successfully."
+      bulk_delete: "User(s) has been deleted successfully."
+      full_name_required: "Full Name is required"
+      email_required: "Email is required."
+      email_invalid: "Email is invalid."
+      password_required: "Password is required."
+      pass_must_have_8_char: "Password length must be greater than or equal to 8."
+      pass_confirmation_required: "Password confirmation is required."
+      pass_and_confirm_pass_should_same: "Password and confirmation should be matched."
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

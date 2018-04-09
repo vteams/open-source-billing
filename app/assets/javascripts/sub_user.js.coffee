@@ -39,29 +39,29 @@ class @SubUser
       editMode = $("#password").parent().hasClass('editMode')
       console.log editMode
       if $("#user_name").val() is ""
-        applyPopover($("#user_name"),"bottomMiddle","topLeft","Full Name required")
+        applyPopover($("#user_name"),"bottomMiddle","topLeft", I18n.t("views.users.full_name_required"))
         flag = false
       else if email is ""
         hidePopover($("#user_name"))
-        applyPopover($("#email"),"bottomMiddle","topLeft","Email required")
+        applyPopover($("#email"),"bottomMiddle","topLeft", I18n.t("views.users.email_required"))
         flag = false
       else unless pattern.test(email)
-        applyPopover($("#email"),"bottomMiddle","topLeft","Invalid email")
+        applyPopover($("#email"),"bottomMiddle","topLeft", I18n.t("views.users.email_invalid"))
         flag = false
       else if !editMode and $("#password").val is ""
         hidePopover($("#email"))
-        applyPopover($("#password"), 'bottomMiddle', "topLeft", "Password required")
+        applyPopover($("#password"), 'bottomMiddle', "topLeft", I18n.t("views.users.password_required"))
         flag = false
       else if !editMode and $("#password").val().length < 8
-        applyPopover($("#password"), 'bottomMiddle', "topLeft", "Password length must be greator than or equal to 8")
+        applyPopover($("#password"), 'bottomMiddle', "topLeft", I18n.t("views.users.pass_must_have_8_char"))
         flag = false
       else if !editMode and $("#password_confirmation").val is ""
         hidePopover($("#password"))
-        applyPopover($("#password_confirmation"), 'bottomMiddle', "topLeft", "Password confirmation required")
+        applyPopover($("#password_confirmation"), 'bottomMiddle', "topLeft", I18n.t("views.users.pass_confirmation_required"))
         flag = false
       else if !editMode and $("#password").val() != $("#password_confirmation").val()
         hidePopover($("#password"))
-        applyPopover($("#password_confirmation"), 'bottomMiddle', "topLeft", "Password and confirmation should be matched")
+        applyPopover($("#password_confirmation"), 'bottomMiddle', "topLeft", I18n.t("views.users.pass_and_confirm_pass_should_same"))
         flag = false
       else
         hidePopover($("#password_confirmation"))

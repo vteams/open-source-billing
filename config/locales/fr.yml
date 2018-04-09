@@ -688,6 +688,17 @@ fr:
       staff: "Personnel"
       assign_role: "Attribuer un rôle"
       saved_msg: "L'utilisateur a été enregistré avec succès."
+      duplicate_email: "L'utilisateur avec le même email existe déjà."
+      unable_to_save: "Impossible d'enregistrer l'utilisateur. Assurez-vous que vous avez entré un enregistrement correct."
+      updated_msg: "L'utilisateur a été mis à jour avec succès."
+      bulk_delete: "Utilisateur (s) a été supprimé avec succès."
+      full_name_required: "Le nom complet est requis."
+      email_required: "Le courriel est requis"
+      email_invalid: "Le courriel est invalide."
+      password_required: "Mot de passe requis."
+      pass_must_have_8_char: "La longueur du mot de passe doit être supérieure ou égale à 8."
+      pass_confirmation_required: "La confirmation du mot de passe est requise."
+      pass_and_confirm_pass_should_same: "Le mot de passe et la confirmation doivent correspondre."
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

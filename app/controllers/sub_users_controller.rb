@@ -31,7 +31,7 @@ class SubUsersController < ApplicationController
     @sub_user.skip_confirmation!
     respond_to do |format|
       if @sub_user.already_exists?(params[:email])
-        redirect_to(sub_users_url, alert: 'User with same email already exists.')
+        redirect_to(sub_users_url, alert: t('views.users.duplicate_email'))
         return
       elsif @sub_user.save
         # assign current user's company to newly created user
@@ -46,12 +46,12 @@ class SubUsersController < ApplicationController
           @users = User.unscoped
           format.js
         else
-          redirect_to(sub_users_url, notice: 'User has been saved successfully')
+          redirect_to(sub_users_url, notice: t('views.users.saved_msg'))
         end
         return
       else
         format.js {}
-        format.html { render action: 'new', alert: 'Failed to save user. Make sure you have entered correct record.' }
+        format.html { render action: 'new', alert: t('views.users.unable_to_save') }
       end
     end
   end
@@ -78,9 +78,9 @@ class SubUsersController < ApplicationController
 
     message = if @sub_user.update_attributes(options)
                 @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
-                {notice: 'User has been updated successfully'}
+                {notice: t('views.users.updated_msg')}
               else
-                {alert: 'User can not be updated'}
+                {alert: t('views.users.unable_to_save')}
               end
 
     respond_to do |format|
@@ -97,7 +97,7 @@ class SubUsersController < ApplicationController
   def destroy_bulk
     sub_user = User.where(id: params[:user_ids]).destroy_all
     @users = User.unscoped
-    render json: {notice: 'User(s) has been deleted successfully.',
+    render json: {notice: t('views.users.bulk_delete'),
                   html: render_to_string(action: :settings_listing, layout: false)}
   end
 

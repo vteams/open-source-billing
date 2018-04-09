@@ -694,6 +694,17 @@ pt-BR:
       staff: "Funcionários"
       assign_role: "Atribuir Papel"
       saved_msg: "Usuário foi salvo com sucesso."
+      duplicate_email: "Usuário com o mesmo email já existe."
+      unable_to_save: "Falha ao salvar o usuário. Certifique-se de ter inserido o registro correto."
+      updated_msg: "Usuário foi atualizado com sucesso."
+      bulk_delete: "Usuário(s) foi deletado com sucesso."
+      full_name_required: "Nome completo é obrigatório."
+      email_required: "E-mail é obrigatório."
+      email_invalid: "Email inválido."
+      password_required: "Senha requerida."
+      pass_must_have_8_char: "O comprimento da senha deve ser maior ou igual a 8."
+      pass_confirmation_required: "Confirmação de senha é necessária."
+      pass_and_confirm_pass_should_same: "Senha e confirmação devem ser combinadas."
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"
