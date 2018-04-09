@@ -651,6 +651,7 @@ fr:
       manager: "Directeur"
       staff: "Personnel"
       assign_role: "Attribuer un rôle"
+      updated_password_msg: "Le mot de passe a bien été mis à jour."
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

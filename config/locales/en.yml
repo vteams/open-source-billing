@@ -715,6 +715,7 @@ en:
       manager: "Manager"
       staff: "Staff"
       assign_role: "Assign Role"
+      updated_password_msg: "Password has been successfully updated."
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

@@ -655,6 +655,7 @@ de:
       manager: "Manager"
       staff: "Mitarbeiter"
       assign_role: "Rolle zuweisen"
+      updated_password_msg: "Das Passwort wurde erfolgreich aktualisiert."
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"
