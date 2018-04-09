@@ -1,4 +1,4 @@
-`# Sample localization file for English. Add more files in this directory for other locales.
+# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
@@ -731,6 +731,10 @@ en:
       use_this_template_for: "Use this Template for"
       body: "Body"
       email_from: "Email From"
+      from_email_required: "From Email is required."
+      subject_required: "Subject is required."
+      boy_required: "Body is required."
+      updated_msg: "Email template was successfully updated."
 
     users:
       users: "Users"

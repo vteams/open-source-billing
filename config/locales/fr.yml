@@ -669,6 +669,10 @@ fr:
       use_this_template_for: "Utilisez ce modèle pour"
       body: "corps"
       email_from: "Email de"
+      from_email_required: "De l'email est requis."
+      subject_required: "Le sujet est requis."
+      boy_required: "Le corps est requis."
+      updated_msg: "Le modèle de courriel a été mis à jour avec succès."
 
     users:
       users: "utilisateurs"

@@ -673,6 +673,10 @@ de:
       use_this_template_for: "Diesen Entwurf benutzen für"
       body: "Inhalt"
       email_from: "E-Mail von"
+      from_email_required: "Von E-Mail ist erforderlich."
+      subject_required: "Betreff ist erforderlich."
+      boy_required: "Körper ist erforderlich."
+      updated_msg: "Die E-Mail-Vorlage wurde erfolgreich aktualisiert."
 
     users:
       users: "Benutzer"
