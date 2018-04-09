@@ -69,7 +69,7 @@
       <div class="panel-table">
         <h5>
           <%= t('views.payments.payments') %>
-          <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: 'pull-right', remote: unpaid_invoice_exists?(client.id)) %>
+          <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: "pull-right #{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
         </h5>
         <table class="bordered responsive-table">
           <thead>

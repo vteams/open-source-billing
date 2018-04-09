@@ -4301,3 +4301,10 @@ i.material-icons.close:hover {
 #main-content .breadcrum-bar.card-white-panel.clearfix .input-field .select-wrapper.initialized input.select-dropdown {
   padding-left: 5px;
 }
+
+.disabled_link{
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: silver !important;
+}
