@@ -1,4 +1,4 @@
-# Sample localization file for English. Add more files in this directory for other locales.
+`# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
@@ -360,6 +360,8 @@ en:
       to_create_use_last_sent_invoice: "To create new invoice use the last invoice sent to '%{client_name}'."
       paid_cannot_disputed: "Paid invoice cannot be disputed."
       due_date_should_equal_or_greater: "Due date should be equal or greater than invoice date"
+      recover_clients: "Please recover clients for invoice(s) with invoice# %{ids} to enter payment."
+      cannot_paid: "You cannot pay paid invoices."
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -480,6 +482,7 @@ en:
       estimate_deleted_msg: "This estimate has been deleted."
       use_last_estimate_to_create: "To create new estimate use the last estimate sent to '%{client_name}'."
       select_estimate_date: "Select estimate date"
+      recover_clients: "Please recover clients for estimate(s) with estimate# %{ids} to enter payment."
 
     clients:
       client_name: "Client Name"
@@ -547,6 +550,7 @@ en:
       no_record_msg: "You haven't created any expenses yet."
       no_archived_expense: "You don't have any archived expense."
       no_deleted_expense: "You don't have any deleted expense."
+      bulk_action_msg: "Expenses are %{action} successfully."
 
     items:
       new: "New Item"
@@ -616,6 +620,7 @@ en:
       enter_hours: "Enter hours."
       select_task: "Select a task."
       hours_greated_than_zero: "Enter hours value greater than or equal to 0."
+      deleted_msg: "Log was deleted successfully."
 
     payments:
       payments: "Payment"
@@ -652,6 +657,7 @@ en:
       cannot_edit_msg: "You cannot edit credit payment."
       connot_edit_paypal_msg: "You cannot edit payment with paypal."
       payfull: "Pay Full"
+      bulk_action_msg: "Payment(s) are %{action} successfully."
 
     payment_terms:
       number_of_days: "Number of days"
@@ -695,6 +701,7 @@ en:
       language: "Language"
       side_nav_open: "Side Navigation Open"
       import_data: "Import Data"
+      updated_msg: "Settings are successfully updated."
 
     companies:
       companies: "Companies"
@@ -708,6 +715,9 @@ en:
       browse: "Browse"
       tag_line: "Company Tag Line"
       memo: "Memo"
+      bulk_action_msg: "Companies are %{action} successfully."
+      current_company_action: "Sorry, Current Company cannot be %{action}."
+      create_msg: "Company has been created successfully."
 
     email_templates:
       email_templates: "Email Templates"
@@ -735,6 +745,7 @@ en:
       manager: "Manager"
       staff: "Staff"
       assign_role: "Assign Role"
+      saved_msg: "User has been saved successfully."
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

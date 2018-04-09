@@ -341,6 +341,8 @@ fr:
       to_create_use_last_sent_invoice: "Pour créer une nouvelle facture, utilisez la dernière facture envoyée à '%{client_name}'."
       paid_cannot_disputed: "La facture payée ne peut être contestée."
       due_date_should_equal_or_greater: "La date d'échéance doit être égale ou supérieure à la date de la facture"
+      recover_clients: "Veuillez récupérer les clients pour les factures avec la facture # %{ids} pour entrer le paiement."
+      cannot_paid: "Vous ne pouvez pas payer les factures payées."
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"
@@ -434,6 +436,7 @@ fr:
       estimate_deleted_msg: "Cette estimation a été supprimée."
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Sélectionnez la date d'estimation"
+      recover_clients: "Veuillez récupérer les clients pour estimation (s) avec estimation # %{ids} pour entrer le paiement."
 
     clients:
       client_name: "Nom du client"
@@ -488,6 +491,9 @@ fr:
       invalid_business_phone: "Numéro de téléphone professionnel incorrect"
       invalid_mobile_number: "Numéro de portable invalide"
       atleast_one_company_required: "Sélectionnez au moins une entreprise pour la tâche"
+
+    expenses:
+      bulk_action_msg: "Les dépenses sont %{action} réussies."
 
     items:
       new: "Nouvel article"
@@ -553,6 +559,7 @@ fr:
       enter_hours: "Entrez les heures."
       select_task: "Sélectionnez une tâche."
       hours_greated_than_zero: "Entrez une valeur d'heures supérieure ou égale à 0."
+      deleted_msg: "Le journal a été supprimé avec succès."
 
     payments:
       payments: "paiement"
@@ -589,6 +596,7 @@ fr:
       cannot_edit_msg: "Vous ne pouvez pas modifier le paiement par carte de crédit."
       connot_edit_paypal_msg: "Vous ne pouvez pas modifier le paiement avec paypal."
       payfull: "Payer complet"
+      bulk_action_msg: "Les paiements sont %{action} réussis."
 
     payment_terms:
       number_of_days: "Nombre de jours"
@@ -631,6 +639,7 @@ fr:
       default_currency: "devise par défaut"
       language: "La langue"
       import_data: "Importer des données"
+      updated_msg: "Les paramètres sont mis à jour avec succès."
 
     companies:
       companies: "sociétés"
@@ -644,6 +653,9 @@ fr:
       browse: "feuilleter"
       tag_line: "Société Tag Line"
       memo: "note"
+      bulk_action_msg: "Les entreprises sont %{action} réussies."
+      current_company_action: "Désolé, la société actuelle ne peut pas être %{action}."
+      create_msg: "La société a été créée avec succès."
 
     email_templates:
       email_templates: "email Templates"
@@ -671,6 +683,7 @@ fr:
       manager: "Directeur"
       staff: "Personnel"
       assign_role: "Attribuer un rôle"
+      saved_msg: "L'utilisateur a été enregistré avec succès."
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

@@ -4,5 +4,5 @@
   $('#users_listing').html('<%= escape_javascript render(template: 'sub_users/settings_listing',
    layout: false, format: :html) %>');
   initUserListingEvents();
-  showSuccessMsg('User has been saved successfully.')
+  showSuccessMsg('<%= t('views.users.saved_msg') %>')
 <% end %>

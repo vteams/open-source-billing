@@ -345,6 +345,8 @@ pt-BR:
       to_create_use_last_sent_invoice: "Para criar uma nova fatura, use a última fatura enviada para '%{client_name}'."
       paid_cannot_disputed: "A fatura paga não pode ser contestada."
       due_date_should_equal_or_greater: "A data de vencimento deve ser igual ou maior que a data da fatura"
+      recover_clients: "Recupere os clientes por fatura (s) com a fatura # %{ids} para inserir o pagamento."
+      cannot_paid: "Você não pode pagar faturas pagas."
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -438,6 +440,7 @@ pt-BR:
       estimate_deleted_msg: "Estimation convertie avec succès en facture."
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Selecione data estimada"
+      recover_clients: "Por favor, recupere clientes para estimativa (s) com estimativa # %{ids} para inserir o pagamento."
 
     clients:
       client_name: "Nome do Cliente"
@@ -492,6 +495,9 @@ pt-BR:
       invalid_business_phone: "Número de telefone comercial inválido"
       invalid_mobile_number: "número de celular inválido"
       atleast_one_company_required: "Selecione pelo menos uma empresa para a tarefa"
+
+    expenses:
+      bulk_action_msg: "As despesas são %{action} com sucesso."
 
     items:
       new: "Novo item"
@@ -558,6 +564,7 @@ pt-BR:
       enter_hours: "Digite as horas."
       select_task: "Selecione uma tarefa."
       hours_greated_than_zero: "Insira o valor de horas maior ou igual a 0."
+      deleted_msg: "O registro foi excluído com sucesso."
 
     payments:
       payments: "Pagamento"
@@ -594,6 +601,7 @@ pt-BR:
       cannot_edit_msg: "Você não pode editar o pagamento de crédito."
       connot_edit_paypal_msg: "Você não pode editar o pagamento com paypal."
       payfull: "Pague Completamente"
+      bulk_action_msg: "Pagamentos são %{action} com sucesso."
 
     payment_terms:
       number_of_days: "Número de dias"
@@ -636,6 +644,7 @@ pt-BR:
       side_nav_open: "Navegação Lateral Aberta"
       default_currency: "Moeda Padrão"
       import_data: "Importar dados"
+      updated_msg: "As configurações são atualizadas com sucesso."
 
     companies:
       companies: "Empresas"
@@ -649,6 +658,10 @@ pt-BR:
       browse: "Procurar"
       tag_line: "Tagline da Empresa"
       memo: "Memo"
+      bulk_action_msg: "Empresas são %{action} com sucesso."
+      current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
+      current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
+      create_msg: "Empresa foi criada com sucesso."
 
     email_templates:
       email_templates: "Templates para Emails"
@@ -676,6 +689,7 @@ pt-BR:
       manager: "Gerente"
       staff: "Funcionários"
       assign_role: "Atribuir Papel"
+      saved_msg: "Usuário foi salvo com sucesso."
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"

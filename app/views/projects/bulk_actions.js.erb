@@ -12,7 +12,7 @@ jQuery('.alert').hide();
         status = ''
     end %>
 <%else%>
-    jQuery(".alert.alert-success").show().find('span').html("Project(s) are <%= @action %> successfully.");
+    jQuery(".alert.alert-success").show().find('span').html("<%= t('views.projects.bulk_action_msg', action: @action) %>");
 <% end %>
 
 <%if !params[:project_ids].blank? %>

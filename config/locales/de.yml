@@ -345,6 +345,8 @@ de:
       to_create_use_last_sent_invoice: "Um eine neue Rechnung zu erstellen, verwenden Sie die letzte Rechnung, die an '%{client_name}' gesendet wurde."
       paid_cannot_disputed: "Eine bezahlte Rechnung kann nicht bestritten werden."
       due_date_should_equal_or_greater: "Das Fälligkeitsdatum sollte gleich oder größer als das Rechnungsdatum sein"
+      recover_clients: "Bitte stellen Sie Kunden für Rechnung (en) mit der Rechnungsnummer %{ids} wieder her, um die Zahlung einzugeben."
+      cannot_paid: "Sie können keine bezahlten Rechnungen bezahlen."
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -438,6 +440,7 @@ de:
       estimate_deleted_msg: "Diese Schätzung wurde gelöscht."
       use_last_estimate_to_create: "Um eine neue Schätzung zu erstellen, verwenden Sie die letzte Schätzung, die an '%{client_name}' gesendet wurde."
       select_estimate_date: "Wählen Sie das geschätzte Datum aus"
+      recover_clients: "Bitte reklamieren Sie die Kunden für die Schätzung (en) mit der Schätzung # %{ids}, um die Zahlung einzugeben."
 
     clients:
       client_name: "Kunden Name"
@@ -492,6 +495,9 @@ de:
       invalid_business_phone: "Ungültige Geschäftstelefonnummer"
       invalid_mobile_number: "ungültige Telefon-nummer"
       atleast_one_company_required: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+
+    expenses:
+      bulk_action_msg: "Ausgaben sind %{action} erfolgreich."
 
     items:
       new: "Neuer Gegenstand"
@@ -557,6 +563,7 @@ de:
       enter_hours: "Geben Sie Stunden ein."
       select_task: "Wählen Sie eine Aufgabe."
       hours_greated_than_zero: "Geben Sie Stundenwert größer oder gleich 0 ein."
+      deleted_msg: "Das Protokoll wurde erfolgreich gelöscht."
 
     payments:
       payments: "Bezahlung"
@@ -593,6 +600,7 @@ de:
       cannot_edit_msg: "Sie können die Kreditzahlung nicht bearbeiten."
       connot_edit_paypal_msg: "Sie können die Zahlung nicht mit Paypal bearbeiten."
       payfull: "Voll bezahlen"
+      bulk_action_msg: "Zahlung (en) sind %{action} erfolgreich."
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"
@@ -635,6 +643,7 @@ de:
       default_currency: "Standardwährung"
       language: "Sprache"
       import_data: "Daten importieren"
+      updated_msg: "Einstellungen wurden erfolgreich aktualisiert."
 
     companies:
       companies: "Unternehmen"
@@ -648,6 +657,9 @@ de:
       browse: "Durchsuchen"
       tag_line: "Unternehmen Slogan"
       memo: "Memo"
+      bulk_action_msg: "Unternehmen sind %{action} erfolgreich."
+      current_company_action: "Entschuldigung, das aktuelle Unternehmen kann nicht %{action} sein."
+      create_msg: "Firma wurde erfolgreich erstellt."
 
     email_templates:
       email_templates: "Email Entwurf"
@@ -675,6 +687,7 @@ de:
       manager: "Manager"
       staff: "Mitarbeiter"
       assign_role: "Rolle zuweisen"
+      saved_msg: "Benutzer wurde erfolgreich gespeichert."
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"
