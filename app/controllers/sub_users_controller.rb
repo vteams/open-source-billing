@@ -1,4 +1,5 @@
 class SubUsersController < ApplicationController
+  include SubUsersHelper
   load_and_authorize_resource :user, :only => [:index, :show, :create, :destroy, :update, :new, :edit]
 
   helper_method :sort_column, :sort_direction
@@ -75,8 +76,8 @@ class SubUsersController < ApplicationController
       options.delete(:password)
       options.delete(:password_confirmation)
     end
-
     message = if @sub_user.update_attributes(options)
+                @successfully_updated = true
                 @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
                 {notice: 'User has been updated successfully'}
               else
@@ -85,7 +86,13 @@ class SubUsersController < ApplicationController
 
     respond_to do |format|
       format.js { @users = User.unscoped }
-      format.html { redirect_to(sub_users_url, message) }
+      format.html {
+        if password_has_changed?(params[:user_id], params[:password]) && @successfully_updated.eql?(true)
+          redirect_to(new_user_session_path, message)
+        else
+          redirect_to(sub_users_path, message)
+        end
+      }
     end
   end
 
