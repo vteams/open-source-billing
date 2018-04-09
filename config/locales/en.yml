@@ -611,6 +611,11 @@ en:
       time_logs: "Time logs for"
       no_log_exist: "No Logs exist for"
       create_by: "Created By"
+      invoice_created: "Invoice successfully created."
+      select_project: "Select a project."
+      enter_hours: "Enter hours."
+      select_task: "Select a task."
+      hours_greated_than_zero: "Enter hours value greater than or equal to 0."
 
     payments:
       payments: "Payment"

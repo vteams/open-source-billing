@@ -553,6 +553,11 @@ pt-BR:
       time_logs: "Registros de tempo para"
       no_log_exist: "Não existem logs para"
       create_by: "Criado por"
+      invoice_created: "Fatura criada com sucesso."
+      select_project: "Selecione um projeto."
+      enter_hours: "Digite as horas."
+      select_task: "Selecione uma tarefa."
+      hours_greated_than_zero: "Insira o valor de horas maior ou igual a 0."
 
     payments:
       payments: "Pagamento"

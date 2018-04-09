@@ -548,6 +548,11 @@ fr:
       time_logs: "Journaux de temps pour"
       no_log_exist: "Aucun journal n'existe pour"
       create_by: "Créé par"
+      invoice_created: "Facture créée avec succès."
+      select_project: "Sélectionnez un projet."
+      enter_hours: "Entrez les heures."
+      select_task: "Sélectionnez une tâche."
+      hours_greated_than_zero: "Entrez une valeur d'heures supérieure ou égale à 0."
 
     payments:
       payments: "paiement"
