@@ -2,18 +2,18 @@ module CompaniesHelper
   include ApplicationHelper
   def companies_archived(ids)
     notice = <<-HTML
-     <p>#{ids.size} companies have been archived. You can find them under
-     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='companies/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived companies back to active.</p>
+     <p>#{ids.size} #{t('views.companies.bulk_archived')}
+     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">#{t('views.common.archived')}</a> #{t('views.items.section_on_page')}</p>
+     <p><a href='companies/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">#{t('views.items.undo_action')}</a> #{t('views.companies.move_archived_to_active')}</p>
     HTML
     notice.html_safe
   end
 
   def companies_deleted(ids)
     notice = <<-HTML
-     <p>#{ids.size} companies have been deleted. You can find them under
-     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='companies/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted companies back to active.</p>
+     <p>#{ids.size} #{t('views.companies.bulk_deleted_msg')}
+     <a href="?status=deleted" data-remote="true">#{t('views.common.deleted')}</a> #{t('views.items.section_on_page')}</p>
+     <p><a href='companies/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">#{t('views.items.undo_action')}</a> #{t('views.companies.move_deleted_to_active')}</p>
     HTML
     notice.html_safe
   end

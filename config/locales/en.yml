@@ -718,6 +718,15 @@ en:
       bulk_action_msg: "Companies are %{action} successfully."
       current_company_action: "Sorry, Current Company cannot be %{action}."
       create_msg: "Company has been created successfully."
+      updated_msg: "Your company has been updated successfully."
+      deleted_msg: "Companies has been deleted successfully."
+      bulk_archived: "companies have been archived. You can find them under"
+      move_archived_to_active: "to move archived companies back to active."
+      bulk_deleted_msg: "companies have been deleted. You can find them under"
+      move_deleted_to_active: "to move deleted companies back to active."
+      field_requied: "This field is required."
+      email_invalid: "Email is Invalid."
+      changes_discarded_msg: "Your changes will be discarded by switching company. Are you sure you want to switch company?"
 
     email_templates:
       email_templates: "Email Templates"

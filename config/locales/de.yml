@@ -660,6 +660,15 @@ de:
       bulk_action_msg: "Unternehmen sind %{action} erfolgreich."
       current_company_action: "Entschuldigung, das aktuelle Unternehmen kann nicht %{action} sein."
       create_msg: "Firma wurde erfolgreich erstellt."
+      updated_msg: "Ihre Firma wurde erfolgreich aktualisiert."
+      deleted_msg: "Firmen wurde erfolgreich gelöscht."
+      bulk_archived: "Firmen wurden archiviert. Sie finden sie unter"
+      move_archived_to_active: "um archivierte Unternehmen zurück in den aktiven Bereich zu verschieben"
+      bulk_deleted_msg: "Firmen wurden gelöscht. Sie finden sie unter"
+      move_deleted_to_active: "um gelöschte Firmen zurück in den aktiven Bereich zu verschieben"
+      field_requied: "Dieses Feld ist erforderlich."
+      email_invalid: "Email ist ungültig."
+      changes_discarded_msg: "Ihre Änderungen werden durch den Wechsel der Firma verworfen. Möchten Sie wirklich die Firma wechseln?"
 
     email_templates:
       email_templates: "Email Entwurf"

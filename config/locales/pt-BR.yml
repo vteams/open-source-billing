@@ -662,6 +662,15 @@ pt-BR:
       current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
       current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
       create_msg: "Empresa foi criada com sucesso."
+      updated_msg: "Sua empresa foi atualizada com sucesso."
+      deleted_msg: "Empresas foram deletadas com sucesso."
+      bulk_archived: "as empresas foram arquivadas. Você pode encontrá-las em"
+      move_archived_to_active: "para mover empresas arquivadas de volta para ativos."
+      bulk_deleted_msg: "empresas foram excluídas. Você pode encontrá-las em"
+      move_deleted_to_active: "para mover as empresas excluídas de volta à ativa."
+      field_requied: "Este campo é obrigatório."
+      email_invalid: "O email é inválido."
+      changes_discarded_msg: "Suas alterações serão descartadas por meio da troca de empresa. Tem certeza de que deseja mudar de empresa?"
 
     email_templates:
       email_templates: "Templates para Emails"
