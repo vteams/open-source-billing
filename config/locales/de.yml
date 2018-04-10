@@ -11,6 +11,7 @@ de:
   invoices: "Rechnungen"
   projects: "Projekte"
   project: "Projekt"
+  project_name: "Projektname"
   payment: "Bezahlung"
   client: "Kunde"
   clients: "Kunden"
@@ -688,6 +689,7 @@ de:
       select_an_item: "Wähle einen Gegenstand..."
 
     projects:
+      project_description: "Projektbeschreibung"
       add_task: "Aufgabe hinzufügen"
       add_staff: "Mitarbeiter hinzufügen"
       select_a_member: "Wählen Sie ein Mitglied.."

@@ -11,6 +11,7 @@ fr:
   invoices: "factures"
   projects: "Projets"
   project: "Projet"
+  project_name: "nom du projet"
   payment: "paiement"
   client: "Client"
   clients: "Clients"
@@ -684,6 +685,7 @@ fr:
       select_an_item: "Sélectionnez un élément ..."
 
     projects:
+      project_description: "Description du projet"
       add_task: "Ajouter une tâche"
       add_staff: "Ajouter du personnel"
       select_a_member: "Sélectionnez un membre.."

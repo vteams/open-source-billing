@@ -748,6 +748,7 @@ en:
       select_an_item: "Select an item.."
 
     projects:
+      project_description: "Project Description"
       total_hours: "Total Hours"
       no_project_msg: "You haven't created any project yet. Please click on New Project button to create new project."
       no_archived_msg: "You haven't any archived project."

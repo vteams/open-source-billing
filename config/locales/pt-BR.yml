@@ -11,6 +11,7 @@ pt-BR:
   invoices: "Faturas"
   projects: "Projetos"
   project: "Projeto"
+  project_name: "Nome do Projeto"
   payment: "Pagamento"
   client: "Cliente"
   clients: "Clientes"
@@ -689,6 +690,7 @@ pt-BR:
       select_an_item: "Selecione um item.."
 
     projects:
+      project_description: "Descrição do Projeto"
       add_task: "Adicionar tarefa"
       add_staff: "Adicionar pessoal"
       select_a_member: "Selecione um membro.."
