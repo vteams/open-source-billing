@@ -57,6 +57,10 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
+        if params[:select_new].to_i == 1
+          session['current_company'] = @company
+          current_user.update_attributes(current_company: @company)
+        end
         format.js { @companies = Company.all }
         format.html { redirect_to companies_path, notice: t('views.companies.create_msg') }
         format.json { render json: companies_path, status: :created, location: @company }
