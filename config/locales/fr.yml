@@ -402,6 +402,7 @@ fr:
       name: "Nom du personnel"
       password: "mot de passe"
       password_confirmation: "Confirmez le mot de passe"
+      empty_listing: 'Aucun membre du personnel n'a encore été ajouté!'
       make_this_staff_available_to: "Rendre ce personnel disponible pour"
       duplicate_name: "Le personnel avec le même email existe déjà."
       created_msg: "Le personnel a été créé avec succès."

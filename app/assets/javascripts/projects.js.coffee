@@ -176,3 +176,9 @@ $(document).ready ->
     $("#project_project_name").val($("strong.project_name").text())
     $("#project_description").val($("span.project_description").text())
     Project.validate_fields()
+
+  # show add staff member button when edit project is clicked
+  $('.edit-detail').click ->
+    $('#add_member').removeClass 'hidden'
+    $('#remove-staff-member').removeClass 'hidden'
+

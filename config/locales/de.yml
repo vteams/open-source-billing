@@ -406,6 +406,7 @@ de:
       name: "Personal Name"
       password: "Passwort"
       password_confirmation: "Bestätige das Passwort"
+      empty_listing: "Es wurde noch kein Mitarbeiter hinzugefügt!"
       make_this_staff_available_to: "Stellen Sie diesen Stab zur Verfügung"
       duplicate_name: "Mitarbeiter mit derselben E-Mail-Adresse sind bereits vorhanden."
       created_msg: "Mitarbeiter wurde erfolgreich erstellt."

@@ -13,8 +13,8 @@
                   <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {include_blank: false}, {disabled: true, class: 'clientselect'} %>
                 </div>
                 <div class="text-field">
-                  <span><%= t('project') %> <small>:</small> </span>
-                  <strong class="text-blue project_name" contenteditable="false"> <%= f.text_field :project_name, placeholder: t('project_name')%></strong>
+                  <span><%= t('views.common.title') %> <small>:</small> </span>
+                  <strong class="text-blue project_name project-title-box" contenteditable="false"> <%= @project.project_name %></strong>
                   <%= f.hidden_field :project_name %>
                 </div>
                 <div class="input-field"><%= t('views.users.manager') %> <small>:</small>
@@ -22,7 +22,8 @@
                 </div>
               </div>
               <div class="amount-box">
-                <span class="usertitle project_description" contenteditable="false"><%= f.text_field :description, placeholder: t('views.projects.project_description')%></span>
+                <%= t('views.common.description') %>
+                <span class="usertitle project_description project-description-box" contenteditable="false"><%= @project.description%></span>
                 <%= f.hidden_field :description %>
               </div>
             </div>
@@ -56,11 +57,14 @@
                   <%= render partial: 'staff_fields', locals: {f: f, count: count} %>
                   <% count += 1 %>
                 <% end %>
+                <div class="small-font">
+                    <%= t('views.staffs.empty_listing') if count < 1 %>
+                </div>
               </div>
             </div>
             <div class="list-buttons">
-              <%= f.link_to_add t('views.projects.add_staff'), :team_members, class: 'addbtn', id: 'add_member', data: { target: '#staff_container' } %>
-              <a href="#" class="staff_remove_btn removebtn hidden"><%= t('helpers.links.remove') %></a>
+              <%= f.link_to_add t('views.projects.add_staff'), :team_members, class: "addbtn #{'hidden' if params[:action].eql?('show')}", id: 'add_member', data: { target: '#staff_container' } %>
+                <a href="#" id="remove-staff-member" class="staff_remove_btn removebtn <%= 'hidden' if params[:action].eql?('show')%>"><%= t('helpers.links.remove') %></a>
             </div>
           </div>
         </div>

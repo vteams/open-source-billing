@@ -406,6 +406,7 @@ pt-BR:
       name: "Nome da equipe"
       password: "senha"
       password_confirmation: "Confirme a Senha"
+      empty_listing: "Nenhum membro da equipe adicionado ainda!"
       make_this_staff_available_to: "Disponibilize esta equipe para"
       duplicate_name: "A equipe com o mesmo email já existe."
       created_msg: "A equipe foi criada com sucesso."

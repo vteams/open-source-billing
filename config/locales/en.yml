@@ -429,6 +429,7 @@ en:
       rate: "Rate per hour"
       new: "New Staff"
       edit_staff: "Edit Staff"
+      empty_listing: 'No staff member added yet'
       no_staff_msg: "You haven't created any staff yet. Please click on New Staff button to create new staff."
       no_archived_msg: "You haven't archived any staff."
       no_deleted_msg: "You haven't deleted any staff."
