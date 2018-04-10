@@ -183,6 +183,7 @@ fr:
       and: "et"
       as_for: "À partir de"
       add_new: "Ajouter un nouveau"
+      title: "Titre"
 
     pagination:
       previous: "précédent"

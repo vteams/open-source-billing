@@ -14,7 +14,7 @@
                 </div>
                 <div class="text-field">
                   <span><%= t('project') %> <small>:</small> </span>
-                  <strong class="text-blue project_name" contenteditable="false"> <%= @project.project_name %></strong>
+                  <strong class="text-blue project_name" contenteditable="false"> <%= @project.project_name || t('views.common.title') %></strong>
                   <%= f.hidden_field :project_name %>
                 </div>
                 <div class="input-field"><%= t('views.users.manager') %> <small>:</small>
@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="amount-box">
-                <span class="usertitle project_description" contenteditable="false"><%= @project.description %></span>
+                <span class="usertitle project_description" contenteditable="false"><%= @project.description || t('views.common.description') %></span>
                 <%= f.hidden_field :description %>
               </div>
             </div>

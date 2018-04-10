@@ -201,6 +201,7 @@ en:
       and: "And"
       as_for: "As of"
       add_new: "Add New"
+      title: "Title"
 
     pagination:
       previous: "Previous"

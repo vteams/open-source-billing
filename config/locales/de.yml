@@ -187,6 +187,7 @@ de:
       and: "und"
       as_for: "Ab"
       add_new: "Neue hinzufügen"
+      title: "Titel"
 
     pagination:
       previous: "Vorherige"

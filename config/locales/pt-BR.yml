@@ -187,6 +187,7 @@ pt-BR:
       and: "e"
       as_for: "A partir de"
       add_new: "Adicionar novo"
+      title: "título"
 
     pagination:
       previous: "Anterior"
