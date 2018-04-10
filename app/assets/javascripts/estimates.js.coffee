@@ -18,14 +18,14 @@ class @Estimate
     $('table.estimate_grid_fields tr:visible .line_total').each ->
       line_total = parseFloat($(this).text())
       total += line_total
-      $('#estimate_sub_total').val total.toFixed(2)
-      $('#estimate_sub_total_lbl').text total.toFixed(2)
-      $('#estimate_estimate_total').val total.toFixed(2)
-      $('#estimate_total_lbl').text total.toFixed(2)
-      $('.estimate_total_strong').html total.toFixed(2)
       tax_amount += applyTax(line_total, $(this))
     discount_amount = applyDiscount(total)
 
+    $('#estimate_sub_total').val total.toFixed(2)
+    $('#estimate_sub_total_lbl').text total.toFixed(2)
+    $('#estimate_estimate_total').val total.toFixed(2)
+    $('#estimate_total_lbl').text total.toFixed(2)
+    $('.estimate_total_strong').html total.toFixed(2)
     $('#tax_amount_lbl').text tax_amount.toFixed(2)
     $('#estimate_tax_amount').val tax_amount.toFixed(2)
     $('#estimate_discount_amount_lbl').text discount_amount.toFixed(2)

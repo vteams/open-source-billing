@@ -38,14 +38,14 @@ class @Invoice
     $('table.invoice_grid_fields tr:visible .line_total').each ->
       line_total = parseFloat($(this).text())
       total += line_total
-      $('#invoice_sub_total').val total.toFixed(2)
-      $('#invoice_sub_total_lbl').text total.toFixed(2)
-      $('#invoice_invoice_total').val total.toFixed(2)
-      $('#invoice_total_lbl').text total.toFixed(2)
-      $('.invoice_total_strong').html total.toFixed(2)
       tax_amount += applyTax(line_total, $(this))
     discount_amount = applyDiscount(total)
 
+    $('#invoice_sub_total').val total.toFixed(2)
+    $('#invoice_sub_total_lbl').text total.toFixed(2)
+    $('#invoice_invoice_total').val total.toFixed(2)
+    $('#invoice_total_lbl').text total.toFixed(2)
+    $('.invoice_total_strong').html total.toFixed(2)
     $('#tax_amount_lbl').text tax_amount.toFixed(2)
     $('#invoice_tax_amount').val tax_amount.toFixed(2)
     $('#invoice_discount_amount').val (discount_amount * -1).toFixed(2)
