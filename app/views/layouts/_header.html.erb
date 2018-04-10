@@ -19,7 +19,7 @@
               <option value="-1"><%= t('views.companies.new') %></option>
             </optgroup>
           </select>
-          <%= link_to '', new_company_path(remote: 1, reload: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
+          <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and current_user.settings.currency.present? and current_user.settings.currency.eql?("On") %>
               <select class="currency currency_select" data-user-id="<%= current_user.id %>">
                 <option value="" disabled selected><%= current_user.settings.default_currency %></option>

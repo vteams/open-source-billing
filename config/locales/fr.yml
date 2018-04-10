@@ -184,6 +184,7 @@ fr:
       and: "et"
       as_for: "À partir de"
       add_new: "Ajouter un nouveau"
+      title: "Titre"
 
     pagination:
       previous: "précédent"
@@ -342,6 +343,8 @@ fr:
       to_create_use_last_sent_invoice: "Pour créer une nouvelle facture, utilisez la dernière facture envoyée à '%{client_name}'."
       paid_cannot_disputed: "La facture payée ne peut être contestée."
       due_date_should_equal_or_greater: "La date d'échéance doit être égale ou supérieure à la date de la facture"
+      recover_clients: "Veuillez récupérer les clients pour les factures avec la facture # %{ids} pour entrer le paiement."
+      cannot_paid: "Vous ne pouvez pas payer les factures payées."
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"
@@ -400,6 +403,21 @@ fr:
       password: "mot de passe"
       password_confirmation: "Confirmez le mot de passe"
       make_this_staff_available_to: "Rendre ce personnel disponible pour"
+      duplicate_name: "Le personnel avec le même email existe déjà."
+      created_msg: "Le personnel a été créé avec succès."
+      updated_msg: "Le personnel a été mis à jour avec succès."
+      destroyed_msg: "Le personnel a été détruit avec succès."
+      bulk_action_msg: "Le personnel est %{action} réussi."
+      bulk_archived_msg: "le personnel a été archivé. Vous pouvez les trouver sous"
+      move_archived_to_active: "pour ramener les états-majors archivés à actifs."
+      bulk_deleted_msg: "le personnel a été supprimé. Vous pouvez les trouver sous"
+      move_deleted_to_active: "pour ramener les états supprimés à actifs."
+      enter_name: "Entrez un nom pour le personnel."
+      enter_email: "Entrez un email pour le personnel."
+      enter_valid_email: "Entrez un email valide pour le personnel."
+      enter_rate: "Entrez le taux par heure pour le personnel."
+      rate_must_be_positive: "Entrez la valeur positive du taux horaire pour le personnel."
+      select_company: "Sélectionnez au moins une entreprise pour le personnel."
 
     estimates:
       this_estimate_was_sent_using: "Cette estimation a été envoyée en utilisant"
@@ -420,6 +438,7 @@ fr:
       estimate_deleted_msg: "Cette estimation a été supprimée."
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Sélectionnez la date d'estimation"
+      recover_clients: "Veuillez récupérer les clients pour estimation (s) avec estimation # %{ids} pour entrer le paiement."
 
     clients:
       client_name: "Nom du client"
@@ -474,6 +493,9 @@ fr:
       invalid_business_phone: "Numéro de téléphone professionnel incorrect"
       invalid_mobile_number: "Numéro de portable invalide"
       atleast_one_company_required: "Sélectionnez au moins une entreprise pour la tâche"
+
+    expenses:
+      bulk_action_msg: "Les dépenses sont %{action} réussies."
 
     items:
       new: "Nouvel article"
@@ -534,6 +556,12 @@ fr:
       time_logs: "Journaux de temps pour"
       no_log_exist: "Aucun journal n'existe pour"
       create_by: "Créé par"
+      invoice_created: "Facture créée avec succès."
+      select_project: "Sélectionnez un projet."
+      enter_hours: "Entrez les heures."
+      select_task: "Sélectionnez une tâche."
+      hours_greated_than_zero: "Entrez une valeur d'heures supérieure ou égale à 0."
+      deleted_msg: "Le journal a été supprimé avec succès."
 
     payments:
       payments: "paiement"
@@ -570,6 +598,7 @@ fr:
       cannot_edit_msg: "Vous ne pouvez pas modifier le paiement par carte de crédit."
       connot_edit_paypal_msg: "Vous ne pouvez pas modifier le paiement avec paypal."
       payfull: "Payer complet"
+      bulk_action_msg: "Les paiements sont %{action} réussis."
 
     payment_terms:
       number_of_days: "Nombre de jours"
@@ -612,6 +641,7 @@ fr:
       default_currency: "devise par défaut"
       language: "La langue"
       import_data: "Importer des données"
+      updated_msg: "Les paramètres sont mis à jour avec succès."
 
     companies:
       companies: "sociétés"
@@ -625,6 +655,18 @@ fr:
       browse: "feuilleter"
       tag_line: "Société Tag Line"
       memo: "note"
+      bulk_action_msg: "Les entreprises sont %{action} réussies."
+      current_company_action: "Désolé, la société actuelle ne peut pas être %{action}."
+      create_msg: "La société a été créée avec succès."
+      updated_msg: "Votre entreprise a été mise à jour avec succès."
+      deleted_msg: "Les entreprises ont été supprimées avec succès."
+      bulk_archived: "les entreprises ont été archivées. Vous pouvez les trouver sous"
+      move_archived_to_active: "pour ramener les entreprises archivées à actives."
+      bulk_deleted_msg: "les entreprises ont été supprimées. Vous pouvez les trouver sous"
+      move_deleted_to_active: "pour ramener les entreprises supprimées à actives."
+      field_requied: "Ce champ est obligatoire."
+      email_invalid: "Le courriel est invalide."
+      changes_discarded_msg: "Vos changements seront supprimés en changeant d'entreprise. Voulez-vous vraiment changer d'entreprise?"
 
     email_templates:
       email_templates: "email Templates"
@@ -638,6 +680,10 @@ fr:
       use_this_template_for: "Utilisez ce modèle pour"
       body: "corps"
       email_from: "Email de"
+      from_email_required: "De l'email est requis."
+      subject_required: "Le sujet est requis."
+      boy_required: "Le corps est requis."
+      updated_msg: "Le modèle de courriel a été mis à jour avec succès."
 
     users:
       users: "utilisateurs"
@@ -653,6 +699,18 @@ fr:
       staff: "Personnel"
       assign_role: "Attribuer un rôle"
       updated_password_msg: "Le mot de passe a bien été mis à jour."
+      saved_msg: "L'utilisateur a été enregistré avec succès."
+      duplicate_email: "L'utilisateur avec le même email existe déjà."
+      unable_to_save: "Impossible d'enregistrer l'utilisateur. Assurez-vous que vous avez entré un enregistrement correct."
+      updated_msg: "L'utilisateur a été mis à jour avec succès."
+      bulk_delete: "Utilisateur (s) a été supprimé avec succès."
+      full_name_required: "Le nom complet est requis."
+      email_required: "Le courriel est requis"
+      email_invalid: "Le courriel est invalide."
+      password_required: "Mot de passe requis."
+      pass_must_have_8_char: "La longueur du mot de passe doit être supérieure ou égale à 8."
+      pass_confirmation_required: "La confirmation du mot de passe est requise."
+      pass_and_confirm_pass_should_same: "Le mot de passe et la confirmation doivent correspondre."
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

@@ -188,6 +188,7 @@ de:
       and: "und"
       as_for: "Ab"
       add_new: "Neue hinzufügen"
+      title: "Titel"
 
     pagination:
       previous: "Vorherige"
@@ -346,6 +347,8 @@ de:
       to_create_use_last_sent_invoice: "Um eine neue Rechnung zu erstellen, verwenden Sie die letzte Rechnung, die an '%{client_name}' gesendet wurde."
       paid_cannot_disputed: "Eine bezahlte Rechnung kann nicht bestritten werden."
       due_date_should_equal_or_greater: "Das Fälligkeitsdatum sollte gleich oder größer als das Rechnungsdatum sein"
+      recover_clients: "Bitte stellen Sie Kunden für Rechnung (en) mit der Rechnungsnummer %{ids} wieder her, um die Zahlung einzugeben."
+      cannot_paid: "Sie können keine bezahlten Rechnungen bezahlen."
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -404,6 +407,21 @@ de:
       password: "Passwort"
       password_confirmation: "Bestätige das Passwort"
       make_this_staff_available_to: "Stellen Sie diesen Stab zur Verfügung"
+      duplicate_name: "Mitarbeiter mit derselben E-Mail-Adresse sind bereits vorhanden."
+      created_msg: "Mitarbeiter wurde erfolgreich erstellt."
+      updated_msg: "Mitarbeiter wurde erfolgreich aktualisiert."
+      destroyed_msg: "Mitarbeiter wurde erfolgreich zerstört."
+      bulk_action_msg: "Mitarbeiter sind %{action} erfolgreich."
+      bulk_archived_msg: "Mitarbeiter wurden archiviert. Sie können sie unter finden"
+      move_archived_to_active: "um archivierte Mitarbeiter zurück in den aktiven Bereich zu verschieben."
+      bulk_deleted_msg: "Mitarbeiter wurden gelöscht. Sie können sie unter finden"
+      move_deleted_to_active: "um gelöschte Mitarbeiter zurück in den aktiven Bereich zu verschieben."
+      enter_name: "Geben Sie einen Namen für die Mitarbeiter ein."
+      enter_email: "Geben Sie eine E-Mail für die Mitarbeiter ein."
+      enter_valid_email: "Geben Sie eine gültige E-Mail-Adresse für die Mitarbeiter ein."
+      enter_rate: "Geben Sie den Stundensatz für das Personal ein."
+      rate_must_be_positive: "Geben Sie für die Mitarbeiter einen positiven Stundensatz ein."
+      select_company: "Wählen Sie mindestens eine Firma für die Mitarbeiter aus."
 
     estimates:
       this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
@@ -424,6 +442,7 @@ de:
       estimate_deleted_msg: "Diese Schätzung wurde gelöscht."
       use_last_estimate_to_create: "Um eine neue Schätzung zu erstellen, verwenden Sie die letzte Schätzung, die an '%{client_name}' gesendet wurde."
       select_estimate_date: "Wählen Sie das geschätzte Datum aus"
+      recover_clients: "Bitte reklamieren Sie die Kunden für die Schätzung (en) mit der Schätzung # %{ids}, um die Zahlung einzugeben."
 
     clients:
       client_name: "Kunden Name"
@@ -478,6 +497,9 @@ de:
       invalid_business_phone: "Ungültige Geschäftstelefonnummer"
       invalid_mobile_number: "ungültige Telefon-nummer"
       atleast_one_company_required: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+
+    expenses:
+      bulk_action_msg: "Ausgaben sind %{action} erfolgreich."
 
     items:
       new: "Neuer Gegenstand"
@@ -538,6 +560,12 @@ de:
       time_logs: "Zeitprotokolle für"
       no_log_exist: "Keine Protokolle existieren für"
       create_by: "Erstellt von"
+      invoice_created: "Die Rechnung wurde erfolgreich erstellt."
+      select_project: "Wählen Sie ein Projekt aus."
+      enter_hours: "Geben Sie Stunden ein."
+      select_task: "Wählen Sie eine Aufgabe."
+      hours_greated_than_zero: "Geben Sie Stundenwert größer oder gleich 0 ein."
+      deleted_msg: "Das Protokoll wurde erfolgreich gelöscht."
 
     payments:
       payments: "Bezahlung"
@@ -574,6 +602,7 @@ de:
       cannot_edit_msg: "Sie können die Kreditzahlung nicht bearbeiten."
       connot_edit_paypal_msg: "Sie können die Zahlung nicht mit Paypal bearbeiten."
       payfull: "Voll bezahlen"
+      bulk_action_msg: "Zahlung (en) sind %{action} erfolgreich."
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"
@@ -616,6 +645,7 @@ de:
       default_currency: "Standardwährung"
       language: "Sprache"
       import_data: "Daten importieren"
+      updated_msg: "Einstellungen wurden erfolgreich aktualisiert."
 
     companies:
       companies: "Unternehmen"
@@ -629,6 +659,18 @@ de:
       browse: "Durchsuchen"
       tag_line: "Unternehmen Slogan"
       memo: "Memo"
+      bulk_action_msg: "Unternehmen sind %{action} erfolgreich."
+      current_company_action: "Entschuldigung, das aktuelle Unternehmen kann nicht %{action} sein."
+      create_msg: "Firma wurde erfolgreich erstellt."
+      updated_msg: "Ihre Firma wurde erfolgreich aktualisiert."
+      deleted_msg: "Firmen wurde erfolgreich gelöscht."
+      bulk_archived: "Firmen wurden archiviert. Sie finden sie unter"
+      move_archived_to_active: "um archivierte Unternehmen zurück in den aktiven Bereich zu verschieben"
+      bulk_deleted_msg: "Firmen wurden gelöscht. Sie finden sie unter"
+      move_deleted_to_active: "um gelöschte Firmen zurück in den aktiven Bereich zu verschieben"
+      field_requied: "Dieses Feld ist erforderlich."
+      email_invalid: "Email ist ungültig."
+      changes_discarded_msg: "Ihre Änderungen werden durch den Wechsel der Firma verworfen. Möchten Sie wirklich die Firma wechseln?"
 
     email_templates:
       email_templates: "Email Entwurf"
@@ -642,6 +684,10 @@ de:
       use_this_template_for: "Diesen Entwurf benutzen für"
       body: "Inhalt"
       email_from: "E-Mail von"
+      from_email_required: "Von E-Mail ist erforderlich."
+      subject_required: "Betreff ist erforderlich."
+      boy_required: "Körper ist erforderlich."
+      updated_msg: "Die E-Mail-Vorlage wurde erfolgreich aktualisiert."
 
     users:
       users: "Benutzer"
@@ -657,6 +703,18 @@ de:
       staff: "Mitarbeiter"
       assign_role: "Rolle zuweisen"
       updated_password_msg: "Das Passwort wurde erfolgreich aktualisiert."
+      saved_msg: "Benutzer wurde erfolgreich gespeichert."
+      duplicate_email: "Benutzer mit derselben E-Mail-Adresse ist bereits vorhanden."
+      unable_to_save: "Speichern des Benutzers fehlgeschlagen. Stellen Sie sicher, dass Sie den korrekten Datensatz eingegeben haben."
+      updated_msg: "Benutzer wurde erfolgreich aktualisiert."
+      bulk_delete: "Benutzer wurden erfolgreich gelöscht."
+      full_name_required: "Der vollständige Name ist erforderlich."
+      email_required: "E-Mail ist erforderlich."
+      email_invalid: "E-Mail ist ungültig."
+      password_required: "Passwort wird benötigt."
+      pass_must_have_8_char: "Die Passwortlänge muss größer oder gleich 8 sein."
+      pass_confirmation_required: "Passwort Bestätigung ist erforderlich."
+      pass_and_confirm_pass_should_same: "Passwort und Bestätigung sollten übereinstimmen."
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"

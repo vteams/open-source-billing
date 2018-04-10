@@ -57,8 +57,12 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
+        if params[:select_new].to_i == 1
+          session['current_company'] = @company
+          current_user.update_attributes(current_company: @company)
+        end
         format.js { @companies = Company.all }
-        format.html { redirect_to companies_path, notice: 'Company has been created successfully.' }
+        format.html { redirect_to companies_path, notice: t('views.companies.create_msg') }
         format.json { render json: companies_path, status: :created, location: @company }
       else
         format.js {}
@@ -76,7 +80,7 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if @company.update_attributes(company_params)
         format.js { @companies = Company.all }
-        format.html { redirect_to companies_path, notice: 'Your company has been updated successfully.' }
+        format.html { redirect_to companies_path, notice: t('views.companies.updated_msg') }
         format.json { head :no_content }
       else
         format.js {}
@@ -91,7 +95,7 @@ class CompaniesController < ApplicationController
   def destroy
     check_if_current_company
     if @flag_current_company
-      user_message = "Sorry, Current Company cannot be #{@action_for_company}"
+      user_message = t('views.companies.current_company_action', action: @action_for_company)
       redirect_to companies_path, alert: user_message
       return
     end
@@ -128,13 +132,13 @@ class CompaniesController < ApplicationController
         @action_for_company = "deleted"
       end
       @flag_current_company = true
-      redirect_to companies_path, alert: "Sorry, Current Company cannot be #{@action_for_company}."
+      redirect_to companies_path, alert: t('views.companies.current_company_action', action: @action_for_company)
     else
       result = Services::CompanyBulkActionsService.new(params.merge({current_user: current_user})).perform
       @companies = result[:companies]
       @message = get_intimation_message(result[:action_to_perform], result[:company_ids])
       @action = result[:action]
-      redirect_to companies_path, notice: "Company(s) are #{@action} successfully."
+      redirect_to companies_path, notice: t('views.companies.bulk_action_msg', action: @action)
     end
   end
 
@@ -161,7 +165,7 @@ class CompaniesController < ApplicationController
     company = Company.where(id: params[:company_ids]).destroy_all
 
     @companies = Company.all
-    render json: {notice: 'Companies has been deleted successfully.',
+    render json: {notice: t('views.companies.deleted_msg'),
                   html: render_to_string(action: :settings_listing, layout: false)}
   end
 

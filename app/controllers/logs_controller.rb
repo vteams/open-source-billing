@@ -150,7 +150,7 @@ class LogsController < ApplicationController
       if @invoice.save
         Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        redirect_to(invoices_url, :notice => 'Invoice successfully created')
+        redirect_to(invoices_url, :notice => t('views.logs.invoice_created'))
         return
       else
         format.html { render :action => 'invoice_form' }

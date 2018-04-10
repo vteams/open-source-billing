@@ -13,16 +13,16 @@ class @Company
       flag = true
       pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
       if jQuery("#company_company_name").val() is ""
-        applyQtip(jQuery("#company_company_name"), "This field is required")
+        applyQtip(jQuery("#company_company_name"), I18n.t("views.companies.field_requied"))
         flag = false
       else if jQuery("#company_contact_name").val() is ""
-        applyQtip(jQuery("#company_contact_name"), "This field is required")
+        applyQtip(jQuery("#company_contact_name"), I18n.t("views.companies.field_requied"))
         flag = false
       else if jQuery("#company_email").val() is ""
-        applyQtip(jQuery("#company_email"), "This field is required")
+        applyQtip(jQuery("#company_email"), I18n.t("views.companies.field_requied"))
         flag = false
       else unless pattern.test(jQuery("#company_email").val())
-        applyQtip(jQuery("#company_email"), "Invalid email")
+        applyQtip(jQuery("#company_email"), I18n.t('views.companies.email_invalid'))
         flag = false
       flag
 
@@ -57,7 +57,7 @@ jQuery ->
     controller = $(this).find(':selected').data('controller')
     action = $(this).find(':selected').data('action')
     if action is 'new' or action is 'edit'
-      unless confirm("Your changes will be discarded by switching company. Are you sure you want to switch company?")
+      unless confirm('views.companies.changes_discarded_msg')
         return true
 
     if parseInt($(this).find(':selected').val()) && parseInt($(this).find(':selected').val()) != -1

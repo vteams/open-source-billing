@@ -15,29 +15,29 @@ class @Staff
       no_of_selected_companies = jQuery('.company_checkbox:checked').length
       flag = true
       if name is ""
-        applyPopover(jQuery("#staff_name"),"bottomMiddle","topLeft","Enter a name for the staff")
+        applyPopover(jQuery("#staff_name"),"bottomMiddle","topLeft", I18n.t("views.staffs.enter_name"))
         flag = false
       else if email is ""
         hidePopover(jQuery("#staff_name"))
-        applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft","Enter an email for the staff")
+        applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft",I18n.t("views.staffs.enter_email"))
         flag = false
       else if !validateEmail(email)
         hidePopover(jQuery("#staff_name"))
-        applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft","Enter a valid email for the staff")
+        applyPopover(jQuery("#staff_email"),"bottomMiddle","topLeft",I18n.t("views.staffs.enter_valid_email"))
         flag = false
       else if rate is ""
         hidePopover(jQuery("#staff_email"))
-        applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft","Enter rate per hour for the staff")
+        applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft",I18n.t("views.staffs.enter_rate"))
         flag = false
       else if rate < 0
-        applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the staff")
+        applyPopover(jQuery("#staff_rate"),"bottomMiddle","topLeft",I18n.t("views.staffs.rate_must_be_positive"))
         flag = false
       else if association_name == undefined
         hidePopover($("#staff_rate"))
-        applyPopover($("input[name=association]"),"topright","leftcenter","Select aleast one company for the staff")
+        applyPopover($("input[name=association]"),"topright","leftcenter",I18n.t("views.staffs.select_company"))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
         hidePopover(jQuery("#staff_rate"))
-        applyPopover(jQuery("input[name=association]:checked"),"topright","leftcenter","Select aleast one company for the staff")
+        applyPopover(jQuery("input[name=association]:checked"),"topright","leftcenter",I18n.t("views.staffs.select_company"))
         flag = false
       else
         hidePopover(jQuery("input[name=association]:checked"))

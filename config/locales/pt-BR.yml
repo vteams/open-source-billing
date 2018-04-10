@@ -188,6 +188,7 @@ pt-BR:
       and: "e"
       as_for: "A partir de"
       add_new: "Adicionar novo"
+      title: "título"
 
     pagination:
       previous: "Anterior"
@@ -346,6 +347,8 @@ pt-BR:
       to_create_use_last_sent_invoice: "Para criar uma nova fatura, use a última fatura enviada para '%{client_name}'."
       paid_cannot_disputed: "A fatura paga não pode ser contestada."
       due_date_should_equal_or_greater: "A data de vencimento deve ser igual ou maior que a data da fatura"
+      recover_clients: "Recupere os clientes por fatura (s) com a fatura # %{ids} para inserir o pagamento."
+      cannot_paid: "Você não pode pagar faturas pagas."
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -404,6 +407,21 @@ pt-BR:
       password: "senha"
       password_confirmation: "Confirme a Senha"
       make_this_staff_available_to: "Disponibilize esta equipe para"
+      duplicate_name: "A equipe com o mesmo email já existe."
+      created_msg: "A equipe foi criada com sucesso."
+      updated_msg: "A equipe foi atualizada com sucesso."
+      destroyed_msg: "A equipe foi destruída com sucesso."
+      bulk_action_msg: "Staff(s) são %{action} com sucesso."
+      bulk_archived_msg: "a equipe foi arquivada. Você pode encontrá-los sob"
+      move_archived_to_active: "para mover as equipes arquivadas de volta para ativo."
+      bulk_deleted_msg: "a equipe foi excluída. Você pode encontrá-los sob"
+      move_deleted_to_active: "para mover as equipes deletadas de volta para o ativo."
+      enter_name: "Digite um nome para o pessoal."
+      enter_email: "Digite um email para a equipe."
+      enter_valid_email: "Digite um email válido para a equipe."
+      enter_rate: "Digite a taxa por hora para a equipe."
+      rate_must_be_positive: "Insira um valor positivo de taxa por hora para a equipe."
+      select_company: "Selecione pelo menos uma empresa para a equipe."
 
     estimates:
       this_estimate_was_sent_using: "Esta estimativa foi enviada usando"
@@ -424,6 +442,7 @@ pt-BR:
       estimate_deleted_msg: "Estimation convertie avec succès en facture."
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Selecione data estimada"
+      recover_clients: "Por favor, recupere clientes para estimativa (s) com estimativa # %{ids} para inserir o pagamento."
 
     clients:
       client_name: "Nome do Cliente"
@@ -478,6 +497,9 @@ pt-BR:
       invalid_business_phone: "Número de telefone comercial inválido"
       invalid_mobile_number: "número de celular inválido"
       atleast_one_company_required: "Selecione pelo menos uma empresa para a tarefa"
+
+    expenses:
+      bulk_action_msg: "As despesas são %{action} com sucesso."
 
     items:
       new: "Novo item"
@@ -539,6 +561,12 @@ pt-BR:
       time_logs: "Registros de tempo para"
       no_log_exist: "Não existem logs para"
       create_by: "Criado por"
+      invoice_created: "Fatura criada com sucesso."
+      select_project: "Selecione um projeto."
+      enter_hours: "Digite as horas."
+      select_task: "Selecione uma tarefa."
+      hours_greated_than_zero: "Insira o valor de horas maior ou igual a 0."
+      deleted_msg: "O registro foi excluído com sucesso."
 
     payments:
       payments: "Pagamento"
@@ -575,6 +603,7 @@ pt-BR:
       cannot_edit_msg: "Você não pode editar o pagamento de crédito."
       connot_edit_paypal_msg: "Você não pode editar o pagamento com paypal."
       payfull: "Pague Completamente"
+      bulk_action_msg: "Pagamentos são %{action} com sucesso."
 
     payment_terms:
       number_of_days: "Número de dias"
@@ -617,6 +646,7 @@ pt-BR:
       side_nav_open: "Navegação Lateral Aberta"
       default_currency: "Moeda Padrão"
       import_data: "Importar dados"
+      updated_msg: "As configurações são atualizadas com sucesso."
 
     companies:
       companies: "Empresas"
@@ -630,6 +660,19 @@ pt-BR:
       browse: "Procurar"
       tag_line: "Tagline da Empresa"
       memo: "Memo"
+      bulk_action_msg: "Empresas são %{action} com sucesso."
+      current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
+      current_company_action: "Desculpe, a Empresa Atual não pode ser %{action}."
+      create_msg: "Empresa foi criada com sucesso."
+      updated_msg: "Sua empresa foi atualizada com sucesso."
+      deleted_msg: "Empresas foram deletadas com sucesso."
+      bulk_archived: "as empresas foram arquivadas. Você pode encontrá-las em"
+      move_archived_to_active: "para mover empresas arquivadas de volta para ativos."
+      bulk_deleted_msg: "empresas foram excluídas. Você pode encontrá-las em"
+      move_deleted_to_active: "para mover as empresas excluídas de volta à ativa."
+      field_requied: "Este campo é obrigatório."
+      email_invalid: "O email é inválido."
+      changes_discarded_msg: "Suas alterações serão descartadas por meio da troca de empresa. Tem certeza de que deseja mudar de empresa?"
 
     email_templates:
       email_templates: "Templates para Emails"
@@ -643,6 +686,10 @@ pt-BR:
       use_this_template_for: "Usar este template para"
       body: "Corpo"
       email_from: "E-mail de"
+      from_email_required: "De e-mail é obrigatório."
+      subject_required: "Assunto é obrigatório."
+      boy_required: "Corpo é necessário."
+      updated_msg: "O modelo de e-mail foi atualizado com sucesso."
 
     users:
       users: "Usuários"
@@ -658,6 +705,18 @@ pt-BR:
       staff: "Funcionários"
       assign_role: "Atribuir Papel"
       updated_password_msg: "A senha foi atualizada com sucesso."
+      saved_msg: "Usuário foi salvo com sucesso."
+      duplicate_email: "Usuário com o mesmo email já existe."
+      unable_to_save: "Falha ao salvar o usuário. Certifique-se de ter inserido o registro correto."
+      updated_msg: "Usuário foi atualizado com sucesso."
+      bulk_delete: "Usuário(s) foi deletado com sucesso."
+      full_name_required: "Nome completo é obrigatório."
+      email_required: "E-mail é obrigatório."
+      email_invalid: "Email inválido."
+      password_required: "Senha requerida."
+      pass_must_have_8_char: "O comprimento da senha deve ser maior ou igual a 8."
+      pass_confirmation_required: "Confirmação de senha é necessária."
+      pass_and_confirm_pass_should_same: "Senha e confirmação devem ser combinadas."
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"

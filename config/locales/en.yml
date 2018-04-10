@@ -201,6 +201,7 @@ en:
       and: "And"
       as_for: "As of"
       add_new: "Add New"
+      title: "Title"
 
     pagination:
       previous: "Previous"
@@ -360,6 +361,8 @@ en:
       to_create_use_last_sent_invoice: "To create new invoice use the last invoice sent to '%{client_name}'."
       paid_cannot_disputed: "Paid invoice cannot be disputed."
       due_date_should_equal_or_greater: "Due date should be equal or greater than invoice date"
+      recover_clients: "Please recover clients for invoice(s) with invoice# %{ids} to enter payment."
+      cannot_paid: "You cannot pay paid invoices."
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -431,6 +434,21 @@ en:
       no_deleted_msg: "You haven't deleted any staff."
       make_this_staff_available_to: "Make this Staff available to"
       add_new_staff: "Add New Staff"
+      duplicate_name: "Staff with same email already exists."
+      created_msg: "Staff was successfully created."
+      updated_msg: "Staff was successfully updated."
+      destroyed_msg: "Staff was successfully destroyed."
+      bulk_action_msg: "Staff(s) are %{action} successfully."
+      bulk_archived_msg: "staff have been archived. You can find them under"
+      move_archived_to_active: "to move archived staffs back to active."
+      bulk_deleted_msg: "staff have been deleted. You can find them under"
+      move_deleted_to_active: "to move deleted staffs back to active."
+      enter_name: "Enter a name for the staff."
+      enter_email: "Enter an email for the staff."
+      enter_valid_email: "Enter a valid email for the staff."
+      enter_rate: "Enter rate per hour for the staff."
+      rate_must_be_positive: "Enter positive value of rate per hour for the staff."
+      select_company: "Select at least one company for the staff."
 
     estimates:
       no_estimate_msg: "You haven't created any estimate yet. Please click on New Estimate button to create new estimate."
@@ -465,6 +483,7 @@ en:
       estimate_deleted_msg: "This estimate has been deleted."
       use_last_estimate_to_create: "To create new estimate use the last estimate sent to '%{client_name}'."
       select_estimate_date: "Select estimate date"
+      recover_clients: "Please recover clients for estimate(s) with estimate# %{ids} to enter payment."
 
     clients:
       client_name: "Client Name"
@@ -532,6 +551,7 @@ en:
       no_record_msg: "You haven't created any expenses yet."
       no_archived_expense: "You don't have any archived expense."
       no_deleted_expense: "You don't have any deleted expense."
+      bulk_action_msg: "Expenses are %{action} successfully."
 
     items:
       new: "New Item"
@@ -596,6 +616,12 @@ en:
       time_logs: "Time logs for"
       no_log_exist: "No Logs exist for"
       create_by: "Created By"
+      invoice_created: "Invoice successfully created."
+      select_project: "Select a project."
+      enter_hours: "Enter hours."
+      select_task: "Select a task."
+      hours_greated_than_zero: "Enter hours value greater than or equal to 0."
+      deleted_msg: "Log was deleted successfully."
 
     payments:
       payments: "Payment"
@@ -632,6 +658,7 @@ en:
       cannot_edit_msg: "You cannot edit credit payment."
       connot_edit_paypal_msg: "You cannot edit payment with paypal."
       payfull: "Pay Full"
+      bulk_action_msg: "Payment(s) are %{action} successfully."
 
     payment_terms:
       number_of_days: "Number of days"
@@ -675,6 +702,7 @@ en:
       language: "Language"
       side_nav_open: "Side Navigation Open"
       import_data: "Import Data"
+      updated_msg: "Settings are successfully updated."
 
     companies:
       companies: "Companies"
@@ -688,6 +716,18 @@ en:
       browse: "Browse"
       tag_line: "Company Tag Line"
       memo: "Memo"
+      bulk_action_msg: "Companies are %{action} successfully."
+      current_company_action: "Sorry, Current Company cannot be %{action}."
+      create_msg: "Company has been created successfully."
+      updated_msg: "Your company has been updated successfully."
+      deleted_msg: "Companies has been deleted successfully."
+      bulk_archived: "companies have been archived. You can find them under"
+      move_archived_to_active: "to move archived companies back to active."
+      bulk_deleted_msg: "companies have been deleted. You can find them under"
+      move_deleted_to_active: "to move deleted companies back to active."
+      field_requied: "This field is required."
+      email_invalid: "Email is Invalid."
+      changes_discarded_msg: "Your changes will be discarded by switching company. Are you sure you want to switch company?"
 
     email_templates:
       email_templates: "Email Templates"
@@ -701,6 +741,10 @@ en:
       use_this_template_for: "Use this Template for"
       body: "Body"
       email_from: "Email From"
+      from_email_required: "From Email is required."
+      subject_required: "Subject is required."
+      boy_required: "Body is required."
+      updated_msg: "Email template was successfully updated."
 
     users:
       users: "Users"
@@ -716,6 +760,18 @@ en:
       staff: "Staff"
       assign_role: "Assign Role"
       updated_password_msg: "Password has been successfully updated."
+      saved_msg: "User has been saved successfully."
+      duplicate_email: "User with same email already exists."
+      unable_to_save: "Failed to save user. Make sure you have entered correct record."
+      updated_msg: "User has been updated successfully."
+      bulk_delete: "User(s) has been deleted successfully."
+      full_name_required: "Full Name is required"
+      email_required: "Email is required."
+      email_invalid: "Email is invalid."
+      password_required: "Password is required."
+      pass_must_have_8_char: "Password length must be greater than or equal to 8."
+      pass_confirmation_required: "Password confirmation is required."
+      pass_and_confirm_pass_should_same: "Password and confirmation should be matched."
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

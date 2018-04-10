@@ -45,7 +45,7 @@ $(document).ready(function() {
         project_id = jQuery("#project_id").val();
         flag = true;
         if (project_id === "") {
-            applyPopover(jQuery("#project_id"), "bottomMiddle", "topLeft", "Select a project");
+            applyPopover(jQuery("#project_id"), "bottomMiddle", "topLeft", I18n.t('views.logs.select_project'));
             flag = false;
         }
         else
@@ -69,29 +69,29 @@ $(document).ready(function() {
         });
 
         if (window.valid == 7){
-            applyPopover(jQuery("#hours_div"), "bottomMiddle", "topLeft", "Enter hours");
+            applyPopover(jQuery("#hours_div"), "bottomMiddle", "topLeft", I18n.t('views.logs.enter_hours'));
             flag = false;
         }else {
             hidePopover(jQuery("#hours_div"))
         }
         if (project_id === "") {
-            applyPopover(jQuery("#log_project_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", "Select a project");
+            applyPopover(jQuery("#log_project_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", I18n.t('views.logs.select_project'));
             flag = false;
         } else {
             hidePopover(jQuery("#log_project_id").parents('.select-wrapper'))
         }
         if (task_id === "") {
-            applyPopover(jQuery("#log_task_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", "Select a task");
+            applyPopover(jQuery("#log_task_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", I18n.t('views.logs.select_task'));
             flag = false;
         } else {
             hidePopover(jQuery("#log_task_id").parents('.select-wrapper'))
         }
         if (hours === "") {
-            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours");
+            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", I18n.t('views.logs.enter_hours'));
             flag = false;
         }
         else if(hours < 0){
-            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", "Enter hours value greater than or equal to 0");
+            applyPopover(jQuery("#log_hours"), "bottomMiddle", "topLeft", I18n.t('views.logs.hours_greated_than_zero'));
             flag = false;
         }
         else {
