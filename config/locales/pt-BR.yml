@@ -532,6 +532,7 @@ pt-BR:
       name_required: "O nome do item é obrigatório"
       description_required: "Descrição é obrigatória"
       must_be_numeric: "Deve ser numérico"
+      must_be_greater_than_zero: "Deve ser maior que zero"
       same_tax_applied: "Mesmo imposto não aplicado em um item"
       select_atleast_one_company: "Selecione pelo menos uma empresa para a tarefa"
 

@@ -584,6 +584,7 @@ en:
       name_required: "Item name is required"
       description_required: "Description is required"
       must_be_numeric: "Must be numeric"
+      must_be_greater_than_zero: "Must be greater than zero"
       same_tax_applied: "Same tax not applied on one item"
       select_atleast_one_company: "Select at least one company for the task"
 

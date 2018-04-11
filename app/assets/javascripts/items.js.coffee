@@ -58,6 +58,9 @@ class @Item
       else if $("#item_unit_cost").val() isnt "" and  isNaN($("#item_unit_cost").val())
         applyPopover($("#item_unit_cost"), I18n.t('views.items.must_be_numeric'))
         flag = false
+      else if $("#item_unit_cost").val() isnt "" and !isNaN($("#item_unit_cost").val()) and $("#item_unit_cost").val() < 1
+        applyPopover($("#item_unit_cost"), I18n.t('views.items.must_be_greater_than_zero'))
+        flag = false
       else if ($("#item_tax_1").val() != "" or $("#item_tax_2").val() != "") and ($("#item_tax_1").val() == $("#item_tax_2").val())
         applyPopover($("#item_tax_2").parents('.select-wrapper'), I18n.t('views.items.same_tax_applied'))
         flag = false

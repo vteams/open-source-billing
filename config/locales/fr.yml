@@ -527,6 +527,7 @@ fr:
       name_required: "Le nom de l'article est requis"
       description_required: "La description est requise"
       must_be_numeric: "Doit être numérique"
+      must_be_greater_than_zero: "Doit être supérieur à zéro"
       same_tax_applied: "Même taxe non appliquée sur un article"
       select_atleast_one_company: "Sélectionnez au moins une entreprise pour la tâche"
 

@@ -531,6 +531,7 @@ de:
       name_required: "Der Name des Artikels ist erforderlich"
       description_required: "Beschreibung ist erforderlich"
       must_be_numeric: "Muss numerisch sein"
+      must_be_greater_than_zero: "Muss größer als Null sein"
       same_tax_applied: "Die gleiche Steuer gilt nicht für einen Artikel"
       select_atleast_one_company: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
 
