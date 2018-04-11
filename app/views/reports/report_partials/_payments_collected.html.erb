@@ -23,12 +23,7 @@
       <tbody>
         <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
           <tr>
-            <td class="align_left text-overflow-class" data-overflow-rows="2" >
-              <% payments.each do |payment| %>
-                  <%= payment.client.organization_name %>
-                  <br>
-              <% end %>
-            </td>
+            <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= payments.first[:client_name] %></td>
             <td class="align_left" >
               <% payments.each do |payment| %>
                 <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
