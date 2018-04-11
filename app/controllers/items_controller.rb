@@ -162,7 +162,7 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t('views.clients.bulk_action_msg') }
+      format.html { redirect_to items_url, notice: t('views.clients.bulk_action_msg', action: @action) }
       format.js
       format.json
     end
