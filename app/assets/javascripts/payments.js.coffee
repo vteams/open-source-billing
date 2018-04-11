@@ -116,7 +116,7 @@ jQuery ->
 
     # show a message if 0 is entered in payment amount
     payment_fields.each ->
-      if parseFloat(jQuery(this).val()) is 0
+      if parseFloat(jQuery(this).val()) is 0 or parseFloat(jQuery(this).val()) < 0
         jQuery(this).qtip({content: text: I18n.t("views.payments.negative_value_not_allowed_msg"), show: event: false, hide: event: false})
         jQuery(this).focus().qtip().show()
         validate = false
