@@ -23,49 +23,36 @@
   <tbody>
   <% unless @report.report_data.blank? %>
       <% @report.report_data.group_by{|data| data.item_name}.values.each do |items| %>
-        <tr>
-          <td data-sort_val="<%= items.first.item_name %>"><%= items.first.item_name %></td>
-          <td class="center-align">
-            <%  items.each do |item| %>
-                <%= request.format.pdf? ? item.attributes["invoice_number"] : (link_to item.attributes["invoice_number"], invoice_path(item.invoice_id),remote: true) %>
-                <br>
+        <% items.each_with_index do |item, index| %>
+          <tr class="no-border">
+            <% if index == 0 %>
+              <td class="bottom-bordered" data-sort_val="<%= item.item_name %>"rowspan="<%= items.count %>">
+                <%= item.item_name %>
+              </td>
             <% end %>
-          </td>
-          <td>
-            <%  items.each do |item| %>
-                <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true) %>
-                <br>
-            <% end %>
-          </td>
-
-          <td class="right-align" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
-            <%  items.each do |item| %>
+            <td class="center-align<%= ' bottom-bordered' if index == items.count - 1 %>">
+              <%= request.format.pdf? ? item.attributes["invoice_number"] : (link_to item.attributes["invoice_number"], invoice_path(item.invoice_id),remote: true) %>
+            </td>
+            <td class="<%= 'bottom-bordered' if index == items.count - 1 %>">
+              <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true) %>
+            </td>
+            <td class="right-align<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
               <%= item.attributes["item_quantity"].to_i %>
-              <br>
-            <% end %>
-          </td>
-          <td class="right-align currency" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
-            <%  items.each do |item| %>
+            </td>
+            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["total_amount"],unit: '') %>
-              <br>
-            <% end %>
-          </td>
-          <td class="right-align currency"  data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
-            <%  items.each do |item| %>
-                <%= item.attributes["currency_code"] %>
+            </td>
+            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
+              <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["discount_amount"],unit: '') %>
-              <br>
-            <% end %>
-          </td>
-          <td class="right-align currency"  data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
-            <%  items.each do |item| %>
+            </td>
+            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["net_total"],unit: '') %>
-              <br>
-            <% end %>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
       <tfoot>
         <tr>

@@ -14,49 +14,41 @@
       <th width="15%"><%= t('views.clients.client_name') %></th>
       <th width="10%"><%= t('views.invoices.invoice') %></th>
       <th width="15%"><%= t('views.common.type') %></th>
-      <th  width="30%"><%= t('views.common.note') %></th>
-      <th class="center-align" width="13%"><%= t('views.common.date') %></th>
+      <th  width="26%"><%= t('views.common.note') %></th>
+      <th class="center-align" width="17%"><%= t('views.common.date') %></th>
       <th class="right-align {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
     </tr>
     </thead>
     <% unless @report.report_data.blank? %>
       <tbody>
         <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
-          <tr>
-            <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= payments.first[:client_name] %></td>
-            <td class="align_left" >
-              <% payments.each do |payment| %>
-                <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
-                <br>
+          <% payments.each_with_index do |payment, index| %>
+            <tr class="no-border">
+              <% if index == 0 %>
+                  <td class="align_left text-overflow-class bottom-bordered" data-overflow-rows="2"
+                      rowspan="<%= payments.count %>">
+                    <%= payment[:client_name] %>
+                  </td>
               <% end %>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
             </td>
-            <td class="align_left" >
-              <% payments.each do |payment| %>
-                <%= (payment.payment_type || payment.payment_method || "").capitalize %>
-                <br>
-              <% end %>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= (payment.payment_type || payment.payment_method || "").capitalize %>
             </td>
-            <td class="left-align text-overflow-class" data-overflow-rows="2" >
-              <% payments.each do |payment| %>
-                <%= payment.notes %>
-                <br>
-              <% end %>
+            <td class="left-align text-overflow-class<%= ' bottom-bordered' if index == payments.count - 1 %>" data-overflow-rows="2">
+              <%= payment.notes %>
             </td>
-            <td class="center-align" >
-              <% payments.each do |payment| %>
-                <%= payment.created_at.to_date.strftime(get_date_format) %>
-                <br>
-              <% end %>
+            <td class="center-align<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= payment.created_at.to_date.strftime(get_date_format) %>
             </td>
-            <td class="right-align currency" >
-              <% payments.each do |payment| %>
-                <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
-                  <%= payment.currency_code %>
-                  <%= number_to_currency(payment.payment_amount,unit: '') %>
-                <br>
-              <% end %>
+            <td class="right-align currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
+              <%= payment.currency_code %>
+              <%= number_to_currency(payment.payment_amount,unit: '') %>
             </td>
           </tr>
+          <% end %>
        <% end %>
       </tbody>
     <tfoot>
