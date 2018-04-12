@@ -20,9 +20,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :project_tasks , :reject_if => proc { |task| task['task_id'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :team_members ,  :reject_if => proc { |staff| staff['staff_id'].blank? }, :allow_destroy => true
 
-  validates_presence_of :project_name, :client_id
-  validates_numericality_of :total_hours, greater_than: 0
-
   acts_as_archival
   acts_as_paranoid
 
