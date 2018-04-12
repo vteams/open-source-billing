@@ -1,4 +1,4 @@
-<%= nested_form_for(@project, html:{class: 'project-form-inline'}) do |f| %>
+<%= nested_form_for(@project, html:{class: 'project-form-inline', id: 'horizontal-project-form'}) do |f| %>
     <div class="content-detail">
       <div class="card-white-panel clearfix">
         <div class="left-content col s12 m12 l8 xl9">
@@ -13,8 +13,8 @@
                   <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {include_blank: false}, {disabled: true, class: 'clientselect'} %>
                 </div>
                 <div class="text-field">
-                  <span><%= t('views.common.title') %> <small>:</small> </span>
-                  <strong class="text-blue project_name project-title-box" contenteditable="false"> <%= @project.project_name %></strong>
+                  <span><%= t('views.common.name') %> <small>:</small> </span>
+                  <strong class="text-blue project_name project-title-box" id="project-title" contenteditable="false"> <%= @project.project_name %></strong>
                   <%= f.hidden_field :project_name %>
                 </div>
                 <div class="input-field"><%= t('views.users.manager') %> <small>:</small>

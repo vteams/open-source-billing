@@ -106,16 +106,15 @@ class @Project
     $('select').material_select();
 
   @load_functions = ->
-
-    jQuery('form.project-form').submit ->
+    jQuery('form#horizontal-project-form').submit ->
       flag = true
-      if $("#project_project_name").val() is ""
-        flag = false
-        applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
-      else if $("#project_client_id").val() is ""
+      if $("#project_client_id").val() is "" or $("#project_client_id").val() is null
         hidePopover(jQuery("#project_project_name"))
         applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_client'))
         flag = false
+      else if $("#project-title").html().trim() is ""
+        flag = false
+        applyPopover(jQuery("#project-title"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
       else if ($("#project_total_hours").val() < 0)
         hidePopover($("#project_client_id").parents('.select-wrapper'))
         flag = false
