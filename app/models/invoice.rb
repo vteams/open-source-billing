@@ -492,7 +492,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def is_recurring_invoice?
-    parent_id.present? or recurring_schedule.present?
+    ((parent_id.present? or recurring_schedule.present?) && recurring_parent.recurring_schedule.enable_recurring?)
   end
 
   class << self

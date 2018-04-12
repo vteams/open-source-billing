@@ -27,7 +27,7 @@
           <td data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), remote: true, class: "invoices_link") %></td>
           <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
           <td class="center-align" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
-          <td class="center-align <%= invoice.status %>" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" >
+          <td class="center-align" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" >
             <%= t('views.invoices.' + invoice.status ) %>
           </td>
           <td class="right-align" data-sort_val="<%= invoice.invoice_total %>" ><%= invoice.currency.present? ? invoice.currency.unit : "USD" %>  <%= number_to_currency(invoice.invoice_total, unit: '' ) %></td>
