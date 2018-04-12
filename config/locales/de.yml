@@ -773,6 +773,7 @@ de:
       freshbooks:
         freshbooks_subdomain: "Freshbooks Subdomein"
         freshbooks_subdomain_hint: "Hinweis: xy1234.freshbooks.com"
+        remove_http(s)_from_subdomain: "Bitte entfernen Sie http (s) von Ihrer freshbooks-Subdomain"
       quickbooks:
         create_sandbox_companies_first: "Maak eerst sandboxbedrijven in Quickbooks"
 

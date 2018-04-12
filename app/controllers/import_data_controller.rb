@@ -14,7 +14,7 @@ class ImportDataController < ApplicationController
 
   def import_freshbooks_data
     if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
-      redirect_to import_data_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
+      redirect_to settings_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else
       remove_url_path_from_sub_domain(params)
       options = {}
@@ -96,7 +96,12 @@ class ImportDataController < ApplicationController
 
   def verify_sub_domain_name
     if params[:freshbooks][:account_url].start_with?('http')
-      redirect_to import_data_url, alert: 'Please remove http(s) from your freshbooks subdomain'
+      respond_to do |format|
+        format.js {
+          flash[:alert]= t('views.import_data.freshbooks.remove_http(s)_from_subdomain')
+          render :js => "window.location.href='#{settings_url}'"
+        }
+      end
     end
   end
 

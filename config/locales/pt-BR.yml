@@ -775,6 +775,7 @@ pt-BR:
       freshbooks:
         freshbooks_subdomain: "Freshbooks Subdomain"
         freshbooks_subdomain_hint: "Sugerencia: xy1234.freshbooks.com"
+        remove_http(s)_from_subdomain: "Por favor, remova o http(s) do seu subdomínio de livros didáticos"
       quickbooks:
         create_sandbox_companies_first: "Crie companhias sandbox primeiro em Quickbooks"
 
