@@ -1,4 +1,5 @@
 <% if @js_response %>
+  showSuccessMsg("Data has been successfully imported.");
  $("#freshModal").modal('close');
 <% else %>
  $(".fb_error").text('Unable to connect Freshbooks, invalid account url/ api token')
