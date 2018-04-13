@@ -34,7 +34,7 @@
     <div class="modal-footer">
       <div class="pull-right">
         <%= submit_tag 'Submit', class: 'model-submit-btn modal-action modal-close waves-effect waves-green btn' %>
-        <a href="#" title="close" class="model-submit-btn modal-action modal-close waves-effect waves-green btn">Cancel</a>
+        <a href="#" title="close" class="modal-close waves-effect waves-green btn" id="close_link"><%= t('views.common.cancel') %></a>
       </div>
     </div>
   </div>
@@ -47,4 +47,7 @@
     elem = $("#select_popup");
     Popup.initialize(elem);
     Popup.open(elem);
+    $('#close_link').click(function () {
+       window.close();
+    });
 </script>
