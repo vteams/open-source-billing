@@ -1,45 +1,84 @@
 module Services
   class ImportQbInvoiceService
+    include ItemsHelper
+    include TaxesHelper
 
     def import_data(options)
       counter = 0
-      invoices = Quickbooks::Service::Invoice.new(:access_token => options[:token_hash], :company_id => options[:realm_id] )
-      invoices = invoices.all
-      if invoices.present?
-        invoices.each do |invoice|
-          unless ::Invoice.find_by_provider_id(invoice.id.to_i)
-            hash = { provider: 'Quickbooks', provider_id: invoice.id.to_i,
-                     invoice_number: invoice.doc_number,
-                     po_number: nil,
-                     invoice_date: (invoice.ship_date || invoice.meta_data.create_time).to_date,
-                     discount_percentage: nil,notes: invoice.private_note,
-                     terms: nil, status: 'sent' , company_id: options[:current_company_id],
-                     discount_type: '%', invoice_total: invoice.total.to_f }
-            osb_invoice=  ::Invoice.new(hash)
-            osb_invoice.currency = ::Currency.find_by_unit(invoice.currency_ref.value) if invoice.currency_ref.value.present?
-            osb_invoice.client = ::Client.find_by_provider_id(invoice.customer_ref.value.to_i) if invoice.customer_ref.value.present?
-            osb_invoice.save
-            counter+=1
-            amount = 0
-            invoice.line_items.each do |item|
-              if item.try(:sales_line_item_detail).try(:item_ref).try(:name).present?
-                amount += item.amount.to_f
-                item_hash = {item_name: item.try(:sales_line_item_detail).try(:item_ref).try(:name), item_description: item.description,
-                             item_unit_cost: item.sales_line_item_detail.try(:unit_price).to_f,
-                             item_quantity:  item.try(:sales_line_item_detail).try(:quantity)}
-                osb_item = osb_invoice.invoice_line_items.new(item_hash)
-                #osb_item.tax_1 = ::Tax.find_by_name_and_percentage(item['tax1_name'], item['tax1_percent'].to_f).try(:id) if item['tax1_name'].present?
-                #osb_item.tax_2 = ::Tax.find_by_name_and_percentage(item['tax2_name'],item['tax2_percent'].to_f).try(:id) if item['tax2_name'].present?
-                osb_item.save
+
+      qbo_api = QboApi.new(access_token: options[:token], realm_id: options[:realm_id])
+      if qbo_api.all(:invoices).count > 0
+        qbo_api.all(:invoices) do |invoice|
+          begin
+            if invoice.present?
+              unless ::Invoice.find_by_provider_id(invoice['Id'].to_i)
+                if invoice['Line'].last['DetailType'].eql?('DiscountLineDetail')
+                  discount_line_detail = invoice['Line'].last['DiscountLineDetail']
+                  discount_per =  discount_line_detail['DiscountPercent'] if discount_line_detail['PercentBased']
+                  discount_amount = invoice['Line'].last['Amount']
+                  discount_type = discount_line_detail['PercentBased'] ? '%' : invoice['CurrencyRef']['value']
+                end
+                invoice_attributes_hash = {
+                    terms:               nil,
+                    po_number:           nil,
+                    provider:            'Quickbooks',
+                    provider_id:         invoice['Id'].to_i,
+                    discount_type:       discount_type,
+                    notes:               invoice['PrivateNote'],
+                    discount_amount:     discount_amount,
+                    discount_percentage: discount_per,
+                    invoice_number:      invoice['DocNumber'],
+                    invoice_total:       invoice['TotalAmt'].to_f,
+                    company_id:          options[:current_company_id],
+                    invoice_date:        (invoice['ShipDate'] || invoice['MetaData']['CreateTime']).to_date,
+                    status:              invoice['EmailStatus'] == 'NotSet' ? 'Draft' : 'Sent',
+                }
+                osb_invoice=  ::Invoice.new(invoice_attributes_hash)
+                qb_client = invoice['CustomerRef']['value']
+                qb_currency = invoice['CurrencyRef']['value']
+                osb_invoice.currency = ::Currency.find_by_unit(qb_currency) if invoice['CurrencyRef'].present? && qb_currency.present?
+                osb_invoice.client = ::Client.find_by_provider_id(qb_client.to_i) if invoice['CustomerRef'].present? && qb_client.present?
+                osb_invoice.save
+                counter+=1
+                amount = 0
+                invoice['Line'].each do |item|
+                  if qb_item_name?(item['SalesItemLineDetail'])
+                    amount += item['Amount'].to_f
+                    qb_tax_id = invoice['TxnTaxDetail']['TaxLine'][0]['TaxLineDetail']['TaxRateRef']['value'] if qb_tax_rate?(invoice['TxnTaxDetail'])
+                    if qb_tax_id.present?
+                      qb_tax = qbo_api.query(%{SELECT * FROM TaxRate  WHERE Id = '#{qb_tax_id.to_i}'}).first
+                      osb_tax = ::Tax.find_by_name_and_percentage(qb_tax['Name'], qb_tax['RateValue'].to_f)
+                      if osb_tax.present?
+                        tax_1 = osb_tax.id
+                      else
+                        new_tax = ::Tax.create(name: qb_tax['Name'], percentage: qb_tax['RateValue'].to_f)
+                        tax_1 = new_tax.id
+                      end
+                    end
+                    item_id = Item.find_by_provider_id(item['SalesItemLineDetail']['ItemRef']['value']).try(:id) if item['SalesItemLineDetail']['ItemRef']
+                    item_hash = {
+                        item_id:          item_id,
+                        item_name:        item['SalesItemLineDetail']['ItemRef']['name'],
+                        item_description: item['Description'],
+                        item_unit_cost:   item['SalesItemLineDetail']['UnitPrice'].to_f,
+                        item_quantity:    item['SalesItemLineDetail']['Qty'].to_i, tax_1: tax_1
+                    }
+                    osb_item = osb_invoice.invoice_line_items.new(item_hash)
+                    osb_item.save
+                  end
+                end
+                osb_invoice.create_line_item_taxes
+                osb_invoice.update_attributes(sub_total: amount)
               end
             end
-            osb_invoice.create_line_item_taxes
-            discount_amount = nil #amount * (osb_invoice.discount_percentage/100)
-            osb_invoice.update_attributes(sub_total: amount, invoice_total:  amount, discount_amount: discount_amount)
+          rescue Exception => e
+            p e.inspect
           end
         end
       end
-      "invoice #{counter} record(s) successfully imported."
+      data_import_result_message = "#{counter} record(s) successfully imported."
+      module_name = 'Invoices'
+      ::UserMailer.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
     end
   end
 end

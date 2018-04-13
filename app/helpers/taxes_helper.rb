@@ -43,4 +43,8 @@ module TaxesHelper
     HTML
     notice.html_safe
   end
+
+  def qb_tax_rate?(txn_tax_detail)
+    txn_tax_detail && txn_tax_detail['TaxLine'].present? && txn_tax_detail['TaxLine'][0]['TaxLineDetail']['TaxRateRef'].present?
+  end
 end

@@ -62,4 +62,12 @@ module ClientsHelper
   def unpaid_client_invoices_path(client_id)
     unpaid_invoice_exists?(client_id) ? invoices_unpaid_invoices_path(for_client: client_id) : 'javascript:void(0);'
   end
+
+  def qb_customer_payment?(customer_ref)
+    customer_ref.present? && customer_ref['value'].present?
+  end
+
+  def qb_client_email?(client_email)
+    client_email.present? && client_email['Address'].present?
+  end
 end

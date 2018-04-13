@@ -36,4 +36,8 @@ module PaymentsHelper
     HTML
     notice = notice.html_safe
   end
+
+  def qb_currency?(currency)
+    currency.present? && currency['value'].present?
+  end
 end
