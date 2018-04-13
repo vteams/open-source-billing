@@ -772,12 +772,14 @@ pt-BR:
     import_data:
       import_data: "Datos de importacion"
       fresh_books: "FreshBooks"
+      data_imported_msg: "Os dados foram importados com sucesso."
       freshbooks:
         freshbooks_subdomain: "Freshbooks Subdomain"
         freshbooks_subdomain_hint: "Sugerencia: xy1234.freshbooks.com"
         remove_http(s)_from_subdomain: "Por favor, remova o http(s) do seu subdomínio de livros didáticos"
       quickbooks:
         create_sandbox_companies_first: "Crie companhias sandbox primeiro em Quickbooks"
+        unable_to_connect: "Não é possível conectar o Freshbooks, o URL inválido da conta / api token"
 
     sessions:
       sign_in: "Assinar em"

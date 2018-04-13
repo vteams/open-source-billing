@@ -766,12 +766,14 @@ fr:
     import_data:
       import_data: "Importer des données"
       fresh_books: "FreshBooks"
+      data_imported_msg: "Les données ont été importées avec succès."
       freshbooks:
         freshbooks_subdomain: 'Sous-domaine Freshbooks'
         freshbooks_subdomain_hint: "Indice: xy1234.freshbooks.com"
         remove_http(s)_from_subdomain: "Veuillez supprimer http(s) de votre sous-domaine freshbooks"
       quickbooks:
         create_sandbox_companies_first: "Créer des sociétés sandbox d'abord dans Quickbooks"
+        unable_to_connect: "Impossible de connecter Freshbooks, jeton url / api de compte invalide"
 
     sessions:
       sign_in: "Se connecter"

@@ -836,12 +836,14 @@ en:
     import_data:
       import_data: "Import Data"
       fresh_books: "FreshBooks"
+      data_imported_msg: "Data has been successfully imported."
       freshbooks:
         freshbooks_subdomain: 'Freshbooks Subdomain'
         freshbooks_subdomain_hint: "Hint: xy1234.freshbooks.com"
         remove_http(s)_from_subdomain: "Please remove http(s) from your freshbooks subdomain"
       quickbooks:
         create_sandbox_companies_first: "Create sandbox companies first in Quickbooks"
+        unable_to_connect: "Unable to connect Freshbooks, invalid account url/ api token"
 
     sessions:
       sign_in: "Sign In"
