@@ -16,6 +16,9 @@ module OSB
     WKHTMTTOPDF_PATH ||= APP_CONFIG[:wkhtmltopdf_path]
 
     SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
+    OAUTH_CONSUMER_KEY ||= APP_CONFIG[:oauth_consumer_key]
+    OAUTH_CONSUMER_SECRET ||= APP_CONFIG[:oauth_consumer_secret]
+
 
     ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
 

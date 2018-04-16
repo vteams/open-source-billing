@@ -21,6 +21,9 @@ development:
      user_name: 'YOUR_EMAIL_HERE'
      password: 'YOUR_PASSWORD_HERE'
 
+  oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
+  oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
+
 
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
@@ -47,6 +50,9 @@ production:
      enable_starttls_auto: true
      user_name: 'YOUR_EMAIL_HERE'
      password: 'YOUR_PASSWORD_HERE'
+
+  oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
+  oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
 
 
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
