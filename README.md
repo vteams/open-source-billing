@@ -1,7 +1,7 @@
 Open Source Billing
 ===================
 
-A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.1.0. This document describes OSB application setup on ubuntu 14.04 LTS  machine.
+A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.2.2. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
 
 Features
 ---------
@@ -21,13 +21,13 @@ Features
 * Manage billing for your multiple sister companies under one account
 * Export invoices to PDF
 * Export estimates to PDF
-* Import data from Freshbooks
+* Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
 
 
 Caveats
 -------
-This is `2.0` release. You may contribute by having any suggesstion or reporting the bugs you find.
+This is `1.1` release. You may contribute by having any suggestion or reporting the bugs you find.
 
 ## Installation step
 ### Step-1. Dependencies
@@ -61,9 +61,9 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.1.0
+    rvm install 2.2.2
 
-    rvm use 2.1.0 --default
+    rvm use 2.2.2 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
@@ -73,7 +73,7 @@ Bundler is a tool that allows you to install multiple gem versions, run this com
 ### Step-3. Configuration
 
 #### 3.1 Clone Application Code
-To clone project code from github, give your github account credential for authentication while cloning project.
+To clone project code from GitHub, give your GitHub account credential for authentication while cloning project.
     
     git clone https://github.com/vteams/open-source-billing
 
@@ -133,6 +133,12 @@ Edit config/config.yml with your own application smtp settings.
          user_name: 'YOUR_EMAIL_HERE',
          password: 'YOUR_PASSWORD_HERE'
 
+#### 3.10 QuickBooks configuration
+Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
+
+     oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
+     oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
+
 ### Step-4. Run
 #### 4.1 Background Services
 You need to start delayed_job for email delivery and other background tasks required for properly functionality of Open Source Billing by using following command
@@ -161,9 +167,9 @@ Contributing
 
 Contact Information
 -------------------
-Jane Cady
-+1 (858) 586 7777
+Mia Mian
+-+1 (858) 586 7777
 
-E-mail: <jane@vteams.com> | <mia@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstigers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>
