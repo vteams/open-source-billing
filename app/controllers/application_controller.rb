@@ -28,13 +28,13 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
-  before_filter :authenticate_user!
   before_filter :_reload_libs #reload libs on every request for dev environment only
   #layout :choose_layout
   #reload libs on every request for dev environment only
   before_filter :set_per_page
   before_filter :set_date_format
   before_filter :set_current_user
+  before_filter :authenticate_user!
 
   before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|

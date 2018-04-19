@@ -37,7 +37,7 @@
             </li>
             <li>
               <a href="#section-6">
-                Plans
+                Services
               </a>
             </li>
             <li>
@@ -293,19 +293,19 @@
         <div class="col-sm-3">
           <div class="wow fadeIn" data-wow-delay="0">
             <div class="work-img">
-              <%= image_tag 'images/work-signup.png' %>
+              <%= image_tag 'images/work-download.png' %>
 
             </div>
-            <h5>Sign Up</h5>
+            <h5>Download</h5>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="wow fadeIn" data-wow-delay="0.4s">
             <div class="work-img">
-              <%= image_tag 'images/work-invoice.png' %>
+              <%= image_tag 'images/work-install.png' %>
 
             </div>
-            <h5>Send Invoices</h5>
+            <h5>Install</h5>
           </div>
         </div>
         <div class="col-sm-3">
@@ -314,7 +314,7 @@
               <%= image_tag 'images/work-billing.png' %>
 
             </div>
-            <h5>Collect Payments</h5>
+            <h5>Start Billing</h5>
           </div>
         </div>
         <div class="col-sm-3">
@@ -335,41 +335,134 @@
     <div class="row">
       <div class="col-sm-12 text-center">
         <h2 class="wow fadeIn" data-wow-delay="0">
+          All Plans Include
         </h2>
+
+        <p class="wow fadeIn" data-wow-delay="0.3s">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis lectus metus, at posuere neque
+        </p>
       </div>
     </div>
     <div class="row">
+      <%#= render partial: 'subscriptions/form', locals:{subscription: @subscription, plan: @plan}%>
       <% Plan.all.each do |plan| %>
-      <div class="col-sm-3">
-        <div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">
-          <div class="config-box-head clearfix">
-            <h5 class="v-align">
-              <span class="text-light"><%= plan.name%></span>
-              <span class="text-bold">$<%= plan.amount %></span>
-            </h5>
-          </div>
-          <div class="config-box-data">
-
-            <ul class="config-box-list">
-              <% eval(plan.name.gsub(" ", "").upcase).each do |feature|%>
+          <div class="col-sm-4">
+            <div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">
+              <div class="config-box-head clearfix">
+                <h5 class="v-align">
+                  <span class="text-light"><%= plan.name%></span>
+                  <span class="text-bold">$<%= plan.amount %></span>
+                </h5>
+              </div>
+              <div class="config-box-data">
+                <ul class="config-box-list">
                   <li>
-                    <%= feature %>
+                    Lorem ipsum dolor sit
                   </li>
-              <% end %>
-              <li>
-                <a href="/subscribe/<%= plan.id%>"  class="subscription-btn btn-success btn wow bounceInUp">
+                  <li>
+                    Lorem ipsum dolor sit
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit
+                  </li>
+                  <li class="hidden-xs">
+                    &nbsp;
+                  </li>
+                  <li>
+                    <a href="/subscribe/<%= plan.id%>" class="btn-primary btn wow bounceInUp">
                   <span>
-                   <%= "Subscribe for ($#{plan.amount})"%>
+                    Subscribe
                   </span>
-                </a>
-              </li>
-            </ul>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
 
           </div>
-        </div>
-
-      </div>
       <% end %>
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-1 wow fadeIn" data-wow-delay="0.4s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">Basic Setup</span>-->
+      <!--<span class="text-bold">$45</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--Application Setup-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Email Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Paypal Configuration-->
+      <!--</li>-->
+      <!--<li class="hidden-xs">-->
+      <!--&nbsp;-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-2 wow fadeIn" data-wow-delay="0.7s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">-->
+      <!--Basic Setup <br>+ Support-->
+      <!--</span>-->
+      <!--<span class="text-bold">$75</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--Application Setup-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Email Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Paypal Configuration-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--3 Months Support-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-4">-->
+      <!--<div class="config-box config-box-3 wow fadeIn" data-wow-delay="1s">-->
+      <!--<div class="config-box-head clearfix">-->
+      <!--<h5 class="v-align">-->
+      <!--<span class="text-light">-->
+      <!--Custom <br> Development-->
+      <!--</span>-->
+      <!--</h5>-->
+      <!--</div>-->
+      <!--<div class="config-box-data">-->
+      <!--<ul class="config-box-list">-->
+      <!--<li>-->
+      <!--New Feature to Match your Unique Needs-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Generate Custom Reports-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Take and Restore Backups-->
+      <!--</li>-->
+      <!--<li>-->
+      <!--Any Change in Existing System-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="row">
       <div class="section-6-btns text-center col-sm-12">

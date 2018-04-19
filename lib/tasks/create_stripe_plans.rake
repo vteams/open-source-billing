@@ -1,7 +1,7 @@
 require 'rake'
 namespace :stripe do
   desc 'all'
-  task all: [:delete_plans,:create_plans, :create_free_plan]
+  task all: [:delete_plans,:create_plans]
 
   desc "Create stripe plans"
   task :create_plans => :environment do
@@ -11,8 +11,8 @@ namespace :stripe do
         {stripe_plan_id: 'gold', name: 'Gold', amount: 19.99, interval: 'month', client_limit: 25},
         {stripe_plan_id: 'platinum', name: 'Platinum', amount: 99.99, interval: 'month', client_limit: 1000}
     ]
-    puts " Plans creation in progress..."
     plans.each do |plan|
+      puts " Plan creation in progress..."
       if Plan.create!(plan)
         Stripe::Plan.create(
             :amount   => (plan[:amount]*100).to_i,
@@ -22,9 +22,8 @@ namespace :stripe do
             :id       => plan[:stripe_plan_id]
         )
       end
-
+      puts " Plan Created ..............................."
     end
-    puts " Plans Created ..............................."
   end
 
   desc "Create test plans to check events"

@@ -7,8 +7,8 @@ class SubscriptionsController < ApplicationController
     # @plan         = Plan.find_by( id: Plan.last.id)
     # @subscription = Subscription.new
     # @plan         = Plan.find_by(id: Plan.first.id)
-    @subscription = Subscription.new
-    @resource     ||= User.unscoped.new
+    # @subscription = Subscription.new
+    # @resource     ||= User.unscoped.new
   end
 
   def new

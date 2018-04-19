@@ -13,14 +13,11 @@
 
 //= require jquery
 //= require jquery_ujs
-//= require ../../../vendor/assets/javascripts/js/jquery.min.js
-//= require ../../../vendor/assets/javascripts/js/bootstrap.min.js
-//= require ../../../vendor/assets/javascripts/js/jquery.easing.min
-//= require ../../../vendor/assets/javascripts/js/jquery.qtip.min
-//= require ../../../vendor/assets/javascripts/js/wow.min
-//= require ../../../vendor/assets/javascripts/js/validate_subscription.js.coffee
-// require_tree .
+//= require js/jquery.min
+//= require js/bootstrap.min
+//= require js/jquery.easing.min
+//= require js/jquery.qtip.min
+//= require js/wow.min
+//= require js/validate_subscription.js.coffee
+// require_tree
 // require_self
-
-// require_directory ../../../vendor/assets/javascripts/js
-
