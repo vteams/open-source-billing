@@ -57,7 +57,6 @@ module Services
     # create invoice from recurring profile
     def self.create_invoice_from_recurring(due_date, profile, user)
       invoice = ::Invoice.create({
-                                     account_id: profile.account_id,
                                      invoice_number: ::Invoice.get_next_invoice_number(nil),
                                      invoice_date: Date.today,
                                      po_number: profile.po_number,
@@ -100,7 +99,6 @@ module Services
       invoice = ::Invoice.find invoice_id
       profile.recurring_profile_line_items.each do |line_item|
         ::InvoiceLineItem.create({
-                                     account_id: invoice.account_id,
                                      invoice_id: invoice_id,
                                      item_name: line_item.item_name,
                                      item_id: line_item.item_id,

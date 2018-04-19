@@ -22,7 +22,6 @@ class DashboardController < ApplicationController
   include ApplicationHelper
   def index
     @current_company_id = get_company_id
-    CompanyEmailTemplate.where(parent_type: 'Account', account_id: current_account.id).each {|cet| cet.update_column(:parent_id, cet.account_id)} if !!current_account
     @currency = currency_is_off? ? "" : params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
     gon.currency_code= @currency_code = @currency.present? ? @currency.code : '$'
     gon.currency_id = @currency.present? ? @currency.id : ""
