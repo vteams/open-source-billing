@@ -31,7 +31,9 @@
         <%= link_to 'www.opensourcebilling.org', 'http://opensourcebilling.org/', target: '_blank' %>.
         <%= t('views.sessions.powered_by') %>: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
       </p>
-      <a href="<%= new_user_registration_path  %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+      <% if User.all.empty? %>
+          <a href="<%= new_user_registration_path %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+      <% end %>
     </div>
   </div>
 </section>
