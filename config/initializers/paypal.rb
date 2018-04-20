@@ -2,7 +2,7 @@ ActiveMerchant::Billing::Base.mode = OSB::CONFIG::ACTIVEMERCHANT_BILLING_MODE
 
 module OSB
   module Paypal
-    URL = OSB::CONFIG::PAYPAL_URL
+    URL = OSB::CONFIG::PAYPAL[:url]
     module TransStatus
       SUCCESS = :SUCCESS
       FAILED = :FAILED
@@ -12,9 +12,9 @@ module OSB
 
     def self.gateway
       ActiveMerchant::Billing::PaypalGateway.new(
-          :login => OSB::CONFIG::PAYPAL_LOGIN,
-          :password => OSB::CONFIG::PAYPAL_PASSWORD,
-          :signature => OSB::CONFIG::PAYPAL_SIGNATURE
+          :login => OSB::CONFIG::PAYPAL[:login],
+          :password => OSB::CONFIG::PAYPAL[:password],
+          :signature => OSB::CONFIG::PAYPAL[:signature]
       )
     end
   end

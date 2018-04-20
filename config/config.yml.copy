@@ -1,58 +1,53 @@
 development:
- app_host: 'APP_HOST_HERE' # e.g. osb.mydomain.com
- app_protocol: http
+  app_host: APP_HOST_HERE # e.g. osb.mydomain.com
+  app_protocol: http
+  activemerchant_billing_mode: test
+  wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
+  encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
- activemerchant_billing_mode: test
+  paypal:
+    url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    login: YOUR_PAYPAL_LOGIN
+    password: YOUR_PAYPAL_PASSWORD
+    signature: YOUR_PAYPAL_SIGNATURE
+    business: YOUR_PAYPAL_BUSINESS
 
- paypal:
-   paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-   paypal_login: YOUR_PAYPAL_LOGIN
-   paypal_password: YOUR_PAYPAL_PASSWORD
-   paypal_signature: YOUR_PAYPAL_SIGNATURE
-   paypal_business: YOUR_PAYPAL_BUSINESS
-
- wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
-
- smtp_setting:
-    address: 'smtp.gmail.com'
+  smtp_setting:
+    address: smtp.gmail.com
     port: 587
     authentication: :plain
     enable_starttls_auto: true
-    user_name: 'YOUR_EMAIL_HERE'
-    password: 'YOUR_PASSWORD_HERE'
+    user_name: YOUR_EMAIL_HERE
+    password: YOUR_PASSWORD_HERE
 
-  oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
-  oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
-
-
- encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
-
+  quickbooks:
+    # QuickBooksApp account key and secret
+    consumer_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
+    consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET
 
 production:
- app_host: 'APP_HOST_HERE' # e.g. osb.mydomain.com
- app_protocol: http
+  app_host: APP_HOST_HERE # e.g. osb.mydomain.com
+  app_protocol: http
+  activemerchant_billing_mode: test
+  wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
+  encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
- activemerchant_billing_mode: test
+  paypal:
+    url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    login: YOUR_PAYPAL_LOGIN
+    password: YOUR_PAYPAL_PASSWORD
+    signature: YOUR_PAYPAL_SIGNATURE
+    business: YOUR_PAYPAL_BUSINESS
 
- paypal:
-   paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-   paypal_login: YOUR_PAYPAL_LOGIN
-   paypal_password: YOUR_PAYPAL_PASSWORD
-   paypal_signature: YOUR_PAYPAL_SIGNATURE
-   paypal_business: YOUR_PAYPAL_BUSINESS
-
- wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
-
- smtp_setting:
-    address: 'smtp.gmail.com'
+  smtp_setting:
+    address: smtp.gmail.com
     port: 587
     authentication: :plain
     enable_starttls_auto: true
-    user_name: 'YOUR_EMAIL_HERE'
-    password: 'YOUR_PASSWORD_HERE'
+    user_name: YOUR_EMAIL_HERE
+    password: YOUR_PASSWORD_HERE
 
-  oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
-  oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
-
-
- encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
+  quickbooks:
+    # QuickBooksApp account key and secret
+    consume_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
+    consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET

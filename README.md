@@ -100,16 +100,17 @@ Loading default values in database
 Copy config/config.yml.copy to config/config.yml and set your configuration
 
 Edit config/config.yml with your own paypal settings:
-    
-    paypal_login: YOUR_PAYPAL_LOGIN
-    paypal_password: YOUR_PAYPAL_PASSWORD
-    paypal_signature: YOUR_PAYPAL_SIGNATURE
-    paypal_business: YOUR_PAYPAL_BUSINESS
+
+    paypal:
+      login: YOUR_PAYPAL_LOGIN
+      password: YOUR_PAYPAL_PASSWORD
+      signature: YOUR_PAYPAL_SIGNATURE
+      business: YOUR_PAYPAL_BUSINESS
 
 #### 3.7 Configuration Application host and protocol
 Edit config/config.yml with your own application settings:
 
-    app_host: 'APP_HOST_HERE' # e.g. osb.mydomain.com
+    app_host: APP_HOST_HERE # e.g. osb.mydomain.com
     app_protocol: http
 
 #### 3.8 PDF configuration
@@ -125,18 +126,20 @@ Edit config/config.yml with your own application wkhtmltopdf path.
 Edit config/config.yml with your own application smtp settings.
 
      smtp_setting:
-         address: 'smtp.gmail.com'
+         address: smtp.gmail.com
          port: 587
-         authentication: :plain,
-         enable_starttls_auto: true,
-         user_name: 'YOUR_EMAIL_HERE',
-         password: 'YOUR_PASSWORD_HERE'
+         authentication: :plain
+         enable_starttls_auto: true
+         user_name: YOUR_EMAIL_HERE
+         password: YOUR_PASSWORD_HERE
 
 #### 3.10 QuickBooks configuration
 Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
 
-     oauth_consumer_key: 'YOUR_QUICKBOOKS_APP_CLIENT_ID'
-     oauth_consumer_secret: 'YOUR_QUICKBOOKS_APP_CLIENT_SECRET'
+     quickbooks:
+       # QuickBooksApp's account key and secret
+       consumer_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
+       consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET
 
 ### Step-4. Run
 #### 4.1 Background Services
