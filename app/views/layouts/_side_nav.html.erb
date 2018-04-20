@@ -7,24 +7,13 @@
     <div class="profile-details">
       <div class="dropdown">
         <!-- Dropdown Trigger -->
-        <a id="dLabel" class='dropdown-button menudd' href='#' data-activates='dropdown1' data-beloworigin="true">
-          <span><%= current_user.user_name || current_user.email %></span>
-        </a>
+        <a class='dropdown-button '><span><%= current_user.user_name || current_user.email %></span></a>
         <a  class="email-link"><%= current_user.email %> </a>
       </div>
     </div>
   </div>
   <!--- side main menu --->
 
-  <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><%= link_to raw("<i class='material-icons'>settings</i> <span>#{t('views.settings.settings')}</span>"), settings_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>person</i> <span>#{t('views.users.profile')}</span>"), edit_sub_user_path(current_user), remote: true %></li>
-    <li><%= link_to raw("<i class='material-icons'>group</i> <span>#{t('header.links.setting.users')}</span>"), sub_users_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>domain</i> <span>#{t('header.links.setting.companies')}</span>"), companies_path %></li>
-    <li><%= link_to raw("<i class='material-icons'>power_settings_new</i><span>#{t('header.links.logout')}</span>"),
-                    destroy_user_session_path, method: :delete, class: 'logout' %></li>
-  </ul>
   <div>
       <ul class="side-menu mCustomScrollbar">
         <li>
@@ -76,11 +65,22 @@
               <span><%= t('header.links.items.taxes') %></span>
           <% end %>
         </li>
-
         <li>
           <%= active_link_to "/#{locale}/reports/payments_collected", title: t('header.links.reports.reports') do %>
               <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
               <span><%= t('header.links.reports.reports') %></span>
+          <% end %>
+        </li>
+        <li>
+          <%= active_link_to settings_path do %>
+              <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
+              <span><%= t('views.settings.settings') %></span>
+          <% end %>
+        </li>
+        <li>
+          <%= active_link_to destroy_user_session_path, method: :delete, class: 'logout' do %>
+              <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
+              <span><%= t('header.links.logout') %></span>
           <% end %>
         </li>
       </ul>
