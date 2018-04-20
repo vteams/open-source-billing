@@ -713,6 +713,7 @@ fr:
       pass_must_have_8_char: "La longueur du mot de passe doit être supérieure ou égale à 8."
       pass_confirmation_required: "La confirmation du mot de passe est requise."
       pass_and_confirm_pass_should_same: "Le mot de passe et la confirmation doivent correspondre."
+      cannot_delete_current_user: "L'utilisateur actuellement connecté ne peut pas être supprimé."
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

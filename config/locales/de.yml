@@ -717,6 +717,7 @@ de:
       pass_must_have_8_char: "Die Passwortlänge muss größer oder gleich 8 sein."
       pass_confirmation_required: "Passwort Bestätigung ist erforderlich."
       pass_and_confirm_pass_should_same: "Passwort und Bestätigung sollten übereinstimmen."
+      cannot_delete_current_user: "Der aktuell angemeldete Benutzer kann nicht gelöscht werden."
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"

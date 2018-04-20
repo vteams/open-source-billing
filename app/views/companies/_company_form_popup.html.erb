@@ -3,6 +3,7 @@
     <%- model_class = Company -%>
     <%= form_for @company, :html => {:id => 'companyForm', :multipart => true, :novalidate => ""} do |f| %>
         <%= hidden_field_tag :select_new, params[:select_new] %>
+        <%= hidden_field_tag :setting_form, params[:setting_form] %>
         <div class="modal-header clearfix text-content">
           <h5 class="left">
             <% if f.object.persisted? %>

@@ -85,10 +85,11 @@ class SubUsersController < ApplicationController
               end
 
     respond_to do |format|
-      format.js { @users = User.unscoped }
       format.html {
         if password_has_changed?(params[:user_id], params[:password]) && @successfully_updated.eql?(true)
           redirect_to(new_user_session_path, message)
+        elsif params[:setting_form] == '1'
+          redirect_to(settings_path, message)
         else
           redirect_to(sub_users_path, message)
         end

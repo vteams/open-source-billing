@@ -36,14 +36,16 @@
     event.stopPropagation()
 
     currentUserSelected = false
+    # error msg on selecting invalid user
     $('input[name^=user_ids].disabled:checked').each (index, element) =>
-      showErrorMsg("Current logged in user cannot be deleted.")
+      showErrorMsg(I18n.t('views.users.cannot_delete_current_user'))
       currentUserSelected = true
 
     userIds = []
     $('input[name^=user_ids]:not(.disabled):checked').each (index, element) =>
       userIds.push($(element).val())
 
+    # Bulk user delete ajax request while clicking on delete btn
     if userIds.length > 0 && !currentUserSelected
       $.ajax '/sub_users/destroy_bulk',
         type: 'delete'
@@ -57,18 +59,17 @@
   $('select').material_select()
 
   $('input[id^=user_ck_]').on "change", ->
-    if $('input[id^=user_ck_]:checked').length == 1
-      $('#user_edit_btn').removeClass('disabled')
-      url = '/sub_users/' + $('input[id^=user_ck_]:checked').val() + '/edit?remote=1'
-      $('#user_edit_btn').attr('href', url).attr('data-remote', 'true')
-    else
-      $('#user_edit_btn').addClass('disabled')
-      $('#user_edit_btn').attr('href', 'javascript:;').removeAttr('data-remote')
-
+    # active/deactive delete button on selecting/deselecting users
     if $('input[id^=user_ck_]:checked').length > 0
       $('#user_delete_btn').removeClass('disabled')
     else
       $('#user_delete_btn').addClass('disabled')
+
+    # Add/remove error class if invalid user is selected
+    if $('input[name^=user_ids].disabled:checked').length > 0
+      $('#user_delete_btn').addClass('error')
+    else
+      $('#user_delete_btn').removeClass('error')
 
   $('.user-side-form').addClass('hidden')
 
@@ -87,13 +88,15 @@
     event.stopPropagation()
     companyIds = []
     currentCompanySelected = false
+    # Error msg on selecting invalid company
     $('input[name^=company_ids].disabled:checked').each (index, element) =>
-      showErrorMsg("Current Company cannot be deleted.")
+      showErrorMsg(I18n.t('views.companies.current_company_action', action: 'deleted'))
       currentCompanySelected = true
 
     $('input[name^=company_ids]:not(.disabled):checked').each (index, element) =>
       companyIds.push($(element).val())
 
+    # Ajax call for deleteing bulk companies while clicking on delete btn
     if companyIds.length > 0 && !currentCompanySelected
       $.ajax '/companies/destroy_bulk',
         type: 'delete'
@@ -107,18 +110,17 @@
   $('select').material_select()
 
   $('input[id^=company_ck_]').on "change", ->
-    if $('input[id^=company_ck_]:checked').length == 1
-      $('#company_edit_btn').removeClass('disabled')
-      url = '/companies/' + $('input[id^=company_ck_]:checked').val() + '/edit?remote=1'
-      $('#company_edit_btn').attr('href', url).attr('data-remote', 'true')
-    else
-      $('#company_edit_btn').addClass('disabled')
-      $('#company_edit_btn').attr('href', 'javascript:;').removeAttr('data-remote')
-
+    # disable/enable delete btn on selecting/deselecting companies
     if $('input[id^=company_ck_]:checked').length > 0
       $('#company_delete_btn').removeClass('disabled')
     else
       $('#company_delete_btn').addClass('disabled')
+
+    # Add/remove error class if invalid company is selected
+    if $('input[name^=company_ids].disabled:checked').length > 0
+      $('#company_delete_btn').addClass('error')
+    else
+      $('#company_delete_btn').removeClass('error')
 
   $('.company-side-form').addClass('hidden')
 

@@ -2714,6 +2714,12 @@ h6 {
   background-color: #09b8e2;
   color: #fff;
   border-color: #09b8e2; }
+.user-list .list-buttons a.error:hover,
+.user-list .list-buttons a.error:focus {
+  background-color: red;
+  color: #fff;
+  border-color: red;
+}
 .user-list .list-item {
   margin-bottom: 4px;
   position: relative; }

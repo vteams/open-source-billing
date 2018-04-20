@@ -2,6 +2,7 @@
   <div class="modal-content">
     <%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "sub_user_form",
                  :multipart => true, remote: params[:remote].to_i == 1) %>
+    <%= hidden_field_tag :setting_form, params[:setting_form] %>
       <div class="modal-header clearfix text-content">
         <h5 class="left">
           <%= t '.title', :default => t('helpers.titles.edit', :model => t(User.model_name.singular),

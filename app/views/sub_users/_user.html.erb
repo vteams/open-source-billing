@@ -10,9 +10,7 @@
   </div>
   <div class="invoice-details editContent">
     <div class="input-field">
-      <select disabled>
-        <option value="1"><%= user.user_name %></option>
-      </select>
+      <%= link_to user.user_name, edit_sub_user_path(user, setting_form: 1), data: {remote: true} %>
     </div>
     <div class="input-field">
       <input type="text" value="<%= user.email %>" placeholder="" disabled>
