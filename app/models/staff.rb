@@ -1,6 +1,6 @@
 class Staff < ActiveRecord::Base
   include DateFormats
-  include StaffSearch if OSB::CONFIG::ENABLE_SEARCH
+  include StaffSearch
   paginates_per 10
 
   acts_as_archival

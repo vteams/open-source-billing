@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  include CompanySearch if OSB::CONFIG::ENABLE_SEARCH
+  include CompanySearch
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 
   mount_uploader :logo, ImageUploader

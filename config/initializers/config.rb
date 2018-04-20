@@ -11,6 +11,5 @@ module OSB
     SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
     QUICKBOOKS ||= APP_CONFIG[:quickbooks]
     ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
-    ENABLE_SEARCH ||= APP_CONFIG[:enable_search]
   end
 end

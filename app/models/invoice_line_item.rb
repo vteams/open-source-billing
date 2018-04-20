@@ -20,7 +20,7 @@
 #
 class InvoiceLineItem < ActiveRecord::Base
 
-  include ItemSearch if OSB::CONFIG::ENABLE_SEARCH
+  include ItemSearch
   # associations
   belongs_to :invoice
   belongs_to :estimate

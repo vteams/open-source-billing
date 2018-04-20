@@ -19,7 +19,7 @@
 #
 class Client < ActiveRecord::Base
 
-  include ClientSearch if OSB::CONFIG::ENABLE_SEARCH
+  include ClientSearch
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
 

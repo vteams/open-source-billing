@@ -36,7 +36,7 @@
     <div class="col s3 m2 l4  header-right">
       <div class="right">
         <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
-                    title: t('header.links.search') if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
+                    title: t('header.links.search') if search_available_in?(controller_name)%>
         <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
                     title: t('views.help.help'), remote: true %>
       </div>
@@ -55,7 +55,7 @@
           <!--<i class="zmdi zmdi-search"></i>-->
           <!--<input type="text" class="form-control" placeholder="" />-->
         <!--</form>-->
-        <% if OSB::CONFIG::ENABLE_SEARCH and search_available_in?(controller_name)%>
+        <% if search_available_in?(controller_name)%>
             <div class="search">
               <%= form_tag eval("#{controller_name}_path"), method: :get do %>
                   <i class="zmdi zmdi-search"></i>

@@ -2,7 +2,7 @@ class Project < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
-  include ProjectSearch if OSB::CONFIG::ENABLE_SEARCH
+  include ProjectSearch
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
 

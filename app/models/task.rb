@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
   include DateFormats
-  include TaskSearch if OSB::CONFIG::ENABLE_SEARCH
+  include TaskSearch
   paginates_per 10
 
   acts_as_archival

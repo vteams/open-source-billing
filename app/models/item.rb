@@ -20,7 +20,7 @@
 #
 class Item < ActiveRecord::Base
 
-  include ItemSearch if OSB::CONFIG::ENABLE_SEARCH
+  include ItemSearch
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }

@@ -20,7 +20,7 @@
 #
 class Payment < ActiveRecord::Base
  include DateFormats
- include PaymentSearch if OSB::CONFIG::ENABLE_SEARCH
+ include PaymentSearch
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
