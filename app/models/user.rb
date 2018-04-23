@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   def set_default_settings
     self.settings.date_format = "%Y-%m-%d"
     self.settings.currency = "On"
-    self.settings.records_per_page = 5
+    self.settings.records_per_page = 9
     self.settings.default_currency = "USD"
     self.settings.side_nav_opened = true
   end
