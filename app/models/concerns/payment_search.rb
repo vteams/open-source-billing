@@ -36,7 +36,7 @@ module PaymentSearch
       keys = keyword.keys
       query_base= {query: {bool: {must: []}}}
 
-      query_base[:query][:bool][:must] << {nested: { path: 'client', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} if keys.include?('client')
+      query_base[:query][:bool][:must] << {nested: { path: 'invoice', nested: { path: 'client', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} }if keys.include?('client')
       query_base[:query][:bool][:must] << {nested: { path: 'invoice', query: {query_string: { query: keyword[:invoice], fields: [:invoice_number] }}}} if keys.include?('invoice')
 
       if keys.include?('payment_type') or keys.include?('payment_method') or keys.include?('notes')
@@ -81,7 +81,7 @@ module PaymentSearch
         end
       end
       query = query.join(" AND ")
-      return joins(:client, :invoice).where(query).uniq
+      return joins(invoice: :client).where(query).uniq
     end
 
   end
