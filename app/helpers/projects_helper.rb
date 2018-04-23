@@ -1,7 +1,9 @@
 module ProjectsHelper
 
   def load_clients_for_project
-    Client.all.map{|c| [c.organization_name, c.id]}
+    hash = Company.find_by(id: get_company_id).clients.map{|c| [c.organization_name, c.id]}
+    hash += current_user.current_account.clients.map{|c| [c.organization_name, c.id]}
+    hash
   end
 
   def load_billing_methods_for_project
