@@ -6,6 +6,7 @@
       <div class="breadcrum-bar activebar">
         <div class="card-white-panel noCollapse">
           <h3>
+            <i class="zmdi zmdi-arrow-left project-back-icon" onclick="window.location.href = '/<%= I18n.locale %>/projects'"></i>
             <%= t '.title', :default => t('helpers.titles.new', :model => t(Project.model_name.singular),
                                           :default => "New  #{Project.model_name.human}") %>
           </h3>

@@ -5,7 +5,10 @@
       <!--- breadcrum Bar --->
       <div class="breadcrum-bar activebar">
         <div class="card-white-panel">
-          <h3><%= t('views.projects.project_detail') %></h3>
+          <h3>
+            <i class="zmdi zmdi-arrow-left project-back-icon" onclick="window.location.href = '/<%= I18n.locale %>/projects'"></i>
+            <%= t('views.projects.project_detail') %>
+          </h3>
           <div class="page-action-btn-group">
             <a href="#" class="edit-detail"><i class="material-icons" title="<%= t('helpers.links.edit') %>">create</i></a>
             <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
