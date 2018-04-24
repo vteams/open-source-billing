@@ -292,7 +292,7 @@ h6 {
     padding-right: 0; } }
 #header .header-right.search-show .form-control, #header .header-right.chekbox-show .form-control {
   width: 61.4%;
-  margin-left: 165px;
+  margin-left: 169px;
   float: left; }
 #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search {
   left: 326px;
@@ -4302,7 +4302,7 @@ i.material-icons.close:hover {
   border: 1px solid #14B6E1;
 }
 #bulk_action_form .search_result_container{
-  padding: 10px;
+  margin-right: -8px !important;
 }
 #main-content .breadcrum-bar.card-white-panel.clearfix .input-field .select-wrapper.initialized input.select-dropdown {
   padding-left: 5px;
