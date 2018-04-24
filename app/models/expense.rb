@@ -1,6 +1,6 @@
 class Expense < ActiveRecord::Base
   include DateFormats
-  include ExpenseSearch if OSB::CONFIG::ENABLE_SEARCH
+  include ExpenseSearch
   belongs_to :client
   belongs_to :category, class_name: 'ExpenseCategory', foreign_key: 'category_id'
   belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
