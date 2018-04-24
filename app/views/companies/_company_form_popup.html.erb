@@ -27,11 +27,11 @@
         <div class="modal-body">
           <div class="row">
             <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
-            <div class="input-field col s12">
+            <div class="input-field col s12 md-input">
               <%= f.text_field :company_name %>
               <%= f.label :company_name,  t('views.companies.name') %>
             </div>
-            <div class="input-field col s6 m4">
+            <div class="input-field col s6 m4 md-input">
               <%= f.text_field :contact_name %>
               <%= f.label :contact_name,  t('views.clients.contact_name') %>
             </div>
@@ -40,7 +40,7 @@
               <%= f.label :contact_title,t('views.clients.contact_title') %>
             </div>
 
-            <div class="input-field col s6 m4">
+            <div class="input-field col s6 m4 md-input">
               <%= f.text_field :email, required: true %>
               <%= f.label :email,t('views.common.email') %>
             </div>

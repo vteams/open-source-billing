@@ -633,3 +633,8 @@ form .select-wrapper .select-dropdown {
 .date-wrapper span.payment-date{
     margin-left: 20px;
 }
+.md-input label:before {
+    content: '* ';
+    color: red;
+    font-weight: bold;
+}
