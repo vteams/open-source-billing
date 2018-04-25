@@ -649,3 +649,6 @@ form .select-wrapper .select-dropdown {
     min-width: 130px;
     width: 130px !important;
 }
+.invoice-select-align input.select-dropdown{
+    text-align: center !important;
+}

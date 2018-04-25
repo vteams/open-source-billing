@@ -8,13 +8,13 @@
   </td>
   <td>
     <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),
-                 {:prompt => t('views.common.select_item'), :include_blank => false}, {"data-placeholder" => 'select item', class: "items_list inline-select title-select", :required => ""} %>
+                 {:prompt => t('views.common.select_item'), :include_blank => false}, {"data-placeholder" => 'select item', class: "items_list inline-select title-select invoice-select-align", :required => ""} %>
   </td>
   <%= f.hidden_field :item_name, class: 'item_name' %>
   <%= f.hidden_field :tax_1, class: 'tax1' %>
   <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
   <td>
-    <%= f.text_field :item_description, class: 'description' %>
+    <%= f.text_field :item_description, class: 'description center-align' %>
   </td>
   <td>
     <%= f.text_field :item_unit_cost, class: 'cost center-align'%>
