@@ -159,26 +159,27 @@ $(document).ready(function(){
     $(".side-menu").mCustomScrollbar();
 
     $("a.multi_currency").click(function(){
-        $("a.no_multi_currency").removeClass('active');
-        $(this).addClass('active');
+        $("a.no_multi_currency").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
         $("input#multi_currency").attr('checked', 'checked').val('On');
     });
 
-    $("a.no_multi_currency").click(function(){
-        $("a.multi_currency").removeClass('active');
-        $(this).addClass('active');
+    $("a.no_multi_currency" +
+    "").click(function(){
+        $("a.multi_currency").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
         $("input#multi_currency").attr('checked', false).val('Off');
     });
 
     $("a.side_nav_opened").click(function(){
-        $("a.no_side_nav_opened").removeClass('active');
-        $(this).addClass('active');
+        $("a.no_side_nav_opened").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
         $("input#side_nav_opened").attr('checked', 'checked').val('Open');
     });
 
     $("a.no_side_nav_opened").click(function(){
-        $("a.side_nav_opened").removeClass('active');
-        $(this).addClass('active');
+        $("a.side_nav_opened").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
         $("input#side_nav_opened").attr('checked', false).val('Close');
     });
 

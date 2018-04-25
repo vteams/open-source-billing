@@ -16,8 +16,8 @@
                 <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
                 <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
                 <div id="radioBtn" class="btn-group mutli_currency_btn">
-                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active' if multi_currency}" %>"><%= t('views.common.yes') %></a>
-                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active' unless multi_currency}" %>"><%= t('views.common.no') %></a>
+                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active bold-white-txt' unless multi_currency}" %>"><%= t('views.common.no') %></a>
                 </div>
               </div>
             </div>
@@ -29,8 +29,8 @@
                 <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
 
                 <div id="radioBtn" class="btn-group side-nav_btn">
-                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
-                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
+                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active bold-white-txt' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active bold-white-txt' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
                 </div>
               </div>
             </div>
