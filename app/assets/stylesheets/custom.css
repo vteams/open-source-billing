@@ -641,3 +641,11 @@ form .select-wrapper .select-dropdown {
 .btn-position{
     padding-top: 15px;
 }
+.new-invoice-holder .inline-select.select-wrapper.payment-term-dropdown .caret{
+    bottom: 15px;
+    width: 128px;
+}
+.inline-select.payment-term-dropdown .dropdown-content{
+    min-width: 130px;
+    width: 130px !important;
+}
