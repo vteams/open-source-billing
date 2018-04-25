@@ -18,8 +18,8 @@
                          :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
             <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
                         target: '_blank' %>
-            <a href="javascript:;" class="modal-close" title="<%= t('helpers.links.close') %>">
-              <i class="material-icons">done</i>
+            <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+              <i class="material-icons close">close</i>
             </a>
           </div>
         </div>
