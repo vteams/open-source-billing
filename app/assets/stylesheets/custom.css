@@ -652,3 +652,7 @@ form .select-wrapper .select-dropdown {
 .invoice-select-align input.select-dropdown{
     text-align: center !important;
 }
+#payments_form .submit_payment_form:hover {
+    background-color: #09b8e2;
+    color: #fff;
+    border-color: #09b8e2; }
