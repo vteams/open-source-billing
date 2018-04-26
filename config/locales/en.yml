@@ -25,6 +25,7 @@ en:
   email_template: "Email Template"
   user: "User"
   task: "Task"
+  tax: "Tax"
   staff: "Staff"
 
   date:

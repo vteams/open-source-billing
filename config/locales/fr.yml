@@ -25,6 +25,7 @@ fr:
   email_template: "Modèle d'email"
   user: "Utilisateur"
   task: "Tâche"
+  tax: "Impôt"
   staff: "Personnel"
 
   date:

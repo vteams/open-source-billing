@@ -25,6 +25,7 @@ de:
   email_template: "E-Mail-Vorlage"
   user: "Benutzer"
   task: "Aufgabe"
+  tax: "Steuer"
   staff: "Mitarbeiter"
 
   date:

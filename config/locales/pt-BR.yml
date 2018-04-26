@@ -25,6 +25,7 @@ pt-BR:
   email_template: "Modelo de email"
   user: "Do utilizador"
   task: "Tarefa"
+  tax: "Imposto"
   staff: "Funcionários"
 
   date:
