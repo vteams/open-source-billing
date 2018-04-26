@@ -9,15 +9,15 @@
             <div class="invoice-details">
               <div class="editable-content">
                 <div class="input-field">
-                  <span><%= t('client') %> <small>:</small></span>
+                  <span><%= t('client') %></span>
                   <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {include_blank: false}, {disabled: true, class: 'clientselect'} %>
                 </div>
                 <div class="text-field">
-                  <span><%= t('views.common.name') %> <small>:</small> </span>
+                  <span><%= t('views.common.name') %></span>
                   <strong class="text-blue project_name project-title-box" id="project-title" contenteditable="false"> <%= @project.project_name %></strong>
                   <%= f.hidden_field :project_name %>
                 </div>
-                <div class="input-field"><%= t('views.users.manager') %> <small>:</small>
+                <div class="input-field"><%= t('views.users.manager') %>
                   <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, f.object.company_id, f.object.manager), selected: f.object.manager_id), {include_blank: false}, {disabled: true, class: 'managerselect'} %>
                 </div>
               </div>
