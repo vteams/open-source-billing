@@ -23,7 +23,7 @@ class PaymentTermsController < ApplicationController
   # GET /payment_terms
   # GET /payment_terms.json
   def index
-    @payment_terms = PaymentTerm.all
+    @payment_terms = PaymentTerm.unscoped
 
     respond_to do |format|
       format.html # index.html.erb

@@ -61,7 +61,7 @@
             <div class="terms ">
               <span><%= t('views.invoices.terms') %>: </span>
               <small>
-                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p|
+                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.unscoped.map { |p|
                   [t('views.invoices.' + p.description.parameterize.underscore), p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id),
                              {:include_blank => false}, {class: 'inline-select payment-term-dropdown'} %>
               </small>
@@ -70,7 +70,7 @@
               <strong><strong class="invoice_total_strong"></strong>
                 <small>
                   <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                  <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select'} %>
+                  <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select'} %>
                 </small>
               </strong>
             </div>

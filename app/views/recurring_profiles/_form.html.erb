@@ -66,7 +66,7 @@
               <div class="small_field">
                 <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
                 <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_recurring_profile_currency"),:id => "recurring_profile_currency_id", :class => "recurring_profile_currency medium chzn-select", "data-dropdown-width" => "300"} %>
+                <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_recurring_profile_currency"),:id => "recurring_profile_currency_id", :class => "recurring_profile_currency medium chzn-select", "data-dropdown-width" => "300"} %>
               </div>
             </div>
             <!--field_row-->
@@ -75,7 +75,7 @@
               <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t("views.common.terms")) %></div>
               <div class="small_field">
                 <%#= collection_select :invoice, :payment_terms_id, PaymentTerm.all, :id, :description, {:prompt => ""}, {"data-placeholder" => "Select a payment term...", :class => "medium chzn-select"} %>
-                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.unscoped.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
                 <ul class="field_description select">
                   <li><%= t('views.invoices.recurring.payment_hint') %></li>
                 </ul>

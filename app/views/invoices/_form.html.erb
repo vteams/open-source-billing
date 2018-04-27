@@ -16,7 +16,7 @@
           <div class="terms">
             <span>Terms:</span>
             <small>
-              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select custom_select'} %>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.unscoped.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select custom_select'} %>
             </small>
           </div>
           <div class="">
@@ -24,7 +24,7 @@
 
               <small>
                 <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select custom_select'} %>
+                <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select custom_select'} %>
               </small>
             </strong>
           </div>
