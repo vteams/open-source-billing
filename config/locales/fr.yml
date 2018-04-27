@@ -602,6 +602,7 @@ fr:
       connot_edit_paypal_msg: "Vous ne pouvez pas modifier le paiement avec paypal."
       payfull: "Payer complet"
       bulk_action_msg: "Les paiements sont %{action} réussis."
+      payment_history: "Historique de Paiement"
 
     payment_terms:
       number_of_days: "Nombre de jours"

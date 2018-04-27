@@ -606,6 +606,7 @@ de:
       connot_edit_paypal_msg: "Sie können die Zahlung nicht mit Paypal bearbeiten."
       payfull: "Voll bezahlen"
       bulk_action_msg: "Zahlung (en) sind %{action} erfolgreich."
+      payment_history: "Zahlungshistorie"
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"
