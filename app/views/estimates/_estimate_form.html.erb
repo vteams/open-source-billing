@@ -22,7 +22,7 @@
           <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>">
             <i class="material-icons" >done</i>
           </a>
-          <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), estimates_url %>
+          <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), estimates_path %>
           <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
           <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
           <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
