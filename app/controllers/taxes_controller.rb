@@ -32,7 +32,7 @@ class TaxesController < ApplicationController
 
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax
+    @taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
     @taxes = @taxes.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
 
     respond_to do |format|

@@ -104,7 +104,7 @@ class SubUsersController < ApplicationController
 
   def destroy_bulk
     sub_user = User.where(id: params[:user_ids]).destroy_all
-    @users = User.unscoped
+    @users = User.all
     render json: {notice: t('views.users.bulk_delete'),
                   html: render_to_string(action: :settings_listing, layout: false)}
   end
@@ -113,7 +113,7 @@ class SubUsersController < ApplicationController
   end
 
   def settings_listing
-    @users = User.unscoped
+    @users = User.all
     render layout: false
   end
 
