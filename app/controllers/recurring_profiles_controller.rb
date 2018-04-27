@@ -53,7 +53,7 @@ class RecurringProfilesController < ApplicationController
   # GET /recurring_profiles/new.json
   def new
     #@recurring_profile = RecurringProfile.new
-    @recurring_profile = RecurringProfile.new({:invoice_number => RecurringProfile.get_next_profile_id, :payment_terms_id => (PaymentTerm.unscoped.present? && PaymentTerm.first.id), :first_invoice_date => Date.today,:sent_invoices => 0})
+    @recurring_profile = RecurringProfile.new({:invoice_number => RecurringProfile.get_next_profile_id, :payment_terms_id => (PaymentTerm.unscoped.present? && PaymentTerm.unscoped.first.id), :first_invoice_date => Date.today,:sent_invoices => 0})
     @invoice = Invoice.find_by_id params[:id] if params[:id].present?
     @client = @invoice.client if @invoice.present?
     @recurring_profile.currency = @client.currency if @client.present?

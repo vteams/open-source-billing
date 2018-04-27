@@ -474,7 +474,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def term
-    PaymentTerm.find(self.payment_terms_id).description rescue ''
+    PaymentTerm.unscoped.find(self.payment_terms_id).description rescue ''
   end
 
   def group_date
