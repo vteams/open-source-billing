@@ -23,7 +23,7 @@
       <% if @status.eql?('deleted') %>
           <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
       <% else %>
-          <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id),
+          <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_path(id: estimate.id),
                       title: t('views.common.send') %>
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon',
                       title: t('helpers.links.edit') %>
