@@ -226,10 +226,6 @@ end
 
 Role.delete_all
 
-ROLES.each do |role|
-  Role.create name: role
-end
-
 PaymentTerm.delete_all
 PaymentTerm.create(number_of_days: 10, description: "10 days")
 PaymentTerm.create(number_of_days: 7, description: "Weekly")
