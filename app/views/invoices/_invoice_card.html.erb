@@ -23,7 +23,7 @@
       <% if @status.eql?('deleted') %>
           <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
       <% else %>
-          <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id), title: t('views.common.send') %>
+          <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send') %>
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), class: 'edit_invoice_icon',
                       title: t('helpers.links.edit') unless invoice.invoice_type.eql?('ProjectInvoice') %>
           <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, title: t('helpers.links.delete'),
