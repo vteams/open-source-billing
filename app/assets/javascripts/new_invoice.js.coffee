@@ -372,7 +372,7 @@ class @Invoice
         flag = false
         # Check if item is selected
       else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-        first_item = $("table#invoice_grid_fields tr.fields:visible:first")
+        first_item = $("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)")
         applyPopover(first_item,"bottomMiddle","topLeft",I18n.t("views.invoice_line_item.select_an_item"))
         flag = false
       else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
