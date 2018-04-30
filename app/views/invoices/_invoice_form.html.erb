@@ -99,7 +99,8 @@
                       <%= rs.label :frequency, t('helpers.messages.how_ofter')%>
                     </div>
                     <div class="input-field">
-                      <%= rs.number_field :occurrences, min: 0, class: 'recurring_occurrences' %>
+                      <%= rs.number_field :occurrences, min: 0, class: 'recurring_occurrences', onkeydown: 'javascript: return event.keyCode == 69 ? false : true' %>
+
                       <%= rs.label :occurrences, t('helpers.messages.how_many'), class: 'active'%>
                     </div>
                   </div>
