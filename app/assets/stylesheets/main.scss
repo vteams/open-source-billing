@@ -4367,3 +4367,12 @@ i.material-icons.close:hover {
     width: 85px;
   }
 }
+
+.new-invoice-holder.editInvoice .paymentInfo{
+  .select-dropdown{
+    min-width: 90px;
+  }
+  .caret{
+    bottom: 2px;
+  }
+}
