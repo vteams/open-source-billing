@@ -4355,3 +4355,15 @@ i.material-icons.close:hover {
   color: transparent !important;
   text-shadow: rgb(144, 144, 144) 0px 0px !important;
 }
+
+#recurring_schedule_container{
+  ul.dropdown-content{
+    min-width: 120px;
+    width: 120px;
+    top: 30px;
+  }
+  .caret{
+    bottom: 15px;
+    width: 85px;
+  }
+}
