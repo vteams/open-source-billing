@@ -693,7 +693,7 @@ pt-BR:
       from_email_required: "De e-mail é obrigatório."
       subject_required: "Assunto é obrigatório."
       boy_required: "Corpo é necessário."
-      updated_msg: "O modelo de e-mail foi atualizado com sucesso."
+      updated_msg: "O modelo de email foi atualizado com sucesso."
 
     users:
       users: "Usuários"

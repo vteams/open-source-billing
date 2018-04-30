@@ -748,7 +748,7 @@ en:
       from_email_required: "From Email is required."
       subject_required: "Subject is required."
       boy_required: "Body is required."
-      updated_msg: "Email template was successfully updated."
+      updated_msg: "Email template has been successfully updated."
 
     users:
       users: "Users"

@@ -687,7 +687,7 @@ fr:
       from_email_required: "De l'email est requis."
       subject_required: "Le sujet est requis."
       boy_required: "Le corps est requis."
-      updated_msg: "Le modèle de courriel a été mis à jour avec succès."
+      updated_msg: "Le modèle d'e-mail a été mis à jour avec succès."
 
     users:
       users: "utilisateurs"
