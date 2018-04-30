@@ -4079,7 +4079,7 @@ html {
   right: 0px; }
 
 .new-invoice-footer {
-  padding: 0 0 10px; }
+  padding: 0 6px 10px; }
 .new-invoice-footer:after {
   display: block;
   content: " ";
@@ -4168,7 +4168,7 @@ html {
 
 .invoice-add-notes {
   overflow: hidden;
-  padding: 0 30px 30px; }
+  padding: 0 35px 30px; }
 .invoice-add-notes a {
   color: #909090;
   font-size: 13px;
@@ -4375,4 +4375,8 @@ i.material-icons.close:hover {
   .caret{
     bottom: 2px;
   }
+}
+
+.fields .elementsAction .cross-position{
+  padding-left: 22px;
 }
