@@ -1269,7 +1269,7 @@ h6 {
   margin-bottom: 20px;
   font-family: 'Arial','Helvetica',sans-serif;
   position: relative;
-  cursor: pointer; }
+  cursor: default; }
 .card-white-panel .invoice-name {
   float: left;
   width: 40px;
@@ -4346,4 +4346,8 @@ i.material-icons.close:hover {
 
 .text-align{
   padding-left: 24px !important;
+}
+
+.card-white-panel h3 a.active{
+  cursor: default;
 }
