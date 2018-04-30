@@ -45,3 +45,5 @@ Gemfile.lock
 # Ignore application configuration
 /config/application.yml
 
+# Ignore rbenv gemset file
+.rbenv-gemsets
