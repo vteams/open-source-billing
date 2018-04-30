@@ -29,7 +29,7 @@ class SettingsController < ApplicationController
   end
 
   def index
-    @email_templates = EmailTemplate.unscoped
+    @email_templates = EmailTemplate.all
   end
 
   def set_default_currency
