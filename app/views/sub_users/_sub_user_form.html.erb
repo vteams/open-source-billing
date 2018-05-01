@@ -1,7 +1,7 @@
 <div class="side-form user-side-form">
   <%= form_tag('/sub_users', novalidate: '', id: 'user_side_form', method: :post, remote: true)  %>
   <%= hidden_field_tag :setting_form, 1 %>
-  <div class="modal-body users">
+  <div class="modal-body users fields-container">
     <div class="input-field">
       <%= text_field_tag :user_name, '', required: true, placeholder: t('views.users.full_name'), id: 'side_form_user_name' %>
     </div>

@@ -656,3 +656,6 @@ form .select-wrapper .select-dropdown {
     background-color: #09b8e2;
     color: #fff;
     border-color: #09b8e2; }
+.fields-container{
+    padding-bottom: 5px !important;
+}
