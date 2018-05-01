@@ -508,7 +508,7 @@ pt-BR:
       add_new_item: 'Adicionar novo item'
       name: "Nome"
       item_name: "Nome do Item"
-      description: "descrição"
+      description: "Descrição"
       item_description: "Descrição do Item"
       item_unit_cost: "Custo unitário"
       unit_code: "Custo unitário"

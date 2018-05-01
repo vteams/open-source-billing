@@ -560,7 +560,7 @@ en:
       add_new_item: 'Add New Item'
       name: "Name"
       item_name: "Item Name"
-      description: "description"
+      description: "Description"
       item_description: "Item description"
       item_unit_cost: "Unit Cost"
       unit_code: "Unit cost"

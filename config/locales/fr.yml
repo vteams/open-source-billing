@@ -503,7 +503,7 @@ fr:
       new: "Nouvel article"
       name: "nom"
       item_name: "Nom de l'article "
-      description: "description"
+      description: "Description"
       item_description: "Description de l'article"
       item_unit_cost: "Coût Unitaire"
       unit_code: "Coût Unitaire"
