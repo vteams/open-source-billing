@@ -11,7 +11,7 @@
   <div class="invoice-details editContent">
     <h5><%= company.company_name %></h5>
     <div class="input-field">
-      <%= link_to company.contact_name, edit_company_path(company, setting_form: 1), data: {remote: true} %>
+      <%= link_to company.contact_name || company.company_name, edit_company_path(company, setting_form: 1), data: {remote: true} %>
     </div>
     <div class="input-field">
       <input type="email" value="<%= company.email %>" placeholder="" disabled>
