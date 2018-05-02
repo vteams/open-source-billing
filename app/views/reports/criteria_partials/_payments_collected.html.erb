@@ -15,7 +15,7 @@
     <label><%= t('views.clients.client') %></label>
   </div>
   <div class="input-field col s12 m6 xl3">
-    <%= select_tag "criteria[payment_method]", options_for_select(PAYMENT_METHODS.map { |p| [p, p] }), {:prompt => t('views.common.all'), :class => "payment-method"} %>
+    <%= select_tag "criteria[payment_method]", options_for_select(PAYMENT_METHODS.map { |p| [p, p] }), {:prompt => t('views.common.all')} %>
     <label><%= t('views.common.type') %></label>
   </div>
   <div class="col s12 m1">
