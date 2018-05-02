@@ -61,7 +61,7 @@
               </div>
               <div class="row">
                 <div class="input-field col s6">
-                  <%= f.number_field :payment_amount, class: "payment_amount", placeholder: 0 %>
+                  <%= f.number_field :payment_amount, class: "payment_amount", placeholder: 0, min: 0 %>
                   <%= f.label :payment_amount, "#{t('payment')} #{invoice.currency.unit}", class: 'active'%>
                 </div>
                 <div class="checkbox-field inline-checkbox col s6">
