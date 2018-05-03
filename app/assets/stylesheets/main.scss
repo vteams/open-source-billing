@@ -1335,17 +1335,19 @@ h6 {
   padding: 10px 10px 0 55px;
   font-size: 11px;
   line-height: 11px; }
-.card-white-panel .action-btn-group {
-  position: absolute;
-  top: 10px;
-  right: 9px;
-  margin-right: -76px;
-  -moz-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  transition: all 0.5s;
-  margin-right: -150px;
-  opacity: 0; }
+@media(min-width:768px) {
+  .card-white-panel .action-btn-group {
+    position: absolute;
+    top: 10px;
+    right: 9px;
+    margin-right: -76px;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-right: -150px;
+    opacity: 0; }
+}
 .card-white-panel .action-btn-group a {
   color: #b9b9b9; }
 .card-white-panel .action-btn-group a i {
