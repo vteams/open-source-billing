@@ -2597,12 +2597,14 @@ h6 {
 .page-box .page-box-header .report-links {
   text-align: right;
   font-size: 11px;
+  padding-right: 1px;
   vertical-align: middle; }
 .page-box .page-box-header .report-links a {
   color: #05a4d8; }
 @media only screen and (max-width: 767px) {
   .page-box .page-box-header .report-links {
     text-align: left;
+    padding-right: 1px;
     display: block; }
   .page-box .page-box-header p {
     max-width: 100%;
@@ -4379,4 +4381,13 @@ i.material-icons.close:hover {
 
 .fields .elementsAction .cross-position{
   padding-left: 22px;
+}
+
+.report-body-container{
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.report-inner-scroll-container{
+  padding-right: 3px;
 }

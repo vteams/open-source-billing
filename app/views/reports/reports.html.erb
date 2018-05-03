@@ -14,13 +14,16 @@
       </select>
     </div>
   </div>
-  <div class="page-box mCustomScrollbar">
-      <% unless request.format.pdf? %>
+  <div class="page-box">
+    <% unless request.format.pdf? %>
         <%= render "criteria_controls" %>
-      <% end %>
-      <div class="simple-responsive report_content">
+    <% end %>
+    <div class="mCustomScrollbar report-body-container">
+      <div class="simple-responsive report_content report-inner-scroll-container">
+
         <%= render "report_body" %>
       </div>
+    </div>
   </div>
 <!-- report_content -->
 </div>
