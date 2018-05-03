@@ -659,3 +659,6 @@ form .select-wrapper .select-dropdown {
 .fields-container{
     padding-bottom: 5px !important;
 }
+.invoice-checkbox-position{
+     margin-top: -5px;
+ }

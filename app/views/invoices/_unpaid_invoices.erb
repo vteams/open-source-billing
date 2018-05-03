@@ -40,7 +40,7 @@
           </colgroup>
           <thead>
           <tr>
-            <th class="align_center"><%= check_box_tag 'select_all', '', false, class: 'fix-left-and-opacity'%></th>
+            <th class="align_center"><%= check_box_tag 'select_all', '', false, class: 'fix-left-and-opacity invoice-checkbox-position' %></th>
             <th class="align_center"><%= t('invoice') %>#</th>
             <th class="align_left"><%= t('views.common.notes') %></th>
             <th class="align_left"><%= t('client') %></th>
@@ -53,7 +53,7 @@
           <% unless @invoices.blank? %>
               <% @invoices.each do |inv| %>
                   <tr>
-                    <td class="align_center"><%= check_box_tag "invoice_ids[]", inv.id, false, class: 'fix-left-and-opacity' %></td>
+                    <td class="align_center"><%= check_box_tag "invoice_ids[]", inv.id, false, class: 'fix-left-and-opacity invoice-checkbox-position' %></td>
                     <td class="align_center"><%= inv.invoice_number %></td>
                     <td class="align_left"><%= inv.notes %></td>
                     <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
