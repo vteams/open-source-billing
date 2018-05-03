@@ -5,15 +5,15 @@
       <div class="col m6 total-income">
         <h4><%= link_to t("views.dashboard.ytd_income"), invoices_url(type: ['paid']) %></h4>
         <div class="amount">
-          <%= number_to_currency_dashboard(@ytd_income,{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'span'})  %>
+          <%= number_to_currency_dashboard(@ytd_income,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'})  %>
         </div>
         <h4><%= link_to t("views.dashboard.amount_billed"), invoices_url %></h4>
         <div class="amount">
-          <%= number_to_currency_dashboard(@amount_billed,{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'span'}) %>
+          <%= number_to_currency_dashboard(@amount_billed,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
         </div>
         <h4><%= link_to t("views.dashboard.total_outstanding"), invoices_url(type: ['sent', 'draft', 'viewed']) %></h4>
         <div class="amount">
-          <%= number_to_currency_dashboard(@outstanding_invoices, {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'span'}) %>
+          <%= number_to_currency_dashboard(@outstanding_invoices, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
         </div>
       </div>
       <div class="col m6">
@@ -22,7 +22,7 @@
           <div class="aged-ar">
             <strong>0 - 30 <em><%= t("views.dashboard.days_old") %></em> </strong>
             <span>
-              <%= number_to_currency_dashboard(@aged_invoices.attributes["zero_to_thirty"].to_f,{unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %>
+              <%= number_to_currency_dashboard(@aged_invoices.attributes["zero_to_thirty"].to_f,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %>
             </span>
           </div>
           <div class="progress">
@@ -34,7 +34,7 @@
         <div class="agedWrapper">
           <div class="aged-ar">
             <strong>30 - 60 <em><%= t("views.dashboard.days_old") %></em> </strong>
-            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["thirty_one_to_sixty"].to_f, {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
+            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["thirty_one_to_sixty"].to_f, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
           </div>
           <div class="progress">
             <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(@aged_invoices.attributes["thirty_one_to_sixty"],@aged_invoices_total) %>%;">
@@ -45,7 +45,7 @@
         <div class="agedWrapper">
           <div class="aged-ar">
             <strong>over 90 <em><%= t("views.dashboard.days_old") %></em> </strong>
-            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["sixty_one_to_ninety"].to_f, {unit: @currency.present? ? @currency.unit : "$", unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
+            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["sixty_one_to_ninety"].to_f, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
           </div>
           <div class="progress">
             <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(@aged_invoices.attributes["sixty_one_to_ninety"], @aged_invoices_total) %>%;">
