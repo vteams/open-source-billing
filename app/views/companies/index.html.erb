@@ -6,7 +6,7 @@
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
         <h3 class="heading_with_action">
-          <span><%= link_to t('views.companies.companies'), companies_url %></span>
+          <span><%= link_to t('views.companies.companies'), companies_path %></span>
           <%= link_to "/ #{t('views.common.' + @status.humanize.downcase)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_company_path, remote: true, class: 'pull-right',
                       title: t('helpers.links.add') %>
