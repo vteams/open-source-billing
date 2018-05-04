@@ -3,7 +3,7 @@
   <!--- main content --->
   <!--- breadcrum Bar --->
   <div class="breadcrum-bar card-white-panel clearfix">
-    <div class="input-field">
+    <div class="input-field" id="reports-breadcrumb">
       <h3> <%= t('header.links.reports.reports') %>: <%= t('views.reports.' + @report.report_name.parameterize.underscore) if request.format.pdf? %></h3>
       <select onchange="location = this.value;" style="padding-left: 5px;">
         <option value="<%= "/#{I18n.locale}/reports/payments_collected"%>"<%= "#{'selected' if @report.report_name.eql?('payments_collected') }"%>><%= t('views.reports.payments_collected') %></option>

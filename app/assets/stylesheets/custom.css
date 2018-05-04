@@ -662,3 +662,6 @@ form .select-wrapper .select-dropdown {
 .invoice-checkbox-position{
      margin-top: -5px;
  }
+#reports-breadcrumb .select-wrapper.initialized .caret{
+    padding-right: 45px;
+}
