@@ -37,7 +37,7 @@ class @Tax
         applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.percentage_must_be_numeric'))
         false
       else if parseFloat(jQuery("#tax_percentage").val()) > 100
-        applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.percentage_must_be_numeric'))
+        applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.less_than_hundred'))
         false
       flag
 
