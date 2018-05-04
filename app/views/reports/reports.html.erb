@@ -18,9 +18,9 @@
     <% unless request.format.pdf? %>
         <%= render "criteria_controls" %>
     <% end %>
-    <div class="mCustomScrollbar report-body-container">
-      <div class="simple-responsive report_content report-inner-scroll-container">
 
+    <div class="simple-responsive report_content report-inner-scroll-container scrollContainer">
+      <div class="report-body-container">
         <%= render "report_body" %>
       </div>
     </div>

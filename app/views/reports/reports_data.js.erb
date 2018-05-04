@@ -13,3 +13,11 @@ jQuery('table.table_listing tbody,table.table_listing tfoot', jQuery('.report_co
 
 
 jQuery('.report_content').html("<%= escape_javascript render("reports/report_partials/#{@report.report_name}")%>").find('table tbody').fadeIn(9000);
+debugger;
+$(".scrollContainer").mCustomScrollbar({
+    scrollInertia: 150,
+    advanced: {
+        updateOnContentResize:true,
+        autoScrollOnFocus: false
+    }
+});
