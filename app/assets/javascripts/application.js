@@ -97,6 +97,7 @@
 //= require jstz
 //= require browser_timezone_rails/set_time_zone
 //= require i18n/translations
+//= require sweetalert.min
 
 jQuery(function () {
 
@@ -164,6 +165,7 @@ jQuery(function () {
     }).qtip();
 
     (function ($) {
+        initCustomConfirmPopUp();
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
                 scrollInertia: 150,
@@ -231,3 +233,50 @@ $(document).ready(function(){
         format: DateFormats.format()
     });
 });
+
+function initCustomConfirmPopUp() {
+    // Removing rails default confirm popup
+    $.rails.confirm = function () { }
+
+    $("[data-confirm]").off("click");
+    $("[data-confirm]").on("click", function(e) {
+        e.preventDefault();
+        var link = this;
+
+        // Showing Custom Popup
+        swal({
+            title: $(link).data('confirm'),
+            text: I18n.t('helpers.messages.not_be_recoverable'),
+            icon: 'warning',
+            buttons: [true, true],
+        }).then(function(confirmed) {
+
+            // If user confirm the action perform the action
+            if(confirmed) {
+                if($(link).data("method") === 'delete') {
+                    $.ajax({
+                        url: $(link).attr("href"),
+                        dataType: "JSON",
+                        method: "DELETE",
+                        success: function () {
+                            console.log('success')
+                            swal(I18n.t('helpers.links.delete'), $(link).data('success'), 'success').then(
+                                function (confirmed) {
+                                    if($(link).data('redirect')) {
+                                        window.location.href = $(link).data('redirect');
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                });
+                        },
+                        error: function (obj) {
+                            swal(I18n.t('helpers.links.delete'), obj.responseJSON.errors || I18n.t('helpers.messages.unable_to_delete'), 'error');
+                        }
+                    });
+                } else {
+                    window.location.href = $(link).attr("href");
+                }
+            }
+        });
+    });
+}

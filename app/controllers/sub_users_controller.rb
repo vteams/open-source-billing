@@ -99,7 +99,11 @@ class SubUsersController < ApplicationController
 
   def destroy
     sub_user = User.find_by_id(params[:id]).destroy
-    respond_to { |format| format.js }
+
+    respond_to do |format|
+      format.js
+      format.json { render_json(sub_user) }
+    end
   end
 
   def destroy_bulk

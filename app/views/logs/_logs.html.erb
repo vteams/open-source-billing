@@ -11,7 +11,9 @@
         <%= link_to raw("<i class='tiny material-icons'>create</i>"), edit_log_path(log), remote: true,
                     class: 'edit_log_icon', title: t('helpers.links.edit') %>
         <%= link_to raw("<i class='tiny material-icons'>delete</i>"), log_path(log), method: :delete,
-                    remote: true, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+                    remote: true, data:{confirm: t('helpers.messages.confirm'),
+                                        success: t('views.logs.deleted_msg') },
+                    title: t('helpers.links.delete') %>
       </td>
     </tr>
   <% end %>
@@ -28,3 +30,6 @@
     </td>
   </tr>
 <% end %>
+<script>
+    initCustomConfirmPopUp();
+</script>

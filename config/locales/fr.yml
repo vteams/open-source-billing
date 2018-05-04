@@ -808,6 +808,8 @@ fr:
         confirm: "Êtes-vous sûr?"
         how_ofter: "À quelle fréquence?"
         how_many: "Combien?"
+        not_be_recoverable: "Vous ne pourrez peut-être pas annuler cette action."
+        unable_to_delete: "Impossible de supprimer cette entité."
       titles:
         new: "Nouveau %{model}"
         edit: "modifier %{model}"

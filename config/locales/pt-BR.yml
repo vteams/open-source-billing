@@ -814,6 +814,8 @@ pt-BR:
         confirm: "Você tem certeza?"
         how_ofter: "Com que frequência?"
         how_many: "Quantos?"
+        not_be_recoverable: "Você pode não conseguir reverter essa ação."
+        unable_to_delete: "Não é possível excluir esta entidade."
       titles:
         new: "Novo %{model}"
         edit: "editar %{model}"

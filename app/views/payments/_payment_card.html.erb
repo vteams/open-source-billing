@@ -24,7 +24,9 @@
     <div class="action-btn-group">
       <% unless payment.payment_type == "credit" %>
         <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete,
-                    data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+                    data:{ confirm: t('helpers.messages.confirm'),
+                           success: t('views.payments.bulk_deleted_msg')},
+                    title: t('helpers.links.delete') %>
       <% end %>
     </div>
   </div>

@@ -812,6 +812,8 @@ de:
         confirm: "Bist du sicher?"
         how_ofter: "Wie oft?"
         how_many: "Wie viele?"
+        not_be_recoverable: "Sie können diese Aktion möglicherweise nicht rückgängig machen."
+        unable_to_delete: "Diese Entität konnte nicht gelöscht werden."
       titles:
         new: "Neu %{model}"
         edit: "bearbeiten %{model}"

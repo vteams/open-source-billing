@@ -19,7 +19,9 @@
         <%= link_to raw("<i class='material-icons'>create</i>"), edit_tax_path(taxis),
                     remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
         <%= link_to raw("<i class='material-icons'>delete</i>"), taxis, method: :delete,
-                    data: {confirm: t('helpers.messages.confirm')}, title: t('helpers.links.delete') %>
+                    data: {confirm: t('helpers.messages.confirm'),
+                           success: t('views.taxes.bulk_action_msg', action: 'deleted')},
+                    title: t('helpers.links.delete') %>
         <a id="dLabel" class='dropdown-button' href='javascript:void(0);' data-activates='dropdown_<%= taxis.id %>' data-alignment="right" data-beloworigin="true">
           <i class="material-icons">more_vert</i>
         </a>

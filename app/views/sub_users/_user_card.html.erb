@@ -18,6 +18,12 @@
     <div class="action-btn-group">
       <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true,
                   class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+      <% if current_user != user %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"), sub_user_path(user), method: :delete,
+                    data: {confirm: t('helpers.messages.confirm'),
+                           success: t('views.users.bulk_delete')},
+                    class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+      <% end %>
     </div>
   </div>
 

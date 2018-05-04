@@ -26,8 +26,9 @@
           <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send') %>
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), class: 'edit_invoice_icon',
                       title: t('helpers.links.edit') unless invoice.invoice_type.eql?('ProjectInvoice') %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, title: t('helpers.links.delete'),
-                      method: :delete, data:{confirm: t('helpers.messages.confirm')} %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, title: t('helpers.links.delete'), method: :delete,
+                      data:{confirm: t('helpers.messages.confirm'),
+                            success: t('views.invoices.invoice_deleted')} %>
           <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'), target: '_blank' %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>

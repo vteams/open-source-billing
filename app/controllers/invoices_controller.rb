@@ -183,7 +183,7 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to invoices_url }
-      format.json { head :no_content }
+      format.json { render_json(@invoice) }
     end
   end
 

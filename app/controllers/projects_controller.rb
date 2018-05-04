@@ -80,7 +80,11 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: t('views.projects.destroyed_msg')
+
+    respond_to do |format|
+      format.html { redirect_to projects_url, notice: t('views.projects.destroyed_msg') }
+      format.json { render_json(@project) }
+    end
   end
 
   def sort_column

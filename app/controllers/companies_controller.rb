@@ -104,7 +104,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to companies_path }
-      format.json { head :no_content }
+      format.json { render_json(@company) }
     end
   end
 
