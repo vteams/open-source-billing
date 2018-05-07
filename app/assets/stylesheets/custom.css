@@ -665,3 +665,7 @@ form .select-wrapper .select-dropdown {
 #reports-breadcrumb .select-wrapper.initialized .caret{
     padding-right: 45px;
 }
+.time-log-table{
+    padding-left: 0;
+    padding-top: 0;
+}
