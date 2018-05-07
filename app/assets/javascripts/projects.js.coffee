@@ -164,8 +164,14 @@ class @Project
     applyDatePicker()
     $('.rkmd-slider').rkmd_rangeSlider()
     $(".project_task_form").submit ->
-      $("#project_task_name").val($(this).find('.task_name').text())
-      $("#project_task_description").val($(this).find('.task_description').text())
+      flag = true
+      if $(".task_name").text() is ""
+        applyPopover($(".task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
+        flag = false
+      else
+        $("#project_task_name").val($(this).find('.task_name').text())
+        $("#project_task_description").val($(this).find('.task_description').text())
+      flag
 
 $(document).ready ->
   Project.change_project_staff()
