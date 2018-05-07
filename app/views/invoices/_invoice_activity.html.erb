@@ -85,12 +85,6 @@
       <% end %>
     </div>
 
-    <div class="status-info">
-      <h5>
-        <%= link_to t('views.common.recurring'), "invoices?status=recurring#{query_string(params.except(:page).merge(per: @per_page))}" %>
-        <span id="archives">(<%= get_count(params.merge(status: 'recurring')) %>)</span>
-      </h5>
-    </div>
     <% if action_name.eql?('index') %>
         <div class="status-info actionState">
           <%= form_tag '', method: :get, remote: true do %>
