@@ -2,12 +2,12 @@
     <div class="row">
       <div class="input-field col s12 m6 xl2  datepicker">
         <input name="criteria[from_date]" type="text" id="from_date" readonly value="<%= 1.month.ago.to_date.strftime(get_date_format) %>"/>
-        <i class="material-icons" id="from_date_icon">date_range</i>
+        <i class="material-icons">date_range</i>
         <label for="from_date" class="active"><%= t('views.reports.date_range') %></label>
       </div>
       <div class="input-field col s12 m6 xl2 datepicker">
         <input name="criteria[to_date]" type="text" id="to_date" readonly value="<%= Date.today.strftime(get_date_format) %>"/>
-        <i class="material-icons" id="to_date_icon">date_range</i>
+        <i class="material-icons">date_range</i>
         <label for="to_date" class="active"><%= t('views.reports.to') %></label>
       </div>
       <div class="input-field col s12 m6 xl2">

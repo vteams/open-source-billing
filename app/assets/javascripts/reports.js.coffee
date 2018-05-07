@@ -3,15 +3,15 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('.report-section  #from_date_icon').pickadate
-    format: "yyyy-mm-dd"
+  $('.report-section  #from_date').pickadate
+    format: DateFormats.format()
     formatSubmit: DateFormats.format()
     onSet: (context) ->
       value = @get('value')
       $('.report-section #from_date').val value
 
-  $('.report-section  #to_date_icon ').pickadate
-    format: "yyyy-mm-dd"
+  $('.report-section  #to_date ').pickadate
+    format: DateFormats.format()
     formatSubmit: DateFormats.format()
     onSet: (context) ->
       value = @get('value')
