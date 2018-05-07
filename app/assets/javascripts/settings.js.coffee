@@ -106,6 +106,7 @@
           showSuccessMsg(data.notice)
           $('#companies_listing').html(data.html)
           initCompanyListingEvents()
+  @Company.init_settings_form()
 
   $('select').material_select()
 
