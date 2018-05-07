@@ -7,6 +7,7 @@ Popup.open(elem);
 
 jQuery('#invoice_selection').submit(function() {
     var flag, invoices;
-    invoices = jQuery("table.table_listing tbody");
-    return flag = invoices.find('tr.no-invoices').length ? (jQuery(".invoice_popup_error").show().find('span').html('There are no unpaid invoices to enter payment against.'), false) : invoices.find(":checked").length === 0 ? (jQuery(".invoice_popup_error").show().find('span').html("You haven't selected any invoice. Please select one or more invoices and try again."), false) : true;
+    invoices = $('#unpaid_invoices').find('tbody');
+    var errorDiv = $('#unpaid_invoices').find('table');
+    return flag = invoices.find('tr.no-invoices').length ? (applyPopover(errorDiv,"topMiddle","topLeft",I18n.t("views.payments.no_unpaid_invoice")), false) : invoices.find(":checked").length === 0 ? (applyPopover(errorDiv,"topMiddle","topLeft",I18n.t("views.payments.no_invoice_selected")), false) : true;
 });

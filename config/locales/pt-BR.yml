@@ -608,6 +608,8 @@ pt-BR:
       payfull: "Pague Completamente"
       bulk_action_msg: "Pagamentos são %{action} com sucesso."
       payment_history: "Histórico de pagamento"
+      no_unpaid_invoice: "Não há faturas não pagas para efetuar o pagamento."
+      no_invoice_selected: "Você não selecionou nenhuma fatura. Selecione uma ou mais faturas e tente novamente."
 
     payment_terms:
       number_of_days: "Número de dias"

@@ -11,11 +11,11 @@
             <%= t('views.payments.select_one_or_more_invoices_from_the_list_below_to_apply_payment') %>
           <div class="modal-action-btn right">
             <% unless @invoices.blank? %>
-                <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+                <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
                   <i class="material-icons" >done</i>
                 </a>
             <% end %>
-            <%= submit_tag'', class: 'btn_large submit hidden' %>
+            <%= submit_tag'', class: 'btn_large payment_select_form hidden' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
               <i class="material-icons" >close</i>
             </a>

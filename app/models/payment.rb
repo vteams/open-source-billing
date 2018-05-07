@@ -78,9 +78,9 @@ class Payment < ActiveRecord::Base
     return_v
   end
 
-  def self.update_invoice_status_credit(inv_id, c_pay, pay)
+  def self.update_invoice_status_credit(inv_id, c_pay, pay = nil)
     invoice = Invoice.find(inv_id)
-    diff = (self.invoice_old_paid_amount(invoice.id, pay.id) + c_pay) - invoice.invoice_total
+    diff = (self.invoice_old_paid_amount(invoice.id, pay.try(:id)) + c_pay) - invoice.invoice_total
     #if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
     if diff < 0
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
@@ -127,9 +127,11 @@ class Payment < ActiveRecord::Base
   end
 
  def self.invoice_old_paid_amount(inv_id, pay_id)
-   invoice_old_payments = Payment.where("id != #{pay_id} and invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id).all
+   invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
+   invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
+
    invoice_paid_amount = 0
-   invoice_old_payments.each do |inv_p|
+   invoice_old_payments.all.each do |inv_p|
      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
    end
    invoice_paid_amount

@@ -663,6 +663,8 @@ en:
       payfull: "Pay Full"
       bulk_action_msg: "Payment(s) are %{action} successfully."
       payment_history: "Payment History"
+      no_unpaid_invoice: "There are no unpaid invoices to enter payment against."
+      no_invoice_selected: "You haven't selected any invoice. Please select one or more invoices and try again."
 
     payment_terms:
       number_of_days: "Number of days"
