@@ -166,6 +166,7 @@ jQuery(function () {
 
     (function ($) {
         initCustomConfirmPopUp();
+        initLoginPageFormValidation();
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
                 scrollInertia: 150,
@@ -278,5 +279,25 @@ function initCustomConfirmPopUp() {
                 }
             }
         });
+    });
+}
+
+function initLoginPageFormValidation() {
+    $('#user_login').submit(function () {
+        var flag = true;
+        var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        if($('#email').val() === '') {
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        } else if(!pattern.test($("#email").val())) {
+            hidePopover($('#email'));
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t('views.companies.email_invalid'));
+            flag = false;
+        } else if ($('#password').val() === '') {
+            hidePopover($('#email'));
+            applyPopover($("#password"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        }
+        return flag;
     });
 }
