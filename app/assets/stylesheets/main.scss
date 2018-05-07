@@ -2534,7 +2534,7 @@ h6 {
   border-bottom: none; }
 .report-section table tr, .setting-section table tr {
   border-color: #e5e5e5; }
-.report-section table tr th, .setting-section table tr th {
+.report-section table.bordered tr th, .setting-section table.bordered tr th {
   border-right: 1px solid #fff;
   background-color: #ececec;
   padding: 10px 12px;
@@ -2543,7 +2543,7 @@ h6 {
   font-size: 12px; }
 .report-section table tr th:last-child, .setting-section table tr th:last-child {
   border: none; }
-.report-section table tr td, .setting-section table tr td {
+.report-section table.bordered tr td, .setting-section table.bordered tr td {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px;
   padding: 10px 12px; }
