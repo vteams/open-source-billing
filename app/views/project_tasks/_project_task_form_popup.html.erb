@@ -37,9 +37,12 @@
                         <%= f.hidden_field :name %>
                       </div>
                     </div>
-                    <div class="amount-box">
-                      <span class="usertitle task_description" contenteditable="true"><%= task.description %></span>
-                      <%= f.hidden_field :description %>
+                    <div class="editable-content">
+                      <div class="text-field">
+                        <span><%= t('views.common.description') %> <small>:</small> </span>
+                        <strong class="usertitle task_description" contenteditable="true"><%= task.description %></strong>
+                        <%= f.hidden_field :description %>
+                      </div>
                     </div>
                   </div>
                 </div>
