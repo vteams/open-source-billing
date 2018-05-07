@@ -9,7 +9,7 @@ class Log < ActiveRecord::Base
   before_create :set_user
 
   def line_total
-    (hours * task.rate).round(2)
+    task.rate ? (hours * task.rate).round(2) : 0.0
   end
 
   def set_user
