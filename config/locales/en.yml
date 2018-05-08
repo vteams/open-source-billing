@@ -850,7 +850,7 @@ en:
 
     sessions:
       sign_in: "Sign In"
-      keep_me_signed_in: "Keep me Signed in"
+      keep_me_signed_in: "Keep me signed in"
       forgot_password: "Forgot Password?"
       submit: "Submit"
       powered_by: "powered by"
