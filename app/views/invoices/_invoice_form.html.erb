@@ -153,7 +153,7 @@
               <div class="new-invoice-footer-row">
                 <span><%= t('views.common.tax') %></span>
                 <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id),
-                             { prompt: t('views.common.select'), include_blank: true},{:class => "discount_select inline-select small-select"} %>
+                             { prompt: t('views.common.select')},{:class => "discount_select inline-select small-select"} %>
               </div>
               <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
