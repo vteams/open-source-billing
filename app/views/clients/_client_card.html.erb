@@ -32,7 +32,9 @@
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true,
                       class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
           <%= link_to raw("<i class='material-icons'>delete</i>"),client, method: :delete,
-                      data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+                      data:{confirm: t('helpers.messages.confirm'),
+                            success: t('views.clients.bulk_action_msg', action: 'deleted') },
+                      title: t('helpers.links.delete') %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= client.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>
           </a>

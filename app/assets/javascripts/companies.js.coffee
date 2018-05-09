@@ -1,4 +1,24 @@
 class @Company
+  @init_settings_form = ->
+    $("#company_name,#contact_name,#companies_email").keypress ->
+      hideQtip(jQuery(this))
+    $('#company_side_form').submit ->
+      flag = true
+      pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+      if $('#company_name').val() == ''
+        applyQtip($("#company_name"), I18n.t("views.companies.field_requied"))
+        flag = false
+      else if $('#contact_name').val() == ''
+        applyQtip($("#contact_name"), I18n.t("views.companies.field_requied"))
+        flag = false
+      else if $('#companies_email').val() == ''
+        applyQtip($("#companies_email"), I18n.t("views.companies.field_requied"))
+        flag = false
+      else unless pattern.test($("#companies_email").val())
+        applyQtip($("#companies_email"), I18n.t('views.companies.email_invalid'))
+        flag = false
+      flag
+
   @load_functions = ->
 
     $('.modal').modal complete: ->

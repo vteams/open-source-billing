@@ -120,7 +120,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to taxes_url }
-      format.json { head :no_content }
+      format.json { render_json(@taxis) }
     end
   end
 

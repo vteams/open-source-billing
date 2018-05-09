@@ -170,6 +170,14 @@ class ApplicationController < ActionController::Base
     User.current = current_user
   end
 
+  def render_json(obj)
+    if obj.errors.present?
+      render json: {errors: obj.errors.full_messages.join('.') }, status: :unprocessable_entity
+    else
+      render json: {}
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

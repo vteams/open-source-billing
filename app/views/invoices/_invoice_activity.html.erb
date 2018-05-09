@@ -5,7 +5,7 @@
     <!--- activities list--->
     <div class="status-info active">
       <h5>
-        <%= link_to t('views.common.active'), "invoices?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <%= link_to t('views.common.active'), activities_invoices_path('active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@invoice_activity[:active_invoices_total], unit: default_currency_unit) %></div>
@@ -26,7 +26,7 @@
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to t('header.links.invoices.recurring'), "invoices?status=recurring#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'recurring'}" %>
+        <%= link_to t('header.links.invoices.recurring'), activities_invoices_path('recurring'), :class => "get_actives #{'active' if params[:status] == 'recurring'}" %>
         <span id="actives">(<%= get_count(params.merge(status: 'recurring')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@invoice_activity[:recurring_invoices_total], unit: default_currency_unit) %></div>
@@ -46,7 +46,7 @@
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to t('views.common.deleted'), "invoices?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <%= link_to t('views.common.deleted'), activities_invoices_path('deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@invoice_activity[:deleted_invoices_total], unit: default_currency_unit )%></div>
@@ -66,7 +66,7 @@
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to t('views.common.archived'), "invoices?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <%= link_to t('views.common.archived'), activities_invoices_path('archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@invoice_activity[:archived_invoices_total], unit: default_currency_unit )%></div>
@@ -85,12 +85,6 @@
       <% end %>
     </div>
 
-    <div class="status-info">
-      <h5>
-        <%= link_to t('views.common.recurring'), "invoices?status=recurring#{query_string(params.except(:page).merge(per: @per_page))}" %>
-        <span id="archives">(<%= get_count(params.merge(status: 'recurring')) %>)</span>
-      </h5>
-    </div>
     <% if action_name.eql?('index') %>
         <div class="status-info actionState">
           <%= form_tag '', method: :get, remote: true do %>

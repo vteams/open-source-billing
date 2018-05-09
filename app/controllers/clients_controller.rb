@@ -144,7 +144,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to clients_url }
-      format.json { head :no_content }
+      format.json { render_json(@client) }
     end
   end
 

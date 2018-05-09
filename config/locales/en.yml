@@ -196,7 +196,7 @@ en:
       select: "Select"
       add_notes: "Add Notes"
       all_companies: "All Companies"
-      selected_companies_only: "Selected companies only"
+      selected_companies_only: "Selected Companies Only"
       all_clients: "All Clients"
       between: "Between"
       and: "And"
@@ -663,6 +663,8 @@ en:
       payfull: "Pay Full"
       bulk_action_msg: "Payment(s) are %{action} successfully."
       payment_history: "Payment History"
+      no_unpaid_invoice: "There are no unpaid invoices to enter payment against."
+      no_invoice_selected: "You haven't selected any invoice. Please select one or more invoices and try again."
 
     payment_terms:
       number_of_days: "Number of days"
@@ -724,7 +726,7 @@ en:
       current_company_action: "Sorry, Current Company cannot be %{action}."
       create_msg: "Company has been created successfully."
       updated_msg: "Your company has been updated successfully."
-      deleted_msg: "Companies has been deleted successfully."
+      deleted_msg: "Company has been deleted successfully."
       bulk_archived: "companies have been archived. You can find them under"
       move_archived_to_active: "to move archived companies back to active."
       bulk_deleted_msg: "companies have been deleted. You can find them under"
@@ -878,6 +880,8 @@ en:
         confirm: "Are you sure?"
         how_ofter: "How Often?"
         how_many: "How Many?"
+        not_be_recoverable: "You may not be able to revert this action."
+        unable_to_delete: "Unable to delete this entity."
       titles:
         new: "New %{model}"
         edit: "Edit %{model}"

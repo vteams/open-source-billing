@@ -603,6 +603,8 @@ fr:
       payfull: "Payer complet"
       bulk_action_msg: "Les paiements sont %{action} réussis."
       payment_history: "Historique de Paiement"
+      no_unpaid_invoice: "Il n'y a pas de factures impayées pour entrer le paiement contre."
+      no_invoice_selected: "Vous n'avez sélectionné aucune facture. Veuillez sélectionner une ou plusieurs factures et réessayer."
 
     payment_terms:
       number_of_days: "Nombre de jours"
@@ -808,6 +810,8 @@ fr:
         confirm: "Êtes-vous sûr?"
         how_ofter: "À quelle fréquence?"
         how_many: "Combien?"
+        not_be_recoverable: "Vous ne pourrez peut-être pas annuler cette action."
+        unable_to_delete: "Impossible de supprimer cette entité."
       titles:
         new: "Nouveau %{model}"
         edit: "modifier %{model}"

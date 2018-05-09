@@ -93,7 +93,11 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   def destroy
     @staff.destroy
-    redirect_to staffs_url, notice: t('views.staffs.destroyed_msg')
+
+    respond_to do |format|
+      format.html { redirect_to staffs_url, notice: t('views.staffs.destroyed_msg') }
+      format.json { render_json(@staff) }
+    end
   end
 
   def filter_staffs

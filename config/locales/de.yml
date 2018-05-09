@@ -607,6 +607,8 @@ de:
       payfull: "Voll bezahlen"
       bulk_action_msg: "Zahlung (en) sind %{action} erfolgreich."
       payment_history: "Zahlungshistorie"
+      no_unpaid_invoice: "Es gibt keine unbezahlten Rechnungen für die Zahlung."
+      no_invoice_selected: "Sie haben keine Rechnung ausgewählt. Bitte wählen Sie eine oder mehrere Rechnungen aus und versuchen Sie es erneut."
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"
@@ -812,6 +814,8 @@ de:
         confirm: "Bist du sicher?"
         how_ofter: "Wie oft?"
         how_many: "Wie viele?"
+        not_be_recoverable: "Sie können diese Aktion möglicherweise nicht rückgängig machen."
+        unable_to_delete: "Diese Entität konnte nicht gelöscht werden."
       titles:
         new: "Neu %{model}"
         edit: "bearbeiten %{model}"

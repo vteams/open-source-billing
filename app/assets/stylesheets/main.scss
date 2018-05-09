@@ -427,10 +427,10 @@ h6 {
   width: 66px;
   height: auto;
   line-height: 1;
-  border: 1px solid #f0f0f1;
+  border: 1px solid #dfdede;
   border-radius: 20px;
   color: #909090;
-  margin: 5px 0 0;
+  margin: 8px 0 0;
   left: -16px; }
 #header .header-center .hdr-select-holder .select-wrapper.currency input.select-dropdown {
   text-align: center;
@@ -441,8 +441,13 @@ h6 {
   line-height: 21px;
   padding-top: 0; }
 #header .header-center .hdr-select-holder .select-wrapper.currency .dropdown-content.select-dropdown {
-  min-width: 50px;
-  top: 41px !important; }
+  max-height: 300px;
+  min-width: 250px;
+  max-width: 300px;
+  top: 41px !important;
+  overflow-y: auto;
+  left: -94px !important;
+}
 #header .header-center .hdr-select-holder .select-wrapper.currency .dropdown-content.select-dropdown li span {
   text-align: center;
   font-size: 12px;
@@ -1269,7 +1274,9 @@ h6 {
   margin-bottom: 20px;
   font-family: 'Arial','Helvetica',sans-serif;
   position: relative;
-  cursor: default; }
+  cursor: default;
+  word-wrap: break-word;
+}
 .card-white-panel .invoice-name {
   float: left;
   width: 40px;
@@ -1335,17 +1342,19 @@ h6 {
   padding: 10px 10px 0 55px;
   font-size: 11px;
   line-height: 11px; }
-.card-white-panel .action-btn-group {
-  position: absolute;
-  top: 10px;
-  right: 9px;
-  margin-right: -76px;
-  -moz-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  transition: all 0.5s;
-  margin-right: -150px;
-  opacity: 0; }
+@media(min-width:768px) {
+  .card-white-panel .action-btn-group {
+    position: absolute;
+    top: 10px;
+    right: 9px;
+    margin-right: -76px;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-right: -150px;
+    opacity: 0; }
+}
 .card-white-panel .action-btn-group a {
   color: #b9b9b9; }
 .card-white-panel .action-btn-group a i {
@@ -2530,7 +2539,7 @@ h6 {
   border-bottom: none; }
 .report-section table tr, .setting-section table tr {
   border-color: #e5e5e5; }
-.report-section table tr th, .setting-section table tr th {
+.report-section table.bordered tr th, .setting-section table.bordered tr th {
   border-right: 1px solid #fff;
   background-color: #ececec;
   padding: 10px 12px;
@@ -2539,7 +2548,7 @@ h6 {
   font-size: 12px; }
 .report-section table tr th:last-child, .setting-section table tr th:last-child {
   border: none; }
-.report-section table tr td, .setting-section table tr td {
+.report-section table.bordered tr td, .setting-section table.bordered tr td {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px;
   padding: 10px 12px; }
@@ -4387,6 +4396,37 @@ i.material-icons.close:hover {
   padding: 0 3px 5px 3px !important;
 }
 
-.report-inner-scroll-container{
+.report-inner-scroll-container {
   height: 550px;
+}
+.td-checkbox { padding-top: 0 !important; }
+
+#log_date { color: #454545; }
+
+.new-invoice-header  input.select-dropdown { text-align: center; }
+
+#dropdown_currency::-webkit-scrollbar {
+  width: .5em;
+}
+#dropdown_currency::-webkit-scrollbar-button {
+  background: #ccc;
+}
+#dropdown_currency::-webkit-scrollbar-thumb {
+  background: #eee;}
+
+#dropdown_currency .country-item {
+  padding: 10px;
+  border-bottom: none;
+}
+
+#header .header-center .hdr-select-holder .select-wrapper.currency .dropdown-content.select-dropdown li .country-name {
+  display: inline-block;
+  width: 70% !important;
+  padding: 0;
+}
+
+#header .header-center .hdr-select-holder .select-wrapper.currency .dropdown-content.select-dropdown li .currency-code {
+  display: inline-block;
+  padding: 0;
+  text-align: center;
 }

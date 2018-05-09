@@ -32,14 +32,17 @@
                   <div class="invoice-details">
                     <div class="editable-content">
                       <div class="text-field">
-                        <span><%= t('task') %> <small>:</small> </span>
+                        <span><%= t('task') %> : </span>
                         <strong class="text-blue task_name" contenteditable="true"><%= task.name %></strong>
                         <%= f.hidden_field :name %>
                       </div>
                     </div>
-                    <div class="amount-box">
-                      <span class="usertitle task_description" contenteditable="true"><%= task.description %></span>
-                      <%= f.hidden_field :description %>
+                    <div class="editable-content">
+                      <div class="text-field">
+                        <span><%= t('views.common.description') %> : </span>
+                        <strong class="usertitle task_description" contenteditable="true"><%= task.description %></strong>
+                        <%= f.hidden_field :description %>
+                      </div>
                     </div>
                   </div>
                 </div>

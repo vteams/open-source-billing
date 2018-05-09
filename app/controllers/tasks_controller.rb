@@ -87,7 +87,11 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: t('views.tasks.destroyed_msg')
+
+    respond_to do |format|
+      format.html { redirect_to tasks_url, notice: t('views.tasks.destroyed_msg') }
+      format.json { render_json(@task) }
+    end
   end
 
   def filter_tasks

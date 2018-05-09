@@ -66,7 +66,7 @@ class CompaniesController < ApplicationController
         format.json { render json: companies_path, status: :created, location: @company }
       else
         format.js {}
-        format.html { render action: "new" }
+        format.html { redirect_to companies_path, alert: @company.errors.full_messages.join('. ') }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
     end
@@ -84,7 +84,7 @@ class CompaniesController < ApplicationController
         format.json { head :no_content }
       else
         format.js {}
-        format.html { render action: "edit" }
+        format.html { redirect_to companies_path, alert: @company.errors.full_messages.join('. ') }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
     end
@@ -104,7 +104,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to companies_path }
-      format.json { head :no_content }
+      format.json { render_json(@company) }
     end
   end
 

@@ -6,7 +6,7 @@
     <div class="checkbox-item">
       <%= check_box_tag "company_ids[]", company.id, false, :id => "company_#{company.id}", class: "filled-in" %>
       <label for="<%= "company_#{company.id}" %>"></label>
-      <div class="invoice-name <%= random_card_color %>">
+      <div class="invoice-name <%= random_card_color unless company.logo_url.present? %>">
         <%= company.logo_url.present? ? image_tag(company.logo_url(:thumb), class: 'responsive-img circle') : company.image_name %>
       </div>
     </div>
@@ -27,7 +27,10 @@
       <% else %>
 
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_company_path(company), remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),company, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),company, method: :delete,
+                      data:{confirm: t('helpers.messages.confirm'),
+                            success: t('views.companies.deleted_msg') },
+                      title: t('helpers.links.delete') %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= company.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>
           </a>

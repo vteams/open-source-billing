@@ -21,12 +21,21 @@
           </select>
           <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and current_user.settings.currency.present? and current_user.settings.currency.eql?("On") %>
-              <select class="currency currency_select" data-user-id="<%= current_user.id %>">
-                <option value="" disabled selected><%= current_user.settings.default_currency %></option>
-                <% currencies.each do |currency| %>
-                    <option value="<%= currency.id%> "><%= currency.unit %></option>
-                <% end %>
-              </select>
+              <div class="select-wrapper currency currency_select initialized">
+                <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="dropdown-button"
+                   title="<%= t('views.settings.default_currency') %>">
+                  <input class="select-dropdown" value="<%= current_user.settings.default_currency %>" readonly="readonly">
+                </a>
+                <ul id="dropdown_currency" class='dropdown-content dropdown-content select-dropdown'>
+                  <% Currency.unscoped.each do |currency| %>
+                    <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>">
+                      <div class="currency-flag currency-flag-<%= currency.unit.downcase %>"></div>
+                      <span class="country-name"><%= currency.title.truncate(20) %></span>
+                      <span class="currency-code"><%= currency.code %></span>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
          <% end %>
         </div>
       </div>

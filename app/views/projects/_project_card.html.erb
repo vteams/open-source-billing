@@ -32,7 +32,9 @@
           <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
       <% else %>
           <%= link_to raw("<i class='material-icons'>create</i>"),edit_project_path(project), class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: t('helpers.messages.confirm'),
+                                                                                                  success: t('views.projects.destroyed_msg'),
+                                                                                                  redirect: projects_path}, title: t('helpers.links.delete') %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= project.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>
           </a>

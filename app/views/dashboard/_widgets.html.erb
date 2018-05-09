@@ -3,15 +3,15 @@
   <div class="dashboard-whitebox">
     <div class="row">
       <div class="col m6 total-income">
-        <h4><%= link_to t("views.dashboard.ytd_income"), invoices_url(type: ['paid']) %></h4>
+        <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path(type: ['paid']) %></h4>
         <div class="amount">
           <%= number_to_currency_dashboard(@ytd_income,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'})  %>
         </div>
-        <h4><%= link_to t("views.dashboard.amount_billed"), invoices_url %></h4>
+        <h4><%= link_to t("views.dashboard.amount_billed"), invoices_path %></h4>
         <div class="amount">
           <%= number_to_currency_dashboard(@amount_billed,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
         </div>
-        <h4><%= link_to t("views.dashboard.total_outstanding"), invoices_url(type: ['sent', 'draft', 'viewed']) %></h4>
+        <h4><%= link_to t("views.dashboard.total_outstanding"), invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
         <div class="amount">
           <%= number_to_currency_dashboard(@outstanding_invoices, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
         </div>
