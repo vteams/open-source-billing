@@ -19,7 +19,22 @@ $(document).ready(function(){
         $('.search-holder form').show();
     });
     $(".btn-back").click(function(){
-        window.location.reload();
+        $('.card-white-panel .action-btn-group').show();
+        $('.checkbox-item').find('.invoice-name').css('opacity', '1');
+        $('.checkbox-item').find('label').css('opacity', '0');
+        $(".header-right").removeClass("chekbox-show");
+        $('#header').removeClass("chkbox-content");
+
+        $('.checkboxinfo .action-btn-group .edit').show();
+        $('.checkboxinfo .action-btn-group .send').show();
+        $('.checkbox-item').find('input[type="checkbox"]').prop('checked', false);
+
+        $(".header-right").removeClass("search-show");
+        $('.checkboxinfo').show();
+        $('.search-holder form').hide();
+        if($('.select2-search-choice-close').size() == 1){
+            $('a.select2-search-choice-close').click();
+        }
     });
     //
     $(".btn-menu").click(function(){

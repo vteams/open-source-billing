@@ -62,8 +62,8 @@
                   </div>
 
                   <div class="input-field col s12 m9 xl4 titlebold">
-                    <label class="active"><%= t('views.tasks.hours') %></label>
-                    <%= f.number_field :hours %>
+                    <label class="active placeholder-position"><%= t('views.tasks.hours') %></label>
+                    <%= f.number_field :hours , min: 0%>
                   </div>
                   <div class="range-input col s12 m6 l4 offset-l2">
                     <label><%= t('views.tasks.spent_time') %></label>
@@ -71,9 +71,9 @@
                       <%= f.range_field :spent_time, min: 0, max: f.object.hours  %>
                     </div>
                   </div>
-                  <div class="input-field col s12 m9 xl4 clearfix titlebold">
-                    <label class="active"><%= t('views.tasks.rate_') %></label>
-                    <%= f.number_field :rate %>
+                  <div class="input-field col s12 m9 xl4 clearfix titlebold placeholder-position">
+                    <label class="active placeholder-position"><%= t('views.tasks.rate_') %></label>
+                    <%= f.number_field :rate, min: 0 %>
                   </div>
                 </div>
               </div>
