@@ -51,6 +51,7 @@
  *= require custom
  *= require select2.min
  *= require search
+ *= require currency-flags
 */
 
 .fix-left-and-opacity {

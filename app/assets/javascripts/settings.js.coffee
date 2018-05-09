@@ -136,8 +136,8 @@
     initCompanyListingEvents()
 
 jQuery ->
-  jQuery('.currency_select').on "change", ->
-    currency_id = $(this).val()
+  jQuery('.country-item').on "click", ->
+    currency_id = $(this).data('id')
     user_id = $(this).data('user-id')
     url = "/settings/"+user_id+"/set_default_currency?currency_id="+currency_id
     jQuery.get url, (response) ->

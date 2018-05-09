@@ -209,7 +209,9 @@ end
 #creating default currencies
 Currency.delete_all
 ActiveRecord::Base.connection.execute("TRUNCATE currencies")
-sample_currencies = Money::Currency.all.collect{|x| {code: x.symbol,unit: x.iso_code,title: x.name}}
+sample_currencies = []
+not_currencies = ['BTC', 'XAG', 'XAU', 'XDR']
+Money::Currency.all.collect{|x| sample_currencies << {code: x.symbol,unit: x.iso_code,title: x.name} if not_currencies.exclude?(x.iso_code)}
 Currency.create(sample_currencies)
 
 # set default currencies to clients
