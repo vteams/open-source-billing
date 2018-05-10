@@ -6,16 +6,16 @@ class @Company
       flag = true
       pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
       if $('#company_name').val() == ''
-        applyQtip($("#company_name"), I18n.t("views.companies.field_requied"))
+        applyQtip($("#company_name"), I18n.t("views.companies.field_requied"), "bottomMiddle", "topLeft")
         flag = false
       else if $('#contact_name').val() == ''
-        applyQtip($("#contact_name"), I18n.t("views.companies.field_requied"))
+        applyQtip($("#contact_name"), I18n.t("views.companies.field_requied"), "bottomMiddle", "topLeft")
         flag = false
       else if $('#companies_email').val() == ''
-        applyQtip($("#companies_email"), I18n.t("views.companies.field_requied"))
+        applyQtip($("#companies_email"), I18n.t("views.companies.field_requied"), "bottomMiddle", "topLeft")
         flag = false
       else unless pattern.test($("#companies_email").val())
-        applyQtip($("#companies_email"), I18n.t('views.companies.email_invalid'))
+        applyQtip($("#companies_email"), I18n.t('views.companies.email_invalid'), "bottomMiddle", "topLeft")
         flag = false
       flag
 
@@ -46,7 +46,8 @@ class @Company
         flag = false
       flag
 
-  applyQtip = (elem, message, direction) ->
+  applyQtip = (elem, message, position = "topRight", corner = "leftMiddle") ->
+
     elem.qtip
       content:
         text: message
@@ -55,10 +56,10 @@ class @Company
       hide:
         event: false
       position:
-        at: "topRight"
+        at: position
       style:
         tip:
-          corner: "leftMiddle"
+          corner: corner
     elem.qtip().show()
     elem.focus()
 

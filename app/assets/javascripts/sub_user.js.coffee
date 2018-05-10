@@ -67,3 +67,32 @@ class @SubUser
         hidePopover($("#password_confirmation"))
         flag = true
       flag
+
+  @init_settings_form = ->
+    $("#side_form_user_name,#side_form_user_email,#side_form_password,#side_form_password_confirmation").keypress ->
+      hidePopover(jQuery(this))
+    $('#user_side_form').submit ->
+      flag = true
+      pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+      if $('#side_form_user_name').val() == ''
+        applyPopover($("#side_form_user_name"), "bottomMiddle", "topLeft", I18n.t("views.users.full_name_required"))
+        flag = false
+      else if $('#side_form_user_email').val() == ''
+        applyPopover($("#side_form_user_email"), "bottomMiddle", "topLeft", I18n.t("views.users.email_required"))
+        flag = false
+      else if !pattern.test($("#side_form_user_email").val())
+        applyPopover($("#side_form_user_email"), "bottomMiddle", "topLeft", I18n.t('views.users.email_invalid'))
+        flag = false
+      else if $('#side_form_password').val() == ''
+        applyPopover($("#side_form_password"), "bottomMiddle", "topLeft", I18n.t("views.users.password_required"))
+        flag = false
+      else if $('#side_form_password').val().length < 8
+        applyPopover($("#side_form_password"), "bottomMiddle", "topLeft", I18n.t("views.users.pass_must_have_8_char"))
+        flag = false
+      else if $('#side_form_password_confirmation').val() == ''
+        applyPopover($("#side_form_password_confirmation"), "bottomMiddle", "topLeft", I18n.t("views.users.pass_confirmation_required"))
+        flag = false
+      else if $('#side_form_password_confirmation').val() != $('#side_form_password').val()
+        applyPopover($("#side_form_password_confirmation"), "bottomMiddle", "topLeft", I18n.t("views.users.pass_and_confirm_pass_should_same"))
+        flag = false
+      flag

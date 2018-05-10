@@ -73,6 +73,8 @@
 
   $('.user-side-form').addClass('hidden')
 
+  @SubUser.init_settings_form()
+
 @initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
