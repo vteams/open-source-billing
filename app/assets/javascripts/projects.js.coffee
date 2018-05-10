@@ -168,7 +168,37 @@ class @Project
       if $(".task_name").text() is ""
         applyPopover($(".task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
         flag = false
+      else if $('.project_task_start_date').val() is ""
+        hidePopover($(".task_name"))
+        applyPopover($('.project_task_start_date'),"bottomMiddle","topLeft", I18n.t("views.tasks.select_start_date"))
+        flag = false
+      else if $(".project_task_due_date").val() is ""
+        hidePopover($(".project_task_start_date"))
+        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.select_due_date"))
+        flag = false
+      else if $(".project_task_start_date").val() > $(".project_task_due_date").val()
+        hidePopover($(".project_task_due_date"))
+        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.due_date_should_equal_or_greater"))
+        flag = false
+      else if $("#project_task_hours").val() is ""
+        hidePopover($(".project_task_due_date"))
+        applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_hours"))
+        flag = false
+      else if $("#project_task_hours").val() < 0
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
+        flag = false
+      else if $("#project_task_rate").val() is ""
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_rate"))
+        flag = false
+      else if $("#project_task_rate").val() < 0
+        hidePopover($("#project_task_hours"))
+        hidePopover($("#project_task_rate"))
+        applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_rate"))
+        flag = false
       else
+        hidePopover($("#project_task_rate"))
         $("#project_task_name").val($(this).find('.task_name').text())
         $("#project_task_description").val($(this).find('.task_description').text())
       flag

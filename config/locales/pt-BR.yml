@@ -399,7 +399,12 @@ pt-BR:
       bulk_deleted_msg: "tarefas foram eliminadas. Você pode encontrá-los sob"
       to_move_deleted: "para mover as despesas excluídas de volta à ativa."
       enter_name: "Digite um nome para a tarefa"
+      select_start_date: "Selecione a data de início da tarefa"
+      select_due_date: "Insira uma data de vencimento para a tarefa"
+      due_date_should_equal_or_greater: "A data de vencimento deve ser igual ou maior que a data de início"
+      enter_hours: "Insira hora(s) para a tarefa"
       enter_rate: "Insira a taxa por hora para a tarefa"
+      enter_positive_hour: "Insira um valor positivo de hora para a tarefa"
       enter_positive_rate: "Insira um valor positivo de taxa por hora para a tarefa"
       atleast_one_company_selected: "Selecione pelo menos uma empresa para a tarefa"
 

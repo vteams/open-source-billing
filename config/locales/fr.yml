@@ -395,7 +395,12 @@ fr:
       bulk_deleted_msg: "les tâches ont été supprimées. Vous pouvez les trouver sous"
       to_move_deleted: "pour déplacer les dépenses supprimées vers actives."
       enter_name: "Entrez un nom pour la tâche"
+      select_start_date: "Sélectionnez la date de début de la tâche"
+      select_due_date: "Entrez une date d'échéance pour la tâche"
+      due_date_should_equal_or_greater: "La date d'échéance doit être égale ou supérieure à la date de début"
+      enter_hours: "Entrez l'heure (s) pour la tâche"
       enter_rate: "Entrez le taux par heure pour la tâche"
+      enter_positive_hour: "Entrez une valeur positive d'heure pour la tâche"
       enter_positive_rate: "Entrez la valeur positive du taux horaire pour la tâche"
       atleast_one_company_selected: "Sélectionnez au moins une entreprise pour la tâche;"
 

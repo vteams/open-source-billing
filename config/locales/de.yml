@@ -399,7 +399,12 @@ de:
       bulk_deleted_msg: "Aufgaben wurden gelöscht. Sie können sie unter finden"
       to_move_deleted: "um gelöschte Ausgaben zurück in den aktiven Bereich zu verschieben."
       enter_name: "Geben Sie einen Namen für die Aufgabe ein"
+      select_start_date: "Wählen Sie das Startdatum für die Aufgabe aus"
+      select_due_date: "Geben Sie ein Fälligkeitsdatum für die Aufgabe ein"
+      due_date_should_equal_or_greater: "Das Fälligkeitsdatum sollte gleich oder größer als das Startdatum sein"
+      enter_hours: "Geben Sie Stunde(n) für die Aufgabe ein"
       enter_rate: "Geben Sie den Stundensatz für die Aufgabe ein"
+      enter_positive_hour: "Geben Sie den positiven Stundenwert für die Aufgabe ein"
       enter_positive_rate: "Geben Sie einen positiven Wert für die Rate pro Stunde für die Aufgabe ein"
       atleast_one_company_selected: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
 
