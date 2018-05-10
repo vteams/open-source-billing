@@ -26,6 +26,28 @@ class DateFormats
         format = 'yy-mm-dd'
     format
 
+  @jqueryFormat: ->
+    format = 'yy-mm-dd'
+    s_format = @server_format()
+    switch s_format
+      when '%d-%b-%Y'
+        format = 'dd-M-yy'
+      when '%m/%d/%y'
+        format = 'mm/dd/y'
+      when '%m/%d/%Y'
+        format = 'mm/dd/yy'
+      when '%d/%m/%y'
+        format = 'dd/mm/y'
+      when '%d/%m/%Y'
+        format = 'dd/mm/yy'
+      when '%y-%m-%d'
+        format = 'y-mm-dd'
+      when '%Y-%m-%d'
+        format = 'yy-mm-dd'
+      else
+        format = 'yy-mm-dd'
+    format
+
   @get_formated_date: (date) ->
     year = date.split('-')[0]
     month = date.split('-')[1]
@@ -117,7 +139,7 @@ class DateFormats
   @validate_date:(date = null) ->
     returnState = false
     try
-      jQuery.datepicker.parseDate @format(), date
+      jQuery.datepicker.parseDate @jqueryFormat(), date
       returnState = true
     catch err
       returnState = false

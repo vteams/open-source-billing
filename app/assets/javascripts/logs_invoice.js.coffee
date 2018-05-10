@@ -4,7 +4,7 @@
 class @LogInvoice
 
   applyDatePicker = ->
-    $('#invoice_date_picker').pickadate
+    $('#invoice_date').pickadate
       format: DateFormats.format()
       formatSubmit: DateFormats.format()
       onSet: (context) ->
@@ -12,7 +12,7 @@ class @LogInvoice
         $('#invoice_date').html value
         $('#invoice_invoice_date').val value
 
-    $('#invoice_due_date_picker').pickadate
+    $('#invoice_due_date_text').pickadate
       format: DateFormats.format()
       formatSubmit: DateFormats.format()
       onSet: (context) ->
