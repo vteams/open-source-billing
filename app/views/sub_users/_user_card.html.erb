@@ -2,8 +2,9 @@
   <%= link_to '', edit_sub_user_path(user) , remote: true, class: 'invoice_show_link', style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-user_id= <%=user.id %>>
     <div class="checkbox-item">
-      <div class="invoice-name <%= random_card_color %>">
-        <%= user.avatar_url(:thumb) ? image_tag(user.avatar_url(:thumb), alt: 'user image', class: 'responsive-img circle') : user.card_name %>
+      <div class="invoice-name circle-img <%= random_card_color unless user.avatar_url(:thumb) %>"
+           style="background-image: url('<%= user.avatar_url %>');">
+        <%= user.card_name unless user.avatar_url(:thumb) %>
       </div>
     </div>
     <div class="invoice-details">
