@@ -10,7 +10,7 @@
     <div class="col s9 m5 l4">
       <div class="header-center">
         <div class="hdr-select-holder">
-          <select class="company_select">
+          <select class="company_select fix-cursor-pointer">
             <option value="" disabled selected><%= get_company_name%></option>
             <% filter_select_by_companies.each do |company| %>
                 <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>"><%= company.company_name %></option>
@@ -22,7 +22,7 @@
           <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and current_user.settings.currency.present? and current_user.settings.currency.eql?("On") %>
               <div class="select-wrapper currency currency_select initialized">
-                <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="dropdown-button"
+                <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"
                    title="<%= t('views.settings.default_currency') %>">
                   <input class="select-dropdown" value="<%= current_user.settings.default_currency %>" readonly="readonly">
                 </a>
