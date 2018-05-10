@@ -163,6 +163,10 @@ class @Project
   @projectTaskForm = ->
     applyDatePicker()
     $('.rkmd-slider').rkmd_rangeSlider()
+    $('.slider-label span').on 'DOMSubtreeModified', ->
+      completePer = parseFloat($('.slider-label span').text()) / parseFloat($('#project_task_hours').val()) * 100.0
+      $('#time_spent_label').text( completePer.toFixed(2) + ' %')
+
     $(".project_task_form").submit ->
       flag = true
       if $(".task_name").text() is ""

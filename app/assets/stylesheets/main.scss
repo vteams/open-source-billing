@@ -4446,3 +4446,33 @@ i.material-icons.close:hover {
   background-repeat: no-repeat;
   background-size:cover;
 }
+
+.card-white-panel .invoice-details strong.task_description {
+  color: #454545;
+  margin: 10px;
+}
+
+.card-white-panel .invoice-details strong.task_description:focus {
+  border: none;
+  outline: none;
+}
+
+.text-field-description {
+  display: table !important;
+}
+
+.text-field-description > span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#time_spent_label {
+  color:  #09b8e2;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: "Roboto", sans-serif;
+}
+
+.slider {
+  margin-top: 5px;
+}
