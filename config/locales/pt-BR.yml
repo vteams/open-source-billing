@@ -777,7 +777,9 @@ pt-BR:
       bulk_deleted_msg: "projeto (s) foram excluídos. Você pode encontrá-los sob"
       to_move_deleted: "para mover os projetos excluídos de volta para ativos."
       name_required: "Campo Nome do Projeto é obrigatório"
-      estimate_should_be_greater_than_zero: "O tempo estimado deve ser maior que zero"
+      select_a_client: "Selecione um cliente"
+      select_a_manager: "Selecione um gerente"
+      estimate_should_be_greater_than_zero: "O tempo estimado deve ser igual ou maior que zero"
 
     import_data:
       import_data: "Datos de importacion"

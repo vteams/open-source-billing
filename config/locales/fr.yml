@@ -771,7 +771,9 @@ fr:
       bulk_deleted_msg: "le (s) projet (s) ont été supprimés. Vous pouvez les trouver sous"
       to_move_deleted: "pour déplacer les projets supprimés vers actifs."
       name_required: "Le champ Nom du projet est requis"
-      estimate_should_be_greater_than_zero: "L'estimation du temps devrait être supérieure à zéro"
+      select_a_client: "Sélectionnez un client"
+      select_a_manager: "Sélectionnez un manager"
+      estimate_should_be_greater_than_zero: "L'estimation du temps devrait être égale ou supérieure à zéro"
 
     import_data:
       import_data: "Importer des données"

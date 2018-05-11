@@ -775,7 +775,9 @@ de:
       bulk_deleted_msg: "Projekt (e) wurden gelöscht. Sie können sie unter finden"
       to_move_deleted: "Verschieben gelöschter Projekte zurück in active."
       name_required: "Das Feld Projektname ist erforderlich"
-      estimate_should_be_greater_than_zero: "Die Zeitschätzung sollte größer als Null sein"
+      select_a_client: "Wählen Sie einen Kunden aus"
+      select_a_manager: "Wählen Sie einen manager"
+      estimate_should_be_greater_than_zero: "Die Zeitschätzung sollte gleich oder größer als Null sein"
 
     import_data:
       import_data: "Daten importieren"
