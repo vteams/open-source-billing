@@ -672,3 +672,10 @@ form .select-wrapper .select-dropdown {
 #project_task_form_popup .modal-body .left-content .form-wrapper label.placeholder-position{
     top: 0px;
 }
+
+#horizontal-project-form .content-detail .left-content .row label.placeholder-position{
+    top: 0px;
+}
+.label-position{
+    margin-top:15px;
+}

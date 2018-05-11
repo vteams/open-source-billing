@@ -399,7 +399,12 @@ pt-BR:
       bulk_deleted_msg: "tarefas foram eliminadas. Você pode encontrá-los sob"
       to_move_deleted: "para mover as despesas excluídas de volta à ativa."
       enter_name: "Digite um nome para a tarefa"
+      select_start_date: "Selecione a data de início da tarefa"
+      select_due_date: "Insira uma data de vencimento para a tarefa"
+      due_date_should_equal_or_greater: "A data de vencimento deve ser igual ou maior que a data de início"
+      enter_hours: "Insira hora(s) para a tarefa"
       enter_rate: "Insira a taxa por hora para a tarefa"
+      enter_positive_hour: "Insira um valor positivo de hora para a tarefa"
       enter_positive_rate: "Insira um valor positivo de taxa por hora para a tarefa"
       atleast_one_company_selected: "Selecione pelo menos uma empresa para a tarefa"
 
@@ -772,7 +777,9 @@ pt-BR:
       bulk_deleted_msg: "projeto (s) foram excluídos. Você pode encontrá-los sob"
       to_move_deleted: "para mover os projetos excluídos de volta para ativos."
       name_required: "Campo Nome do Projeto é obrigatório"
-      estimate_should_be_greater_than_zero: "O tempo estimado deve ser maior que zero"
+      select_a_client: "Selecione um cliente"
+      select_a_manager: "Selecione um gerente"
+      estimate_should_be_greater_than_zero: "O tempo estimado deve ser igual ou maior que zero"
 
     import_data:
       import_data: "Datos de importacion"

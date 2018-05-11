@@ -49,21 +49,21 @@
                 <div class="form-wrapper row">
                   <div class="input-field col s12 m9 l9 xl6  datepicker">
                     <label class="active"><%= t('views.invoices.recurring.start_date') %></label>
-                    <input type="text"  value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
+                    <input type="text" class="project_task_start_date" value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
                     <%= f.hidden_field :start_date %>
                     <i class="material-icons" id='start_date_picker'>date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 l9 xl6 datepicker">
                     <label class="active"><%= t('views.invoices.due_date') %></label>
-                    <input type="text" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
+                    <input type="text" class="project_task_due_date" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
                     <%= f.hidden_field :due_date %>
                     <i class="material-icons" id='due_date_picker'>date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 l9 xl6  datepicker titlebold">
                     <label class="active placeholder-position"><%= t('views.tasks.hours') %></label>
-                    <%= f.number_field :hours , min: 0%>
+                    <%= f.number_field :hours%>
                   </div>
                   <div class="range-input col s12 m9 l9 xl6">
                     <label><%= t('views.tasks.spent_time') %></label>
@@ -74,7 +74,7 @@
                   </div>
                   <div class="input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position">
                     <label class="active placeholder-position"><%= t('views.tasks.rate_') %></label>
-                    <%= f.number_field :rate, min: 0 %>
+                    <%= f.number_field :rate %>
                   </div>
                 </div>
               </div>

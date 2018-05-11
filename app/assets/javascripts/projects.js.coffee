@@ -108,17 +108,26 @@ class @Project
   @load_functions = ->
     jQuery('form#horizontal-project-form').submit ->
       flag = true
-      if $("#project_client_id").val() is "" or $("#project_client_id").val() is null
+      if $('#project_project_name').val() is ""
+        applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
+        flag = false
+      else if $("#project_client_id").val() is "" or $("#project_client_id").val() is null
         hidePopover(jQuery("#project_project_name"))
-        applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_client'))
+        applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.projects.select_a_client'))
         flag = false
-      else if $("#project-title").html().trim() is ""
+      else if $("#project_manager_id").val() is "" or $("#project_manager_id").val() is null
+        hidePopover(jQuery("#project_client_id").parents('.select-wrapper'))
+        applyPopover($("#project_manager_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.projects.select_a_manager'))
         flag = false
-        applyPopover(jQuery("#project-title"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
-      else if ($("#project_total_hours").val() < 0)
-        hidePopover($("#project_client_id").parents('.select-wrapper'))
-        flag = false
+      else if $("#project_total_hours").val() is ""
+        hidePopover($("#project_manager_id").parents('.select-wrapper'))
         applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
+        flag = false
+      else if (parseFloat($("#project_total_hours").val()) < 0)
+        hidePopover($("#project_manager_id").parents('.select-wrapper'))
+        jQuery("#project_total_hours")
+        applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
+        flag = false
       else
         hidePopover(jQuery("#project_total_hours"))
         flag = true
@@ -172,7 +181,37 @@ class @Project
       if $(".task_name").text() is ""
         applyPopover($(".task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
         flag = false
+      else if $('.project_task_start_date').val() is ""
+        hidePopover($(".task_name"))
+        applyPopover($('.project_task_start_date'),"bottomMiddle","topLeft", I18n.t("views.tasks.select_start_date"))
+        flag = false
+      else if $(".project_task_due_date").val() is ""
+        hidePopover($(".project_task_start_date"))
+        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.select_due_date"))
+        flag = false
+      else if $(".project_task_start_date").val() > $(".project_task_due_date").val()
+        hidePopover($(".project_task_due_date"))
+        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.due_date_should_equal_or_greater"))
+        flag = false
+      else if $("#project_task_hours").val() is ""
+        hidePopover($(".project_task_due_date"))
+        applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_hours"))
+        flag = false
+      else if $("#project_task_hours").val() < 0
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
+        flag = false
+      else if $("#project_task_rate").val() is ""
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_rate"))
+        flag = false
+      else if $("#project_task_rate").val() < 0
+        hidePopover($("#project_task_hours"))
+        hidePopover($("#project_task_rate"))
+        applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_rate"))
+        flag = false
       else
+        hidePopover($("#project_task_rate"))
         $("#project_task_name").val($(this).find('.task_name').text())
         $("#project_task_description").val($(this).find('.task_description').text())
       flag
@@ -181,10 +220,6 @@ $(document).ready ->
   Project.change_project_staff()
   Project.toggleStaffRemoveButton()
   Project.removeStaff()
-  jQuery('form.project-form-inline').submit ->
-    $("#project_project_name").val($("strong.project_name").text())
-    $("#project_description").val($("span.project_description").text())
-    Project.validate_fields()
 
   # show add/remove staff member button when edit project icon is clicked
   $('.edit-detail').click ->

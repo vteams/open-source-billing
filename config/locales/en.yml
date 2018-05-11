@@ -417,7 +417,12 @@ en:
       bulk_deleted_msg: "tasks have been deleted. You can find them under"
       to_move_deleted: "to move deleted expenses back to active."
       enter_name: "Enter a name for the task"
+      select_start_date: "Select start date for the task"
+      select_due_date: "Enter a due date for the task"
+      due_date_should_equal_or_greater: "Due date should be equal or greater than start date"
+      enter_hours: "Enter hour(s) for the task"
       enter_rate: "Enter rate per hour for the task"
+      enter_positive_hour: "Enter positive value of hour for the task"
       enter_positive_rate: "Enter positive value of rate per hour for the task"
       atleast_one_company_selected: "Select aleast one company for the task"
 
@@ -835,8 +840,10 @@ en:
       to_move_archive: "to move archived projects back to active."
       bulk_deleted_msg: "project(s) have been deleted. You can find them under"
       to_move_deleted: "to move deleted projects back to active."
-      name_required: "Project Name field is required"
-      estimate_should_be_greater_than_zero: "Time Estimate should be greater than zero"
+      name_required: "Project name is required"
+      select_a_client: "Select a client"
+      select_a_manager: "Select a manager"
+      estimate_should_be_greater_than_zero: "Time Estimate should be equal or greater than zero"
 
     import_data:
       import_data: "Import Data"

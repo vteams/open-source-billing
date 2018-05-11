@@ -196,17 +196,19 @@
 
 }
 .payment-btn-style{
-  background-color: #00BDE5;
-  border-radius: 4px;
-  display: inline-block;
-  font-family: "Dosis Regular", sans-serif;
-  font-size: 20px;
-  min-width: 156px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  color: #09b8e2;
+  background: transparent;
+  border: 1px solid #09b8e2;
+  font-size: 24px;
+  font-family: "Dosis",sans-serif;
+  min-height: 49px;
+  box-shadow: none;
   text-transform: capitalize;
-  border: none;
-  font-weight: normal;
-  min-height: 40px;
-  color: #FFFFFF;
+  font-weight: 400;
+  border-radius: 5px;
+  min-width: 140px;
 }
 
 .right-payment-container{

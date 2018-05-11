@@ -67,13 +67,13 @@ module ProjectSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('project_name')
-          query << "projects.#{key} like '#{val}%'"
+          query << "projects.#{key} like '%#{val}%'"
         end
         if key.eql?('client')
-          query << "(cc.first_name like '#{val}%' or cc.last_name like '#{val}%' or cc.email like '#{keyword[:client]}%' or cc.organization_name like '#{val}%')"
+          query << "(cc.first_name like '%#{val}%' or cc.last_name like '%#{val}%' or cc.email like '%#{keyword[:client]}%' or cc.organization_name like '%#{val}%')"
         end
         if key.eql?('manager')
-          query << "(staffs.name like '#{val}%' or staffs.email like '#{val}%')"
+          query << "(staffs.name like '%#{val}%' or staffs.email like '%#{val}%')"
         end
       end
       query = query.join(" AND ")
