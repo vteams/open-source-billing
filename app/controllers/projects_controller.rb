@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
     params[:status] = params[:status] || 'active'
     @status = params[:status]
     load_projects
-    @projects = filter_by_company(@projects)
+    @projects = filter_by_company(@projects) if @projects
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -155,9 +155,21 @@ class ProjectsController < ApplicationController
   end
 
   def load_projects
-    projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
-    projects = projects.search(params[:search]).records if params[:search].present?
-    @projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    if (current_user.has_role? :staff)
+      projects = current_user.staff.projects if current_user.staff.present?
+    else
+      projects = Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    end
+
+    if projects
+      projects = ((current_user.has_role? :staff) && current_user.staff ) ? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+      projects = projects.search(params[:search]).records if params[:search].present?
+      projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    else
+      projects = nil
+    end
+
+    @projects = projects
   end
 
 end
