@@ -66,7 +66,7 @@
               <strong><strong class="invoice_total_strong"></strong>
                 <small>
                   <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
-                  <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select'} %>
+                  <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select', disabled: (true if currency_is_off?)} %>
                 </small>
               </strong>
             </div>
