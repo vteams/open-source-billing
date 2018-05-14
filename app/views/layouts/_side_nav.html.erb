@@ -7,7 +7,7 @@
     <div class="profile-details">
       <div class="dropdown">
         <!-- Dropdown Trigger -->
-        <a class='dropdown-button '><span><%= current_user.user_name || current_user.email %></span></a>
+        <a class='dropdown-button '><span><%= current_user.role_name || current_user.email %></span></a>
         <a  class="email-link"><%= current_user.email %> </a>
       </div>
     </div>
