@@ -4476,3 +4476,14 @@ i.material-icons.close:hover {
 .slider {
   margin-top: 5px;
 }
+.search_currency {
+  margin-bottom: 0 !important;
+  text-align: center;
+  position: fixed;
+  width: 250px !important;
+  top: 64px;
+  background: white !important;
+}
+#dropdown_currency:nth-child(2) {
+  padding-top: 50px;
+}

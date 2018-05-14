@@ -167,6 +167,7 @@ jQuery(function () {
     (function ($) {
         initCustomConfirmPopUp();
         initLoginPageFormValidation();
+        initCurrencySelect();
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
                 scrollInertia: 150,
@@ -299,5 +300,22 @@ function initLoginPageFormValidation() {
             flag = false;
         }
         return flag;
+    });
+}
+
+function initCurrencySelect() {
+    $(function(){
+        $('.search_currency').keyup(function(){
+            var searchText = $(this).val().toLowerCase();
+            $('#dropdown_currency > li:not(.search-bar)').each(function(){
+                var currentLiText = $(this).text().toLowerCase(),
+                    showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+                $(this).toggle(showCurrentLi);
+            });
+        });
+        $('#dLabel').click(function(e){
+            $('#search_currency_bar').focus();
+            $('#dropdown_currency').scrollTop(0);
+        });
     });
 }
