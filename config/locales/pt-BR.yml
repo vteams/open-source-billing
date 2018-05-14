@@ -406,6 +406,9 @@ pt-BR:
       enter_rate: "Insira a taxa por hora para a tarefa"
       enter_positive_hour: "Insira um valor positivo de hora para a tarefa"
       enter_positive_rate: "Insira um valor positivo de taxa por hora para a tarefa"
+      enter_positive_rate: "Insira o valor positivo da taxa para a tarefa"
+      enter_spent_time: "Insira o tempo gasto para a tarefa"
+      enter_positive_spent_time: "Insira um valor positivo de taxa por hora para a tarefa"
       atleast_one_company_selected: "Selecione pelo menos uma empresa para a tarefa"
 
     staffs:

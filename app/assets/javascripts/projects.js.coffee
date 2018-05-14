@@ -171,10 +171,7 @@ class @Project
 
   @projectTaskForm = ->
     applyDatePicker()
-    $('.rkmd-slider').rkmd_rangeSlider()
-    $('.slider-label span').on 'DOMSubtreeModified', ->
-      completePer = parseFloat($('.slider-label span').text()) / parseFloat($('#project_task_hours').val()) * 100.0
-      $('#time_spent_label').text( completePer.toFixed(2) + ' %')
+#    $('.rkmd-slider').rkmd_rangeSlider()
 
     $(".project_task_form").submit ->
       flag = true
@@ -195,14 +192,29 @@ class @Project
         flag = false
       else if $("#project_task_hours").val() is ""
         hidePopover($(".project_task_due_date"))
+        hidePopover($(".project_task_start_date"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_hours"))
         flag = false
       else if $("#project_task_hours").val() < 0
         hidePopover($("#project_task_hours"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
         flag = false
+      else if $("#project_task_hours").val() < 0
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
+        flag = false
+      else if $("#project_task_spent_time").val() is ""
+        hidePopover($("#project_task_hours"))
+        applyPopover($("#project_task_spent_time"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_spent_time"))
+        flag = false
+      else if $("#project_task_spent_time").val() < 0
+        hidePopover($("#project_task_hours"))
+        hidePopover($("#project_task_spent_time"))
+        applyPopover($("#project_task_spent_time"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_spent_time"))
+        flag = false
       else if $("#project_task_rate").val() is ""
         hidePopover($("#project_task_hours"))
+        hidePopover($("#project_task_spent_time"))
         applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_rate"))
         flag = false
       else if $("#project_task_rate").val() < 0

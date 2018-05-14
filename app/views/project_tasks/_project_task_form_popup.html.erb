@@ -49,31 +49,37 @@
                 <div class="form-wrapper row">
                   <div class="input-field col s12 m9 l9 xl6  datepicker">
                     <label class="active"><%= t('views.invoices.recurring.start_date') %></label>
-                    <input type="text" class="project_task_start_date" value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
+                    <input type="text" class="project_task_start_date" value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled="disabled">
                     <%= f.hidden_field :start_date %>
                     <i class="material-icons" id='start_date_picker'>date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 l9 xl6 datepicker">
                     <label class="active"><%= t('views.invoices.due_date') %></label>
-                    <input type="text" class="project_task_due_date" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="">
+                    <input type="text" class="project_task_due_date" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled="disabled">
                     <%= f.hidden_field :due_date %>
                     <i class="material-icons" id='due_date_picker'>date_range</i>
                   </div>
 
                   <div class="input-field col s12 m9 l9 xl6  datepicker titlebold">
-                    <label class="active placeholder-position"><%= t('views.tasks.hours') %></label>
+                    <label class="placeholder-position"><%= t('views.tasks.hours') %></label>
                     <%= f.number_field :hours%>
                   </div>
-                  <div class="range-input col s12 m9 l9 xl6">
-                    <label><%= t('views.tasks.spent_time') %></label>
-                    <div class="rkmd-slider slider-discrete slider-lightBlue">
-                      <%= f.label :spent_time, (f.object.spent_time / f.object.hours * 100).to_s + ' %', id: 'time_spent_label' %>
-                      <%= f.range_field :spent_time, in: 0..f.object.hours %>
-                    </div>
+                  <div class="input-field col s12 m9 l9 xl6 datepicker titlebold">
+                    <label class="placeholder-position"><%= t('views.tasks.spent_time') %></label>
+                    <%= f.number_field :spent_time %>
                   </div>
+
+                  <!--<div class="range-input col s12 m9 l9 xl6">-->
+                    <!--<label><%#= t('views.tasks.spent_time') %></label>-->
+                    <!--<div class="rkmd-slider slider-discrete slider-lightBlue">-->
+                      <%#= f.label :spent_time, ((f.object.spent_time.to_f / f.object.hours.to_f * 100).to_s + ' %' if f.object.hours), id: 'time_spent_label1' %>
+
+                      <%#= f.range_field :spent_time, in: 0..f.object.hours.to_f %>
+                    <!--</div>-->
+                  <!--</div>-->
                   <div class="input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position">
-                    <label class="active placeholder-position"><%= t('views.tasks.rate_') %></label>
+                    <label class="placeholder-position"><%= t('views.tasks.rate_') %></label>
                     <%= f.number_field :rate %>
                   </div>
                 </div>

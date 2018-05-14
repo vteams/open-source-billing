@@ -423,7 +423,9 @@ en:
       enter_hours: "Enter hour(s) for the task"
       enter_rate: "Enter rate per hour for the task"
       enter_positive_hour: "Enter positive value of hour for the task"
-      enter_positive_rate: "Enter positive value of rate per hour for the task"
+      enter_positive_rate: "Enter positive value of rate for the task"
+      enter_spent_time: "Enter spent time for the task"
+      enter_positive_spent_time: "Enter positive value of rate per hour for the task"
       atleast_one_company_selected: "Select aleast one company for the task"
 
     staffs:

@@ -406,6 +406,9 @@ de:
       enter_rate: "Geben Sie den Stundensatz für die Aufgabe ein"
       enter_positive_hour: "Geben Sie den positiven Stundenwert für die Aufgabe ein"
       enter_positive_rate: "Geben Sie einen positiven Wert für die Rate pro Stunde für die Aufgabe ein"
+      enter_positive_rate: "Geben Sie den positiven Wert der Rate für die Aufgabe ein"
+      enter_spent_time: "Geben Sie die Zeit für die Aufgabe ein"
+      enter_positive_spent_time: "Geben Sie einen positiven Wert für die Rate pro Stunde für die Aufgabe ein"
       atleast_one_company_selected: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
 
     staffs:

@@ -402,6 +402,9 @@ fr:
       enter_rate: "Entrez le taux par heure pour la tâche"
       enter_positive_hour: "Entrez une valeur positive d'heure pour la tâche"
       enter_positive_rate: "Entrez la valeur positive du taux horaire pour la tâche"
+      enter_positive_rate: "Entrer la valeur positive du taux pour la tâche"
+      enter_spent_time: "Entrer le temps passé pour la tâche"
+      enter_positive_spent_time: "Entrez la valeur positive du taux horaire pour la tâche"
       atleast_one_company_selected: "Sélectionnez au moins une entreprise pour la tâche;"
 
     staffs:
