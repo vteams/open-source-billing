@@ -151,7 +151,7 @@ input#expense_amount{
 }
 
 a.modal-close i{
-    font-size: 22px !important;
+    padding-bottom: 2px;
 }
 .inline_form input[type='submit']{
     background-color: #09b8e2;
