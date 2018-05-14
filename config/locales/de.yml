@@ -350,6 +350,7 @@ de:
       due_date_should_equal_or_greater: "Das Fälligkeitsdatum sollte gleich oder größer als das Rechnungsdatum sein"
       recover_clients: "Bitte stellen Sie Kunden für Rechnung (en) mit der Rechnungsnummer %{ids} wieder her, um die Zahlung einzugeben."
       cannot_paid: "Sie können keine bezahlten Rechnungen bezahlen."
+      project_invoice_cannot_be_edit: "Projektrechnung kann nicht bearbeitet werden"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"

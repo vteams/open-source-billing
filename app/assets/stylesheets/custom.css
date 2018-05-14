@@ -679,3 +679,6 @@ form .select-wrapper .select-dropdown {
 .label-position{
     margin-top:15px;
 }
+.disabled-style{
+    color: gainsboro;
+}

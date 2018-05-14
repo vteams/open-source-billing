@@ -364,6 +364,7 @@ en:
       due_date_should_equal_or_greater: "Due date should be equal or greater than invoice date"
       recover_clients: "Please recover clients for invoice(s) with invoice# %{ids} to enter payment."
       cannot_paid: "You cannot pay paid invoices."
+      project_invoice_cannot_be_edit: "Project invoice cannot be edit"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"

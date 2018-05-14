@@ -268,4 +268,13 @@ module InvoicesHelper
   def activities_invoices_path(status)
     invoices_path(params.except(:page).slice(:per, :company_id, :sort, :direction).merge(per: @per_page, status: status))
   end
+
+  def edit_invoice_link(invoice)
+    if invoice.invoice_type.eql?('ProjectInvoice')
+      link_to raw("<i class='material-icons disabled-style'>create</i>"), '#', class: 'edit_invoice_icon', title: t('views.invoices.project_invoice_cannot_be_edit'), class: 'disabled'
+    else
+      link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), class: 'edit_invoice_icon',
+              title: t('helpers.links.edit')
+    end
+  end
 end

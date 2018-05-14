@@ -350,6 +350,7 @@ pt-BR:
       due_date_should_equal_or_greater: "A data de vencimento deve ser igual ou maior que a data da fatura"
       recover_clients: "Recupere os clientes por fatura (s) com a fatura # %{ids} para inserir o pagamento."
       cannot_paid: "Você não pode pagar faturas pagas."
+      project_invoice_cannot_be_edit: "A fatura do projeto não pode ser editada"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
