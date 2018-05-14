@@ -416,7 +416,7 @@ jQuery ->
 
 
   jQuery('body').on "click", '#select_all', ->
-    listing_table =  jQuery(this).parents('table.table_listing')
+    listing_table =  jQuery(this).parents('table.bordered')
     selected = if @checked then "selected" else ""
     window.listing_table = listing_table
     listing_table.find(':checkbox').prop('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
