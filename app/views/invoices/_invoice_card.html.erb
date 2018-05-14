@@ -11,7 +11,9 @@
     <div class="invoice-details">
       <h5><%= invoice.unscoped_client.organization_name rescue '' %></h5>
       <strong><%= invoice.invoice_number %></strong>
-      <em><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : "$")} " %><span><%= invoice.currency.unit%></span></em>
+      <em><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : default_currency_code)} " %>
+        <span><%= invoice.currency.present? ? invoice.currency.unit : default_currency_unit%></span>
+      </em>
       <div class="card-footer clearfix">
         <span class="invoice-recurring-status invoice-date <%= "mg-btm" unless invoice.recurring_status.present? %> "> <%= invoice.recurring_status %> </span>
         <span class="invoice-date"><small><%= t('views.invoices.due') %>:</small> <%= invoice.due_date rescue "" %></span>
