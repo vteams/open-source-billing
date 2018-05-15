@@ -4487,3 +4487,9 @@ i.material-icons.close:hover {
 #dropdown_currency:nth-child(2) {
   padding-top: 50px;
 }
+#dropdown_currency li.selected {
+  background-color: #eee;
+}
+.hide {
+  display: none;
+}

@@ -304,18 +304,16 @@ function initLoginPageFormValidation() {
 }
 
 function initCurrencySelect() {
-    $(function(){
-        $('.search_currency').keyup(function(){
-            var searchText = $(this).val().toLowerCase();
-            $('#dropdown_currency > li:not(.search-bar)').each(function(){
-                var currentLiText = $(this).text().toLowerCase(),
-                    showCurrentLi = currentLiText.indexOf(searchText) !== -1;
-                $(this).toggle(showCurrentLi);
-            });
+    $('.search_currency').keyup(function(){
+        var searchText = $(this).val().toLowerCase();
+        $('#dropdown_currency > li:not(.search-bar)').each(function(){
+            var currentLiText = $(this).text().toLowerCase(),
+                showCurrentLi = currentLiText.indexOf(searchText) === -1;
+            $(this).toggleClass('hide', showCurrentLi);
         });
-        $('#dLabel').click(function(e){
-            $('#search_currency_bar').focus();
-            $('#dropdown_currency').scrollTop(0);
-        });
+    });
+    $('#dLabel').click(function(e){
+        $('#search_currency_bar').focus();
+        $('#dropdown_currency').scrollTop(0);
     });
 }

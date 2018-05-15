@@ -60,6 +60,7 @@ module Reporting
       currency_filter = currency.present? ? "currency_id=#{currency.id}" : ""
       invoice_ids = currency.present? ? Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",") : ""
       payment_currency_filter = (currency.present? and invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
+      payment_currency_filter =  'invoice_id IN (-1)' if (currency.present? && invoice_ids.empty?)
       invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).where(company_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
