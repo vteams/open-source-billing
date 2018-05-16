@@ -89,15 +89,19 @@
             </div>
             <div class="invoice-total-right">
               <%= f.hidden_field :sub_total %>
-              <strong class="invoice-total-title"><%= estimate.currency.unit rescue 'USD' %> <span><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></span></strong>
+              <strong class="invoice-total-title">
+                <div style="display: inline;" id="subtotal_currency_unit"><%= estimate.currency.unit rescue 'USD' %></div>
+                <span><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></span>
+              </strong>
               <div class="new-invoice-footer-row">
-                <span><%= estimate.currency.unit rescue 'USD' %></span>
+                <span id="discount_amount_currency_unit"><%= estimate.currency.unit rescue 'USD' %></span>
                 <%= f.hidden_field :discount_amount %>
                 <%= f.number_field :discount_percentage, class: "input-inoive-number invoice_discount line_item_qtip right-align", placeholder:  "00.00", min: 0 %>
                 <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
               </div>
               <%= f.hidden_field :estimate_total %>
-              <strong class="invoice-total-title bottom"><%= estimate.currency.unit rescue 'USD' %> <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span></strong>
+              <strong class="invoice-total-title bottom">
+                <div style="display: inline" id="total_currency_unit"><%= estimate.currency.unit rescue 'USD' %> </div> <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span></strong>
             </div>
 
           </div>

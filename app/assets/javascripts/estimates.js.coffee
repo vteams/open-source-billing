@@ -34,7 +34,8 @@ class @Estimate
     $('#estimate_estimate_total').val total_balance.toFixed(2)
     $('#estimate_total_lbl').text total_balance.toFixed(2)
     $('.estimate_total_strong').html total_balance.toFixed(2)
-    $('#estimate_total_lbl').formatCurrency symbol: window.currency_symbol
+    $('#subtotal_currency_unit,#discount_amount_currency_unit,#total_currency_unit').text($('#estimate_currency_id option:selected').text());
+    $("#estimate_sub_total_lbl, #estimate_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});
 
     window.taxByCategory()
 

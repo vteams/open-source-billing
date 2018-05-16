@@ -1,6 +1,8 @@
+<% dis_type = '' %>
 <div class="new-invoice-holder editInvoice">
   <%- model_class = Invoice -%>
   <%= nested_form_for invoice, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
+      <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
         <h5 class="left">
           <% if f.object.persisted? %>
@@ -148,8 +150,7 @@
               <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
               <div class="new-invoice-footer-row">
                 <span><%= t('views.common.discount') %></span>
-                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type },
-                             {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                <%= f.select :discount_type, options_for_select(@discount_types, selected: f.object.discount_type), {}, {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
               </div>
               <div class="new-invoice-footer-row">
                 <span><%= t('views.common.tax') %></span>
@@ -192,10 +193,17 @@
 </div>
 
 <script>
-    window.currency_symbol = "<%= Currency.default_currency.code %>";
+    window.currency_symbol = "<%= if params[:action].eql?('new')
+                                    Currency.default_currency.code
+                                 else
+                                   (@client.present? ? @client.currency.code : invoice.currency.code)
+                                 end
+                               %>";
     $(document).ready(function (){
         Invoice.change_invoice_item();
         Invoice.changeTax();
         Invoice.load_functions();
+        $('#discount_type').val('<%= dis_type %>');
+        $('#discount_type').trigger('contentChanged');
     });
 </script>

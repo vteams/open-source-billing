@@ -60,17 +60,20 @@
                 var element = $('#staff_container').find('.fields:last');
                 $(element).find('.filled-in').attr('id', 'project_staff_' + id);
                 $(element).find('.staff-label').attr('for', 'project_staff_' + id);
+                Project.change_project_task();
+                Project.change_project_staff();
+                Project.enable_staff_fields();
+                Project.toggleStaffRemoveButton();
             }
-            Invoice.change_invoice_item();
-            Invoice.changeTax();
-            Invoice.load_functions();
-            Estimate.change_estimate_item();
-            Estimate.changeTax();
-            Estimate.load_functions();
-            Project.change_project_task();
-            Project.change_project_staff();
-            Project.enable_staff_fields();
-            Project.toggleStaffRemoveButton();
+            if ($('.invoice-form').length > 0) {
+                Invoice.change_invoice_item();
+                Invoice.changeTax();
+                Invoice.load_functions();
+            } else {
+                Estimate.change_estimate_item();
+                Estimate.changeTax();
+                Estimate.load_functions();
+            }
             return false;
         },
         newId: function() {
