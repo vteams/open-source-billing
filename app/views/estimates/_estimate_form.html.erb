@@ -1,6 +1,8 @@
+<% dis_type = '' %>
 <div class="new-invoice-holder editInvoice">
   <%- model_class = Estimate -%>
   <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
+      <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
         <h5 class="left">
           <% if f.object.persisted? %>
@@ -47,7 +49,12 @@
             <div class="paymentInfo">
               <strong><strong class="estimate_total_strong"></strong>
                 <small>
-                  <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+                  <% selected_currency = if params[:action].eql?('new')
+                                           Currency.default_currency.id
+                                         else
+                                           (@client.present? ? @client.currency_id : f.object.currency_id)
+                                         end
+                  %>
                   <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
                 </small>
               </strong>
@@ -82,8 +89,8 @@
               <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
               <div class="new-invoice-footer-row">
                 <span><%= t('views.common.discount') %></span>
-                <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type },
-                             {:class => 'discount_select inline-select small-select', :id => 'discount_type'} %>
+                <%= f.select :discount_type, options_for_select(@discount_types, selected: f.object.discount_type), {},
+                             {class: 'discount_select inline-select small-select', id: 'discount_type'} %>
               </div>
               <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
@@ -101,7 +108,9 @@
               </div>
               <%= f.hidden_field :estimate_total %>
               <strong class="invoice-total-title bottom">
-                <div style="display: inline" id="total_currency_unit"><%= estimate.currency.unit rescue 'USD' %> </div> <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span></strong>
+                <div style="display: inline" id="total_currency_unit"><%= estimate.currency.unit rescue 'USD' %> </div>
+                <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span>
+              </strong>
             </div>
 
           </div>
@@ -117,9 +126,17 @@
 </div>
 
 <script>
+    window.currency_symbol = "<%= if params[:action].eql?('new')
+                                    Currency.default_currency.code
+                                 else
+                                   (@client.present? ? @client.currency.code : estimate.currency.code)
+                                 end
+                               %>";
     $(document).ready(function (){
         Estimate.change_estimate_item();
         Estimate.changeTax();
         Estimate.load_functions();
+        $('#discount_type').val('<%= dis_type %>');
+        $('#discount_type').trigger('contentChanged');
     });
 </script>
