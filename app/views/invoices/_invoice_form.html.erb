@@ -192,6 +192,7 @@
 </div>
 
 <script>
+    window.currency_symbol = "<%= Currency.default_currency.code %>";
     $(document).ready(function (){
         Invoice.change_invoice_item();
         Invoice.changeTax();
