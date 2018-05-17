@@ -1,13 +1,13 @@
 <div id="flash_message" class="<%= "#{ 'side-show' if side_nav_opened?}"%> <%= "#{ 'hidden' if notice.blank? and alert.blank? }" %>">
   <div class="col s12 breadcrum-bar">
     <div id="card-alert" class="card green lighten-5" style="display:<%= notice.blank? ? 'none' : 'block' %>">
-      <div class="card-content green-text"><p><%= notice %></p></div>
+      <div class="card-content green-text"><p><%= raw(notice) %></p></div>
       <button type="button" class="close green-text" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">×</span>
       </button>
     </div>
     <div id="card-alert" class="card red lighten-5" style="display:<%= alert.blank? ? 'none' : 'block' %>">
-      <div class="card-content red-text"><p><%= alert %></p></div>
+      <div class="card-content red-text"><p><%= raw(alert) %></p></div>
       <button type="button" class="close red-text" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
   </div>

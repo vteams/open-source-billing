@@ -27,7 +27,7 @@
                   <input class="select-dropdown" value="<%= current_user.settings.default_currency %>" readonly="readonly">
                 </a>
                 <ul id="dropdown_currency" class='dropdown-content select-dropdown'>
-                  <li class="search-bar"><input type="text" class="search_currency" placeholder="search" id="search_currency_bar" /></li>
+                  <li class="search-bar"><input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" /></li>
                   <% Currency.unscoped.each do |currency| %>
                     <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>">
                       <div class="currency-flag currency-flag-<%= currency.unit.downcase %>"></div>

@@ -316,4 +316,41 @@ function initCurrencySelect() {
         $('#search_currency_bar').focus();
         $('#dropdown_currency').scrollTop(0);
     });
+
+    var li = $('#dropdown_currency > li');
+    var liSelected;
+    $(window).on('keydown', function(e){
+        var selected;
+        if(e.which === 40){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                next = liSelected.nextAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.eq(1).addClass('selected');
+                }
+            }else{
+                liSelected = li.eq(1).addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 38){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                next = liSelected.prevAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.last().addClass('selected');
+                }
+            }else{
+                liSelected = li.last().addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 13){
+            if(liSelected){
+                liSelected.click();
+            }
+        }
+    });
 }

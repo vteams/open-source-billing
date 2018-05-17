@@ -717,6 +717,7 @@ en:
       side_nav_open: "Side Navigation Open"
       import_data: "Import Data"
       updated_msg: "Settings are successfully updated."
+      currency_updated_msg_html: "Currency has been updated to <strong>%{unit}</strong> successfully."
 
     companies:
       companies: "Companies"

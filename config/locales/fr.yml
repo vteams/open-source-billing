@@ -657,6 +657,7 @@ fr:
       language: "La langue"
       import_data: "Importer des données"
       updated_msg: "Les paramètres sont mis à jour avec succès."
+      currency_updated_msg_html: "La devise a été mise à jour vers <strong>%{unit}</strong> avec succès."
 
     companies:
       companies: "sociétés"

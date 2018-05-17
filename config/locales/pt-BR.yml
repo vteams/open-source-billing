@@ -662,6 +662,7 @@ pt-BR:
       default_currency: "Moeda Padrão"
       import_data: "Importar dados"
       updated_msg: "As configurações são atualizadas com sucesso."
+      currency_updated_msg_html: "Moeda foi atualizada para <strong>%{unit}</strong> com sucesso."
 
     companies:
       companies: "Empresas"

@@ -661,6 +661,7 @@ de:
       language: "Sprache"
       import_data: "Daten importieren"
       updated_msg: "Einstellungen wurden erfolgreich aktualisiert."
+      currency_updated_msg_html: "Die Währung wurde erfolgreich auf <strong>%{unit}</strong> aktualisiert."
 
     companies:
       companies: "Unternehmen"
