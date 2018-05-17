@@ -422,14 +422,16 @@ jQuery ->
     listing_table.find(':checkbox').prop('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
 
   unit = $('#invoice_currency_id option:selected').text()
-  $('#subtotal_currency_unit').text(unit)
-  $('#discount_amount_currency_unit').text(unit)
-  $('#tax_currency_unit').text(unit)
-  $('#total_currency_unit').text(unit)
-  $selectDropdown = $('#discount_type').empty().html(' ').prop("disabled", false)
-  $selectDropdown.append($("<option></option>").attr("value", '%').text("%"))
-  $selectDropdown.append($("<option></option>").attr("value", unit).text(unit))
-  $selectDropdown.trigger('contentChanged')
+
+  if unit.length > 0
+    $('#subtotal_currency_unit').text(unit)
+    $('#discount_amount_currency_unit').text(unit)
+    $('#tax_currency_unit').text(unit)
+    $('#total_currency_unit').text(unit)
+    $selectDropdown = $('#discount_type').empty().html(' ').prop("disabled", false)
+    $selectDropdown.append($("<option></option>").attr("value", '%').text("%"))
+    $selectDropdown.append($("<option></option>").attr("value", unit).text(unit))
+    $selectDropdown.trigger('contentChanged')
 
   $('select').on 'contentChanged', ->
     $(this).material_select()

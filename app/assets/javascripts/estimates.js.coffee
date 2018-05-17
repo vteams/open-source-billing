@@ -343,13 +343,14 @@ class @Estimate
 
 jQuery ->
   unit = $('#estimate_currency_id option:selected').text()
-  debugger
-  $('#subtotal_currency_unit').text(unit)
-  $('#discount_amount_currency_unit').text(unit)
-  $selectDropdown = $('#discount_type').empty().html(' ').prop("disabled", false)
-  $selectDropdown.append($("<option></option>").attr("value", '%').text("%"))
-  $selectDropdown.append($("<option></option>").attr("value", unit).text(unit))
-  $selectDropdown.trigger('contentChanged')
+
+  if unit.length > 0
+    $('#subtotal_currency_unit').text(unit)
+    $('#discount_amount_currency_unit').text(unit)
+    $selectDropdown = $('#discount_type').empty().html(' ').prop("disabled", false)
+    $selectDropdown.append($("<option></option>").attr("value", '%').text("%"))
+    $selectDropdown.append($("<option></option>").attr("value", unit).text(unit))
+    $selectDropdown.trigger('contentChanged')
 
   $('select').on 'contentChanged', ->
     $(this).material_select()
