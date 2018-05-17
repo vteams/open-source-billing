@@ -313,6 +313,7 @@ function initCurrencySelect() {
         });
     });
     $('#dLabel').click(function(e){
+        $('#search_currency_bar').val('').keyup();
         $('#search_currency_bar').focus();
         $('#dropdown_currency').scrollTop(0);
     });
