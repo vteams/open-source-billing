@@ -78,7 +78,7 @@ jQuery ->
     controller = $(this).find(':selected').data('controller')
     action = $(this).find(':selected').data('action')
     if action is 'new' or action is 'edit'
-      unless confirm('views.companies.changes_discarded_msg')
+      unless confirm(I18n.t('views.companies.changes_discarded_msg'))
         return true
 
     if parseInt($(this).find(':selected').val()) && parseInt($(this).find(':selected').val()) != -1
