@@ -78,9 +78,8 @@ class @Invoice
     tax2 = 0 if not tax2? or tax2 is ""
     # if line total is 0
     tax1=tax2=0 if line_total is 0
-    discount_amount = applyDiscount(line_total)
     total_tax = (parseFloat(tax1) + parseFloat(tax2))
-    (line_total - discount_amount) * (parseFloat(total_tax) / 100.0)
+    (line_total) * (parseFloat(total_tax) / 100.0)
 
   # Apply discount percentage on subtotals
   applyDiscount = (subtotal) ->

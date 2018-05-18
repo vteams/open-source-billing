@@ -133,10 +133,10 @@
                                  end
                                %>";
     $(document).ready(function (){
+        $('#discount_type').val('<%= dis_type %>');
+        $('#discount_type').trigger('contentChanged');
         Estimate.change_estimate_item();
         Estimate.changeTax();
         Estimate.load_functions();
-        $('#discount_type').val('<%= dis_type %>');
-        $('#discount_type').trigger('contentChanged');
     });
 </script>
