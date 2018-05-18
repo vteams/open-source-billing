@@ -682,3 +682,21 @@ form .select-wrapper .select-dropdown {
 .disabled-style{
     color: gainsboro;
 }
+.item_name_width{
+    width: 12%;
+}
+.item_desc_width{
+    width: 36%;
+}
+.item_unit_cost_width{
+    width: 15%;
+}
+.item_quantity_width{
+    width: 10%;
+}
+.item_tax_width{
+    width: 12%;
+}
+.item_total_width{
+    width: 15%;
+}
