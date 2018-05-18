@@ -69,9 +69,6 @@
                 <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
               </div>
               <% end %>
-              <% unless invoice.tax_detail_with_discount.blank? %>
-                  <%= taxes_list(invoice.tax_detail_with_discount,invoice) %>
-              <% end %>
               <div class="table-row">
                 <span></span>
                 <span></span>
