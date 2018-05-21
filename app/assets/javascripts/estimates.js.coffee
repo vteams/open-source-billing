@@ -41,13 +41,11 @@ class @Estimate
 
   # Apply Tax on totals
   applyTax = (line_total,elem) ->
-    tax1 = elem.parents("tr").find("select.tax1 option:selected").attr('data-tax_1')
-    tax2 = elem.parents("tr").find("select.tax2 option:selected").attr('data-tax_2')
+    tax1 = elem.parents("tr").find("input#tax_amount").val()
     tax1 = 0 if not tax1? or tax1 is ""
-    tax2 = 0 if not tax2? or tax2 is ""
     # if line total is 0
-    tax1=tax2=0 if line_total is 0
-    total_tax = (parseFloat(tax1) + parseFloat(tax2))
+    tax1=0 if line_total is 0
+    total_tax = parseFloat(tax1)
     (line_total) * (parseFloat(total_tax) / 100.0)
 
   # Apply discount percentage on subtotals
@@ -66,9 +64,6 @@ class @Estimate
     if qty == null or qty == '' or !$.isNumeric(qty)
       qty = 0
     line_total = (parseFloat(cost) * parseFloat(qty))
-    tax = parseFloat($(container).find("input.tax1").val())
-    if tax > 0
-      line_total = line_total + (line_total * parseFloat($(container).find("input.tax-amount").val()) / 100.0)
     $(container).find('.line_total').text line_total.toFixed(2)
 
   clearLineTotal = (elem) ->
@@ -89,7 +84,6 @@ class @Estimate
     tax_container.find('input.tax2').val ''
     tax_container.find('td.tax1').html ''
     tax_container.find('td.tax1').html ''
-    $('.taxes_total').remove()
 
   @change_estimate_item  = ->
     $('.estimate_grid_fields select.items_list').on 'change', ->

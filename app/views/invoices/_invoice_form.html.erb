@@ -152,11 +152,12 @@
                 <span><%= t('views.common.discount') %></span>
                 <%= f.select :discount_type, options_for_select(@discount_types, selected: f.object.discount_type), {}, {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
               </div>
-              <div class="new-invoice-footer-row">
+              <div class="new-invoice-footer-row invicetax">
                 <span><%= t('views.common.tax') %></span>
                 <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id),
                              { prompt: t('views.common.select')},{:class => "discount_select inline-select small-select"} %>
               </div>
+              <div class="new-invoice-footer-row taxes_total"></div>
               <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
             <div class="invoice-total-right">
@@ -168,12 +169,13 @@
                 <%= f.number_field :discount_percentage, class: "input-inoive-number invoice_discount line_item_qtip right-align", placeholder:  "00.00", min: 0 %>
                 <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
               </div>
-              <div class="new-invoice-footer-row">
+              <div class="new-invoice-footer-row invicetax">
                 <span id="tax_currency_unit"><%= invoice.currency.unit rescue 'USD' %></span>
                 <%= f.text_field :invoice_tax_amount, class: "input-inoive-number invoice_tax line_item_qtip right-align", placeholder:  "00.00", readOnly: true %>
               </div>
               <%= f.hidden_field :tax_amount %>
               <%= f.hidden_field :invoice_total %>
+              <div class="new-invoice-footer-row taxes_total values"></div>
               <strong class="invoice-total-title bottom">
                 <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
                 <span><%= label_tag '', '0', :id => 'invoice_total_lbl', :class => 'net_total_value' %></span>

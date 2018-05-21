@@ -121,7 +121,7 @@ class EstimatesController < ApplicationController
                                 footer:{
                                     right: 'Page [page] of [topage]'
                                 }
-        send_data pdf, filename: file_name
+        send_data pdf, filename: file_name, disposition: 'inline'
       end
     end
   end

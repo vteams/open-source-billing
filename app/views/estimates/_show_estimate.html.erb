@@ -140,8 +140,12 @@
                 <div class="preview_right_description"><%= number_to_currency(@estimate.discount_amount, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
               </div>
               <!--top_right_row-->
-              <% unless @estimate.tax_detail_with_discount.blank? %>
-                  <%= taxes_list(@estimate.tax_detail_with_discount,@estimate) %>
+              <% currency_unit = @estimate.nil? ? '$' : (@estimate.currency.present? ? @estimate.currency.unit : '$') %>
+              <% for tax, amount in @estimate.tax_detail_with_discount %>
+                  <div class="top_right_row">
+                    <div class="preview_right_label"><%= tax %></div>
+                    <div class="preview_right_description"><%= number_to_currency(amount,unit: currency_unit) %></div>
+                  </div>
               <% end %>
 
               <!--top_right_row-->

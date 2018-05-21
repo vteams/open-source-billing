@@ -117,20 +117,15 @@
               </div>
           <% end %>
           <% if @invoice.tax.present? %>
-              <div class="new-invoice-footer-row">
-                <span><%= t('views.common.tax') %></span>
-                <select class="inline-select small-select" disabled>
-                  <option value="1"><%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</option>
-                </select>
+              <div class="new-invoice-footer-row invicetax">
+                <span><%= t('views.common.tax') %>: </span>
+                <span style="float: right;"><%= @invoice.tax.name %> <%= @invoice.tax.percentage %>%</span>
               </div>
           <% end %>
 
           <% @invoice.tax_detail_with_discount.each do |tax, amount| %>
-              <div class="new-invoice-footer-row">
-                <span>Line Item Tax </span>
-                <select class="inline-select small-select" disabled>
-                  <option value="1"><%= tax %></option>
-                </select>
+              <div class="new-invoice-footer-row invicetax">
+                <span style="float: right;"><%= tax %></span>
               </div>
           <% end %>
 
@@ -153,13 +148,13 @@
           <% end %>
 
           <% if @invoice.tax.present? %>
-              <div class="new-invoice-footer-row">
+              <div class="new-invoice-footer-row invicetax">
                 <span><%=  @invoice.currency.unit %></span>
                 <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_tax_amount, unit: '' )%></em>
               </div>
           <% end %>
           <% @invoice.tax_detail_with_discount.each do |tax, amount| %>
-              <div class="new-invoice-footer-row">
+              <div class="new-invoice-footer-row invicetax">
                 <span><%=  @invoice.currency.unit %></span>
                 <em class="f-invoice-price"><%= number_to_currency(amount, unit: '' )%></em>
               </div>

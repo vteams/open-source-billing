@@ -4493,3 +4493,22 @@ i.material-icons.close:hover {
 .hide {
   display: none;
 }
+.taxes_total {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.taxes_total ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.taxes_total.values ul {
+  float: right;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.taxes_total ul li {
+  display: flex;
+}
+.new-invoice-footer-row.invicetax {
+  border-bottom: none !important;
+}

@@ -50,7 +50,6 @@
         <tbody>
         <% estimate.estimate_line_items.each do |item|
           item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-          item_line_total += (item_line_total * item.tax1.percentage.to_f / 100.0) if item.tax1
         %>
             <tr>
               <td><%= item.item_name rescue "" %></td>
@@ -75,6 +74,9 @@
             <span><%= t('views.common.discount') %> <%= estimate.discount_percentage %><%= estimate.discount_type %></span>
             <span><%= number_to_currency(estimate.discount_amount, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></span>
           </div>
+          <% unless estimate.tax_detail_with_discount.blank? %>
+              <%= taxes_list(estimate.tax_detail_with_discount,estimate) %>
+          <% end %>
           <div class="table-row">
             <span></span>
             <span></span>
