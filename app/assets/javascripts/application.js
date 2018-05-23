@@ -355,3 +355,23 @@ function initCurrencySelect() {
         }
     });
 }
+
+function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) {
+    swal({
+        title: title,
+        text: message,
+        icon: 'warning',
+        buttons: [true, true],
+    }).then(function(confirmed) {
+
+        // If user confirm the action perform the action
+        if(confirmed) {
+            confirmCallback();
+        } else {
+            if (cancelCallback) {
+                cancelCallback();
+            }
+        }
+    });
+
+}

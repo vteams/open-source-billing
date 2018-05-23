@@ -47,14 +47,15 @@
 
     # Bulk user delete ajax request while clicking on delete btn
     if userIds.length > 0 && !currentUserSelected
-      $.ajax '/sub_users/destroy_bulk',
-        type: 'delete'
-        data: {user_ids: userIds}
-        dataType: 'json'
-        success: (data, textStatus, jqXHR) ->
-          showSuccessMsg(data.notice)
-          $('#users_listing').html(data.html)
-          initUserListingEvents()
+      showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
+        $.ajax '/sub_users/destroy_bulk',
+          type: 'delete'
+          data: {user_ids: userIds}
+          dataType: 'json'
+          success: (data, textStatus, jqXHR) ->
+            swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            $('#users_listing').html(data.html)
+            initUserListingEvents()
 
   $('select').material_select()
 
@@ -100,14 +101,16 @@
 
     # Ajax call for deleteing bulk companies while clicking on delete btn
     if companyIds.length > 0 && !currentCompanySelected
-      $.ajax '/companies/destroy_bulk',
-        type: 'delete'
-        data: {company_ids: companyIds}
-        dataType: 'json'
-        success: (data, textStatus, jqXHR) ->
-          showSuccessMsg(data.notice)
-          $('#companies_listing').html(data.html)
-          initCompanyListingEvents()
+      showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
+        $.ajax '/companies/destroy_bulk',
+          type: 'delete'
+          data: {company_ids: companyIds}
+          dataType: 'json'
+          success: (data, textStatus, jqXHR) ->
+            swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            $('#companies_listing').html(data.html)
+            initCompanyListingEvents()
+
   @Company.init_settings_form()
 
   $('select').material_select()
