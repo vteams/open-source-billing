@@ -348,7 +348,6 @@ class @Invoice
         applyPopover($("#invoice_invoice_date"),"rightTop","leftMiddle",I18n.t("views.invoices.select_invoice_date"))
         flag =false
       else if invoice_date_value > due_date_value
-        debugger
         applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft",I18n.t("views.invoices.due_date_should_equal_or_greater"))
         flag = false
         # Check if payment term is selected
