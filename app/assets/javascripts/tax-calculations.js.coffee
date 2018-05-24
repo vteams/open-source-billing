@@ -18,7 +18,7 @@ window.taxByCategory = ->
     tax1Input = $(this).find("#tax_amount")
 
     # calculate tax1
-    tax1Name = $(this).find('td.center-align.tax1').text()
+    tax1Name = $(this).find('td.center-align.tax1').text().trim()
     tax1Pct = parseFloat tax1Input.val()
     tax1Amount = lineTotal * tax1Pct / 100.0
 
