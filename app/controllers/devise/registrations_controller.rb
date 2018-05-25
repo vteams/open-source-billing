@@ -24,6 +24,7 @@ class Devise::RegistrationsController < DeviseController
 
   # GET /resource/sign_up
   def new
+    redirect_to new_user_session_path and return if User.exists?
     resource = build_resource({})
     respond_with resource
   end
