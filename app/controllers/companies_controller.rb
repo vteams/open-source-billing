@@ -58,7 +58,7 @@ class CompaniesController < ApplicationController
     respond_to do |format|
       if @company.save
         if params[:select_new].to_i == 1
-          session['current_company'] = @company
+          session['current_company'] = @company.id
           current_user.update_attributes(current_company: @company)
         end
         format.js { @companies = Company.all }
