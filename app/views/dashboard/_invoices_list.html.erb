@@ -30,7 +30,7 @@
       <ul class="pastData">
         <% @past_invoices.each do |past_invoice| %>
             <li>
-              <div class="invoice-name" style="background:#<%= (0..2).map{"%0x" % (rand * 0x80 + 0x80)}.join %>"><%= past_invoice.invoice_name %></div>
+              <div class="invoice-name random-colors"><%= past_invoice.invoice_name %></div>
               <span class="invoice-date"><%= (past_invoice.due_date || past_invoice.invoice_date) rescue "" %></span>
               <div class="invoice-details">
                 <h5><%= past_invoice.unscoped_client.organization_name rescue "" %></h5>

@@ -2552,7 +2552,7 @@ ul:not(.browser-default) li {
 }
 
 a {
-  color: #039be5;
+  color: #09b8e2;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -5167,13 +5167,13 @@ small {
 }
 
 .btn, .btn-large {
-  text-decoration: none;
-  color: #fff;
-  background-color: #26a69a;
-  text-align: center;
-  letter-spacing: .5px;
-  transition: .2s ease-out;
-  cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    background-color: #09b8e2;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+    cursor: pointer;
 }
 
 .btn:hover, .btn-large:hover {
@@ -6196,8 +6196,8 @@ textarea.materialize-textarea + label:after {
 }
 
 .input-field {
-  position: relative;
-  margin-top: 1rem;
+    position: relative;
+    margin: 1rem 0;
 }
 
 .input-field.inline {
@@ -6905,9 +6905,11 @@ select:disabled {
 }
 
 .file-field .btn, .file-field .btn-large {
-  float: left;
-  height: 3rem;
-  line-height: 3rem;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 18px;
+    text-transform: capitalize;
 }
 
 .file-field span {
