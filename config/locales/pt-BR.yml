@@ -673,6 +673,7 @@ pt-BR:
       no_deleted_msg: "Você não tem qualquer empresa apagada."
       branding: "Marca"
       logo: "Logo"
+      set_your_logo: "Defina seu logotipo"
       browse: "Procurar"
       tag_line: "Tagline da Empresa"
       memo: "Memo"

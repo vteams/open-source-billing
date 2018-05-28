@@ -700,3 +700,9 @@ form .select-wrapper .select-dropdown {
 .item_total_width{
     width: 15%;
 }
+.help-text{
+    width: 100%;
+    display: block;
+    margin-left: 18px;
+    font-size: 15px;
+}

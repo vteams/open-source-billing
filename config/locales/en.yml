@@ -728,6 +728,7 @@ en:
       no_deleted_msg: "You haven't any deleted company."
       branding: "Branding"
       logo: "Logo"
+      set_your_logo: "Set your logo"
       browse: "Browse"
       tag_line: "Company Tag Line"
       memo: "Memo"

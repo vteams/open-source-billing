@@ -668,6 +668,7 @@ fr:
       no_deleted_msg: "Vous ne l'avez pas supprimé toute société."
       branding: "Branding"
       logo: "Logo"
+      set_your_logo: "Définissez votre logo"
       browse: "feuilleter"
       tag_line: "Société Tag Line"
       memo: "note"
