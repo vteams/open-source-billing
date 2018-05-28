@@ -91,7 +91,9 @@ h6 {
   color: #09b8e2 !important; }
 
 .text-orange {
-  color: #f59210 !important; }
+  color: #f59210 !important;
+  font-weight: bold !important;
+}
 
 .text-grey {
   color: #a7a7a7 !important; }
@@ -1299,7 +1301,7 @@ h6 {
 
 .card-white-panel {
   background-color: #fff;
-  padding: 15px;
+  padding: 30px 15px;
   -moz-box-shadow: 0 2px 10px rgba(139, 139, 139, 0.12);
   -webkit-box-shadow: 0 2px 10px rgba(139, 139, 139, 0.12);
   -ms-box-shadow: 0 2px 10px rgba(139, 139, 139, 0.12);
@@ -1391,7 +1393,7 @@ h6 {
 .card-white-panel .action-btn-group a {
   color: #b9b9b9; }
 .card-white-panel .action-btn-group a i {
-  font-size: 14px; }
+  font-size: 17px; }
 .card-white-panel .action-btn-group a:hover {
   color: #09b8e2;
   background-color: transparent; }
@@ -3638,6 +3640,35 @@ h6 {
 }
 
 .flex-item.box:nth-child(7n) .invoice-name {
+  background-color: #a9b6bc;
+}
+
+//taxes
+.flex-item:nth-child(1n) .invoice-name {
+  background-color: #c2e2a0;
+}
+
+.flex-item:nth-child(2n) .invoice-name {
+  background-color: #c3bedd;
+}
+
+.flex-item:nth-child(3n) .invoice-name {
+  background-color: #7fb9e2;
+}
+
+.flex-item:nth-child(4n) .invoice-name {
+  background-color: #c9c1b7;
+}
+
+.flex-item:nth-child(4n) .invoice-name {
+  background-color: #c9a8c8;
+}
+
+.flex-item:nth-child(6n) .invoice-name {
+  background-color: #fac887;
+}
+
+.flex-item:nth-child(7n) .invoice-name {
   background-color: #a9b6bc;
 }
 

@@ -25,7 +25,7 @@
           <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= random_progress %>%;"></div>
         </div>
       </div>
-      <div class="gen-invoice"><%= link_to t('header.links.time_tracking.invoice'), invoice_form_log_path(project), remote: true unless random_progress.zero? %></div>
+      <div class="gen-invoice project-invoice"><%= link_to t('header.links.time_tracking.invoice'), invoice_form_log_path(project), remote: true unless random_progress.zero? %></div>
     </div>
     <div class="action-btn-group">
       <% if @status.eql?('deleted') %>
