@@ -639,6 +639,7 @@ en:
       new: "New Payment"
       delete_forever: "Delete Forever"
       net_due: "Net due"
+      add_description: "Add description"
       total_amount_due_against_selected_invoices: "Total amount due against selected invoices"
       payments_entered_against_selected_invoices: "Payments entered against selected invoices"
       which_invoices_have_you_received_payment_for: "Which Invoices have you received payment for"

@@ -90,7 +90,7 @@
         <div class="modal-footer commentSection">
           <div class="comments-content">
             <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
-            <%= f.text_area :notes,  maxlength: 400%>
+            <%= f.text_area :notes,  maxlength: 400, placeholder: t('views.payments.add_description')%>
           </div>
         </div>
     <% end %>

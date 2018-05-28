@@ -585,6 +585,7 @@ pt-BR:
       new: "Novo Pagamento"
       delete_forever: "Apagar para sempre"
       net_due: "Net due"
+      add_description: "Adicionar descrição"
       total_amount_due_against_selected_invoices: "Montante total devido contra faturas selecionadas"
       payments_entered_against_selected_invoices: "Pagamentos contabilizados para faturas selecionadas"
       which_invoices_have_you_received_payment_for: "Quais faturas você recebeu o pagamento"

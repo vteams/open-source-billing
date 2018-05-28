@@ -580,6 +580,7 @@ fr:
       new: "New paiement"
       delete_forever: "supprimer définitivement"
       net_due: "en raison net"
+      add_description: "Ajouter une description"
       total_amount_due_against_selected_invoices: "Montant total dû contre factures sélectionnées"
       payments_entered_against_selected_invoices: "Paiements inscrits contre factures sélectionnées"
       which_invoices_have_you_received_payment_for: "Quels factures Avez-vous reçu le paiement pour"

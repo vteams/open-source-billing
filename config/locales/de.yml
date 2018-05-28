@@ -584,6 +584,7 @@ de:
       new: "Neue Bezahlung"
       delete_forever: "Für immer löschen"
       net_due: "Netto Fällig"
+      add_description: "Beschreibung hinzufügen"
       total_amount_due_against_selected_invoices: "Insgesamter Betrag fällig für ausgewählte Rechnung"
       payments_entered_against_selected_invoices: "Bezahlungen eingetragen für ausgewählte Rechnung"
       which_invoices_have_you_received_payment_for: "Für welche Rechnungen hast du Bezahlungen erhalten"
