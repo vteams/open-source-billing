@@ -1,9 +1,6 @@
 <div id="invoice_model" class="modal estimate_modal">
   <div class="modal-content">
     <div class="modal-header clearfix">
-      <h5 class="left">
-        <span><%= @client.organization_name %></span>
-      </h5>
       <div class="modal-action-btn right">
         <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate),
                     class: 'edit_estimate_icon', title: t('helpers.links.edit') %>
@@ -18,6 +15,9 @@
           <i class="material-icons close">close</i>
         </a>
       </div>
+      <h5 class="left">
+        <span><%= @client.organization_name %></span>
+      </h5>
     </div>
     <div class="info-section clearfix">
       <div class="info-left-section left">

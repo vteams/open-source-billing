@@ -1,13 +1,6 @@
 <div id="invoice_model" class="modal">
   <div class="modal-content">
         <div class="modal-header clearfix">
-          <h5 class="left">
-            <% unless invoice.status.eql?("paid") %>
-                <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
-                <button id="enterPayment" class="btn btn-default" onclick="$('.invoice_payment_link').click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
-            <% end %>
-            <span><%= @client.organization_name %></span>
-          </h5>
           <div class="modal-action-btn right">
 
             <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),
@@ -22,6 +15,13 @@
               <i class="material-icons close">close</i>
             </a>
           </div>
+          <h5 class="left">
+            <% unless invoice.status.eql?("paid") %>
+                <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
+                <button id="enterPayment" class="btn btn-default" onclick="$('.invoice_payment_link').click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
+            <% end %>
+            <span><%= @client.organization_name %></span>
+          </h5>
         </div>
         <div class="info-section clearfix">
           <div class="info-left-section left">
