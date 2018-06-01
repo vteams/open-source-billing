@@ -756,7 +756,7 @@ h6 {
     -webkit-transition: all 0.5s;
     -ms-transition: all 0.5s;
     transition: all 0.5s; } }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 992px) {
   #activity-sidebar {
     margin-right: -330px;
     right: 25px;
@@ -905,7 +905,7 @@ h6 {
 @media only screen and (max-width: 767px) {
   #header .header-center {
     margin-left: -40px; } }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 992px) {
   #header .header-center {
     margin-left: 0px; }
 
@@ -1088,7 +1088,7 @@ h6 {
     font-size: 9px; } }
 @media only screen and (max-width: 992px) {
   #main-content {
-    margin-right: 258px; } }
+    margin-right: 0px; } }
 @media only screen and (max-width: 767px) {
   #main-content {
     margin-right: 0;
@@ -4705,5 +4705,20 @@ li:nth-child(7n) .random-colors {
   }
   .templatsidebar ul, .templatsidebar h5 {
     margin-left: 15px;
+  }
+}
+@media (min-width: 768px) and (max-width: 992px){
+  #side-nav{
+    height: 100vh;
+  }
+  .invoice-box .mCustomScrollbar .mCustomScrollBox{
+    height: 100vh !important;
+  }
+  .invoice-box {
+    max-height: 100vh;
+    height: auto;
+  }
+  #main #main-content {
+    height: 100vh;
   }
 }
