@@ -735,7 +735,8 @@ h6 {
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s;
-  margin-right: 0; }
+  margin-right: 0;
+}
 #activity-sidebar.side-show {
   margin-right: 0;
   -moz-transition: all 0.5s;
@@ -749,7 +750,7 @@ h6 {
 @media only screen and (max-width: 992px) {
   #activity-sidebar {
     width: 200px;
-    padding-right: 0; }
+    padding: 20px; }
   #activity-sidebar.side-show {
     margin-right: -258px;
     -moz-transition: all 0.5s;
