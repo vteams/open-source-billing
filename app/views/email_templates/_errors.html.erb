@@ -1,0 +1,8 @@
+<div id="error_explanation">
+  <h2><%= pluralize(@email_template.errors.count, "error") %> prohibited this email_template from being saved:</h2>
+  <ul>
+    <% @email_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>

@@ -98,6 +98,7 @@
 //= require browser_timezone_rails/set_time_zone
 //= require i18n/translations
 //= require sweetalert.min
+//= require cocoon
 
 jQuery(function () {
 
@@ -106,19 +107,6 @@ jQuery(function () {
         remain = parseInt(max - tlength);
        $('.text-limit').text(remain + "  characters remaining" );
     });
-
-    $(".tablesorter").tablesorter();
-
-    //override default behavior of inserting new subforms into form
-    window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1 || document.location.pathname.search(/\/estimates\//) != -1) {
-            var $tr = $(link).closest('tr');
-            return $(content).insertBefore($tr);
-        } else if (document.location.pathname.search(/\/clients\//) != -1) {
-            var $contact_container = $(link).parents('#adCntcts').find(".client_contacts_container");
-            return $contact_container.append(content);
-        }
-    };
 
     jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
 
@@ -320,7 +308,7 @@ function initCurrencySelect() {
 
     var li = $('#dropdown_currency > li');
     var liSelected;
-    $(window).on('keydown', function(e){
+    $('.search_currency').on('keydown', function(e){
         var selected;
         if(e.which === 40){
             if(liSelected){

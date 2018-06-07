@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many :logs, dependent: :destroy
   has_many :invoices
 
-  attr_accessor :account,:login
+  attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'
 

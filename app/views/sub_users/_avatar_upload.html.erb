@@ -1,0 +1,15 @@
+<div class="row">
+  <h5 class="text-blue title-heading"><%= t('views.users.avatar') %></h5>
+  <div class="file-field input-field col s12 m12">
+    <div class="btn">
+      <span>Logo</span>
+      <input type="file" name="avatar">
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text">
+    </div>
+  </div>
+  <div class="input-field col s6 m6">
+    <%= image_tag @sub_user.avatar_url(:thumb) if action_name == 'edit' %>
+  </div>
+</div>

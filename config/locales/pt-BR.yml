@@ -545,6 +545,9 @@ pt-BR:
       must_be_greater_than_zero: "Deve ser maior que zero"
       same_tax_applied: "Mesmo imposto não aplicado em um item"
       select_atleast_one_company: "Selecione pelo menos uma empresa para a tarefa"
+      must_be_greater_or_equal_to_zero: "Quantidade não deve ser valor negativo"
+      quantity_required: "Quantidade de item é necessária"
+      greater_than_zero: "A porcentagem deve ser maior que zero"
 
     taxes:
       taxes: "Impostos"

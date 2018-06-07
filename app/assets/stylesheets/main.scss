@@ -1863,7 +1863,6 @@ h6 {
   font-size: 14px;
   color: #454545;
   line-height: 24px;
-  height: auto;
   margin-bottom: 12px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   border-bottom-color: #dadada; }
@@ -4638,7 +4637,6 @@ li:nth-child(6n) .random-colors {
 li:nth-child(7n) .random-colors {
   background-color: #a9b6bc;
 }
-
 @media (max-width: 767px){
   #main{
     height: auto;
@@ -4767,9 +4765,35 @@ li:nth-child(7n) .random-colors {
     display: table;
   }
 }
-@media (max-width: 480px){
+@media (max-width: 480px) {
   .search-wrap .search .select2-container {
     width: 86% !important;
     margin-left: 9px !important;
   }
+  label abbr {
+    color: red;
+    border-bottom: none !important;
+    text-decoration: none;
+  }
+  textarea.task_description.materialize-textarea {
+    padding: 0 !important;
+    margin-bottom: 0;
+  }
+}
+.form-invoice .scroll-area{
+padding-bottom: 0px;
+}
+@media (max-width: 992px){
+  .new-invoice-holder .new-invoice-table-holder.main-invoice{
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .new-invoice-holder .new-invoice-table-holder.main-invoice table{
+    width: 140%;
+    display: table;
+  }
+}
+.new-invoice-holder .new-invoice-table-holder.main-invoice table{
+  width: 100%;
+  display: table;
 }

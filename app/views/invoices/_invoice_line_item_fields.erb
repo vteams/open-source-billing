@@ -1,25 +1,26 @@
-<tr class="fields">
+<tr class="fields nested-fields">
   <td>
     <div class="elementsAction">
-      <%= f.hidden_field :_destroy%>
-      <a href="#" data-association="invoice_line_items" class="remove_item remove_nested_fields removeItem cross-position"><i class="material-icons close">close</i></a>
+      <%= f.input :_destroy, as: :hidden %>
+      <%= link_to_remove_association raw('<i class="material-icons close">close</i>'), f, class: 'remove_item remove_nested_fields removeItem cross-position' %>
     </div>
   </td>
   <td>
-    <%= f.select :item_id, options_for_select(load_line_items(action_name, @invoice.company_id, f.object), selected: f.object.item_id),
-                 {:prompt => t('views.common.select_item'), :include_blank => false}, {"data-placeholder" => 'select item', class: "items_list inline-select title-select invoice-select-align", :required => ""} %>
+    <%= f.input :item_id, collection: load_line_items(action_name, @invoice.company_id, f.object),
+                selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
+                include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align' } %>
   </td>
-  <%= f.hidden_field :item_name, class: 'item_name' %>
-  <%= f.hidden_field :tax_1, class: 'tax1' %>
+  <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name' } %>
+  <%= f.input :tax_1, as: :hidden, input_html: { class: 'tax1' } %>
   <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
   <td>
-    <%= f.text_field :item_description, class: 'description center-align' %>
+    <%= f.input :item_description, label: false, wrapper: false, input_html: { class: 'description center-align' } %>
   </td>
   <td>
-    <%= f.text_field :item_unit_cost, class: 'cost center-align'%>
+    <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align' } %>
   </td>
   <td>
-    <%= f.number_field :item_quantity, class: 'qty center-align', min: 1 %>
+    <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', min: 1 } %>
   </td>
   <td class="center-align tax1">
     <%= f.object.tax1.name rescue '' %>

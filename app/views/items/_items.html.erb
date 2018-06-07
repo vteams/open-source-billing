@@ -40,7 +40,8 @@
         <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
                     remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
         <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
-                    data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.edit') %>
+                    data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
+                    title: t('helpers.links.edit') %>
         <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
           <i class="material-icons">more_vert</i>
         </a>

@@ -277,4 +277,17 @@ module InvoicesHelper
               title: t('helpers.links.edit')
     end
   end
+
+  def payment_terms_options
+    PaymentTerm.unscoped.map { |p|
+      [t('views.invoices.' + p.description.parameterize.underscore), p.id, {'number_of_days' => p.number_of_days}] }
+  end
+
+  def invoice_selected_currency(invoice)
+    if params[:action].eql?('new')
+      Currency.default_currency.id
+    else
+      (@client.present? ? @client.currency_id : invoice.currency_id)
+    end
+  end
 end

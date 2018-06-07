@@ -524,7 +524,7 @@ span.invoice-recurring-status{
 .flex-item .invoice.card-white-panel .card-footer {
     height: 50px;
 }
-.staff_rate input{
+.staff_rate input:not(.fix-width){
     width: 38px !important;
 }
 

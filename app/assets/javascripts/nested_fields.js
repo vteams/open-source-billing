@@ -6,53 +6,7 @@
 
     NestedFormEvents.prototype = {
         addFields: function(e) {
-            // Setup
             var link      = e.currentTarget;
-            var assoc     = $(link).data('association');                // Name of child
-            var blueprint = $('#' + $(link).data('blueprint-id'));
-            var content   = blueprint.data('blueprint');                // Fields template
-
-            // Make the context correct by replacing <parents> with the generated ID
-            // of each of the parent objects
-            var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(new RegExp('\[[a-z_]+\]$'), '');
-
-            // context will be something like this for a brand new form:
-            // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
-            // or for an edit form:
-            // project[tasks_attributes][0][assignments_attributes][1]
-            if (context) {
-                var parentNames = context.match(/[a-z_]+_attributes(?=\]\[(new_)?\d+\])/g) || [];
-                var parentIds   = context.match(/[0-9]+/g) || [];
-
-                for(var i = 0; i < parentNames.length; i++) {
-                    if(parentIds[i]) {
-                        content = content.replace(
-                            new RegExp('(_' + parentNames[i] + ')_.+?_', 'g'),
-                            '$1_' + parentIds[i] + '_');
-
-                        content = content.replace(
-                            new RegExp('(\\[' + parentNames[i] + '\\])\\[.+?\\]', 'g'),
-                            '$1[' + parentIds[i] + ']');
-                    }
-                }
-            }
-
-            // Make a unique ID for the new child
-            var regexp  = new RegExp('new_' + assoc, 'g');
-            var new_id  = this.newId();
-            content     = $.trim(content.replace(regexp, new_id));
-            var target = $(link).data('target');
-
-
-            if (typeof(target)!="undefined") {
-                field=  $(content).appendTo($(target));
-            } else {
-                field = $(content).insertBefore(link);
-            }
-
-            field
-                .trigger({ type: 'nested:fieldAdded', field: field })
-                .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
 
             $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").material_select();
             if ($('.project-form-inline').length > 0){
@@ -78,38 +32,13 @@
         },
         newId: function() {
             return new Date().getTime();
-        },
-        insertFields: function(content, assoc, link) {
-
-            var target = $(link).data('target');
-
-            if (target) {
-                return $(content).appendTo($(target));
-            } else {
-                return $(content).insertBefore(link);
-            }
-        },
-        removeFields: function(e) {
-            var $link = $(e.currentTarget),
-                assoc = $link.data('association'); // Name of child to be removed
-
-            var hiddenField = $link.prev('input[type=hidden]');
-            hiddenField.val('1');
-
-            var field = $link.closest('.fields');
-            field.hide();
-
-            field
-                .trigger({ type: 'nested:fieldRemoved', field: field })
-                .trigger({ type: 'nested:fieldRemoved:' + assoc, field: field });
-            return false;
         }
     };
 
     window.nestedFormEvents = new NestedFormEvents();
-    $(document)
-        .delegate('form a.add_nested_fields',    'click', nestedFormEvents.addFields)
-        .delegate('form a.remove_nested_fields', 'click', nestedFormEvents.removeFields);
+    $(document).ready(function() {
+      $('.nested-forms').on('cocoon:after-insert', nestedFormEvents.addFields);
+    });
 })(jQuery);
 
 // http://plugins.jquery.com/project/closestChild

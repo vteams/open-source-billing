@@ -1,49 +1,36 @@
 <div id="item_form_popup" class="modal editableModal editTaxModal edititemModal">
   <%- model_class = Item -%>
   <div class="modal-content">
-    <%= form_for(item, :html => {class: 'item_form'}) do |f| %>
-        <div class="modal-content">
-            <div class="modal-header clearfix text-content">
-              <h5 class="left">
-                <% if f.object.persisted? %>
-                  <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
-                                                :default => "Edit #{model_class.model_name.human}") %>
-                <% else %>
-                  <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
-                                                :default => "New  #{model_class.model_name.human}") %>
-                <% end %>
-              </h5>
-              <div class="modal-action-btn right">
-                <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
-                  <i class="material-icons" >done</i>
-                </a>
-                <%= f.submit class: 'btn_large submit hidden' %>
-                <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
-                  <i class="material-icons close">close</i>
-                </a>
-              </div>
+      <div class="modal-content">
+          <div class="modal-header clearfix text-content">
+            <h5 class="left">
+              <% if item.persisted? %>
+                <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
+                                              :default => "Edit #{model_class.model_name.human}") %>
+              <% else %>
+                <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
+                                              :default => "New  #{model_class.model_name.human}") %>
+              <% end %>
+            </h5>
+            <div class="modal-action-btn right">
+              <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+                <i class="material-icons" >done</i>
+              </a>
+              <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+                <i class="material-icons close">close</i>
+              </a>
             </div>
+          </div>
+          <%= simple_form_for item, html: { class: 'item_form' } do |f| %>
             <div class="modal-body">
               <div class="row">
-                <div class="input-field col s12">
-                  <%= f.text_field :item_name, id:'item_item_name' %>
-                  <label for="item_item_name"> <%= t('views.items.item_name') %></label>
-                </div>
-                <div class="input-field col s12">
-                  <%= f.text_field :item_description, id:'item_item_description' %>
-                  <label for="item_item_description"><%= t('views.items.description') %></label>
-                </div>
-                <div class="input-field col s6">
-                  <%= f.text_field :unit_cost, id:'item_unit_cost' %>
-                  <label for="item_unit_cost"><%= t('views.items.default_unit_cost') %></label>
-                </div>
-                <div class="input-field col s6">
-                  <%= f.number_field :quantity,id: 'defaultqty', min: 1 %>
-                  <label for="defaultqty"><%= t('views.items.default_quantity') %></label>
-                </div>
-                <div class="input-field col s6">
-                  <%= f.collection_select(:tax_1, Tax.all, :id, :name, {prompt: t('views.taxes.select_a_tax'), include_blank: true}, {class: "tax2 small"}) %>
-                </div>
+                <%= f.submit class: 'btn_large submit hidden' %>
+                <%= f.input :item_name, label: t('views.items.item_name'), wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :item_description, label: t('views.items.description'), wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :unit_cost, label: t('views.items.default_unit_cost'), wrapper_html: { class: 'input-field col s6' } %>
+                <%= f.input :quantity, label: t('views.items.default_quantity'), wrapper_html: { class: 'input-field col s6' } %>
+                <%= f.association :tax1, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
+                                  wrapper_html: { class: 'input-field col s6' }, label: false %>
               </div>
               <div class="row">
                 <div class="col s12 items">

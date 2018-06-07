@@ -1,6 +1,5 @@
 <div id="project_task_form_popup" class="modal viewModal taskModal">
   <div class="modal-content">
-    <%= form_for [@project,task], html: {class: 'project_task_form'} do |f|  %>
     <div class="modal-header clearfix text-content">
       <h5 class="left text-blue">
         <% if task.new_record? %>
@@ -13,74 +12,36 @@
         <a href="javascript:void(0);" onclick="$('.simple_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
           <i class="material-icons" >done</i>
         </a>
-        <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
         <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action waves-effect" onclick="$('#project_task_form_popup').modal('close');">
           <i class="material-icons close">close</i>
         </a>
       </div>
     </div>
+    <%= simple_form_for [@project,task], html: { class: 'project_task_form' } do |f| %>
     <div class="modal-body">
       <div class="row">
+        <%= f.submit class: 'simple_submit submit hidden' %>
         <div class="col s12 m8 l9">
           <div class="content-detail">
             <div class="card-white-panel clearfix">
               <div class="left-content">
-                <div class="text-wrapper">
-                  <div class="checkbox-item">
-                    <div class="invoice-name green-light"><%= @project.image_name%></div>
-                  </div>
-                  <div class="invoice-details">
-                    <div class="editable-content">
-                      <div class="text-field">
-                        <span><%= t('task') %></span>
-                        <strong class="text-blue task_name" contenteditable="true"><%= task.name %></strong>
-                        <%= f.hidden_field :name %>
-                      </div>
-                    </div>
-                    <div class="editable-content">
-                      <div class="text-field text-field-description">
-                        <span><%= t('views.common.description') %></span>
-                        <strong class="task_description" contenteditable="true"><%= task.description %></strong>
-                        <%= f.hidden_field :description %>
-                      </div>
-                    </div>
-                  </div>
+                <div class="checkbox-item">
+                  <div class="invoice-name green-light"><%= @project.image_name%></div>
                 </div>
-                <div class="form-wrapper row">
-                  <div class="input-field col s12 m9 l9 xl6  datepicker">
-                    <label class="active"><%= t('views.invoices.recurring.start_date') %></label>
-                    <input type="text" class="project_task_start_date" value="<%= task.start_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled="disabled">
-                    <%= f.hidden_field :start_date %>
-                    <i class="material-icons" id='start_date_picker'>date_range</i>
-                  </div>
-
-                  <div class="input-field col s12 m9 l9 xl6 datepicker">
-                    <label class="active"><%= t('views.invoices.due_date') %></label>
-                    <input type="text" class="project_task_due_date" value="<%= task.due_date.strftime('%Y-%m-%d') rescue nil %>" placeholder="" disabled="disabled">
-                    <%= f.hidden_field :due_date %>
-                    <i class="material-icons" id='due_date_picker'>date_range</i>
-                  </div>
-
-                  <div class="input-field col s12 m9 l9 xl6  datepicker titlebold">
-                    <label class="placeholder-position active" for="project_task_hours"><%= t('views.tasks.hours') %></label>
-                    <%= f.number_field :hours%>
-                  </div>
-                  <div class="input-field col s12 m9 l9 xl6 datepicker titlebold">
-                    <label class="placeholder-position active"><%= t('views.tasks.spent_time') %></label>
-                    <%= f.number_field :spent_time %>
-                  </div>
-
-                  <!--<div class="range-input col s12 m9 l9 xl6">-->
-                    <!--<label><%#= t('views.tasks.spent_time') %></label>-->
-                    <!--<div class="rkmd-slider slider-discrete slider-lightBlue">-->
-                      <%#= f.label :spent_time, ((f.object.spent_time.to_f / f.object.hours.to_f * 100).to_s + ' %' if f.object.hours), id: 'time_spent_label1' %>
-
-                      <%#= f.range_field :spent_time, in: 0..f.object.hours.to_f %>
-                    <!--</div>-->
-                  <!--</div>-->
-                  <div class="input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position">
-                    <label class="placeholder-position active"><%= t('views.tasks.rate_') %></label>
-                    <%= f.number_field :rate %>
+                <div class="invoice-details">
+                  <div class="row">
+                    <%= f.input :name, label: false, wrapper_html: { class: 'input-field col s12 required' },
+                                input_html: { placeholder: t('views.tasks.name') } %>
+                    <%= f.input :description, label: false, wrapper_html: { class: 'input-field col s12 required' },
+                                input_html: { class: 'materialize-textarea task_description',
+                                              placeholder: t('views.tasks.description') }, as: :text %>
+                    <%= render 'date_fields', f: f, task: task %>
+                    <%= f.input :hours, label: t('views.tasks.hours'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker titlebold'}, as: :float %>
+                    <%= f.input :spent_time, label: t('views.tasks.spent_time'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6 datepicker titlebold'}, as: :float %>
+                    <%= f.input :rate, label: t('views.tasks.rate_'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position'}, as: :float %>
                   </div>
                 </div>
               </div>

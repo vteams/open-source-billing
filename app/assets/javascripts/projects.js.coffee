@@ -175,11 +175,11 @@ class @Project
 
     $(".project_task_form").submit ->
       flag = true
-      if $(".task_name").text() is ""
-        applyPopover($(".task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
+      if $("#project_task_name").val() is ""
+        applyPopover($("#project_task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
         flag = false
       else if $('.project_task_start_date').val() is ""
-        hidePopover($(".task_name"))
+        hidePopover($("#project_task_name"))
         applyPopover($('.project_task_start_date'),"bottomMiddle","topLeft", I18n.t("views.tasks.select_start_date"))
         flag = false
       else if $(".project_task_due_date").val() is ""
@@ -224,8 +224,6 @@ class @Project
         flag = false
       else
         hidePopover($("#project_task_rate"))
-        $("#project_task_name").val($(this).find('.task_name').text())
-        $("#project_task_description").val($(this).find('.task_description').text())
       flag
 
 $(document).ready ->

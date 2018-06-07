@@ -1,25 +1,17 @@
 <div class="side-form company-side-form">
-  <%= form_tag('/companies', id: 'company_side_form', method: :post, remote: true)  %>
-  <%= hidden_field_tag :setting_form, 1, id: 'company_setting_form' %>
-  <div class="modal-body users">
-    <div class="input-field">
-      <%= text_field_tag :company_name, '', placeholder: '*' + t('views.companies.name'), name: 'company[company_name]' %>
+  <% @company = Company.new() %>
+  <%= simple_form_for(@company, url: '/companies', remote: true, html: { id: 'company_side_form'}) do |f| %>
+    <%= hidden_field_tag :setting_form, 1, id: 'company_setting_form' %>
+    <div class="modal-body users">
+      <%= f.input :company_name, label: false, placeholder: '*' + t('views.companies.name'), wrapper_html: { class: 'input-field' }, input_html: { id: 'company_name' } %>
+      <%= f.input :contact_name, label: false, placeholder: '*' + t('views.clients.contact_name'), wrapper_html: { class: 'input-field' }, input_html: { id: 'contact_name' } %>
+      <%= f.input :contact_title, label: false, placeholder: t('views.clients.contact_title'), wrapper_html: { class: 'input-field' } %>
+      <%= f.input :email, label: false, placeholder: '*' + t('views.common.email'), wrapper_html: { class: 'input-field' }, input_html: { id: 'companies_email' } %>
+      <%= f.input :phone_number, label: false, placeholder: t('views.common.phone'), wrapper_html: { class: 'input-field' }, as: :string %>
     </div>
-    <div class="input-field">
-      <%= text_field_tag :contact_name,'', placeholder: '*' + t('views.clients.contact_name'), name: 'company[contact_name]' %>
-    </div>
-    <div class="input-field">
-      <%= text_field_tag :contact_title, '', placeholder: t('views.clients.contact_title'), name: 'company[contact_title]' %>
-    </div>
-    <div class="input-field">
-      <%= text_field_tag :email, '', placeholder: '*' + t('views.common.email'), name: 'company[email]', id: 'companies_email' %>
-    </div>
-    <div class="input-field">
-      <%= text_field_tag :phone_number, '', placeholder: t('views.common.phone'), name: 'company[phone_number]' %>
-    </div>
-  </div>
-  <a href="javascript:;" id="company_save_btn"><%= t('views.common.save') %></a>
-  <a href="javascript:;" id="company_cancel_btn"><%= t('views.common.cancel') %></a>
-  <%= submit_tag 'Save', class: 'submit-company-form hidden' %>
-  <%= submit_tag 'Clear', type: 'reset', id: 'company_reset_form', class: 'hidden' %>
+    <a href="javascript:;" id="company_save_btn"><%= t('views.common.save') %></a>
+    <a href="javascript:;" id="company_cancel_btn"><%= t('views.common.cancel') %></a>
+    <%= f.submit t('views.common.save'), class: 'submit-company-form hidden' %>
+    <%= f.submit 'Clear', type: 'reset', class: 'hidden', id: 'company_reset_form' %>
+  <% end %>
 </div>

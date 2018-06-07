@@ -1,49 +1,39 @@
 <div id="task_form_popup" class="modal editableModal">
-    <div class="modal-content">
-      <%= form_for @task, :html => { class: 'task_form form-horizontal',:id => 'newTask'} do |f| %>
-          <div class="modal-header clearfix text-content">
-            <h5 class="left">
-              <% if f.object.persisted? %>
-                  <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
-              <% else %>
-                  <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
-              <% end %>
-            </h5>
-            <div class="modal-action-btn right">
-              <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
-                <i class="material-icons" >done</i>
-              </a>
-              <%= f.submit class: 'btn_large submit hidden' %>
-              <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
-                <i class="material-icons close">close</i>
-              </a>
-            </div>
-          </div>
-          <div class="modal-body users">
-            <div class="row">
-              <div class="input-field col s6 required">
-                <%= f.text_field :name  %>
-                <%= f.label :name, t('views.tasks.name') %>
-              </div>
-              <div class="input-field col s6 required">
-                <%= f.number_field :rate, min: 0, step: "any" %>
-                <%= f.label :rate, t('views.tasks.rate') %>
-              </div>
-              <div class="input-field col s12 required">
-                <%= f.label :description, t('views.tasks.description') %>
-                <%= f.text_area :description, maxlength: 400, class: "materialize-textarea" %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <h5 class="text-blue title-heading"><%= t('views.tasks.make_this_task_available_to') %></h5>
-
-                <div class="input-field col s12">
-                  <%= associate_account(controller_name, action_name, task) %>
-                </div>
-              </div>
-            </div>
-          </div>
-      <% end %>
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left">
+        <% if @task.persisted? %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
+        <% end %>
+      </h5>
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
     </div>
+    <%= simple_form_for @task, html: {class: 'task_form form-horizontal', id: 'newTask'} do |f| %>
+      <div class="modal-body users">
+        <div class="row">
+          <%= f.submit class: 'btn_large submit hidden' %>
+          <%= f.input :name, label: t('views.tasks.name'), wrapper_html: { class: 'input-field col s6 required' } %>
+          <%= f.input :rate, label: t('views.tasks.rate'), wrapper_html: { class: 'input-field col s6 required' }, input_html: { min: 0 } %>
+          <%= f.input :description, label: t('views.tasks.description'), wrapper_html: { class: 'input-field col s12 required' }, input_html: { class: 'materialize-textarea' }, as: :text %>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <h5 class="text-blue title-heading"><%= t('views.tasks.make_this_task_available_to') %></h5>
+            <div class="input-field col s12">
+              <%= associate_account(controller_name, action_name, task) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -540,6 +540,8 @@ fr:
       must_be_greater_than_zero: "Doit être supérieur à zéro"
       same_tax_applied: "Même taxe non appliquée sur un article"
       select_atleast_one_company: "Sélectionnez au moins une entreprise pour la tâche"
+      must_be_greater_or_equal_to_zero: "La quantité ne devrait pas être une valeur négative"
+      quantity_required: "La quantité d'article est requise"
 
     taxes:
       taxes: "impôts"
@@ -560,6 +562,7 @@ fr:
       enter_percentage: "Entrez le pourcentage d'impôt"
       percentage_must_be_numeric: "Le pourcentage doit être une valeur numérique"
       less_than_hundred: "Le pourcentage doit être de cent ou moins"
+      greater_than_zero: "Le pourcentage doit être supérieur à zéro"
 
     logs:
       project: "Sélectionner un projet"

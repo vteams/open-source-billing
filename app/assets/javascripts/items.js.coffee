@@ -39,7 +39,7 @@ class @Item
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    jQuery("#item_item_name, #item_item_description").keypress ->
+    jQuery("#item_item_name,#item_item_description,#item_unit_cost,#item_quantity").keypress ->
       hidePopover(jQuery(this))
 
     $("form.item_form").submit ->
@@ -55,11 +55,20 @@ class @Item
       else if ($('#company_association').is(':checked') is  false and $('#account_association').is(':checked') is  false)
         $("#company_association").prop('checked', true);
         flag = false
+      else if $("#item_unit_cost").val() is ""
+        applyPopover($("#item_unit_cost"), I18n.t('views.companies.field_requied'))
+        flag = false
       else if $("#item_unit_cost").val() isnt "" and  isNaN($("#item_unit_cost").val())
         applyPopover($("#item_unit_cost"), I18n.t('views.items.must_be_numeric'))
         flag = false
-      else if $("#item_unit_cost").val() isnt "" and !isNaN($("#item_unit_cost").val()) and $("#item_unit_cost").val() < 1
+      else if $("#item_unit_cost").val() isnt "" and !isNaN($("#item_unit_cost").val()) and $("#item_unit_cost").val() <= 0
         applyPopover($("#item_unit_cost"), I18n.t('views.items.must_be_greater_than_zero'))
+        flag = false
+      else if $("#item_quantity").val() is ""
+        applyPopover($("#item_quantity"), I18n.t('views.items.quantity_required'))
+        flag = false
+      else if $("#item_quantity").val() isnt "" and !isNaN($("#item_quantity").val()) and $('#item_quantity').val() < 0
+        applyPopover($("#item_quantity"), I18n.t('views.items.must_be_greater_or_equal_to_zero'))
         flag = false
       else if ($("#item_tax_1").val() != "" or $("#item_tax_2").val() != "") and ($("#item_tax_1").val() == $("#item_tax_2").val())
         applyPopover($("#item_tax_2").parents('.select-wrapper'), I18n.t('views.items.same_tax_applied'))

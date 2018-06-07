@@ -596,6 +596,8 @@ en:
       must_be_greater_than_zero: "Must be greater than zero"
       same_tax_applied: "Same tax not applied on one item"
       select_atleast_one_company: "Select at least one company for the task"
+      must_be_greater_or_equal_to_zero: "Quantity should not be negative value"
+      quantity_required: "Item quantity is required"
 
     taxes:
       taxes: "Taxes"
@@ -616,6 +618,7 @@ en:
       enter_percentage: "Enter tax percentage"
       percentage_must_be_numeric: "Percentage must be numeric value"
       less_than_hundred: "Percentage must be hundred or less"
+      greater_than_zero: "Percentage must be greater than zero"
 
     logs:
       project: "Select Project"

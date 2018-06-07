@@ -1,11 +1,9 @@
 <div id="client_form_popup" class="modal editableModal editProject editClient newModel large_modal">
   <div class="modal-content">
     <%- model_class = Client -%>
-    <%= nested_form_for @client, :html => {:id => 'newClient', :novalidate => ""} do |f| %>
-        <% @parent_f = f %>
-        <div class="modal-header clearfix text-content">
+    <div class="modal-header clearfix text-content">
           <h5 class="left">
-            <% if f.object.persisted? %>
+            <% if @client.persisted? %>
                 <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
                                               :default => "Edit #{model_class.model_name.human}") %>
             <% else %>
@@ -18,41 +16,24 @@
                class="modal-action waves-effect">
               <i class="material-icons" >done</i>
             </a>
-            <%= f.submit class: 'btn_large submit hidden' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
               <i class="material-icons close">close</i>
             </a>
           </div>
         </div>
+    <%= simple_form_for @client, html: { id: 'newClient' } do |f| %>
         <div class="modal-body">
           <div class="info-right-section">
             <div class="row">
+              <%= f.submit class: 'btn_large submit hidden' %>
               <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
-              <div class="input-field col s12">
-                <%= f.text_field :organization_name %>
-                <%= f.label :organization_name,  t('views.clients.organization_name') %>
-              </div>
-              <div class="input-field col s6 m4">
-                <%= f.text_field :first_name %>
-                <%= f.label :first_name,  t('views.clients.first_name') %>
-              </div>
-              <div class="input-field col s6 m4">
-                <%= f.text_field :last_name %>
-                <%= f.label :last_name,t('views.clients.last_name') %>
-              </div>
+              <%= f.input :organization_name, label: t('views.clients.organization_name'), wrapper_html: { class: 'input-field col s12' } %>
+              <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :last_name, label: t('views.clients.last_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :mobile_number, label: t('views.common.mobile'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :business_phone, label: t('views.clients.business_phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
 
-              <div class="input-field col s6 m4">
-                <%= f.text_field :email, required: true %>
-                <%= f.label :email,t('views.common.email') %>
-              </div>
-              <div class="input-field col s6 m4">
-                <%= f.text_field :mobile_number %>
-                <%= f.label :mobile_number,t('views.common.mobile') %>
-              </div>
-              <div class="input-field col s6 m4">
-                <%= f.text_field :business_phone %>
-                <%= f.label :business_phone,t('views.clients.business_phone') %>
-              </div>
               <div id="client_credit"></div>
               <div class="input-field col s12 m4">
                 <% @readonly = is_client_credit_payments @client %>
@@ -68,17 +49,22 @@
               </div>
 
               <div class="col s12">
-                <%= f.link_to_add t('views.clients.add_new_contact'), :client_contacts, class: 'btn moreBtn add',
-                                  data: { target: '#client-contact-container' } %>
+                <%= link_to_add_association t('views.clients.add_new_contact'), f, :client_contacts,
+                                            partial: 'client_contact_fields',
+                                            class: 'btn moreBtn add',
+                                            data: { association_insertion_node: '#client-contact-container',
+                                                    association_insertion_method: :append } %>
               </div>
             </div>
 
-            <div class="row">
+              <div class="row">
                 <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
                 <div class="client_contact_container" id="client-contact-container">
-                  <%= f.fields_for :client_contacts, :wrapper => false %>
+                  <%= f.simple_fields_for :client_contacts do |client_contact| %>
+                    <%= render 'client_contact_fields', f: client_contact %>
+                  <% end %>
                 </div>
-            </div>
+              </div>
             <div class="row">
                 <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
             </div>

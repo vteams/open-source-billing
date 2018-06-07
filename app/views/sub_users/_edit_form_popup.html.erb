@@ -1,8 +1,5 @@
 <div id="edit_form_popup" class="modal editableModal importModal">
   <div class="modal-content">
-    <%= form_tag('/sub_users/update', :method => :put, novalidate: "", id: "sub_user_form",
-                 :multipart => true, remote: params[:remote].to_i == 1) %>
-    <%= hidden_field_tag :setting_form, params[:setting_form] %>
       <div class="modal-header clearfix text-content">
         <h5 class="left">
           <%= t '.title', :default => t('helpers.titles.edit', :model => t(User.model_name.singular),
@@ -12,57 +9,35 @@
           <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
             <i class="material-icons" >done</i>
           </a>
-          <%= submit_tag 'Save', class:  "btn_large submit hidden" %>
           <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
             <i class="material-icons close">close</i>
           </a>
         </div>
       </div>
+    <%= simple_form_for(@sub_user, url: '/sub_users/update', method: :put, remote: params[:remote].to_i == 1,
+                        html: { id: 'sub_user_form', multipart: true }) do |f| %>
+      <%= hidden_field_tag :setting_form, params[:setting_form] %>
       <div class="modal-body">
         <div class="row">
-          <div class="input-field col s6">
-            <%= text_field_tag :user_name,"#{@sub_user.user_name}", :required => "" %>
-            <label for="username" class="active"><%= t('views.users.full_name') %></label>
-          </div>
-          <div class="input-field col s6">
-            <%= text_field_tag :email,"#{@sub_user.email}", :required => "" %>
-            <label for="email" class="active"><%= t('views.common.email') %></label>
-          </div>
-          <div class="input-field col s6 editMode">
-            <%= password_field_tag :password %>
-            <label for="password"><%= t('views.staffs.password') %></label>
-          </div>
-          <div class="input-field col s6 editMode">
-            <%= password_field_tag :password_confirmation %>
-            <label for="password_confirmation"><%= t('views.staffs.password_confirmation') %></label>
-          </div>
+          <%= f.submit class: 'btn_large submit hidden' %>
+          <%= f.input :user_name, label: t('views.users.full_name'), input_html: {id: 'user_name', name: 'user_name'},
+                      label_html: {class: 'active'}, wrapper_html: { class: 'input-field col s6' } %>
+          <%= f.input :email, label: t('views.common.email'), input_html: {id: 'email', name: 'email'},
+                      label_html: {class: 'active'}, wrapper_html: { class: 'input-field col s6' } %>
+          <%= f.input :password, label: t('views.staffs.password'), input_html: {id: 'password', name: 'password'},
+                      wrapper_html: { class: 'input-field col s6 editMode' } %>
+          <%= f.input :password_confirmation, label: t('views.staffs.password_confirmation'),
+                      input_html: {id: 'password_confirmation', name: 'password_confirmation'},
+                      wrapper_html: { class: 'input-field col s6 editMode' } %>
           <%= hidden_field_tag 'user_id',@sub_user.id %>
           <% unless @sub_user.id == current_user.id %>
-            <div class="input-field col s12">
-              <%= select_tag :role_ids, options_for_select(load_user_roles, @sub_user.role_ids.first) %>
-              <label for="role_ids"><%= t('views.users.assign_role') %></label>
-            </div>
-          <% end %>
-          <% unless params[:remote].to_i == 1 %>
-            <div class="row">
-              <h5 class="text-blue title-heading"><%= t('views.users.avatar') %></h5>
-              <div class="file-field input-field col s12 m12">
-                <div class="btn">
-                  <span>Logo</span>
-                  <input type="file" name="avatar">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
-              </div>
-              <div class="input-field col s6 m6">
-                <% if action_name == 'edit' %>
-                    <%= image_tag @sub_user.avatar_url(:thumb) %>
-                <% end %>
-              </div>
-            </div>
+            <%= f.input :role_ids, collection: load_user_roles, selected: @sub_user.role_ids.first, label: false,
+                        as: :select, input_html: {name: 'role_ids'},
+                        wrapper_html: { class: 'input-field col s12' } %>
           <% end %>
         </div>
+        <%= render 'avatar_upload' unless params[:remote].to_i == 1 %>
       </div>
+    <% end %>
   </div>
 </div>

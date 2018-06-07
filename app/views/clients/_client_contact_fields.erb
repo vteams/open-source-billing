@@ -1,31 +1,12 @@
-<div class="client_contact">
-  <div class="fields">
+<div class="client_contact row">
+  <div class="fields nested-fields">
+    <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :last_name, label: t('views.clients.last_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :home_phone, label: t('views.common.phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
+    <%= f.input :mobile_number, label: t('views.common.mobile'), wrapper_html: { class: 'input-field col s6 m4' } %>
     <div class="input-field col s6 m4">
-      <%= f.text_field :first_name %>
-      <%= f.label :first_name, t('views.clients.first_name') %>
-    </div>
-    <div class="input-field col s6 m4">
-      <%= f.text_field :last_name %>
-      <%= f.label :last_name, t('views.clients.last_name') %>
-    </div>
-
-    <div class="input-field col s6 m4">
-      <%= f.text_field :email %>
-      <%= f.label :email, t('views.common.email') %>
-    </div>
-    <div class="input-field col s6 m4">
-      <%= f.text_field :home_phone %>
-      <%= f.label :home_phone, t('views.common.phone') %>
-    </div>
-
-    <div class="input-field col s6 m4">
-      <%= f.text_field :mobile_number %>
-      <%= f.label :mobile_number,  t('views.common.mobile') %>
-    </div>
-
-    <div class="input-field col s6 m4">
-      <%= f.link_to_remove t("views.clients.remove_this_contact"), :class => 'btn moreBtn remove' %>
+      <%= link_to_remove_association t('views.clients.remove_this_contact'), f, class: 'btn moreBtn remove' %>
     </div>
   </div>
-
 </div>
