@@ -1,16 +1,15 @@
 <div id="payment_form_popup" class="modal editableModal enterPayment">
   <div class="modal-content">
-
     <%- model_class = Payment -%>
     <% invoice = payment.invoice %>
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue"><%= t('views.dashboard.enter_payment') %>: <span><%= invoice.client.organization_name %></span> </h5>
       <div class="modal-action-btn right">
         <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect"><i class="material-icons">done</i></a>
         <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
           <i class="material-icons close">close</i>
         </a>
       </div>
+      <h5 class="left text-blue"><%= t('views.dashboard.enter_payment') %>: <span><%= invoice.client.organization_name %></span> </h5>
     </div>
     <%= simple_form_for payment, html: { class: 'payment_form form-horizontal' } do |f| %>
         <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
@@ -25,7 +24,7 @@
         <%= f.submit '', class: 'send_submit submit hidden', name: 'save_as_draft' %>
         <div style="display:none" class="rem_payment_amount" value="<%= due_amount %>"></div>
 
-        <div class="info-section clearfix">
+        <div class="info-section enter-payment clearfix">
           <div class="row">
             <%= render 'invoice_info', invoice: invoice, due_amount: due_amount %>
             <div class="info-right-section right col m7">

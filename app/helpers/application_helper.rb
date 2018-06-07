@@ -97,12 +97,12 @@ module ApplicationHelper
   def generate_radio_buttons(status, list)
     radio_buttons = <<-HTML
               <div class="row">
-                <div class="col s3 custom"  style="margin-bottom: 20px;">
+                <div class="col s6 custom"  style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='account' checked=true name='association' id='account_association' />
                     <label for='account_association'>#{t('views.common.all_companies')}</label>
                 </div>
 
-                <div class="col s3" style="margin-bottom: 20px;">
+                <div class="col s6" style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                     <label for='company_association'>#{t('views.common.selected_companies_only')}</label>
                 </div>

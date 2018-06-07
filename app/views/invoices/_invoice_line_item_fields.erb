@@ -1,7 +1,6 @@
 <tr class="fields nested-fields">
   <td>
     <div class="elementsAction">
-      <%= f.input :_destroy, as: :hidden %>
       <%= link_to_remove_association raw('<i class="material-icons close">close</i>'), f, class: 'remove_item remove_nested_fields removeItem cross-position' %>
     </div>
   </td>
@@ -10,8 +9,8 @@
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
                 include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align' } %>
   </td>
-  <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name' } %>
-  <%= f.input :tax_1, as: :hidden, input_html: { class: 'tax1' } %>
+  <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name', value: f.object.item_name }, label: false, wrapper: false %>
+  <%= f.input :tax_1, as: :hidden, input_html: { class: 'tax1', value: f.object.tax_1 }, label: false, wrapper: false %>
   <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
   <td>
     <%= f.input :item_description, label: false, wrapper: false, input_html: { class: 'description center-align' } %>

@@ -1,76 +1,69 @@
 <div class="basic-setting">
-  <%= form_for(:settings, url: '/settings', remote: true ,novalidate: "", id: "sub_user_form") do %>
-      <div class="row">
-        <div class="col s12 m12 xl8">
-          <div class="card-white-panel clearfix">
-            <h5 class="text-blue">
-              <%= t('header.links.setting.basic_settings') %>
-              <%= submit_tag t('views.common.save'), class:  "btn_large submit_currency hidden" %>
-              <a href="#" onclick="$('.submit_currency').click();" class="icon-done" title="<%= t('views.common.save') %>">
-                <i class="material-icons">done</i>
-              </a>
-            </h5>
-            <div class="col s12 m12 xl4">
-              <div class="setting-btns">
-                <span><%= t('views.settings.multi_currency')  %></span>
-                <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
-                <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
-                <div id="radioBtn" class="btn-group mutli_currency_btn">
-                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
-                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active bold-white-txt' unless multi_currency}" %>"><%= t('views.common.no') %></a>
-                </div>
+  <div class="row">
+    <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
+      <div class="col s12 m12 xl8">
+        <div class="card-white-panel clearfix">
+          <h5 class="text-blue">
+            <%= t('header.links.setting.basic_settings') %>
+            <%= f.submit '', class:  'btn_large submit_currency hidden' %>
+            <a href="#" onclick="$('.submit_currency').click();" class="icon-done" title="<%= t('views.common.save') %>">
+              <i class="material-icons">done</i>
+            </a>
+          </h5>
+          <div class="col s12 m12 xl4">
+            <div class="setting-btns">
+              <span><%= t('views.settings.multi_currency')  %></span>
+              <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
+              <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
+              <div id="radioBtn" class="btn-group mutli_currency_btn">
+                <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
+                <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active bold-white-txt' unless multi_currency}" %>"><%= t('views.common.no') %></a>
               </div>
             </div>
-            <div class="col s12 m12 xl4">
-              <div class="setting-btns">
-                <span><%= t('views.settings.side_nav_open') %></span>
-
-                <% side_nav_opened = current_user.settings.side_nav_opened %>
-                <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
-
-                <div id="radioBtn" class="btn-group side-nav_btn">
-                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active bold-white-txt' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
-                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active bold-white-txt' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
-                </div>
-              </div>
-            </div>
-            <div class="input-field col s12 m6 xl6">
-              <%= select_tag "default_currency", options_for_select(currency_list, :selected => current_user.settings.default_currency) %>
-              <label><%= t('views.settings.default_currency') %></label>
-            </div>
-
-            <div class="input-field col s12 m6 xl6">
-              <%= select_tag "locale", options_for_select(get_available_languages, :selected => current_user.settings.language) %>
-              <label><%= t('views.settings.language')  %></label>
-            </div>
-
-            <div class="input-field col s12 m6 xl6">
-              <%= select_tag "date_format", options_for_select(DATE_FORMATS, :selected => current_user.settings.date_format) %>
-              <label><%= t('views.settings.date_format')  %></label>
-            </div>
-            <div class="input-field col s12 m6 xl6">
-              <%= select_tag "records_per_page", options_for_select(LINES_PER_PAGE, :selected => current_user.settings.records_per_page) %>
-              <label><%= t('views.settings.records_per_page')  %></label>
-            </div>
-
           </div>
+          <div class="col s12 m12 xl4">
+            <div class="setting-btns">
+              <span><%= t('views.settings.side_nav_open') %></span>
+
+              <% side_nav_opened = current_user.settings.side_nav_opened %>
+              <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
+
+              <div id="radioBtn" class="btn-group side-nav_btn">
+                <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active bold-white-txt' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
+                <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active bold-white-txt' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
+              </div>
+            </div>
+          </div>
+          <%= f.input :default_currency, collection: currency_list, selected: current_user.settings.default_currency,
+                      input_html: {name: 'default_currency', id: 'default_currency'}, label: t('views.settings.default_currency'),
+                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+          <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
+                      input_html: {name: 'locale', id: 'locale'}, label: t('views.settings.language'),
+                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+          <%= f.input :date_format, collection: DATE_FORMATS, selected: current_user.settings.date_format,
+                      input_html: {name: 'date_format', id: 'date_format'}, label: t('views.settings.date_format'),
+                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+          <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
+                      input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
+                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
         </div>
-        <div class="col s12 m12 xl4">
-          <div class="card-white-panel importData">
-            <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
-            <div class="importElement">
-              <div class="col s12 m12 xl6">
-                <%= link_to new_import_datum_path, remote: true do
-                  image_tag('freshbooks.png', class: 'img-responsive', width: 100)
-                end %>
-              </div>
-              <div class="col s12 m12 xl6">
-                <%= render partial: 'import_data/qb_connect' %>
-              </div>
+      </div>
+    <% end %>
+    <div class="col s12 m12 xl4">
+        <div class="card-white-panel importData">
+          <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
+          <div class="importElement">
+            <div class="col s12 m12 xl6">
+              <%= link_to new_import_datum_path, remote: true do
+                image_tag('freshbooks.png', class: 'img-responsive', width: 100)
+              end %>
+            </div>
+            <div class="col s12 m12 xl6">
+              <%= render 'import_data/qb_connect' %>
             </div>
           </div>
         </div>
       </div>
-  <% end %>
+  </div>
 </div>
 

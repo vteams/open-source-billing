@@ -10,8 +10,8 @@
 
             $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").material_select();
             if ($('.project-form-inline').length > 0){
-                var id = $('#staff_container').find('.fields').length;
-                var element = $('#staff_container').find('.fields:last');
+                var id = $('#staff_container').find('.nested-fields').length;
+                var element = $('#staff_container').find('.nested-fields:last');
                 $(element).find('.filled-in').attr('id', 'project_staff_' + id);
                 $(element).find('.staff-label').attr('for', 'project_staff_' + id);
                 Project.change_project_task();

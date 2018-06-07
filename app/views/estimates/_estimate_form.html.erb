@@ -1,35 +1,10 @@
 <% dis_type = '' %>
 <div class="new-invoice-holder editInvoice">
-  <%- model_class = Estimate -%>
-  <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
+  <%= simple_form_for estimate, html: { class: 'estimate-form form-horizontal nested-forms' } do |f| %>
       <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
-        <h5 class="left">
-          <% if f.object.persisted? %>
-              <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
-                                            :default => "Edit #{model_class.model_name.human}") %>:
-          <% else %>
-              <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
-                                            :default => "New  #{model_class.model_name.human}") %>:
-          <% end %>
-          <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-          <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id),
-                                                      selected: selected_client),
-                       {prompt: t('views.invoices.select_client'), include_blank: false}  %>
-        </h5>
-        <div class="new-invoice-action-btn right">
-          <a href="#" onclick="$('.simple_submit').click();" title="<%= t('views.common.send') %>">
-            <i class="material-icons">send</i>
-          </a>
-          <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>">
-            <i class="material-icons" >done</i>
-          </a>
-          <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), estimates_path %>
-          <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-          <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
-          <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
-
-        </div>
+        <%= render 'form_heading', f: f, estimate: estimate %>
+        <%= render 'form_action_links', f: f %>
       </div>
       <div class="scroll-area">
         <div class="info-section clearfix">
@@ -40,27 +15,21 @@
                 <span>
                   <small id="estimate_date">
                     <% estimate_date = f.object.estimate_date.empty? ? Date.today.strftime(get_date_format) : f.object.estimate_date %>
-                    <span><%= f.text_field :estimate_date, value: estimate_date, class: 'date-picker date-field-style' %></span>
+                    <%= f.input :estimate_date, label: false, wrapper_tag: :span, as: :string,
+                                input_html: { class: 'date-picker date-field-style', value: estimate_date } %>
                     <span><i class="material-icons" id="estimate_date_picker">date_range</i></span>
                   </small>
                 </span>
             </div>
-
             <div class="paymentInfo">
               <strong><strong class="estimate_total_strong"></strong>
-                <small>
-                  <% selected_currency = if params[:action].eql?('new')
-                                           Currency.default_currency.id
-                                         else
-                                           (@client.present? ? @client.currency_id : f.object.currency_id)
-                                         end
-                  %>
-                  <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
-                </small>
+                <% selected_currency = estimate_selected_currency(f.object) %>
+                  <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency,
+                              include_blank: false, input_html: { class: 'inline-select large-select', disabled: currency_is_off? },
+                              wrapper_tag: :small, label: false %>
               </strong>
             </div>
           </div>
-
         </div>
         <div class="new-invoice-table-holder main-invoice">
           <table class="bordered responsive-table estimate_grid_fields" id="estimate_grid_fields">
@@ -76,39 +45,40 @@
             </tr>
             </thead>
             <tbody id="estimate_line_items_tbl">
-            <%= f.fields_for :estimate_line_items, :wrapper => false %>
+              <%= f.simple_fields_for :estimate_line_items do |estimate_line_item| %>
+                  <%= render 'estimate_line_item_fields', f: estimate_line_item %>
+              <% end %>
             </tbody>
           </table>
         </div>
         <div class="new-invoice-footer">
-          <%= f.link_to_add t('views.invoices.add_line_item'), :estimate_line_items,
-                            class: 'invoice-add-items-button addItemRow', id: 'add_line_item',
-                            data: { target: '#estimate_line_items_tbl' } %>
+          <%= link_to_add_association t('views.invoices.add_line_item'), f, :estimate_line_items,
+                                      class: 'invoice-add-items-button addItemRow', id: 'add_line_item',
+                                      data: { association_insertion_node: '#estimate_line_items_tbl',
+                                              association_insertion_method: :append } %>
           <div class="right-section right">
             <div class="invoice-total-left">
               <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
-              <div class="new-invoice-footer-row invicetax">
-                <span><%= t('views.common.discount') %></span>
-                <%= f.select :discount_type, options_for_select(@discount_types, selected: f.object.discount_type), {},
-                             {class: 'discount_select inline-select small-select', id: 'discount_type'} %>
-              </div>
+              <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('views.common.discount'),
+                          input_html: { class: 'discount_select inline-select small-select', id: 'discount_type' },
+                          wrapper_html: { class: 'new-invoice-footer-row invicetax' } %>
               <div class="new-invoice-footer-row taxes_total"></div>
               <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
             </div>
             <div class="invoice-total-right">
-              <%= f.hidden_field :sub_total %>
+              <%= f.input :sub_total, as: :hidden, label: false, wrapper: false %>
               <strong class="invoice-total-title">
                 <div style="display: inline;" id="subtotal_currency_unit"><%= estimate.currency.unit rescue 'USD' %></div>
                 <span><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></span>
               </strong>
               <div class="new-invoice-footer-row invicetax">
                 <span id="discount_amount_currency_unit"><%= estimate.currency.unit rescue 'USD' %></span>
-                <%= f.hidden_field :discount_amount %>
-                <%= f.number_field :discount_percentage, class: "input-inoive-number invoice_discount line_item_qtip right-align", placeholder:  "00.00", min: 0 %>
-                <%= label_tag '', '', :id => 'estimate_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                <%= f.input :discount_amount, as: :hidden, label: false, wrapper: false %>
+                <%= f.input :discount_percentage, label: '', label_html: { id: 'estimate_discount_amount_lbl', style: 'font-weight:normal; display:none;' },
+                            input_html: { class: 'input-inoive-number invoice_discount line_item_qtip right-align', placeholder:  '00.00', min: 0 }, wrapper: false %>
               </div>
               <div class="new-invoice-footer-row taxes_total values"></div>
-              <%= f.hidden_field :estimate_total %>
+              <%= f.input :estimate_total, as: :hidden, label: false, wrapper: false %>
               <strong class="invoice-total-title bottom">
                 <div style="display: inline" id="total_currency_unit"><%= estimate.currency.unit rescue 'USD' %> </div>
                 <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span>
@@ -119,9 +89,9 @@
         </div>
         <div class="invoice-add-notes">
           <a href="#"><i class="material-icons">chat</i> </a>
-          <div class="invoice-add-notes-textare">
-            <%= f.text_area :notes, maxlength: 400, placeholder: t('views.common.add_notes') %>
-          </div>
+          <%= f.input :notes, label: false, as: :text,
+                      input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
+                      wrapper_html: { class: 'invoice-add-notes-textare'} %>
         </div>
       </div>
   <% end %>

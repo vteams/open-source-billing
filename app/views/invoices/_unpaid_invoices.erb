@@ -7,8 +7,6 @@
     <div id="unpaid_invoices" class="modal editableModal editPayment newModel large_modal unpaid_invoice">
       <div class="modal-content">
         <div class="modal-header clearfix text-content">
-          <h2 class="text-blue"><%= t('views.payments.which_invoices_have_you_received_payment_for') %>?</h2>
-            <%= t('views.payments.select_one_or_more_invoices_from_the_list_below_to_apply_payment') %>
           <div class="modal-action-btn right">
             <% unless @invoices.blank? %>
                 <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
@@ -20,6 +18,8 @@
               <i class="material-icons" >close</i>
             </a>
           </div>
+          <h2 class="text-blue"><%= t('views.payments.which_invoices_have_you_received_payment_for') %>?</h2>
+            <%= t('views.payments.select_one_or_more_invoices_from_the_list_below_to_apply_payment') %>
         </div>
       </div>
 

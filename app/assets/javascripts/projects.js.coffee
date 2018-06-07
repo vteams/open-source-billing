@@ -150,8 +150,8 @@ class @Project
   @removeStaff = ->
     $("a.staff_remove_btn").on 'click', ->
       $( ".checkbox-item.inline_team_member > input[type='checkbox']:checked" ).each ->
-        $(this).parents('.fields').find('input.destroy_staff').val true
-        $(this).parents('.fields').addClass('hidden')
+        $(this).parents('.nested-fields').find('input.destroy_staff').val true
+        $(this).parents('.nested-fields').addClass('hidden')
 
   applyDatePicker = ->
     $("#start_date_picker").pickadate

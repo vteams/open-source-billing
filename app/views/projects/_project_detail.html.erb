@@ -1,4 +1,4 @@
-<%= nested_form_for(@project, html:{class: 'project-form-inline', novalidate: '', id: 'horizontal-project-form'}) do |f| %>
+<%= simple_form_for @project, html: { class: 'project-form-inline nested-forms', id: 'horizontal-project-form' } do |f| %>
     <div class="content-detail">
       <div class="card-white-panel clearfix">
         <div class="left-content col s12 m12 l12 xl9">
@@ -8,65 +8,29 @@
           </div>
           <div class="invoice-details">
             <div class="row">
-              <div class="input-field col s12 label-position">
-                <%= f.text_field :project_name, :required => "", disabled: !can_edit %>
-                <label for="project_project_name" class="placeholder-position"><%= t('views.common.name') %></label>
-              </div>
-              <div class="input-field col s12 label-position">
-                <%= f.text_field :description, :required => "",id:'tax_name', disabled: !can_edit %>
-                <label for="project_description" class="placeholder-position"><%= t('views.common.description') %></label>
-              </div>
-              <div class="input-field col s6">
-                <%= f.select :client_id, options_for_select(load_clients_for_project, selected: f.object.client_id),  {include_blank: false, prompt: t('views.projects.select_a_client')},
-                             {class: 'clientselect', disabled: !can_edit} %>
-              </div>
-              <div class="input-field col s6">
-                <%= f.select :manager_id, options_for_select(load_managers_for_project(action_name, f.object.company_id, f.object.manager),
-                                                             selected: f.object.manager_id),
-                             {include_blank: false, prompt: t('views.projects.select_a_manager')},
-                             {class: 'managerselect', disabled: !can_edit} %>
-              </div>
-              <% unless @project.new_record? %>
-                  <div class="input-field col s12 m4 l4 xl4">
-                    <label style="display: contents;"><%= t('views.invoices.recurring.start_date') %></label>
-                    <input type="text" value="<%= @project.created_at.strftime(get_date_format)%>" placeholder="" disabled class="not-editable">
-                  </div>
-              <% end %>
-              <div class="input-field col s12 m4 l4 xl4">
-                <label class="active" style="display: contents;"><%= t('views.projects.estimated_time') %> (hrs)</label>
-                <%= f.number_field :total_hours, disabled: true %>
-              </div>
-              <% unless @project.new_record? %>
-                  <div class="input-field col s12 m4 l4 xl4">
-                    <label class="active not-editable" style="display: contents;"><%= t('views.projects.time_logged') %> (hrs)</label>
-                    <input type="text" value="<%= @project.log_hours %>" disabled/>
-                  </div>
-              <% end %>
+              <%= f.input :project_name, label: t('views.common.name'), label_html: { class: 'placeholder-position' },
+                          input_html: { disabled: !can_edit }, wrapper_html: { class: 'input-field col s12 label-position' } %>
+              <%= f.input :description, label: t('views.common.description'), label_html: { class: 'placeholder-position' },
+                          input_html: { disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s12 label-position' }, as: :string %>
+              <%= f.input :client_id, collection: load_clients_for_project, selected: f.object.client_id, label: false, prompt: t('views.projects.select_a_client'),
+                          input_html: { class: 'clientselect', disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s6' } %>
+              <%= f.input :manager_id, collection: load_managers_for_project(action_name, f.object.company_id, f.object.manager),
+                          selected: f.object.manager_id, label: false, prompt: t('views.projects.select_a_manager'),
+                          input_html: { class: 'managerselect', disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s6' } %>
+              <%= f.input :created_at, label: t('views.invoices.recurring.start_date'), label_html: { style: 'display: contents;' },
+                          input_html: {value: @project.created_at.strftime(get_date_format), disabled: 'disabled', class: 'not-editable' },
+                          wrapper_html: { class: 'input-field col s12 m4 l4 xl4' }, as: :string unless @project.new_record? %>
+              <%= f.input :total_hours, label: "#{t('views.projects.estimated_time')} (hrs)", label_html: { class: 'active', style: 'display: contents;' },
+                          input_html: { disabled: true }, wrapper_html: { class: 'input-field col s12 m4 l4 xl4' } %>
+              <%= f.input :created_at, label: "#{t('views.projects.time_logged')} (hrs)",
+                          label_html: { style: 'display: contents;', class: 'active not-editable' },
+                          input_html: {value: @project.log_hours, disabled: 'disabled' },
+                          wrapper_html: { class: 'input-field col s12 m4 l4 xl4' }, as: :string unless @project.new_record? %>
             </div>
           </div>
         </div>
-        <div class="right-content col s12 m12 l12 xl3">
-          <div class="user-list staff-list project_grid_fields" id="staff">
-            <div class="status-info active">
-              <h5><%= t('staff') %></h5>
-              <div id="staff_container">
-                <% count = 0 %>
-                <%= f.fields_for :team_members do |f| %>
-                    <%= render partial: 'staff_fields', locals: {f: f, count: count} %>
-                    <% count += 1 %>
-                <% end %>
-                <div class="small-font">
-                  <%= t('views.staffs.empty_listing') if count < 1 %>
-                </div>
-              </div>
-            </div>
-            <div class="list-buttons">
-              <%= f.link_to_add t('views.projects.add_staff'), :team_members, class: "addbtn #{'hidden' if params[:action].eql?('show')}", id: 'add_member', data: { target: '#staff_container' } %>
-              <a href="#" id="remove-staff-member" class="staff_remove_btn removebtn <%= 'hidden' if params[:action].eql?('show')%>"><%= t('helpers.links.remove') %></a>
-            </div>
-          </div>
-        </div>
+        <%= render 'form_staff_section', f: f %>
       </div>
     </div>
-    <%= f.submit "submit", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
+    <%= f.submit '', class: 'send_submit submit hidden', name: 'save_as_draft' %>
 <% end %>

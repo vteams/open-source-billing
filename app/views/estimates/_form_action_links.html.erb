@@ -1,0 +1,11 @@
+<div class="new-invoice-action-btn right">
+  <a href="#" onclick="$('.simple_submit').click();" title="<%= t('views.common.send') %>">
+    <i class="material-icons">send</i>
+  </a>
+  <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>">
+    <i class="material-icons" >done</i>
+  </a>
+  <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), estimates_path %>
+  <%= f.submit '', class: 'simple_submit submit hidden' %>
+  <%= f.submit '', class: 'send_submit submit hidden', name: 'save_as_draft' %>
+</div>

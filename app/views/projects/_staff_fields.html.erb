@@ -1,28 +1,28 @@
-<div class="list-item">
+<div class="list-item nested-fields">
   <div class="checkbox-item inline_team_member">
-    <% id = f.object.id ? f.object.id : count %>
+    <% count = count rescue 0 %>
+    <% id = f.object.id ? f.object.id : count.to_i %>
     <input type="checkbox" class="filled-in" id="project_staff_<%= id %>" />
     <label class="staff-label" for="project_staff_<%= id %>"></label>
     <div class="invoice-name">
       <%= image_tag('img-user.png', alt: 'avatar', class: 'responsive-img circle') %>
     </div>
-    <%= f.hidden_field :_destroy, class: 'destroy_staff'%>
+    <%= f.input :_destroy, as: :hidden, label: false, wrapper: false, input_html: { class: 'destroy_staff' } %>
   </div>
   <div class="invoice-details editContent">
-    <div class="input-field">
-      <%= f.select :staff_id, options_for_select(load_staffs_for_project(
-                                                     action_name, @project.company_id, f.object),
-                                                 selected: f.object.staff_id
-      ), {prompt: t('views.projects.select_a_member')}, {class: 'members_list', disabled: true} %>
-    </div>
-    <div class="input-field">
-      <%= f.email_field :email, disabled: true, class: 'email' %>
-    </div>
+    <%= f.input :staff_id, collection: load_staffs_for_project(action_name, @project.company_id, f.object),
+                selected: f.object.staff_id, prompt: t('views.projects.select_a_member'), label: false,
+                input_html: { class: 'members_list', disabled: true }, wrapper_html: { class: 'input-field' } %>
+    <%= f.input :email, label: false, input_html: { disabled: true, class: 'email' }, wrapper_html: { class: 'input-field' } %>
     <div class="input-field amount">
-      <strong><%= default_currency_unit %><em class="staff_rate"><%= f.number_field :rate, disabled: true, class: 'rate' %></em></strong>
+      <strong><%= default_currency_unit %>
+        <em class="staff_rate">
+          <%= f.input :rate, input_html: { disabled: true, class: 'rate' }, label: false, wrapper: false %>
+        </em>
+      </strong>
       <span> <%= default_currency_code %> / <small class="text-blue">hr</small></span>
 
     </div>
-    <%= f.hidden_field :name, class: 'name' %>
+    <%= f.input :name, as: :hidden, label: false, wrapper: false, input_html: { class: 'name' } %>
   </div>
 </div>

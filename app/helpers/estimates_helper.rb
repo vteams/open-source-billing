@@ -216,4 +216,11 @@ module EstimatesHelper
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
+  def estimate_selected_currency(estimate)
+    if params[:action].eql?('new')
+      Currency.default_currency.id
+    else
+      (@client.present? ? @client.currency_id : estimate.currency_id)
+    end
+  end
 end

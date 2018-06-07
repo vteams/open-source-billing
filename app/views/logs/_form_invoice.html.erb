@@ -5,11 +5,6 @@
         <% @parent_f = f %>
 
         <div class="modal-header clearfix text-content">
-          <h5 class="left text-blue">
-            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                              :default => "Project  #{model_class.model_name.human}") %>:
-            <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, class: 'inline-select '} %>
-          </h5>
           <div class="modal-action-btn right">
             <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
             <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
@@ -17,6 +12,11 @@
             <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
             <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
           </div>
+          <h5 class="left text-blue">
+            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                              :default => "Project  #{model_class.model_name.human}") %>:
+            <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, class: 'inline-select '} %>
+          </h5>
         </div>
         <div class="info-section clearfix">
             <div class="info-left-section left">

@@ -1434,6 +1434,8 @@ h6 {
 .card-white-panel .checkbox-item input:checked ~ .invoice-name {
   opacity: 0; }
 .card-white-panel:hover .action-btn-group {
+  background-color: #fff;
+  padding-left: 5px;
   margin-right: 0;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -1700,7 +1702,7 @@ h6 {
     margin-top: 25px;
     margin-bottom: 25px; } }
 .modal .info-section .info-left-section .editPayementInfo {
-  margin-top: 56px; }
+  margin-top: 0; }
 .modal .info-section .info-left-section .date-invoice {
   margin-bottom: 0; }
 .modal .info-section .info-right-section {
@@ -1709,7 +1711,7 @@ h6 {
 .modal .info-section .info-right-section img {
   display: block; }
 .modal .modal-body {
-  padding: 20px 40px 20px !important; }
+  padding: 20px 20px 20px !important; }
 .modal .modal-body table thead {
   border-bottom: none; }
 .modal .modal-body table thead tr {
@@ -1744,7 +1746,7 @@ h6 {
 .modal .modal-footer .left-section p {
   font-size: 9px;
   position: absolute;
-  bottom: 20px; }
+  bottom: 0px; }
 .modal .modal-footer .left-section img {
   vertical-align: middle; }
 .modal .modal-footer .right-section {
@@ -2127,7 +2129,7 @@ h6 {
   box-shadow: none; }
 
 .paymentModal .modal-footer, .editableModal.editPaymentModal .modal-footer {
-  margin-top: 42px;
+  margin-top: 0;
   padding-bottom: 30px; }
 
 /*---Expense Modal Styles---*/
@@ -2269,8 +2271,8 @@ h6 {
     margin-top: 44px; } }
 .clientsModal .panel-table {
   display: inline-block;
-  margin-left: -2px;
-  width: 50%;
+  margin: 6px 6px;
+  width: 48%;
   padding-bottom: 40px; }
 .clientsModal .panel-table h5 {
   background-color: #ececec;
@@ -3249,6 +3251,8 @@ h6 {
   margin-bottom: 0;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   border-bottom-color: transparent;
+  border-bottom: 1px solid #dadada;
+  padding-bottom: 10px 0;
 }
 .content-detail .right-content .input-field input + label {
   color: #aeaeae; }
@@ -3270,12 +3274,14 @@ h6 {
   line-height: 14px; }
 
 .staff-list .list-item {
-  margin-bottom: 10px; }
+  margin-bottom: 20px; }
 .staff-list .list-item .invoice-name {
   cursor: default; }
 .staff-list .list-item .invoice-details .select-wrapper .select-dropdown {
   color: #454545;
-  font-weight: normal; }
+  font-weight: normal;
+  border-bottom: 1px solid #dadada;
+  padding-bottom: 10px;}
 .staff-list .list-item .invoice-details strong {
   display: inline-block;
   font-size: 14px;
@@ -4783,6 +4789,7 @@ li:nth-child(7n) .random-colors {
 .form-invoice .scroll-area{
 padding-bottom: 0px;
 }
+<<<<<<< Updated upstream
 @media (max-width: 992px){
   .new-invoice-holder .new-invoice-table-holder.main-invoice{
     width: 100%;
@@ -4793,7 +4800,42 @@ padding-bottom: 0px;
     display: table;
   }
 }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table{
+.new-invoice-holder .new-invoice-table-holder.main-invoice table {
   width: 100%;
   display: table;
 }
+
+label abbr {
+  color: red;
+  border-bottom: none !important;
+  text-decoration: none;
+}
+textarea.task_description.materialize-textarea {
+  padding: 0 !important;
+  margin-bottom: 0;
+}
+
+.task_form textarea.materialize-textarea:focus:not([readonly]){
+  border-bottom: 1px solid #dadada;
+  box-shadow: 0 1px 0 0 #dadada;
+}
+input[type=text]{
+  height: 2.6rem;
+}
+.enter-payment{
+  margin: 0 20px;
+}
+form .select-wrapper .select-dropdown{
+  height: 2.6rem;
+}
+@media (max-width: 992px){
+  .clientsModal .panel-table{
+    display: inline-block;
+    margin: 0;
+    width: 100%;
+    padding-bottom: 40px;
+    overflow-x: scroll;
+  }
+}
+=======
+>>>>>>> Stashed changes
