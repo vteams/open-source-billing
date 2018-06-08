@@ -3,9 +3,11 @@
   <%= simple_form_for invoice, html: { class: 'invoice-form form-invoice form-horizontal nested-forms' } do |f| %>
       <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
-        <%= render 'form_heading', f: f, invoice: invoice %>
         <%= render 'form_action_links', f: f %>
+        <%= render 'form_heading', f: f, invoice: invoice %>
       </div>
+
+
       <div class="scroll-area">
         <div class="info-section clearfix">
           <div class="info-left-section">
@@ -133,7 +135,7 @@
           <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
                       wrapper_html: { class: 'invoice-add-notes-textare'} %>
         </div>
-      </div>
+    </div>
   <% end %>
 </div>
 

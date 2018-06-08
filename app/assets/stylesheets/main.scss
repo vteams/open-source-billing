@@ -58,7 +58,10 @@ h6 {
   margin-bottom: 0;
   margin-left: -10px;
   margin-right: -10px; }
-
+.modal-body .row{
+  margin-left: auto;
+  margin-right: auto;
+}
 .clearfix:before, .clearfix:after {
   clear: both;
   content: "";
@@ -221,7 +224,7 @@ h6 {
   position: absolute;
   top: 0;
   width: 100%;
-  padding: 13px 10px;
+  padding: 16px 10px;
   background: #f4f4f4;
   @inlude box-shadow;
   left: 0;
@@ -313,9 +316,9 @@ h6 {
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s; }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 600px) {
   #header .header-right.search-show .search-holder, #header .header-right.chekbox-show .search-holder {
-    padding: 15px 10px; } }
+    padding: 26px 10px; } }
 @media only screen and (max-width: 480px) {
   #header .header-right.search-show .search-holder, #header .header-right.chekbox-show .search-holder {
     padding: 26px 10px; } }
@@ -645,7 +648,7 @@ h6 {
 #side-nav .side-menu {
   margin: 0;
   padding: 0;
-  overflow-y: auto;
+
   max-height: calc(100vh - 200px); }
 #side-nav .side-menu li {
   list-style: none;
@@ -1049,7 +1052,6 @@ h6 {
   z-index: 998; }
 
 #main-content {
-  overflow: hidden;
   padding-left: 107px;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -1274,7 +1276,6 @@ h6 {
   padding: 10px 15px; }
 
 .invoice-box {
-  overflow-y: auto;
   max-height: calc(100vh - 175px);
   height: 100%; }
 .invoice-box p .activity-date {
@@ -1628,7 +1629,7 @@ h6 {
 .modal .modal-header .modal-action-btn a:hover {
   color: #09b8e2; }
 .modal .modal-header.text-content {
-  padding: 18px 44px; }
+  padding: 18px 27px; }
 .modal .modal-header.text-content .modal-action-btn a {
   line-height: normal; }
 .modal .modal-header.text-content .modal-action-btn a i {
@@ -1637,7 +1638,7 @@ h6 {
   font-size: 16px; }
 .modal .info-section {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  padding: 20px 44px;
+  padding: 20px 30px;
   border-bottom: 1px solid #dfdede; }
 .modal .info-section .info-left-section h6 {
   font-size: 16px;
@@ -4041,7 +4042,7 @@ html {
 .new-invoice-holder .new-invoice-table-holder.main-invoice table td {
   border-bottom: 1px solid #d0d0d0;
   font-size: 13px;
-  padding: 5px 13px; }
+  padding: 0 13px; }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table td:first-child {
   width: 33px;
   background-color: transparent;
@@ -4350,7 +4351,6 @@ html {
 
 /*# sourceMappingURL=main.css.map */
 .scroll-area {
-  overflow: hidden;
   max-height: 600px;
   padding-bottom: 60px; }
 .scroll-area .mCSB_scrollTools .mCSB_draggerRail {
@@ -4480,7 +4480,7 @@ i.material-icons.close:hover {
     min-width: 90px;
   }
   .caret{
-    bottom: 2px;
+    bottom: 12px;
   }
 }
 
@@ -4719,12 +4719,7 @@ li:nth-child(7n) .random-colors {
     width: 93% !important;
     margin-left: 9px !important;
   }
-  .select2-drop-active{
-    left: 65px !important;
-  }
-  .select2-drop{
-    width: 64% !important;
-  }
+
   .select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-ajax-error, .select2-results .select2-selection-limit{
     background: #fff !important;
   }
@@ -4789,7 +4784,6 @@ li:nth-child(7n) .random-colors {
 .form-invoice .scroll-area{
 padding-bottom: 0px;
 }
-<<<<<<< Updated upstream
 @media (max-width: 992px){
   .new-invoice-holder .new-invoice-table-holder.main-invoice{
     width: 100%;
@@ -4800,10 +4794,7 @@ padding-bottom: 0px;
     display: table;
   }
 }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table {
-  width: 100%;
-  display: table;
-}
+
 
 label abbr {
   color: red;
@@ -4834,8 +4825,71 @@ form .select-wrapper .select-dropdown{
     margin: 0;
     width: 100%;
     padding-bottom: 40px;
-    overflow-x: scroll;
   }
 }
-=======
->>>>>>> Stashed changes
+
+
+.card .card-content{
+  padding: 12px 24px ;
+
+}
+#card-alert button{
+  top: 5px !important;
+}
+@media (max-width: 767px){
+  .overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9;
+  }
+  .disable-scroll{
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 600px){
+  #header .header-right.search-show .help-search{
+    z-index: 0;
+  }
+
+}
+@media (min-width: 768px) and (max-width: 992px){
+  #header .header-right.search-show .form-control, #header .header-right.chekbox-show .form-control{
+    margin-left: 0;
+  }
+  .search .select2-container{
+    width: 97% !important;
+  }
+  #header .header-right.search-show .help-search, #header .header-right.chekbox-show .help-search{
+    z-index: 1;
+  }
+  #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search{
+    left: 154px;
+  }
+  #header .header-right .search-holder .btn-back i{
+    padding-right: 12px;
+  }
+  #header .header-right.search-show .btn-back, #header .header-right.chekbox-show .btn-back{
+    margin-right: 11px;
+  }
+}
+@media (min-width: 993px) and (max-width: 1045px) {
+  #header .header-center .hdr-select-holder .select-wrapper.currency{
+width: 44px;
+  }
+}
+@media (min-width: 993px){
+  #header .header-right.search-show .form-control, #header .header-right.chekbox-show .form-control{
+    margin-left: 10px;
+  }
+
+  #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search{
+    left: 165px;
+  }
+  .search .select2-container{
+    width: 90% !important;
+  }
+}

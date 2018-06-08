@@ -2,6 +2,14 @@
   <div class="modal-content">
     <%- model_class = Company -%>
     <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
       <h5 class="left">
         <% if @company.persisted? %>
             <%= t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
@@ -11,14 +19,6 @@
                                           :default => "New  #{model_class.model_name.human}") %>
         <% end %>
       </h5>
-      <div class="modal-action-btn right">
-        <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
-          <i class="material-icons" >done</i>
-        </a>
-        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
-          <i class="material-icons close">close</i>
-        </a>
-      </div>
     </div>
     <%= simple_form_for @company, html: { id: 'companyForm', class: 'item_form', multipart: true } do |f| %>
         <%= hidden_field_tag :select_new, params[:select_new] %>

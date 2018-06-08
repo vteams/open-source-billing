@@ -34,6 +34,8 @@
 
         <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}"%> ">
           <div class="container-fluid">
+            <div id='overly-container'>
+              </div>
             <!--- side vertical menu --->
             <%= render 'layouts/side_nav'%>
             <%= render 'layouts/flash_messages'%>
@@ -48,4 +50,3 @@
         </div>
     </body>
 </html>
-

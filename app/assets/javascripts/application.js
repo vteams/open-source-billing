@@ -222,6 +222,16 @@ $(document).ready(function(){
     $('.date-picker').pickadate({
         format: DateFormats.format()
     });
+
+    $( ".btn-menu" ).click(function() {
+        if($('#overly-container').hasClass('overlay') == false) {
+            $('#overly-container').addClass('overlay');
+            $('body').addClass('disable-scroll');
+        }else if($('#overly-container').hasClass('overlay') == true) {
+            $('#overly-container').removeClass('overlay');
+            $('body').removeClass('disable-scroll');
+        }
+    });
 });
 
 function initCustomConfirmPopUp() {

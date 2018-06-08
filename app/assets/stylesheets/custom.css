@@ -128,12 +128,14 @@ input#expense_amount{
 
 #flash_message {
     overflow: hidden;
-    padding-left: 107px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
     -moz-transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -ms-transition: all 0.5s;
     transition: all 0.5s;
-    margin-right: 330px; }
+}
 #flash_message.side-show {
     position: relative;
     padding-left: 281px;
@@ -551,7 +553,7 @@ form .select-wrapper .dropdown-content {
 }
 
 form .select-wrapper .select-dropdown {
-    height: auto;
+    height: 2.6rem;
 }
 
 .text-red{
@@ -705,4 +707,15 @@ form .select-wrapper .select-dropdown {
     display: block;
     margin-left: 18px;
     font-size: 15px;
+}
+
+@media (min-width: 767px){
+    #flash_message{
+        width: 521px;
+    }
+}
+@media (max-width: 767px){
+    #flash_message{
+        width: 100%;
+    }
 }
