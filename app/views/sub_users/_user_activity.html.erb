@@ -1,5 +1,7 @@
-<span class="btn-activity"><%= t('views.common.activities') %></span>
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+    <span class="btn-activity"><i class="material-icons">
+      keyboard_arrow_left
+    </i></span>
   <div class="activity-scroll-holder mCustomScrollbar">
     <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
       <div class="status-info active">
