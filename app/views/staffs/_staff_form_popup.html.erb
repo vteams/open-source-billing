@@ -23,8 +23,8 @@
         <div class="row">
           <%= f.submit class: 'btn_large submit hidden' %>
           <%= f.input :name, label: t('views.staffs.name'), wrapper_html: { class: 'input-field col s6 required' } %>
-          <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 required' } %>
-          <%= f.input :rate, label: t('views.tasks.rate'), wrapper_html: { class: 'input-field col s4 m4 required' },
+          <%= f.input :email, as: :string, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 required'} %>
+          <%= f.input :rate, label: t('views.tasks.rate'), wrapper_html: { class: 'input-field col s6 required' },
                       input_html: { min: 0, step: 'any', class: 'fix-width' } %>
           <%= hidden_field_tag :project_id, @project_id %>
         </div>
