@@ -106,31 +106,29 @@ class @Project
     $('select').material_select();
 
   @load_functions = ->
+    $('#project_project_name,#project_total_hours').keypress ->
+      hidePopover($(this))
+    $('#project_client_id,#project_manager_id').change ->
+      hidePopover($(this).parents('.select-wrapper'))
+
     jQuery('form#horizontal-project-form').submit ->
       flag = true
       if $('#project_project_name').val() is ""
         applyPopover(jQuery("#project_project_name"),"bottomMiddle","topLeft", I18n.t('views.projects.name_required'))
         flag = false
-      else if $("#project_client_id").val() is "" or $("#project_client_id").val() is null
-        hidePopover(jQuery("#project_project_name"))
+      else if $("#project_client_id").val() is "" or $("#project_client_id").val() == undefined
         applyPopover($("#project_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.projects.select_a_client'))
         flag = false
-      else if $("#project_manager_id").val() is "" or $("#project_manager_id").val() is null
-        hidePopover(jQuery("#project_client_id").parents('.select-wrapper'))
+      else if $("#project_manager_id").val() is "" or $("#project_manager_id").val() == undefined
         applyPopover($("#project_manager_id").parents('.select-wrapper'),"bottomMiddle","topLeft", I18n.t('views.projects.select_a_manager'))
         flag = false
       else if $("#project_total_hours").val() is ""
-        hidePopover($("#project_manager_id").parents('.select-wrapper'))
         applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
         flag = false
       else if (parseFloat($("#project_total_hours").val()) < 0)
-        hidePopover($("#project_manager_id").parents('.select-wrapper'))
         jQuery("#project_total_hours")
         applyPopover(jQuery("#project_total_hours"),"bottomLeft","topLeft", I18n.t('views.projects.estimate_should_be_greater_than_zero'))
         flag = false
-      else
-        hidePopover(jQuery("#project_total_hours"))
-        flag = true
       flag
 
     $('#project_grid_fields tbody').sortable

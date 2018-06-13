@@ -11,12 +11,12 @@
               <%= f.input :project_name, label: t('views.common.name'), label_html: { class: 'placeholder-position' },
                           input_html: { disabled: !can_edit }, wrapper_html: { class: 'input-field col s12 label-position' } %>
               <%= f.input :description, label: t('views.common.description'), label_html: { class: 'placeholder-position' },
-                          input_html: { disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s12 label-position' }, as: :string %>
+                          input_html: { disabled: !can_edit }, wrapper_html: { class: 'input-field col s12 label-position' }, as: :string %>
               <%= f.input :client_id, collection: load_clients_for_project, selected: f.object.client_id, label: false, prompt: t('views.projects.select_a_client'),
-                          input_html: { class: 'clientselect', disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s6' } %>
+                          input_html: { class: 'clientselect', disabled: !can_edit }, wrapper_html: { class: 'input-field col s6' } %>
               <%= f.input :manager_id, collection: load_managers_for_project(action_name, f.object.company_id, f.object.manager),
                           selected: f.object.manager_id, label: false, prompt: t('views.projects.select_a_manager'),
-                          input_html: { class: 'managerselect', disabled: !can_edit, id:'tax_name' }, wrapper_html: { class: 'input-field col s6' } %>
+                          input_html: { class: 'managerselect', disabled: !can_edit }, wrapper_html: { class: 'input-field col s6' } %>
               <%= f.input :created_at, label: t('views.invoices.recurring.start_date'), label_html: { style: 'display: contents;' },
                           input_html: {value: @project.created_at.strftime(get_date_format), disabled: 'disabled', class: 'not-editable' },
                           wrapper_html: { class: 'input-field col s12 m4 l4 xl4' }, as: :string unless @project.new_record? %>
