@@ -25,6 +25,7 @@
   $('#user_add_btn,#user_cancel_btn').on "click", ->
     $('#user_reset_form').click()
     $('.user-side-form,#user_btn_container').toggleClass('hidden')
+    hidePopover($("#side_form_user_name,#side_form_user_email,#side_form_password,#side_form_password_confirmation"))
 
   $('#user_save_btn').on "click", (event)->
     event.preventDefault()
@@ -80,6 +81,7 @@
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
     $('.company-side-form,#company_btn_container').toggleClass('hidden')
+    hidePopover($("#company_name,#contact_name,#companies_email"))
 
   $('#company_save_btn').on "click", (event)->
     event.preventDefault()
