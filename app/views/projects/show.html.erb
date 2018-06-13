@@ -13,7 +13,11 @@
             <a href="#" class="edit-detail"><i class="material-icons" title="<%= t('helpers.links.edit') %>">create</i></a>
             <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"), @project, method: :delete,
+                        data:{confirm: t('helpers.messages.confirm'),
+                              success: t('views.projects.destroyed_msg'),
+                              redirect: projects_path},
+                        title: t('helpers.links.delete') %>
           </div>
         </div>
       </div>
