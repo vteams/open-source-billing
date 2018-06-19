@@ -4201,6 +4201,12 @@ html {
   width: 400px;
   padding: 0 38px;
   box-sizing: border-box; }
+@media (max-width: 400px) {
+  .new-invoice-footer .right-section {
+    width: 100%;
+    padding: 0 8px;
+  }
+}
 .new-invoice-footer .right-section .invoice-total-title {
   display: block;
   font-size: 13px;
