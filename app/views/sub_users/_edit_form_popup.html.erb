@@ -1,10 +1,6 @@
 <div id="edit_form_popup" class="modal editableModal importModal">
   <div class="modal-content">
       <div class="modal-header clearfix text-content">
-        <h5 class="left">
-          <%= t '.title', :default => t('helpers.titles.edit', :model => t(User.model_name.singular),
-                                        :default => "Edit #{User.model_name.human}") %>
-        </h5>
         <div class="modal-action-btn right">
           <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
             <i class="material-icons" >done</i>
@@ -13,6 +9,10 @@
             <i class="material-icons close">close</i>
           </a>
         </div>
+        <h5 class="left">
+          <%= t '.title', :default => t('helpers.titles.edit', :model => t(User.model_name.singular),
+                                        :default => "Edit #{User.model_name.human}") %>
+        </h5>
       </div>
     <%= simple_form_for(@sub_user, url: '/sub_users/update', method: :put, remote: params[:remote].to_i == 1,
                         html: { id: 'sub_user_form', multipart: true }) do |f| %>

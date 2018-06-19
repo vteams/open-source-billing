@@ -3,6 +3,14 @@
   <div class="modal-content">
       <div class="modal-content">
           <div class="modal-header clearfix text-content">
+            <div class="modal-action-btn right">
+              <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+                <i class="material-icons" >done</i>
+              </a>
+              <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+                <i class="material-icons close">close</i>
+              </a>
+            </div>
             <h5 class="left">
               <% if item.persisted? %>
                 <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
@@ -12,14 +20,6 @@
                                               :default => "New  #{model_class.model_name.human}") %>
               <% end %>
             </h5>
-            <div class="modal-action-btn right">
-              <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
-                <i class="material-icons" >done</i>
-              </a>
-              <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
-                <i class="material-icons close">close</i>
-              </a>
-            </div>
           </div>
           <%= simple_form_for item, html: { class: 'item_form' } do |f| %>
             <div class="modal-body">
