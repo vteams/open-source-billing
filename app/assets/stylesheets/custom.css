@@ -128,9 +128,7 @@ input#expense_amount{
 
 #flash_message {
     overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+    padding-left: 107px;
     -moz-transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -709,13 +707,15 @@ form .select-wrapper .select-dropdown {
     font-size: 15px;
 }
 
-@media (min-width: 767px){
-    #flash_message{
-        width: 521px;
-    }
-}
-@media (max-width: 767px){
+@media (max-width: 992px){
     #flash_message{
         width: 100%;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 767px){
+    #flash_message{
+        width: 100%;
+        padding-left: 0;
     }
 }
