@@ -2,13 +2,6 @@
   <div class="modal-content">
     <%- model_class = Staff -%>
     <div class="modal-header clearfix text-content">
-      <h5 class="left">
-        <% if staff.persisted? %>
-            <%= t '.title', default: t('helpers.titles.edit', model: t('staff'), default: "Edit #{model_class.model_name.human}") %>
-        <% else %>
-            <%= t '.title', default: t('helpers.titles.new', model: t('staff'), default: "New  #{model_class.model_name.human}") %>
-        <% end %>
-      </h5>
       <div class="modal-action-btn right">
         <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
           <i class="material-icons" >done</i>
@@ -17,6 +10,13 @@
           <i class="material-icons close">close</i>
         </a>
       </div>
+      <h5 class="left">
+        <% if staff.persisted? %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('staff'), default: "Edit #{model_class.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('staff'), default: "New  #{model_class.model_name.human}") %>
+        <% end %>
+      </h5>
     </div>
     <%= simple_form_for staff, html: {class: 'staff_form form-horizontal', id: 'newStaff'} do |f| %>
       <div class="modal-body users">

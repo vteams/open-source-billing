@@ -1,13 +1,6 @@
 <div id="project_task_form_popup" class="modal viewModal taskModal">
   <div class="modal-content">
     <div class="modal-header clearfix text-content">
-      <h5 class="left text-blue">
-        <% if task.new_record? %>
-            <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
-        <% else %>
-            <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
-        <% end %>
-      </h5>
       <div class="modal-action-btn right">
         <a href="javascript:void(0);" onclick="$('.simple_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
           <i class="material-icons" >done</i>
@@ -16,6 +9,13 @@
           <i class="material-icons close">close</i>
         </a>
       </div>
+      <h5 class="left text-blue">
+        <% if task.new_record? %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
+        <% end %>
+      </h5>
     </div>
     <%= simple_form_for [@project,task], html: { class: 'project_task_form' } do |f| %>
     <div class="modal-body">

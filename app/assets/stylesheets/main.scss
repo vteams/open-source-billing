@@ -2876,6 +2876,10 @@ h6 {
 
 .modal.importModal {
   max-width: 35%; }
+@media only screen and (max-width: 992px) {
+  .modal.importModal { max-width: 85%; }
+}
+
 .modal.importModal .modal-body {
   padding-bottom: 30px; }
 
@@ -4197,6 +4201,12 @@ html {
   width: 400px;
   padding: 0 38px;
   box-sizing: border-box; }
+@media (max-width: 400px) {
+  .new-invoice-footer .right-section {
+    width: 100%;
+    padding: 0 8px;
+  }
+}
 .new-invoice-footer .right-section .invoice-total-title {
   display: block;
   font-size: 13px;
@@ -4410,7 +4420,7 @@ i.material-icons.close:hover {
   border: 1px solid #14B6E1;
 }
 #bulk_action_form .search_result_container{
-  margin-right: -8px !important;
+  margin-right: 10px !important;
 }
 #main-content .breadcrum-bar.card-white-panel.clearfix .input-field .select-wrapper.initialized input.select-dropdown {
   padding-left: 5px;
@@ -4890,4 +4900,7 @@ width: 44px;
   .search .select2-container{
     width: 90% !important;
   }
+}
+.picker__frame {
+  top: 100px !important;
 }
