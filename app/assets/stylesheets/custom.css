@@ -552,10 +552,6 @@ form .select-wrapper .dropdown-content {
     max-height: 200px !important;
 }
 
-form .select-wrapper .select-dropdown {
-    height: 2.6rem;
-}
-
 .text-red{
     color: red;
 }
