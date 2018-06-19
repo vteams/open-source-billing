@@ -55,12 +55,12 @@
         <div class="card-white-panel importData">
           <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
           <div class="importElement">
-            <div class="col s12 m12 xl6">
+            <div class="col s6 m6 xl12">
               <%= link_to new_import_datum_path, remote: true do
                 image_tag('freshbooks.png', class: 'img-responsive', width: 100)
               end %>
             </div>
-            <div class="col s12 m12 xl6">
+            <div class="col s6 m6 xl12">
               <%= render 'import_data/qb_connect' %>
             </div>
           </div>
