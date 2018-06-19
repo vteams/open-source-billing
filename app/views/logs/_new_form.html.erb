@@ -5,7 +5,7 @@
       <%= f.input :project_id, collection: load_projects_for_log, selected: f.object.project_id,
                   include_blank: t('views.logs.project'), label: false, wrapper_html: { class: 'input-field col s12' } %>
       <%= f.input :task_id, collection: load_tasks_for_log(@log), selected: f.object.task_id,
-                  include_blank: t('views.logs.task'), label: false, input_html: { disabled: true },
+                  include_blank: t('views.logs.task'), label: false, disabled: true,
                   wrapper_html: { class: 'input-field col s12 tasks_dropdown' } %>
       <%= f.input :hours, label: t('views.tasks.hours'), wrapper_html: { class: 'input-field col s12' }, input_html: {min: 0, step: 'any'} %>
       <%= f.input :notes, label: t('views.common.notes'), wrapper_html: { class: 'input-field col s12' },

@@ -12,12 +12,14 @@
   <div class="invoice-details editContent">
     <%= f.input :staff_id, collection: load_staffs_for_project(action_name, @project.company_id, f.object),
                 selected: f.object.staff_id, prompt: t('views.projects.select_a_member'), label: false,
-                input_html: { class: 'members_list', disabled: true }, wrapper_html: { class: 'input-field' } %>
-    <%= f.input :email, label: false, input_html: { disabled: true, class: 'email' }, wrapper_html: { class: 'input-field' } %>
+                input_html: { class: 'members_list' }, wrapper_html: { class: 'input-field' } %>
+    <span class="email"><%= f.object.email %></span>
+    <%= f.input :email, as: :hidden, label: false, disabled: true, wrapper: false, input_html: { class: 'email' } %>
     <div class="input-field amount">
       <strong><%= default_currency_unit %>
         <em class="staff_rate">
-          <%= f.input :rate, input_html: { disabled: true, class: 'rate' }, label: false, wrapper: false %>
+          <span class="rate"><%= f.object.rate %></span>
+          <%= f.input :rate, as: :hidden, label: false, disabled: true, wrapper: false, input_html: { class: 'rate' } %>
         </em>
       </strong>
       <span> <%= default_currency_code %> / <small class="text-blue">hr</small></span>

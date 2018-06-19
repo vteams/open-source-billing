@@ -21,7 +21,7 @@
                           input_html: {value: @project.created_at.strftime(get_date_format), disabled: 'disabled', class: 'not-editable' },
                           wrapper_html: { class: 'input-field col s12 m4 l4 xl4' }, as: :string unless @project.new_record? %>
               <%= f.input :total_hours, label: "#{t('views.projects.estimated_time')} (hrs)", label_html: { class: 'active', style: 'display: contents;' },
-                          input_html: { disabled: true }, wrapper_html: { class: 'input-field col s12 m4 l4 xl4' } %>
+                          disabled: true, wrapper_html: { class: 'input-field col s12 m4 l4 xl4' } %>
               <%= f.input :created_at, label: "#{t('views.projects.time_logged')} (hrs)",
                           label_html: { style: 'display: contents;', class: 'active not-editable' },
                           input_html: {value: @project.log_hours, disabled: 'disabled' },
