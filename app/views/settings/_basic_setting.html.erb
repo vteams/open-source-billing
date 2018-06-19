@@ -10,27 +10,29 @@
               <i class="material-icons">done</i>
             </a>
           </h5>
-          <div class="col s12 m12 xl4">
-            <div class="setting-btns">
-              <span><%= t('views.settings.multi_currency')  %></span>
-              <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
-              <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
-              <div id="radioBtn" class="btn-group mutli_currency_btn">
-                <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
-                <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active bold-white-txt' unless multi_currency}" %>"><%= t('views.common.no') %></a>
+          <div class="row">
+            <div class="col s5 m3 xl4">
+              <div class="setting-btns">
+                <span><%= t('views.settings.multi_currency')  %></span>
+                <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
+                <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
+                <div id="radioBtn" class="btn-group mutli_currency_btn">
+                  <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_multi_currency <%= "#{'active bold-white-txt' unless multi_currency}" %>"><%= t('views.common.no') %></a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col s12 m12 xl4">
-            <div class="setting-btns">
-              <span><%= t('views.settings.side_nav_open') %></span>
+            <div class="col s5 m4 xl4">
+              <div class="setting-btns">
+                <span><%= t('views.settings.side_nav_open') %></span>
 
-              <% side_nav_opened = current_user.settings.side_nav_opened %>
-              <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
+                <% side_nav_opened = current_user.settings.side_nav_opened %>
+                <%= check_box_tag "side_nav_opened", side_nav_opened ? "Open" : "Close",  checked: side_nav_opened %>
 
-              <div id="radioBtn" class="btn-group side-nav_btn">
-                <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active bold-white-txt' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
-                <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active bold-white-txt' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
+                <div id="radioBtn" class="btn-group side-nav_btn">
+                  <a class="btn btn-primary btn-sm side_nav_opened <%= "#{'active bold-white-txt' if side_nav_opened}" %>"><%= t('views.common.yes') %></a>
+                  <a class="btn btn-primary btn-sm no_side_nav_opened <%= "#{'active bold-white-txt' unless side_nav_opened }" %>"><%= t('views.common.no') %></a>
+                </div>
               </div>
             </div>
           </div>
@@ -53,12 +55,12 @@
         <div class="card-white-panel importData">
           <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
           <div class="importElement">
-            <div class="col s12 m12 xl6">
+            <div class="col s6 m6 xl12">
               <%= link_to new_import_datum_path, remote: true do
                 image_tag('freshbooks.png', class: 'img-responsive', width: 100)
               end %>
             </div>
-            <div class="col s12 m12 xl6">
+            <div class="col s6 m6 xl12">
               <%= render 'import_data/qb_connect' %>
             </div>
           </div>

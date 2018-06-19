@@ -48,8 +48,10 @@ class @Project
             container.find("input.name").val(item[2])
             container.find("td.name").text(item[2])
             container.find("input.email").val(item[0])
+            container.find("span.email").html(item[0])
             container.find("td.email").text(item[0])
             container.find("input.rate").val(item[1])
+            container.find("span.rate").html(item[1])
             container.find("td.rate").text(item[1])
 
   addLineTaskRow = (elem) ->
