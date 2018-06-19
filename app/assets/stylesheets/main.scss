@@ -2876,6 +2876,10 @@ h6 {
 
 .modal.importModal {
   max-width: 35%; }
+@media only screen and (max-width: 992px) {
+  .modal.importModal { max-width: 85%; }
+}
+
 .modal.importModal .modal-body {
   padding-bottom: 30px; }
 
