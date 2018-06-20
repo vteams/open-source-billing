@@ -342,7 +342,7 @@ h6 {
     width: 80%;
     margin-left: 0; }
   #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search {
-    left: 78px;
+    left: 88px;
     margin-right: 0; }
   #header .header-right.search-show .help-search, #header .header-right.chekbox-show .help-search {
     top: 0px; } }
@@ -353,7 +353,7 @@ h6 {
     width: 72%;
     margin-left: 0; }
   #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search {
-    left: 80px; } }
+    left: 90px; } }
 #header .header-right.search-show .header-right .checkboxinfo .right a, #header .header-right.chekbox-show .header-right .checkboxinfo .right a {
   padding-right: 10px; }
 #header .header-center {
@@ -4893,7 +4893,7 @@ width: 44px;
   }
 
   #header .header-right.search-show i.zmdi-search, #header .header-right.chekbox-show i.zmdi-search{
-    left: 165px;
+    left: 155px;
   }
   .search .select2-container{
     width: 90% !important;
@@ -4903,3 +4903,4 @@ width: 44px;
   top: 100px !important;
 }
 #new_log { margin-top: 30px; }
+.zmdi.zmdi-arrow-left { padding-right: 10px !important; }
