@@ -6,7 +6,7 @@
     <%= f.input :home_phone, label: t('views.common.phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
     <%= f.input :mobile_number, label: t('views.common.mobile'), wrapper_html: { class: 'input-field col s6 m4' } %>
     <div class="input-field col s6 m4">
-      <%= link_to_remove_association t('views.clients.remove_this_contact'), f, class: 'btn moreBtn remove' %>
+      <%= link_to_remove_association t('views.clients.remove_this_contact'), f, class: 'btn moreBtn remove truncate' %>
     </div>
   </div>
 </div>
