@@ -4884,7 +4884,7 @@ input[type=text]{
 }
 @media (min-width: 993px) and (max-width: 1045px) {
   #header .header-center .hdr-select-holder .select-wrapper.currency{
-width: 44px;
+    width: 44px;
   }
 }
 @media (min-width: 993px){
@@ -4904,3 +4904,43 @@ width: 44px;
 }
 #new_log { margin-top: 30px; }
 .zmdi.zmdi-arrow-left { padding-right: 10px !important; }
+
+.modal-balance .modal-header.text-content{
+  padding: 18px 44px;
+}
+.modal-balance .modal-body{
+  padding: 20px 44px !important;
+}
+.modal-balance .input-field{
+  margin-top: 0;
+}
+.modal-balance .input-field input + label.active{
+  margin-top: 16px;
+}
+.editClient .modal-balance .title-heading{
+  margin-top: 0 !important;
+}
+.modal-body.modal-body-balance {
+  padding: 20px 34px !important;
+}
+//.modal-body.modal-body-balance  .input-field .row .col{
+//  padding: 0;
+//}
+//.modal-body.modal-body-balance .input-field.col{
+//  padding: 0;
+//}
+.remove-padding{
+  padding: 0 !important;
+}
+//.modal-body.modal-body-balance .input-field.col label{
+//  left: 0
+//}
+.modal-body.modal-body-balance .input-field .row .col.s6{
+  width: 100%;
+}
+@media (max-width: 480px) {
+  .modal-body.modal-body-balance .input-field label {
+    font-size: 0.8rem;
+  }
+}
+

@@ -1,7 +1,6 @@
 <div id="item_form_popup" class="modal editableModal editTaxModal edititemModal">
   <%- model_class = Item -%>
-  <div class="modal-content">
-      <div class="modal-content">
+      <div class="modal-content modal-balance">
           <div class="modal-header clearfix text-content">
             <div class="modal-action-btn right">
               <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
@@ -22,7 +21,7 @@
             </h5>
           </div>
           <%= simple_form_for item, html: { class: 'item_form' } do |f| %>
-            <div class="modal-body">
+            <div class="modal-body modal-body-balance">
               <div class="row">
                 <%= f.submit class: 'btn_large submit hidden' %>
                 <%= f.input :item_name, label: t('views.items.item_name'), wrapper_html: { class: 'input-field col s12' } %>
@@ -44,5 +43,4 @@
             </div>
           </div>
     <% end %>
-  </div>
 </div>

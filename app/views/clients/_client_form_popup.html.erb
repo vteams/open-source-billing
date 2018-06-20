@@ -1,5 +1,5 @@
     <div id="client_form_popup" class="modal editableModal editProject editClient newModel large_modal mCustomScrollbar">
-  <div class="modal-content">
+  <div class="modal-content modal-balance">
     <%- model_class = Client -%>
     <div class="modal-header clearfix text-content">
       <div class="modal-action-btn right">
@@ -22,7 +22,7 @@
           </h5>
     </div>
     <%= simple_form_for @client, html: { id: 'newClient' } do |f| %>
-        <div class="modal-body">
+        <div class="modal-body modal-body-balance">
           <div class="info-right-section">
             <div class="row">
               <%= f.submit class: 'btn_large submit hidden' %>
