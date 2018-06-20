@@ -10,10 +10,9 @@
     padding: 0 30px;
   }
   .payment_left {
-    float: left;
     border: 1px solid #D7D7D7;
     border-radius: 3px 3px 3px 3px;
-    width: 280px;
+    max-width: 280px;
     min-height: 234px;
   }
   .payment_serial {
@@ -73,7 +72,7 @@
   .invoice_label{
     font-family: 'Dosis Regular';
     float: left;
-    width: 109px;
+    max-width: 109px;
     font-size: 16px;
     color: #464646;
   }
@@ -81,7 +80,7 @@
     float: right;
   }
   .inovice_description{
-    width: 86px;
+    max-width: 86px;
     font-family: 'Dosis SemiBold';
     float: right;
     font-size: 16px;
@@ -92,14 +91,15 @@
     color: #7eb813;
   }
   .payment_right {
-    float: right;
-    width: 415px;
+    margin-top: 20px;
+    max-width: 415px;
   }
   .label_field.left {
-    width: 105px;
+    max-width: 105px;
+    min-width: 60px;
   }
   .label_field.right {
-    width: 39px;
+    max-width: 39px;
     padding: 5px 0 0 20px;
   }
   .small_field input {
@@ -109,7 +109,7 @@
     width: 125px;
   }
   .large_field textarea {
-    width: 289px;
+    max-width: 289px;
     min-height: 40px;
     margin-bottom: 7px;
   }
