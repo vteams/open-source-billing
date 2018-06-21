@@ -3864,7 +3864,7 @@ html {
   margin: 15px 0; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo span {
   margin-bottom: 0;
-  min-width: 88px;
+  min-width: 78px;
   display: inline-block;
   text-transform: capitalize; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo em {
@@ -3895,7 +3895,7 @@ html {
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .inputValue {
   display: none; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .caret {
-  top: 0;
+  margin-top: 15px;
   color: #b5b5b5;
   font-size: 9px; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .dropdown-content {
@@ -4951,4 +4951,8 @@ input[type=text]{
   .new-invoice-holder .info-section .info-left-section { width: 110px; }
   .new-invoice-holder .info-section .info-right-section { width: 120px; }
   .new-invoice-holder .info-section .info-right-section .show-me .invoice-input-holder .input-field { width: 100%; }
+}
+
+@media only screen and (max-width: 600px) {
+  .scroll-area {  max-height: 650px;  }
 }
