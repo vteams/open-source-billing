@@ -4945,3 +4945,10 @@ input[type=text]{
   }
 }
 
+@media (min-width: 320px) and (max-width: 469px) {
+  #send_password .btn-content .btn_large {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 0 5px !important;
+  }
+}
