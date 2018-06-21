@@ -1205,7 +1205,7 @@ h6 {
 
 /*---DropDown----------*/
 .dropdown-content {
-  min-width: 250px; }
+  min-width: 200px; }
 .dropdown-content li {
   min-height: inherit; }
 .dropdown-content li a {
@@ -2598,7 +2598,7 @@ h6 {
   margin-bottom: 0; }
 .report-section .icon-done, .setting-section .icon-done {
   color: #b5b5b5; }
-.report-section .icon-done i, .setting-section .icon-done i {
+.report-section .icon-done i {
   line-height: 40px; }
 .report-section .simple-responsive, .setting-section .simple-responsive {
   max-width: 100%;
@@ -2669,7 +2669,7 @@ h6 {
 .basic-setting .card-white-panel {
   cursor: default; }
 .basic-setting .card-white-panel h5 {
-  padding: 0 10px;
+  padding: 0;
   width: 100%;
   font-family: "Roboto", sans-serif;
   font-weight: 500; }
@@ -4943,4 +4943,10 @@ input[type=text]{
     font-size: 0.8rem;
   }
 }
+.basic-setting .card-white-panel > .row .col:nth-child(1) {
+  width: 120px;
+}
 
+.basic-setting .card-white-panel > .row .col:nth-child(2) {
+  width: 130px;
+}
