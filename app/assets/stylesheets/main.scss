@@ -4250,7 +4250,7 @@ html {
   font-size: 13px; }
 .new-invoice-footer .right-section .new-invoice-footer-row .select-wrapper {
   float: right;
-  width: 90px; }
+  width: 70px; }
 .new-invoice-footer .right-section .new-invoice-footer-row .select-wrapper span.caret {
   font-size: 9px;
   color: #909090;
@@ -4494,7 +4494,7 @@ i.material-icons.close:hover {
 }
 
 .fields .elementsAction .cross-position{
-  padding-left: 22px;
+  padding-left: 0;
 }
 
 .report-body-container{
@@ -4663,12 +4663,8 @@ li:nth-child(7n) .random-colors {
     overflow-y: scroll;
   }
   .fields .elementsAction .cross-position{
-    padding-left: 0;
     width: 100%;
     text-align: left;
-  }
-  .new-invoice-holder .new-invoice-table-holder.main-invoice .elementsAction a{
-    margin-bottom: 24px;
   }
   .new-invoice-holder .new-invoice-table-holder.main-invoice table td{
     margin-bottom: 5px;
@@ -4949,4 +4945,10 @@ input[type=text]{
 
 .basic-setting .card-white-panel > .row .col:nth-child(2) {
   width: 130px;
+}
+
+@media (max-width: 360px) {
+  .new-invoice-holder .info-section .info-left-section { width: 110px; }
+  .new-invoice-holder .info-section .info-right-section { width: 120px; }
+  .new-invoice-holder .info-section .info-right-section .show-me .invoice-input-holder .input-field { width: 100%; }
 }
