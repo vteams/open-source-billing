@@ -15,20 +15,20 @@
         <%= mail_to client.email, client.email , class: 'email-link' %>
         <div class="amount-wrapper">
           <div class="amountInfo">
-            <span><%= t('views.clients.available_credit') %></span>
+            <span class="truncate"><%= t('views.clients.available_credit') %></span>
             <strong class="text-color"><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
           </div>
           <div class="amountInfo">
-            <span><%= t('views.clients.outstanding_amount') %></span>
+            <span class="truncate"><%= t('views.clients.outstanding_amount') %></span>
             <strong class="text-orange"><%= number_to_currency(@detail[:amount_billed], unit: '') %> <small><%= default_currency_code %></small></strong>
 
           </div>
           <div class="amountInfo">
-            <span><%= t('views.clients.total_amount_billed') %></span>
+            <span class="truncate"><%= t('views.clients.total_amount_billed') %></span>
             <strong class="text-blue"><%= number_to_currency(@detail[:outstanding_amount], unit: '') %> <small><%= default_currency_code %></small></strong>
           </div>
           <div class="amountInfo">
-            <span><%= t('views.clients.total_payments_received') %></span>
+            <span class="truncate"><%= t('views.clients.total_payments_received') %></span>
             <strong class="text-green"><%= number_to_currency(@detail[:payments], unit: '') %> <small><%= default_currency_code %></small></strong>
           </div>
         </div>
