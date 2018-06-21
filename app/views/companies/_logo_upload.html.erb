@@ -1,6 +1,6 @@
 <h5 class="text-blue title-heading"><%= t('views.companies.branding') %></h5>
 <label class="help-text"><%= t('companies.views.set_your_logo') %></label>
-<div class="file-field input-field col s6 m6">
+<div class="file-field input-field col s12 m6">
   <div class="btn">
     <span>Choose File</span>
     <input type="file" name="company[logo]">
@@ -9,6 +9,6 @@
     <input class="file-path validate" type="text">
   </div>
 </div>
-<div class="input-field col s6 m6">
+<div class="input-field col s12 m6">
   <% image_tag @company.logo_url(:thumb) if action_name == 'edit' %>
 </div>
