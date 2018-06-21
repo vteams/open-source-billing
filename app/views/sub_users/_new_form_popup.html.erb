@@ -18,11 +18,11 @@
         <div class="modal-body users">
           <div class="row">
             <%= f.submit class: 'btn_large submit_user hidden' %>
-            <%= f.input :user_name, label: t('views.users.full_name'), input_html: {id: 'user_name', name: 'user_name'}, wrapper_html: { class: 'input-field col s6' } %>
-            <%= f.input :email, label: t('views.common.email'), input_html: {id: 'email', name: 'email'}, wrapper_html: { class: 'input-field col s6' } %>
-            <%= f.input :password, label: t('views.staffs.password'), input_html: {id: 'password', name: 'password'}, wrapper_html: { class: 'input-field col s6' } %>
-            <%= f.input :password_confirmation, label: t('views.staffs.password_confirmation'), input_html: {id: 'password_confirmation', name: 'password_confirmation'}, wrapper_html: { class: 'input-field col s6' } %>
-            <%= f.input :role_ids, collection: load_user_roles, selected: @sub_user.role_ids.first, label: false, as: :select, input_html: {name: 'role_ids'}, wrapper_html: { class: 'input-field col s6' } %>
+            <%= f.input :user_name, label: t('views.users.full_name'), input_html: {id: 'user_name', name: 'user_name'}, wrapper_html: { class: 'input-field col s12 m6' } %>
+            <%= f.input :email, label: t('views.common.email'), input_html: {id: 'email', name: 'email'}, wrapper_html: { class: 'input-field col s12 m6' } %>
+            <%= f.input :password, label: t('views.staffs.password'), input_html: {id: 'password', name: 'password'}, wrapper_html: { class: 'input-field col s12 m6' } %>
+            <%= f.input :password_confirmation, label: t('views.staffs.password_confirmation'), input_html: {id: 'password_confirmation', name: 'password_confirmation'}, wrapper_html: { class: 'input-field col s12 m6' } %>
+            <%= f.input :role_ids, collection: load_user_roles, selected: @sub_user.role_ids.first, label: false, as: :select, input_html: {name: 'role_ids'}, wrapper_html: { class: 'input-field col s12 m6' } %>
             <%= f.input :notify_user, label: t('views.users.notify_user'), wrapper_html: { class: 'input-field col s6 checkbox'}, input_html: {class: 'filled-in', name: 'notify_user'}, as: :boolean, boolean_style: :inline %>
           </div>
         </div>

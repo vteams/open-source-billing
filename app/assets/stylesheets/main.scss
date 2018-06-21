@@ -1205,7 +1205,7 @@ h6 {
 
 /*---DropDown----------*/
 .dropdown-content {
-  min-width: 250px; }
+  min-width: 200px; }
 .dropdown-content li {
   min-height: inherit; }
 .dropdown-content li a {
@@ -1862,7 +1862,10 @@ h6 {
   padding: 5px 16px;
   font-size: 14px;
   font-weight: 400; }
-.modal.editableModal .input-field input[type=text], .modal.editableModal .input-field input[type=number], .modal.editableModal .input-field input[type=email] {
+.modal.editableModal .input-field input[type=text],
+.modal.editableModal .input-field input[type=number],
+.modal.editableModal .input-field input[type=email],
+.modal.editableModal .input-field input[type=password] {
   height:  2.6rem;
   font-size: 14px;
   color: #454545;
@@ -2598,7 +2601,7 @@ h6 {
   margin-bottom: 0; }
 .report-section .icon-done, .setting-section .icon-done {
   color: #b5b5b5; }
-.report-section .icon-done i, .setting-section .icon-done i {
+.report-section .icon-done i {
   line-height: 40px; }
 .report-section .simple-responsive, .setting-section .simple-responsive {
   max-width: 100%;
@@ -2669,7 +2672,7 @@ h6 {
 .basic-setting .card-white-panel {
   cursor: default; }
 .basic-setting .card-white-panel h5 {
-  padding: 0 10px;
+  padding: 0;
   width: 100%;
   font-family: "Roboto", sans-serif;
   font-weight: 500; }
@@ -3865,7 +3868,7 @@ html {
   margin: 15px 0; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo span {
   margin-bottom: 0;
-  min-width: 88px;
+  min-width: 78px;
   display: inline-block;
   text-transform: capitalize; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo em {
@@ -3896,7 +3899,7 @@ html {
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .inputValue {
   display: none; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .caret {
-  top: 0;
+  margin-top: 15px;
   color: #b5b5b5;
   font-size: 9px; }
 .new-invoice-holder .info-section .info-left-section .paymentInfo strong .select-wrapper .dropdown-content {
@@ -4251,7 +4254,7 @@ html {
   font-size: 13px; }
 .new-invoice-footer .right-section .new-invoice-footer-row .select-wrapper {
   float: right;
-  width: 90px; }
+  width: 70px; }
 .new-invoice-footer .right-section .new-invoice-footer-row .select-wrapper span.caret {
   font-size: 9px;
   color: #909090;
@@ -4495,7 +4498,7 @@ i.material-icons.close:hover {
 }
 
 .fields .elementsAction .cross-position{
-  padding-left: 22px;
+  padding-left: 0;
 }
 
 .report-body-container{
@@ -4664,12 +4667,8 @@ li:nth-child(7n) .random-colors {
     overflow-y: scroll;
   }
   .fields .elementsAction .cross-position{
-    padding-left: 0;
     width: 100%;
     text-align: left;
-  }
-  .new-invoice-holder .new-invoice-table-holder.main-invoice .elementsAction a{
-    margin-bottom: 24px;
   }
   .new-invoice-holder .new-invoice-table-holder.main-invoice table td{
     margin-bottom: 5px;
@@ -4944,7 +4943,19 @@ input[type=text]{
     font-size: 0.8rem;
   }
 }
+.basic-setting .card-white-panel > .row .col:nth-child(1) {
+  width: 120px;
+}
 
+.basic-setting .card-white-panel > .row .col:nth-child(2) {
+  width: 130px;
+}
+
+@media (max-width: 360px) {
+  .new-invoice-holder .info-section .info-left-section { width: 110px; }
+  .new-invoice-holder .info-section .info-right-section { width: 120px; }
+  .new-invoice-holder .info-section .info-right-section .show-me .invoice-input-holder .input-field { width: 100%; }
+}
 @media (min-width: 320px) and (max-width: 469px) {
   #send_password .btn-content .btn_large {
     font-weight: 600 !important;
@@ -4952,3 +4963,7 @@ input[type=text]{
     padding: 0 5px !important;
   }
 }
+@media only screen and (max-width: 600px) {
+  .scroll-area {  max-height: 650px;  }
+}
+

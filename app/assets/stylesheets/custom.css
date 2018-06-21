@@ -719,10 +719,10 @@ form .select-wrapper .dropdown-content {
 }
 .lb_contents { display: contents; }
 
-input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
-    border-bottom: 1px solid #09b8e2; /* fixed discount amount field for invoice */
-    box-shadow: 0 1px 0 0 #09b8e2;
-}
+/*input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){*/
+    /*border-bottom: 1px solid #09b8e2; !* fixed discount amount field for invoice *!*/
+    /*box-shadow: 0 1px 0 0 #09b8e2;*/
+/*}*/
 input[type=number]:focus:not([readonly]){
     border-bottom: none;
     box-shadow: none;
