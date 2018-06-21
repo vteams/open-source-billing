@@ -2,7 +2,6 @@
     <div class="modal-content">
       <%= form_for :freshbooks, url: import_freshbooks_data_import_data_path,  :html => {remote: true, novalidate: "", class: "import_freshbook_form"} do |f| %>
         <div class="modal-header clearfix text-content">
-          <h5 class="left text-blue">Import data from your freshbooks account</h5>
           <div class="modal-action-btn right">
             <%= f.submit "Submit", :class => "btn_large submit model-submit-btn hidden" %>
             <a href="javascript:void(0);" onclick="$('.model-submit-btn').click();" title="Import" class="modal-action waves-effect">
@@ -12,6 +11,7 @@
               <i class="material-icons close">close</i>
             </a>
           </div>
+          <h5 class="left text-blue">Import data from your freshbooks account</h5>
         </div>
         <div class="modal-body">
           <p class="fb_error"></p>

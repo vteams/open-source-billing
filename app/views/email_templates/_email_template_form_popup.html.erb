@@ -3,10 +3,6 @@
     <%= tinymce  :theme_advanced_buttons1 => "bold,italic,underline,separator,strikethrough,undo,redo,link", :content_css => '/assets/email_template_editor.css' %>
     <div class="modal-content">
       <div class="modal-header clearfix text-content">
-        <h5 class="left text-blue">
-          <%= t '.title', :default => t('helpers.titles.edit', :model => t(EmailTemplate.model_name.singular),
-                                        :default => "Edit #{EmailTemplate.model_name.human}") %>
-        </h5>
         <div class="modal-action-btn right">
           <a href="javascript:void(0);" title="<%= t('views.common.save') %>" class="modal-action waves-effect" id="form_submit_btn">
             <i class="material-icons" >done</i>
@@ -15,6 +11,10 @@
             <i class="material-icons close">close</i>
           </a>
         </div>
+        <h5 class="left text-blue">
+          <%= t '.title', :default => t('helpers.titles.edit', :model => t(EmailTemplate.model_name.singular),
+                                        :default => "Edit #{EmailTemplate.model_name.human}") %>
+        </h5>
       </div>
       <%= simple_form_for @email_template, html: { class: 'email_template_class' } do |f| %>
           <%= f.hidden_field :torder %>
