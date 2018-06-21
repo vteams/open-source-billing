@@ -1862,7 +1862,10 @@ h6 {
   padding: 5px 16px;
   font-size: 14px;
   font-weight: 400; }
-.modal.editableModal .input-field input[type=text], .modal.editableModal .input-field input[type=number], .modal.editableModal .input-field input[type=email] {
+.modal.editableModal .input-field input[type=text],
+.modal.editableModal .input-field input[type=number],
+.modal.editableModal .input-field input[type=email],
+.modal.editableModal .input-field input[type=password] {
   height:  2.6rem;
   font-size: 14px;
   color: #454545;
