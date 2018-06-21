@@ -713,6 +713,8 @@ form .select-wrapper .dropdown-content {
     #flash_message{
         width: 100%;
         padding-left: 0;
+        z-index: 99999;
+        position: absolute;
     }
 }
 .lb_contents { display: contents; }
