@@ -2607,7 +2607,7 @@ h6 {
   max-width: 100%;
   overflow: auto;
   display: block; }
-.report-section .simple-responsive table, .setting-section .simple-responsive table {
+.report-section .simple-responsive table:not(.log_table), .setting-section .simple-responsive table {
   min-width: 700px; }
 .report-section #main-content, .setting-section #main-content {
   overflow-x: auto; }
