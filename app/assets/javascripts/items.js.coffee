@@ -67,6 +67,9 @@ class @Item
       else if $("#item_quantity").val() is ""
         applyPopover($("#item_quantity"), I18n.t('views.items.quantity_required'))
         flag = false
+      else if $("#item_quantity").val() isnt "" and  isNaN($("#item_quantity").val())
+        applyPopover($("#item_quantity"), I18n.t('views.items.must_be_numeric'))
+        flag = false
       else if $("#item_quantity").val() isnt "" and !isNaN($("#item_quantity").val()) and $('#item_quantity').val() < 0
         applyPopover($("#item_quantity"), I18n.t('views.items.must_be_greater_or_equal_to_zero'))
         flag = false
