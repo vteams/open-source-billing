@@ -286,15 +286,15 @@ h3.heading_with_action{
     /*padding: 0px 12px !important;*/
 /*}*/
 
-.editInvoice .estimate_grid_fields input, .editInvoice .estimate_grid_fields input:focus {
-    border-bottom: none !important;
-    box-shadow: none !important;
-    margin-bottom: 0px !important;
-}
+/*.editInvoice .estimate_grid_fields input, .editInvoice .estimate_grid_fields input:focus {*/
+    /*border-bottom: none !important;*/
+    /*box-shadow: none !important;*/
+    /*margin-bottom: 0px !important;*/
+/*}*/
 
-.editInvoice .estimate_grid_fields tr td{
-    padding: 0px 12px !important;
-}
+/*.editInvoice .estimate_grid_fields tr td{*/
+    /*padding: 0px 12px !important;*/
+/*}*/
 span.invoice-recurring-status{
     width: 100% !important;
     text-transform: none !important;
