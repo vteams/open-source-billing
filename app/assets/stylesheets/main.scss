@@ -2477,8 +2477,8 @@ h6 {
   height: 100%; }
 #main .container-fluid {
   height: calc(100% - 30px); }
-#main #main-content {
-  height: 100%; }
+//#main #main-content {
+//  height: 100%; }
 
 @media only screen and (max-width: 767px) {
   .report-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content, .full-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content {
@@ -4935,9 +4935,9 @@ input[type=text]{
 //.modal-body.modal-body-balance .input-field.col label{
 //  left: 0
 //}
-.modal-body.modal-body-balance .input-field .row .col.s6{
-  width: 100%;
-}
+//.modal-body.modal-body-balance .input-field .row .col.s6{
+//  width: 100%;
+//}
 @media (max-width: 480px) {
   .modal-body.modal-body-balance .input-field label {
     font-size: 0.8rem;
