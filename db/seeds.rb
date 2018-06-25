@@ -68,6 +68,10 @@
 #      :tax_1 => tax2,
 #      :tax_2 => tax1
 #    }])
+EmailTemplate.delete_all
+ActiveRecord::Base.connection.execute("TRUNCATE email_templates")
+CompanyEmailTemplate.delete_all
+ActiveRecord::Base.connection.execute("TRUNCATE company_email_templates")
 templates = EmailTemplate.create([
         {
             :torder => 1,
