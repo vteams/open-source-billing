@@ -179,6 +179,11 @@ class EstimatesController < ApplicationController
   def preview
     @estimate = Services::EstimateService.get_estimate_for_preview(params[:inv_id])
     render action: 'estimate_deleted_message', notice: t('views.estimates.estimate_deleted_msg') if @estimate == 'Estimate deleted'
+
+    respond_to do |format|
+      format.html {render template: 'estimates/preview.html.erb', layout:  'pdf_mode'}
+      format.js
+    end
   end
 
   private

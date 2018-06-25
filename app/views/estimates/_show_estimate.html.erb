@@ -1,180 +1,107 @@
-<div class="show_estimate">
-  <div class="estimate_preview">
-    <div class="estimate_preview_contianer">
-      <div class="estimate_tag <%= @estimate.status %>"></div>
-
-      <div class="estimate_preview_content">
-
-        <div class="preview_content_top">
-
-          <div class="preview_top">
-
-            <div class="preview_top_left">
-              <div class="estimate_date">
-                <h2><%= t('estimate') %></h2>
-              </div>
-              <div class="estimate_name"><%= @estimate.company.company_name || '' %></div>
-
-              <div class="estimate_organization">
-                <p><%= @estimate.company.contact_name %></p>
-
-                <p><%= @estimate.company.street_address_1 %></p>
-
-                <p><%= @estimate.company.street_address_2 %></p>
-
-                <p><%= [@estimate.company.city, "#{@estimate.company.province_or_state } #{@estimate.company.postal_or_zipcode}"].reject(&:blank?).join(", ") %></p>
-
-                <p><%= @estimate.company.country %></p>
-              </div>
-
-            </div>
-
-            <div class="preview_top_right">
-              <% unless @estimate.company.logo_url.blank? %>
-
-                  <div class="company_logo"><%= request.format.pdf? ? (wicked_pdf_image_tag  @estimate.company.logo_url(:thumb)) : (image_tag @estimate.company.logo_url(:thumb)) %></div>
-              <% end %>
-              <div class="company_logo"><%= @estimate.company.company_tag_line %></div>
-            </div>
-
+<div class="invoice_template">
+  <div class="new-invoice-holder">
+    <div class="new-invoice-header clearfix">
+      <h5 class="left">
+        <%= t('estimate') %>: <span><%= @estimate.client.organization_name rescue '' %></span>
+      </h5>
+      <% unless  request.format.pdf? %>
+          <div class="new-invoice-action-btn right">
+            <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"),
+                        {:controller => 'estimates', :action => 'estimate_pdf',
+                         :id => @estimate.encrypted_id, :format => "pdf"},
+                        :target => '_blank', title: t('views.common.pdf') %>
+            <%= link_to raw("<i class='material-icons'>print</i>"),
+                        {:controller => 'estimates', :action => 'estimate_pdf',
+                         :id => @estimate.encrypted_id, :format => "pdf"},
+                        :target => '_blank', title: t('views.common.print') %>
           </div>
-          <!--preview_top-->
-
-
-          <div class="preview_btm">
-
-            <% if @client.present? %>
-                <div class="preview_top_left">
-                  <div class="estimate_name"><%= @client.organization_name rescue '' %></div>
-
-                  <div class="estimate_organization">
-                    <p><%= @client.first_name.to_s + " " +@client.last_name.to_s %></p>
-
-                    <p><%= @client.address_street1 %></p>
-
-                    <p><%= @client.address_street2 %></p>
-
-                    <p><%= [@client.city, "#{@client.province_state } #{@client.postal_zip_code}"].reject(&:blank?).join(",") %></p>
-
-                    <p><%= @client.country %></p>
-                  </div>
-
-                </div>
-            <% end %>
-            <div class="preview_top_right">
-
-              <div class="top_right_row">
-                <div class="preview_right_label"><%= t('estimate')%> # <span>:</span></div>
-                <div class="preview_right_description"><%= @estimate.estimate_number %></div>
-              </div>
-              <!--top_right_row-->
-
-              <div class="top_right_row">
-                <div class="preview_right_label"><%= t('views.estimates.estimate_date')%><span>:</span></div>
-                <div class="preview_right_description"><%= @estimate.estimate_date rescue "" %></div>
-              </div>
-              <!--top_right_row-->
-            </div>
-          </div>
-        </div>
-        <!--preview_content_top-->
-
-        <div class="preview_content_middle">
-          <div class="grid_table">
-            <table cellpadding="0" cellspacing="0">
-              <colgroup>
-                <col class="one"/>
-                <col class="two"/>
-                <col class="three"/>
-                <col class="four"/>
-                <col class="five"/>
-
-              </colgroup>
-              <tr>
-                <th class="align_left"><%= t('views.common.item') %></th>
-                <th class="align_left"><%= t('views.common.description') %></th>
-                <th class="align_right"><%= t('views.common.unit_cost') %></th>
-                <th class="align_right"><%= t('views.items.quantity') %></th>
-                <th class="align_right"><%= t('views.invoices.line_total') %></th>
-              </tr>
-              <% @estimate.estimate_line_items.each do |item|
-                item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-              %>
-                  <tr>
-                    <td class="align_left"><%= item.item_name rescue "" %></td>
-                    <td class="align_left"><%= item.item_description %></td>
-                    <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-                    <td class="align_right"><%= item.item_quantity.to_i %></td>
-                    <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
-                  </tr>
-              <% end %>
-            </table>
-          </div>
-          <!--grid_table-->
-        </div>
-        <!--preview_content_middle-->
-
-        <div class="preview_content_btm">
-          <div class="preview_btm_top">
-
-            <% unless @estimate.notes.blank? %>
-                <div class="preview_left btm">
-                  <div class="preview_notes">
-                    <p class="preview_heading"><%= t('views.common.notes') %></p>
-
-                    <p><%= @estimate.notes %></p>
-                  </div>
-                </div>
-            <% end %>
-            <!--preview_top_left-->
-
-            <div class="preview_right btm">
-              <div class="top_right_row preview_heading">
-                <div class="preview_right_label"> <%= t('views.invoices.subtotal') %> </div>
-                <div class="preview_right_description"><%= number_to_currency(@estimate.sub_total, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
-              </div>
-              <!--top_right_row-->
-
-              <div class="top_right_row">
-                <div class="preview_right_label"><%= t('views.common.discount') %> <%= @estimate.discount_percentage %><%= @estimate.discount_type %></div>
-                <div class="preview_right_description"><%= number_to_currency(@estimate.discount_amount, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
-              </div>
-              <!--top_right_row-->
-              <% currency_unit = @estimate.nil? ? '$' : (@estimate.currency.present? ? @estimate.currency.unit : '$') %>
-              <% for tax, amount in @estimate.tax_detail_with_discount %>
-                  <div class="top_right_row">
-                    <div class="preview_right_label"><%= tax %></div>
-                    <div class="preview_right_description"><%= number_to_currency(amount,unit: currency_unit) %></div>
-                  </div>
-              <% end %>
-
-              <!--top_right_row-->
-
-              <div class="top_right_row preview_heading border-row">
-                <div class="preview_right_label"><%= t('views.common.total') %></div>
-                <div class="preview_right_description"><%= number_to_currency(@estimate.estimate_total, unit: @estimate.currency.present? ? @estimate.currency.unit : '$') %></div>
-              </div>
-              <!--top_right_row-->
-
-
-            </div>
-            <!--preview_top_right-->
-
-          </div>
-          <!--preview_btm_top-->
-          <div class="preview_btm_footer">
-            <ul>
-              <li class="footer_txt"><%= t('views.estimates.this_estimate_was_sent_using')%></li>
-              <li><%= request.format.pdf? ? (wicked_pdf_image_tag "payment_logo.png", :size => "74x13", :alt => "") : (image_tag "payment_logo.png", :size => "74x13", :alt => "") %></li>
-            </ul>
-          </div>
-          <!--preview_btm_footer-->
-        </div>
-        <!--preview_content_btm-->
-      </div>
-      <!--estimate_preview_content-->
+      <% end %>
     </div>
-    <!--estimate_preview_container-->
-  </div>
-  <!--estimate_preview-->
-</div><!--show_estimate-->
+    <div class="info-section clearfix">
+      <div class="info-left-section">
+        <h6><%= @estimate.estimate_number %>: <span><bold><%= @estimate.company.company_name %></bold></span></h6>
+        <span><%= t('estimate') %>: <small> <%= @estimate.estimate_date %></small></span>
+        <div class="paymentInfo">
+          <strong><%= number_to_currency(@estimate.estimate_total, unit: @estimate.currency.code ) %>
+            <select disabled>
+              <option value="1"><%= @estimate.currency.unit %></option>
+            </select>
+          </strong>
+        </div>
+      </div>
+    </div>
+    <div class="new-invoice-table-holder">
+      <% if @estimate.estimate_line_items.present? %>
+          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+              <th class="left-align"><%= t('views.common.item') %></th>
+              <th class="left-align"><%= t('views.common.description') %></th>
+              <th class="right-align"><%= t('views.common.unit_cost') %></th>
+              <th class="right-align"><%= t('views.items.quantity') %></th>
+              <th class="right-align"><%= t('views.invoices.line_total') %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @estimate.estimate_line_items.each do |item|
+              item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+            %>
+                <tr>
+                  <td class="left-align"><%= item.item_name rescue "" %></td>
+                  <td class="left-align"><%= item.item_description %></td>
+                  <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                  <td class="right-align"><%= item.item_quantity.to_i %></td>
+                  <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+      <% end %>
+    </div>
+    <div class="new-invoice-footer">
+      <div class="right-section right">
+        <div class="invoice-total-left">
+          <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
+          <% if @estimate.discount_percentage.present? %>
+              <div class="new-invoice-footer-row">
+                <span><%= t('views.common.discount') %></span>
+                <select class="inline-select small-select" disabled>
+                  <option value="1"><%= @estimate.discount_percentage %><%= @estimate.discount_type %></option>
+                </select>
+              </div>
+          <% end %>
+          <% @estimate.tax_detail_with_discount.each do |tax, amount| %>
+            <div class="new-invoice-footer-row invicetax">
+              <span style="float: right;"><%= tax %></span>
+            </div>
+          <% end %>
+
+          <hr />
+          <strong class="invoice-total-title"><%= t('views.common.total') %></strong>
+        </div>
+        <div class="invoice-total-right">
+          <strong class="invoice-total-title"><%=  @estimate.currency.unit %> <span><%= number_to_currency(@estimate.sub_total, unit: '' ) %></span></strong>
+
+          <% if @estimate.discount_percentage.present? %>
+              <div class="new-invoice-footer-row">
+                <span><%=  @estimate.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(@estimate.discount_amount, unit: '' )%></em>
+              </div>
+          <% end %>
+
+          <% @estimate.tax_detail_with_discount.each do |tax, amount| %>
+              <div class="new-invoice-footer-row invicetax">
+                <span><%=  @estimate.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(amount, unit: '' )%></em>
+              </div>
+          <% end %>
+
+          <hr />
+          <strong class="invoice-total-title">
+            <%= @estimate.currency.unit %> <span><%= number_to_currency(@estimate.estimate_total, unit: '' ) %></span>
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div><!--content_top-->
+</div>
