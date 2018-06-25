@@ -4968,3 +4968,12 @@ input[type=text]{
 }
 
 .invoice-total-right .new-invoice-footer-row:not(.invicetax) {  padding-bottom: 10px !important;  }
+
+@media (min-width: 768px) {
+  .notes-section {
+    margin-bottom: -20px;
+    margin-left: -20px;
+    padding-top: 15px;
+  }
+}
+.notes-section { text-align: left !important; }

@@ -94,6 +94,11 @@
               </div>
             </div>
           </div>
+          <div class="left-section left notes-section clearfix">
+            <strong><%= t('views.common.notes') %>: </strong> <%= @invoice.notes %>
+          </div>
+        </div>
+        <div class="modal-footer clearfix">
           <div class="left-section left">
             <p><%= t('views.invoices.this_invoice_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
           </div>
