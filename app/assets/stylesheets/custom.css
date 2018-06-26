@@ -638,8 +638,8 @@ form .select-wrapper .dropdown-content {
     padding-top: 15px;
 }
 .new-invoice-holder .inline-select.select-wrapper.payment-term-dropdown .caret{
-    bottom: 15px;
-    width: 128px;
+    bottom: 20px;
+    left: 60px;
 }
 .inline-select.payment-term-dropdown .dropdown-content{
     min-width: 130px;
