@@ -117,7 +117,7 @@ class @Invoice
 
   @change_invoice_item  = ->
     $('.invoice_grid_fields select.items_list').on 'change', ->
-      hidePopover($("table#invoice_grid_fields tr.fields:visible:first"));
+      hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
       elem = undefined
       elem = $(this)
       if elem.val() == ''
@@ -294,10 +294,6 @@ class @Invoice
       setTimeout (->
         updateInvoiceTotal()
       ), 100
-    $('#invoice_grid_fields tbody').sortable
-      handle: '.sort_icon'
-      items: 'tr.fields'
-      axis: 'y'
     $('#invoice_payment_terms_id').unbind 'change'
     $('#invoice_payment_terms_id').change ->
       number_of_days = undefined
@@ -313,6 +309,8 @@ class @Invoice
 
     $("#invoice_client_id").change ->
       hidePopover($("#invoice_client_id").parents('.select-wrapper'));
+    $("#invoice_due_date_picker").change ->
+      hidePopover($("#invoice_due_date_picker"));
     # Change currency of invoice
     $("#invoice_currency_id").unbind 'change'
     $("#invoice_currency_id").change ->
@@ -320,7 +318,8 @@ class @Invoice
       hidePopover($("#invoice_currency_id_chzn")) if currency_id is ""
       if not currency_id? or currency_id isnt ""
         $.get('/invoices/selected_currency?currency_id='+ currency_id)
-
+    $('#add_line_item').click ->
+      hidePopover($('#add_line_item'))
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
       invoice_date_value = new Date(DateFormats.get_original_date($("#invoice_invoice_date").val()))
@@ -404,8 +403,6 @@ jQuery ->
     onClose: ->
       custom_option = $('.payment-term-dropdown').find('li:last')
       custom_option.trigger('click') if custom_option.text() is "Custom"
-
-
 
   jQuery('body').on "click", '#select_all', ->
     listing_table =  jQuery(this).parents('table.bordered')
