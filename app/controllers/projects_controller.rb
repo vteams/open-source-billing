@@ -35,6 +35,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+    managers = load_managers_for_project('new', get_company_id, nil)
+    redirect_to staffs_path, alert: t('views.projects.staff_required_msg') and return if managers.count <= 0
     params[:status] = params[:status] || 'active'
     @status = params[:status]
     load_projects
