@@ -853,6 +853,7 @@ en:
       select_a_client: "Select a client"
       select_a_manager: "Select a manager"
       estimate_should_be_greater_than_zero: "Time Estimate should be equal or greater than zero"
+      project_time_log_tooltip: "Time logged will automatically be calculated on the basis of project task's spent time."
 
     import_data:
       import_data: "Import Data"
