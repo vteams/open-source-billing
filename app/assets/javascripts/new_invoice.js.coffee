@@ -49,7 +49,7 @@ class @Invoice
     $('#tax_amount_lbl').text tax_amount.toFixed(2)
     $('#invoice_tax_amount').val tax_amount.toFixed(2)
     $('#invoice_discount_amount').val (discount_amount * -1).toFixed(2)
-    total_balance = parseFloat($('#invoice_total_lbl').text() - discount_amount) + tax_amount
+    total_balance = parseFloat($('#invoice_total_lbl').text() - discount_amount)
 
     if $('#invoice_tax_id').val() != ""
       invoice_tax_amount = getInvoiceTax(total_balance).toFixed(2)
@@ -58,7 +58,7 @@ class @Invoice
       $("#invoice_invoice_tax_amount").val invoice_tax_amount
 
     invoice_tax_amount = parseFloat(invoice_tax_amount)
-    total_balance += invoice_tax_amount
+    total_balance += (invoice_tax_amount + tax_amount)
     $('#invoice_invoice_total').val total_balance.toFixed(2)
     $('#invoice_total_lbl').text total_balance.toFixed(2)
     $('.invoice_total_strong').html total_balance.toFixed(2)
