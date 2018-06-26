@@ -1719,7 +1719,7 @@ h6 {
   border-bottom: none; }
 .modal .modal-body table tr {
   border-color: #e5e5e5; }
-.modal .modal-body table tr th {
+.modal .modal-body table:not(.picker__table) tr th {
   border-right: 1px solid #fff;
   background-color: #ececec;
   padding: 10px 12px;
@@ -1728,7 +1728,7 @@ h6 {
   font-size: 12px; }
 .modal .modal-body table tr th:last-child {
   border: none; }
-.modal .modal-body table tr td {
+.modal .modal-body table:not(.picker__table) tr td {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px;
   padding: 10px 12px; }
@@ -1865,7 +1865,9 @@ h6 {
 .modal.editableModal .input-field input[type=text],
 .modal.editableModal .input-field input[type=number],
 .modal.editableModal .input-field input[type=email],
-.modal.editableModal .input-field input[type=password] {
+.modal.editableModal .input-field input[type=password],
+.modal.editableModal .input-field textarea.materialize-textarea,
+.modal.taskModal .input-field textarea.materialize-textarea {
   height:  2.6rem;
   font-size: 14px;
   color: #454545;
@@ -4980,3 +4982,6 @@ input[type=text]{
 .footer-signature {
   margin-bottom: 10px;
 }
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {  box-shadow: none;  }
+.modal.viewModal.taskModal .input-field label { top: 5px; }
+input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !important; }
