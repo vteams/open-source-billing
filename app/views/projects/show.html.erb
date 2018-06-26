@@ -10,6 +10,8 @@
             <%= t('views.projects.project_detail') %>
           </h3>
           <div class="page-action-btn-group">
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_task')}'>assignment</i>"), new_project_project_task_path(@project), remote: true %>
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_staff')}'>person</i>"), new_staff_path(project_id: @project.id), remote: true %>
             <a href="#" class="edit-detail"><i class="material-icons" title="<%= t('helpers.links.edit') %>">create</i></a>
             <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 

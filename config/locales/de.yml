@@ -788,6 +788,8 @@ de:
       select_a_client: "Wählen Sie einen Kunden aus"
       select_a_manager: "Wählen Sie einen manager"
       estimate_should_be_greater_than_zero: "Die Zeitschätzung sollte gleich oder größer als Null sein"
+      project_time_log_tooltip: "Die geloggte Zeit wird automatisch auf der Grundlage der Projektaufgaben berechnet, die für die Zeit benötigt werden."
+      staff_required_msg: 'Bitte erstellen Sie zunächst Mitarbeiter, um ein Projekt zu erstellen.'
 
     import_data:
       import_data: "Daten importieren"

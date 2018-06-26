@@ -76,6 +76,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.save
         Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
+        @payment.notify_client(current_user) if params[:payment] && params[:payment][:send_payment_notification]
         format.html { redirect_to payments_path, :notice => t('views.payments.saved_msg') }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else

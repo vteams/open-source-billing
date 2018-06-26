@@ -203,10 +203,6 @@ class @Project
         hidePopover($("#project_task_hours"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
         flag = false
-      else if $("#project_task_spent_time").val() is ""
-        hidePopover($("#project_task_hours"))
-        applyPopover($("#project_task_spent_time"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_spent_time"))
-        flag = false
       else if $("#project_task_spent_time").val() < 0
         hidePopover($("#project_task_hours"))
         hidePopover($("#project_task_spent_time"))

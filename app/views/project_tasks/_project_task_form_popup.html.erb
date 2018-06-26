@@ -37,10 +37,10 @@
                                               placeholder: t('views.tasks.description') }, as: :text %>
                     <%= render 'date_fields', f: f, task: task %>
                     <%= f.input :hours, label: t('views.tasks.hours'), label_html: { class: 'placeholder-position active'},
-                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker titlebold'}, as: :float %>
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker titlebold'}, input_html: {min: 0}, as: :float %>
                     <%= f.input :spent_time, label: t('views.tasks.spent_time'), label_html: { class: 'placeholder-position active'},
-                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6 datepicker titlebold'}, as: :float %>
-                    <%= f.input :rate, label: t('views.tasks.rate_'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6 datepicker titlebold'}, input_html: {min: 0}, as: :float %>
+                    <%= f.input :rate, label: t('views.tasks.rate_'), label_html: { class: 'placeholder-position active'}, input_html: {min: 0},
                                 wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position'}, as: :float %>
                   </div>
                 </div>

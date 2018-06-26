@@ -784,6 +784,8 @@ fr:
       select_a_client: "Sélectionnez un client"
       select_a_manager: "Sélectionnez un manager"
       estimate_should_be_greater_than_zero: "L'estimation du temps devrait être égale ou supérieure à zéro"
+      project_time_log_tooltip: "L'heure enregistrée sera automatiquement calculée sur la base des tâches du projet."
+      staff_required_msg: "Veuillez d'abord créer un membre du personnel pour créer un projet."
 
     import_data:
       import_data: "Importer des données"
