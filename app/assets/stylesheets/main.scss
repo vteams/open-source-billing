@@ -1747,7 +1747,7 @@ h6 {
 .modal .modal-footer .left-section p {
   font-size: 9px;
   position: absolute;
-  bottom: 0px; }
+  bottom: 10px; }
 .modal .modal-footer .left-section img {
   vertical-align: middle; }
 .modal .modal-footer .right-section {
@@ -4973,4 +4973,10 @@ input[type=text]{
     padding-top: 15px;
   }
 }
-.notes-section { text-align: left !important; }
+.notes-section {
+  text-align: left !important;
+  font-size: 12px;
+}
+.footer-signature {
+  margin-bottom: 10px;
+}
