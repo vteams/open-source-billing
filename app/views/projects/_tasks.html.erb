@@ -22,7 +22,9 @@
       <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task),
                   class: 'edit-modal', title: t('helpers.links.edit'), remote: true %>
       <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task),
-                  method: :delete, data:{confirm: t('helpers.messages.confirm') }, title: t('helpers.links.delete') %>
+                  method: :delete, data:{confirm: t('helpers.messages.confirm'),
+                                         success: t('views.tasks.destroyed_msg'),
+                                         redirect: project_path(@project) }, title: t('helpers.links.delete') %>
     </div>
   </div>
 </div>

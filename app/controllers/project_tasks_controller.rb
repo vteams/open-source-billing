@@ -30,7 +30,11 @@ class ProjectTasksController < ApplicationController
   
   def destroy
     @project_task.destroy
-    redirect_to :back, notice: 'Project Task was successfully destroyed.'
+
+    respond_to do |format|
+      format.html { redirect_to project_path(@project.id) }
+      format.json { head :no_content }
+    end
   end
 
   private
