@@ -87,7 +87,7 @@ class @Estimate
 
   @change_estimate_item  = ->
     $('.estimate_grid_fields select.items_list').on 'change', ->
-      hidePopover($("table#estimate_grid_fields tr.fields:visible:first"));
+      hidePopover($("table#estimate_grid_fields tr.fields:visible:first td:nth-child(2)"))
       elem = $(this)
       if elem.val() == ''
         clearLineTotal elem
@@ -240,10 +240,6 @@ class @Estimate
       setTimeout (->
         updateInvoiceTotal()
       ), 100
-    $('#estimate_grid_fields tbody').sortable
-      handle: '.sort_icon'
-      items: 'tr.fields'
-      axis: 'y'
     $('#estimate_payment_terms_id').unbind 'change'
     $('#estimate_payment_terms_id').change ->
       number_of_days = undefined
@@ -259,6 +255,8 @@ class @Estimate
 
     $("#estimate_client_id").change ->
       hidePopover($("#estimate_client_id").parents('.select-wrapper'));
+    $("#add_line_item").click ->
+      hidePopover($("#add_line_item"))
     # Change currency of estimate
     $("#estimate_currency_id").unbind 'change'
     $("#estimate_currency_id").change ->
