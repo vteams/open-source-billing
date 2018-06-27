@@ -146,6 +146,7 @@ class LogsController < ApplicationController
   def create_invoice
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.payment_terms_id = PaymentTerm.where(description: 'Custom').first.id
     @invoice.company_id = get_company_id
     respond_to do |format|
       if @invoice.save
