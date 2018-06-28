@@ -727,3 +727,9 @@ input[type=number]:focus:not([readonly]){
     border-bottom: none;
     box-shadow: none;
 }
+.italic-text{
+    font-style: italic !important;
+}
+.block{
+    display: inline-block !important;
+}

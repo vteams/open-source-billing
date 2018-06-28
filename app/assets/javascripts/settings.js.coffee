@@ -77,6 +77,16 @@
 
   @SubUser.init_settings_form()
 
+  setTimeout (->
+    # made italic to the date formats samples in drop down
+    $('.settings_date_format .date-formats ul li').each (index, li) ->
+      date_format_str = this.innerText.split(' ')
+      $(li).html($("<span class='block'></span>")
+        .append(date_format_str[0])
+        .append($("<span class='red1 italic-text block'></span>")
+        .append(date_format_str[1])));
+  ), 1
+
 @initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
