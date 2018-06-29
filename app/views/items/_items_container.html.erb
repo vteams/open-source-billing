@@ -1,8 +1,1 @@
-<% @items.group_by { |d| d.group_date }.each do |date, items| %>
-    <p><span class="activity-date"><%= date %></span></p>
-    <div class="flex-wrapper">
-      <%= render partial: 'items', collection: items, as: :item %>
-    </div>
-<% end %>
-<%= page_entries_info @items %>
-<%= paginate @items %>
+<%= render render_card_view? ? 'card_view' : 'table_view' %>
