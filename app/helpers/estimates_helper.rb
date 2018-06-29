@@ -223,4 +223,12 @@ module EstimatesHelper
       (@client.present? ? @client.currency_id : estimate.currency_id)
     end
   end
+
+  def activities_estimates_path(status)
+    estimates_path(estimate_params(per: @per_page, status: status))
+  end
+
+  def estimate_params(params)
+    params.except(:page).slice(:per, :company_id, :sort, :direction).merge(params)
+  end
 end
