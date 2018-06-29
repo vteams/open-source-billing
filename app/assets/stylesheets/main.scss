@@ -1389,7 +1389,7 @@ h6 {
     opacity: 0; }
 }
 .card-white-panel .action-btn-group a {
-  color: #b9b9b9; }
+  color: #a6a6a6; }
 .card-white-panel .action-btn-group a i {
   font-size: 17px; }
 .card-white-panel .action-btn-group a:hover {
@@ -4042,17 +4042,17 @@ html {
   margin: 0 0 0 -3px; }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table thead {
   border: 0; }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table thead th:first-child {
+.new-invoice-holder .new-invoice-table-holder.main-invoice table:not(.grid-view) thead th:first-child {
   width: 35px;
   background-color: transparent;
   border: 0; }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table tr {
   border: 0; }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table td {
+.new-invoice-holder .new-invoice-table-holder.main-invoice table:not(.grid-view) td {
   border-bottom: 1px solid #d0d0d0;
   font-size: 13px;
   padding: 0 13px; }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table td:first-child {
+.new-invoice-holder .new-invoice-table-holder.main-invoice table:not(.grid-view) td:first-child {
   width: 33px;
   background-color: transparent;
   border: 0;
@@ -4942,12 +4942,10 @@ input[type=text]{
     font-size: 0.8rem;
   }
 }
-.basic-setting .card-white-panel > .row .col:nth-child(1) {
-  width: 120px;
-}
-
-.basic-setting .card-white-panel > .row .col:nth-child(2) {
-  width: 130px;
+.basic-setting .card-white-panel > .row .col:nth-child(1) {  width: 120px;  }
+.basic-setting .card-white-panel > .row .col:nth-child(2) {  width: 130px;  }
+@media (min-width: 470px) {
+  .basic-setting .card-white-panel > .row .col:nth-child(3) {  width: 130px;  }
 }
 
 @media (max-width: 360px) {

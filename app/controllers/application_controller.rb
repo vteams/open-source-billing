@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
     elem.where("#{tbl}.company_id IN(?)", get_company_id())
   end
 
-  helper_method :filter_by_company
+  helper_method :filter_by_company, :render_card_view?
 
   def new_selected_company_name
     session['current_company'] = params[:company_id]
@@ -176,6 +176,11 @@ class ApplicationController < ActionController::Base
     else
       render json: {}
     end
+  end
+
+  def render_card_view?
+    params[:view] ||= current_user.settings.index_page_format || 'card'
+    params[:view] == 'card'
   end
 
   protected

@@ -1,0 +1,64 @@
+// Styling related to listing table views
+
+.new-invoice-holder {
+  .new-invoice-table-holder {
+    table.grid-view { border: 1px solid #dadada; }
+    table.grid-view th {  border-right: 1px solid #dadada; }
+    //table.grid-view td {  border-right: 1px solid #dadada; }
+    table.grid-view tr:hover {  background-color: #f2f2f2; }
+    &.page-box { padding: 30px; }
+    &.main-invoice table.grid-view {
+      thead tr th { font-size: 13px; }
+      tbody tr td { font-size: 12px; }
+    }
+  }
+
+  .paginate-info {
+    padding: 0 30px 20px;
+    font-size: 12px;
+  }
+
+}
+
+// Styling for icons in breadcrumb to switch page layout
+.with-grid-icons {
+  width: 100%;
+
+  .right a {
+    &.active i { color: #09b8e2; }
+    i { color: #a6a6a6; }
+    i:hover { color: #09b8e2; }
+  }
+}
+
+// table body styling
+.table-view-body {
+  td {
+    line-height: 35px;
+    td:last-child { text-align: center; }
+
+    i {
+      font-size: 16px;
+      color: #a6a6a6;
+
+      &:hover{  color: #09b8e2;  }
+    }
+
+    ul.dropdown-content.z-depth-4 {
+      min-width: 150px;
+
+      li a {
+        font-size: 12px;
+        i {
+          font-size: 16px;
+          color: #a6a6a6;
+          vertical-align: bottom;
+        }
+
+        &:hover {
+          i {  color: #09b8e2;  }
+        }
+      }
+    }
+  }
+}

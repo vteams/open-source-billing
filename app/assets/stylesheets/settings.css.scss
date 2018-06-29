@@ -1,22 +1,2 @@
-a.btn.active.btn-danger, a.btn.active.btn-success {
-  color: #ffffff;
-  background-color: #00BDE5;
-}
-a.btn.btn-default {
-  color: #000000;
-  background-color: #FFFFFF;
-  background-position: 0px;
-  z-index: 0;
-}
-.fields_content_container{
-  &.basic{
-    width: 500px;
-    select{
-      width: 350px;
-    }
-  }
-}
-
-#import_links{padding:30px}
-#fb_link,#qb_link{float: left; width: 100px; margin: 20px 0 0 20px}
-#qb_link {padding-top:10px}
+// Styling for Setting page
+.no_index_page_format{ text-align: right !important; }

@@ -1,8 +1,5 @@
-<% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
-  <p><span class="activity-date"><%= date %></span></p>
-  <div class="flex-wrapper">
-    <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
-  </div>
+<% if render_card_view? %>
+  <%= render 'grid_view' %>
+<% else %>
+    <%= render 'table_view' %>
 <% end %>
-<%= page_entries_info @invoices %>
-<%= paginate @invoices %>

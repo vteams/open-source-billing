@@ -165,6 +165,7 @@ jQuery(function () {
                 }
             });
         });
+        $('.sent,.partial,.draft,.draft-partial,.paid,.disputed,.viewed').qtip();
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})

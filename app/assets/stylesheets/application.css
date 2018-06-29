@@ -45,13 +45,14 @@
  *= recurring_profile.css.scss
  *= show_email.css.scss
  *= bootstrap_switch.css
- *= settings.css.scss
+ *= require settings.css.scss
  *= project.css.scss
  *= require fullcalendar
  *= require custom
  *= require select2.min
  *= require search
  *= require currency-flags
+ *= require table_view.css.scss
 */
 
 .fix-left-and-opacity {

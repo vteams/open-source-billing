@@ -25,6 +25,11 @@ class SettingsController < ApplicationController
     if params[:default_currency].present?
       user.settings.default_currency = params[:default_currency]
     end
+    if params[:index_page_format].present? && params[:index_page_format].eql?('card')
+      user.settings.index_page_format = 'card'
+    else
+      user.settings.index_page_format = 'table'
+    end
     respond_to { |format| format.js }
   end
 

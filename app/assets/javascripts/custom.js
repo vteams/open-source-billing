@@ -74,7 +74,7 @@ $(document).ready(function(){
     //---Checkbox Items
     $('.checkbox-item > input[type="checkbox"]').on('change', function () {
         if(!$('.checkbox-item').hasClass('inline_team_member')){
-            var n = $( "input[type='checkbox']:checked" ).length;
+            var n = $( "input:not(#select_all_items)[type='checkbox']:checked" ).length;
             if ($(this).is(':checked')){
                 $('#header').addClass("chkbox-content");
                 $(".header-right").addClass("chekbox-show");
@@ -99,6 +99,7 @@ $(document).ready(function(){
 
                     $('.checkboxinfo .action-btn-group .edit').show();
                     $('.checkboxinfo .action-btn-group .send').show();
+                    $('#select_all_items').removeProp('checked');
                 }
                 if(n == 1){
                     $('.checkboxinfo .action-btn-group .edit').show();
@@ -110,7 +111,37 @@ $(document).ready(function(){
         }
 
     });
-    
+
+    // Select All Items Checkbox Click
+    $('.checkbox-item > input#select_all_items[type="checkbox"]').on('change', function () {
+      if($('#select_all_items').is(":checked")) {
+        $('.checkbox-item > input[type="checkbox"]').prop('checked', 'checked');
+        var n = $( "input:not(#select_all_items)[type='checkbox']:checked" ).length;
+
+        $('#header').addClass("chkbox-content");
+        $(".header-right").addClass("chekbox-show");
+        $('.checkbox-item').find('.invoice-name').css('opacity', '0');
+        $('.checkbox-item').find('label').css('opacity', '1');
+        $('.search-holder form').hide();
+        $('.card-white-panel .action-btn-group').hide();
+        $('.checkboxinfo').show();
+        $('.checkboxinfo .action-btn-group .send').show();
+        $( ".chk-text" ).text(n + ' ' + I18n.t('views.common.selected'));
+      } else {
+        $('.checkbox-item > input[type="checkbox"]').removeProp('checked');
+        $('#header').addClass("chkbox-content");
+        $('.action-btn-group').hide();
+        $('.checkboxinfo .action-btn-group').show();
+        $('.card-white-panel .action-btn-group').show();
+        $('.checkbox-item').find('.invoice-name').css('opacity', '1');
+        $('.checkbox-item').find('label').css('opacity', '0');
+        $(".header-right").removeClass("chekbox-show");
+        $('#header').removeClass("chkbox-content");
+        $('.checkboxinfo .action-btn-group .edit').show();
+        $('.checkboxinfo .action-btn-group .send').show();
+      }
+    });
+
     $(".checkbox-item").on("click", function(e){
         e.stopImmediatePropagation();
     });
@@ -192,6 +223,18 @@ $(document).ready(function(){
         $("a.side_nav_opened").removeClass('active bold-white-txt');
         $(this).addClass('active bold-white-txt');
         $("input#side_nav_opened").attr('checked', false).val('Close');
+    });
+
+    $("a.index_page_format").click(function(){
+        $("a.no_index_page_format").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
+        $("input#index_page_format").attr('checked', 'checked').val('card');
+    });
+
+    $("a.no_index_page_format").click(function(){
+        $("a.index_page_format").removeClass('active bold-white-txt');
+        $(this).addClass('active bold-white-txt');
+        $("input#index_page_format").attr('checked', false).val('table');
     });
 
     $('#invoices-list #radioBtn a').on('click', function(){
