@@ -662,6 +662,9 @@ fr:
       import_data: "Importer des données"
       updated_msg: "Les paramètres sont mis à jour avec succès."
       currency_updated_msg_html: "La devise a été mise à jour vers <strong>%{unit}</strong> avec succès."
+      index_page_format: "Format de la page d'index"
+      card: "Carte"
+      table: "Table"
 
     companies:
       companies: "sociétés"

@@ -37,14 +37,14 @@
             </div>
             <div class="col s12 m4 xl4">
               <div class="setting-btns">
-                <span><%= 'Index Page Format' %></span>
+                <span><%= t('views.settings.index_page_format') %></span>
 
                 <% show_card_view = current_user.settings.index_page_format == 'card' %>
                 <%= check_box_tag 'index_page_format', show_card_view ? 'card' : 'table',  checked: show_card_view %>
 
                 <div id="radioBtn" class="btn-group index_page_format_btn">
-                  <a class="btn btn-primary btn-sm index_page_format <%= "#{'active bold-white-txt' if show_card_view}" %>"><%= 'Card' %></a>
-                  <a class="btn btn-primary btn-sm no_index_page_format <%= "#{'active bold-white-txt' unless show_card_view}" %>"><%= 'Table' %></a>
+                  <a class="btn btn-primary btn-sm index_page_format <%= "#{'active bold-white-txt' if show_card_view}" %>"><%= t('views.settings.card') %></a>
+                  <a class="btn btn-primary btn-sm no_index_page_format <%= "#{'active bold-white-txt' unless show_card_view}" %>"><%= t('views.settings.table') %></a>
                 </div>
               </div>
             </div>

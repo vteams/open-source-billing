@@ -667,6 +667,9 @@ pt-BR:
       import_data: "Importar dados"
       updated_msg: "As configurações são atualizadas com sucesso."
       currency_updated_msg_html: "Moeda foi atualizada para <strong>%{unit}</strong> com sucesso."
+      index_page_format: "Formato da Página de Índice"
+      card: "Cartão"
+      table: "Mesa"
 
     companies:
       companies: "Empresas"
