@@ -1,0 +1,54 @@
+<div class="new-invoice-holder">
+  <div class="new-invoice-table-holder main-invoice page-box">
+    <table class="bordered grid-view">
+      <thead>
+      <tr>
+        <th class="align_center td-checkbox checkbox-item">
+          <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+        </th>
+        <th><%= t('invoice') %></th>
+        <th><%= t('client') %></th>
+        <th><%= t('views.payments.payment_date') %></th>
+        <th><%= t('views.common.type') %></th>
+        <th><%= t('views.invoices.amount_paid') %></th>
+        <th class="center-align"><%= t('helpers.actions') %></th>
+      </tr>
+      </thead>
+      <tbody class="table-view-body">
+      <% @payments.each do |payment| %>
+          <tr>
+            <td class="align_center td-checkbox checkbox-item">
+              <%= check_box_tag 'payment_ids[]', payment.id, false, :id => "payment_#{payment.id}", class: 'fix-left-and-opacity' %>
+            </td>
+            <td>
+              <strong><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></strong>
+            </td>
+            <td><%= payment.unscoped_client.organization_name rescue '' %></td>
+            <td><%= payment.payment_date rescue "" %></td>
+            <td>
+              <% type = payment.payment_method ? payment.payment_method.parameterize.underscore : ((payment.payment_type.parameterize.underscore if payment.payment_type.present?)  || '') %>
+              <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if type.present? %></span>
+            </td>
+            <td>
+              <em>
+                <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
+              </em>
+            </td>
+            <td>
+              <% unless payment.payment_type == "credit" %>
+                  <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete,
+                              data:{ confirm: t('helpers.messages.confirm'),
+                                     success: t('views.payments.bulk_deleted_msg')},
+                              title: t('helpers.links.delete') %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="paginate-info">
+    <%= page_entries_info @payments %>
+    <%= paginate @payments %>
+  </div>
+</div>

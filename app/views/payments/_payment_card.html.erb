@@ -17,7 +17,7 @@
       <div class="card-footer clearfix">
         <span class="invoice-date"><small><%= t('views.payments.payment_date') %>:</small> <%= payment.payment_date rescue "" %></span>
         <% type = payment.payment_method ? payment.payment_method.parameterize.underscore : ((payment.payment_type.parameterize.underscore if payment.payment_type.present?)  || '') %>
-        <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if payment.payment_type.present?%></span>
+        <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if type.present? %></span>
       </div>
     </div>
 
