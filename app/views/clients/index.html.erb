@@ -6,9 +6,10 @@
     <!--- breadcrum Bar --->
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel ">
-        <h3>
+        <h3 class="with-grid-icons">
           <span><%= link_to t('views.clients.clients'), clients_path %></span>
           <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(clients_path(view: 'card'), clients_path(view: 'table')) %>
         </h3>
       </div>
     </div>
@@ -16,7 +17,9 @@
 
   <div class="invoice-box client-box mCustomScrollbar clearfix">
     <%= form_tag "clients/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
-        <div class="search_result_container"><%= render 'clients_container'%> </div>
+        <div class="search_result_container">
+          <%= render 'clients_container' %>
+        </div>
         <%= render partial: 'bulk_actions'%>
     <% end %>
   </div>
