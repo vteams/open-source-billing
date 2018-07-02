@@ -24,6 +24,14 @@
 .with-grid-icons {
   width: 100%;
 
+  a.plus-add-icon {
+    i {
+      color: #a6a6a6;
+      vertical-align: bottom;
+      line-height: inherit;
+      &hover { color: #09b8e2; }
+    }
+  }
   .right a {
     &.active i { color: #09b8e2; }
     i { color: #a6a6a6; }

@@ -1,12 +1,5 @@
 <% if @projects %>
-    <% @projects.group_by { |d| d.group_date }.each do |date, projects| %>
-        <p><span class="activity-date"><%= date %></span></p>
-        <div class="flex-wrapper">
-          <%= render partial: 'project_card', collection: projects, as: :project %>
-        </div>
-    <% end %>
-    <%= page_entries_info @projects %>
-    <%= paginate @projects %>
+  <%= render render_card_view? ? 'card_view' : 'table_view' %>
 <% else %>
-    <%= raw(t('helpers.page_entries_info.one_page.display_entries', count: 0)) %>
+  <%= raw(t('helpers.page_entries_info.one_page.display_entries', count: 0)) %>
 <% end %>
