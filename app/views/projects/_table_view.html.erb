@@ -20,7 +20,7 @@
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'project_ids[]', project.id, false, id: "project_#{project.id}", class: 'fix-left-and-opacity' %>
             </td>
-            <td><strong><%= link_to_if !@status.eql?('deleted'), project.project_name, project, remote: true %></strong></td>
+            <td><strong><%= link_to_if !@status.eql?('deleted'), project.project_name, project %></strong></td>
             <td><%= project.unscoped_client.organization_name rescue '' %></td>
             <td><%= project.manager.try(:name)%></td>
             <td><%= project.total_hours %> <small>HRS</small></td>

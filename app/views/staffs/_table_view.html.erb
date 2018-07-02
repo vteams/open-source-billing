@@ -1,0 +1,56 @@
+<div class="new-invoice-holder">
+  <div class="new-invoice-table-holder main-invoice page-box">
+    <table class="bordered grid-view">
+      <thead>
+      <tr>
+        <th class="align_center td-checkbox checkbox-item">
+          <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+        </th>
+        <th><%= t('views.common.name') %></th>
+        <th><%= t('views.common.email') %></th>
+        <th><%= t('views.tasks.rate_') %></th>
+        <th class="center-align"><%= t('helpers.actions') %></th>
+      </tr>
+      </thead>
+      <tbody class="table-view-body">
+      <% @staffs.each do |staff| %>
+          <tr>
+            <td class="align_center td-checkbox checkbox-item">
+              <%= check_box_tag 'staff_ids[]', staff.id, false, :id => "staff_#{staff.id}", class: 'fix-left-and-opacity' %>
+            </td>
+            <td><strong><%= link_to_if !@status.eql?('deleted'), staff.name, staff, remote: true %></strong></td>
+            <td><%= staff.email %></td>
+            <td><%= "#{default_currency_unit}"  "#{staff.rate}" %> <small>HRS</small></td>
+            <td>
+              <% if @status.eql?('deleted') %>
+                  <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+              <% else %>
+                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_staff_path(staff), remote: true,
+                              class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                  <%= link_to raw("<i class='material-icons'>delete</i>"),staff, method: :delete,
+                              data:{ confirm: t('helpers.messages.confirm'),
+                                     success: t('views.staffs.destroyed_msg') },
+                              title: t('helpers.links.delete') %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= staff.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= staff.id %>" class='dropdown-content z-depth-4'>
+                    <% if @status.eql?('active') %>
+                        <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+                    <% elsif @status.eql?('archived') %>
+                        <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+                    <% end %>
+                  </ul>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="paginate-info">
+    <%= page_entries_info @staffs %>
+    <%= paginate @staffs %>
+  </div>
+</div>
