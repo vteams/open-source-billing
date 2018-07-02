@@ -87,6 +87,13 @@
         .append(date_format_str[1])));
   ), 1
 
+  selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
+  $('.settings_date_format .date-formats input').val(selected_format)
+
+  $(".settings_date_format select.date-formats").on "change", ->
+    selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
+    $('.settings_date_format .date-formats input').val(selected_format)
+
 @initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
