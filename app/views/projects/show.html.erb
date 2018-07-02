@@ -54,27 +54,19 @@
               <div class="btn-inline right">
                 <!--ToDo-->
                 <!-- Followings action actions will be implements later. -->
-                <div class="btn-icons hidden">
-                  <a href="#"><i class="material-icons">date_range</i></a>
-                  <a href="#" class="active"><i class="material-icons">view_module</i></a>
-                  <a href="#"><i class="material-icons">view_list</i></a>
+                <div class="btn-icons">
+                  <a href="<%= project_path(@project, view: 'card', group: params[:group]) %>" class="<%= 'active' if render_card_view? %>"><i class="material-icons">view_comfy</i></a>
+                  <a href="<%= project_path(@project, view: 'table', group: params[:group]) %>" class="<%= 'active' unless render_card_view? %>"><i class="material-icons">view_list</i></a>
                 </div>
                 <div class="btn-calender">
-                  <a href='<%= project_path(@project, group: :day) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
-                  <a href="<%= project_path(@project, group: :week) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
-                  <a href="<%= project_path(@project) %>" class="<%= 'active' unless params[:group].present? %>"><%= t('views.tasks.month') %></a>
+                  <a href='<%= project_path(@project, group: :day, view: params[:view]) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
+                  <a href="<%= project_path(@project, group: :week, view: params[:view]) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
+                  <a href="<%= project_path(@project, view: params[:view]) %>" class="<%= 'active' unless params[:group].present? %>"><%= t('views.tasks.month') %></a>
                 </div>
               </div>
             </div>
             <!--- task Card --->
-            <% @project_tasks.group_by { |d| d.group_date(project_task_date_format) }.each do |date, tasks| %>
-                <p>
-                  <span class="activity-date"><%= params[:group] == 'week' ? month_date_range(date) : date %></span>
-                </p>
-                <div class="flex-wrapper">
-                  <%= render partial: 'tasks', collection: tasks, as: :task %>
-                </div>
-            <% end %>
+            <%= render render_card_view? ? 'task_card_view' : 'task_table_view' %>
           </div>
         </div>
       </div>

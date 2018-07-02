@@ -44,6 +44,16 @@
     position: relative;
     top: 5px;
   }
+  tr.table-group-heading th {
+    padding: 0 13px;
+    margin: 5px 0;
+    border-bottom: 1px solid #dadada;
+    border-top: 1px solid #dadada;
+    background-color: #E2F4F9;
+    span.activity-date {
+      margin: 5px 0;
+    }
+  }
   td {
     padding: 13px !important;
     &:last-child { text-align: center; }

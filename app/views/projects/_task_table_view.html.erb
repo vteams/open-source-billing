@@ -1,0 +1,38 @@
+<div class="new-invoice-holder">
+  <div class="new-invoice-table-holder main-invoice page-box">
+    <table class="bordered grid-view">
+      <thead>
+      <tr>
+        <th><%= t('views.common.title') %></th>
+        <th width="35%"><%= t('views.items.description') %></th>
+        <th><%= t('views.tasks.rate_') %></th>
+        <th><%= t('views.sessions.done') %></th>
+        <th class="center-align"><%= t('helpers.actions') %></th>
+      </tr>
+      </thead>
+      <tbody class="table-view-body">
+      <% @project_tasks.group_by { |d| d.group_date(project_task_date_format) }.each do |date, tasks| %>
+          <tr class="table-group-heading">
+            <th colspan="5"><span class="activity-date"><%= params[:group] == 'week' ? month_date_range(date) : date %></span></th>
+          </tr>
+          <% tasks.each do |task| %>
+              <tr>
+                <td><strong><%= link_to_if !@status.eql?('deleted'), task.name, project_project_task_path(@project,task), remote: true, class: 'invoice_show_link' %></strong></td>
+                <td width="35%"><%= task.description %></td>
+                <td><%= task.hours %> <small>HRS</small></td>
+                <td><%= task.spent_time_percentage %>%</td>
+                <td>
+                  <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task),
+                              class: 'edit-modal', title: t('helpers.links.edit'), remote: true %>
+                  <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task),
+                              method: :delete, data:{confirm: t('helpers.messages.confirm'),
+                                                     success: t('views.tasks.destroyed_msg'),
+                                                     redirect: project_path(@project) }, title: t('helpers.links.delete') %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

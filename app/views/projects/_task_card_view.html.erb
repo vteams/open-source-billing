@@ -1,0 +1,8 @@
+<% @project_tasks.group_by { |d| d.group_date(project_task_date_format) }.each do |date, tasks| %>
+    <p>
+      <span class="activity-date"><%= params[:group] == 'week' ? month_date_range(date) : date %></span>
+    </p>
+    <div class="flex-wrapper">
+      <%= render partial: 'tasks', collection: tasks, as: :task %>
+    </div>
+<% end %>
