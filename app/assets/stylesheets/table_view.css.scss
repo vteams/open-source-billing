@@ -34,7 +34,7 @@
 // table body styling
 .table-view-body {
   td {
-    line-height: 35px;
+    padding: 13px !important;
     &:last-child { text-align: center; }
 
     i {

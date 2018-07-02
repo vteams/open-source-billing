@@ -1,0 +1,8 @@
+<% @taxes.group_by { |d| d.group_date }.each do |date, taxes| %>
+    <p><span class="activity-date"><%= date %></span></p>
+    <div class="flex-wrapper">
+      <%= render partial: 'taxes',:collection => taxes, as: :taxis %>
+    </div>
+<% end %>
+<%= page_entries_info @taxes %>
+<%= paginate @taxes %>
