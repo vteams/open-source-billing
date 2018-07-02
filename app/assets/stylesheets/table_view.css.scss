@@ -1,6 +1,10 @@
 // Styling related to listing table views
 
 .new-invoice-holder {
+  .table-view-heading {
+    padding: 20px 30px;
+    padding-bottom: 0px;
+  }
   .new-invoice-table-holder {
     table.grid-view { border: 1px solid #dadada; }
     table.grid-view th {  border-right: 1px solid #dadada; }
