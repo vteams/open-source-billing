@@ -5,7 +5,8 @@
     <!--- breadcrum Bar --->
     <div class="flex-item breadcrum-bar">
       <div class="card-white-panel">
-        <h3 class="heading_with_action"><%= t('header.links.time_tracking.time_tracking') %>:
+        <h3 class="with-grid-icons">
+          <%= t('header.links.time_tracking.time_tracking') %>:
           <select onchange="location = this.value;">
             <option value="<%= "/#{I18n.locale}/projects" %>"> <%= t('header.links.time_tracking.project') %></option>
             <option value="<%= "/#{I18n.locale}/tasks" %>" selected><%= t('header.links.time_tracking.task') %></option>
@@ -13,7 +14,8 @@
             <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
           <%= link_to "/ #{t('views.common.' + @status.humanize.underscore)}", 'javascript:;', class: 'active' %>
-          <%= link_to raw('<i class="material-icons">add</i>'), new_task_path, remote: true, class: 'right', title: t('helpers.links.add')%>
+          <%= link_to raw('<i class="material-icons">add</i>'), new_task_path, remote: true, class: 'plus-add-icon', title: t('helpers.links.add')%>
+          <%= index_layout_toggle_icons(tasks_path(view: 'card'), tasks_path(view: 'table')) %>
         </h3>
       </div>
     </div>

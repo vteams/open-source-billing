@@ -41,10 +41,18 @@
 
 // table body styling
 .table-view-body {
+  th .fix-left-and-opacity {
+    position: relative;
+    top: 5px;
+  }
   td {
     padding: 13px !important;
     &:last-child { text-align: center; }
 
+    .fix-left-and-opacity {
+      position: relative;
+      top: 5px;
+    }
     i {
       font-size: 16px;
       color: #a6a6a6;

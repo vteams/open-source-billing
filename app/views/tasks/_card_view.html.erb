@@ -1,0 +1,8 @@
+<% @tasks.group_by { |d| d.group_date }.each do |date, tasks| %>
+    <p><span class="activity-date"><%= date %></span></p>
+    <div class="flex-wrapper">
+      <%= render partial: 'task_card', collection: tasks, as: :task %>
+    </div>
+<% end %>
+<%= page_entries_info @tasks %>
+<%= paginate @tasks %>
