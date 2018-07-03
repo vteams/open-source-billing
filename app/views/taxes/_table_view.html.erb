@@ -13,13 +13,13 @@
       </thead>
       <tbody class="table-view-body">
       <% @taxes.each do |tax| %>
-          <tr>
+          <tr class="invoice-card">
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'tax_ids[]', tax.id, false, id: "tax_#{tax.id}", class: 'fix-left-and-opacity' %>
             </td>
             <td><strong><%= link_to_if !@status.eql?('deleted'), tax.name, tax, remote: true, class: 'invoice_show_link' %></strong></td>
             <td><strong><%= tax.percentage %>%</strong></td>
-            <td>
+            <td class="action-btn-group">
               <% if @status.eql?('deleted') %>
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                     <i class="material-icons">unarchive</i>
