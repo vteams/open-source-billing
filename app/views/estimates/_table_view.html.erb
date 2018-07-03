@@ -16,7 +16,7 @@
       </thead>
       <tbody class="table-view-body">
       <% @estimates.each do |estimate| %>
-          <tr>
+          <tr class="invoice-card">
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: 'fix-left-and-opacity' %>
             </td>
@@ -34,7 +34,7 @@
             <td class="<%= estimate.status %>" title="<%= estimate.tooltip %>">
               <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= t('views.invoices.' + estimate.status.downcase) %></span>
             </td>
-            <td>
+            <td class="action-btn-group">
               <% if @status.eql?('deleted') %>
                   <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
               <% else %>
