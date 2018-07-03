@@ -16,7 +16,7 @@
       </thead>
       <tbody class="table-view-body">
       <% @clients.each do |client| %>
-          <tr>
+          <tr class="invoice-card">
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'client_ids[]', client.id, false, :id => "client_#{client.id}", class: 'fix-left-and-opacity' %>
             </td>
@@ -27,7 +27,7 @@
             <td>
               <strong><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
             </td>
-            <td>
+            <td class="action-btn-group">
               <% if @status.eql?('deleted') %>
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                     <i class="material-icons">unarchive</i>
