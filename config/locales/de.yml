@@ -669,6 +669,8 @@ de:
       index_page_format: "Indexseitenformat"
       card: "Karte"
       table: "Tabelle"
+      card_view: "Kartenansicht"
+      table_view: "Tabellenansicht"
 
     companies:
       companies: "Unternehmen"

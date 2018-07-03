@@ -670,6 +670,8 @@ pt-BR:
       index_page_format: "Formato da Página de Índice"
       card: "Cartão"
       table: "Mesa"
+      card_view: "Vista de cartão"
+      table_view: "Vista de mesa"
 
     companies:
       companies: "Empresas"

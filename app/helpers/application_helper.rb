@@ -330,8 +330,8 @@ module ApplicationHelper
 
   def index_layout_toggle_icons(card_path, table_path)
     content_tag(:div,class: 'right') do
-      link_to( raw('<i class="material-icons">view_comfy</i>'), card_path, class: ('active' if render_card_view?)) +
-      link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?))
+      link_to( raw('<i class="material-icons">view_comfy</i>'), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
+      link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view'))
     end
   end
 end

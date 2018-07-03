@@ -665,6 +665,8 @@ fr:
       index_page_format: "Format de la page d'index"
       card: "Carte"
       table: "Table"
+      card_view: "Vue de la carte"
+      table_view: "Vue de la table"
 
     companies:
       companies: "sociétés"

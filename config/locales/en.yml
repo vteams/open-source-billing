@@ -725,6 +725,8 @@ en:
       index_page_format: "Index Page Format"
       card: "Card"
       table: "Table"
+      card_view: "Card view"
+      table_view: "Table view"
 
     companies:
       companies: "Companies"
