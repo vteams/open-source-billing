@@ -16,7 +16,7 @@
       </thead>
       <tbody class="table-view-body">
       <% @items.each do |item| %>
-          <tr>
+          <tr class="invoice-card">
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'item_ids[]', item.id, false, :id => "item_#{item.id}", class: 'fix-left-and-opacity' %>
             </td>
@@ -29,7 +29,7 @@
                 <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
               <% end %>
             </td>
-            <td>
+            <td class="action-btn-group">
               <% if @status.eql?('deleted') %>
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                     <i class="material-icons">unarchive</i>
