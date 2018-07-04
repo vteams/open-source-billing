@@ -269,8 +269,8 @@ module InvoicesHelper
     invoices_path(invoice_params(per: @per_page, status: status))
   end
 
-  def invoice_params(params)
-    params.except(:page).slice(:per, :company_id, :sort, :direction).merge(params)
+  def invoice_params(custom_params)
+    params.except(:page).slice(:per, :company_id, :sort, :direction).merge(custom_params)
   end
 
   def edit_invoice_link(invoice)

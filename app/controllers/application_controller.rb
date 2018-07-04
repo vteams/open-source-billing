@@ -34,6 +34,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_per_page
   before_filter :set_date_format
   before_filter :set_current_user
+  before_filter :set_listing_layout
   before_filter :authenticate_user!
 
   before_action :set_locale
@@ -170,6 +171,14 @@ class ApplicationController < ActionController::Base
     User.current = current_user
   end
 
+  def set_listing_layout
+    if params[:view].nil?
+    session[:view] ||= current_user.settings.index_page_format || 'card'
+    else
+      session[:view] = params[:view]
+    end
+  end
+
   def render_json(obj)
     if obj.errors.present?
       render json: {errors: obj.errors.full_messages.join('.') }, status: :unprocessable_entity
@@ -179,7 +188,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_card_view?
-    params[:view] ||= current_user.settings.index_page_format || 'card'
+    params[:view] ||= session[:view]
     params[:view] == 'card'
   end
 

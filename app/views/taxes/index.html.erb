@@ -12,7 +12,8 @@
         <h3 class="with-grid-icons">
           <span><%= link_to t('views.taxes.taxes'), taxes_path %></span>
           <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
-          <%= index_layout_toggle_icons(taxes_path(view: 'card'), taxes_path(view: 'table')) %>
+          <%= index_layout_toggle_icons(taxes_path(layout_toggle_params(view: 'card')),
+                                        taxes_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>

@@ -14,7 +14,8 @@
             <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
           <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, title: t('helpers.links.add'), class: 'plus-add-icon' %>
-          <%= index_layout_toggle_icons(projects_path(view: 'card'), projects_path(view: 'table')) %>
+          <%= index_layout_toggle_icons(projects_path(layout_toggle_params(view: 'card')),
+                                        projects_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>

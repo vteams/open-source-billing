@@ -334,4 +334,8 @@ module ApplicationHelper
       link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view'))
     end
   end
+
+  def layout_toggle_params(custom_params)
+    params.except(:action, :controller, :locale, :per, :company_id, :sort, :direction).merge(custom_params)
+  end
 end

@@ -15,7 +15,7 @@
           </select>
           <%= link_to "/ #{t('views.common.' + @status.humanize.underscore)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_staff_path, remote: true, class: 'plus-add-icon', title: t('helpers.links.add') %>
-          <%= index_layout_toggle_icons(staffs_path(view: 'card'), staffs_path(view: 'table')) %>
+          <%= index_layout_toggle_icons(staffs_path(layout_toggle_params(view: 'card')), staffs_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>

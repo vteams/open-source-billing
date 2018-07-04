@@ -10,7 +10,8 @@
           <%= link_to "/ #{t('views.common.' + @status.humanize.downcase)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_company_path, remote: true, class: 'plus-add-icon',
                       title: t('helpers.links.add') %>
-          <%= index_layout_toggle_icons(companies_path(view: 'card'), companies_path(view: 'table')) %>
+          <%= index_layout_toggle_icons(companies_path(layout_toggle_params(view: 'card')),
+                                        companies_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>

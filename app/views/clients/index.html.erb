@@ -9,7 +9,8 @@
         <h3 class="with-grid-icons">
           <span><%= link_to t('views.clients.clients'), clients_path %></span>
           <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
-          <%= index_layout_toggle_icons(clients_path(view: 'card'), clients_path(view: 'table')) %>
+          <%= index_layout_toggle_icons(clients_path(layout_toggle_params(view: 'card')),
+                                        clients_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>
