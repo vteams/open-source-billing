@@ -172,7 +172,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_listing_layout
-    if params[:view].nil?
+    if params[:view].nil? && current_user
     session[:view] ||= current_user.settings.index_page_format || 'card'
     else
       session[:view] = params[:view]
