@@ -87,7 +87,7 @@ $(document).ready(function(){
             }
             else{
                 $('#header').addClass("chkbox-content");
-                $('.action-btn-group').hide();
+                $('.header.action-btn-group').hide();
                 $('.checkboxinfo .action-btn-group').show();
 
                 if(n == 0){
@@ -130,7 +130,7 @@ $(document).ready(function(){
       } else {
         $('.checkbox-item > input[type="checkbox"]').removeProp('checked');
         $('#header').addClass("chkbox-content");
-        $('.action-btn-group').hide();
+        $('.header.action-btn-group').hide();
         $('.checkboxinfo .action-btn-group').show();
         $('.card-white-panel .action-btn-group').show();
         $('.checkbox-item').find('.invoice-name').css('opacity', '1');
