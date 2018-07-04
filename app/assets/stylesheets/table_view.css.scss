@@ -13,6 +13,10 @@
     &.page-box { padding: 30px; }
     &.main-invoice table.grid-view {
       thead tr th { font-size: 12px; }
+      thead tr th .fix-left-and-opacity {
+        position: inherit;
+        margin-top: 13px;
+      }
       tbody tr td { font-size: 13px; }
     }
   }
@@ -44,10 +48,6 @@
 
 // table body styling
 .table-view-body {
-  th .fix-left-and-opacity {
-    position: relative;
-    top: 5px;
-  }
   tr.table-group-heading th {
     padding: 0 13px;
     margin: 5px 0;
