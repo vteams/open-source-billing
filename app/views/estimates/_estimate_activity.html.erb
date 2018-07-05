@@ -8,7 +8,7 @@
     <!--- activities list--->
     <div class="status-info active">
       <h5>
-        <%= link_to t('views.common.active'), activities_estimates_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <%= link_to t('views.common.active'), activities_estimates_path('active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@estimate_activity[:active_estimates_total], unit: default_currency_unit) %></div>
@@ -29,7 +29,7 @@
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to t('views.common.deleted'), activities_estimates_path(status: 'deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <%= link_to t('views.common.deleted'), activities_estimates_path('deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@estimate_activity[:deleted_estimates_total], unit: default_currency_unit )%></div>
@@ -49,7 +49,7 @@
     </div>
     <div class="status-info">
       <h5>
-        <%= link_to t('views.common.archived'), activities_estimates_path(status: 'archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <%= link_to t('views.common.archived'), activities_estimates_path('archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
       <div class="amount"><%= number_to_currency(@estimate_activity[:archived_estimates_total], unit: default_currency_unit )%></div>
