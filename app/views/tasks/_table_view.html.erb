@@ -1,56 +1,58 @@
-<div class="new-invoice-holder">
-  <div class="new-invoice-table-holder main-invoice page-box">
-    <table class="bordered grid-view">
-      <thead>
-      <tr>
-        <th class="align_center td-checkbox checkbox-item">
-          <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
-        </th>
-        <th><%= t('views.common.title') %></th>
-        <th><%= t('views.tasks.description') %></th>
-        <th><%= t('views.tasks.rate_') %></th>
-        <th class="center-align"><%= t('helpers.actions') %></th>
-      </tr>
-      </thead>
-      <tbody class="table-view-body">
-      <% @tasks.each do |task| %>
+<% if @tasks.count > 0  %>
+    <div class="new-invoice-holder">
+      <div class="new-invoice-table-holder main-invoice page-box">
+        <table class="bordered grid-view">
+          <thead>
           <tr>
-            <td class="align_center td-checkbox checkbox-item">
-              <%= check_box_tag 'task_ids[]', task.id, false, :id => "task_#{task.id}", class: 'fix-left-and-opacity' %>
-            </td>
-            <td><strong><%= link_to_if !@status.eql?('deleted'), task.name, task, remote: true %></strong></td>
-            <td width="50%"><%= task.description %></td>
-            <td><strong><%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small></strong></td>
-            <td>
-              <% if @status.eql?('deleted') %>
-                  <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
-              <% else %>
-                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_task_path(task),
-                              remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-                  <%= link_to raw("<i class='material-icons'>delete</i>"),task, method: :delete,
-                              data:{confirm: t('helpers.messages.confirm'),
-                                    success: t('views.tasks.destroyed_msg') },
-                              title: t('helpers.links.delete') %>
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= task.id %>' data-alignment="right" data-beloworigin="true">
-                    <i class="material-icons">more_vert</i>
-                  </a>
-                  <!-- Dropdown Structure -->
-                  <ul id="dropdown_<%= task.id %>" class='dropdown-content z-depth-4'>
-                    <% if @status.eql?('active') %>
-                        <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
-                    <% elsif @status.eql?('archived') %>
-                        <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
-                    <% end %>
-                  </ul>
-              <% end %>
-            </td>
+            <th class="align_center td-checkbox checkbox-item">
+              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+            </th>
+            <th><%= t('views.common.title') %></th>
+            <th><%= t('views.tasks.description') %></th>
+            <th><%= t('views.tasks.rate_') %></th>
+            <th class="center-align"><%= t('helpers.actions') %></th>
           </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="paginate-info">
-    <%= page_entries_info @tasks %>
-    <%= paginate @tasks %>
-  </div>
+          </thead>
+          <tbody class="table-view-body">
+          <% @tasks.each do |task| %>
+              <tr>
+                <td class="align_center td-checkbox checkbox-item">
+                  <%= check_box_tag 'task_ids[]', task.id, false, :id => "task_#{task.id}", class: 'fix-left-and-opacity' %>
+                </td>
+                <td><strong><%= link_to_if !@status.eql?('deleted'), task.name, task, remote: true %></strong></td>
+                <td width="50%"><%= task.description %></td>
+                <td><strong><%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small></strong></td>
+                <td>
+                  <% if @status.eql?('deleted') %>
+                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+                  <% else %>
+                      <%= link_to raw("<i class='material-icons'>create</i>"),edit_task_path(task),
+                                  remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                      <%= link_to raw("<i class='material-icons'>delete</i>"),task, method: :delete,
+                                  data:{confirm: t('helpers.messages.confirm'),
+                                        success: t('views.tasks.destroyed_msg') },
+                                  title: t('helpers.links.delete') %>
+                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= task.id %>' data-alignment="right" data-beloworigin="true">
+                        <i class="material-icons">more_vert</i>
+                      </a>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown_<%= task.id %>" class='dropdown-content z-depth-4'>
+                        <% if @status.eql?('active') %>
+                            <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+                        <% elsif @status.eql?('archived') %>
+                            <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<% end %>
+<div class="paginate-info">
+  <%= page_entries_info @tasks %>
+  <%= paginate @tasks %>
 </div>
