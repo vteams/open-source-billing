@@ -845,9 +845,9 @@ de:
         edit: "bearbeiten %{model}"
       page_entries_info:
         more_pages:
-          display_entries: "Anzeigen %{entry_name} <b>%{first}-%{last}</b> of <b>%{total}</b>"
+          display_entries: "Anzeigen %{entry_name} <strong>%{first}-%{last}</strong> of <strong>%{total}</strong>"
         one_page:
-          display_entries: "Anzeige von <b>allen %{count}</b> Einträgen."
+          display_entries: "Anzeige von <strong>allen %{count}</strong> %{entry_name}."
 #  activerecord:
 #    errors:
 #      messages:

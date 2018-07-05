@@ -730,6 +730,12 @@ input[type=number]:focus:not([readonly]){
 #main-content h3.with-grid-icons a.plus-add-icon i:hover {
     color: #09b8e2;
 }
-#main-content h3.with-grid-icons a.plus-add-icon i{
+#main-content h3.with-grid-icons a.plus-add-icon i {
     padding-bottom: 3px;
+}
+.italic-text{
+    font-style: italic !important;
+}
+.block{
+    display: inline-block !important;
 }

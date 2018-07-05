@@ -841,9 +841,9 @@ fr:
         edit: "modifier %{model}"
       page_entries_info:
         more_pages:
-          display_entries: "visualisation %{entry_name} <b>%{first}-%{last}</b> de <b>%{total}</b>"
+          display_entries: "visualisation %{entry_name} <strong>%{first}-%{last}</strong> de <strong>%{total}</strong>"
         one_page:
-          display_entries: "Affichage de <b>toutes les entrées %{count}</b>."
+          display_entries: "Affichage de toutes <strong>les %{count}</strong> %{entry_name}."
 #  activerecord:
 #    errors:
 #      messages:

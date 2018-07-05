@@ -1,4 +1,4 @@
-<div class="basic-setting">
+<div class="basic-setting hide" id="basic_settings_container">
   <div class="row">
     <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
       <div class="col s12 m12 xl8">
@@ -55,8 +55,8 @@
           <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
                       input_html: {name: 'locale', id: 'locale'}, label: t('views.settings.language'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
-          <%= f.input :date_format, collection: DATE_FORMATS, selected: current_user.settings.date_format,
-                      input_html: {name: 'date_format', id: 'date_format'}, label: t('views.settings.date_format'),
+          <%= f.input :date_format, collection: (DATE_FORMATS), selected: current_user.settings.date_format,
+                      input_html: {name: 'date_format', id: 'date_format', class: 'date-formats'}, label: t('views.settings.date_format'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
                       input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
