@@ -82,6 +82,7 @@ $(document).ready(function(){
                 $('.checkbox-item').find('label').css('opacity', '1');
                 $('.search-holder form').hide();
                 $('.card-white-panel .action-btn-group').hide();
+                $('.table-view-body .action-btn-group').addClass('disabled_link');
                 $('.checkboxinfo').show();
                 $('.checkboxinfo .action-btn-group .send').show();
             }
@@ -92,6 +93,7 @@ $(document).ready(function(){
 
                 if(n == 0){
                     $('.card-white-panel .action-btn-group').show();
+                    $('.table-view-body .action-btn-group').removeClass('disabled_link');
                     $('.checkbox-item').find('.invoice-name').css('opacity', '1');
                     $('.checkbox-item').find('label').css('opacity', '0');
                     $(".header-right").removeClass("chekbox-show");
@@ -124,6 +126,7 @@ $(document).ready(function(){
         $('.checkbox-item').find('label').css('opacity', '1');
         $('.search-holder form').hide();
         $('.card-white-panel .action-btn-group').hide();
+        $('.table-view-body .action-btn-group').addClass('disabled_link');
         $('.checkboxinfo').show();
         $('.checkboxinfo .action-btn-group .send').show();
         $( ".chk-text" ).text(n + ' ' + I18n.t('views.common.selected'));
@@ -133,6 +136,7 @@ $(document).ready(function(){
         $('.header.action-btn-group').hide();
         $('.checkboxinfo .action-btn-group').show();
         $('.card-white-panel .action-btn-group').show();
+        $('.table-view-body .action-btn-group').removeClass('disabled_link');
         $('.checkbox-item').find('.invoice-name').css('opacity', '1');
         $('.checkbox-item').find('label').css('opacity', '0');
         $(".header-right").removeClass("chekbox-show");
