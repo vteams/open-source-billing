@@ -85,10 +85,11 @@
         .append(date_format_str[0])
         .append($("<span class='red1 italic-text block'></span>")
         .append(date_format_str[1])));
-  ), 1
 
-  selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
-  $('.settings_date_format .date-formats input').val(selected_format)
+    selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
+    $('.settings_date_format .date-formats input').val(selected_format)
+    $('#basic_settings_container').removeClass('hide')
+  ), 1
 
   $(".settings_date_format select.date-formats").on "change", ->
     selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
