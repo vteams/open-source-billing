@@ -31,8 +31,8 @@
                 <% end %>
               </select>
             </h6>
-            <span>DATE: <small id="expense_date"> <%= f.object.expense_date.present? ? f.object.expense_date : Time.now.strftime('%y-%m-%d') %></small> <i class="material-icons" id="expense_date_picker">date_range</i></span>
-            <%= f.hidden_field :expense_date, value: f.object.expense_date.present? ? f.object.expense_date :  Time.now.strftime('%y-%m-%d')   %>
+            <span>DATE: <small id="expense_date"> <%= f.object.expense_date.present? ? f.object.expense_date : Time.now.strftime(get_date_format) %></small> <i class="material-icons" id="expense_date_picker">date_range</i></span>
+            <%= f.hidden_field :expense_date, value: f.object.expense_date.present? ? f.object.expense_date :  Time.now.strftime(get_date_format)   %>
             <div class="editPayementInfo">
               <strong><strong class="expense_total_strong"><%= number_to_currency(f.object.total, unit: '') rescue 0.00 %></strong> <small> <%= default_currency_code %></small>
               </strong>
