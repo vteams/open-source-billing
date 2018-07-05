@@ -27,8 +27,10 @@ class SettingsController < ApplicationController
     end
     if params[:index_page_format].present? && params[:index_page_format].eql?('card')
       user.settings.index_page_format = 'card'
+      session[:view] = 'card'
     else
       user.settings.index_page_format = 'table'
+      session[:view] = 'table'
     end
     respond_to { |format| format.js }
   end
