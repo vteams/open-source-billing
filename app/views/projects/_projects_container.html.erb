@@ -1,5 +1,2 @@
-<% if @projects %>
-  <%= render render_card_view? ? 'card_view' : 'table_view' %>
-<% else %>
-  <%= raw(t('helpers.page_entries_info.one_page.display_entries', count: 0)) %>
-<% end %>
+<%= render render_card_view? ? 'card_view' : 'table_view' %>
+<%= render partial: 'shared/pagination', locals: {model_object: @projects} %>
