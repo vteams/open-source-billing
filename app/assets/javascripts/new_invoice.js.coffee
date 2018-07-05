@@ -400,7 +400,7 @@ jQuery ->
   # for custom payment term
   $('#invoice_due_date_picker').pickadate
     format: DateFormats.format()
-    onClose: ->
+    onSet: ->
       custom_option = $('.payment-term-dropdown').find('li:last')
       custom_option.trigger('click') if custom_option.text() is "Custom"
 
