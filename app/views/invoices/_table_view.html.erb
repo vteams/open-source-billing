@@ -22,7 +22,7 @@
                   <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: 'fix-left-and-opacity' %>
                 </td>
                 <td>
-                  <strong><%= link_to invoice.invoice_number, invoice , remote: true, class: 'invoice_show_link', style: ('display: none' if @status.eql?('deleted')) %></strong>
+                  <strong><%= link_to_if !@status.eql?('deleted'), invoice.invoice_number, invoice , remote: true, class: ''%></strong>
                 </td>
                 <td><%= invoice.unscoped_client.organization_name rescue '' %></td>
                 <td><%= invoice.due_date rescue '' %></td>

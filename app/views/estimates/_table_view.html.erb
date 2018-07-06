@@ -22,8 +22,7 @@
                   <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: 'fix-left-and-opacity' %>
                 </td>
                 <td>
-                  <strong><%= link_to estimate.estimate_number, estimate , remote: true, class: 'invoice_show_link',
-                                      style: ('display: none' if @status.eql?('deleted')) %></strong>
+                  <strong><%= link_to_if !@status.eql?('deleted'), estimate.estimate_number, estimate , remote: true, class: 'invoice_show_link'%></strong>
                 </td>
                 <td><%= estimate.unscoped_client.organization_name rescue '' %></td>
                 <td><%= estimate.estimate_date rescue '' %></td>
