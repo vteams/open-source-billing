@@ -66,6 +66,9 @@
       position: relative;
       top: 5px;
     }
+    &.action-btn-group.disabled_link {
+      i {  color: #dadada;  }
+    }
     i {
       font-size: 16px;
       color: #a6a6a6;
