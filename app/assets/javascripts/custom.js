@@ -168,8 +168,13 @@ $(document).ready(function(){
     });
 
     $(".action-btn-group .single_archive").on('click', function(){
+      if($(this).parents(".invoice-card").length > 0) {
         $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
         $("input.top_links.archive").click();
+      }else {
+        $(this).parents("tr").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.archive").click();
+      }
     });
 
     $(".header.action-btn-group a.recover_deleted").on('click', function(){
@@ -189,13 +194,23 @@ $(document).ready(function(){
     });
 
     $(".action-btn-group .single_recover").on('click', function(){
+      if($(this).parents(".invoice-card").length > 0) {
         $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
         $("input.top_links.recover_archived").click();
+      }else {
+        $(this).parents("tr").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.recover_archived").click();
+      }
     });
 
     $(".action-btn-group .single_recover_deleted").on('click', function(){
+      if($(this).parents(".invoice-card").length > 0) {
         $(this).parents(".invoice-card").find("input[type='checkbox']").prop("checked","checked")
         $("input.top_links.recover_deleted").click();
+      }else {
+        $(this).parents("tr").find("input[type='checkbox']").prop("checked","checked")
+        $("input.top_links.recover_deleted").click();
+      }
     });
 
     $(".side-menu li > a").each(function(){

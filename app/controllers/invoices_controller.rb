@@ -314,7 +314,7 @@ class InvoicesController < ApplicationController
   def invoice_has_deleted_clients?(invoices)
     invoice_with_deleted_clients = []
     invoices.each do |invoice|
-      if invoice.unscoped_client.deleted_at.present?
+      if invoice.unscoped_client.present? && invoice.unscoped_client.deleted_at.present?
         invoice_with_deleted_clients << invoice.invoice_number
       end
     end
