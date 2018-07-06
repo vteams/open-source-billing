@@ -36,11 +36,11 @@
                 <!--ToDo-->
                 <!-- Followings action actions will be implements later. -->
 
-                <div class="btn-icons">
-                  <a href="<%= project_path(@project, view: 'card', group: params[:group]) %>" class="<%= 'active' if render_card_view? %>" title=<%= t('views.settings.card_view') %>><i class="material-icons">view_comfy</i></a>
-                  <a href="<%= project_path(@project, view: 'table', group: params[:group]) %>" class="<%= 'active' unless render_card_view?%>"  title=<%= t('views.settings.table_view') %>><i class="material-icons">view_list</i></a>
-                </div>
                 <% if @project.project_tasks.count > 0 %>
+                    <div class="btn-icons">
+                      <a href="<%= project_path(@project, view: 'card', group: params[:group]) %>" class="<%= 'active' if render_card_view? %>" title=<%= t('views.settings.card_view') %>><i class="material-icons">view_comfy</i></a>
+                      <a href="<%= project_path(@project, view: 'table', group: params[:group]) %>" class="<%= 'active' unless render_card_view?%>"  title=<%= t('views.settings.table_view') %>><i class="material-icons">view_list</i></a>
+                    </div>
                     <div class="btn-calender">
                       <a href='<%= project_path(@project, group: :day, view: params[:view]) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
                       <a href="<%= project_path(@project, group: :week, view: params[:view]) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
