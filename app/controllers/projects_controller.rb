@@ -143,7 +143,7 @@ class ProjectsController < ApplicationController
   def project_has_deleted_clients?(projects)
     project_with_deleted_clients = []
     projects.each do |project|
-      if project.unscoped_client.deleted_at.present?
+      if project.unscoped_client.present? && project.unscoped_client.deleted_at.present?
         project_with_deleted_clients << project.project_name
       end
     end
