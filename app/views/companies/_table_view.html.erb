@@ -23,7 +23,7 @@
             <td><%= company.contact_name %></td>
             <td><%= company.email %></td>
             <td><%= company.created_at.strftime(get_date_format) rescue '' %></td>
-            <td>
+            <td class="action-btn-group">
               <% if @status.eql?('deleted') %>
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                     <i class="material-icons">unarchive</i>

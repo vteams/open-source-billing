@@ -22,7 +22,7 @@
                 <td><strong><%= link_to_if !@status.eql?('deleted'), task.name, task, remote: true %></strong></td>
                 <td width="50%"><%= task.description %></td>
                 <td><strong><%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small></strong></td>
-                <td>
+                <td class="action-btn-group">
                   <% if @status.eql?('deleted') %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                   <% else %>

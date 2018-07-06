@@ -29,7 +29,7 @@
                   <% random_progress = aged_progress_width(project.log_hours, project.total_hours) %>
                   <strong><%= random_progress %>%</strong>
                 </td>
-                <td>
+                <td class="action-btn-group">
                   <% if @status.eql?('deleted') %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                   <% else %>

@@ -19,7 +19,7 @@
             <td><%= user.email %></td>
             <td><%= user.created_at.strftime(get_date_format) %></td>
             <td><%= user.role_name  %></td>
-            <td>
+            <td class="action-btn-group">
               <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true,
                           class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
               <% if current_user != user %>

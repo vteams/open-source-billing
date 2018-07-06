@@ -22,7 +22,7 @@
                 <td width="35%"><%= task.description %></td>
                 <td><%= task.hours %> <small>HRS</small></td>
                 <td><%= task.spent_time_percentage %>%</td>
-                <td>
+                <td class="action-btn-group">
                   <%= link_to raw('<i class="material-icons">create</i>'), edit_project_project_task_path(@project, task),
                               class: 'edit-modal', title: t('helpers.links.edit'), remote: true %>
                   <%= link_to raw('<i class="material-icons">delete</i>'), project_project_task_path(@project, task),

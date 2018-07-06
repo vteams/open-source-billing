@@ -35,7 +35,7 @@
                     <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
                   </em>
                 </td>
-                <td>
+                <td class="action-btn-group">
                   <% unless payment.payment_type == "credit" %>
                       <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete,
                                   data:{ confirm: t('helpers.messages.confirm'),
