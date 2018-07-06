@@ -78,6 +78,7 @@
 
     ul.dropdown-content.z-depth-4 {
       min-width: 150px;
+      top: inherit !important;
 
       li a {
         font-size: 12px;

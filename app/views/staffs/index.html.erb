@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="invoice-box staff-box mCustomScrollbar clearfix">
+  <div class="invoice-box staff-box clearfix">
     <%= form_tag bulk_actions_staffs_path, {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'staffs_container' %> </div>
         <%= render partial: 'bulk_actions'%>
