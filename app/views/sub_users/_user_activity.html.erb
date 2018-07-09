@@ -6,7 +6,7 @@
     <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
       <div class="status-info active">
         <h5>
-          <a href="javascript:;"><%= t('views.users.' + role.downcase) rescue '' %></a>
+          <a href="javascript:;" class="non-clickable"><%= t('views.users.' + role.downcase) rescue '' %></a>
           <span id="actives">(<%= users.length %>)</span>
         </h5>
       </div>
