@@ -744,3 +744,4 @@ input[type=number]:focus:not([readonly]){
   margin: 0 0.75rem;
 }
 .search_result_container p:first-child { padding-top: 10px; }
+.fb_error { color: red; }
