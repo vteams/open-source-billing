@@ -41,10 +41,8 @@
     </div>
     <div class="modal-body">
       <div class="panel-table">
-        <h5>
-          <%= t('invoice') %>
-          <%= link_to(("+ #{t('header.links.invoices.new')}") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right') %>
-        </h5>
+        <h5><%= t('invoice') %></h5>
+        <%= link_to(("+ #{t('header.links.invoices.new')}") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right new-link') %>
         <table class="bordered responsive-table">
           <thead>
           <tr>
@@ -67,10 +65,8 @@
         </table>
       </div>
       <div class="panel-table">
-        <h5>
-          <%= t('views.payments.payments') %>
-          <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: "pull-right #{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
-        </h5>
+        <h5><%= t('views.payments.payments') %></h5>
+        <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: "new-link pull-right #{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
         <table class="bordered responsive-table">
           <thead>
           <tr>
