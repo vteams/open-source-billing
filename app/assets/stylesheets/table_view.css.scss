@@ -7,6 +7,10 @@
   }
   .new-invoice-table-holder {
     &.page-box { padding: 30px; }
+    thead tr th .fix-left-and-opacity {
+      position: inherit;
+      margin-top: 13px;
+    }
   }
 }
 
