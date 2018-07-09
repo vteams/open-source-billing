@@ -746,3 +746,7 @@ input[type=number]:focus:not([readonly]){
 .search_result_container p:first-child { padding-top: 10px; }
 .fb_error { color: red; }
 .non-clickable:hover { cursor: default; }
+td.action-btn-group.items-action,
+td.action-btn-group.clients-action {
+    width: 11% !important;
+}

@@ -30,7 +30,7 @@
                     <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
                   <% end %>
                 </td>
-                <td class="action-btn-group">
+                <td class="action-btn-group items-action">
                   <% if @status.eql?('deleted') %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                         <i class="material-icons">unarchive</i>

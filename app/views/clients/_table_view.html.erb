@@ -28,7 +28,7 @@
                 <td>
                   <strong><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
                 </td>
-                <td class="action-btn-group">
+                <td class="action-btn-group clients-action">
                   <% if @status.eql?('deleted') %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                         <i class="material-icons">unarchive</i>
