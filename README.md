@@ -161,9 +161,9 @@ Contributing
 
 Contact Information
 -------------------
-Jane Cady
+Mia Mian
 +1 (858) 586 7777
 
-E-mail: <jane@vteams.com> | <mia@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstgers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>
