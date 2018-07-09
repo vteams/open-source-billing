@@ -2282,16 +2282,18 @@ h6 {
   width: 48%;
   padding-bottom: 40px; }
 .clientsModal .panel-table h5 {
-  background-color: #ececec;
-  padding: 10px 14px;
-  font-size: 12px;
+  padding: 10px 4px 5px 0px;
+  display: inline-block;
   font-weight: bold;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  color: #454545; }
-.clientsModal .panel-table h5 a {
+  color: #454545;
+}
+.clientsModal .panel-table a.new-link {
   font-size: 12px;
   font-weight: normal;
-  color: #05a4d8; }
+  color: #05a4d8;
+  margin-top: 15px;
+}
 .clientsModal .panel-table h5 a i.material-icons {
   font-size: 12px; }
 .clientsModal .panel-table table tr {
@@ -4039,6 +4041,8 @@ html {
 .new-invoice-holder .new-invoice-table-holder.main-invoice {
   padding-left: 0;
   margin: 0 0 0 -3px; }
+.new-invoice-holder .new-invoice-table-holder.main-invoice table thead {
+  border: 0; }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table:not(.grid-view) thead th:first-child {
   width: 35px;
   background-color: transparent;
@@ -4345,6 +4349,8 @@ html {
 .invoice-report .new-invoice-action-btn {
   position: relative;
   top: -5px; }
+.invoice-report thead {
+  border-bottom: 0; }
 .invoice-report thead tr {
   border-bottom: 0 !important; }
 .invoice-report tbody > tr {

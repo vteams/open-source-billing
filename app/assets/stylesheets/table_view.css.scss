@@ -6,26 +6,8 @@
     padding-bottom: 0px;
   }
   .new-invoice-table-holder {
-    table.grid-view { border: 1px solid #dadada; }
-    table.grid-view th {  border-right: 1px solid #dadada; }
-    //table.grid-view td {  border-right: 1px solid #dadada; }
-    table.grid-view tr:hover {  background-color: #f2f2f2; }
     &.page-box { padding: 30px; }
-    &.main-invoice table.grid-view {
-      thead tr th { font-size: 12px; }
-      thead tr th .fix-left-and-opacity {
-        position: inherit;
-        margin-top: 13px;
-      }
-      tbody tr td { font-size: 13px; }
-    }
   }
-
-  .paginate-info {
-    padding: 0 30px 20px;
-    font-size: 14px;
-  }
-
 }
 
 // Styling for icons in breadcrumb to switch page layout
@@ -94,4 +76,12 @@
       }
     }
   }
+}
+
+.new-invoice-holder .new-invoice-table-holder.main-invoice table.grid-view tbody tr.fields.nested-fields td {
+  padding: 1px 8px !important;
+}
+.new-invoice-holder .new-invoice-table-holder.main-invoice table tbody tr td {
+  font-size: 12px !important;
+  input { font-size:  12px; }
 }
