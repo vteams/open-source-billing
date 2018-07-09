@@ -743,3 +743,4 @@ input[type=number]:focus:not([readonly]){
   max-height: max-content !important;
   margin: 0 0.75rem;
 }
+.search_result_container p:first-child { padding-top: 10px; }
