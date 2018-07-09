@@ -4039,8 +4039,6 @@ html {
 .new-invoice-holder .new-invoice-table-holder.main-invoice {
   padding-left: 0;
   margin: 0 0 0 -3px; }
-.new-invoice-holder .new-invoice-table-holder.main-invoice table thead {
-  border: 0; }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table:not(.grid-view) thead th:first-child {
   width: 35px;
   background-color: transparent;
@@ -4347,8 +4345,6 @@ html {
 .invoice-report .new-invoice-action-btn {
   position: relative;
   top: -5px; }
-.invoice-report thead {
-  border-bottom: 0; }
 .invoice-report thead tr {
   border-bottom: 0 !important; }
 .invoice-report tbody > tr {
