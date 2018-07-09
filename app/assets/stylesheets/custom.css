@@ -739,3 +739,7 @@ input[type=number]:focus:not([readonly]){
 .block{
     display: inline-block !important;
 }
+.time-log-container {
+  max-height: max-content !important;
+  margin: 0 0.75rem;
+}
