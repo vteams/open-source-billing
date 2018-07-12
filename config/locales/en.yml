@@ -505,6 +505,8 @@ en:
       use_last_estimate_to_create: "To create new estimate use the last estimate sent to '%{client_name}'."
       select_estimate_date: "Select estimate date"
       recover_clients: "Please recover clients for estimate(s) with estimate# %{ids} to enter payment."
+      estimate_date_range: "Estimate Date Range"
+      estimate_number_range: "Estimate Number Range"
 
     clients:
       client_name: "Client Name"

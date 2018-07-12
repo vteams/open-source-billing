@@ -465,6 +465,8 @@ de:
       use_last_estimate_to_create: "Um eine neue Schätzung zu erstellen, verwenden Sie die letzte Schätzung, die an '%{client_name}' gesendet wurde."
       select_estimate_date: "Wählen Sie das geschätzte Datum aus"
       recover_clients: "Bitte reklamieren Sie die Kunden für die Schätzung (en) mit der Schätzung # %{ids}, um die Zahlung einzugeben."
+      estimate_date_range: "Geschätzter Datumsbereich"
+      estimate_number_range: "Geschätzter Zahlenbereich"
 
     clients:
       client_name: "Kunden Name"

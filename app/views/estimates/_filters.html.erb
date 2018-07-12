@@ -4,30 +4,24 @@
     <%= form_tag '', method: :get, remote: true, class: 'col s12' do %>
       <div class="row">
         <div class="input-field col s12 m3">
-          <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
-          <input type="hidden" name="create_at_end_date" id="create_at_end_date" value="<%= params[:create_at_end_date] %>">
-          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" />
-          <label class="active"><%= t('views.invoices.invoice_date_range') %></label>
+          <input type="hidden" name="estimate_start_date" id="estimate_start_date">
+          <input type="hidden" name="estimate_end_date" id="estimate_end_date">
+          <input type="text" class="date-range" name="due" id="estimate" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
+          <label class="active"><%= t('views.estimates.estimate_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
-          <input type="hidden" name="due_start_date" id="due_start_date">
-          <input type="hidden" name="due_end_date" id="due_end_date">
-          <input type="text" class="date-range" name="due" id="due" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
-          <label class="active"><%= t('views.invoices.due_date_range') %></label>
-        </div>
-        <div class="input-field col s12 m2">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), t('all_clients'),
                                                           {selected: params[:client_id] || ''}),
                          include_blank: false, multiple: true, class: 'small_list') %>
           <label><%= t('clients') %></label>
         </div>
-        <div class="input-field col s12 m2">
-          <%= select_tag(:type, multi_select_options(Invoice::STATUS_DESCRIPTION.keys.map{|status| t('views.invoices.' + status.to_s)},
+        <div class="input-field col s12 m3">
+          <%= select_tag(:type, multi_select_options(Estimate::STATUS_DESCRIPTION.keys.map{|status| t('views.invoices.' + status.to_s)},
                                                      t('views.invoices.all_statuses'), {selected: params[:type] || ''}),
                          include_blank: false, multiple: true, class: 'small_list') %>
           <label><%= t('views.common.status') %></label>
         </div>
-        <div class="input-field col s12 m2">
+        <div class="input-field col s12 m3">
           <%= select_tag(:status, multi_select_options(filters_status_select_options, t('views.invoices.all_types'),
                                                        {selected: params[:status] || ''}),
                          include_blank: false, multiple: true, class: 'small_list') %>
@@ -37,19 +31,19 @@
       <div class="row">
         <div class="input-filed col s12 m12">
           <p class="range-field">
-            <label><%= t('views.invoices.invoice_number_range') %></label>
-            <input type="hidden" name="min_invoice_number" id="invoice_number_min" value="1">
-            <input type="hidden" name="max_invoice_number" id="invoice_number_max" value="<%= Invoice.last.id %>">
+            <label><%= t('views.estimates.estimate_number_range') %></label>
+            <input type="hidden" name="min_estimate_number" id="estimate_number_min" value="1">
+            <input type="hidden" name="max_estimate_number" id="estimate_number_max" value="<%= Estimate.last.id %>">
           <div class="label-range">
-            <span class="label_left"><%= t('views.invoices.min') %>: <span id="invoice_number_min_label"></span></span>
-            <span class="label_right"><%= t('views.invoices.max') %>: <span id="invoice_number_max_label"></span></span>
+            <span class="label_left"><%= t('views.invoices.min') %>: <span id="estimate_number_min_label"></span></span>
+            <span class="label_right"><%= t('views.invoices.max') %>: <span id="estimate_number_max_label"></span></span>
           </div>
-          <div id="invoice_number"
+          <div id="estimate_number"
                min="1"
-               max="<%= Invoice.last.id %>"
+               max="<%= Estimate.last.id %>"
                class="range_selector"
-               data-min="<%= params[:min_invoice_number] %>"
-               data-max="<%= params[:max_invoice_number] %>"></div>
+               data-min="<%= params[:min_estimate_number] %>"
+               data-max="<%= params[:max_estimate_number] %>"></div>
           </p>
         </div>
       </div>

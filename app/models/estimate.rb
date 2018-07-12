@@ -4,6 +4,11 @@ class Estimate < ActiveRecord::Base
   include Trackstamps
   include EstimateSearch
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
+  scope :status, -> (status) { where(status: status) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
+  scope :estimate_number, -> (estimate_number) { where(id: estimate_number) }
+  scope :estimate_date, -> (estimate_date) { where(estimate_date: estimate_date) }
+
   # constants
   STATUS_DESCRIPTION = {
       draft: 'Estimate created, but you have not notified your client. Your client will not see this estimate if they log in.',
@@ -63,9 +68,25 @@ class Estimate < ActiveRecord::Base
 
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
-    method = mappings[params[:status].to_sym]
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
     estimates = params[:search].present? ? self.search(params[:search]).records : self
-    estimates.send(method).page(params[:page]).per(per_page)
+    estimates = estimates.status(params[:type]) if params[:type].present?
+    estimates = estimates.client_id(params[:client_id]) if params[:client_id].present?
+    estimates = estimates.estimate_number((params[:min_estimate_number].to_i .. params[:max_estimate_number].to_i)) if params[:min_estimate_number].present?
+    estimates = estimates.estimate_date(
+        (Date.strptime(params[:estimate_start_date], date_format) .. Date.strptime(params[:estimate_end_date], date_format))
+    ) if params[:estimate_start_date].present?
+
+    if params[:status].present? && params[:status].is_a?(String)
+      method = mappings[params[:status].to_sym]
+      estimates = estimates.send(method)
+    else
+      params[:status].each {|status| estimates = estimates.send(mappings[status.to_sym])} if params[:status].present?
+    end
+
+    estimates.page(params[:page]).per(per_page)
   end
 
   def self.invoiced

@@ -461,6 +461,8 @@ fr:
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Sélectionnez la date d'estimation"
       recover_clients: "Veuillez récupérer les clients pour estimation (s) avec estimation # %{ids} pour entrer le paiement."
+      estimate_date_range: "Estimation de la plage de dates"
+      estimate_number_range: "Estimation de la plage de numéros"
 
     clients:
       client_name: "Nom du client"
