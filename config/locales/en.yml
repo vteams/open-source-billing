@@ -203,6 +203,9 @@ en:
       as_for: "As of"
       add_new: "Add New"
       title: "Title"
+      show_filters: "Show Filters"
+      reset: "Reset"
+      start_date_to_end_date: "Start Date - End Date"
 
     pagination:
       previous: "Previous"
@@ -365,6 +368,14 @@ en:
       recover_clients: "Please recover clients for invoice(s) with invoice# %{ids} to enter payment."
       cannot_paid: "You cannot pay paid invoices."
       project_invoice_cannot_be_edit: "Project invoice cannot be edit"
+      invoice_date_range: "Invoice Date Range"
+      due_date_range: "Due Date Range"
+      all_clients: "All Clients"
+      all_types: "All Types"
+      all_statuses: "All Statuses"
+      invoice_number_range: "Invoice Number Range"
+      min: "Min"
+      max: "Max"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"

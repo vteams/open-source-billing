@@ -186,6 +186,9 @@ fr:
       as_for: "À partir de"
       add_new: "Ajouter un nouveau"
       title: "Titre"
+      show_filters: "Afficher les filtres"
+      reset: "Réinitialiser"
+      start_date_to_end_date: "Date de début - date de fin"
 
     pagination:
       previous: "précédent"
@@ -347,6 +350,14 @@ fr:
       recover_clients: "Veuillez récupérer les clients pour les factures avec la facture # %{ids} pour entrer le paiement."
       cannot_paid: "Vous ne pouvez pas payer les factures payées."
       project_invoice_cannot_be_edit: "La facture du projet ne peut pas être modifiée"
+      invoice_date_range: "Plage de dates de facture"
+      due_date_range: "Plage de dates d'échéance"
+      all_clients: "Tous les clients"
+      all_types: "Tous les types"
+      all_statuses: "Tous les statuts"
+      invoice_number_range: "Gamme de numéros de facture"
+      min: "Min"
+      max: "Max"
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"

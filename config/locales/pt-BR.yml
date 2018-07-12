@@ -190,6 +190,9 @@ pt-BR:
       as_for: "A partir de"
       add_new: "Adicionar novo"
       title: "título"
+      show_filters: "Mostrar filtros"
+      reset: "Restabelecer"
+      start_date_to_end_date: "Data de início - data final"
 
     pagination:
       previous: "Anterior"
@@ -351,6 +354,14 @@ pt-BR:
       recover_clients: "Recupere os clientes por fatura (s) com a fatura # %{ids} para inserir o pagamento."
       cannot_paid: "Você não pode pagar faturas pagas."
       project_invoice_cannot_be_edit: "A fatura do projeto não pode ser editada"
+      invoice_date_range: "Intervalo de datas da fatura"
+      due_date_range: "Prazo de vencimento"
+      all_clients: "Todos os clientes"
+      all_types: "Todos os tipos"
+      all_statuses: "Todos os status"
+      invoice_number_range: "Faixa de números da fatura"
+      min: "Minuto"
+      max: "Max"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"

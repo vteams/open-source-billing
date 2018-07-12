@@ -38,6 +38,7 @@
 //= require application.js
 //= require bootstrap.js.coffee
 //= require moment
+//= require daterangepicker.min
 //= require fullcalendar
 //= require calendar.js
 //= require logs.js
@@ -99,6 +100,7 @@
 //= require i18n/translations
 //= require sweetalert.min
 //= require cocoon
+//= require nouislider
 
 jQuery(function () {
 
@@ -169,7 +171,8 @@ jQuery(function () {
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
-
+  initDateRangePicker(DateFormats.format().toUpperCase());
+  initRangeSelector();
 });
 
 window.preventDeletedNavigation = function(){
@@ -373,4 +376,64 @@ function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) 
         }
     });
 
+}
+
+function initDateRangePicker(format) {
+  var options = {
+    autoUpdateInput: false,
+    locale: {format: format}
+  };
+  $.each($('input[class="date-range"]'), function(index, element) {
+    $(element).daterangepicker(options, function(start, end) {
+      $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
+      $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
+    });
+
+    $(element).on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+    });
+
+    $(element).on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+      $('#' + $(element).attr('id') + '_start_date').val('');
+      $('#' + $(element).attr('id') + '_end_date').val('');
+    });
+  });
+}
+
+function initRangeSelector() {
+  $.each($('.range_selector'), function(index, element) {
+    var min = parseInt($(element).attr('min'));
+    var max = parseInt($(element).attr('max'));
+    var hiddenInputs = [
+      $('#' + $(element).attr('id') + '_min')[0],
+      $('#' + $(element).attr('id') + '_max')[0]
+    ];
+    var labels = [
+      $('#' + $(element).attr('id') + '_min_label')[0],
+      $('#' + $(element).attr('id') + '_max_label')[0]
+    ];
+    noUiSlider.create(element, {
+      start: [$(element).data('min') || min, $(element).data('max') || max],
+      connect: true,
+      step: 1,
+      orientation: 'horizontal',
+      range: {
+        'min': min,
+        'max': max
+      }
+    });
+    element.noUiSlider.on('update', function( values, handle ) {
+      hiddenInputs[handle].value = parseInt(values[handle]);
+      labels[handle].innerHTML = parseInt(values[handle]);
+    });
+
+  });
+}
+
+function resetRangeSelectors() {
+  $.each($('.range_selector'), function(index, element) {
+    element.noUiSlider.destroy();
+  });
+  initRangeSelector();
 }

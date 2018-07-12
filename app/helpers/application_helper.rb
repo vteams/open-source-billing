@@ -338,4 +338,10 @@ module ApplicationHelper
   def layout_toggle_params(custom_params)
     params.except(:action, :controller, :locale, :per, :company_id, :sort, :direction).merge(custom_params)
   end
+
+  def multi_select_options(select_options, prompt, options = {})
+    ("<option value='' disabled selected>#{prompt}</option>" +
+        options_for_select(select_options, options)
+    ).html_safe
+  end
 end

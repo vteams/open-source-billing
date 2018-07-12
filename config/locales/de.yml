@@ -190,6 +190,9 @@ de:
       as_for: "Ab"
       add_new: "Neue hinzufügen"
       title: "Titel"
+      show_filters: "Filter anzeigen"
+      reset: "Zurücksetzen"
+      start_date_to_end_date: "Anfangsdatum - Endtermin"
 
     pagination:
       previous: "Vorherige"
@@ -351,6 +354,14 @@ de:
       recover_clients: "Bitte stellen Sie Kunden für Rechnung (en) mit der Rechnungsnummer %{ids} wieder her, um die Zahlung einzugeben."
       cannot_paid: "Sie können keine bezahlten Rechnungen bezahlen."
       project_invoice_cannot_be_edit: "Projektrechnung kann nicht bearbeitet werden"
+      invoice_date_range: "Rechnungsdatumsbereich"
+      due_date_range: "Fälligkeitsbereich"
+      all_clients: "Alle Kunden"
+      all_types: "Alle Arten"
+      all_statuses: "Alle Status"
+      invoice_number_range: "Rechnungsnummernbereich"
+      min: "Mindest"
+      max: "Max"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
