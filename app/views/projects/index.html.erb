@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box project-box">
     <%= form_tag "projects/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render partial: 'projects_container' %></div>
@@ -30,3 +30,6 @@
   </div>
 
 </div>
+<script>
+  Project.initFilterEvents();
+</script>

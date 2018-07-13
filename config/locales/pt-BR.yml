@@ -810,6 +810,9 @@ pt-BR:
       estimate_should_be_greater_than_zero: "O tempo estimado deve ser igual ou maior que zero"
       project_time_log_tooltip: "O tempo registrado será automaticamente calculado com base no tempo gasto nas tarefas do projeto."
       staff_required_msg: 'Por favor, crie primeiro o Membro da Equipe para criar o Projeto.'
+      created_date_range: "Faixa de datas criada"
+      all_managers: "Todos os gerentes"
+      managers: "Gerentes"
 
     import_data:
       import_data: "Datos de importacion"

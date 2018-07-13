@@ -873,6 +873,9 @@ en:
       estimate_should_be_greater_than_zero: "Time Estimate should be equal or greater than zero"
       project_time_log_tooltip: "Time logged will automatically be calculated on the basis of project task's spent time."
       staff_required_msg: 'Please create Staff Member first to create Project.'
+      created_date_range: "Created Date Range"
+      all_managers: "All Managers"
+      managers: "Managers"
 
     import_data:
       import_data: "Import Data"

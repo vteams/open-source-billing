@@ -1,7 +1,7 @@
 <div class="filter-container">
   <a href="javascript:void(0);" class="show-filters" id="toggle_filters"><%= t('views.common.show_filters') %></a>
   <div class="nav-wrapper subnav-filters" id="filters">
-    <%= form_tag '', method: :get, remote: true, class: 'col s12' do %>
+    <%= form_tag estimates_path, method: :get, remote: true, class: 'col s12' do %>
       <div class="row">
         <div class="input-field col s12 m3">
           <input type="hidden" name="estimate_start_date" id="estimate_start_date">
