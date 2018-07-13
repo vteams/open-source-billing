@@ -10,9 +10,7 @@ class TasksController < ApplicationController
     set_company_session
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @tasks = Task.get_tasks(params.merge(get_args(method)))
+    @tasks = Task.get_tasks(params.merge(get_args))
 
     respond_to do |format|
       format.js
@@ -150,8 +148,8 @@ class TasksController < ApplicationController
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
-    def get_args(status)
-      {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+    def get_args
+      {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
     end
 
 end

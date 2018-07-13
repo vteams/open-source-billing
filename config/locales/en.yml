@@ -439,6 +439,7 @@ en:
       enter_spent_time: "Enter spent time for the task"
       enter_positive_spent_time: "Enter positive value of rate per hour for the task"
       atleast_one_company_selected: "Select aleast one company for the task"
+      rate_range: "Rate Range"
 
     staffs:
       name: "Staff Name"

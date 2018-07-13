@@ -418,6 +418,7 @@ fr:
       enter_spent_time: "Entrer le temps passé pour la tâche"
       enter_positive_spent_time: "Entrez la valeur positive du taux horaire pour la tâche"
       atleast_one_company_selected: "Sélectionnez au moins une entreprise pour la tâche;"
+      rate_range: "Plage de taux"
 
     staffs:
       name: "Nom du personnel"

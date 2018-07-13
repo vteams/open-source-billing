@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box task-box clearfix">
     <%= form_tag bulk_actions_tasks_path, {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'tasks_container' %></div>
@@ -30,3 +30,6 @@
   </div>
 
 </div>
+<script>
+  Task.initFilterEvents();
+</script>

@@ -422,6 +422,7 @@ de:
       enter_spent_time: "Geben Sie die Zeit für die Aufgabe ein"
       enter_positive_spent_time: "Geben Sie einen positiven Wert für die Rate pro Stunde für die Aufgabe ein"
       atleast_one_company_selected: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+      rate_range: "Tarifbereich"
 
     staffs:
       name: "Personal Name"

@@ -422,6 +422,7 @@ pt-BR:
       enter_spent_time: "Insira o tempo gasto para a tarefa"
       enter_positive_spent_time: "Insira um valor positivo de taxa por hora para a tarefa"
       atleast_one_company_selected: "Selecione pelo menos uma empresa para a tarefa"
+      rate_range: "Faixa de Taxa"
 
     staffs:
       name: "Nome da equipe"
