@@ -26,7 +26,7 @@ class Task < ActiveRecord::Base
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
-    tasks = Task
+    tasks = self
     tasks = tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
     tasks = tasks.created_at(
         (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
