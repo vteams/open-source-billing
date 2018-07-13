@@ -564,6 +564,7 @@ form .select-wrapper .dropdown-content {
 .new-invoice-holder .inline-select.select-wrapper .caret {
     color: #b5b5b5;
     top: 0px;
+    font-size: 9px;
 }
 .new-invoice-holder .inline-select.select-wrapper .dropdown-content {
     top: 40px !important;
