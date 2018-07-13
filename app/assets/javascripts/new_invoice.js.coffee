@@ -424,3 +424,8 @@ jQuery ->
 
   $('select').on 'contentChanged', ->
     $(this).material_select()
+
+  $("select").on "change", ->
+    if parseInt($(this).find(':selected').val()) == -1
+      controller_name = $(this).data('action-path')
+      $('#open_new_popup_link').attr('href', controller_name+"?type=add-new-popup").click()

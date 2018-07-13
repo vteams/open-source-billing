@@ -108,9 +108,7 @@ class ClientsController < ApplicationController
       if @client.save
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
-        new_client_message = new_client(@client.id)
-        redirect_to(clients_path, :notice => new_client_message) unless params[:quick_create]
-        return
+        format.html { redirect_to(clients_path, :notice => new_client(@client.id)) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @client.errors, :status => :unprocessable_entity }
