@@ -31,9 +31,8 @@ class ClientsController < ApplicationController
     set_company_session
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
+
+    @clients = Client.get_clients(params.merge(get_args))
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
 
     respond_to do |format|
@@ -44,9 +43,7 @@ class ClientsController < ApplicationController
   end
 
   def filter_clients
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
+    @clients = Client.get_clients(params.merge(get_args))
   end
 
   # GET /clients/1
@@ -163,7 +160,8 @@ class ClientsController < ApplicationController
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
-    @clients = Client.get_clients(params.merge(get_args('unarchived')))
+    params[:status] = 'active'
+    @clients = Client.get_clients(params.merge(get_args))
     respond_to { |format| format.js }
   end
 
@@ -211,8 +209,8 @@ class ClientsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  def get_args(status)
-    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+  def get_args
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   private
 
