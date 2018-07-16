@@ -636,6 +636,7 @@ fr:
       payment_history: "Historique de Paiement"
       no_unpaid_invoice: "Il n'y a pas de factures impayées pour entrer le paiement contre."
       no_invoice_selected: "Vous n'avez sélectionné aucune facture. Veuillez sélectionner une ou plusieurs factures et réessayer."
+      payment_date_range: "Plage de dates de paiement"
 
     payment_terms:
       number_of_days: "Nombre de jours"

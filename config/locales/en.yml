@@ -695,6 +695,7 @@ en:
       payment_history: "Payment History"
       no_unpaid_invoice: "There are no unpaid invoices to enter payment against."
       no_invoice_selected: "You haven't selected any invoice. Please select one or more invoices and try again."
+      payment_date_range: "Payment Date Range"
 
     payment_terms:
       number_of_days: "Number of days"

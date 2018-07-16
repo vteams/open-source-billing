@@ -640,6 +640,7 @@ de:
       payment_history: "Zahlungshistorie"
       no_unpaid_invoice: "Es gibt keine unbezahlten Rechnungen für die Zahlung."
       no_invoice_selected: "Sie haben keine Rechnung ausgewählt. Bitte wählen Sie eine oder mehrere Rechnungen aus und versuchen Sie es erneut."
+      payment_date_range: "Zahlungsdatum Reichweite"
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"

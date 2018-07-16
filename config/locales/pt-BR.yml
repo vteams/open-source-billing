@@ -641,6 +641,7 @@ pt-BR:
       payment_history: "Histórico de pagamento"
       no_unpaid_invoice: "Não há faturas não pagas para efetuar o pagamento."
       no_invoice_selected: "Você não selecionou nenhuma fatura. Selecione uma ou mais faturas e tente novamente."
+      payment_date_range: "Intervalo de datas de pagamento"
 
     payment_terms:
       number_of_days: "Número de dias"

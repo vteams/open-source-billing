@@ -25,7 +25,10 @@
       ul.dropdown-content.select-dropdown {
         top: 45px !important;
 
-        li span { padding: 5px 10px; }
+        li span {
+          padding: 5px 10px;
+          display: inline-flex;
+        }
       }
     }
 
@@ -50,6 +53,7 @@
       }
     }
 
+    div.noUi-base { cursor: pointer; }
     .noUi-connect { background: #14B6E1; }
 
     .range_selector.noUi-target.noUi-ltr.noUi-horizontal.noUi-background { margin-top: 5px; }
