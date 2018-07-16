@@ -115,43 +115,45 @@ class @Invoice
     tax_container.find('td.tax1').html ''
     tax_container.find('td.tax1').html ''
 
-  @change_invoice_item  = ->
-    $('.invoice_grid_fields select.items_list').on 'change', ->
-      hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
-      elem = undefined
-      elem = $(this)
-      if elem.val() == ''
-        clearLineTotal elem
-        false
-      else
-        #addLineItemRow(elem);
-        $.ajax '/items/load_item_data',
-          type: 'POST'
-          data: 'id=' + $(this).val()
-          dataType: 'html'
-          error: (jqXHR, textStatus, errorThrown) ->
-            alert 'Error: ' + textStatus
-          success: (data, textStatus, jqXHR) ->
-            item = JSON.parse(data)
-            container = elem.parents('tr.fields')
-            container.find('input.description').val item[0]
-            container.find('td.description').html item[0]
-            container.find('input.cost').val item[1].toFixed(2)
-            container.find('td.cost').html item[1].toFixed(2)
-            container.find('input.qty').val item[2]
-            container.find('td.qty').html item[2]
-            empty_tax_fields(container)
-            if item[3] != 0
-              container.find('input.tax1').val item[3]
-              container.find('input.tax-amount').val item[8]
-              container.find('td.tax1').html item[6]
-            if item[4] != 0
-              container.find('input.tax2').val item[4]
-              container.find('input.tax-amount').val item[9]
-              container.find('td.tax2').html item[7]
-            container.find('input.item_name').val item[5]
-            updateLineTotal elem
-            updateInvoiceTotal()
+  @change_invoice_item  = (elem) ->
+    if parseInt($(this).find(':selected').val()) == -1
+      console.log 'change invoice item'
+      $('.invoice_grid_fields select.items_list').on 'change', ->
+        hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
+        elem = undefined
+        elem = $(this)
+        if elem.val() == ''
+          clearLineTotal elem
+          false
+        else
+          #addLineItemRow(elem);
+          $.ajax '/items/load_item_data',
+            type: 'POST'
+            data: 'id=' + $(this).val()
+            dataType: 'html'
+            error: (jqXHR, textStatus, errorThrown) ->
+              alert 'Error: ' + textStatus
+            success: (data, textStatus, jqXHR) ->
+              item = JSON.parse(data)
+              container = elem.parents('tr.fields')
+              container.find('input.description').val item[0]
+              container.find('td.description').html item[0]
+              container.find('input.cost').val item[1].toFixed(2)
+              container.find('td.cost').html item[1].toFixed(2)
+              container.find('input.qty').val item[2]
+              container.find('td.qty').html item[2]
+              empty_tax_fields(container)
+              if item[3] != 0
+                container.find('input.tax1').val item[3]
+                container.find('input.tax-amount').val item[8]
+                container.find('td.tax1').html item[6]
+              if item[4] != 0
+                container.find('input.tax2').val item[4]
+                container.find('input.tax-amount').val item[9]
+                container.find('td.tax2').html item[7]
+              container.find('input.item_name').val item[5]
+              updateLineTotal elem
+              updateInvoiceTotal()
 
   setDuedate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null
@@ -424,8 +426,3 @@ jQuery ->
 
   $('select').on 'contentChanged', ->
     $(this).material_select()
-
-  $("select").on "change", ->
-    if parseInt($(this).find(':selected').val()) == -1
-      controller_name = $(this).data('action-path')
-      $('#open_new_popup_link').attr('href', controller_name+"?type=add-new-popup").click()

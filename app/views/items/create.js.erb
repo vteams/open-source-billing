@@ -1,6 +1,17 @@
-<%unless @item_exists%>
-<% inlineform_action = params[:add_more] ? "inlineform:save_and_add_more" : "inlineform:save" %>
-<%= "{\"action\": \"#{inlineform_action}\",\"exists\": \"#{@item_exists}\", \"record\": \"<option value='#{@item.id}' selected type='#{params[:association] == "account" ? "account_level" : "company_level"}'>#{@item.item_name}</option>\"}".html_safe%>
-<%else%>
-<%= "{\"exists\": \"#{@item_exists}\"}".html_safe%>
-<%end%>
+<% if @item_exists %>
+    <%= "{\"exists\": \"#{@item_exists}\"}".html_safe%>
+<% else %>
+    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(index, elem){
+        $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
+        last_option = $items_list_select.find('option:last').clone();
+        $items_list_select.find('option:last').remove();
+        var selected = '';
+        if (index == <%= params[:position].to_i %>){
+            selected = 'selected';
+        }
+        $items_list_select.append('<option value="<%= @item.id %>" ' +selected+'> <%= @item.item_name %> </option>').append(last_option);
+        $items_list_select.trigger('contentChanged');
+    });
+    $('.modal').modal('close');
+    showSuccessMsg("<%= t('views.items.created_msg') %>");
+<% end %>

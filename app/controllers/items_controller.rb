@@ -95,19 +95,17 @@ class ItemsController < ApplicationController
 
     if Item.is_exists?(params[:item][:item_name], get_association_obj)
       @item_exists = true
-      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:quick_create]
+      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:position].present?
       return
     end
     @item = Item.new(item_params)
-    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    options = params[:position].present? ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
     respond_to do |format|
       if @item.save
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
-        new_item_message = new_item(@item.id)
-        redirect_to({:action => "index", :controller => "items"}, :notice => new_item_message) unless params[:quick_create]
-        return
+        format.html { redirect_to items_path,  notice: new_item(@item.id) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }

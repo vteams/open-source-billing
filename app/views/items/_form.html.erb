@@ -20,7 +20,7 @@
               <% end %>
             </h5>
           </div>
-          <%= simple_form_for item, html: { class: 'item_form' } do |f| %>
+          <%= simple_form_for item, remote: (true if params[:type].present?), html: { class: 'item_form' } do |f| %>
             <div class="modal-body modal-body-balance">
               <div class="row">
                 <%= f.submit class: 'btn_large submit-item-form hidden' %>
@@ -30,6 +30,7 @@
                 <%= f.input :quantity, label: t('views.items.default_quantity'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string %>
                 <%= f.association :tax1, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
                                   wrapper_html: { class: 'input-field col s12 m6' }, label: false %>
+                <%= hidden_field_tag :position, params[:position] %>
               </div>
               <div class="row">
                 <div class="col s12 items">
