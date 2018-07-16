@@ -584,6 +584,7 @@ de:
       enter_percentage: "Steuerprozentsatz eingeben"
       percentage_must_be_numeric: "Der Prozentsatz muss ein numerischer Wert sein"
       less_than_hundred: "Der Prozentsatz muss hundert oder weniger betragen"
+      percentage_range: "Prozentbereich"
 
     logs:
       project: "Wählen Sie Projekt"

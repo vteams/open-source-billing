@@ -636,6 +636,7 @@ en:
       percentage_must_be_numeric: "Percentage must be numeric value"
       less_than_hundred: "Percentage must be hundred or less"
       greater_than_zero: "Percentage must be greater than zero"
+      percentage_range: "Percentage Range"
 
     logs:
       project: "Select Project"

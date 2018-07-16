@@ -3,6 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 class @Tax
 
+  @initFilterEvents = ->
+    $(document).ready (event) ->
+      $('#toggle_filters').on 'click', (event) ->
+        $('#filters').toggle('slow')
+      $('#filter_reset_btn').on 'click', (event) ->
+        $('#create_at_start_date,#create_at_end_date,#percentage_min,#percentage_max').val('')
+        resetRangeSelectors()
+
   applyPopover = (elem,message) ->
     elem.qtip
       content:

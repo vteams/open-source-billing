@@ -29,7 +29,7 @@
           <p class="range-field">
             <label><%= t('views.items.quantity_range') %></label>
             <input type="hidden" name="min_quantity" id="quantity_min" value="0">
-            <input type="hidden" name="max_quantity" id="quantity_max" value="<%= Invoice.last.id %>">
+            <input type="hidden" name="max_quantity" id="quantity_max" value="<%= qnty_max_val %>">
           <div class="label-range">
             <span class="label_left"><%= t('views.invoices.min') %>: <span id="quantity_min_label"></span></span>
             <span class="label_right"><%= t('views.invoices.max') %>: <span id="quantity_max_label"></span></span>
@@ -46,7 +46,7 @@
           <p class="range-field">
             <label><%= t('views.items.unit_cost_range') %></label>
             <input type="hidden" name="min_unit_cost" id="unit_cost_min" value="0">
-            <input type="hidden" name="max_unit_cost" id="unit_cost_max" value="<%= Invoice.last.id %>">
+            <input type="hidden" name="max_unit_cost" id="unit_cost_max" value="<%= unit_cost_max_val %>">
           <div class="label-range">
             <span class="label_left"><%= t('views.invoices.min') %>: <span id="unit_cost_min_label"></span></span>
             <span class="label_right"><%= t('views.invoices.max') %>: <span id="unit_cost_max_label"></span></span>

@@ -30,10 +30,7 @@ class TaxesController < ApplicationController
     params[:status] = params[:status] || 'active'
     @status = params[:status]
 
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
-    @taxes = @taxes.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+    @taxes = Tax.filter(params, @per_page)
 
     respond_to do |format|
       format.html # index.html.erb

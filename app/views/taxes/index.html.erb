@@ -18,12 +18,14 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box tax-box">
       <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
           <div class="search_result_container"><%= render 'taxes_container' %></div>
           <%= render partial: 'bulk_actions'%>
       <% end %>
   </div>
-
 </div>
+<script>
+  Tax.initFilterEvents();
+</script>

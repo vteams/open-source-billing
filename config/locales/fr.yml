@@ -580,6 +580,7 @@ fr:
       percentage_must_be_numeric: "Le pourcentage doit être une valeur numérique"
       less_than_hundred: "Le pourcentage doit être de cent ou moins"
       greater_than_zero: "Le pourcentage doit être supérieur à zéro"
+      percentage_range: "Plage de pourcentage"
 
     logs:
       project: "Sélectionner un projet"

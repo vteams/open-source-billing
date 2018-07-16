@@ -585,6 +585,7 @@ pt-BR:
       enter_percentage: "Insira a porcentagem de imposto"
       percentage_must_be_numeric: "A porcentagem deve ser um valor numérico"
       less_than_hundred: "A porcentagem deve ser cem ou menos"
+      percentage_range: "Faixa de Porcentagem"
 
     logs:
       project: "Selecione o projeto"
