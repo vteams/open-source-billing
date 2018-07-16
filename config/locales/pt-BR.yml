@@ -562,6 +562,9 @@ pt-BR:
       must_be_greater_or_equal_to_zero: "Quantidade não deve ser valor negativo"
       quantity_required: "Quantidade de item é necessária"
       greater_than_zero: "A porcentagem deve ser maior que zero"
+      all_taxes: "Todos os impostos"
+      quantity_range: "Gama de quantidades"
+      unit_cost_range: "Faixa de custo unitário"
 
     taxes:
       taxes: "Impostos"

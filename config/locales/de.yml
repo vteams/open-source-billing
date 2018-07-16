@@ -561,6 +561,9 @@ de:
       must_be_greater_or_equal_to_zero: "Menge sollte kein negativer Wert sein"
       quantity_required: "Quantidade de item é necessária"
       greater_than_zero: "Der Prozentsatz muss größer als Null sein"
+      all_taxes: "Alle Steuern"
+      quantity_range: "Menge Bereich"
+      unit_cost_range: "Stückkostenbereich"
 
     taxes:
       taxes: "Steuern"

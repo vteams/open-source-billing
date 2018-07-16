@@ -10,6 +10,15 @@ $(document).ready ->
   # Validate client
 
 class @Item
+
+  @initFilterEvents = ->
+    $(document).ready (event) ->
+      $('#toggle_filters').on 'click', (event) ->
+        $('#filters').toggle('slow')
+      $('#filter_reset_btn').on 'click', (event) ->
+        $('#create_at_start_date,#create_at_end_date,#unit_cost_min,#unit_cost_max,#quantity_min,#quantity_max').val('')
+        resetRangeSelectors()
+
   applyPopover = (elem,message) ->
     elem.qtip
       content:

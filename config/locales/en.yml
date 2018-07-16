@@ -612,6 +612,9 @@ en:
       select_atleast_one_company: "Select at least one company for the task"
       must_be_greater_or_equal_to_zero: "Quantity should not be negative value"
       quantity_required: "Item quantity is required"
+      all_taxes: "All Taxes"
+      quantity_range: "Quantity Range"
+      unit_cost_range: "Unit Cost Range"
 
     taxes:
       taxes: "Taxes"

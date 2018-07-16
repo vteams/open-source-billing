@@ -556,6 +556,9 @@ fr:
       select_atleast_one_company: "Sélectionnez au moins une entreprise pour la tâche"
       must_be_greater_or_equal_to_zero: "La quantité ne devrait pas être une valeur négative"
       quantity_required: "La quantité d'article est requise"
+      all_taxes: "Toutes les taxes"
+      quantity_range: "Gamme de quantité"
+      unit_cost_range: "Gamme de coûts unitaires"
 
     taxes:
       taxes: "impôts"
