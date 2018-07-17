@@ -34,9 +34,8 @@ class Staff < ActiveRecord::Base
     multiple(ids).only_deleted.each { |staff| staff.restore; staff.unarchive }
   end
 
-  def self.is_exists? staff_eamil, company_id = nil
-    company = Company.find company_id if company_id.present?
-    company.present? ? company.staffs.where(:email => staff_eamil).present? : where(:email => staff_eamil).present?
+  def self.is_exists? staff_eamil, association = nil
+    association.present? ? association.staffs.where(:email => staff_eamil).present? : where(:email => staff_eamil).present?
   end
 
   def self.get_staffs(params)

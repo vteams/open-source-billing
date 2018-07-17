@@ -90,6 +90,12 @@ class ClientsController < ApplicationController
   # POST /clients
   # POST /clients.json
   def create
+    if Client.is_exists?(params[:client][:name], get_association_obj)
+      @client_exists = true
+      redirect_to(new_client_path, :alert => t('views.users.duplicate_email')) unless params[:quick_create]
+      return
+    end
+
     @client = Client.new(client_params)
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params

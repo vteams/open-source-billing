@@ -50,7 +50,7 @@ class StaffsController < ApplicationController
   # POST /staffs
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    if Staff.is_exists?(params[:staff][:email], company_id)
+    if Staff.is_exists?(params[:staff][:email], get_association_obj)
       @staff_exists = true
       redirect_to(new_staff_path, :alert => t('views.staffs.duplicate_name')) unless params[:quick_create]
       return

@@ -105,6 +105,10 @@ class Client < ActiveRecord::Base
     self.send(method).page(params[:page]).per(params[:per])
   end
 
+  def self.is_exists? email, association
+    association.present? ? association.clients.where(email: email).exists? : where(email: email).exists?
+  end
+
   def credit_payments
     credit = []
     invoices.with_deleted.each { |invoice| credit << invoice.payments.where("payment_type = 'credit'").order("created_at ASC") }

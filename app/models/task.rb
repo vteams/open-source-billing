@@ -37,9 +37,8 @@ class Task < ActiveRecord::Base
     where(project_id: nil)
   end
 
-  def self.is_exists? task_name, company_id = nil
-    company = Company.find company_id if company_id.present?
-    company.present? ? company.tasks.where(:name => task_name).present? : where(:name => task_name).present?
+  def self.is_exists? task_name, association = nil
+    association.present? ? association.tasks.where(:name => task_name).present? : where(:name => task_name).present?
   end
 
 

@@ -50,7 +50,7 @@ class TasksController < ApplicationController
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
-    if Task.is_exists?(params[:task][:name], company_id)
+    if Task.is_exists?(params[:task][:name], get_association_obj)
       @task_exists = true
       redirect_to(new_task_path, :alert => t('views.tasks.duplicate_name')) unless params[:quick_create]
       return

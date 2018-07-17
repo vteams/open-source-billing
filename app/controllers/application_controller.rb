@@ -192,6 +192,10 @@ class ApplicationController < ActionController::Base
     params[:view] == 'card'
   end
 
+  def get_association_obj
+    params[:association] == 'account' ? current_account : Company.find(get_company_id)
+  end
+
   protected
 
   def configure_permitted_parameters
