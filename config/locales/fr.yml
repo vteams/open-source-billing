@@ -757,6 +757,8 @@ fr:
       pass_confirmation_required: "La confirmation du mot de passe est requise."
       pass_and_confirm_pass_should_same: "Le mot de passe et la confirmation doivent correspondre."
       cannot_delete_current_user: "L'utilisateur actuellement connecté ne peut pas être supprimé."
+      all_roles: "Tous les rôles"
+      roles: "Les rôles"
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"

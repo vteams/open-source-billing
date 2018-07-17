@@ -761,6 +761,8 @@ de:
       pass_confirmation_required: "Passwort Bestätigung ist erforderlich."
       pass_and_confirm_pass_should_same: "Passwort und Bestätigung sollten übereinstimmen."
       cannot_delete_current_user: "Der aktuell angemeldete Benutzer kann nicht gelöscht werden."
+      all_roles: "Alle Rollen"
+      roles: "Rollen"
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"

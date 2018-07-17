@@ -817,6 +817,8 @@ en:
       pass_confirmation_required: "Password confirmation is required."
       pass_and_confirm_pass_should_same: "Password and confirmation should be matched."
       cannot_delete_current_user: "Current logged in user cannot be deleted."
+      all_roles: "All Roles"
+      roles: "Roles"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"

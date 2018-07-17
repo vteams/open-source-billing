@@ -763,6 +763,8 @@ pt-BR:
       pass_confirmation_required: "Confirmação de senha é necessária."
       pass_and_confirm_pass_should_same: "Senha e confirmação devem ser combinadas."
       cannot_delete_current_user: "Usuário logado atual não pode ser excluído."
+      all_roles: "Todos os papéis"
+      roles: "Papéis"
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"
