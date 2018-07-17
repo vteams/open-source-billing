@@ -296,9 +296,13 @@ module InvoicesHelper
   end
 
   def filters_status_select_options
-    [[t('views.common.active'), 'active'],
-     [t('views.common.archived'), 'archived'],
-     [t('views.common.deleted'), 'deleted'],
-     [t('views.common.recurring'), 'recurring']]
+    statuses = [
+        [t('views.common.active'), 'active'],
+        [t('views.common.archived'), 'archived'],
+        [t('views.common.deleted'), 'deleted']
+    ]
+    statuses << [t('views.common.recurring'), 'recurring'] if params[:controller] == 'invoices'
+
+    statuses
   end
 end
