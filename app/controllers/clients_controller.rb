@@ -92,7 +92,7 @@ class ClientsController < ApplicationController
   def create
     if Client.is_exists?(params[:client][:email], get_association_obj)
       @client_exists = true
-      redirect_to(new_client_path, :alert => t('views.users.duplicate_email')) unless params[:quick_create]
+      redirect_to(clients_path, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
       return
     end
 
