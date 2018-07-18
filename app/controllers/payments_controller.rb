@@ -29,7 +29,7 @@ class PaymentsController < ApplicationController
     @payments = Payment.filter(params, @per_page)
     #filter invoices by company
     @payments = filter_by_company(@payments)
-    @payment_activity = Reporting::PaymentActivity.get_recent_activity(@payments)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -120,7 +120,7 @@ class PaymentsController < ApplicationController
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
     end
 
-    @payment_activity = Reporting::PaymentActivity.get_recent_activity(Payment.unarchived)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
   end
 
   def update_individual_payment

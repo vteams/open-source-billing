@@ -9,7 +9,7 @@
       <h5>
         <h5>
           <a href="javascript:;"><%= t('header.links.payments.payments') %></a>
-          <span>(<%= @payments.count %>)</span>
+          <span>(<%= @payment_activity[:total_count] %>)</span>
         </h5>
       </h5>
       <div class="amount"><%= number_to_currency(@payment_activity[:active_payments_total], unit: default_currency_unit) %></div>
