@@ -24,5 +24,5 @@
         }
     });
     $('.modal').modal('close');
-    showSuccessMsg("<%= t('views.items.created_msg') %>");
+    showWarningSweetAlert('success', "<%= t('views.items.created_msg') %>", function(){});
 <% end %>

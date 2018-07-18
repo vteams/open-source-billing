@@ -382,7 +382,7 @@ function initSelectActionLink(){
     $("select").on("change", function() {
         var controller_name;
         if (parseInt($(this).find(':selected').val()) == -1) {
-            $(this).val('')
+            $(this).val('');
             controller_name = $(this).data('action-path');
             var position = $(this).attr('id');
             return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
