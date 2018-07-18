@@ -11,13 +11,17 @@
         last_option = $items_list_select.find('option:last').clone();
         $items_list_select.find('option:last').remove();
         var selected = '';
-        if ( $items_list_select.attr('id') == "<%= params[:position].to_s %>"){
+        if( $items_list_select.attr('id') == "<%= params[:position].to_s %>"){
             selected = 'selected';
+            $items_list_select.append('<option value="<%= @item.id %>" ' +selected+'> <%= @item.item_name %> </option>').append(last_option);
+            $items_list_select.material_select();
+            $items_list_select.trigger('contentChanged');
+            $items_list_select.change();
+        }else{
+            $items_list_select.append('<option value="<%= @item.id %>"> <%= @item.item_name %> </option>').append(last_option);
+            $items_list_select.material_select();
+            $items_list_select.trigger('contentChanged');
         }
-
-        $items_list_select.append('<option value="<%= @item.id %>" ' +selected+'> <%= @item.item_name %> </option>').append(last_option);
-        $items_list_select.material_select();
-        $items_list_select.trigger('contentChanged');
     });
     $('.modal').modal('close');
     showSuccessMsg("<%= t('views.items.created_msg') %>");

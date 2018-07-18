@@ -6,6 +6,7 @@
 
     NestedFormEvents.prototype = {
         addFields: function(e) {
+            initSelectActionLink();
             var link      = e.currentTarget;
 
             $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").material_select();
@@ -28,7 +29,6 @@
                 Estimate.changeTax();
                 Estimate.load_functions();
             }
-            initSelectActionLink();
             return false;
         },
         newId: function() {
