@@ -1,15 +1,22 @@
 <% if @item_exists %>
-    <%= "{\"exists\": \"#{@item_exists}\"}".html_safe%>
+    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(){
+        $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
+    });
+    showWarningSweetAlert('error', "<%= t('views.items.duplicate_name') %>", function(){});
+    $('#' + '<%= params[:position] %>').val('').material_select();
+
 <% else %>
-    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(index, elem){
+    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(){
         $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
         last_option = $items_list_select.find('option:last').clone();
         $items_list_select.find('option:last').remove();
         var selected = '';
-        if (index == <%= params[:position].to_i %>){
+        if ( $items_list_select.attr('id') == "<%= params[:position].to_s %>"){
             selected = 'selected';
         }
+
         $items_list_select.append('<option value="<%= @item.id %>" ' +selected+'> <%= @item.item_name %> </option>').append(last_option);
+        $items_list_select.material_select();
         $items_list_select.trigger('contentChanged');
     });
     $('.modal').modal('close');

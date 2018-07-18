@@ -234,15 +234,7 @@ $(document).ready(function(){
         }
     });
 
-    $("select").on("change", function() {
-        console.log('clicked here');
-        var controller_name;
-        if (parseInt($(this).find(':selected').val()) == -1) {
-            controller_name = $(this).data('action-path');
-            var position = $(this).data('position');
-            return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
-        }
-    });
+    initSelectActionLink();
 });
 
 function initCustomConfirmPopUp() {
@@ -383,4 +375,16 @@ function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) 
         }
     });
 
+}
+
+function initSelectActionLink(){
+    $("select").off();
+    $("select").on("change", function() {
+        var controller_name;
+        if (parseInt($(this).find(':selected').val()) == -1) {
+            controller_name = $(this).data('action-path');
+            var position = $(this).attr('id');
+            return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
+        }
+    });
 }

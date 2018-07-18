@@ -28,6 +28,7 @@
                 Estimate.changeTax();
                 Estimate.load_functions();
             }
+            initSelectActionLink();
             return false;
         },
         newId: function() {

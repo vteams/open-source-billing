@@ -116,9 +116,8 @@ class @Invoice
     tax_container.find('td.tax1').html ''
 
   @change_invoice_item  = (elem) ->
-    if parseInt($(this).find(':selected').val()) == -1
-      console.log 'change invoice item'
-      $('.invoice_grid_fields select.items_list').on 'change', ->
+    $('.invoice_grid_fields select.items_list').on 'change', ->
+      if parseInt($(this).find(':selected').val()) != -1
         hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
         elem = undefined
         elem = $(this)
@@ -216,6 +215,9 @@ class @Invoice
       updateInvoiceTotal()
 
   @load_functions = ->
+
+    $('select').on 'contentChanged', ->
+      $(this).material_select()
 
     if $('#recurring').is(":checked")
       $("#invoice_recurring_schedule_attributes__destroy").val false
