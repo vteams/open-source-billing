@@ -487,6 +487,7 @@ de:
       remove_this_contact: "Diesen Kontakt entfernen"
       outstanding_amount: "Unbezahlter Betrag"
       total_amount_billed: "Insgesamter Rechnungsbetrag"
+      duplicate_email: "Client mit derselben E-Mail-Adresse existiert bereits"
       total_payments_received: "Insgesamte Bezahlungen empfangen"
       no_record_msg: "Es existieren noch keine Kunden. Klicke auf Neuer Kunde um einen neuen zu erstellen."
       no_archived_client: "Es existieren keine archivierten Kunden."

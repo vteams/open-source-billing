@@ -487,6 +487,7 @@ pt-BR:
       remove_this_contact: "Remover este contato"
       outstanding_amount: "Montante excepcional"
       total_amount_billed: "Valor total faturado"
+      duplicate_email: "Cliente com o mesmo email já existe"
       total_payments_received: "Pagamentos totais recebidos"
       no_record_msg: "Você não criou nenhum cliente ainda. Por favor, clique no botão Novo cliente para criar um cliente."
       no_archived_client: "Você não possui nenhum cliente arquivado"

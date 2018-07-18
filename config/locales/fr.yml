@@ -483,6 +483,7 @@ fr:
       remove_this_contact: "Supprimer ce contact"
       outstanding_amount: "Outstanding Amount"
       total_amount_billed: "Montant total des factures"
+      duplicate_email: "Le client avec le même email existe déjà"
       total_payments_received: "Le total des paiements reçus"
       no_record_msg: "Vous ne l'avez pas encore créé de client. S'il vous plaît cliquer sur le bouton Nouveau client pour créer un nouveau client."
       no_archived_client: "Vous ne l'avez pas tout client archivé."

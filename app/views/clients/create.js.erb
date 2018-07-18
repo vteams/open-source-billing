@@ -1,6 +1,10 @@
-last_option = $("#invoice_client_id option:last").clone();
-$("#invoice_client_id option:last").remove();
-$("#invoice_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
-$("#invoice_client_id").trigger('contentChanged');
-$('.modal').modal('close');
-showSuccessMsg("<%= t('views.clients.created_msg') %>");
+<% if @client_exists %>
+    showWarningSweetAlert('error', "<%= t('views.clients.duplicate_email') %>", function(){});
+<% else %>
+    last_option = $("#invoice_client_id option:last").clone();
+    $("#invoice_client_id option:last").remove();
+    $("#invoice_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
+    $("#invoice_client_id").trigger('contentChanged');
+    $('.modal').modal('close');
+    showWarningSweetAlert('success', "<%= t('views.clients.created_msg') %>", function(){});
+<% end %>

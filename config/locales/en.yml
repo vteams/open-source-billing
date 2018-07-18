@@ -528,6 +528,7 @@ en:
       outstanding_amount: "Outstanding Amount"
       total_amount_billed: "Total amount billed"
       total_payments_received: "Total payments received"
+      duplicate_email: "Client with same email already exists"
       no_record_msg: "You haven't created any client yet. Please click on New Client button to create new client."
       no_archived_client: "You haven't any archived client."
       no_deleted_client: "You haven't any deleted client."
