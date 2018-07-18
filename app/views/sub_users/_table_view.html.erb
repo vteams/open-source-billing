@@ -14,7 +14,7 @@
       <% @sub_users.each do |user| %>
           <tr>
             <td>
-              <strong><%= link_to_if !@status.eql?('deleted'), user.name, edit_sub_user_path(user), remote: true, class: 'invoice_show_link' %></strong>
+              <strong><%= link_to_if !user.deleted?, user.name, edit_sub_user_path(user), remote: true, class: 'invoice_show_link' %></strong>
             </td>
             <td><%= user.email %></td>
             <td><%= user.created_at.strftime(get_date_format) %></td>

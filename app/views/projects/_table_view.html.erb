@@ -21,7 +21,7 @@
                 <td class="align_center td-checkbox checkbox-item">
                   <%= check_box_tag 'project_ids[]', project.id, false, id: "project_#{project.id}", class: 'fix-left-and-opacity' %>
                 </td>
-                <td><strong><%= link_to_if !@status.eql?('deleted'), project.project_name, project %></strong></td>
+                <td><strong><%= link_to_if !project.deleted?, project.project_name, project %></strong></td>
                 <td><%= project.unscoped_client.organization_name rescue '' %></td>
                 <td><%= project.manager.try(:name)%></td>
                 <td><%= project.total_hours %> <small>HRS</small></td>
@@ -30,7 +30,7 @@
                   <strong><%= random_progress %>%</strong>
                 </td>
                 <td class="action-btn-group">
-                  <% if @status.eql?('deleted') %>
+                  <% if project.deleted? %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                   <% else %>
                       <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice_form_log_path(project), title: t('header.links.time_tracking.invoice'), remote: true unless random_progress.zero? %>
@@ -43,9 +43,9 @@
                       </a>
                       <!-- Dropdown Structure -->
                       <ul id="dropdown_<%= project.id %>" class='dropdown-content z-depth-4'>
-                        <% if @status.eql?('active') %>
+                        <% if !project.archived? %>
                             <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
-                        <% elsif @status.eql?('archived') %>
+                        <% else %>
                             <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
                         <% end %>
                       </ul>

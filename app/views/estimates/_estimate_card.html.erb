@@ -1,7 +1,7 @@
 <div class="flex-item box">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
-  <%= link_to '', estimate , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
+  <%= link_to '', estimate , remote: true, class: 'invoice_show_link', style: 'display: none' unless estimate.deleted? %>
   <div class="card-white-panel invoice-card" data-estimate_id= <%= estimate.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in" %>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="action-btn-group">
-      <% if @status.eql?('deleted') %>
+      <% if estimate.deleted? %>
           <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
       <% else %>
           <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_path(id: estimate.id),
@@ -36,14 +36,14 @@
           </a>
           <!-- Dropdown Structure -->
           <ul id="dropdown_<%= estimate.id %>" class='dropdown-content z-depth-4'>
-            <% if @status.eql?('active') %>
+            <% if !estimate.archived? %>
                 <li>
                   <a href="javascript:;" class="single_archive">
                     <i class="material-icons">archive</i>
                     <%= t('views.common.send_to_archive') %>
                   </a>
                 </li>
-            <% elsif @status.eql?('archived') %>
+            <% else %>
                 <li>
                   <a href="javascript:;" class="single_recover">
                     <i class="material-icons">unarchive</i>

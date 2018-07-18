@@ -8,7 +8,7 @@
       <div class="card-white-panel">
         <h3 class="with-grid-icons">
           <span><%= link_to t('header.links.items.items'), items_path %></span>
-          <a class="active"><%= "/ #{t('views.common.' + @status.downcase)}" %></a>
+          <a class="active"><%= "/ #{t('views.common.' + status_text)}" %></a>
           <%= index_layout_toggle_icons(items_path(layout_toggle_params(view: 'card')),
                                         items_path(layout_toggle_params(view: 'table'))) %>
         </h3>

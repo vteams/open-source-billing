@@ -344,4 +344,8 @@ module ApplicationHelper
         options_for_select(select_options, options)
     ).html_safe
   end
+
+  def status_text
+    @status.is_a?(String) ? @status.humanize.underscore : @status.first.humanize.underscore
+  end
 end

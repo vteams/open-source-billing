@@ -13,7 +13,7 @@
             <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
             <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
-          <%= link_to "/ #{t('views.common.' + @status.humanize.underscore)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, title: t('helpers.links.add'), class: 'plus-add-icon' %>
           <%= index_layout_toggle_icons(projects_path(layout_toggle_params(view: 'card')),
                                         projects_path(layout_toggle_params(view: 'table'))) %>

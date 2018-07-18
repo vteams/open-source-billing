@@ -7,7 +7,7 @@
       <div class="card-white-panel">
         <h3 class="with-grid-icons">
           <span><%= link_to t('header.links.invoices.invoices'), invoices_path %> </span>
-          <%= link_to "/ #{t('views.common.' + @status)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= index_layout_toggle_icons(invoices_path(layout_toggle_params(view: 'card')),
                                         invoices_path(layout_toggle_params(view: 'table'))) %>
         </h3>

@@ -19,12 +19,12 @@
             <td class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'company_ids[]', company.id, false, id: "company_#{company.id}", class: 'fix-left-and-opacity' %>
             </td>
-            <td><strong><%= link_to_if !@status.eql?('deleted'), company.company_name, edit_company_path(company), remote: true, class: 'invoice_show_link' %></strong></td>
+            <td><strong><%= link_to_if !company.deleted?, company.company_name, edit_company_path(company), remote: true, class: 'invoice_show_link' %></strong></td>
             <td><%= company.contact_name %></td>
             <td><%= company.email %></td>
             <td><%= company.created_at.strftime(get_date_format) rescue '' %></td>
             <td class="action-btn-group">
-              <% if @status.eql?('deleted') %>
+              <% if company.deleted? %>
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                     <i class="material-icons">unarchive</i>
                   </a>
@@ -40,9 +40,9 @@
                   </a>
                   <!-- Dropdown Structure -->
                   <ul id="dropdown_<%= company.id %>" class='dropdown-content z-depth-4'>
-                    <% if @status.eql?('active') %>
+                    <% if !company.archived? %>
                         <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
-                    <% elsif @status.eql?('archived') %>
+                    <% else %>
                         <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
                     <% end %>
                   </ul>

@@ -18,10 +18,10 @@
                 <td class="align_center td-checkbox checkbox-item">
                   <%= check_box_tag 'tax_ids[]', tax.id, false, id: "tax_#{tax.id}", class: 'fix-left-and-opacity' %>
                 </td>
-                <td><strong><%= link_to_if !@status.eql?('deleted'), tax.name, tax, remote: true, class: 'invoice_show_link' %></strong></td>
+                <td><strong><%= link_to_if !tax.deleted?, tax.name, tax, remote: true, class: 'invoice_show_link' %></strong></td>
                 <td><strong><%= tax.percentage %>%</strong></td>
                 <td class="action-btn-group">
-                  <% if @status.eql?('deleted') %>
+                  <% if tax.deleted? %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                         <i class="material-icons">unarchive</i>
                       </a>
@@ -37,13 +37,13 @@
                       </a>
                       <!-- Dropdown Structure -->
                       <ul id="dropdown_<%= tax.id %>" class='dropdown-content z-depth-4'>
-                        <% if @status.eql?('active') %>
+                        <% if !tax.archived? %>
                             <li>
                               <a href="javascript:;" class="single_archive">
                                 <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
                               </a>
                             </li>
-                        <% elsif @status.eql?('archived') %>
+                        <% else %>
                             <li>
                               <a href="javascript:;" class="single_recover">
                                 <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>

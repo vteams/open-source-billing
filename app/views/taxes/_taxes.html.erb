@@ -1,5 +1,5 @@
 <div class="flex-item">
-  <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' unless @status.eql?('deleted') %>
+  <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' unless taxis.deleted? %>
   <div class="card-white-panel invoice-card" data-taxis_id= <%=taxis.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "tax_#{taxis.id}", class: "filled-in" %>
@@ -11,7 +11,7 @@
       <strong><%= taxis.percentage %>%</strong>
     </div>
     <div class="action-btn-group">
-      <% if @status.eql?('deleted') %>
+      <% if taxis.deleted? %>
         <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
           <i class="material-icons">unarchive</i>
         </a>
@@ -27,13 +27,13 @@
         </a>
         <!-- Dropdown Structure -->
         <ul id="dropdown_<%= taxis.id %>" class='dropdown-content z-depth-4'>
-          <% if @status.eql?('active') %>
+          <% if !taxis.archived? %>
             <li>
               <a href="javascript:;" class="single_archive">
                 <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
               </a>
             </li>
-          <% elsif @status.eql?('archived') %>
+          <% else %>
             <li>
               <a href="javascript:;" class="single_recover">
                 <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>

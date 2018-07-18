@@ -7,7 +7,7 @@
       <div class="card-white-panel ">
         <h3 class="with-grid-icons">
           <span><%= link_to t('header.links.estimates.estimates'), estimates_path %></span>
-          <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= index_layout_toggle_icons(estimates_path(layout_toggle_params(view: 'card')),
                                         estimates_path(layout_toggle_params(view: 'table'))) %>
         </h3>
