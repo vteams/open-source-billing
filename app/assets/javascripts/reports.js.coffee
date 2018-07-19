@@ -5,14 +5,12 @@
 jQuery ->
   $('.report-section  #from_date').pickadate
     format: DateFormats.format()
-    formatSubmit: DateFormats.format()
     onSet: (context) ->
       value = @get('value')
       $('.report-section #from_date').val value
 
   $('.report-section  #to_date ').pickadate
     format: DateFormats.format()
-    formatSubmit: DateFormats.format()
     onSet: (context) ->
       value = @get('value')
       $('.report-section  #to_date').val value
