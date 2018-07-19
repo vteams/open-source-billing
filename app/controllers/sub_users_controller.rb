@@ -6,6 +6,7 @@ class SubUsersController < ApplicationController
 
   def index
     @sub_users = User.filter(params, @per_page)
+    @user_activities = User.all
     respond_to do |format|
       format.html
       format.js

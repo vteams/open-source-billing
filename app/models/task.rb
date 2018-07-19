@@ -38,7 +38,7 @@ class Task < ActiveRecord::Base
       params[:status].each {|status| tasks = tasks.send(mappings[status.to_sym])} if params[:status].present?
     end
 
-    tasks.page(params[:page]).per(params[:per])
+    tasks
   end
 
   def self.recover_archived(ids)

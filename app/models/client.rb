@@ -117,7 +117,7 @@ class Client < ActiveRecord::Base
       params[:status].each {|status| clients = clients.send(mappings[status.to_sym])} if params[:status].present?
     end
 
-    clients.page(params[:page]).per(params[:per])
+    clients
   end
 
   def credit_payments

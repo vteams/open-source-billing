@@ -3,7 +3,7 @@
       keyboard_arrow_left
     </i></span>
   <div class="activity-scroll-holder mCustomScrollbar">
-    <% @sub_users.group_by { |d| d.group_role }.each do |role, users| %>
+    <% @user_activities.group_by { |d| d.group_role }.each do |role, users| %>
       <div class="status-info active">
         <h5>
           <a href="javascript:;" class="non-clickable"><%= t('views.users.' + role.downcase) rescue '' %></a>

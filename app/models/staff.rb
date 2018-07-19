@@ -40,7 +40,7 @@ class Staff < ActiveRecord::Base
       params[:status].each {|status| staffs = staffs.send(mappings[status.to_sym])} if params[:status].present?
     end
 
-    staffs.page(params[:page]).per(params[:per])
+    staffs
   end
 
   def self.recover_archived(ids)

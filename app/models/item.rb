@@ -76,7 +76,7 @@ class Item < ActiveRecord::Base
       params[:status].each {|status| items = items.send(mappings[status.to_sym])} if params[:status].present?
     end
 
-    items.page(params[:page]).per(per_page)
+    items
   end
 
   def self.get_items(params)
