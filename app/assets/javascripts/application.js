@@ -395,6 +395,7 @@ function initDateRangePicker(format) {
 
     $(element).on('cancel.daterangepicker', function(ev, picker) {
       $(this).val('');
+      picker.element.val('');
       $('#' + $(element).attr('id') + '_start_date').val('');
       $('#' + $(element).attr('id') + '_end_date').val('');
     });
@@ -448,6 +449,9 @@ function initFilterEvents(ids) {
       $('#filters select').val('');
       $(ids).val('');
       resetRangeSelectors();
+      $.each($('.daterangepicker.ltr.show-calendar.opensright .cancelBtn.btn.btn-sm.btn-default'), function(index, element) {
+        $(element).click();
+      });
       $('#filters_form').submit();
     });
   });
