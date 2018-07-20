@@ -119,6 +119,7 @@ class @Invoice
     $(document).ready (event) ->
       $('#toggle_filters').on 'click', (event) ->
         $('#filters').toggle('slow')
+        toggleFilterText()
       $('#filter_reset_btn').on 'click', (event) ->
         $('#create_at_start_date,#create_at_end_date,#due_start_date,#due_end_date,#invoice_number_min,#invoice_number_max').val('')
         resetRangeSelectors()

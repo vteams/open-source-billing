@@ -437,3 +437,11 @@ function resetRangeSelectors() {
   });
   initRangeSelector();
 }
+
+function toggleFilterText() {
+  if($('#toggle_filters').text() == I18n.t('views.common.show_filters')){
+    $('#toggle_filters').text(I18n.t('views.common.hide_filters'));
+  } else {
+    $('#toggle_filters').text(I18n.t('views.common.show_filters'));
+  }
+}

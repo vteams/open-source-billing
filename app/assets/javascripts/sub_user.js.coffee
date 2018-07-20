@@ -4,6 +4,7 @@ class @SubUser
     $(document).ready (event) ->
       $('#toggle_filters').on 'click', (event) ->
         $('#filters').toggle('slow')
+        toggleFilterText()
       $('#filter_reset_btn').on 'click', (event) ->
         $('#create_at_start_date,#create_at_end_date').val('')
         resetRangeSelectors()

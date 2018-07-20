@@ -204,6 +204,7 @@ en:
       add_new: "Add New"
       title: "Title"
       show_filters: "Show Filters"
+      hide_filters: "Hide Filters"
       reset: "Reset"
       start_date_to_end_date: "Start Date - End Date"
 

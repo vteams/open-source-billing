@@ -15,6 +15,7 @@ class @Item
     $(document).ready (event) ->
       $('#toggle_filters').on 'click', (event) ->
         $('#filters').toggle('slow')
+        toggleFilterText()
       $('#filter_reset_btn').on 'click', (event) ->
         $('#create_at_start_date,#create_at_end_date,#unit_cost_min,#unit_cost_max,#quantity_min,#quantity_max').val('')
         resetRangeSelectors()

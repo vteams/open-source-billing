@@ -175,6 +175,7 @@ class @Estimate
     $(document).ready (event) ->
       $('#toggle_filters').on 'click', (event) ->
         $('#filters').toggle('slow')
+        toggleFilterText()
       $('#filter_reset_btn').on 'click', (event) ->
         $('#estimate_start_date,#estimate_end_date,#estimate_number_min,#estimate_number_max').val('')
         resetRangeSelectors()

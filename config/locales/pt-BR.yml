@@ -191,6 +191,7 @@ pt-BR:
       add_new: "Adicionar novo"
       title: "título"
       show_filters: "Mostrar filtros"
+      hide_filters: "Ocultar filtros"
       reset: "Restabelecer"
       start_date_to_end_date: "Data de início - data final"
 

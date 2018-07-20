@@ -187,6 +187,7 @@ fr:
       add_new: "Ajouter un nouveau"
       title: "Titre"
       show_filters: "Afficher les filtres"
+      hide_filters: "Masquer les filtres"
       reset: "Réinitialiser"
       start_date_to_end_date: "Date de début - date de fin"
 

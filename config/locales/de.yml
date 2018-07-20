@@ -191,6 +191,7 @@ de:
       add_new: "Neue hinzufügen"
       title: "Titel"
       show_filters: "Filter anzeigen"
+      hide_filters: "Filter ausblenden"
       reset: "Zurücksetzen"
       start_date_to_end_date: "Anfangsdatum - Endtermin"
 
