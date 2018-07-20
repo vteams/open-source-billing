@@ -1,12 +1,12 @@
 <% if @item_exists %>
-    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(){
+    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields, table.estimate-grid-table > tbody.estimate-line-items-table > tr.line-items-fields').each(function(){
         $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
     });
     showWarningSweetAlert('error', "<%= t('views.items.duplicate_name') %>", function(){});
     $('#' + '<%= params[:position] %>').val('').material_select();
 
 <% else %>
-    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields').each(function(){
+    $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields, table.estimate-grid-table > tbody.estimate-line-items-table > tr.line-items-fields').each(function(){
         $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
         last_option = $items_list_select.find('option:last').clone();
         $items_list_select.find('option:last').remove();

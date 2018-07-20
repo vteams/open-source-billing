@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="new-invoice-table-holder main-invoice">
-          <table class="invoice_grid_fields estimate_grid_fields" id="estimate_grid_fields">
+          <table class="invoice_grid_fields estimate_grid_fields estimate-grid-table" id="estimate_grid_fields">
             <thead>
             <tr>
               <th>&nbsp;</th>
@@ -44,9 +44,9 @@
               <th class="item_total_width right-align"><%= t('views.common.total') %></th>
             </tr>
             </thead>
-            <tbody id="estimate_line_items_tbl">
+            <tbody id="estimate_line_items_tbl" class="estimate-line-items-table">
               <%= f.simple_fields_for :estimate_line_items do |estimate_line_item| %>
-                  <%= render 'estimate_line_item_fields', f: estimate_line_item %>
+                  <%= render 'estimate_line_item_fields', f: estimate_line_item, count: estimate_line_item.index %>
               <% end %>
             </tbody>
           </table>

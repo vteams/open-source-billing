@@ -1,13 +1,15 @@
-<tr class="fields nested-fields">
+<tr class="fields nested-fields line-items-fields">
   <td>
     <div class="elementsAction">
       <%= link_to_remove_association raw('<i class="material-icons close">close</i>'), f, class: 'remove_item remove_nested_fields removeItem cross-position' %>
     </div>
   </td>
   <td>
-    <%= f.input :item_id, collection: load_line_items(action_name, @estimate.company_id, f.object),
-                selected: f.object.item_id, prompt: t('views.invoice_line_item.select_an_item'), label: false, wrapper: false,
-                include_blank: false, input_html: { class: 'items_list inline-select title-select' } %>
+    <%= f.input :item_id, collection: (load_line_items(action_name, @estimate.company_id, f.object) << ['Add New', '-1']),
+                selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
+                include_blank: false, input_html: { class: 'items_list inline-select title-select',
+                                                    data: {action_path: new_item_path, position: (count rescue 0)} } %>
+
   </td>
   <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name' }, label: false, wrapper: false %>
   <td><%= f.input :item_description, input_html: { class: 'description' }, label: false, wrapper: false %></td>

@@ -87,40 +87,41 @@ class @Estimate
 
   @change_estimate_item  = ->
     $('.estimate_grid_fields select.items_list').on 'change', ->
-      hidePopover($("table#estimate_grid_fields tr.fields:visible:first td:nth-child(2)"))
-      elem = $(this)
-      if elem.val() == ''
-        clearLineTotal elem
-        false
-      else
-        #addLineItemRow(elem);
-        $.ajax '/items/load_item_data',
-          type: 'POST'
-          data: 'id=' + $(this).val()
-          dataType: 'html'
-          error: (jqXHR, textStatus, errorThrown) ->
-            alert 'Error: ' + textStatus
-          success: (data, textStatus, jqXHR) ->
-            item = JSON.parse(data)
-            container = elem.parents('tr.fields')
-            container.find('input.description').val item[0]
-            container.find('td.description').html item[0]
-            container.find('input.cost').val item[1].toFixed(2)
-            container.find('td.cost').html item[1].toFixed(2)
-            container.find('input.qty').val item[2]
-            container.find('td.qty').html item[2]
-            empty_tax_fields(container)
-            if item[3] != 0
-              container.find('input.tax1').val item[3]
-              container.find('input.tax-amount').val item[8]
-              container.find('td.tax1').html item[6]
-            if item[4] != 0
-              container.find('input.tax2').val item[4]
-              container.find('input.tax-amount').val item[9]
-              container.find('td.tax2').html item[7]
-            container.find('input.item_name').val item[5]
-            updateLineTotal elem
-            updateInvoiceTotal()
+      if parseInt($(this).find(':selected').val()) != -1
+        hidePopover($("table#estimate_grid_fields tr.fields:visible:first td:nth-child(2)"))
+        elem = $(this)
+        if elem.val() == ''
+          clearLineTotal elem
+          false
+        else
+          #addLineItemRow(elem);
+          $.ajax '/items/load_item_data',
+            type: 'POST'
+            data: 'id=' + $(this).val()
+            dataType: 'html'
+            error: (jqXHR, textStatus, errorThrown) ->
+              alert 'Error: ' + textStatus
+            success: (data, textStatus, jqXHR) ->
+              item = JSON.parse(data)
+              container = elem.parents('tr.fields')
+              container.find('input.description').val item[0]
+              container.find('td.description').html item[0]
+              container.find('input.cost').val item[1].toFixed(2)
+              container.find('td.cost').html item[1].toFixed(2)
+              container.find('input.qty').val item[2]
+              container.find('td.qty').html item[2]
+              empty_tax_fields(container)
+              if item[3] != 0
+                container.find('input.tax1').val item[3]
+                container.find('input.tax-amount').val item[8]
+                container.find('td.tax1').html item[6]
+              if item[4] != 0
+                container.find('input.tax2').val item[4]
+                container.find('input.tax-amount').val item[9]
+                container.find('td.tax2').html item[7]
+              container.find('input.item_name').val item[5]
+              updateLineTotal elem
+              updateInvoiceTotal()
 
   setDuedate = (estimate_date, term_days) ->
     if term_days != null and estimate_date != null
