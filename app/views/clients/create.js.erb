@@ -6,5 +6,5 @@
     $("#invoice_client_id, #estimate_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
     $("#invoice_client_id, #estimate_client_id").trigger('contentChanged');
     $('.modal').modal('close');
-    showWarningSweetAlert('success', "<%= t('views.clients.created_msg') %>", function(){});
+    swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
 <% end %>
