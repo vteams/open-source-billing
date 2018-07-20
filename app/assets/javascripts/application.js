@@ -454,13 +454,16 @@ function initFilterEvents(ids) {
       });
       $('#filters_form').submit();
     });
+    $('#filter_submit_btn').on('click', function (event) {
+      $('#filters_form').submit();
+    })
   });
 }
 
 function toggleFilterText() {
-  if($('#toggle_filters').text() == I18n.t('views.common.show_filters')){
-    $('#toggle_filters').text(I18n.t('views.common.hide_filters'));
+  if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   } else {
-    $('#toggle_filters').text(I18n.t('views.common.show_filters'));
+    $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
   }
 }

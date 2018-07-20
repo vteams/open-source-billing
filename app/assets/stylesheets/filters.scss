@@ -1,13 +1,14 @@
 .filter-container {
-  margin-top: 20px;
+  border-top: 1px solid lightgrey;
+  background-color: white;
+  padding: 20px;
+  display: none;
 
-  .show-filters {
-    font-size: 12px;
+  .show-filters i {
+    padding-left: 20px;
   }
 
   .subnav-filters {
-    display: none;
-    margin-top: 20px;
     margin-right: 20px;
     font-size: 12px;
 
@@ -37,9 +38,9 @@
 
     .noUi-horizontal .noUi-handle {
       width: 14px;
-      height: 12px;
+      height: 14px;
       left: 0;
-      top: -5px;
+      top: -6px;
       border-radius: 50%;
     }
 
@@ -62,12 +63,22 @@
   .filter-footer {
     float: right;
     margin-top: 20px;
-    input[type="submit"],
-    input[type="reset"] {
-      font-weight: normal;
-      background-color: transparent;
-      border: none;
-      color: #14B6E1;
+    .filter-btn {
+      color: #09b8e2;
+      background: transparent;
+      border: 1px solid #09b8e2;
+      font-size: 16px;
+      font-family: "Dosis",sans-serif;
+      min-height: 35px;
+      box-shadow: none;
+      text-transform: capitalize;
+      font-weight: 400;
+      border-radius: 5px;
+      min-width: 120px;
+      &:hover {
+        background-color: #14B6E1;
+        color: white;
+      }
     }
   }
 }
