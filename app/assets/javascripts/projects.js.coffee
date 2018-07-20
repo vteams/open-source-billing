@@ -1,14 +1,5 @@
 class @Project
 
-  @initFilterEvents = ->
-    $(document).ready (event) ->
-      $('#toggle_filters').on 'click', (event) ->
-        $('#filters').toggle('slow')
-        toggleFilterText()
-      $('#filter_reset_btn').on 'click', (event) ->
-        $('#create_at_start_date,#create_at_end_date').val('')
-        resetRangeSelectors()
-
   @change_project_task  = ->
     # Load Task data when an task is selected from dropdown list
     jQuery(".project_grid_fields select.tasks_list").on "change", ->

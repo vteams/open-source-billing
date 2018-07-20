@@ -438,6 +438,21 @@ function resetRangeSelectors() {
   initRangeSelector();
 }
 
+function initFilterEvents(ids) {
+  $(document).ready( function (event) {
+    $('#toggle_filters').on('click', function (event) {
+      $('#filters').toggle('slow');
+      toggleFilterText();
+    });
+    $('#filter_reset_btn').on('click', function(event) {
+      $('#filters select').val('');
+      $(ids).val('');
+      resetRangeSelectors();
+      $('#filters_form').submit();
+    });
+  });
+}
+
 function toggleFilterText() {
   if($('#toggle_filters').text() == I18n.t('views.common.show_filters')){
     $('#toggle_filters').text(I18n.t('views.common.hide_filters'));

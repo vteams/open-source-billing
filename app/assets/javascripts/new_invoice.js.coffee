@@ -115,15 +115,6 @@ class @Invoice
     tax_container.find('td.tax1').html ''
     tax_container.find('td.tax1').html ''
 
-  @initFilterEvents = ->
-    $(document).ready (event) ->
-      $('#toggle_filters').on 'click', (event) ->
-        $('#filters').toggle('slow')
-        toggleFilterText()
-      $('#filter_reset_btn').on 'click', (event) ->
-        $('#create_at_start_date,#create_at_end_date,#due_start_date,#due_end_date,#invoice_number_min,#invoice_number_max').val('')
-        resetRangeSelectors()
-
   @change_invoice_item  = ->
     $('.invoice_grid_fields select.items_list').on 'change', ->
       hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
