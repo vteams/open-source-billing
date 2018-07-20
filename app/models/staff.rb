@@ -32,13 +32,7 @@ class Staff < ActiveRecord::Base
     staffs = staffs.created_at(
         (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
     ) if params[:create_at_start_date].present?
-
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      staffs = staffs.send(method)
-    else
-      params[:status].each {|status| staffs = staffs.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    staffs = staffs.send(mappings[params[:status].to_sym]) if params[:status].present?
 
     staffs
   end

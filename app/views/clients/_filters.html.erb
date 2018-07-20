@@ -10,9 +10,8 @@
           <label class="active"><%= t('views.projects.created_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
-          <%= select_tag(:status, multi_select_options(filters_status_select_options, t('views.invoices.all_types'),
-                                                       {selected: params[:status] || ''}),
-                         include_blank: false, multiple: true, class: 'small_list') %>
+          <%= select_tag(:status, options_for_select(filters_status_select_options, {selected: params[:status] || ''}),
+                         include_blank: false, class: 'small_list') %>
           <label><%= t('views.common.type') %></label>
         </div>
       </div>

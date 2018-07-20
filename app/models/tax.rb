@@ -60,13 +60,7 @@ class Tax < ActiveRecord::Base
         (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
     ) if params[:create_at_start_date].present?
     taxes = taxes.percentage((params[:min_percentage].to_i .. params[:max_percentage].to_i)) if params[:min_percentage].present?
-
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      taxes = taxes.send(method)
-    else
-      params[:status].each {|status| taxes = taxes.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    taxes = taxes.send(mappings[params[:status].to_sym]) if params[:status].present?
 
     taxes.page(params[:page]).per(per_page)
   end

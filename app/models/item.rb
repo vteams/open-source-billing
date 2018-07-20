@@ -68,13 +68,7 @@ class Item < ActiveRecord::Base
     ) if params[:create_at_start_date].present?
     items = items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
     items = items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
-
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      items = items.send(method)
-    else
-      params[:status].each {|status| items = items.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    items = items.send(mappings[params[:status].to_sym]) if params[:status].present?
 
     items
   end

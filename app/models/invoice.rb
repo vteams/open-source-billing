@@ -228,15 +228,9 @@ class Invoice < ActiveRecord::Base
     invoices = invoices.due_date(
         (Date.strptime(params[:due_start_date], date_format) .. Date.strptime(params[:due_end_date], date_format))
     ) if params[:due_start_date].present?
-    invoices = invoices.page(params[:page]).per(per_page)
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      invoices = invoices.send(method)
-    else
-      params[:status].each {|status| invoices = invoices.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    invoices = invoices.send(mappings[params[:status].to_sym]) if params[:status].present?
 
-    invoices
+    invoices.page(params[:page]).per(per_page)
   end
 
   def self.recurring

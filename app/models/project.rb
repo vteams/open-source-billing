@@ -43,14 +43,8 @@ class Project < ActiveRecord::Base
     projects = projects.created_at(
         (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
     ) if params[:create_at_start_date].present?
-
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      projects = projects.send(method)
-    else
-      params[:status].each {|status| projects = projects.send(mappings[status.to_sym])} if params[:status].present?
-    end
-
+    projects = projects.send(mappings[params[:status].to_sym]) if params[:status].present?
+    
     projects.page(params[:page]).per(per_page)
   end
 

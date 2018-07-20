@@ -31,12 +31,7 @@ class Task < ActiveRecord::Base
     tasks = tasks.created_at(
         (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
     ) if params[:create_at_start_date].present?
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      tasks = tasks.send(method)
-    else
-      params[:status].each {|status| tasks = tasks.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    tasks = tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
 
     tasks
   end

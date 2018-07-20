@@ -78,13 +78,7 @@ class Estimate < ActiveRecord::Base
     estimates = estimates.estimate_date(
         (Date.strptime(params[:estimate_start_date], date_format) .. Date.strptime(params[:estimate_end_date], date_format))
     ) if params[:estimate_start_date].present?
-
-    if params[:status].present? && params[:status].is_a?(String)
-      method = mappings[params[:status].to_sym]
-      estimates = estimates.send(method)
-    else
-      params[:status].each {|status| estimates = estimates.send(mappings[status.to_sym])} if params[:status].present?
-    end
+    estimates = estimates.send(mappings[params[:status].to_sym]) if params[:status].present?
 
     estimates.page(params[:page]).per(per_page)
   end
