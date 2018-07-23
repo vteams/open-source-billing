@@ -1,6 +1,5 @@
-<div class="filter-container">
-  <a href="javascript:void(0);" class="show-filters" id="toggle_filters"><%= t('views.common.show_filters') %></a>
-  <div class="nav-wrapper subnav-filters" id="filters">
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
     <%= form_tag tasks_path, method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
       <div class="row">
         <div class="input-field col s12 m3">
@@ -35,8 +34,8 @@
       </div>
       <div class="row">
         <div class="filter-footer">
-          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn"/>
-          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn"/>
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
         </div>
       </div>
     <% end %>

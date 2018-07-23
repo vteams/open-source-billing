@@ -348,6 +348,6 @@ module ApplicationHelper
   end
 
   def status_text
-    @status.is_a?(String) ? @status.humanize.underscore : @status.first.humanize.underscore
+    @status.humanize.underscore
   end
 end
