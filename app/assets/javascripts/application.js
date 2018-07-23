@@ -442,8 +442,7 @@ function resetRangeSelectors() {
 function initFilterEvents(ids) {
   $(document).ready( function (event) {
     $('#toggle_filters').on('click', function (event) {
-      $('#filters').toggle('slow');
-      toggleFilterText();
+      toggleFilters();
     });
     $('#filter_reset_btn').on('click', function(event) {
       $('#filters select').val('');
@@ -460,10 +459,12 @@ function initFilterEvents(ids) {
   });
 }
 
-function toggleFilterText() {
+function toggleFilters() {
   if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+    $('#filters').slideDown('slow');
     $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   } else {
+    $('#filters').slideUp('slow');
     $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
   }
 }
