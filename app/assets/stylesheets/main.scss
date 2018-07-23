@@ -4431,7 +4431,12 @@ i.material-icons.close:hover {
   margin: 5px;
 }
 .pagination .next:after { content: "⮚"; }
-
+.pagination span:hover {
+  background-color: #10A2D7;
+  color: white;
+}
+.pagination span:hover a { color: white; }
+.paginate-info { margin-top: 30px; }
 #bulk_action_form .search_result_container{
   margin-right: 10px !important;
 }
