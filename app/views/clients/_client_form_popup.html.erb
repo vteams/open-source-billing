@@ -3,7 +3,7 @@
     <%- model_class = Client -%>
     <div class="modal-header clearfix text-content">
       <div class="modal-action-btn right">
-        <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>"
+        <a href="javascript:void(0);" onclick="$('.client_submit').click();" title="<%= t('views.common.save') %>"
            class="modal-action waves-effect">
           <i class="material-icons" >done</i>
         </a>
@@ -25,7 +25,7 @@
         <div class="modal-body modal-body-balance">
           <div class="info-right-section">
             <div class="row">
-              <%= f.submit class: 'btn_large submit hidden' %>
+              <%= f.submit class: 'btn_large submit hidden client_submit' %>
               <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
               <%= f.input :organization_name, label: t('views.clients.organization_name'), wrapper_html: { class: 'input-field col s12' } %>
               <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>

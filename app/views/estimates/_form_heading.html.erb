@@ -10,6 +10,6 @@
   <% selected_client = @client.present? ? @client.id : f.object.client_id %>
   <%= f.select :client_id, (options_for_select((load_clients(action_name, estimate.company_id)),
                                                selected: selected_client)+'<option value="-1">Add New</option>'.html_safe),
-               {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}%>
+               {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select' %>
   <%= link_to '', 'javascript:void;', class: 'hidden', data: {remote: true}, id: 'open_new_popup_link' %>
 </h5>
