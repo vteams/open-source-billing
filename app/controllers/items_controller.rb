@@ -34,9 +34,7 @@ class ItemsController < ApplicationController
     params[:status] = params[:status] || 'active'
     params[:user]=current_user
     @status = params[:status]
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @items = Item.get_items(params.merge(get_args(method)))
+    @items = Item.get_items(params.merge(get_args))
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
 
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
@@ -50,9 +48,7 @@ class ItemsController < ApplicationController
   end
 
   def filter_items
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @items = Item.get_items(params.merge(get_args(method)))
+    @items = Item.get_items(params.merge(get_args))
   end
 
   # GET /items/1
@@ -169,7 +165,8 @@ class ItemsController < ApplicationController
 
   def undo_actions
     params[:archived] ? Item.recover_archived(params[:ids]) : Item.recover_deleted(params[:ids])
-    @items = Item.get_items(params.merge(get_args('unarchived')))
+    params[:status] = 'active'
+    @items = Item.get_items(params.merge(get_args))
     respond_to { |format| format.js }
   end
 
@@ -195,8 +192,8 @@ class ItemsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  def get_args(status)
-    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+  def get_args
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
 
   private

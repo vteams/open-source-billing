@@ -25,9 +25,9 @@ module Reporting
 
       options.merge!(user: current_user, company_id: company_id)
 
-      options[:status] = 'unarchived'
+      options[:status] = 'active'
       active_clients = Client.get_clients(options)
-      options[:status] = 'only_deleted'
+      options[:status] = 'deleted'
       deleted_clients = Client.get_clients(options)
       options[:status] = 'archived'
       archived_clients = Client.get_clients(options)

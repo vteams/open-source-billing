@@ -190,6 +190,10 @@ de:
       as_for: "Ab"
       add_new: "Neue hinzufügen"
       title: "Titel"
+      show_filters: "Filter anzeigen"
+      hide_filters: "Filter ausblenden"
+      reset: "Zurücksetzen"
+      start_date_to_end_date: "Anfangsdatum - Endtermin"
 
     pagination:
       previous: "Vorherige"
@@ -351,6 +355,14 @@ de:
       recover_clients: "Bitte stellen Sie Kunden für Rechnung (en) mit der Rechnungsnummer %{ids} wieder her, um die Zahlung einzugeben."
       cannot_paid: "Sie können keine bezahlten Rechnungen bezahlen."
       project_invoice_cannot_be_edit: "Projektrechnung kann nicht bearbeitet werden"
+      invoice_date_range: "Rechnungsdatumsbereich"
+      due_date_range: "Fälligkeitsbereich"
+      all_clients: "Alle Kunden"
+      all_types: "Alle Arten"
+      all_statuses: "Alle Status"
+      invoice_number_range: "Rechnungsnummernbereich"
+      min: "Mindest"
+      max: "Max"
       recurring:
         recurring_profile: "Wiederholendes Profil"
         start_date: "Anfangsdatum"
@@ -411,6 +423,7 @@ de:
       enter_spent_time: "Geben Sie die Zeit für die Aufgabe ein"
       enter_positive_spent_time: "Geben Sie einen positiven Wert für die Rate pro Stunde für die Aufgabe ein"
       atleast_one_company_selected: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+      rate_range: "Tarifbereich"
 
     staffs:
       name: "Personal Name"
@@ -454,6 +467,8 @@ de:
       use_last_estimate_to_create: "Um eine neue Schätzung zu erstellen, verwenden Sie die letzte Schätzung, die an '%{client_name}' gesendet wurde."
       select_estimate_date: "Wählen Sie das geschätzte Datum aus"
       recover_clients: "Bitte reklamieren Sie die Kunden für die Schätzung (en) mit der Schätzung # %{ids}, um die Zahlung einzugeben."
+      estimate_date_range: "Geschätzter Datumsbereich"
+      estimate_number_range: "Geschätzter Zahlenbereich"
 
     clients:
       client_name: "Kunden Name"
@@ -548,6 +563,9 @@ de:
       must_be_greater_or_equal_to_zero: "Menge sollte kein negativer Wert sein"
       quantity_required: "Quantidade de item é necessária"
       greater_than_zero: "Der Prozentsatz muss größer als Null sein"
+      all_taxes: "Alle Steuern"
+      quantity_range: "Menge Bereich"
+      unit_cost_range: "Stückkostenbereich"
 
     taxes:
       taxes: "Steuern"
@@ -568,6 +586,7 @@ de:
       enter_percentage: "Steuerprozentsatz eingeben"
       percentage_must_be_numeric: "Der Prozentsatz muss ein numerischer Wert sein"
       less_than_hundred: "Der Prozentsatz muss hundert oder weniger betragen"
+      percentage_range: "Prozentbereich"
 
     logs:
       project: "Wählen Sie Projekt"
@@ -623,6 +642,7 @@ de:
       payment_history: "Zahlungshistorie"
       no_unpaid_invoice: "Es gibt keine unbezahlten Rechnungen für die Zahlung."
       no_invoice_selected: "Sie haben keine Rechnung ausgewählt. Bitte wählen Sie eine oder mehrere Rechnungen aus und versuchen Sie es erneut."
+      payment_date_range: "Zahlungsdatum Reichweite"
 
     payment_terms:
       number_of_days: "Anzahl an Tagen"
@@ -743,6 +763,8 @@ de:
       pass_confirmation_required: "Passwort Bestätigung ist erforderlich."
       pass_and_confirm_pass_should_same: "Passwort und Bestätigung sollten übereinstimmen."
       cannot_delete_current_user: "Der aktuell angemeldete Benutzer kann nicht gelöscht werden."
+      all_roles: "Alle Rollen"
+      roles: "Rollen"
 
     credit_card:
       pay_by_credit_card: "Bezahle Rechnung mit Kreditkarte"
@@ -796,6 +818,9 @@ de:
       estimate_should_be_greater_than_zero: "Die Zeitschätzung sollte gleich oder größer als Null sein"
       project_time_log_tooltip: "Die geloggte Zeit wird automatisch auf der Grundlage der Projektaufgaben berechnet, die für die Zeit benötigt werden."
       staff_required_msg: 'Bitte erstellen Sie zunächst Mitarbeiter, um ein Projekt zu erstellen.'
+      created_date_range: "Erstellungsdatumsbereich"
+      all_managers: "Alle Manager"
+      managers: "Manager"
 
     import_data:
       import_data: "Daten importieren"

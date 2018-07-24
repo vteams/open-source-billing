@@ -26,6 +26,11 @@ class Invoice < ActiveRecord::Base
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
+  scope :status, -> (status) { where(status: status) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
+  scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
+  scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
+  scope :due_date, -> (due_date) { where(due_date: due_date) }
 
   # constants
   STATUS_DESCRIPTION = {
@@ -211,11 +216,21 @@ class Invoice < ActiveRecord::Base
 
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
-    method = mappings[params[:status].to_sym]
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     invoices = params[:search].present? ? self.search(params[:search]).records : self
-    invoices = invoices.send(method)
-    invoices = invoices.where(status: params[:type]) if params[:type].present?
-    invoices = invoices.page(params[:page]).per(per_page)
+    invoices = invoices.status(params[:type]) if params[:type].present?
+    invoices = invoices.client_id(params[:client_id]) if params[:client_id].present?
+    invoices = invoices.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
+    invoices = invoices.invoice_date(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    invoices = invoices.due_date(
+        (Date.strptime(params[:due_start_date], date_format) .. Date.strptime(params[:due_end_date], date_format))
+    ) if params[:due_start_date].present?
+    invoices = invoices.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    invoices.page(params[:page]).per(per_page)
   end
 
   def self.recurring

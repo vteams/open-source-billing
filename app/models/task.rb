@@ -16,13 +16,24 @@ class Task < ActiveRecord::Base
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
   scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
+  scope :rate, -> (rate) { where(rate: rate) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
 
 
   # filter tasks i.e active, archive, deleted
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    Task.send(method).page(params[:page]).per(params[:per])
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    tasks = self
+    tasks = tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
+    tasks = tasks.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    tasks = tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    tasks
   end
 
   def self.recover_archived(ids)
@@ -51,7 +62,7 @@ class Task < ActiveRecord::Base
     # get the tasks associated with companies
     company_tasks = company.tasks
     company_tasks = company_tasks.search(params[:search]).records if params[:search].present? and company_tasks.present?
-    company_tasks = company_tasks.send(params[:status])
+    company_tasks = company_tasks.filter(params) if company_tasks.present?
 
     # get the account
     account = params[:user].current_account
@@ -59,7 +70,7 @@ class Task < ActiveRecord::Base
     # get the tasks associated with accounts
     account_tasks = account.tasks
     account_tasks = account_tasks.search(params[:search]).records if params[:search].present? and account_tasks.present?
-    account_tasks = account_tasks.send(params[:status])
+    account_tasks = account_tasks.filter(params) if account_tasks.present?
 
     # get the unique clients associated with companies and accounts
     tasks = ( account_tasks + company_tasks).uniq

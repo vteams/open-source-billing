@@ -294,4 +294,15 @@ module InvoicesHelper
       (@client.present? ? @client.currency_id : invoice.currency_id)
     end
   end
+
+  def filters_status_select_options
+    statuses = [
+        [t('views.common.active'), 'active'],
+        [t('views.common.archived'), 'archived'],
+        [t('views.common.deleted'), 'deleted']
+    ]
+    statuses << [t('views.common.recurring'), 'recurring'] if params[:controller] == 'invoices'
+
+    statuses
+  end
 end

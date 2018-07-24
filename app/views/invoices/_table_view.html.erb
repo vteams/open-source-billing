@@ -22,7 +22,7 @@
                   <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: 'fix-left-and-opacity' %>
                 </td>
                 <td>
-                  <strong><%= link_to_if !@status.eql?('deleted'), invoice.invoice_number, invoice , remote: true, class: ''%></strong>
+                  <strong><%= link_to_if !invoice.deleted?, invoice.invoice_number, invoice , remote: true, class: ''%></strong>
                 </td>
                 <td><%= invoice.unscoped_client.organization_name rescue '' %></td>
                 <td><%= invoice.due_date rescue '' %></td>
@@ -35,7 +35,7 @@
                   <span class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= t('views.invoices.' + invoice.status) %></span>
                 </td>
                 <td class="action-btn-group">
-                  <% if @status.eql?('deleted') %>
+                  <% if invoice.deleted? %>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                   <% else %>
                       <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send') %>
@@ -49,13 +49,13 @@
                       </a>
                       <!-- Dropdown Structure -->
                       <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
-                        <% if @status.eql?('active') %>
+                        <% if !invoice.archived? %>
                             <li>
                               <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
                                 <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
                               </a>
                             </li>
-                        <% elsif @status.eql?('archived') %>
+                        <% else %>
                             <li>
                               <a href="javascript:;" class="single_recover" title="<%= t('helpers.links.recover') %>">
                                 <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>

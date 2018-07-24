@@ -1,0 +1,84 @@
+.filter-container {
+  border-top: 1px solid lightgrey;
+  background-color: white;
+  padding: 20px;
+  display: none;
+
+  .show-filters i {
+    padding-left: 20px;
+  }
+
+  .subnav-filters {
+    margin-right: 20px;
+    font-size: 12px;
+
+    input {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .select-wrapper.small_list {
+      input.select-dropdown {
+        font-size: 12px;
+        height: 2.6rem;
+      }
+
+      ul.dropdown-content.select-dropdown {
+        top: 45px !important;
+
+        li span {
+          padding: 5px 10px;
+          display: inline-flex;
+          color: #000;
+        }
+      }
+    }
+
+    .noUi-horizontal { height: 5px; }
+
+    .noUi-horizontal .noUi-handle {
+      width: 14px;
+      height: 14px;
+      left: 0;
+      top: -6px;
+      border-radius: 50%;
+    }
+
+    .noUi-horizontal .noUi-handle:before, .noUi-horizontal .noUi-handle:after { content: none; }
+
+    .label-range {
+      font-weight: bold;
+      .label_left span { font-weight: normal; }
+      .label_right {
+        float: right;
+        span { font-weight: normal; }
+      }
+    }
+
+    div.noUi-base { cursor: pointer; }
+    .noUi-connect { background: #14B6E1; }
+
+    .range_selector.noUi-target.noUi-ltr.noUi-horizontal.noUi-background { margin-top: 5px; }
+  }
+  .filter-footer {
+    float: right;
+    margin-top: 20px;
+    .filter-btn {
+      color: #09b8e2;
+      background: transparent;
+      border: 1px solid #09b8e2;
+      font-size: 16px;
+      font-family: "Dosis",sans-serif;
+      min-height: 35px;
+      box-shadow: none;
+      text-transform: capitalize;
+      font-weight: 400;
+      border-radius: 5px;
+      min-width: 120px;
+      &:hover {
+        background-color: #14B6E1;
+        color: white;
+      }
+    }
+  }
+}

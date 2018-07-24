@@ -4423,34 +4423,47 @@ i.material-icons.close:hover {
 .pagination {
   background: transparent !important;
   box-shadow: none;
-  border-top: 1px solid lightgray;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #38BAE1;
 }
+
+.pagination a { color: #38BAE1; }
 
 .pagination .page {
   padding: 10px;
-  background-color: #14B6E1;
   border: 1px solid #14B6E1;
-}
-
-.pagination .page:hover, .pagination .prev:hover, .pagination .next:hover {
-  background-color: #049bd3;
+  margin: 5px;
 }
 
 .pagination .page.current {
   background-color: #10A2D7;
+  color: white;
 }
 
 .pagination .prev {
   padding: 10px;
-  background-color: #14B6E1;
   border: 1px solid #14B6E1;
+  margin: 5px;
+}
+
+.pagination .prev:before {
+  content: "⮘";
 }
 
 .pagination .next {
   padding: 10px;
-  background-color: #14B6E1;
   border: 1px solid #14B6E1;
+  margin: 5px;
 }
+.pagination .next:after { content: "⮚"; }
+.pagination span:hover {
+  background-color: #10A2D7;
+  color: white;
+}
+.pagination span:hover a { color: white; }
+.paginate-info { margin-top: 30px; }
 #bulk_action_form .search_result_container{
   margin-right: 10px !important;
 }

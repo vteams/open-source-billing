@@ -1,4 +1,5 @@
 class @Company
+
   @init_settings_form = ->
     $("#company_name,#contact_name,#companies_email").keypress ->
       hideQtip(jQuery(this))

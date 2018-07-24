@@ -10,6 +10,7 @@ $(document).ready ->
   # Validate client
 
 class @Item
+
   applyPopover = (elem,message) ->
     elem.qtip
       content:

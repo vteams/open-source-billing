@@ -13,7 +13,7 @@
             <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
             <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
-          <%= link_to "/ #{t('views.common.' + @status.humanize.underscore)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, title: t('helpers.links.add'), class: 'plus-add-icon' %>
           <%= index_layout_toggle_icons(projects_path(layout_toggle_params(view: 'card')),
                                         projects_path(layout_toggle_params(view: 'table'))) %>
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box project-box">
     <%= form_tag "projects/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render partial: 'projects_container' %></div>
@@ -30,3 +30,6 @@
   </div>
 
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date');
+</script>

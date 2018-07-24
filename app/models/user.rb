@@ -37,6 +37,31 @@ class User < ActiveRecord::Base
   include RailsSettings::Extend
   has_and_belongs_to_many :accounts, :join_table => 'account_users'
 
+  #Scopes
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :role_ids, -> (role_ids) { joins(:users_roles).where(users_roles: {role_id: role_ids}) }
+
+  class << self
+    def current=(user)
+      Thread.current[:current_user] = user
+    end
+
+    def current
+      Thread.current[:current_user]
+    end
+
+    def filter(params, per_page)
+      date_format = current.nil? ? '%Y-%m-%d' : (current.settings.date_format || '%Y-%m-%d')
+      users = params[:search].present? ? self.search(params[:search]).records : self
+      users = users.role_ids(params[:role_ids]) if params[:role_ids].present?
+      users = users.created_at(
+          (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+      ) if params[:create_at_start_date].present?
+
+      users.page(params[:page]).per(per_page)
+    end
+  end
+
   def set_default_settings
     self.settings.date_format = "%Y-%m-%d"
     self.settings.currency = "On"
@@ -80,14 +105,6 @@ class User < ActiveRecord::Base
        end
     end
     templates
-  end
-
-  def self.current=(user)
-    Thread.current[:current_user] = user
-  end
-
-  def self.current
-    Thread.current[:current_user]
   end
 
   def name

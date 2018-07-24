@@ -203,6 +203,10 @@ en:
       as_for: "As of"
       add_new: "Add New"
       title: "Title"
+      show_filters: "Show Filters"
+      hide_filters: "Hide Filters"
+      reset: "Reset"
+      start_date_to_end_date: "Start Date - End Date"
 
     pagination:
       previous: "Previous"
@@ -365,6 +369,14 @@ en:
       recover_clients: "Please recover clients for invoice(s) with invoice# %{ids} to enter payment."
       cannot_paid: "You cannot pay paid invoices."
       project_invoice_cannot_be_edit: "Project invoice cannot be edit"
+      invoice_date_range: "Invoice Date Range"
+      due_date_range: "Due Date Range"
+      all_clients: "All Clients"
+      all_types: "All Types"
+      all_statuses: "All Statuses"
+      invoice_number_range: "Invoice Number Range"
+      min: "Min"
+      max: "Max"
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -428,6 +440,7 @@ en:
       enter_spent_time: "Enter spent time for the task"
       enter_positive_spent_time: "Enter positive value of rate per hour for the task"
       atleast_one_company_selected: "Select aleast one company for the task"
+      rate_range: "Rate Range"
 
     staffs:
       name: "Staff Name"
@@ -494,6 +507,8 @@ en:
       use_last_estimate_to_create: "To create new estimate use the last estimate sent to '%{client_name}'."
       select_estimate_date: "Select estimate date"
       recover_clients: "Please recover clients for estimate(s) with estimate# %{ids} to enter payment."
+      estimate_date_range: "Estimate Date Range"
+      estimate_number_range: "Estimate Number Range"
 
     clients:
       client_name: "Client Name"
@@ -599,6 +614,9 @@ en:
       select_atleast_one_company: "Select at least one company for the task"
       must_be_greater_or_equal_to_zero: "Quantity should not be negative value"
       quantity_required: "Item quantity is required"
+      all_taxes: "All Taxes"
+      quantity_range: "Quantity Range"
+      unit_cost_range: "Unit Cost Range"
 
     taxes:
       taxes: "Taxes"
@@ -620,6 +638,7 @@ en:
       percentage_must_be_numeric: "Percentage must be numeric value"
       less_than_hundred: "Percentage must be hundred or less"
       greater_than_zero: "Percentage must be greater than zero"
+      percentage_range: "Percentage Range"
 
     logs:
       project: "Select Project"
@@ -678,6 +697,7 @@ en:
       payment_history: "Payment History"
       no_unpaid_invoice: "There are no unpaid invoices to enter payment against."
       no_invoice_selected: "You haven't selected any invoice. Please select one or more invoices and try again."
+      payment_date_range: "Payment Date Range"
 
     payment_terms:
       number_of_days: "Number of days"
@@ -799,6 +819,8 @@ en:
       pass_confirmation_required: "Password confirmation is required."
       pass_and_confirm_pass_should_same: "Password and confirmation should be matched."
       cannot_delete_current_user: "Current logged in user cannot be deleted."
+      all_roles: "All Roles"
+      roles: "Roles"
 
     credit_card:
       pay_by_credit_card: "Pay Invoice by Credit Card"
@@ -861,6 +883,9 @@ en:
       estimate_should_be_greater_than_zero: "Time Estimate should be equal or greater than zero"
       project_time_log_tooltip: "Time logged will automatically be calculated on the basis of project task's spent time."
       staff_required_msg: 'Please create Staff Member first to create Project.'
+      created_date_range: "Created Date Range"
+      all_managers: "All Managers"
+      managers: "Managers"
 
     import_data:
       import_data: "Import Data"

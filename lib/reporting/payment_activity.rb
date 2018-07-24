@@ -22,7 +22,7 @@ module Reporting
   module PaymentActivity
 
     def self.get_recent_activity(all_payments)
-      recent_activity = {}
+      recent_activity = { total_count: all_payments.count }
       payment_status = PAYMENT_METHODS
       active_payment_progress = {}
       all_payments.group_by{|i| i.group_date}.each do |date, payments|
@@ -35,6 +35,8 @@ module Reporting
 
       recent_activity.merge!(active_payments_total: all_payments.reject{|x| x.payment_amount.nil?}.collect(&:payment_amount).sum)
       recent_activity.merge!(active_payment_progress: active_payment_progress)
+
+      recent_activity
     end
 
   end

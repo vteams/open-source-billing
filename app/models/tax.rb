@@ -25,6 +25,8 @@ class Tax < ActiveRecord::Base
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :archive_multiple, lambda {|ids| multiple(ids).map(&:archive)}
   scope :delete_multiple, lambda {|ids| multiple(ids).map(&:destroy)}
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :percentage, -> (percentage) { where(percentage: percentage) }
 
   # associations
   has_many :invoice_line_items
@@ -50,8 +52,17 @@ class Tax < ActiveRecord::Base
 
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
+    taxes = taxes.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    taxes = taxes.percentage((params[:min_percentage].to_i .. params[:max_percentage].to_i)) if params[:min_percentage].present?
+    taxes = taxes.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    taxes.page(params[:page]).per(per_page)
   end
 
   def self.is_exits? tax_name

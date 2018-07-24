@@ -1,0 +1,69 @@
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag items_path(), method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
+          <input type="hidden" name="create_at_end_date" id="create_at_end_date" value="<%= params[:create_at_end_date] %>">
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" />
+          <label class="active"><%= t('views.invoices.invoice_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m3">
+          <%= select_tag(:status, options_for_select(filters_status_select_options, {selected: params[:status] || ''}),
+                         include_blank: false, class: 'small_list') %>
+          <label><%= t('views.common.type') %></label>
+        </div>
+        <div class="input-field col s12 m3">
+          <%= select_tag(:tax_1, multi_select_options(Tax.all.map{|tax| [tax.name, tax.id]}, t('views.items.all_taxes'),
+                                                       {selected: params[:tax_1] || ''}),
+                         include_blank: false, multiple: true, class: 'small_list') %>
+          <label><%= t('header.links.items.taxes') %></label>
+        </div>
+      </div>
+      <div class="row">
+        <% qnty_max_val = Item.all.maximum(:quantity)
+           unit_cost_max_val = Item.all.maximum(:unit_cost) %>
+        <div class="input-filed col s12 m6">
+          <p class="range-field">
+            <label><%= t('views.items.quantity_range') %></label>
+            <input type="hidden" name="min_quantity" id="quantity_min" value="0">
+            <input type="hidden" name="max_quantity" id="quantity_max" value="<%= qnty_max_val %>">
+          <div class="label-range">
+            <span class="label_left"><%= t('views.invoices.min') %>: <span id="quantity_min_label"></span></span>
+            <span class="label_right"><%= t('views.invoices.max') %>: <span id="quantity_max_label"></span></span>
+          </div>
+          <div id="quantity"
+               min="0"
+               max="<%= qnty_max_val %>"
+               class="range_selector"
+               data-min="<%= params[:min_invoice_number] %>"
+               data-max="<%= params[:max_invoice_number] %>"></div>
+          </p>
+        </div>
+        <div class="input-filed col s12 m6">
+          <p class="range-field">
+            <label><%= t('views.items.unit_cost_range') %></label>
+            <input type="hidden" name="min_unit_cost" id="unit_cost_min" value="0">
+            <input type="hidden" name="max_unit_cost" id="unit_cost_max" value="<%= unit_cost_max_val %>">
+          <div class="label-range">
+            <span class="label_left"><%= t('views.invoices.min') %>: <span id="unit_cost_min_label"></span></span>
+            <span class="label_right"><%= t('views.invoices.max') %>: <span id="unit_cost_max_label"></span></span>
+          </div>
+          <div id="unit_cost"
+               min="0"
+               max="<%= unit_cost_max_val %>"
+               class="range_selector"
+               data-min="<%= params[:min_invoice_number] %>"
+               data-max="<%= params[:max_invoice_number] %>"></div>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

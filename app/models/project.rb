@@ -5,6 +5,9 @@ class Project < ActiveRecord::Base
   include ProjectSearch
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
+  scope :client_id, ->(client_id) { where(client_id: client_id) }
+  scope :manager_id, ->(manager_id) { where(manager_id: manager_id) }
+  scope :created_at, ->(created_at) { where(created_at: created_at)}
 
   belongs_to :client
   belongs_to :manager, class_name: 'Staff', foreign_key: 'manager_id'
@@ -31,8 +34,18 @@ class Project < ActiveRecord::Base
 
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    projects = self
+    projects = projects.client_id(params[:client_id]) if params[:client_id].present?
+    projects = projects.manager_id(params[:manager_id]) if params[:manager_id].present?
+    projects = projects.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    projects = projects.send(mappings[params[:status].to_sym]) if params[:status].present?
+    
+    projects.page(params[:page]).per(per_page)
   end
 
   def self.multiple_projects ids

@@ -13,12 +13,14 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box clearfix">
     <%= form_tag "payments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'payments_container' %></div>
         <%= render partial: 'bulk_actions'%>
     <% end %>
   </div>
-
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#payment_start_date,#payment_end_date,#invoice_number_min,#invoice_number_max');
+</script>

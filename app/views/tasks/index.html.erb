@@ -13,7 +13,7 @@
             <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
             <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
           </select>
-          <%= link_to "/ #{t('views.common.' + @status.humanize.underscore)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= link_to raw('<i class="material-icons">add</i>'), new_task_path, remote: true, class: 'plus-add-icon', title: t('helpers.links.add')%>
           <%= index_layout_toggle_icons(tasks_path(layout_toggle_params(view: 'card')),
                                         tasks_path(layout_toggle_params(view: 'table'))) %>
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box task-box clearfix">
     <%= form_tag bulk_actions_tasks_path, {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'tasks_container' %></div>
@@ -30,3 +30,6 @@
   </div>
 
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#rate_min,#rate_max');
+</script>

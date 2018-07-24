@@ -38,6 +38,7 @@
 //= require application.js
 //= require bootstrap.js.coffee
 //= require moment
+//= require daterangepicker.min
 //= require fullcalendar
 //= require calendar.js
 //= require logs.js
@@ -99,6 +100,7 @@
 //= require i18n/translations
 //= require sweetalert.min
 //= require cocoon
+//= require nouislider
 
 jQuery(function () {
 
@@ -169,7 +171,8 @@ jQuery(function () {
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
-
+  initDateRangePicker(DateFormats.format().toUpperCase());
+  initRangeSelector();
 });
 
 window.preventDeletedNavigation = function(){
@@ -388,4 +391,95 @@ function initSelectActionLink(){
             return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
         }
     });
+}
+
+function initDateRangePicker(format) {
+  var options = {
+    autoUpdateInput: false,
+    locale: {format: format}
+  };
+  $.each($('input[class="date-range"]'), function(index, element) {
+    $(element).daterangepicker(options, function(start, end) {
+      $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
+      $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
+    });
+
+    $(element).on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+    });
+
+    $(element).on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+      picker.element.val('');
+      $('#' + $(element).attr('id') + '_start_date').val('');
+      $('#' + $(element).attr('id') + '_end_date').val('');
+    });
+  });
+}
+
+function initRangeSelector() {
+  $.each($('.range_selector'), function(index, element) {
+    var min = parseInt($(element).attr('min'));
+    var max = parseInt($(element).attr('max'));
+    var hiddenInputs = [
+      $('#' + $(element).attr('id') + '_min')[0],
+      $('#' + $(element).attr('id') + '_max')[0]
+    ];
+    var labels = [
+      $('#' + $(element).attr('id') + '_min_label')[0],
+      $('#' + $(element).attr('id') + '_max_label')[0]
+    ];
+    noUiSlider.create(element, {
+      start: [$(element).data('min') || min, $(element).data('max') || max],
+      connect: true,
+      step: 1,
+      orientation: 'horizontal',
+      range: {
+        'min': min,
+        'max': max
+      }
+    });
+    element.noUiSlider.on('update', function( values, handle ) {
+      hiddenInputs[handle].value = parseInt(values[handle]);
+      labels[handle].innerHTML = parseInt(values[handle]);
+    });
+
+  });
+}
+
+function resetRangeSelectors() {
+  $.each($('.range_selector'), function(index, element) {
+    element.noUiSlider.destroy();
+  });
+  initRangeSelector();
+}
+
+function initFilterEvents(ids) {
+  $(document).ready( function (event) {
+    $('#toggle_filters').on('click', function (event) {
+      toggleFilters();
+    });
+    $('#filter_reset_btn').on('click', function(event) {
+      $('#filters select').val('');
+      $(ids).val('');
+      resetRangeSelectors();
+      $.each($('.daterangepicker.ltr.show-calendar.opensright .cancelBtn.btn.btn-sm.btn-default'), function(index, element) {
+        $(element).click();
+      });
+      $('#filters_form').submit();
+    });
+    $('#filter_submit_btn').on('click', function (event) {
+      $('#filters_form').submit();
+    })
+  });
+}
+
+function toggleFilters() {
+  if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  } else {
+    $('#filters').slideUp('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
+  }
 }

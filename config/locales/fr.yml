@@ -186,6 +186,10 @@ fr:
       as_for: "À partir de"
       add_new: "Ajouter un nouveau"
       title: "Titre"
+      show_filters: "Afficher les filtres"
+      hide_filters: "Masquer les filtres"
+      reset: "Réinitialiser"
+      start_date_to_end_date: "Date de début - date de fin"
 
     pagination:
       previous: "précédent"
@@ -347,6 +351,14 @@ fr:
       recover_clients: "Veuillez récupérer les clients pour les factures avec la facture # %{ids} pour entrer le paiement."
       cannot_paid: "Vous ne pouvez pas payer les factures payées."
       project_invoice_cannot_be_edit: "La facture du projet ne peut pas être modifiée"
+      invoice_date_range: "Plage de dates de facture"
+      due_date_range: "Plage de dates d'échéance"
+      all_clients: "Tous les clients"
+      all_types: "Tous les types"
+      all_statuses: "Tous les statuts"
+      invoice_number_range: "Gamme de numéros de facture"
+      min: "Min"
+      max: "Max"
       recurring:
         recurring_profile: "Profil récurrent"
         start_date: "date de début"
@@ -407,6 +419,7 @@ fr:
       enter_spent_time: "Entrer le temps passé pour la tâche"
       enter_positive_spent_time: "Entrez la valeur positive du taux horaire pour la tâche"
       atleast_one_company_selected: "Sélectionnez au moins une entreprise pour la tâche;"
+      rate_range: "Plage de taux"
 
     staffs:
       name: "Nom du personnel"
@@ -450,6 +463,8 @@ fr:
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Sélectionnez la date d'estimation"
       recover_clients: "Veuillez récupérer les clients pour estimation (s) avec estimation # %{ids} pour entrer le paiement."
+      estimate_date_range: "Estimation de la plage de dates"
+      estimate_number_range: "Estimation de la plage de numéros"
 
     clients:
       client_name: "Nom du client"
@@ -543,6 +558,9 @@ fr:
       select_atleast_one_company: "Sélectionnez au moins une entreprise pour la tâche"
       must_be_greater_or_equal_to_zero: "La quantité ne devrait pas être une valeur négative"
       quantity_required: "La quantité d'article est requise"
+      all_taxes: "Toutes les taxes"
+      quantity_range: "Gamme de quantité"
+      unit_cost_range: "Gamme de coûts unitaires"
 
     taxes:
       taxes: "impôts"
@@ -564,6 +582,7 @@ fr:
       percentage_must_be_numeric: "Le pourcentage doit être une valeur numérique"
       less_than_hundred: "Le pourcentage doit être de cent ou moins"
       greater_than_zero: "Le pourcentage doit être supérieur à zéro"
+      percentage_range: "Plage de pourcentage"
 
     logs:
       project: "Sélectionner un projet"
@@ -619,6 +638,7 @@ fr:
       payment_history: "Historique de Paiement"
       no_unpaid_invoice: "Il n'y a pas de factures impayées pour entrer le paiement contre."
       no_invoice_selected: "Vous n'avez sélectionné aucune facture. Veuillez sélectionner une ou plusieurs factures et réessayer."
+      payment_date_range: "Plage de dates de paiement"
 
     payment_terms:
       number_of_days: "Nombre de jours"
@@ -739,6 +759,8 @@ fr:
       pass_confirmation_required: "La confirmation du mot de passe est requise."
       pass_and_confirm_pass_should_same: "Le mot de passe et la confirmation doivent correspondre."
       cannot_delete_current_user: "L'utilisateur actuellement connecté ne peut pas être supprimé."
+      all_roles: "Tous les rôles"
+      roles: "Les rôles"
 
     credit_card:
       pay_by_credit_card: "Payer la facture par carte de crédit"
@@ -792,6 +814,9 @@ fr:
       estimate_should_be_greater_than_zero: "L'estimation du temps devrait être égale ou supérieure à zéro"
       project_time_log_tooltip: "L'heure enregistrée sera automatiquement calculée sur la base des tâches du projet."
       staff_required_msg: "Veuillez d'abord créer un membre du personnel pour créer un projet."
+      created_date_range: "Plage de dates créée"
+      all_managers: "Tous les gestionnaires"
+      managers: "Les gestionnaires"
 
     import_data:
       import_data: "Importer des données"

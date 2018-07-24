@@ -331,11 +331,23 @@ module ApplicationHelper
   def index_layout_toggle_icons(card_path, table_path)
     content_tag(:div,class: 'right') do
       link_to( raw('<i class="material-icons">view_comfy</i>'), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
-      link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view'))
+      link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view')) +
+      raw('<div class="separator"></div>') +
+      link_to( raw('<i class="material-icons">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters'))
     end
   end
 
   def layout_toggle_params(custom_params)
     params.except(:action, :controller, :locale, :per, :company_id, :sort, :direction).merge(custom_params)
+  end
+
+  def multi_select_options(select_options, prompt, options = {})
+    ("<option value='' disabled selected>#{prompt}</option>" +
+        options_for_select(select_options, options)
+    ).html_safe
+  end
+
+  def status_text
+    @status.humanize.underscore
   end
 end

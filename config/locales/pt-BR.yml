@@ -190,6 +190,10 @@ pt-BR:
       as_for: "A partir de"
       add_new: "Adicionar novo"
       title: "título"
+      show_filters: "Mostrar filtros"
+      hide_filters: "Ocultar filtros"
+      reset: "Restabelecer"
+      start_date_to_end_date: "Data de início - data final"
 
     pagination:
       previous: "Anterior"
@@ -351,6 +355,14 @@ pt-BR:
       recover_clients: "Recupere os clientes por fatura (s) com a fatura # %{ids} para inserir o pagamento."
       cannot_paid: "Você não pode pagar faturas pagas."
       project_invoice_cannot_be_edit: "A fatura do projeto não pode ser editada"
+      invoice_date_range: "Intervalo de datas da fatura"
+      due_date_range: "Prazo de vencimento"
+      all_clients: "Todos os clientes"
+      all_types: "Todos os tipos"
+      all_statuses: "Todos os status"
+      invoice_number_range: "Faixa de números da fatura"
+      min: "Minuto"
+      max: "Max"
       recurring:
         recurring_profile: "Perfil Recorrente"
         start_date: "Data de início"
@@ -411,6 +423,7 @@ pt-BR:
       enter_spent_time: "Insira o tempo gasto para a tarefa"
       enter_positive_spent_time: "Insira um valor positivo de taxa por hora para a tarefa"
       atleast_one_company_selected: "Selecione pelo menos uma empresa para a tarefa"
+      rate_range: "Faixa de Taxa"
 
     staffs:
       name: "Nome da equipe"
@@ -454,6 +467,8 @@ pt-BR:
       use_last_estimate_to_create: "Pour créer une nouvelle estimation, utilisez la dernière estimation envoyée à '%{client_name}'."
       select_estimate_date: "Selecione data estimada"
       recover_clients: "Por favor, recupere clientes para estimativa (s) com estimativa # %{ids} para inserir o pagamento."
+      estimate_date_range: "Intervalo de datas de estimativa"
+      estimate_number_range: "Faixa de números de estimativa"
 
     clients:
       client_name: "Nome do Cliente"
@@ -549,6 +564,9 @@ pt-BR:
       must_be_greater_or_equal_to_zero: "Quantidade não deve ser valor negativo"
       quantity_required: "Quantidade de item é necessária"
       greater_than_zero: "A porcentagem deve ser maior que zero"
+      all_taxes: "Todos os impostos"
+      quantity_range: "Gama de quantidades"
+      unit_cost_range: "Faixa de custo unitário"
 
     taxes:
       taxes: "Impostos"
@@ -569,6 +587,7 @@ pt-BR:
       enter_percentage: "Insira a porcentagem de imposto"
       percentage_must_be_numeric: "A porcentagem deve ser um valor numérico"
       less_than_hundred: "A porcentagem deve ser cem ou menos"
+      percentage_range: "Faixa de Porcentagem"
 
     logs:
       project: "Selecione o projeto"
@@ -624,6 +643,7 @@ pt-BR:
       payment_history: "Histórico de pagamento"
       no_unpaid_invoice: "Não há faturas não pagas para efetuar o pagamento."
       no_invoice_selected: "Você não selecionou nenhuma fatura. Selecione uma ou mais faturas e tente novamente."
+      payment_date_range: "Intervalo de datas de pagamento"
 
     payment_terms:
       number_of_days: "Número de dias"
@@ -745,6 +765,8 @@ pt-BR:
       pass_confirmation_required: "Confirmação de senha é necessária."
       pass_and_confirm_pass_should_same: "Senha e confirmação devem ser combinadas."
       cannot_delete_current_user: "Usuário logado atual não pode ser excluído."
+      all_roles: "Todos os papéis"
+      roles: "Papéis"
 
     credit_card:
       pay_by_credit_card: "Pagar fatura com cartão de crédito"
@@ -798,6 +820,9 @@ pt-BR:
       estimate_should_be_greater_than_zero: "O tempo estimado deve ser igual ou maior que zero"
       project_time_log_tooltip: "O tempo registrado será automaticamente calculado com base no tempo gasto nas tarefas do projeto."
       staff_required_msg: 'Por favor, crie primeiro o Membro da Equipe para criar o Projeto.'
+      created_date_range: "Faixa de datas criada"
+      all_managers: "Todos os gerentes"
+      managers: "Gerentes"
 
     import_data:
       import_data: "Datos de importacion"

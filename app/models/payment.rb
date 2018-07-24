@@ -19,8 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Payment < ActiveRecord::Base
- include DateFormats
- include PaymentSearch
+  include DateFormats
+  include PaymentSearch
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
@@ -33,6 +33,13 @@ class Payment < ActiveRecord::Base
 
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
+
+  #socpes
+  scope :invoice_number, -> (invoice_number) { where(invoice_id: invoice_number) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :payment_date, -> (payment_date) { where(payment_date: payment_date) }
+  scope :payment_method, -> (payment_method) { where(payment_method: payment_method) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
 
   paginates_per 10
 
@@ -157,6 +164,25 @@ class Payment < ActiveRecord::Base
       # change invoice status on non credit payments deletion
       invoice.status_after_payment_deleted if invoice.present? && payment.payment_type.blank?
     end
+  end
+
+  def self.filter(params, per_page)
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    payments = params[:search].present? ? Payment.search(params[:search]).records : Payment.all
+
+    payments = payments.payment_method(params[:type]) if params[:type].present?
+    payments = payments.client_id(params[:client_id]) if params[:client_id].present?
+    payments = payments.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
+    payments = payments.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    payments = payments.payment_date(
+        (Date.strptime(params[:payment_start_date], date_format) .. Date.strptime(params[:payment_end_date], date_format))
+    ) if params[:payment_start_date].present?
+
+    payments.unarchived.page(params[:page]).per(per_page)
   end
 
   def destroy_credit_applied(payment_id)

@@ -22,6 +22,7 @@ class Client < ActiveRecord::Base
   include ClientSearch
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
 
   # associations
   has_many :estimates
@@ -101,8 +102,16 @@ class Client < ActiveRecord::Base
 
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(params[:per])
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    clients = self
+    clients = clients.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    clients = clients.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    clients
   end
 
   def self.is_exists? email, association
@@ -184,7 +193,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with companies
     company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
-    company_clients = company_clients.send(params[:status])
+    company_clients = company_clients.filter(params) if company_clients.present?
 
     # get the account
     account = params[:user].current_account
@@ -192,7 +201,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with accounts
     account_clients = account.clients
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
-    account_clients = account_clients.send(params[:status])
+    account_clients = account_clients.filter(params) if account_clients.present?
 
     # get the unique clients associated with companies and accounts
     clients = ( account_clients + company_clients).uniq

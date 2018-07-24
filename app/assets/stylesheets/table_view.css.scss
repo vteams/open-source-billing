@@ -25,10 +25,20 @@
       &hover { color: #09b8e2; }
     }
   }
+  .right div.separator {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+    background-color: grey;
+    height: 20px;
+    width: 2px;
+    border-radius: 5px;
+  }
   .right a {
     &.active i { color: #09b8e2; }
     i { color: #a6a6a6; }
     i:hover { color: #09b8e2; }
+    &.show-filters i { font-size: 20px; }
   }
 }
 

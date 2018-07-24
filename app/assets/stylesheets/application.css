@@ -53,6 +53,9 @@
  *= require search
  *= require currency-flags
  *= require table_view.css.scss
+ *= require filters
+ *= require daterangepicker
+ *= require nouislider
 */
 
 .fix-left-and-opacity {

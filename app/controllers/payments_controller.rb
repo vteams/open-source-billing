@@ -26,14 +26,10 @@ class PaymentsController < ApplicationController
   helper_method :sort_column, :sort_direction, :get_org_name
 
   def index
-    @payments = params[:search].present? ? Payment.search(params[:search]).records : Payment
-    @payments = @payments.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
-    @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
-    @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
-    @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
+    @payments = Payment.filter(params, @per_page)
     #filter invoices by company
     @payments = filter_by_company(@payments)
-    @payment_activity = Reporting::PaymentActivity.get_recent_activity(@payments)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -124,7 +120,7 @@ class PaymentsController < ApplicationController
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
     end
 
-    @payment_activity = Reporting::PaymentActivity.get_recent_activity(Payment.unarchived)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
   end
 
   def update_individual_payment

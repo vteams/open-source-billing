@@ -8,14 +8,14 @@
       <div class="card-white-panel ">
         <h3 class="with-grid-icons">
           <span><%= link_to t('views.clients.clients'), clients_path %></span>
-          <%= link_to "/ #{t('views.common.' + @status.downcase)}", 'javascript:;', class: 'active' %>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
           <%= index_layout_toggle_icons(clients_path(layout_toggle_params(view: 'card')),
                                         clients_path(layout_toggle_params(view: 'table'))) %>
         </h3>
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box client-box clearfix">
     <%= form_tag "clients/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container">
@@ -24,5 +24,7 @@
         <%= render partial: 'bulk_actions'%>
     <% end %>
   </div>
-
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#rate_min,#rate_max');
+</script>

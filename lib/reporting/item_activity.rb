@@ -24,9 +24,9 @@ module Reporting
       recent_activity = {}
       options.merge!(user: current_user, company_id: company_id)
 
-      options[:status] = 'unarchived'
+      options[:status] = 'active'
       active_items = Item.get_items(options)
-      options[:status] = 'only_deleted'
+      options[:status] = 'deleted'
       deleted_items = Item.get_items(options)
       options[:status] = 'archived'
       archived_items =Item.get_items(options)

@@ -15,11 +15,13 @@
       </div>
     </div>
   </div>
-
+  <%= render 'filters' %>
   <div class="invoice-box">
     <div class="search_result_container">
       <%= render 'sub_users_container'%>
     </div>
   </div>
-
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date');
+</script>

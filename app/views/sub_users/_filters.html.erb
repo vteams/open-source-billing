@@ -1,0 +1,25 @@
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag sub_users_path(), method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="create_at_start_date" id="create_at_start_date">
+          <input type="hidden" name="create_at_end_date" id="create_at_end_date">
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
+          <label class="active"><%= t('views.projects.created_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m3">
+          <%= select_tag(:role_ids, multi_select_options(load_user_roles, t('views.users.all_roles'), {selected: params[:role_ids]}),
+                         include_blank: false, multiple: true, class: 'small_list') %>
+          <label><%= t('views.users.roles') %></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
