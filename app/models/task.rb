@@ -60,7 +60,7 @@ class Task < ActiveRecord::Base
     company =  Company.find_by(id: company_id)
 
     # get the tasks associated with companies
-    company_tasks = company.tasks
+    company_tasks = company.tasks.unscoped
     company_tasks = company_tasks.search(params[:search]).records if params[:search].present? and company_tasks.present?
     company_tasks = company_tasks.filter(params) if company_tasks.present?
 
@@ -68,7 +68,7 @@ class Task < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the tasks associated with accounts
-    account_tasks = account.tasks
+    account_tasks = account.tasks.unscoped
     account_tasks = account_tasks.search(params[:search]).records if params[:search].present? and account_tasks.present?
     account_tasks = account_tasks.filter(params) if account_tasks.present?
 

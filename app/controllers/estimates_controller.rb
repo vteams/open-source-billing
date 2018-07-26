@@ -205,7 +205,7 @@ class EstimatesController < ApplicationController
   def estimate_has_deleted_clients?(estimates)
     estimate_with_deleted_clients = []
     estimates.each do |estimate|
-      if estimate.unscoped_client.deleted_at.present?
+      if estimate.unscoped_client && estimate.unscoped_client.deleted_at.present?
         estimate_with_deleted_clients << estimate.estimate_number
       end
     end

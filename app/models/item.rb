@@ -73,21 +73,19 @@ class Item < ActiveRecord::Base
   end
 
   def self.get_items(params)
-
-
     # get the company
     company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company = Company.find_by(id: company_id)
 
     # get the items associated with companies
-    company_items = company.items
+    company_items = company.items.unscoped
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
     company_items = company_items.filter(params, params[:per]) if company_items.present?
     # get the account
     account = params[:user].current_account
 
     # get the items associated with account
-    account_items = account.items
+    account_items = account.items.unscoped
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
     account_items = account_items.filter(params, params[:per]) if account_items.present?
 

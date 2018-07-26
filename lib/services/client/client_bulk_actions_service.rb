@@ -123,6 +123,7 @@ class ExpenseBulkActionsService
   private
 
   def get_clients(filter)
-    ::Client.get_clients(@options.merge(status: filter)) #(filter).page(@options[:page]).per(@options[:per])
+    mappings = {'unarchived' => 'active', 'archived' => 'archived', 'only_deleted' => 'deleted'}
+    ::Client.get_clients(@options.merge(status: mappings[filter]))
   end
 end

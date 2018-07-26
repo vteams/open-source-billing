@@ -63,11 +63,12 @@ module Services
     private
 
     def get_items(filter)
-      if ::Item.get_items(@options.merge(status: filter)).present?
-        ::Item.get_items(@options.merge(status: filter))
+      mappings = {'unarchived' => 'active', 'archived' => 'archived', 'only_deleted' => 'deleted'}
+      if ::Item.get_items(@options.merge(status: mappings[filter])).present?
+        ::Item.get_items(@options.merge(status: mappings[filter]))
       else
         @options[:page] = @options[:page].to_i > 1 ? (@options[:page].to_i - 1).to_s : @options[:page]
-        ::Item.get_items(@options.merge(status: filter))
+        ::Item.get_items(@options.merge(status: mappings[filter]))
       end
     end
   end

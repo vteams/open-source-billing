@@ -55,7 +55,7 @@ class Staff < ActiveRecord::Base
     company =  Company.find_by(id: company_id)
 
     # get the staffs associated with companies
-    company_staffs = company.staffs
+    company_staffs = company.staffs.unscoped
     company_staffs = company_staffs.search(params[:search]).records if params[:search].present? and company_staffs.present?
     company_staffs = company_staffs.filter(params) if company_staffs.present?
 
@@ -63,7 +63,7 @@ class Staff < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the staffs associated with accounts
-    account_staffs = account.staffs
+    account_staffs = account.staffs.unscoped
     account_staffs = account_staffs.search(params[:search]).records if params[:search].present? and account_staffs.present?
     account_staffs = account_staffs.filter(params) if account_staffs.present?
 

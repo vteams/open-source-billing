@@ -191,7 +191,7 @@ class Client < ActiveRecord::Base
     company =  Company.find_by(id: params[:company_id])
 
     # get the clients associated with companies
-    company_clients = company.clients
+    company_clients = company.clients.unscoped
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
     company_clients = company_clients.filter(params) if company_clients.present?
 
@@ -199,7 +199,7 @@ class Client < ActiveRecord::Base
     account = params[:user].current_account
 
     # get the clients associated with accounts
-    account_clients = account.clients
+    account_clients = account.clients.unscoped
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
     account_clients = account_clients.filter(params) if account_clients.present?
 
