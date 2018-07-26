@@ -4449,7 +4449,7 @@ i.material-icons.close:hover {
 }
 
 .pagination .prev:before {
-  content: "⮘";
+  content: "<";
 }
 
 .pagination .next {
@@ -4457,7 +4457,7 @@ i.material-icons.close:hover {
   border: 1px solid #14B6E1;
   margin: 5px;
 }
-.pagination .next:after { content: "⮚"; }
+.pagination .next:after { content: ">"; }
 .pagination span:hover {
   background-color: #10A2D7;
   color: white;
