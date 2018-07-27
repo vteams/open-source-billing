@@ -353,11 +353,9 @@ class @Invoice
       else if invoice_date_value > due_date_value
         applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft",I18n.t("views.invoices.due_date_should_equal_or_greater"))
         flag = false
-      else if $('#how_many_rec').val() isnt "" and $('#how_many_rec').val() < 0
+      else if $('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) <= 0
         applyPopover($("#how_many_rec"),"bottomMiddle","topLeft", I18n.t("views.common.enter_positive_value"))
         flag = false
-      else if $('#how_many_rec').val() is "" or $('#how_many_rec').val() >= 0
-        hidePopover($('#how_many_rec'))
         # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""
         applyPopover($("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft",I18n.t("views.invoices.select_a_payment_term"))
@@ -403,6 +401,8 @@ class @Invoice
               applyPopover(qty,"bottomLeft","topLeft",I18n.t("views.invoices.enter_valid_item_quantity"))
               flag = false
             else hidePopover(qty)
+      if ($('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) >= 1)
+        hidePopover($('#how_many_rec'))
       flag
 
 jQuery ->
