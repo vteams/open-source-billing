@@ -23,17 +23,8 @@ class Task < ActiveRecord::Base
   # filter tasks i.e active, archive, deleted
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    user = User.current
-    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-
-    tasks = self
-    tasks = tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
-    tasks = tasks.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
-    ) if params[:create_at_start_date].present?
-    tasks = tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
-
-    tasks
+    method = mappings[params[:status].to_sym]
+    Task.send(method).page(params[:page]).per(params[:per])
   end
 
   def self.recover_archived(ids)
@@ -54,23 +45,33 @@ class Task < ActiveRecord::Base
 
 
   def self.get_tasks(params)
-
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     # get the company
     company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company =  Company.find_by(id: company_id)
 
     # get the tasks associated with companies
-    company_tasks = company.tasks.unscoped
+    company_tasks = company.tasks
     company_tasks = company_tasks.search(params[:search]).records if params[:search].present? and company_tasks.present?
-    company_tasks = company_tasks.filter(params) if company_tasks.present?
+    company_tasks = company_tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
+    company_tasks = company_tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
+    company_tasks = company_tasks.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the account
     account = params[:user].current_account
 
     # get the tasks associated with accounts
-    account_tasks = account.tasks.unscoped
+    account_tasks = account.tasks
     account_tasks = account_tasks.search(params[:search]).records if params[:search].present? and account_tasks.present?
-    account_tasks = account_tasks.filter(params) if account_tasks.present?
+    account_tasks = account_tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
+    account_tasks = account_tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
+    account_tasks = account_tasks.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts
     tasks = ( account_tasks + company_tasks).uniq

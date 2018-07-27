@@ -57,37 +57,42 @@ class Item < ActiveRecord::Base
 
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    user = User.current
-    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-
-    items = self
-    items = items.tax_1(params[:tax_1]) if params[:tax_1].present?
-    items = items.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
-    ) if params[:create_at_start_date].present?
-    items = items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
-    items = items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
-    items = items.send(mappings[params[:status].to_sym]) if params[:status].present?
-
-    items
+    method = mappings[params[:status].to_sym]
+    self.send(method).page(params[:page]).per(per_page)
   end
 
   def self.get_items(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     # get the company
     company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company = Company.find_by(id: company_id)
 
     # get the items associated with companies
-    company_items = company.items.unscoped
+    company_items = company.items
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
-    company_items = company_items.filter(params, params[:per]) if company_items.present?
+    company_items = company_items.send(mappings[params[:status].to_sym])
+    company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
+    company_items = company_items.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    company_items = company_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
+    company_items = company_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
+
     # get the account
     account = params[:user].current_account
 
     # get the items associated with account
-    account_items = account.items.unscoped
+    account_items = account.items
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
-    account_items = account_items.filter(params, params[:per]) if account_items.present?
+    account_items = account_items.send(mappings[params[:status].to_sym])
+    account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
+    account_items = account_items.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
+    account_items = account_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
+    account_items = account_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
 
     # get the unique items associated with companies and accounts
 

@@ -102,16 +102,8 @@ class Client < ActiveRecord::Base
 
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    user = User.current
-    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-
-    clients = self
-    clients = clients.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
-    ) if params[:create_at_start_date].present?
-    clients = clients.send(mappings[params[:status].to_sym]) if params[:status].present?
-
-    clients
+    method = mappings[params[:status].to_sym]
+    self.send(method).page(params[:page]).per(params[:per])
   end
 
   def self.is_exists? email, association
@@ -186,22 +178,31 @@ class Client < ActiveRecord::Base
   end
 
   def self.get_clients(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
     # get the company
     company =  Company.find_by(id: params[:company_id])
 
     # get the clients associated with companies
-    company_clients = company.clients.unscoped
+    company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
-    company_clients = company_clients.filter(params) if company_clients.present?
+    company_clients = company_clients.send(mappings[params[:status].to_sym])
+    company_clients = company_clients.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the account
     account = params[:user].current_account
 
     # get the clients associated with accounts
-    account_clients = account.clients.unscoped
+    account_clients = account.clients
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
-    account_clients = account_clients.filter(params) if account_clients.present?
+    account_clients = account_clients.send(mappings[params[:status].to_sym])
+    account_clients = account_clients.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts
     clients = ( account_clients + company_clients).uniq

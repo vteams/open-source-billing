@@ -24,17 +24,8 @@ class Staff < ActiveRecord::Base
   # filter staffs i.e active, archive, deleted
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    user = User.current
-    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-
-    staffs = self
-    staffs = staffs.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
-    staffs = staffs.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
-    ) if params[:create_at_start_date].present?
-    staffs = staffs.send(mappings[params[:status].to_sym]) if params[:status].present?
-
-    staffs
+    method = mappings[params[:status].to_sym]
+    Staff.send(method).page(params[:page]).per(params[:per])
   end
 
   def self.recover_archived(ids)
@@ -50,22 +41,33 @@ class Staff < ActiveRecord::Base
   end
 
   def self.get_staffs(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     # get the company
     company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
     company =  Company.find_by(id: company_id)
 
     # get the staffs associated with companies
-    company_staffs = company.staffs.unscoped
+    company_staffs = company.staffs
     company_staffs = company_staffs.search(params[:search]).records if params[:search].present? and company_staffs.present?
-    company_staffs = company_staffs.filter(params) if company_staffs.present?
+    company_staffs = company_staffs.send(mappings[params[:status].to_sym])
+    company_staffs = company_staffs.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
+    company_staffs = company_staffs.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the account
     account = params[:user].current_account
 
     # get the staffs associated with accounts
-    account_staffs = account.staffs.unscoped
+    account_staffs = account.staffs
     account_staffs = account_staffs.search(params[:search]).records if params[:search].present? and account_staffs.present?
-    account_staffs = account_staffs.filter(params) if account_staffs.present?
+    account_staffs = account_staffs.send(mappings[params[:status].to_sym])
+    account_staffs = account_staffs.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
+    account_staffs = account_staffs.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+    ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts
     staffs = ( account_staffs + company_staffs).uniq
