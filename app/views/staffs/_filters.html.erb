@@ -13,24 +13,26 @@
                          include_blank: false, class: 'small_list') %>
           <label><%= t('views.common.type') %></label>
         </div>
-        <% max_val = Staff.all.maximum(:rate)  %>
-        <div class="col s12 m7">
-          <p class="range-field">
-            <label><%= t('views.tasks.rate_range') %></label>
-            <input type="hidden" name="min_rate" id="rate_min" value="1">
-            <input type="hidden" name="max_rate" id="rate_max" value="<%= max_val %>">
-          <div class="label-range">
-            <span class="label_left"><%= t('views.invoices.min') %>: <span id="rate_min_label"></span></span>
-            <span class="label_right"><%= t('views.invoices.max') %>: <span id="rate_max_label"></span></span>
+        <% max_val = Staff.all.unscoped.maximum(:rate) %>
+        <% if max_val.to_i > 1 %>
+          <div class="col s12 m7">
+            <p class="range-field">
+              <label><%= t('views.tasks.rate_range') %></label>
+              <input type="hidden" name="min_rate" id="rate_min" value="1">
+              <input type="hidden" name="max_rate" id="rate_max" value="<%= max_val %>">
+            <div class="label-range">
+              <span class="label_left"><%= t('views.invoices.min') %>: <span id="rate_min_label"></span></span>
+              <span class="label_right"><%= t('views.invoices.max') %>: <span id="rate_max_label"></span></span>
+            </div>
+            <div id="rate"
+                 min="1"
+                 max="<%= max_val %>"
+                 class="range_selector"
+                 data-min="<%= params[:min_rate] %>"
+                 data-max="<%= params[:max_rate] %>"></div>
+            </p>
           </div>
-          <div id="rate"
-               min="1"
-               max="<%= max_val %>"
-               class="range_selector"
-               data-min="<%= params[:min_rate] %>"
-               data-max="<%= params[:max_rate] %>"></div>
-          </p>
-        </div>
+        <% end %>
       </div>
       <div class="row">
         <div class="filter-footer">

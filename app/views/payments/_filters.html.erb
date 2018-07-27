@@ -27,7 +27,8 @@
           <label><%= t('views.common.type') %></label>
         </div>
       </div>
-      <div class="row">
+      <% if Invoice.all.unscoped.count.to_i > 1 %>
+        <div class="row">
         <div class="input-filed col s12 m12">
           <p class="range-field">
             <label><%= t('views.invoices.invoice_number_range') %></label>
@@ -46,6 +47,7 @@
           </p>
         </div>
       </div>
+      <% end %>
       <div class="row">
         <div class="filter-footer">
           <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
