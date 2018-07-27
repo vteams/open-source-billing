@@ -25,4 +25,8 @@
 </div>
 <script>
   initFilterEvents('#create_at_start_date,#create_at_end_date,#unit_cost_min,#unit_cost_max,#quantity_min,#quantity_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date unit_cost_min unit_cost_max quantity_min quantity_max tax_1)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
 </script>

@@ -5,8 +5,8 @@
         <div class="input-field col s12 m3">
           <input type="hidden" name="estimate_start_date" id="estimate_start_date">
           <input type="hidden" name="estimate_end_date" id="estimate_end_date">
-          <input type="text" class="date-range" name="due" id="estimate" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
-          <label class="active"><%= t('views.estimates.estimate_date_range') %></label>
+          <input type="text" class="date-range" name="due" id="estimate" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:due] %>" readonly/>
+          <label class="input_field_label"><%= t('views.estimates.estimate_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), t('all_clients'),

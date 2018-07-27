@@ -4,6 +4,12 @@
   padding: 20px;
   display: none;
 
+  .input_field_label {
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-140%);
+    transform: translateY(-140%);
+  }
+
   .show-filters i {
     padding-left: 20px;
   }
@@ -60,7 +66,9 @@
 
     .range_selector.noUi-target.noUi-ltr.noUi-horizontal.noUi-background { margin-top: 5px; }
   }
-  .no-ui-slider { margin-top: 20px; }
+  @media only screen and (max-width: 600px) {
+    .no-ui-slider { margin-top: 20px; }
+  }
   .filter-footer {
     float: right;
     margin-top: 20px;

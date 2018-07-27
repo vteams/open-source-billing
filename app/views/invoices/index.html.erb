@@ -25,4 +25,8 @@
 </div>
 <script>
   initFilterEvents('#create_at_start_date,#create_at_end_date,#due_start_date,#due_end_date,#invoice_number_min,#invoice_number_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date due_start_date due_end_date invoice_number_min invoice_number_max client_id type)) %>
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
 </script>

@@ -24,4 +24,8 @@
 </div>
 <script>
   initFilterEvents('#create_at_start_date,#create_at_end_date');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date role_ids)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
 </script>

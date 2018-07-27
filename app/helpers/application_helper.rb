@@ -350,4 +350,11 @@ module ApplicationHelper
   def status_text
     @status.humanize.underscore
   end
+
+  def is_filter_applied?(keys)
+    condition = false
+    keys.each {|key| condition = condition || params[key.to_sym].present? }
+
+    condition
+  end
 end
