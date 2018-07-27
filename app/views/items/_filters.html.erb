@@ -44,7 +44,7 @@
         <% end %>
         <% if unit_cost_max_val.to_i > 1 %>
             <div class="input-filed col s12 m6">
-              <p class="range-field">
+              <p class="range-field no-ui-slider">
                 <label><%= t('views.items.unit_cost_range') %></label>
                 <input type="hidden" name="min_unit_cost" id="unit_cost_min" value="0">
                 <input type="hidden" name="max_unit_cost" id="unit_cost_max" value="<%= unit_cost_max_val %>">
