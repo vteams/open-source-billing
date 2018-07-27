@@ -25,4 +25,8 @@
 </div>
 <script>
   initFilterEvents('#estimate_start_date,#estimate_end_date,#estimate_number_min,#estimate_number_max');
+  <% if is_filter_applied?(%w(estimate_start_date estimate_end_date estimate_number_min estimate_number_max client_id type)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
 </script>
