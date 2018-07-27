@@ -31,4 +31,8 @@
 </div>
 <script>
   initFilterEvents('#create_at_start_date,#create_at_end_date,#rate_min,#rate_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date rate_min rate_max)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
 </script>
