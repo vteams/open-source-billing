@@ -190,6 +190,7 @@ fr:
       hide_filters: "Masquer les filtres"
       reset: "Réinitialiser"
       start_date_to_end_date: "Date de début - date de fin"
+      enter_positive_value: "Veuillez entrer uniquement une valeur positive pour ce champ."
 
     pagination:
       previous: "précédent"

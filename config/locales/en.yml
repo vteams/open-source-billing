@@ -207,6 +207,7 @@ en:
       hide_filters: "Hide Filters"
       reset: "Reset"
       start_date_to_end_date: "Start Date - End Date"
+      enter_positive_value: "Please enter only positive value for this field."
 
     pagination:
       previous: "Previous"

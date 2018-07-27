@@ -194,6 +194,7 @@ pt-BR:
       hide_filters: "Ocultar filtros"
       reset: "Restabelecer"
       start_date_to_end_date: "Data de início - data final"
+      enter_positive_value: "Por favor, insira apenas o valor positivo para este campo."
 
     pagination:
       previous: "Anterior"

@@ -51,7 +51,9 @@
                                  input_html: { class: 'input-select' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                     <%= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
                                  wrapper_html: { class: 'input-field' },
-                                 input_html: { class: 'recurring_occurrences', min: 0, onkeydown: 'javascript: return event.keyCode == 69 ? false : true' }
+                                 input_html: { class: 'recurring_occurrences', min: 0,
+                                               onkeydown: 'javascript: return event.keyCode == 69 ? false : true',
+                                               id: 'how_many_rec' }
                     %>
                   </div>
                   <% draft_invoice = invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
