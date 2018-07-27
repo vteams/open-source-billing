@@ -5,13 +5,13 @@
         <div class="input-field col s12 m3">
           <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
           <input type="hidden" name="create_at_end_date" id="create_at_end_date" value="<%= params[:create_at_end_date] %>">
-          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" />
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:create_at] %>"/>
           <label class="active"><%= t('views.invoices.invoice_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
           <input type="hidden" name="due_start_date" id="due_start_date">
           <input type="hidden" name="due_end_date" id="due_end_date">
-          <input type="text" class="date-range" name="due" id="due" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
+          <input type="text" class="date-range" name="due" id="due" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:due] %>"/>
           <label class="active"><%= t('views.invoices.due_date_range') %></label>
         </div>
         <div class="input-field col s12 m2">
