@@ -41,7 +41,7 @@ class Project < ActiveRecord::Base
     projects = projects.client_id(params[:client_id]) if params[:client_id].present?
     projects = projects.manager_id(params[:manager_id]) if params[:manager_id].present?
     projects = projects.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     projects = projects.send(mappings[params[:status].to_sym]) if params[:status].present?
     

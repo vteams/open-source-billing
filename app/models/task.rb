@@ -58,7 +58,7 @@ class Task < ActiveRecord::Base
     company_tasks = company_tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_tasks = company_tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
     company_tasks = company_tasks.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the account
@@ -70,7 +70,7 @@ class Task < ActiveRecord::Base
     account_tasks = account_tasks.send(mappings[params[:status].to_sym]) if params[:status].present?
     account_tasks = account_tasks.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
     account_tasks = account_tasks.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts

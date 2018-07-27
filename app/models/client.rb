@@ -190,7 +190,7 @@ class Client < ActiveRecord::Base
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
     company_clients = company_clients.send(mappings[params[:status].to_sym])
     company_clients = company_clients.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the account
@@ -201,7 +201,7 @@ class Client < ActiveRecord::Base
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
     account_clients = account_clients.send(mappings[params[:status].to_sym])
     account_clients = account_clients.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts

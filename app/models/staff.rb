@@ -54,7 +54,7 @@ class Staff < ActiveRecord::Base
     company_staffs = company_staffs.send(mappings[params[:status].to_sym])
     company_staffs = company_staffs.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
     company_staffs = company_staffs.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the account
@@ -66,7 +66,7 @@ class Staff < ActiveRecord::Base
     account_staffs = account_staffs.send(mappings[params[:status].to_sym])
     account_staffs = account_staffs.rate((params[:min_rate].to_i .. params[:max_rate].to_i)) if params[:min_rate].present?
     account_staffs = account_staffs.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts

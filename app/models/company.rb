@@ -32,7 +32,7 @@ class Company < ActiveRecord::Base
 
     companies = params[:search].present? ? params[:account].companies.search(params[:search]).records : params[:account].companies
     companies = companies.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     companies = companies.send(mappings[params[:status].to_sym]) if params[:status].present?
 

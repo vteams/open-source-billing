@@ -57,7 +57,7 @@ class Tax < ActiveRecord::Base
 
     taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
     taxes = taxes.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     taxes = taxes.percentage((params[:min_percentage].to_i .. params[:max_percentage].to_i)) if params[:min_percentage].present?
     taxes = taxes.send(mappings[params[:status].to_sym]) if params[:status].present?

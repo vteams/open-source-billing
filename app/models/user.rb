@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
       users = params[:search].present? ? self.search(params[:search]).records : self
       users = users.role_ids(params[:role_ids]) if params[:role_ids].present?
       users = users.created_at(
-          (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+          (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
       ) if params[:create_at_start_date].present?
 
       users.page(params[:page]).per(per_page)

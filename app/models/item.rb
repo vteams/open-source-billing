@@ -75,7 +75,7 @@ class Item < ActiveRecord::Base
     company_items = company_items.send(mappings[params[:status].to_sym])
     company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     company_items = company_items.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     company_items = company_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
     company_items = company_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
@@ -89,7 +89,7 @@ class Item < ActiveRecord::Base
     account_items = account_items.send(mappings[params[:status].to_sym])
     account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     account_items = account_items.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     account_items = account_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
     account_items = account_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?

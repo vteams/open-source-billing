@@ -176,10 +176,10 @@ class Payment < ActiveRecord::Base
     payments = payments.client_id(params[:client_id]) if params[:client_id].present?
     payments = payments.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
     payments = payments.created_at(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     payments = payments.payment_date(
-        (Date.strptime(params[:payment_start_date], date_format) .. Date.strptime(params[:payment_end_date], date_format))
+        (Date.strptime(params[:payment_start_date], date_format).in_time_zone .. Date.strptime(params[:payment_end_date], date_format).in_time_zone)
     ) if params[:payment_start_date].present?
 
     payments.unarchived.page(params[:page]).per(per_page)

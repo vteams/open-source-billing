@@ -76,7 +76,7 @@ class Estimate < ActiveRecord::Base
     estimates = estimates.client_id(params[:client_id]) if params[:client_id].present?
     estimates = estimates.estimate_number((params[:min_estimate_number].to_i .. params[:max_estimate_number].to_i)) if params[:min_estimate_number].present?
     estimates = estimates.estimate_date(
-        (Date.strptime(params[:estimate_start_date], date_format) .. Date.strptime(params[:estimate_end_date], date_format))
+        (Date.strptime(params[:estimate_start_date], date_format).in_time_zone .. Date.strptime(params[:estimate_end_date], date_format).in_time_zone)
     ) if params[:estimate_start_date].present?
     estimates = estimates.send(mappings[params[:status].to_sym]) if params[:status].present?
 

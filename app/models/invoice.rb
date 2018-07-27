@@ -223,10 +223,10 @@ class Invoice < ActiveRecord::Base
     invoices = invoices.client_id(params[:client_id]) if params[:client_id].present?
     invoices = invoices.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
     invoices = invoices.invoice_date(
-        (Date.strptime(params[:create_at_start_date], date_format) .. Date.strptime(params[:create_at_end_date], date_format))
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     invoices = invoices.due_date(
-        (Date.strptime(params[:due_start_date], date_format) .. Date.strptime(params[:due_end_date], date_format))
+        (Date.strptime(params[:due_start_date], date_format).in_time_zone .. Date.strptime(params[:due_end_date], date_format).in_time_zone)
     ) if params[:due_start_date].present?
     invoices = invoices.send(mappings[params[:status].to_sym]) if params[:status].present?
 
