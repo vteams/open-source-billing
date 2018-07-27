@@ -5,14 +5,14 @@
         <div class="input-field col s12 m3">
           <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
           <input type="hidden" name="create_at_end_date" id="create_at_end_date" value="<%= params[:create_at_end_date] %>">
-          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" />
-          <label class="active"><%= t('views.invoices.invoice_date_range') %></label>
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:created_at] %>" readonly/>
+          <label class="input_field_label"><%= t('views.invoices.invoice_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
           <input type="hidden" name="payment_start_date" id="payment_start_date">
           <input type="hidden" name="payment_end_date" id="payment_end_date">
-          <input type="text" class="date-range" name="payment" id="payment" placeholder="<%= t('views.common.start_date_to_end_date') %>"/>
-          <label class="active"><%= t('views.payments.payment_date_range') %></label>
+          <input type="text" class="date-range" name="payment" id="payment" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:payment] %>" readonly/>
+          <label class="input_field_label"><%= t('views.payments.payment_date_range') %></label>
         </div>
         <div class="input-field col s12 m3">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), t('all_clients'),
