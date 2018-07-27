@@ -463,9 +463,6 @@ function initFilterEvents(ids) {
       $('#filters select').val('');
       $(ids).val('');
       resetRangeSelectors();
-      $.each($('.daterangepicker.ltr.show-calendar.opensright .cancelBtn.btn.btn-sm.btn-default'), function(index, element) {
-        $(element).click();
-      });
       $('#filters_form').submit();
     });
     $('#filter_submit_btn').on('click', function (event) {
