@@ -1411,8 +1411,11 @@ h6 {
   margin-right: 6px; }
 .card-white-panel .dropdown-content li:last-child a {
   border-bottom-color: transparent; }
-.card-white-panel .dropdown-content li:hover, .card-white-panel .dropdown-content li.active, .card-white-panel .dropdown-content li.selected {
-  background-color: transparent; }
+.card-white-panel div.action-btn-group .dropdown-content li:hover,
+.card-white-panel div.action-btn-group .dropdown-content li.active,
+.card-white-panel div.action-btn-group .dropdown-content li.selected {
+  background-color: transparent;
+}
 .card-white-panel .checkbox-item input + label {
   position: absolute;
   top: 25px;
