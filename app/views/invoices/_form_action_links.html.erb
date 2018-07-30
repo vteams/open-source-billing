@@ -6,6 +6,6 @@
     <i class="material-icons" >done</i>
   </a>
   <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), invoices_path %>
-  <%= f.submit '', class: 'simple_submit submit hidden' %>
+  <%= f.submit 'send_invoices', class: 'simple_submit submit hidden' %>
   <%= f.submit '', class: 'send_submit submit hidden', name: 'save_as_draft' %>
 </div>
