@@ -1,5 +1,5 @@
 <%= render 'report_activity' unless request.format.pdf? %>
-<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+<div id="main-content" class='reports <%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
   <!--- breadcrum Bar --->
   <div class="breadcrum-bar card-white-panel clearfix">
@@ -13,11 +13,15 @@
         <option value="<%= "/#{I18n.locale}/reports/invoice_detail" %>" <%= "#{'selected' if @report.report_name.eql?('invoice_detail')}" %>><%= t('views.reports.invoice_detail') %></option>
       </select>
     </div>
+    <div class="with-grid-icons">
+      <div class="right">
+        <%= link_to( raw('<i class="material-icons">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters')) %>
+      </div>
+    </div>
   </div>
+  <%= render 'criteria_controls' unless request.format.pdf? %>
   <div class="page-box">
-    <% unless request.format.pdf? %>
-        <%= render "criteria_controls" %>
-    <% end %>
+    <%# render 'criteria_controls' unless request.format.pdf? %>
 
     <div class="simple-responsive report_content report-inner-scroll-container">
       <div class="report-body-container">

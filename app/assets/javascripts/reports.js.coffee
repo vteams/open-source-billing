@@ -3,7 +3,11 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  initDateRangePicker(DateFormats.format().toUpperCase())
+  initFilterEvents('#from_date,#to_date,#date_range_picker')
+  if $('#from_date').length > 0 and $('#to_date').length > 0
+    initDateRangePicker(DateFormats.format().toUpperCase())
+  else
+    initOnlyToDatePicker(DateFormats.format().toUpperCase()) if $('#to_date').length > 0
 
 initDateRangePicker = (format) ->
   options =
@@ -22,3 +26,11 @@ initDateRangePicker = (format) ->
     picker.element.val ''
     $('#from_date').val ''
     $('#to_date').val ''
+
+initOnlyToDatePicker = (format) ->
+  $('#to_date').daterangepicker {
+    singleDatePicker: true
+    locale: format: format
+  }, (start, end, label) ->
+    $('#to_date').val start.format(format)
+    return

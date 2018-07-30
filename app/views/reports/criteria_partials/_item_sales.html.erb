@@ -1,27 +1,33 @@
-<%= form_tag "/reports/data/#{@report.report_name}", :method => :get, :remote => true do %>
-    <div class="row">
-      <div class="input-field col s12 m6 xl3">
-        <input type="hidden" name="criteria[from_date]" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>">
-        <input type="hidden" name="criteria[to_date]" id="to_date" value="<%= Date.today.strftime(get_date_format) %>">
-        <input type="text" class="date-range-picker" name="date_range_picker" id="date_range_picker"
-               value="<%= 1.month.ago.to_date.strftime(get_date_format) + ' - ' + Date.today.strftime(get_date_format) %>" readonly/>
-        <label class="input_field_label active"><%= t('views.reports.date_range') %></label>
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag "/reports/data/#{@report.report_name}", method: :get, remote: true, id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m6 xl3">
+          <input type="hidden" name="criteria[from_date]" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>">
+          <input type="hidden" name="criteria[to_date]" id="to_date" value="<%= Date.today.strftime(get_date_format) %>">
+          <input type="text" class="date-range-picker" name="date_range_picker" id="date_range_picker"
+                 value="<%= 1.month.ago.to_date.strftime(get_date_format) + ' - ' + Date.today.strftime(get_date_format) %>" readonly/>
+          <label class="input_field_label active"><%= t('views.reports.date_range') %></label>
+        </div>
+        <div class="input-field col s12 m6 xl2">
+          <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + get_report_items, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item"} %>
+          <label><%= t('views.common.item') %></label>
+        </div>
+        <div class="input-field col s12 m6 xl2">
+          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client"} %>
+          <label><%= t('views.clients.client') %></label>
+        </div>
+        <div class="input-field col s12 m6 xl2">
+          <%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS), {:prompt => t('views.common.all'), :class => "invoice-status"} %>
+          <label><%= t('views.invoices.invoice_status') %></label>
+        </div>
       </div>
-      <div class="input-field col s12 m6 xl2">
-        <%= collection_select "criteria", "item_id", [Item.new({:id => 0, :item_name => t('views.common.all')})] + get_report_items, :id, :item_name, {:prompt => t('views.common.all')}, {:class => "item"} %>
-        <label><%= t('views.common.item') %></label>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
       </div>
-      <div class="input-field col s12 m6 xl2">
-        <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client"} %>
-        <label><%= t('views.clients.client') %></label>
-      </div>
-      <div class="input-field col s12 m6 xl2">
-        <%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS), {:prompt => t('views.common.all'), :class => "invoice-status"} %>
-        <label><%= t('views.invoices.invoice_status') %></label>
-      </div>
-      <div class="col s12 m1">
-        <%= submit_tag t('views.common.go'), :class => "report_update hidden" %>
-        <a href="#" class="icon-done" onclick="$('.report_update').click();"><i class="material-icons">done</i></a>
-      </div>
-    </div>
-<% end %>
+    <% end %>
+  </div>
+</div>
