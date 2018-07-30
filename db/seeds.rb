@@ -80,7 +80,7 @@ templates = EmailTemplate.create([
             :email_from => 'nfor20@yahoo.com',
             :subject => '{{client_company}}: {{company_name}} Invoice: {{invoice_number}}',
             :body => '<p>Dear {{client_contact}},</p>
-            <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your records, click the link below:</p>
+            <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your invoice, please click on below link:</p>
             <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
             <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
