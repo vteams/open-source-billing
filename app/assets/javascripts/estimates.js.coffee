@@ -336,6 +336,14 @@ class @Estimate
 jQuery ->
   unit = $('#estimate_currency_id option:selected').text()
 
+  format = DateFormats.format().toUpperCase()
+  $('#estimate_estimate_date').daterangepicker {
+    singleDatePicker: true
+    locale: format: format
+  }, (start, end, label) ->
+    $('#estimate_estimate_date').val start.format(format)
+    return
+
   if unit.length > 0
     $('#subtotal_currency_unit').text(unit)
     $('#discount_amount_currency_unit').text(unit)

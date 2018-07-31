@@ -16,7 +16,7 @@
                   <small id="estimate_date">
                     <% estimate_date = f.object.estimate_date.empty? ? Date.today.strftime(get_date_format) : f.object.estimate_date %>
                     <%= f.input :estimate_date, label: false, wrapper_tag: :span, as: :string,
-                                input_html: { class: 'date-picker date-field-style', value: estimate_date } %>
+                                input_html: { class: 'date-field-style', value: estimate_date } %>
                     <span><i class="material-icons" id="estimate_date_picker">date_range</i></span>
                   </small>
                 </span>
