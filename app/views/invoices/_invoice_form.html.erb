@@ -39,7 +39,7 @@
                     <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
                     <span>
                       <small>
-                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-picker date-field-style', value: next_invoice_date},
+                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style', value: next_invoice_date, id: 'next_issue_date' },
                                      wrapper_tag: :small, as: :string %>
                         <span><i class="material-icons calendar-icon">date_range</i></span>
                       </small>
