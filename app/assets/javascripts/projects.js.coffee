@@ -154,72 +154,58 @@ class @Project
         $(this).parents('.nested-fields').addClass('hidden')
 
   applyDatePicker = ->
-    $("#start_date_picker").pickadate
-      format: "yyyy-mm-dd"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#start_date_picker').parents('.datepicker').find('input').val value
+    format = DateFormats.format().toUpperCase()
+    $("#project_task_start_date").daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $("#project_start_date").val start.format(format)
+      return
 
-    $("#due_date_picker").pickadate
-      format: "yyyy-mm-dd"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#due_date_picker').parents('.datepicker').find('input').val value
-
+    $("#project_task_due_date").daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $("#project_due_date").val start.format(format)
+      return
 
   @projectTaskForm = ->
     applyDatePicker()
 #    $('.rkmd-slider').rkmd_rangeSlider()
 
     $(".project_task_form").submit ->
+      hidePopover($("#project_task_name,#project_task_start_date,#project_task_due_date,#project_task_hours,#project_task_spent_time,#project_task_rate"))
       flag = true
       if $("#project_task_name").val() is ""
         applyPopover($("#project_task_name"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_name"))
         flag = false
-      else if $('.project_task_start_date').val() is ""
-        hidePopover($("#project_task_name"))
-        applyPopover($('.project_task_start_date'),"bottomMiddle","topLeft", I18n.t("views.tasks.select_start_date"))
+      else if $('#project_task_start_date').val() is ""
+        applyPopover($('#project_task_start_date'),"bottomMiddle","topLeft", I18n.t("views.tasks.select_start_date"))
         flag = false
-      else if $(".project_task_due_date").val() is ""
-        hidePopover($(".project_task_start_date"))
-        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.select_due_date"))
+      else if $("#project_task_due_date").val() is ""
+        applyPopover($("#project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.select_due_date"))
         flag = false
-      else if $(".project_task_start_date").val() > $(".project_task_due_date").val()
-        hidePopover($(".project_task_due_date"))
-        applyPopover($(".project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.due_date_should_equal_or_greater"))
+      else if $("#project_task_start_date").val() > $("#project_task_due_date").val()
+        applyPopover($("#project_task_due_date"),"bottomMiddle","topLeft", I18n.t("views.tasks.due_date_should_equal_or_greater"))
         flag = false
       else if $("#project_task_hours").val() is ""
-        hidePopover($(".project_task_due_date"))
-        hidePopover($(".project_task_start_date"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_hours"))
         flag = false
       else if $("#project_task_hours").val() < 0
-        hidePopover($("#project_task_hours"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
         flag = false
       else if $("#project_task_hours").val() < 0
-        hidePopover($("#project_task_hours"))
         applyPopover($("#project_task_hours"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_hour"))
         flag = false
       else if $("#project_task_spent_time").val() < 0
-        hidePopover($("#project_task_hours"))
-        hidePopover($("#project_task_spent_time"))
         applyPopover($("#project_task_spent_time"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_spent_time"))
         flag = false
       else if $("#project_task_rate").val() is ""
-        hidePopover($("#project_task_hours"))
-        hidePopover($("#project_task_spent_time"))
         applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_rate"))
         flag = false
       else if $("#project_task_rate").val() < 0
-        hidePopover($("#project_task_hours"))
-        hidePopover($("#project_task_rate"))
         applyPopover($("#project_task_rate"),"bottomMiddle","topLeft", I18n.t("views.tasks.enter_positive_rate"))
         flag = false
-      else
-        hidePopover($("#project_task_rate"))
       flag
 
 $(document).ready ->
