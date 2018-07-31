@@ -15,7 +15,7 @@
     </div>
     <div class="with-grid-icons">
       <div class="right">
-        <%= link_to( raw('<i class="material-icons">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters')) %>
+        <%= link_to( raw('<i class="material-icons">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters')) unless request.format.pdf? %>
       </div>
     </div>
   </div>
