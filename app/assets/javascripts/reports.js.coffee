@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  initFilterEvents('#from_date,#to_date,#date_range_picker')
   if $('#from_date').length > 0 and $('#to_date').length > 0
     initDateRangePicker(DateFormats.format().toUpperCase())
   else
