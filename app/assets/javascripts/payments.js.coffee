@@ -21,12 +21,13 @@ class @Payment
     elem.qtip("hide")
 
   applyDatePicker = ->
-    $('#payment_date, #payment_date_picker').pickadate
-      format: "yyyy-mm-dd"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#payment_payment_date,#payment_date').val value
+    format = DateFormats.format().toUpperCase()
+    $('#payment_payment_date').daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $('#payment_payment_date').val start.format(format)
+      return
 
   @load_functions = ->
     applyDatePicker();
