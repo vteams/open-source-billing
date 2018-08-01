@@ -216,5 +216,3 @@ $(document).ready ->
   # show add/remove staff member button when edit project icon is clicked
   $('.edit-detail').click ->
     $('#add_member').removeClass 'hidden'
-    $('#remove-staff-member').removeClass 'hidden'
-

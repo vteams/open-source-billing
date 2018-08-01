@@ -15,7 +15,7 @@
       <%= link_to_add_association t('views.projects.add_staff'), f, :team_members, partial: 'staff_fields', id: 'add_member',
                                   data: { association_insertion_node: '#staff_container', association_insertion_method: :append },
                                   class: "addbtn #{'hidden' if params[:action].eql?('show')}" %>
-      <a href="#" id="remove-staff-member" class="staff_remove_btn removebtn <%= 'hidden' if params[:action].eql?('show')%>"><%= t('helpers.links.remove') %></a>
+      <a href="#" id="remove-staff-member" class="staff_remove_btn removebtn hidden"><%= t('helpers.links.remove') %></a>
     </div>
   </div>
 </div>
