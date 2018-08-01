@@ -447,3 +447,18 @@ body{
     overflow: hidden;
   }
 }
+.simple-responsive.report_content.report-inner-scroll-container {
+  overflow: hidden;
+  height: 100%;
+}
+.new-invoice-holder .info-section .info-left-section {
+  width: 60%;
+}
+.new-invoice-footer .right-section.right {
+  width: 400px !important;
+  padding: 0 38px;
+
+  .invoice-total-left {
+    .new-invoice-footer-row { padding-bottom: 10px; }
+  }
+}

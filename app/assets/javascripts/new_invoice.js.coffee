@@ -1,23 +1,30 @@
 class @Invoice
 
-  applyDatePicker = ->
-    $('#invoice_date_picker').pickadate
-      format: DateFormats.format()
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#invoice_date').html value
-        $('#invoice_invoice_date').val value
-        $('#next_invoice_date').html value
-        $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
+  @applyDatePicker = ->
+    format = DateFormats.format().toUpperCase()
 
-    $("#next_invoice_date_picker").pickadate
-      format: DateFormats.format()
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#next_invoice_date').html value
-        $('#invoice_recurring_schedule_attributes_next_invoice_date').val value
+    $('#invoice_invoice_date').daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $('#invoice_invoice_date').val start.format(format)
+      return
+
+    $('#invoice_due_date_picker').daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $('#invoice_due_date_picker').val start.format(format)
+      custom_option = $('.payment-term-dropdown').find('li:last')
+      custom_option.trigger('click') if custom_option.text() is "Custom"
+      return
+
+    $('#next_issue_date').daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $('#next_issue_date').val start.format(format)
+      return
 
   # Calculate the line total for invoice
   updateLineTotal = (elem) ->
@@ -407,12 +414,7 @@ class @Invoice
 
 jQuery ->
   # for custom payment term
-  $('#invoice_due_date_picker').pickadate
-    format: DateFormats.format()
-    onSet: ->
-      custom_option = $('.payment-term-dropdown').find('li:last')
-      custom_option.trigger('click') if custom_option.text() is "Custom"
-
+  Invoice.applyDatePicker()
   jQuery('body').on "click", '#select_all', ->
     listing_table =  jQuery(this).parents('table.bordered')
     selected = if @checked then "selected" else ""

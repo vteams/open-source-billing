@@ -1,26 +1,29 @@
-<%= form_tag "/reports/data/#{@report.report_name}", :method => :get, :remote => true, :id => "reports_form" do %>
-<div class="row">
-  <div class="input-field col s12 m6 xl2  datepicker">
-    <input name="criteria[from_date]" type="text" id="from_date" readonly value="<%= 1.month.ago.to_date.strftime(get_date_format) %>"/>
-    <i class="material-icons">date_range</i>
-    <label for="from_date" class="active"><%= t('views.reports.date_range') %></label>
-  </div>
-  <div class="input-field col s12 m6 xl2 datepicker">
-    <input name="criteria[to_date]" type="text" id="to_date" readonly value="<%= Date.today.strftime(get_date_format) %>"/>
-    <i class="material-icons">date_range</i>
-    <label for="to_date" class="active"><%= t('views.reports.to') %></label>
-  </div>
-  <div class="input-field col s12 m6 xl3">
-    <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client"} %>
-    <label><%= t('views.clients.client') %></label>
-  </div>
-  <div class="input-field col s12 m6 xl3">
-    <%= select_tag "criteria[payment_method]", options_for_select(PAYMENT_METHODS.map { |p| [p, p] }), {:prompt => t('views.common.all')} %>
-    <label><%= t('views.common.type') %></label>
-  </div>
-  <div class="col s12 m1">
-    <%= submit_tag t('views.common.go'), :class => "report_update hidden" %>
-    <a href="#" class="icon-done" onclick="$('.report_update').click();"><i class="material-icons">done</i></a>
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag "/reports/data/#{@report.report_name}", method: :get, remote: true, id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m6 xl3">
+          <input type="hidden" name="criteria[from_date]" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>">
+          <input type="hidden" name="criteria[to_date]" id="to_date" value="<%= Date.today.strftime(get_date_format) %>">
+          <input type="text" class="date-range-picker" name="date_range_picker" id="date_range_picker"
+                 value="<%= 1.month.ago.to_date.strftime(get_date_format) + ' - ' + Date.today.strftime(get_date_format) %>" readonly/>
+          <label class="input_field_label active"><%= t('views.reports.date_range') %></label>
+        </div>
+        <div class="input-field col s12 m6 xl3">
+          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {:class => "client"} %>
+          <label><%= t('views.clients.client') %></label>
+        </div>
+        <div class="input-field col s12 m6 xl3">
+          <%= select_tag "criteria[payment_method]", options_for_select(PAYMENT_METHODS.map { |p| [p, p] }), {:prompt => t('views.common.all')} %>
+          <label><%= t('views.common.type') %></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
-<% end %>

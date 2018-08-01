@@ -18,7 +18,7 @@
           </tr>
           <% tasks.each do |task| %>
               <tr>
-                <td><strong><%= link_to_if !task.deleted?, task.name, project_project_task_path(@project,task), remote: true, class: 'invoice_show_link' %></strong></td>
+                <td><strong><%= link_to task.name, project_project_task_path(@project,task), remote: true, class: 'invoice_show_link' %></strong></td>
                 <td width="35%"><%= task.description %></td>
                 <td><%= task.hours %> <small>HRS</small></td>
                 <td><%= task.spent_time_percentage %>%</td>

@@ -21,12 +21,13 @@ class @Payment
     elem.qtip("hide")
 
   applyDatePicker = ->
-    $('#payment_date, #payment_date_picker').pickadate
-      format: "yyyy-mm-dd"
-      formatSubmit: DateFormats.format()
-      onSet: (context) ->
-        value = @get('value')
-        $('#payment_payment_date,#payment_date').val value
+    format = DateFormats.format().toUpperCase()
+    $('#payment_payment_date').daterangepicker {
+      singleDatePicker: true
+      locale: format: format
+    }, (start, end, label) ->
+      $('#payment_payment_date').val start.format(format)
+      return
 
   @load_functions = ->
     applyDatePicker();
@@ -89,23 +90,6 @@ jQuery ->
       jQuery('#payments_' + rem_value_id + '_payment_amount').removeAttr('readonly')
       jQuery('#payments_' + rem_value_id + '_payment_amount').val('')
 
-#  jQuery('#submit_payment_form').on "click", ->
-#    console.log "test"
-#    flag = true
-#    jQuery(".apply_credit:checked").each ->
-#      pay_amount = parseFloat(jQuery("#payments_#{@id}_payment_amount").val())
-#      rem_credit = parseFloat(jQuery("#rem_credit_#{@id}").attr("value"))
-#      rem_value = jQuery(".rem_payment_amount##{@id}").attr("value")
-#      if pay_amount > rem_value
-#        alert "If applying the account credit, the payment amount cannot exceed the invoice balance."
-#        flag = false
-#      else if pay_amount > rem_credit
-#        alert "Payment from credit cannot exceed available credit."
-#        flag = false
-#      else
-#        flag = true
-#    flag
-#  #edit payment form check if credit exceed available credit
 
   # validate payments fields on enter payment form submit
 
@@ -162,3 +146,8 @@ jQuery ->
       flag
   window.bind_edit_payment_links()
 
+  if $('[id$="_payment_date"]').length > 0
+    $('[id$="_payment_date"]').daterangepicker {
+      singleDatePicker: true
+      locale: format: DateFormats.format().toUpperCase()
+    }

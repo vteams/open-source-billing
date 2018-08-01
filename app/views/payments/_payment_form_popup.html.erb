@@ -33,9 +33,8 @@
                       label: t('views.common.method'), selected: payment.payment_method, label_html: { class: 'active' },
                             wrapper_html: { class: 'input-field col s6' } %>
                 <div class="input-field col s6 datepicker">
-                  <%= f.input :payment_date, as: :hidden, input_html: { value: f.object.payment_date } %>
-                  <%= text_field_tag :payment_date, f.object.payment_date %>
-                  <i class="material-icons" id="payment_date_picker" style="top: 10px;">date_range</i>
+                  <%= f.input :payment_date, input_html: { value: f.object.payment_date }, as: :string, label: false %>
+                  <i class="material-icons" style="top: 10px;">date_range</i>
                   <label class="active"><%= t('views.common.date') %></label>
                 </div>
               </div>

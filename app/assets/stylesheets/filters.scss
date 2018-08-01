@@ -4,12 +4,6 @@
   padding: 20px;
   display: none;
 
-  .input_field_label {
-    font-size: 0.8rem;
-    -webkit-transform: translateY(-140%);
-    transform: translateY(-140%);
-  }
-
   .show-filters i {
     padding-left: 20px;
   }
@@ -90,4 +84,14 @@
       }
     }
   }
+}
+
+.input_field_label {
+  font-size: 0.8rem;
+  -webkit-transform: translateY(-140%);
+  transform: translateY(-140%);
+}
+
+.reports {
+  .breadcrum-bar.card-white-panel.clearfix { margin-bottom: 0 !important; }
 }

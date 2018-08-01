@@ -119,7 +119,7 @@ class Estimate < ActiveRecord::Base
                            po_number:             self.po_number ,
                            discount_percentage:   self.discount_percentage ,
                            client_id:             self.client_id ,
-                           terms:                 self.terms ,
+                           payment_terms_id:      (PaymentTerm.where(number_of_days: 0).first.id rescue nil),
                            notes:                 self.notes ,
                            status:                "draft" ,
                            sub_total:             self.sub_total ,
