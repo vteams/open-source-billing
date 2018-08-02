@@ -1,5 +1,5 @@
 <div class="flex-item box">
-  <%= link_to '', edit_sub_user_path(user) , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <%= link_to '', OSB::CONFIG::DEMO_MODE ? 'javascript:void(0)' : edit_sub_user_path(user) , remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-user_id= <%=user.id %>>
     <div class="checkbox-item">
       <div class="invoice-name circle-img <%= random_card_color unless user.avatar_url(:thumb) %>"
@@ -17,13 +17,13 @@
     </div>
 
     <div class="action-btn-group">
-      <%= link_to raw("<i class='material-icons'>create</i>"),edit_sub_user_path(user), remote: true,
-                  class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+      <%= link_to raw("<i class='material-icons'>create</i>"),OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true,
+                  class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
       <% if current_user != user %>
-        <%= link_to raw("<i class='material-icons'>delete</i>"), sub_user_path(user), method: :delete,
+        <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : sub_user_path(user), method: :delete,
                     data: {confirm: t('helpers.messages.confirm'),
                            success: t('views.users.bulk_delete')},
-                    class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                    class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
       <% end %>
     </div>
   </div>

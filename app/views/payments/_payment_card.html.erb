@@ -23,10 +23,10 @@
 
     <div class="action-btn-group">
       <% unless payment.payment_type == "credit" %>
-        <%= link_to raw("<i class='material-icons'>delete</i>"),payment, method: :delete,
+        <%= link_to raw("<i class='material-icons'>delete</i>"),(OSB::CONFIG::DEMO_MODE ? 'javascript:void' : payment), method: :delete,
                     data:{ confirm: t('helpers.messages.confirm'),
                            success: t('views.payments.bulk_deleted_msg')},
-                    title: t('helpers.links.delete') %>
+                    title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
       <% end %>
     </div>
   </div>

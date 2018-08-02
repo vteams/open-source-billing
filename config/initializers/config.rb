@@ -11,5 +11,6 @@ module OSB
     SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
     QUICKBOOKS ||= APP_CONFIG[:quickbooks]
     ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
+    DEMO_MODE ||= APP_CONFIG[:demo_mode]
   end
 end

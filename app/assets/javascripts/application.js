@@ -238,6 +238,7 @@ $(document).ready(function(){
     });
 
     initSelectActionLink();
+    initDemoLinksClick();
 });
 
 function initCustomConfirmPopUp() {
@@ -479,4 +480,15 @@ function toggleFilters() {
     $('#filters').slideUp('slow');
     $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
   }
+}
+
+function initDemoLinksClick() {
+  $('.demo-mode').off('click');
+  $('.demo-mode').on('click', function (event) {
+    swal({
+      title: 'Demo',
+      text: I18n.t('views.common.demo_restriction_msg'),
+      icon: 'info'
+    });
+  });
 }
