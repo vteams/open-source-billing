@@ -7,11 +7,11 @@
       <h2><%= t('views.sessions.sign_in') %></h2>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login' , class: 'col s12'}) do |f| %>
         <div class='input-field'>
-          <%= f.email_field :email, :id => "email", :class => 'validate' %>
+          <%= f.email_field :email, :id => "email", :class => 'validate', value: ('demo@opensourcebilling.org' if OSB::CONFIG::DEMO_MODE) %>
           <label for='email'><%= t('views.common.email') %></label>
         </div>
         <div class='input-field'>
-          <%= f.password_field :password, :id => "password", :class => "validate" %>
+          <%= f.password_field :password, :id => "password", :class => "validate", value: ('password' if OSB::CONFIG::DEMO_MODE) %>
           <label for='password'><%= t('views.staffs.password') %></label>
         </div>
           <% if devise_mapping.rememberable? -%>

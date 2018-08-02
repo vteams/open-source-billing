@@ -195,6 +195,7 @@ de:
       reset: "Zurücksetzen"
       start_date_to_end_date: "Anfangsdatum - Endtermin"
       enter_positive_value: "Bitte geben Sie nur einen positiven Wert für dieses Feld ein."
+      demo_restriction_msg: "Diese Funktion ist im Demo-Modus nicht verfügbar."
 
     pagination:
       previous: "Vorherige"
