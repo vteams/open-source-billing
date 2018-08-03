@@ -71,7 +71,7 @@ Bundler is a tool that allows you to install multiple gem versions, run this com
 
     gem install bundler
 
-### Step-3. Configuration
+### Step-3. Configurations
 
 #### 3.1 Clone Application Code
 To clone project code from GitHub, give your GitHub account credential for authentication while cloning project.
@@ -86,19 +86,7 @@ To clone project code from GitHub, give your GitHub account credential for authe
 #### 3.3 Installing Gems
 
     bundle install
-#### 3.4 Configuring Database
-Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
-
-    rake db:create
-
-#### 3.5 Tables schema and seeding
-
-    rake db:migrate
-
-Loading default values in database
-
-    rake db:seed
-#### 3.6 Configuration PayPal (Optional, for paypal payments integration)
+#### 3.4 Configuration PayPal (Optional, for paypal payments integration)
 Copy config/config.yml.copy to config/config.yml and set your configuration
 
 Edit config/config.yml with your own paypal settings:
@@ -109,22 +97,21 @@ Edit config/config.yml with your own paypal settings:
       signature: YOUR_PAYPAL_SIGNATURE
       business: YOUR_PAYPAL_BUSINESS
 
-#### 3.7 Configuration Application host and protocol
+#### 3.5 Configuration Application host and protocol
 Edit config/config.yml with your own application settings:
 
     app_host: APP_HOST_HERE # e.g. osb.mydomain.com
     app_protocol: http
 
-#### 3.8 PDF configuration
+#### 3.6 PDF configuration
 Using following command in terminal to get path of wkhtmltopdf library path that is already installed on system.
 
     which wkhtmltopdf
-
 Edit config/config.yml with your own application wkhtmltopdf path.
 
     wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
-	
-#### 3.9 SMTP configuration 
+
+#### 3.7 SMTP configuration
 Edit config/config.yml with your own application smtp settings.
 
      smtp_setting:
@@ -135,13 +122,34 @@ Edit config/config.yml with your own application smtp settings.
          user_name: YOUR_EMAIL_HERE
          password: YOUR_PASSWORD_HERE
 
-#### 3.10 QuickBooks configuration
+#### 3.8 QuickBooks configuration
 Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
 
      quickbooks:
        # QuickBooksApp's account key and secret
        consumer_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
        consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET
+
+#### 3.9 Secret key configuration
+
+Run following command on terminal to generate secret key
+
+     rake secret
+     copy this (newly generated) secret key from terminal and past it to the value of encryption_key in config.yml file.
+     encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
+
+#### 3.10 Configuring Database
+Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
+
+    rake db:create
+
+#### 3.11 Tables schema and seeding
+
+    rake db:migrate
+
+Loading default values in database
+
+    rake db:seed
 
 ### Step-4. Run
 #### 4.1 Background Services
