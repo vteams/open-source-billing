@@ -745,7 +745,7 @@ en:
       import_data: "Import Data"
       updated_msg: "Settings are successfully updated."
       currency_updated_msg_html: "Currency has been updated to <strong>%{unit}</strong> successfully."
-      index_page_format: "Index Page Format"
+      listing_format: "Listing Format"
       card: "Card"
       table: "Table"
       card_view: "Card view"

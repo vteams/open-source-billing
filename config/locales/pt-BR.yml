@@ -690,7 +690,7 @@ pt-BR:
       import_data: "Importar dados"
       updated_msg: "As configurações são atualizadas com sucesso."
       currency_updated_msg_html: "Moeda foi atualizada para <strong>%{unit}</strong> com sucesso."
-      index_page_format: "Formato da Página de Índice"
+      listing_format: "Formato de Listagem"
       card: "Cartão"
       table: "Mesa"
       card_view: "Vista de cartão"

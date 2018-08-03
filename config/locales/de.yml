@@ -689,7 +689,7 @@ de:
       import_data: "Daten importieren"
       updated_msg: "Einstellungen wurden erfolgreich aktualisiert."
       currency_updated_msg_html: "Die Währung wurde erfolgreich auf <strong>%{unit}</strong> aktualisiert."
-      index_page_format: "Indexseitenformat"
+      listing_format: "Auflistungsformat"
       card: "Karte"
       table: "Tabelle"
       card_view: "Kartenansicht"

@@ -37,7 +37,7 @@
             </div>
             <div class="col s12 m4 xl4">
               <div class="setting-btns">
-                <span><%= t('views.settings.index_page_format') %></span>
+                <span><%= t('views.settings.listing_format') %></span>
 
                 <% show_card_view = current_user.settings.index_page_format == 'card' %>
                 <%= check_box_tag 'index_page_format', show_card_view ? 'card' : 'table',  checked: show_card_view %>
