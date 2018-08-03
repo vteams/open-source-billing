@@ -87,7 +87,7 @@ To clone project code from GitHub, give your GitHub account credential for authe
 
     bundle install
 #### 3.4 Configuring Database
-Copy config/database.yml.sample to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
+Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
 
     rake db:create
 
