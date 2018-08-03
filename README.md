@@ -87,7 +87,7 @@ To clone project code from GitHub, give your GitHub account credential for authe
 
     bundle install
 #### 3.4 Configuration PayPal (Optional, for paypal payments integration)
-Copy config/config.yml.copy to config/config.yml and set your configuration
+Copy config/config.yml.copy to config/config.yml to set your configurations.
 
 Edit config/config.yml with your own paypal settings:
 
@@ -135,7 +135,9 @@ Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oaut
 Run following command on terminal to generate secret key
 
      rake secret
-     copy this (newly generated) secret key from terminal and past it to the value of encryption_key in config.yml file.
+
+copy this (newly generated) secret key from terminal and past it to the value of encryption_key in config.yml file.
+
      encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
 #### 3.10 Configuring Database
