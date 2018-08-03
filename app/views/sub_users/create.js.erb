@@ -1,0 +1,8 @@
+<% if @sub_user.errors.present? %>
+  showErrorMsg("<%= @sub_user.errors.full_messages.join('.') %>.");
+<% else %>
+  $('#users_listing').html('<%= escape_javascript render(template: 'sub_users/settings_listing',
+   layout: false, format: :html) %>');
+  initUserListingEvents();
+  showSuccessMsg('<%= t('views.users.saved_msg') %>')
+<% end %>

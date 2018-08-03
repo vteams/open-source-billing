@@ -1,0 +1,114 @@
+<% dis_type = '' %>
+<div class="new-invoice-holder editInvoice estimate-form-container">
+  <%= simple_form_for estimate, html: { class: 'estimate-form form-horizontal nested-forms' } do |f| %>
+      <% dis_type = f.object.discount_type || '%' %>
+      <div class="new-invoice-header clearfix">
+        <%= render 'form_heading', f: f, estimate: estimate %>
+        <%= render 'form_action_links', f: f %>
+      </div>
+      <div class="scroll-area">
+        <div class="info-section clearfix">
+          <div class="info-left-section">
+            <h6><%= estimate.estimate_number %></h6>
+            <div class="date-wrapper">
+                <span><%= t('estimate') %>:</span>
+                <span>
+                  <small id="estimate_date">
+                    <% estimate_date = f.object.estimate_date.empty? ? Date.today.strftime(get_date_format) : f.object.estimate_date %>
+                    <%= f.input :estimate_date, label: false, wrapper_tag: :span, as: :string,
+                                input_html: { class: 'date-field-style', value: estimate_date } %>
+                    <span><i class="material-icons" id="estimate_date_picker">date_range</i></span>
+                  </small>
+                </span>
+            </div>
+            <div class="paymentInfo">
+              <strong><strong class="estimate_total_strong"></strong>
+                <% selected_currency = estimate_selected_currency(f.object) %>
+                  <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency,
+                              include_blank: false, input_html: { class: 'inline-select large-select', disabled: currency_is_off? },
+                              wrapper_tag: :small, label: false %>
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="new-invoice-table-holder main-invoice">
+          <table class="invoice_grid_fields estimate_grid_fields estimate-grid-table" id="estimate_grid_fields">
+            <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th class="item_name_width"><%= t('header.links.items.items') %></th>
+              <th class="item_desc_width"><%= t('views.common.description') %></th>
+              <th class="item_unit_cost_width center-align"><%= t('views.common.unit_cost') %></th>
+              <th class="item_quantity_width center-align"><%= t('views.items.quantity') %></th>
+              <th class="item_tax_width center-align"><%= t('views.common.tax') %></th>
+              <th class="item_total_width right-align"><%= t('views.common.total') %></th>
+            </tr>
+            </thead>
+            <tbody id="estimate_line_items_tbl" class="estimate-line-items-table">
+              <%= f.simple_fields_for :estimate_line_items do |estimate_line_item| %>
+                  <%= render 'estimate_line_item_fields', f: estimate_line_item, count: estimate_line_item.index %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="new-invoice-footer">
+          <%= link_to_add_association t('views.invoices.add_line_item'), f, :estimate_line_items,
+                                      class: 'invoice-add-items-button addItemRow', id: 'add_line_item',
+                                      data: { association_insertion_node: '#estimate_line_items_tbl',
+                                              association_insertion_method: :append } %>
+          <div class="right-section right">
+            <div class="invoice-total-left">
+              <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
+              <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('views.common.discount'),
+                          input_html: { class: 'discount_select inline-select small-select', id: 'discount_type' },
+                          wrapper_html: { class: 'new-invoice-footer-row invicetax' } %>
+              <div class="new-invoice-footer-row taxes_total"></div>
+              <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
+            </div>
+            <div class="invoice-total-right">
+              <%= f.input :sub_total, as: :hidden, label: false, wrapper: false %>
+              <strong class="invoice-total-title">
+                <div style="display: inline;" id="subtotal_currency_unit"><%= estimate.currency.unit rescue 'USD' %></div>
+                <span><%= label_tag '', '', :id => 'estimate_sub_total_lbl' %></span>
+              </strong>
+              <div class="new-invoice-footer-row invicetax">
+                <span id="discount_amount_currency_unit"><%= estimate.currency.unit rescue 'USD' %></span>
+                <%= f.input :discount_amount, as: :hidden, label: false, wrapper: false %>
+                <%= f.input :discount_percentage, label: '', label_html: { id: 'estimate_discount_amount_lbl', style: 'font-weight:normal; display:none;' },
+                            input_html: { class: 'input-inoive-number invoice_discount line_item_qtip right-align', placeholder:  '00.00', min: 0 }, wrapper: false %>
+              </div>
+              <div class="new-invoice-footer-row taxes_total values"></div>
+              <%= f.input :estimate_total, as: :hidden, label: false, wrapper: false %>
+              <strong class="invoice-total-title bottom">
+                <div style="display: inline" id="total_currency_unit"><%= estimate.currency.unit rescue 'USD' %> </div>
+                <span><%= label_tag '', '0', :id => 'estimate_total_lbl', :class => 'net_total_value' %></span>
+              </strong>
+            </div>
+
+          </div>
+        </div>
+        <div class="invoice-add-notes">
+          <a href="#"><i class="material-icons">chat</i> </a>
+          <%= f.input :notes, label: false, as: :text,
+                      input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
+                      wrapper_html: { class: 'invoice-add-notes-textare'} %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<script>
+    window.currency_symbol = "<%= if params[:action].eql?('new')
+                                    Currency.default_currency.code
+                                 else
+                                   (@client.present? ? @client.currency.code : estimate.currency.code)
+                                 end
+                               %>";
+    $(document).ready(function (){
+        $('#discount_type').val('<%= dis_type %>');
+        $('#discount_type').trigger('contentChanged');
+        Estimate.change_estimate_item();
+        Estimate.changeTax();
+        Estimate.load_functions();
+    });
+</script>

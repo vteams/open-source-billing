@@ -2,8 +2,13 @@ class Estimate < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
-
+  include EstimateSearch
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
+  scope :status, -> (status) { where(status: status) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
+  scope :estimate_number, -> (estimate_number) { where(id: estimate_number) }
+  scope :estimate_date, -> (estimate_date) { where(estimate_date: estimate_date) }
+
   # constants
   STATUS_DESCRIPTION = {
       draft: 'Estimate created, but you have not notified your client. Your client will not see this estimate if they log in.',
@@ -62,9 +67,20 @@ class Estimate < ActiveRecord::Base
   end
 
   def self.filter(params, per_page)
-    mappings = {active: 'unarchived_and_not_invoiced', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
-    method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    estimates = params[:search].present? ? self.search(params[:search]).records : self
+    estimates = estimates.status(params[:type]) if params[:type].present?
+    estimates = estimates.client_id(params[:client_id]) if params[:client_id].present?
+    estimates = estimates.estimate_number((params[:min_estimate_number].to_i .. params[:max_estimate_number].to_i)) if params[:min_estimate_number].present?
+    estimates = estimates.estimate_date(
+        (Date.strptime(params[:estimate_start_date], date_format).in_time_zone .. Date.strptime(params[:estimate_end_date], date_format).in_time_zone)
+    ) if params[:estimate_start_date].present?
+    estimates = estimates.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    estimates.page(params[:page]).per(per_page)
   end
 
   def self.invoiced
@@ -76,7 +92,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+   client
   end
 
   def tooltip
@@ -103,7 +119,7 @@ class Estimate < ActiveRecord::Base
                            po_number:             self.po_number ,
                            discount_percentage:   self.discount_percentage ,
                            client_id:             self.client_id ,
-                           terms:                 self.terms ,
+                           payment_terms_id:      (PaymentTerm.where(number_of_days: 0).first.id rescue nil),
                            notes:                 self.notes ,
                            status:                "draft" ,
                            sub_total:             self.sub_total ,
@@ -151,19 +167,19 @@ class Estimate < ActiveRecord::Base
       line_total = li.item_unit_cost * li.item_quantity
       # calculate tax1 and tax2
       if li.tax_1.present? and li.tax1.nil?
-        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax1(li).percentage / 100.0)  : ((line_total + discount_amount) * load_deleted_tax1(li).percentage / 100.0)}) unless load_deleted_tax1(li).blank?
+        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_deleted_tax1(li).percentage / 100.0)}) unless load_deleted_tax1(li).blank?
       elsif li.tax_1.present? and li.tax1.archived?.present?
-        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax1(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
+        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_archived_tax1(li).percentage / 100.0) }) unless load_archived_tax1(li).blank?
       else
-        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax1.percentage / 100.0)  : ((line_total + discount_amount) * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
+        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0) }) unless li.tax1.blank?
       end
 
       if li.tax_2.present? and li.tax2.nil?
-        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax2(li).percentage / 100.0)  :  ((line_total  +  discount_amount) * load_deleted_tax2(li).percentage / 100.0)}) unless load_deleted_tax2(li).blank?
+        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_deleted_tax2(li).percentage / 100.0) }) unless load_deleted_tax2(li).blank?
       elsif li.tax_2.present? and li.tax2.archived?.present?
-        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax2(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax2(li).percentage / 100.0)}) unless load_archived_tax2(li).blank?
+        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_archived_tax2(li).percentage / 100.0) }) unless load_archived_tax2(li).blank?
       else
-        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax2.percentage / 100.0)  :  ((line_total  + discount_amount)  * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0) }) unless li.tax2.blank?
       end
     end
     taxes.each do |tax|
@@ -209,4 +225,11 @@ class Estimate < ActiveRecord::Base
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
+  def estimate_name
+    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue ""
+  end
+
+  def group_date
+    Date.strptime(estimate_date, date_format).strftime('%B %Y')
+  end
 end

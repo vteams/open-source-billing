@@ -58,6 +58,11 @@ class AccountsController < ApplicationController
   # GET /companies/1/edit
   def edit
     @account = Account.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.js
+      format.json { render json: @account }
+    end
   end
 
   # POST /companies
@@ -84,7 +89,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.update_attributes(account_params)
-        format.html { redirect_to edit_account_url(@account), notice: 'Your account has been updated successfully.'}
+        format.html { redirect_to :back, notice: 'Your account has been updated successfully.'}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

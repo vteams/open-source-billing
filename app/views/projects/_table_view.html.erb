@@ -1,0 +1,60 @@
+<% if @projects.count > 0  %>
+    <div class="new-invoice-holder">
+      <div class="new-invoice-table-holder main-invoice page-box">
+        <table class="bordered grid-view">
+          <thead>
+          <tr>
+            <th class="align_center td-checkbox checkbox-item">
+              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+            </th>
+            <th><%= t('views.common.title') %></th>
+            <th><%= t('client') %></th>
+            <th><%= t('views.users.manager') %></th>
+            <th><%= t('views.tasks.hours') %></th>
+            <th><%= t('views.sessions.done') %></th>
+            <th class="center-align"><%= t('helpers.actions') %></th>
+          </tr>
+          </thead>
+          <tbody class="table-view-body">
+          <% @projects.each do |project| %>
+              <tr>
+                <td class="align_center td-checkbox checkbox-item">
+                  <%= check_box_tag 'project_ids[]', project.id, false, id: "project_#{project.id}", class: 'fix-left-and-opacity' %>
+                </td>
+                <td><strong><%= link_to_if !project.deleted?, project.project_name, project %></strong></td>
+                <td><%= project.unscoped_client.organization_name rescue '' %></td>
+                <td><%= project.manager.try(:name)%></td>
+                <td><%= project.total_hours %> <small>HRS</small></td>
+                <td>
+                  <% random_progress = aged_progress_width(project.log_hours, project.total_hours) %>
+                  <strong><%= random_progress %>%</strong>
+                </td>
+                <td class="action-btn-group">
+                  <% if project.deleted? %>
+                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+                  <% else %>
+                      <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice_form_log_path(project), title: t('header.links.time_tracking.invoice'), remote: true unless random_progress.zero? %>
+                      <%= link_to raw("<i class='material-icons'>create</i>"),edit_project_path(project), class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                      <%= link_to raw("<i class='material-icons'>delete</i>"),project, method: :delete, data:{confirm: t('helpers.messages.confirm'),
+                                                                                                              success: t('views.projects.destroyed_msg'),
+                                                                                                              redirect: projects_path}, title: t('helpers.links.delete') %>
+                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= project.id %>' data-alignment="right" data-beloworigin="true">
+                        <i class="material-icons">more_vert</i>
+                      </a>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown_<%= project.id %>" class='dropdown-content z-depth-4'>
+                        <% if !project.archived? %>
+                            <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+                        <% else %>
+                            <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<% end %>

@@ -28,21 +28,22 @@ module Services
       date_format = self.new.date_format
       if params[:invoice_for_client]
         company_id = get_company_id(params[:invoice_for_client])
-        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.unscoped.present? && PaymentTerm.unscoped.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
         invoice = ::Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
       else
-        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.unscoped.present? && PaymentTerm.unscoped.first.id)})
         3.times { invoice.invoice_line_items.build() }
       end
+      invoice.build_recurring_schedule
       invoice
     end
 
     def self.build_new_project_invoice(project)
       date_format = self.new.date_format
-      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), client: project.client, currency: project.client.currency, invoice_type: "ProjectInvoice"})
+      project.invoices.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.unscoped.present? && PaymentTerm.unscoped.first.id), client: project.client, currency: project.client.currency, invoice_type: "ProjectInvoice"})
     end
 
     # invoice bulk actions

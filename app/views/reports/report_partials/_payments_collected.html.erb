@@ -1,117 +1,75 @@
-<div class="reports payments_collected">
-  <div class="content_middle">
-
-    <div class="report_content_header">
-      <div class="report_content_heading">
-        <h1><%= t('views.reports.payments_collected') %></h1>
-      </div>
-
-      <div class="content_header_data">
-        <div class="header_data_left">
-          <div class="header_data_detail">
-            <ul>
-              <li class="header_name"><%= @report.client_name %></li>
-              <li class="header_duration"><%= @report.period %></li>
-              <li class="header_description"><%= t('views.reports.payments_collected_dtl') %></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- content_header_data -->
-    </div>
-    <!-- report_content_header -->
-
-    <%= render 'reports/report_partials/format_links'%>
-
-    <div class="grid_table">
-      <table cellpadding="0" cellspacing="0" class="table_listing <%= I18n.locale %>">
-        <colgroup>
-          <col class="one"/>
-          <col class="two"/>
-          <col class="three"/>
-          <col class="four"/>
-          <col class="five"/>
-          <col class="six"/>
-        </colgroup>
-        <thead>
-        <tr>
-          <th class="align_left"><%= t('views.clients.client_name') %></th>
-          <th class="align_left"><%= t('views.invoices.invoice') %></th>
-          <th class="align_left"><%= t('views.common.type') %></th>
-          <th class="align_left"><%= t('views.common.note') %></th>
-          <th class="align_center"><%= t('views.common.date') %></th>
-          <th class="align_right {sorter:'thousands'}"><%= t('views.dashboard.amount') %></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% unless @report.report_data.blank? %>
-            <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
-              <tr>
-                <td class="align_left text-overflow-class" data-overflow-rows="2" ><%= payments.first[:client_name] %></td>
-                <td class="align_left" >
-                  <% payments.each do |payment| %>
-                    <%= payment.invoice.invoice_number rescue payment.invoice_number %>
-                    <br>
-                  <% end %>
-                </td>
-                <td class="align_left" >
-                  <% payments.each do |payment| %>
-                    <%= (payment.payment_type || payment.payment_method || "").capitalize %>
-                    <br>
-                  <% end %>
-                </td>
-                <td class="align_left text-overflow-class" data-overflow-rows="2" >
-                  <% payments.each do |payment| %>
-                    <%= payment.notes %>
-                    <br>
-                  <% end %>
-                </td>
-                <td class="align_center" >
-                  <% payments.each do |payment| %>
-                    <%= payment.created_at.to_date.strftime(get_date_format) %>
-                    <br>
-                  <% end %>
-                </td>
-                <td class="align_right currency" >
-                  <% payments.each do |payment| %>
-                    <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= number_to_currency(payment.payment_amount,unit: payment.currency_code) %>
-                    <br>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-            <tfoot>
-              <tr>
-                <td class="align_left"><%= t('views.common.total') %></td>
-                <td class="align_left"></td>
-                <td class="align_left"></td>
-                <td class="align_left"></td>
-                <td class="align_left"></td>
-                <td class="align_right currency">
-                  <% @report.report_total.each do |total| %>
-                    <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
-                    <br>
-                  <% end %>
-                </td>
-              </tr>
-            </tfoot>
-        <% else %>
-            <tr>
-              <td colspan="6"><%= t('views.reports.report_no_data') %></td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-    <!--grid_table-->
-
+<div class="col s12 page-box-header">
+  <div class="title-desc">
+    <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
+    <span class="text-uppercase"><%= raw @report.period %></span>
   </div>
-  <!--content_middle-->
+  <p><%= t('views.reports.payments_collected_dtl') %></p>
 
-  <div class="content_bottom">
-    <div class="report_footer">
-    </div>
-    <!-- report_footer -->
-  </div>
-  <!--content_bottom-->
-</div><!--reports-->
+  <%= render 'reports/report_partials/format_links'%>
+</div>
+<table class="bordered">
+    <thead>
+    <tr>
+      <th width="15%"><%= t('views.clients.client_name') %></th>
+      <th width="10%"><%= t('views.invoices.invoice') %></th>
+      <th width="15%"><%= t('views.common.type') %></th>
+      <th  width="26%"><%= t('views.common.note') %></th>
+      <th class="center-align" width="17%"><%= t('views.common.date') %></th>
+      <th class="right-align {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
+    </tr>
+    </thead>
+    <% unless @report.report_data.blank? %>
+      <tbody>
+        <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
+          <% payments.each_with_index do |payment, index| %>
+            <tr class="no-border">
+              <% if index == 0 %>
+                  <td class="align_left text-overflow-class bottom-bordered" data-overflow-rows="2"
+                      rowspan="<%= payments.count %>">
+                    <%= payment[:client_name] %>
+                  </td>
+              <% end %>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
+            </td>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= (payment.payment_type || payment.payment_method || "").capitalize %>
+            </td>
+            <td class="left-align text-overflow-class<%= ' bottom-bordered' if index == payments.count - 1 %>" data-overflow-rows="2">
+              <%= payment.notes %>
+            </td>
+            <td class="center-align<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= payment.created_at.to_date.strftime(get_date_format) %>
+            </td>
+            <td class="right-align currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
+              <%= payment.currency_code %>
+              <%= number_to_currency(payment.payment_amount,unit: '') %>
+            </td>
+          </tr>
+          <% end %>
+       <% end %>
+      </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5"><strong><%= t('views.common.total') %></strong></td>
+        <td class="right-align currency">
+          <% @report.report_total.each do |total| %>
+            <span>
+              <b>
+                <%= total[:currency_code] %>
+                <%= number_to_currency(total[:total],unit: '') %>
+              </b>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    </tfoot>
+<% else %>
+      <tbody>
+      <tr>
+        <td colspan="6"><%= t('views.reports.report_no_data') %></td>
+      </tr>
+      </tbody>
+<% end %>
+</table>

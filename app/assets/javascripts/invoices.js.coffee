@@ -8,7 +8,7 @@ window.applyChosen = (single_row) =>
   jQuery(".chzn-select:not('.invoice_company, .company_filter, .frequency_select, .per_page, .discount_select, .invoice_currency, .recurring_profile_currency, .report_billing_method, .expense_category')",'.estimates-main, .projects-main, .invoices-main,.recurring_profiles-main, .expenses-main').on "liszt:ready", ->
     chzn_drop = jQuery(this).next().find(".chzn-drop")
     unless chzn_drop.find("div.add-new").length > 0
-      chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>Add New</div>")
+      chzn_drop.append("<div data-dropdown-id='#{this.id}' class='add-new'>" + I18n.t('views.common.add_new') + "</div>")
   #remove identical line items
   identical_line_items = jQuery('.invoice_grid_fields tr.fields:last .chzn-select:first option, .task_grid_fields tr.fields:last .chzn-select:first option, .estimate_grid_fields tr.fields:last .chzn-select:first option')
   identical_line_items.each ->
@@ -20,14 +20,14 @@ window.applyChosen = (single_row) =>
   dropdowns.chosen({allow_single_deselect: true, disable_search_threshold: 10}).trigger("liszt:ready", this)
 
   # Add New click handler to show form inside the list
-  jQuery("body").on "click", '.add-new', (event) ->
+  jQuery(".add-new").on "click",(event) ->
     console.log jQuery(this).attr("data-dropdown-id")
     new InlineForms(jQuery(this).attr("data-dropdown-id")).showForm()
     event.stopImmediatePropagation()
 
 jQuery ->
   $("a.deleted_entry").click (e)->
-    applyPopover(jQuery(this),"bottomMiddle","topLeft","Please recover to view details")
+    applyPopover(jQuery(this), "bottomMiddle", "topLeft", I18n.t('views.invoices.recover_to_view_detail'))
     e.preventDefault()
     return false
 
@@ -103,27 +103,27 @@ jQuery ->
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
   # Update line and grand total if line item fields are changed
-  jQuery("body").on "blur", 'input.cost, input.qty', ->
+  jQuery("input.cost, input.qty").on "blur", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
 
-  jQuery("body").on "keyup", 'input.cost, input.qty', ->
+  jQuery("input.cost, input.qty").on "keyup", ->
     updateLineTotal(jQuery(this))
     updateInvoiceTotal()
   #jQuery(this).popover "hide"
 
   # Update line and grand total when tax is selected from dropdown
-  jQuery("body").on "change", 'select.tax1, select.tax2', ->
+  jQuery("select.tax1, select.tax2").on "change", ->
     updateInvoiceTotal()
 
   # Prevent form submission if enter key is press in cost,quantity or tax inputs.
-  jQuery("body").on "keypress", "input.cost, input.qty", (e) ->
+  jQuery("input.cost, input.qty").on "keypress", (e) ->
     if e.which is 13
       e.preventDefault()
       false
 
   # Load Items data when an item is selected from dropdown list
-  jQuery(".invoice_grid_fields").on "change", "select.items_list", ->
+  jQuery(".invoice_grid_fields select.items_list").on "change", ->
     # Add an empty line item row at the end if last item is changed.
     elem = jQuery(this)
     if elem.val() is ""
@@ -158,11 +158,11 @@ jQuery ->
       jQuery(".invoice_grid_fields .add_nested_fields").click()
   #applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))
 
-  jQuery(".invoice_grid_fields").on "click", ".add_nested_fields", ->
+  jQuery(".invoice_grid_fields .add_nested_fields").on "click", ->
     setTimeout "window.applyChosen(jQuery('.invoice_grid_fields tr.fields:last .chzn-select'))", 0
 
   # Re calculate the total invoice balance if an item is removed
-  jQuery("body").on "click", ".remove_nested_fields", ->
+  jQuery(".remove_nested_fields").on "click", ->
     setTimeout (->
       updateInvoiceTotal()
     ), 100
@@ -213,10 +213,10 @@ jQuery ->
   jQuery("form.dispute_form").submit ->
     flag = true
     if jQuery("#reason_for_dispute").val() is ""
-      applyPopover(jQuery("#reason_for_dispute"),"bottomMiddle","topLeft","Enter reason for dispute")
+      applyPopover(jQuery("#reason_for_dispute"), "bottomMiddle", "topLeft", I18n.t("views.invoices.reason_for_dispute"))
       flag = false
     flag
-  jQuery("body").on "keyup", "#reason_for_dispute", ->
+  jQuery("#reason_for_dispute").on "keyup", ->
     jQuery(this).qtip("hide")
 
   # Validate client, cost and quantity on invoice save
@@ -229,48 +229,48 @@ jQuery ->
     flag = true
     # Check if company is selected
     if jQuery("#invoice_company_id").val() is ""
-      applyPopover(jQuery("#invoice_company_id_chzn"),"bottomMiddle","topLeft","Select a company")
+      applyPopover(jQuery("#invoice_company_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_company"))
       flag = false
       # Check if client is selected
     else if jQuery("#invoice_client_id").val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+      applyPopover(jQuery("#invoice_client_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_client"))
       flag = false
       # if currency is not selected
     else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
-      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+      applyPopover(jQuery("#invoice_currency_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_currency"))
       flag = false
       # check if invoice date is selected
     else if jQuery("#invoice_invoice_date").val() is ""
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+      applyPopover(jQuery("#invoice_invoice_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.select_invoice_date"))
       flag =false
     else if jQuery("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_invoice_date").val())
-      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+      applyPopover(jQuery("#invoice_invoice_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.make_sure_date_format", date_format: DateFormats.format()))
       flag = false
     else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
-       applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+       applyPopover(jQuery("#invoice_due_date"), "rightTop", "leftMiddle", I18n.t("views.invoices.make_sure_date_format", date_format: DateFormats.format()))
        flag = false
       # Check if payment term is selected
     else if jQuery("#invoice_payment_terms_id").val() is ""
-      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+      applyPopover(jQuery("#invoice_payment_terms_id_chzn"), "bottomMiddle", "topLeft", I18n.t("views.invoices.select_a_payment_term"))
       flag = false
       # Check if discount percentage is an integer
     else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.enter_valid_discount"))
       flag = false
       # Check if no item is selected
     else if jQuery("tr.fields:visible").length < 1
-      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+      applyPopover(jQuery("#add_line_item"), "bottomMiddle", "topLeft", I18n.t("views.estimates.add_line_item"))
       flag = false
       # Check if item is selected
     else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
       first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
-      applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+      applyPopover(first_item, "bottomMiddle", "topLeft", I18n.t("views.common.select_item"))
       flag = false
     else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.percentage_must_be_hundred_or_less"))
       flag = false
     else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
-      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      applyPopover(jQuery("#invoice_discount_percentage"), "bottomMiddle", "topLeft", I18n.t("views.invoices.discount_must_be_less_than_sub_total"))
       flag = false
 
       # Item cost and quantity should be greater then 0
@@ -286,15 +286,15 @@ jQuery ->
           tax2_value = jQuery("option:selected",tax2).val()
 
           if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
-            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+            applyPopover(cost, "bottomLeft", "topLeft", I18n.t("views.invoices.enter_valid_item_cost"))
             flag = false
           else hidePopover(cost)
 
           if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
-            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+            applyPopover(qty, "bottomLeft", "topLeft", I18n.t("views.invoices.enter_valid_item_quantity"))
             flag = false
           else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+            applyPopover(tax2.next(), "bottomLeft", "topLeft", I18n.t("views.invoices.tax1_and_tax2_should_be_diff"))
             flag = false
           else hidePopover(qty)
     flag
@@ -319,7 +319,7 @@ jQuery ->
   useAsTemplatePopover = (elem,id,client_name) ->
     elem.qtip
       content:
-        text: "<a href='/en/invoices/new/#{id}'>To create new invoice use the last invoice sent to '#{client_name}'.</a><span class='close_qtip'>x</span>"
+        text: "<a href='/en/invoices/new/#{id}'>" + I18n.t('views.invoices.to_create_use_last_sent_invoice') + "</a><span class='close_qtip'>x</span>"
       show:
         event: false
       hide:
@@ -341,17 +341,16 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('body').on "click", '.use_as_template .close_qtip', ->
-    jQuery("#invoice_client_id_chzn").qtip('hide')
-    jQuery("#recurring_profile_client_id_chzn").qtip('hide')
+  jQuery('.use_as_template .close_qtip').on "click", ->
+    hidePopover(jQuery("#invoice_client_id_chzn"))
 
-  jQuery("body").on "click", "#invoice_client_id_chzn,.chzn-container", ->
+  jQuery("#invoice_client_id_chzn,.chzn-container").on "click", ->
     jQuery(this).qtip("hide")
 
-  jQuery("body").on "click", "#add_line_item",->
+  jQuery("#add_line_item").on "click",->
     jQuery(this).qtip('hide')
 
-  jQuery("body").on "change", ".line_item_qtip",->
+  jQuery(".line_item_qtip").on "change",->
     jQuery(this).qtip('hide')
 
   # Don't send an ajax request if an item is deselected.
@@ -364,7 +363,7 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links').on 'click', 'a', ->
+  jQuery('#active_links a').on 'click', ->
     jQuery('#active_links a').removeClass('active')
     jQuery(this).addClass('active')
 
@@ -431,15 +430,13 @@ jQuery ->
   setDuedate(jQuery("#invoice_invoice_date").val(),jQuery("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
   # Hide placeholder text on focus
-  jQuery('body').on "focus", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper", (e)->
+  jQuery("input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper").on("focus",->
     @dataPlaceholder = @placeholder
     @removeAttribute "placeholder"
-
-  jQuery('body').on "blur", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper",(e)->
+  ).on("blur", ->
     @placeholder = @dataPlaceholder
     @removeAttribute "dataPlaceholder"
-
-  jQuery('body').on "keypress", "input[type=text],input[type=number],input[type=checkbox]",".quick_create_wrapper", (e) ->
+  ).on "keypress", (e) ->
     if e.which is 13
       e.preventDefault()
       jQuery(".active-form .btn_save").trigger("click")
@@ -456,7 +453,7 @@ jQuery ->
       left: pos.left + "px"
     ).show()
 
-  jQuery("body").on "click", ".close_btn", ->
+  jQuery(".close_btn").on "click", ->
     jQuery(this).parents('.quick_create_wrapper').hide().find("input").qtip("hide")
 
   # Alert on dispute if invoice is paid
@@ -465,14 +462,14 @@ jQuery ->
     flag = true
     status = jQuery(this).attr "value"
     if status is "paid"
-      alert "Paid invoice can not be disputed."
+      alert I18n.t("views.invoices.paid_cannot_disputed")
       flag = false
     flag
 
-  jQuery("body").on "click", ".more", ->
+  jQuery(".more").on "click", ->
     jQuery(".toggleable").removeClass("collapse")
 
-  jQuery("body").on "click", "#add_line_item", ->
+  jQuery("#add_line_item").on "click", ->
     options = $('.items_list:first').html()
     $('.items_list:last').html(options).find('option:selected').removeAttr('selected')
     $('.items_list:last').find('option[data-type = "deleted_item"], option[data-type = "archived_item"], option[data-type = "other_company"], option[data-type = "active_line_item"]').remove()
@@ -484,7 +481,7 @@ jQuery ->
     $('.tax2:last').find('option[data-type = "deleted_tax"], option[data-type = "archived_tax"], option[data-type = "active_line_item_tax"]').remove()
 
 
-  jQuery("body").on "click", ".less", ->
+  jQuery(".less").on "click", ->
     jQuery(".toggleable").addClass("collapse")
 
   #send only email to client on clicking send this note only link.
@@ -499,6 +496,6 @@ jQuery ->
         jQuery('.alert').hide();
         jQuery(".alert.alert-success").show().find("span").html "This note has been sent successfully"
 
-  jQuery("body").on "click", ".single-recover-link", ->
+  jQuery(".single-recover-link").on "click", ->
     $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
     $(".top_links.recover_deleted").click();

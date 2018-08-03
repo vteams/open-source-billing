@@ -1,0 +1,78 @@
+    <div id="client_form_popup" class="modal editableModal editProject editClient newModel large_modal mCustomScrollbar">
+  <div class="modal-content modal-balance">
+    <%- model_class = Client -%>
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" onclick="$('.client_submit').click();" title="<%= t('views.common.save') %>"
+           class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left">
+            <% if @client.persisted? %>
+                <%= t '.title', :default => t('helpers.titles.edit', :model => t(model_class.model_name.singular),
+                                              :default => "Edit #{model_class.model_name.human}") %>
+            <% else %>
+                <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
+                                              :default => "New  #{model_class.model_name.human}") %>
+            <% end %>
+          </h5>
+    </div>
+    <%= simple_form_for @client, remote: (true if params[:type].present?), html: { id: 'newClient' } do |f| %>
+        <div class="modal-body modal-body-balance">
+          <div class="info-right-section">
+            <div class="row">
+              <%= f.submit class: 'btn_large submit hidden client_submit' %>
+              <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
+              <%= f.input :organization_name, label: t('views.clients.organization_name'), wrapper_html: { class: 'input-field col s12' } %>
+              <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :last_name, label: t('views.clients.last_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :mobile_number, label: t('views.common.mobile'), wrapper_html: { class: 'input-field col s6 m4' } %>
+              <%= f.input :business_phone, label: t('views.clients.business_phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
+              <%= hidden_field_tag :type, params[:type] if params[:type] %>
+              <div id="client_credit"></div>
+              <div class="input-field col s12 m4">
+                <% @readonly = is_client_credit_payments @client %>
+
+
+                <% if @client.new_record? %>
+                    <%= number_field_tag :available_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly, min: 0%>
+                    <%= label_tag :available_credit, t('views.clients.available_credit'), class: 'active' %>
+                <% else %>
+                    <%= number_field_tag :calculated_credit, number_with_precision(@client.client_credit, precision: 2), :readonly => @readonly, min: 0%>
+                    <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
+                <% end %>
+              </div>
+
+              <div class="col s12">
+                <%= link_to_add_association t('views.clients.add_new_contact'), f, :client_contacts,
+                                            partial: 'client_contact_fields',
+                                            class: 'btn moreBtn add',
+                                            data: { association_insertion_node: '#client-contact-container',
+                                                    association_insertion_method: :append } %>
+              </div>
+            </div>
+
+              <div class="row">
+                <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
+                <div class="client_contact_container" id="client-contact-container">
+                  <%= f.simple_fields_for :client_contacts do |client_contact| %>
+                    <%= render 'client_contact_fields', f: client_contact %>
+                  <% end %>
+                </div>
+              </div>
+            <div class="row">
+                <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
+            </div>
+            <%= associate_account(controller_name, action_name, @client) %>
+
+          </div>
+        </div>
+
+    <% end %>
+  </div>
+</div>

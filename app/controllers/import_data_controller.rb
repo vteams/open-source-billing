@@ -8,9 +8,13 @@ class ImportDataController < ApplicationController
 
   end
 
+  def new
+
+  end
+
   def import_freshbooks_data
     if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
-      redirect_to import_data_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
+      redirect_to settings_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else
       remove_url_path_from_sub_domain(params)
       options = {}
@@ -20,13 +24,23 @@ class ImportDataController < ApplicationController
       options[:current_user] = current_user
       options[:current_company_id] = get_company_id
       data_import_response = []
-      params[:freshbooks][:data_filters].each do |filter|
-        data_import_response <<  eval("Services::Import#{filter.humanize}Service").new.import_data(options)
+      begin
+        params[:freshbooks][:data_filters].each do |filter|
+          data_import_response <<  eval("Services::Import#{filter.humanize}Service").new.import_data(options)
+        end
+        @js_response = true
+      rescue => e
+        @js_response = false
       end
-      if data_import_response.first.class.eql?(String)
-        redirect_to import_data_path, notice: data_import_response.join('<br>').html_safe
-      else
-        redirect_to import_data_path, alert: data_import_response.first['error']
+      respond_to do |format|
+        format.js
+        format.html do
+          if data_import_response.first.class.eql?(String)
+            redirect_to import_data_path, notice: data_import_response.join('<br>').html_safe
+          else
+            redirect_to import_data_path, alert: data_import_response.first['error']
+          end
+        end
       end
     end
 
@@ -69,7 +83,12 @@ class ImportDataController < ApplicationController
 
   def verify_sub_domain_name
     if params[:freshbooks][:account_url].start_with?('http')
-      redirect_to import_data_url, alert: 'Please remove http(s) from your freshbooks subdomain'
+      respond_to do |format|
+        format.js {
+          flash[:alert]= t('views.import_data.freshbooks.remove_http(s)_from_subdomain')
+          render :js => "window.location.href='#{settings_url}'"
+        }
+      end
     end
   end
 

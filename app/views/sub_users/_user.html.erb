@@ -1,0 +1,23 @@
+<div class="list-item" id="user_<%= user.id %>"
+     title="<%= 'Current logged in user cannot be deleted.' if user.id == current_user.id %>">
+  <div class="checkbox-item">
+    <%= check_box_tag 'user_ids[]', user.id, false, :id => "user_ck_#{user.id}",
+                      class: "filled-in#{ ' disabled' if user.id == current_user.id }" %>
+    <label for="<%= "user_ck_#{user.id}" %>"></label>
+    <div class="invoice-name circle-img <%= random_card_color unless user.avatar_url(:thumb) %>"
+         style="background-image: url('<%= user.avatar_url %>');">
+      <%= user.card_name unless user.avatar_url(:thumb) %>
+    </div>
+  </div>
+  <div class="invoice-details editContent">
+    <div class="input-field">
+      <%= link_to user.user_name, OSB::CONFIG::DEMO_MODE ? '#' : edit_sub_user_path(user, setting_form: 1), data: ({remote: true} if !OSB::CONFIG::DEMO_MODE) %>
+    </div>
+    <div class="input-field">
+      <input type="text" value="<%= user.email %>" placeholder="" disabled>
+    </div>
+    <div class="input-field datepicker">
+      <input type="text" value="<%= user.created_at.strftime('%d %b, %Y')%>" placeholder="" disabled>
+    </div>
+  </div>
+</div>

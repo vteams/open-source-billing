@@ -1,14 +1,39 @@
+.login_page_content {
+  clear: none;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(50%);
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
+}
 .log_page {
   .log_container {
     width: 414px;
     margin: auto;
-    padding: 20px 0 0 0;
+    &.subscription {
+      width: auto;
+    }
+    &.login_page{
+      background: #ffffff;
+    }
   }
   .log_content {
-    float: left;
     background-color: #ffffff;
-    padding: 0 36px 16px;
-    width: 342px;
+    padding: 0 36px 30px;
+    width: auto;
+    &.subscription {
+      max-width: 400px;
+      margin: 0 auto;
+      -webkit-box-shadow: -1px -2px 55px -13px rgba(0,0,0,0.5);
+      -moz-box-shadow: -1px -2px 55px -13px rgba(0,0,0,0.5);
+      box-shadow: -1px -2px 55px -13px rgba(0,0,0,0.5);
+      form {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        display: block;
+      }
+    }
     &.change_password{
       width: 363px;
     }
@@ -16,7 +41,7 @@
   .log_top {
     float: left;
     width: 100%;
-    padding: 35px 0 20px 0;
+    padding: 30px 0 20px 0;
     text-align: center;
   }
   .log_top h1 span {
@@ -54,7 +79,7 @@
     margin-top: 0px;
   }
   .label_field.sign_up {
-    min-width: 73px;
+    min-width: 105px;
   }
   .label_field label {
     line-height: 28px;
@@ -70,6 +95,8 @@
     }
     &.change_password_field{
       width: 261px;
+    }
+    &.forgotpassword {
     }
   }
   .medium_field.sign_up {
@@ -92,10 +119,13 @@
     &.confirm_field{
       width: 259px;
     }
+    &.forgotpassword {
+      width: 202px;
+    }
   }
-  .medium_field input.sign_up {
-    width: 234px !important;
-  }
+//  .medium_field input.sign_up {
+//    width: 234px !important;
+//  }
   .field_row.checkbox {
     min-height: 16px;
     padding: 0px;
@@ -219,4 +249,12 @@
   }
 
 
+}
+li.plan{
+  text-align: center;
+}
+
+li.plan.selected {
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 10px 10px 5px #d8d8d8
 }

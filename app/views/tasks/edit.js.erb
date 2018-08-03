@@ -1,0 +1,6 @@
+$('body').append("<%= escape_javascript render partial: 'task_form_popup', locals: {task: @task}  %>");
+Task.load_functions();
+$('div.required label').addClass('active');
+elem = $("#task_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

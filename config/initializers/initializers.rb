@@ -258,15 +258,13 @@ INDUSTRY_LIST = ['Accommodation & Hospitality',
 DISCOUNT_TYPE = %w(% USD)
 
 DATE_FORMATS = [
-    ['mm/dd/yy', '%m/%d/%y'],
-    ['mm/dd/yyyy', '%m/%d/%Y'],
-    ['dd/mm/yy', '%d/%m/%y'],
-    ['dd/mm/yyyy', '%d/%m/%Y'],
-    ['yy-mm-dd', '%y-%m-%d'],
-    ['yyyy-mm-dd', '%Y-%m-%d']
+    ['dd-mon-yyyy' + ' ' + '(31-Jan-98)'  , '%d-%b-%Y'],
+    ['mm/dd/yyyy'  + ' ' + '(01/31/1998)' , '%m/%d/%Y'],
+    ['dd/mm/yyyy'  + ' ' + '(31/01/1998)' , '%d/%m/%Y'],
+    ['yyyy-mm-dd'  + ' ' + '(1998-01-31)' , '%Y-%m-%d']
 ]
 
-LINES_PER_PAGE = %w(5 10 20 50 100)
+LINES_PER_PAGE = %w(9 21 51 99)
 
 LANGUAGES = [
     ['English', 'en'],
@@ -287,10 +285,13 @@ LANGUAGES = [
     ['Slovak', 'sk'],
     ['Italian', 'it'],
     ['Arabic', 'ar'],
-    ['Urdu', 'ur']
+    ['Urdu', 'ur'],
+    ['Brazilian Portuguese', 'pt-BR']
 ]
 
 RECURRING_FREQUENCY = [['weekly', '1.week'], ['2 weeks', '2.weeks'], ['4 weeks', '4.weeks'], ['monthly', '1.month'], ['2 months', '2.months'], ['4 months','4.months'], ['6 months', '6.months'], ['yearly', '1.year'], ['2 years', '2.years'], ['3 years', '3.years']]
+
+Invoice_FREQUENCY = [['Weekly', '1.week'], ['Monthly', '1.month'], ['Yearly', '1.year']]
 
 QUARTER_MONTHS = [['Jan - Mar', '1-3'], ['Apr - Jun', '4-6'], ['Jul - Sep', '7-9'], ['Oct - Dec', '10-12']]
 
@@ -383,9 +384,28 @@ CUSTOM_FIELDS = {
             {label: 'Company Phone', token: '{{company_phone}}'},
             {label: 'User Name', token: '{{user_email}}'},
             {label: 'User Password', token: '{{user_password}}'},
-        ]
+        ],
+    'New Estimate' =>
+        [
+            {label: 'Company Name', token: '{{company_name}}'},
+            {label: 'Client Company', token: '{{client_company}}'},
+            {label: 'Client Name', token: '{{client_contact}}'},
+            {label: 'Currency Symbol', token: '{{currency_symbol}}'},
+            {label: 'Invoice Total', token: '{{invoice_total}}'},
+            {label: 'Invoice Number', token: '{{invoice_number}}'},
+            {label: 'Company Contact', token: '{{company_contact}}'},
+            {label: 'Company Phone', token: '{{company_phone}}'},
+            {label: 'Company Signature', token: '{{company_signature}}'},
+            {label: 'Invoice URL', token: '{{invoice_url}}'}
+        ],
 }
 
 ROLES = ['admin', 'manager', 'staff']
 
 ENTITIES = ['Account','Category', 'Client', 'Company', 'CompanyEmailTemplate', 'CompanyEntity', 'Currency', 'EmailTemplate', 'Estimate', 'ExpenseCategory', 'Expense', 'InvoiceLineItem', 'InvoiceTask', 'Invoice', 'Item', 'LineItemTax', 'Log', 'PaymentTerm', 'Payment', 'ProjectTask', 'Project', 'RecurringProfileLineItem', 'RecurringProfile', 'Role', 'SentEmail', 'Staff', 'Task', 'TeamMember']
+
+
+FREEPLAN = ['5 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+SILVER = ['10 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+GOLD = ['25 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+PLATINUM = ['Unlimited Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']

@@ -162,34 +162,34 @@
   }
 }
 
-table.invoice_grid_fields {
-  .action_links {
-    .remove_item {
-      background: asset-url('del-move-icons.png') no-repeat scroll 0 0 transparent;
-      float: left;
-      height: 10px;
-      width: 7px;
-    }
-    .remove_item:hover {
-      background-position: 0 -12px;
-    }
-    .sort_icon {
-      background: asset-url('del-move-icons.png') no-repeat scroll -7px 0 transparent;
-      float: left;
-      height: 12px;
-      margin-left: 4px;
-      width: 9px;
-    }
-    .sort_icon:hover {
-      background-position: -7px -12px;
-    }
-  }
-  tbody {
-    tr td:first-child {
-      vertical-align: middle;
-    }
-  }
-}
+//table.invoice_grid_fields {
+//  .action_links {
+//    .remove_item {
+//      background: asset-url('del-move-icons.png') no-repeat scroll 0 0 transparent;
+//      float: left;
+//      height: 10px;
+//      width: 7px;
+//    }
+//    .remove_item:hover {
+//      background-position: 0 -12px;
+//    }
+//    .sort_icon {
+//      background: asset-url('del-move-icons.png') no-repeat scroll -7px 0 transparent;
+//      float: left;
+//      height: 12px;
+//      margin-left: 4px;
+//      width: 9px;
+//    }
+//    .sort_icon:hover {
+//      background-position: -7px -12px;
+//    }
+//  }
+//  tbody {
+//    tr td:first-child {
+//      vertical-align: middle;
+//    }
+//  }
+//}
 
 .mouseover_full_content {
   position: absolute;

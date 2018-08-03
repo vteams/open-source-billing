@@ -33,7 +33,7 @@ module Reporting
       end
 
       def period
-        "Between #{@report_criteria.from_date.strftime(get_date_format)} and #{@report_criteria.to_date.strftime(get_date_format)}"
+        "#{I18n.t('views.common.between')} <strong>#{@report_criteria.from_date.strftime(get_date_format)}</strong> #{I18n.t('views.common.and')} <strong>#{@report_criteria.to_date.strftime(get_date_format)}</strong>"
       end
 
       def get_report_data
@@ -43,7 +43,7 @@ module Reporting
         invoices.invoice_number,
         invoices.id as invoice_id,
         IFNULL(invoices.currency_id,0) as currency_id,
-        IFNULL(currencies.code,'$') as currency_code,
+        IFNULL(currencies.unit,'USD') as currency_code,
         clients.organization_name as client_name,
         clients.id as client_id,
         payments.payment_type,
@@ -65,7 +65,7 @@ module Reporting
         clients.organization_name as client_name,
         clients.id as client_id,
         IFNULL(invoices.currency_id,0) as currency_id,
-        IFNULL(currencies.code,'$') as currency_code,
+        IFNULL(currencies.unit,'USD') as currency_code,
         payments.payment_type,
         payments.payment_method,
         payments.notes,
@@ -89,7 +89,7 @@ module Reporting
       end
 
       def to_csv
-       payments_collected_csv self
+        payments_collected_csv self
       end
 
       def to_xls

@@ -27,14 +27,14 @@ module Reporting
       company_filter = company.nil? ? "" : "company_id=#{company}"
       payment_company_filter = company.nil? ? "" : "payments.company_id=#{company}"
       currency_filter = currency.present? ?  "currency_id=#{currency.id}" : ""
-      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(5)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit((10 - invoices.length))
+      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(company_filter).order("created_at DESC").limit(10)
+      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_company_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit(100)
 
       # merge invoices and payments in activity array
       recent_activity = []
 
-      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.unscoped_client.organization_name rescue ''), :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "USD"), :code => (inv.currency.present? ? inv.currency.code : "$"), :activity_date => inv.created_at, :activity_path => "/invoices/#{inv.id}/edit"} }
-      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.unscoped_client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "USD"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "$"), :activity_date => pay.created_at, :activity_path => "/payments/#{pay.id}/edit"} }
+      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.unscoped_client.organization_name rescue ''), :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "USD"), :code => (inv.currency.present? ? inv.currency.code : "$"), :activity_date => inv.created_at.strftime("%d/%m/%Y"), :activity_path => "/invoices/#{inv.id}/edit"} }
+      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.unscoped_client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "USD"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "$"), :activity_date => pay.created_at.strftime("%d/%m/%Y"), :activity_path => "/payments/#{pay.id}/edit"} }
       # sort them by created_at in descending order
       recent_activity.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
     end
@@ -60,6 +60,7 @@ module Reporting
       currency_filter = currency.present? ? "currency_id=#{currency.id}" : ""
       invoice_ids = currency.present? ? Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",") : ""
       payment_currency_filter = (currency.present? and invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
+      payment_currency_filter =  'invoice_id IN (-1)' if (currency.present? && invoice_ids.empty?)
       invoices = Invoice.group("month(invoice_date)").where(:invoice_date => start_date..end_date).where(currency_filter).where(company_filter).sum("invoice_total")
       # TODO: credit amount handling
       #payments = Payment.group("month(payment_date)").where(:payment_date => start_date..end_date).sum("payment_amount")
@@ -84,6 +85,16 @@ module Reporting
       company_filter = company.present? ? "invoices.company_id=#{company}" : ""
       Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).where(company_filter).each do |invoice|
         ytd += invoice.payments.sum(:payment_amount).to_f
+      end
+      ytd
+    end
+
+    def self.get_ytd_payments_count(currency=nil, company=nil)
+      ytd = 0
+      currency_filter = currency.present? ? " invoices.currency_id=#{currency.id}" : ""
+      company_filter = company.present? ? "invoices.company_id=#{company}" : ""
+      Invoice.where(invoice_date: Date.today.beginning_of_year..Date.today).where(currency_filter).where(company_filter).each do |invoice|
+        ytd += invoice.payments.count
       end
       ytd
     end

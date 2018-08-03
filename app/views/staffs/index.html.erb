@@ -1,63 +1,38 @@
-<%- model_class = Staff -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<div class="staff">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.staffs.new'))),
-                  new_staff_path,
-                  :class => 'btn_large' %>
+<%= render 'staff_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel">
+        <h3 class="with-grid-icons">
+          <%= t('header.links.time_tracking.time_tracking') %>:
+          <select onchange="location = this.value;">
+            <option value="<%= "/#{I18n.locale}/projects" %>"> <%= t('header.links.time_tracking.project') %></option>
+            <option value="<%= "/#{I18n.locale}/tasks" %>"><%= t('header.links.time_tracking.task') %></option>
+            <option value="<%= "/#{I18n.locale}/staffs" %>" selected><%= t('header.links.time_tracking.staff') %></option>
+            <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
+          </select>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= link_to raw('<i class="material-icons">add</i>'), new_staff_path, remote: true, class: 'plus-add-icon', title: t('helpers.links.add') %>
+          <%= index_layout_toggle_icons(staffs_path(layout_toggle_params(view: 'card')), staffs_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag bulk_actions_staffs_path, {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
+  <%= render 'filters' %>
+  <div class="invoice-box staff-box clearfix">
+    <%= form_tag bulk_actions_staffs_path, {method: :get, id: "bulk_action_form"} do -%>
+        <div class="search_result_container"><%= render 'staffs_container' %> </div>
+        <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render "filter_links" %>
-          </div>
-        </div>
-
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-            </colgroup>
-            <thead id="staff_head">
-            <%= render partial: 'staffs_header' %>
-            </thead>
-            <tbody id="staff_body">
-            <%= render 'staffs' %>
-            <tfoot id="paging_links">
-            <%= render 'application_partials/paging' %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.staffs.new'))),
-                    new_staff_path,
-                    :class => 'btn_large' %>
-      </div>
-  <% end %>
-  <!--content_bottom-->
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#rate_min,#rate_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date rate_min rate_max)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
+</script>

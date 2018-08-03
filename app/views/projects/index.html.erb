@@ -1,65 +1,39 @@
-<%- model_class = Project -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<div class="project">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.projects.new'))),
-                  new_project_path,
-                  :class => 'btn_large' %>
+<%= render 'project_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel">
+        <h3 class="with-grid-icons">
+          <%= t('header.links.time_tracking.time_tracking') %>:
+          <select onchange="location = this.value;">
+            <option value="<%= "/#{I18n.locale}/projects" %>" selected> <%= t('header.links.time_tracking.project') %></option>
+            <option value="<%= "/#{I18n.locale}/tasks" %>"><%= t('header.links.time_tracking.task') %></option>
+            <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
+            <option value="<%= "/#{I18n.locale}/logs" %>"><%= t('header.links.time_tracking.time_sheet') %></option>
+          </select>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= link_to raw('<i class="material-icons">add</i>'), new_project_path, title: t('helpers.links.add'), class: 'plus-add-icon' %>
+          <%= index_layout_toggle_icons(projects_path(layout_toggle_params(view: 'card')),
+                                        projects_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-
-  <%= form_tag "projects/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render "filter_links" %>
-          </div>
-        </div>
-        <!--grid_control-->
-
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing project_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-            </colgroup>
-            <thead id="project_head">
-            <%= render partial: 'project_header' %>
-            </thead>
-            <tbody id="project_body">
-            <%= render 'project' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.projects.new'))),
-                    new_project_path,
-                    :class => 'btn_large' %>
-      </div>
-      <!--content_bottom-->
-  <% end %>
+  <%= render 'filters' %>
+  <div class="invoice-box project-box">
+    <%= form_tag "projects/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render partial: 'projects_container' %></div>
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
 </div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date client_id manager_id)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
+</script>

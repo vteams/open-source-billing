@@ -22,19 +22,25 @@ class Invoice < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
+  include InvoiceSearch
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
+  scope :status, -> (status) { where(status: status) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
+  scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
+  scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
+  scope :due_date, -> (due_date) { where(due_date: due_date) }
 
   # constants
   STATUS_DESCRIPTION = {
-      draft: 'Invoice created, but you have not notified your client.',
-      sent: 'Invoice created and sent to your client.',
-      viewed: 'Client has clicked the invoice URL in the email and viewed the invoice in browser.',
-      paid: 'Client has made full payment against the invoice.',
-      partial: 'Client has made partial payment against the invoice.',
-      draft_partial: 'Payment received against the draft invoice.',
-      disputed: 'Client has disputed this invoice.',
+      draft: I18n.t('views.invoices.draft_tooltip'),
+      sent: I18n.t('views.invoices.sent_tooltip'),
+      viewed: I18n.t('views.invoices.viewed_tooltip'),
+      paid: I18n.t('views.invoices.paid_tooltip'),
+      partial: I18n.t('views.invoices.partial_tooltip'),
+      draft_partial: I18n.t('views.invoices.draft_partial_tooltip'),
+      disputed: I18n.t('views.invoices.disputed_invoice')
   }
 
 
@@ -45,14 +51,18 @@ class Invoice < ActiveRecord::Base
   belongs_to :company
   belongs_to :project
   belongs_to :currency
+  belongs_to :tax
 
   has_many :invoice_line_items, :dependent => :destroy
   has_many :payments
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
   has_many :invoice_tasks, :dependent => :destroy
+  has_many :recurring_invoices, class_name: 'Invoice', foreign_key: 'parent_id'
+  has_one  :recurring_schedule, dependent: :destroy
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :recurring_schedule,  :allow_destroy => true
 
   # validation
 
@@ -178,6 +188,14 @@ class Invoice < ActiveRecord::Base
     invoice
   end
 
+  def generate_recurring_invoice(recurring)
+    invoice = use_as_template
+    invoice.status = recurring.delivery_option.eql?('draft_invoice') ? 'draft' : 'sent'
+    invoice.due_date = Date.today + eval(recurring.frequency)
+    invoice.parent_id = self.id
+    invoice.save
+  end
+
   def self.multiple_invoices ids
     ids = ids.split(',') if ids and ids.class == String
     where('id IN(?)', ids)
@@ -197,9 +215,26 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.filter(params, per_page)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    self.send(method).page(params[:page]).per(per_page)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+    invoices = params[:search].present? ? self.search(params[:search]).records : self
+    invoices = invoices.status(params[:type]) if params[:type].present?
+    invoices = invoices.client_id(params[:client_id]) if params[:client_id].present?
+    invoices = invoices.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
+    invoices = invoices.invoice_date(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+    invoices = invoices.due_date(
+        (Date.strptime(params[:due_start_date], date_format).in_time_zone .. Date.strptime(params[:due_end_date], date_format).in_time_zone)
+    ) if params[:due_start_date].present?
+    invoices = invoices.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    invoices.page(params[:page]).per(per_page)
+  end
+
+  def self.recurring
+    joins('LEFT OUTER JOIN recurring_schedules as rs ON invoices.id = rs.invoice_id').where('rs.id is NOT NULL or invoices.parent_id is NOT NULL')
   end
 
   def self.paid_full ids
@@ -258,7 +293,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def paypal_business user
-     OSB::CONFIG::PAYPAL_BUSINESS
+    OSB::CONFIG::PAYPAL[:business]
   end
 
   def paypal_url(return_url, notify_url, user = nil)
@@ -314,19 +349,19 @@ class Invoice < ActiveRecord::Base
       line_total = li.item_unit_cost * li.item_quantity
       # calculate tax1 and tax2
       if li.tax_1.present? and li.tax1.nil?
-        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax1(li).percentage / 100.0)  : ((line_total + discount_amount) * load_deleted_tax1(li).percentage / 100.0)}) unless load_deleted_tax1(li).blank?
+        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: ((line_total) * load_deleted_tax1(li).percentage / 100.0) }) unless load_deleted_tax1(li).blank?
       elsif li.tax_1.present? and li.tax1.archived?.present?
-        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax1(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
+        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: ((line_total) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
       else
-        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax1.percentage / 100.0)  : ((line_total + discount_amount.to_f) * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
+        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
       end
 
       if li.tax_2.present? and li.tax2.nil?
-        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_deleted_tax2(li).percentage / 100.0)  :  ((line_total  +  discount_amount) * load_deleted_tax2(li).percentage / 100.0)}) unless load_deleted_tax2(li).blank?
+        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_deleted_tax2(li).percentage / 100.0) }) unless load_deleted_tax2(li).blank?
       elsif li.tax_2.present? and li.tax2.archived?.present?
-        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * load_archived_tax2(li).percentage / 100.0)  : ((line_total  + discount_amount) * load_archived_tax2(li).percentage / 100.0)}) unless load_archived_tax2(li).blank?
+        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_archived_tax2(li).percentage / 100.0) }) unless load_archived_tax2(li).blank?
       else
-        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: discount_type == '%' && discount_percentage.present? ? ((line_total - discount_percentage*line_total/100) * li.tax2.percentage / 100.0)  :  ((line_total  + discount_amount)  * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
       end
     end
     taxes.each do |tax|
@@ -432,11 +467,56 @@ class Invoice < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+    client
   end
 
   def inv_type
     return "Invoiced" if invoice_type.blank?
     invoice_type.underscore.humanize
   end
+
+  def account
+    return Account.where(id: account_id).first if account_id.present?
+    Company.where(id: company_id).first.account if company_id.present?
+  end
+
+  def owner
+    account.owner
+  end
+
+  def invoice_name
+    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue ''
+  end
+
+  def term
+    PaymentTerm.unscoped.find(self.payment_terms_id).description rescue ''
+  end
+
+  def group_date
+    Date.strptime(invoice_date, date_format).strftime('%B %Y')
+  end
+
+  def recurring_status
+    return nil if recurring_schedule.blank?
+    return "#{I18n.t('views.invoices.every')} #{recurring_schedule.frequency.split(".").last.camelize} (#{recurring_schedule.occurrences.to_i - recurring_schedule.generated_count} #{I18n.t('views.invoices.remaining')})"
+  end
+
+  def recurring_parent
+    return self if parent_id.nil?
+    Invoice.find(self.parent_id)
+  end
+
+  def is_recurring_invoice?
+    ((parent_id.present? or recurring_schedule.present?) && recurring_parent.recurring_schedule.enable_recurring?)
+  end
+
+  class << self
+    # Invoice's status count dynamic methods
+    Invoice::STATUS_DESCRIPTION.each do |k,v|
+      define_method("#{k}_count") do
+        where(status: k).count
+      end
+    end
+  end
+
 end

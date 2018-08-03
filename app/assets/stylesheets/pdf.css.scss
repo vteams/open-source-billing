@@ -1,3 +1,7 @@
+body{
+  padding-top: 10px !important;
+}
+
 .header{
   .fl{
     float: left;
@@ -30,7 +34,7 @@
 
   .invoice_preview_content{
     width: 95%;
-    padding: 65px 29px 0 29px;
+    padding: 20px;
   }
   .preview_content_top{
     padding-bottom: 11px;
@@ -144,7 +148,7 @@
   }
 
   .preview_content_middle{
-    width: 97%;
+    width: 100%;
     padding: 0 0 25px 0;
   }
 
@@ -154,8 +158,8 @@
     padding: 25px 0 30px 0;
   }
   .preview_btm_top{
-    float: left;
-    width: 95%;
+    float: right;
+    width: 100%;
   }
   .preview_left.btm{
     padding-left: 0px;
@@ -180,7 +184,7 @@
     padding-top: 0px;
     .preview_right_label{
       float: left;
-      width: 100px;
+      width: auto;
       text-align: left;
     }
     .preview_right_description{
@@ -441,5 +445,20 @@
     padding-top: 3px;
     margin-top: 5px;
     overflow: hidden;
+  }
+}
+.simple-responsive.report_content.report-inner-scroll-container {
+  overflow: hidden;
+  height: 100%;
+}
+.new-invoice-holder .info-section .info-left-section {
+  width: 60%;
+}
+.new-invoice-footer .right-section.right {
+  width: 400px !important;
+  padding: 0 38px;
+
+  .invoice-total-left {
+    .new-invoice-footer-row { padding-bottom: 10px; }
   }
 }

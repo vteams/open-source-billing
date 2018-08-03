@@ -1,143 +1,161 @@
-<div class="pay_invoice">
-  <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
-  <% client_credit = client_credit.present? ? client_credit : 0 %>
-  <div class="fields_content">
-    <div class="fields_content_container">
-      <div class="fields_content_data">
+<div class="container-fluid">
+    <div class="row">
 
-        <div class="payment_left">
+        <div class="pay_invoice">
+          <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
+          <% client_credit = client_credit.present? ? client_credit : 0 %>
+          <div class="fields_content">
+            <div class="fields_content_container">
+              <div class="fields_content_data">
+                <div class="row">
+                  <div class="col s12 m6 l12 xl6">
+                    <div class="payment_left">
 
-          <div class="payment_serial <%= payment.invoice.status %>"></div>
-          <!--payment_serial-->
+                      <div class="payment_serial <%= payment.invoice.status %>"></div>
+                      <!--payment_serial-->
 
-          <div class="payment_summary">
+                      <div class="payment_summary">
 
-            <div class="payment_person">
-              <p class="organization"><%= payment.client_name %></p>
+                        <div class="payment_person">
+                          <p class="organization"><%= payment.client_name %></p>
 
-              <p class="person_name"><%= payment.client_full_name %></p>
-            </div>
-            <!--payment_person-->
+                          <p class="person_name"><%= payment.client_full_name %></p>
+                        </div>
+                        <!--payment_person-->
 
-            <div class="invoice_data">
+                        <div class="invoice_data">
 
-              <div class="invoice_data_row">
-                <div class="invoice_label"><%= t('invoice') %>#<span>:</span></div>
-                <div class="inovice_description"><%= h payment.invoice.invoice_number %></div>
-              </div>
+                          <div class="invoice_data_row">
+                            <div class="invoice_label"><%= t('invoice') %>#<span>:</span></div>
+                            <div class="inovice_description"><%= h payment.invoice.invoice_number %></div>
+                          </div>
 
-              <div class="invoice_data_row">
-                <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
-                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date) rescue "" %></div>
-              </div>
+                          <div class="invoice_data_row">
+                            <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
+                            <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date) rescue "" %></div>
+                          </div>
 
-              <div class="invoice_data_row">
-                <div class="invoice_label"><%= t('views.invoices.invoice_amount') %><span>:</span></div>
-                <div class="inovice_description amount"><%= number_to_currency(payment.invoice.invoice_total, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
-              </div>
+                          <div class="invoice_data_row">
+                            <div class="invoice_label"><%= t('views.invoices.invoice_amount') %><span>:</span></div>
+                            <div class="inovice_description amount"><%= number_to_currency(payment.invoice.invoice_total, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
+                          </div>
 
-              <% if %w(partial draft-partial).include?(payment.invoice.status) && payment.invoice.invoice_total > Payment.invoice_remaining_amount(payment.invoice.id) %>
-                  <div class="invoice_data_row">
-                    <div class="invoice_label"><%= t('views.common.received') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(payment.invoice.invoice_total - Payment.invoice_remaining_amount(payment.invoice.id), unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
+                          <% if %w(partial draft-partial).include?(payment.invoice.status) && payment.invoice.invoice_total > Payment.invoice_remaining_amount(payment.invoice.id) %>
+                              <div class="invoice_data_row">
+                                <div class="invoice_label"><%= t('views.common.received') %><span>:</span></div>
+                                <div class="inovice_description"><%= number_to_currency(payment.invoice.invoice_total - Payment.invoice_remaining_amount(payment.invoice.id), unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
+                              </div>
+
+                              <div class="invoice_data_row">
+                                <div class="invoice_label"><%= t('views.payments.net_due') %><span>:</span></div>
+                                <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.id), unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
+                              </div>
+                          <% end %>
+
+                        </div>
+                        <!--invoice_data-->
+
+                        <!--<div class="payment_person">-->
+                        <!--
+                    <% if payment.invoice.status == 'partial' or payment.invoice.status == 'draft-partial' %>-->
+                            <!--<p><b><%= payment.invoice.status.gsub(/-/, ' ').capitalize %> payments</b></p>-->
+                            <!--
+                        <% payment.invoice.payments.each do |partial_payment| %>-->
+                                <!--<p><%= "#{partial_payment.payment_date} - #{number_to_currency(partial_payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$')}" %></p>-->
+                                <!--
+                        <% end %>-->
+                            <!--
+                    <% end %>-->
+                        <!--</div>-->
+
+                      </div>
+                      <!--payment_summary-->
+
+                    </div>
                   </div>
+                  <div class="col s12 m6 l12 xl6">
+                    <div class="right-payment-container">
+                      <div class=payment_right client_<%=payment.invoice.client.present??  payment.invoice.client.id : payment.invoice.unscoped_client.id  %>">
 
-                  <div class="invoice_data_row">
-                    <div class="invoice_label"><%= t('views.payments.net_due') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.id), unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %></div>
+                      <div class="field_row">
+                        <%= f.hidden_field :invoice_id %>
+                        <div class="label_field left single payment_amount_label"><%= t('payment') %> (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
+                        <div class="small_field floating-left">
+                          <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount text-field-height" %>
+                          <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
+                        </div>
+                        <div class="field_check">
+                          <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full fix-left-and-opacity checkbox-position" name="payments[][paid_full]"/>
+
+                          <div id="<%= index %>" style="display:none" class="rem_payment_amount " value="<%= Payment.invoice_remaining_amount(payment.invoice.id) %>"></div>
+                          <p><%= f.label(:paid_full, :class => 'text-left paid_full_label', :for => "payments_#{index}_paid_full") { t('views.payments.payfull') } %></p>
+                        </div>
+                      </div>
+
+                      <!--field_row-->
+                      <% if client_credit > 0 %>
+                          <div class="field_row">
+                            <div class="label_field left single">&nbsp;</div>
+                            <div class="field_check btm">
+                              <%= check_box " ", index, :id => "#{index}", :class => "apply_credit fix-left-and-opacity checkbox-position checkbox-lable" %>
+                              <p><label for="payments_<%= index %>" id="rem_credit_<%= index %>" value="<%= client_credit %>"><%= t('views.payments.apply_from_credit') %> <%= payment.invoice.currency.present? ? payment.invoice.currency.code : 'USD' %>
+                                <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %>
+                                <%= t('views.common.available') %></label></p>
+                            </div>
+                          </div>
+                      <% end %>
+                      <!--field_row-->
+
+                      <div class="field_row payment-method">
+                        <div class="label_field left single"><%= f.label t('views.common.method'), :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
+                        <div class="small_field">
+                          <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
+                        </div>
+                        <span>
+                        <div class="date-wrapper">
+                          <span class="payment-date"><%=t('views.common.date')%>:</span>
+                            <span>
+                              <small>
+                                <span><%= f.text_field :payment_date, value: f.object.payment_date, class: "date-field-style" %></span>
+                                <span><i class="material-icons calendar-icon">date_range</i></span>
+                              </small>
+                            </span>
+                        </div>
+                    </span>
+
+
+                      </div>
+                      <!--field_row-->
+
+                      <div class="field_row">
+                        <div class="label_field left single"><%= f.label :notes, t('views.common.notes'), :for => "payments_#{index}_notes", :class=> 'label-font'  %></div>
+                        <div class="large_field">
+                          <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
+                        </div>
+                      </div>
+                      <!--field_row-->
+
+                      <div class="field_row">
+                        <div class="field_check btm">
+                          <input type="checkbox" name="payments[][send_payment_notification]" id="payments_<%= index %>_send_payment_notification", class="fix-left-and-opacity checkbox-position"/>
+
+                          <p><%= f.label :send_payment_notification, t('views.payments.send_payment_notification'), :for => "payments_#{index}_send_payment_notification" %></p>
+                        </div>
+                      </div>
+                      <!--field_row-->
+
+                    </div>
                   </div>
-              <% end %>
-
-            </div>
-            <!--invoice_data-->
-
-            <!--<div class="payment_person">-->
-            <!--
-            <% if payment.invoice.status == 'partial' or payment.invoice.status == 'draft-partial' %>-->
-                <!--<p><b><%= payment.invoice.status.gsub(/-/, ' ').capitalize %> payments</b></p>-->
-                <!--
-                <% payment.invoice.payments.each do |partial_payment| %>-->
-                    <!--<p><%= "#{partial_payment.payment_date} - #{number_to_currency(partial_payment.payment_amount, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$')}" %></p>-->
-                    <!--
-                <% end %>-->
-                <!--
-            <% end %>-->
-            <!--</div>-->
-
-          </div>
-          <!--payment_summary-->
-
-        </div>
-        <!--payment_left-->
-
-        <div class="payment_right client_<%=payment.invoice.client.present??  payment.invoice.client.id : payment.invoice.unscoped_client.id  %>">
-
-          <div class="field_row">
-            <%= f.hidden_field :invoice_id %>
-            <div class="label_field left single">Payment (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
-            <div class="small_field">
-              <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount" %>
-              <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
-            </div>
-            <div class="field_check">
-              <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full" name="payments[][paid_full]"/>
-
-              <div id="<%= index %>" style="display:none" class="rem_payment_amount" value="<%= Payment.invoice_remaining_amount(payment.invoice.id) %>"></div>
-              <p><%= f.label(:paid_full, :class => 'text-left paid_full_label', :for => "payments_#{index}_paid_full") { "Pay Full" } %></p>
-            </div>
-          </div>
-
-          <!--field_row-->
-          <% if client_credit > 0 %>
-              <div class="field_row">
-                <div class="label_field left single">&nbsp;</div>
-                <div class="field_check btm">
-                  <%= check_box " ", index, :id => "#{index}", :class => "apply_credit" %>
-                  <p><label for="payments_<%= index %>" id="rem_credit_<%= index %>" value="<%= client_credit %>"><%= t('views.payments.apply_from_credit') %> <%= payment.invoice.currency.present? ? payment.invoice.currency.code : 'USD' %>
-                    <span class="credit_amount" style="display: none;"><%= client_credit %></span><%= number_to_currency(client_credit, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : '$') %>
-                    <%= t('views.common.available') %></label></p>
+                </div>
                 </div>
               </div>
-          <% end %>
-          <!--field_row-->
+              <!--fields_content_data-->
+            </div>
 
-          <div class="field_row">
-            <div class="label_field left single"><%= f.label "Method", :for => "payments_#{index}_payment_method" %></div>
-            <div class="small_field">
-              <%= f.select :payment_method, PAYMENT_METHODS, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
-            </div>
-            <div class="label_field right single"><%= f.label "Date", :for => "payments_#{index}_payment_date" %></div>
-            <div class="small_field">
-              <%= f.text_field :payment_date, value: f.object.payment_date ,:id => "payments_#{index}_payment_date",:class=>"date_picker_class payment_dates" %>
-            </div>
+            <!--fields_content_container-->
           </div>
-          <!--field_row-->
 
-          <div class="field_row">
-            <div class="label_field left single"><%= f.label :notes, :for => "payments_#{index}_notes" %></div>
-            <div class="large_field">
-              <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
-            </div>
-          </div>
-          <!--field_row-->
-
-          <div class="field_row">
-            <div class="label_field left single">&nbsp;</div>
-            <div class="field_check btm">
-              <input type="checkbox" name="payments[][send_payment_notification]" id="payments_<%= index %>_send_payment_notification"/>
-
-              <p><%= f.label :send_payment_notification, :for => "payments_#{index}_send_payment_notification" %></p>
-            </div>
-          </div>
-          <!--field_row-->
-
-        </div>
-        <!--payment_right-->
-
-      </div>
-      <!--fields_content_data-->
+          <!--fields_content-->
+        </div><!--pay_invoice-->
     </div>
-    <!--fields_content_container-->
-  </div>
-  <!--fields_content-->
-</div><!--pay_invoice-->
+</div>

@@ -21,52 +21,45 @@
 module EstimatesHelper
   include ApplicationHelper
   def new_estimate id, is_draft
-    message = is_draft ? "The estimate has been saved as draft." : "Estimate has been created and sent to #{@estimate.client.organization_name}."
+    message = is_draft ? t('views.estimates.saved_draft_msg') : t('views.estimates.saved_and_sent_msg', org_name: @estimate.client.organization_name)
     notice = <<-HTML
        <p>#{message}.</p>
-       <ul>
-         <li><a href="/estimates/new">Create another estimate</a></li>
-       </ul>
     HTML
     notice.html_safe
   end
 
   def estimates_archived ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been archived. You can find them under
-     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='estimates/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived estimates back to active.</p>
+     <p>#{ids.size} #{t('views.invoices.bulk_archived_msg')}
     HTML
     notice.html_safe
   end
 
   def estimates_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been deleted. You can find them under
-     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='estimates/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted estimates back to active.</p>
+     <p>#{ids.size} #{t('views.estimates.bulk_deleted')}
     HTML
     notice.html_safe
   end
 
   def send_estimate _message
     notice = <<-HTML
-     <p>Estimate sent successfully.</p>
+     <p>#{t('views.invoices.sent_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def convert_to_invoices
     notice = <<-HTML
-     <p>#{ids.size} estimate(s) have been converted to invoice. You can find them in Invoices section</p>
+     <p>#{ids.size} #{t('views.estimates.converted_to_invoice_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def dispute_estimate_message company_name
     notice = <<-HTML
-     <p>Estimate disputed.</p>
-     <p> #{company_name} has been notified of the dispute.</p>
+     <p>#{t('views.estimates.disputed_msg')}</p>
+     <p> #{t('views.estimates.disputed_detail_msg', company_name: company_name)}</p>
     HTML
     notice.html_safe
   end
@@ -94,8 +87,8 @@ module EstimatesHelper
   def estimate_not_updated
     notice = <<-HTML
        <ul>
-         <li>You cannot reduce the estimate total below the amount paid.</li>
-         <li>If you entered a payment by mistake, you can edit it in your payment history.</li>
+         <li>#{t('views.estimates.cannot_reduce_amount_msg')}</li>
+         <li>#{t('views.estimates.cannot_reduce_amount_detail_msg')}</li>
        </ul>
     HTML
     notice.html_safe
@@ -103,11 +96,7 @@ module EstimatesHelper
 
   def load_clients(action,company_id)
     account_level = current_user.current_account.clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
-    id = session['current_company'] || current_user.current_company || current_user.first_company_id
-
-    clients = Company.find_by_id(id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
-
-    clients = action == 'new' && company_id.blank? ? account_level + clients  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]} + account_level
+    clients = action == 'new' && company_id.blank? ? account_level  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
     if @recurring_profile.present? && action == 'edit'
       recurring_client = @recurring_profile.unscoped_client
       clients << [recurring_client.organization_name, recurring_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? recurring_client.id
@@ -122,6 +111,7 @@ module EstimatesHelper
     else
       clients
     end
+    clients.first(current_user.client_limit)
   end
 
   def load_items(action,company_id, line_item = nil)
@@ -226,4 +216,19 @@ module EstimatesHelper
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
+  def estimate_selected_currency(estimate)
+    if params[:action].eql?('new')
+      Currency.default_currency.id
+    else
+      (@client.present? ? @client.currency_id : estimate.currency_id)
+    end
+  end
+
+  def activities_estimates_path(status)
+    estimates_path(estimate_params(per: @per_page, status: status))
+  end
+
+  def estimate_params(params)
+    params.except(:page).slice(:per, :company_id, :sort, :direction).merge(params)
+  end
 end

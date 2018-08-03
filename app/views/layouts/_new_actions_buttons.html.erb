@@ -1,0 +1,37 @@
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large orange">
+    <i class="material-icons">add</i>
+  </a>
+  <ul>
+    <li>
+      <%= link_to new_tax_path, class: 'btn-floating dark-brown', data:{ label: t('views.taxes.new') }, remote: true do
+        image_tag('ico-expenses.svg' , alt: t('views.taxes.taxes'))
+      end %>
+    </li>
+    <li>
+      <%= link_to new_item_path, class: 'btn-floating grey', data:{label: t('views.items.new')}, remote: true do
+        image_tag('ico-items.svg' , alt: t('header.links.items.items'))
+      end %>
+    </li>
+    <li>
+      <%= link_to new_client_path, class: 'btn-floating purple', data:{label: t('views.clients.new_client')}, remote: true do
+        image_tag('ico-clients.svg' , alt: t('views.clients.clients'))
+      end %>
+    </li>
+    <li>
+      <%= link_to new_estimate_path, class: 'btn-floating green', data:{label: t('header.links.estimates.new')}    do
+        image_tag('ico-estimates.svg' , alt: t('header.links.estimates.estimates'))
+      end %>
+    </li>
+    <li>
+      <%= link_to invoices_unpaid_invoices_path, class: 'btn-floating info', data:{label: t('header.links.payments.new')}, remote: true do
+        image_tag('ico-payments.svg' , alt: t('header.links.payments.payments'))
+      end %>
+    </li>
+    <li>
+      <%= link_to new_invoice_path, class: 'btn-floating blue', data:{label: t('header.links.invoices.new')}  do
+        image_tag('ico-invoices.svg' , alt: t('header.links.invoices.invoices'))
+      end %>
+    </li>
+  </ul>
+</div>

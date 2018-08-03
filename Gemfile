@@ -1,14 +1,16 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.3.7'
 gem 'rails', '~> 4.2.7.1'
-
+gem 'railties', '4.2.7.1'
+gem 'sprockets', '3.7.1'
+gem 'sprockets-rails', '3.2.1'
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.3.20'
 gem 'devise', '3.4.1'
 gem 'devise-encryptable', '0.2.0'
 gem 'slim-rails', '3.1.0'
 gem 'twitter-bootstrap-rails', '~> 2.1.9'
-gem 'rails-settings-cached'
+gem 'rails-settings-cached', '0.6.6'
 gem 'rake', '< 11.0'
 gem 'responders', '~> 2.0'
 
@@ -39,7 +41,10 @@ group :development do
   gem 'awesome_print', '1.7.0'
   gem 'quiet_assets', '1.1.0'
   gem 'copyright-header', '1.0.15'
+  gem 'capistrano', '3.10.2'
+  gem 'capistrano-rails', '1.1.3'
 end
+gem 'capistrano-rvm', '0.1.2'
 gem 'browser', '2.1.0'
 gem 'gon', '6.0.1'
 gem 'rest-client', '1.8.0'
@@ -59,6 +64,9 @@ gem 'factory_girl_rails', '~> 4.5.0'
 gem 'factory_girl', '~> 4.5.0'
 gem 'faker', '~> 1.4.3'
 gem 'activerecord-session_store', '1.0.0'
+gem 'stripe', '1.56.0'
+gem 'figaro', '1.1.1'
+
 group :test do
   gem 'shoulda-matchers', '2.8.0'
   gem 'shoulda', '~> 3.5.0'
@@ -67,7 +75,6 @@ end
 
 gem 'money', '~>  6.5.0'
 gem 'osb_api', path: 'vendor/engines/osb_api'
-
 
 # To use Jbuilder templates for JSON
 gem 'jbuilder', '~> 2.0'
@@ -80,4 +87,18 @@ gem 'qbo_api', '1.8.1'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
+gem "letter_opener", '1.4.1', :group => :development
 gem 'puma', '3.11.0'
+
+
+gem 'elasticsearch-model', '5.0.0'
+gem 'elasticsearch-rails', '5.0.0'
+
+gem 'exception_notification-rake', '0.3.0'
+
+gem 'whenever', '0.9.7'
+gem 'browser-timezone-rails', '1.0.1'
+gem 'i18n-js', '~> 3.0', '>= 3.0.5'
+gem 'simple_form', '3.5.1'
+gem 'cocoon', '~> 1.2', '>= 1.2.11'
+gem 'nouislider-rails', '~> 8.2', '>= 8.2.1'

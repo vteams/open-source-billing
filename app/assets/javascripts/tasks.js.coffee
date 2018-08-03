@@ -1,58 +1,67 @@
-# Task form validation
+class @Task
 
-jQuery('.task_form').on 'click', '.task-submit-btn', ->
-  name = jQuery("#task_name").val()
-  rate = jQuery("#task_rate").val()
-  association_name = jQuery('input[name=association]:checked').attr("id")
-  no_of_selected_companies = jQuery('.company_checkbox:checked').length
+  @load_functions = ->
 
-  flag = false
-  if name is ""
-    applyPopover(jQuery("#task_name"),"bottomMiddle","topLeft","Enter a name for the task")
-    flag = false
-  else if rate is ""
-    applyPopover(jQuery("#task_rate"),"bottomMiddle","topLeft","Enter rate per hour for the task")
-    flag = false
-    hidePopover(jQuery("#task_name"))
-  else if rate < 0
-    applyPopover(jQuery("#task_rate"),"bottomMiddle","topLeft","Enter postive value of rate per hour for the task")
-    flag = false
-    hidePopover(jQuery("#task_name"))
-  else if (association_name == "company_association" and no_of_selected_companies == 0)
-    hidePopover(jQuery("#task_rate"))
-    applyPopover(jQuery("input[name=association]:checked"),"topright","leftcenter","Select aleast one company for the task")
-    flag = false
-  else
-    flag = true
-    hidePopover(jQuery("input[name=association]:checked"))
-  if(flag)
-    jQuery("form#newTask").get(0).submit()
-  else
-    return false
+    $('.modal').modal complete: ->
+      $('.qtip').remove()
 
-jQuery('body').on "change", '#task_name', ->
+    # Task form validation
+    $(".task_form").submit ->
+      name = $("#task_name").val()
+      rate = $("#task_rate").val()
+      association_name = $('input[name=association]:checked').attr("id")
+      no_of_selected_companies = $('.company_checkbox:checked').length
 
-  return hidePopover(jQuery("#task_name"))
+      flag = false
+      if name is ""
+        applyPopover($("#task_name"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_name'))
+        flag = false
+      else if rate is ""
+        applyPopover($("#task_rate"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_rate'))
+        flag = false
+        hidePopover($("#task_name"))
+      else if rate < 0
+        applyPopover($("#task_rate"),"bottomMiddle","topLeft", I18n.t('views.tasks.enter_positive_rate'))
+        flag = false
+        hidePopover($("#task_name"))
+      else if association_name == undefined
+        hidePopover($("#task_rate"))
+        applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.tasks.atleast_one_company_selected'))
+      else if (association_name == "company_association" and no_of_selected_companies == 0)
+        hidePopover($("#task_rate"))
+        applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.tasks.atleast_one_company_selected'))
+        flag = false
+      else
+        flag = true
+        hidePopover($("input[name=association]"))
+      flag
 
-jQuery('body').on "change", '.company_checkbox' , ->
-  return hidePopover(jQuery("#company_association"))
+    jQuery('#account_association').change ->
+      if jQuery(this).is ':checked'
+        $('.company_checkbox').prop('checked',true)
 
-applyPopover = (elem,position,corner,message) ->
-  elem.qtip
-    content:
-      text: message
-    show:
-      event: false
-    hide:
-      event: false
-    position:
-      at: position
-    style:
-      tip:
-        corner: corner
-  elem.qtip().show()
-  elem.focus()
+    $('#task_name, #task_rate').on "keypress", ->
+      return hidePopover($(this))
+
+    $('.company_checkbox').on "change", ->
+      return hidePopover($("#company_association"))
+
+  applyPopover = (elem,position,corner,message) ->
+    elem.qtip
+      content:
+        text: message
+      show:
+        event: false
+      hide:
+        event: false
+      position:
+        at: position
+      style:
+        tip:
+          corner: corner
+    elem.qtip().show()
+    elem.focus()
 
 
-hidePopover = (elem) ->
-  elem.qtip("hide")
+  hidePopover = (elem) ->
+    elem.qtip("hide")

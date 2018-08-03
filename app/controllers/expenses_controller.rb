@@ -8,8 +8,10 @@ class ExpensesController < ApplicationController
   # GET /expenses
   def index
     params[:status] ||= 'active'
+    @status = params[:status]
     @expenses = Expense.joins(:client, :category).filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @expenses = filter_by_company(@expenses)
+    @expense_activity = Reporting::ExpenseActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: expenses }
@@ -19,15 +21,29 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/1
   def show
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: expenses }
+      format.js
+    end
   end
 
   # GET /expenses/new
   def new
     @expense = Expense.new
+    @expense.company_id = get_company_id()
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /expenses/1/edit
   def edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /expenses
@@ -67,17 +83,7 @@ class ExpensesController < ApplicationController
   def set_per_page_session
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
-
-  def sort_column
-    params[:sort] ||= 'created_at'
-    sort_col = params[:sort]
-  end
-
-  def sort_direction
-    params[:direction] ||= 'desc'
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
+  
   def bulk_actions
       params[:sort] = params[:sort] || 'created_at'
       result = Services::ExpenseBulkActionsService.new(params.merge({current_user: current_user})).perform
@@ -85,7 +91,10 @@ class ExpensesController < ApplicationController
       @message = get_intimation_message(result[:action_to_perform], result[:expense_ids])
       @action = result[:action]
     #end
-    respond_to { |format| format.js }
+      respond_to do |format|
+        format.html { redirect_to expenses_url, notice: "Expense(s) are #{@action} successfully." }
+        format.js
+      end
   end
 
   def undo_actions

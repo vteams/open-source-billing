@@ -1,0 +1,5 @@
+$('body').append("<%= escape_javascript render partial: 'project_task_form_popup', locals: {task: @project_task}  %>");
+elem = $("#project_task_form_popup");
+Project.projectTaskForm();
+Popup.initialize(elem);
+Popup.open(elem);

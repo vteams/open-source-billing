@@ -9,9 +9,8 @@ class StaffsController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @staffs = Staff.get_staffs(params.merge(get_args(method)))
+    @status = params[:status]
+    @staffs = Staff.get_staffs(params.merge(get_args))
 
     respond_to do |format|
       format.js
@@ -29,20 +28,33 @@ class StaffsController < ApplicationController
   def new
     @staff = Staff.new
     @staff.build_user
+    @project_id = params[:project_id]
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @staffs }
+    end
   end
 
   # GET /staffs/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @staffs }
+    end
   end
 
   # POST /staffs
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    if Staff.is_exists?(params[:staff][:email], company_id)
+    if Staff.is_exists?(params[:staff][:email], get_association_obj)
       @staff_exists = true
-      redirect_to(new_staff_path, :alert => "Staff with same email already exists") unless params[:quick_create]
+      redirect_to(staffs_path, :alert => t('views.staffs.duplicate_name')) unless params[:quick_create]
       return
     end
+    @project = Project.find_by_id(params[:project_id])
+
     @staff = Staff.new(staff_params)
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     if staff_params.has_key? "user_attributes"
@@ -54,9 +66,10 @@ class StaffsController < ApplicationController
     respond_to do |format|
       if @staff.save
         current_user.accounts.first.users << @staff.user if @staff.user.present?
+        @project.add_to_team(@staff) if @project.present?
         format.js
         format.json { render :json => @staff, :status => :created, :location => @staff }
-        redirect_to @staff, notice: 'Staff was successfully created.' unless params[:quick_create]
+        redirect_to (@project.present? ? project_path(@project) : staffs_path) , notice: t('views.staffs.created_msg') unless params[:quick_create]
         return
       else
         format.js
@@ -69,7 +82,7 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1
   def update
     if @staff.update(staff_params)
-      redirect_to @staff, notice: 'Staff was successfully updated.'
+      redirect_to staffs_path, notice: t('views.staffs.updated_msg')
     else
       render :edit
     end
@@ -78,7 +91,11 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   def destroy
     @staff.destroy
-    redirect_to staffs_url, notice: 'Staff was successfully destroyed.'
+
+    respond_to do |format|
+      format.html { redirect_to staffs_url, notice: t('views.staffs.destroyed_msg') }
+      format.json { render_json(@staff) }
+    end
   end
 
   def filter_staffs
@@ -96,8 +113,7 @@ class StaffsController < ApplicationController
     @staffs = result[:staffs]
     @message = get_intimation_message(result[:action_to_perform], result[:staff_ids])
     @action = result[:action]
-    #end
-    respond_to { |format| format.js }
+    redirect_to staffs_path, notice: t('views.staffs.bulk_action_msg', action: @action)
   end
 
   def undo_actions
@@ -137,8 +153,8 @@ class StaffsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  def get_args(status)
-    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+  def get_args
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   
 end

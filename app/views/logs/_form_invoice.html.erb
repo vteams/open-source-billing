@@ -1,200 +1,135 @@
-<%= nested_form_for(@invoice, url: create_invoice_logs_path ,:html => {:class => 'project-invoice form-horizontal', :novalidate => ""}) do |f| %>
-    <% @parent_f = f %>
+<div id="form_invoice" class="modal editableModal large_modal">
+  <div class="modal-content">
+    <%- model_class = Invoice -%>
+    <%= nested_form_for(@invoice, url: create_invoice_logs_path ,:html => {:class => 'project-invoice form-horizontal', :novalidate => ""}) do |f| %>
+        <% @parent_f = f %>
 
-    <div class="invoice_form log_invoice_form">
-      <div class="content_middle">
-        <script>window.currency_symbol = "<%= @invoice.currency.present? ? @invoice.currency.unit : "$" %>"</script>
-        <div class="fields_content">
-          <div class="fields_content_container">
-            <div class="fields_content_data new_invoice_fields custom_field">
-
-              <div class="fields_content_left">
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
-                  <div class="medium_field">
-                    <div> <%= text_field_tag 'company', get_invoice_company_name(@invoice), :readonly => '', :class => 'company_read_only' %> </div>
-                    <ul class="field_description">
-                      <li><%= t('views.invoices.company_hint') %></li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="field_row description">
-                  <div class="label_field left single"><%= f.label :client_id, content_tag(:span, t('client')) %></div>
-                  <div class="medium_field">
-                    <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, "data-placeholder" => "Select a client...", "data-dropdown-width" => "300"} %>
-                    <ul class="field_description">
-                      <li><%= t('views.invoices.client_hint') %></li>
-                    </ul>
-                  </div>
-                </div>
-
-
-                <!--field_row-->
-                <div class="field_row description <%= 'hide' if params[:action].eql?('new') and @invoice.currency.nil? or current_user.settings.currency.nil? or current_user.settings.currency == "Off" %>" id="invoice_currency">
-                  <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
-                  <div class="small_field">
-
-                    <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: f.object.currency_id),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_invoice_currency"), :class => "invoice_currency medium chzn-select", "data-dropdown-width" => "300"} %>
-                  </div>
-                </div>
-                <!--field_row-->
-
-              </div>
-
-              <div class="fields_content_right">
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, 'Invoice #') %></div>
-                  <div class="small_field">
-                    <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
-                    <ul class="field_description">
-                      <li><%= t('views.invoices.auto_generated') %></li>
-                    </ul>
-                  </div>
-                </div>
-                <!--field_row-->
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %></div>
-                  <div class="small_field">
-                    <%= f.text_field :invoice_date,value: f.object.invoice_date, :required => "", id: 'log_invoice_date' %>
-                  </div>
-                </div>
-                <!--field_row-->
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :due_date, t("views.invoices.due_date") %></div>
-                  <div class="small_field">
-                    <%= f.text_field :due_date, :placeholder => "TBD" %>
-                  </div>
-                </div>
-                <!--field_row-->
-                <script>$(".field_row.description").last().css('min-height', '46px');</script>
-
-              </div>
-              <!--fields_content_right-->
-
-            </div>
-            <!--fields_content_data-->
+        <div class="modal-header clearfix text-content">
+          <div class="modal-action-btn right">
+            <a href="#" onclick="$('.send_submit').click();" title="Save"> <i class="material-icons" >done</i></a>
+            <a href="#" onclick="$('.simple_submit').click();" title="Send"><i class="material-icons">send</i></a>
+            <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+            <%= f.submit raw("<i class='material-icons' >done</i>"), :class => 'simple_submit submit hidden' %>
+            <%= f.submit "#{button_text}", :class => 'send_submit submit hidden', :name => 'save_as_draft' %>
           </div>
-          <!--fields_content_container-->
+          <h5 class="left text-blue">
+            <%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
+                                              :default => "Project  #{model_class.model_name.human}") %>:
+            <%= f.select :client_id, options_for_select([[@client.contact_name, @client.id ]], selected: @client.id),  {:prompt => "", :include_blank => "", disabled: true}, {"disabled" => true, class: 'inline-select '} %>
+          </h5>
         </div>
-        <!--fields_content-->
-        <script>$(".fields_content").last().css('border-bottom', 'none');</script>
+        <div class="info-section clearfix">
+            <div class="info-left-section left">
+              <h6><%= @invoice.invoice_number %></h6>
+              <%= f.hidden_field :invoice_number %>
+              <span>Invoice: <small id="invoice_date"> <%= f.object.invoice_date %></small> <i class="material-icons" id="invoice_date_picker">date_range</i></span>
+              <span class="text-blue"> Due: <small id="invoice_due_date_text"> <%= f.object.due_date.present? ? f.object.due_date : 'TBD'   %> </small> <i class="material-icons" id="invoice_due_date_picker">date_range</i></span>
+              <%= f.hidden_field :invoice_date,value: f.object.invoice_date, :required => "" %>
+              <%= f.hidden_field :due_date, :placeholder => "TBD" %>
 
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="log_invoice_grid_fields" id="log_invoice_grid_fields">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-            </colgroup>
+              <div class="editPayementInfo">
+                <strong><strong class="invoice_total_strong"></strong>
+                  <small>
+                    <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+                    <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select'} %>
+                  </small>
+                </strong>
+              </div>
+            </div>
+            <% unless f.object.company.blank? or f.object.company.logo_url.blank? %>
+                <div class="info-right-section right circle">
+                  <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+                </div>
+            <% end %>
+          </div>
+
+
+        <div class="modal-body">
+          <table class="bordered responsive-table invoice_grid_fields" id="invoice_grid_fields">
+            <thead>
             <tr>
-              <th></th>
-              <th class="align_center"><%= t('views.tasks.name') %></th>
-              <th class="align_center"><%= t('views.tasks.description') %></th>
-              <th class="align_center"><%= t('views.tasks.rate') %></th>
-              <th class="align_center"><%= t('views.logs.hours') %></th>
-              <th class="align_center"><%= t('views.invoices.line_total') %></th>
+
+              <th class="left-align"><%= t('views.tasks.name') %></th>
+              <th class="left-align"><%= t('views.tasks.description') %></th>
+              <th class="center-align"><%= t('views.tasks.rate') %></th>
+              <th class="center-align"><%= 'Logged hours' %></th>
+              <th class="center-align"><%= t('views.invoices.line_total') %></th>
             </tr>
+            </thead>
+            <tbody>
             <% @project.logs.each do |log| %>
                 <tr>
-                  <td></td>
-                    <td class="align_center"><%= log.task.name %></td>
-                    <td class="align_center"><%= log.task.description %></td>
-                    <td class="align_center"><%= log.task.rate %></td>
-                    <td class="align_center"><%= log.hours %></td>
-                    <td class="align_center line_total"><%= log.line_total %></td>
+
+                  <td class="left-align"><%= log.task.name %></td>
+                  <td class="left-align"><%= log.task.description %></td>
+                  <td class="center-align"><%= log.task.rate %></td>
+                  <td class="center-align"><%= log.hours %></td>
+                  <td class="center-align line_total"><%= log.line_total %></td>
                 </tr>
 
             <% end %>
+            </tbody>
           </table>
-
         </div>
-        <!--grid_table-->
-
-        <div class="grid_summary custom">
-          <div class="grid_summary_content">
-            <div class="grid_summary_row">
-              <div class="grid_summary_title">
-                <%= t('views.invoices.subtotal') %>
+        <div class="modal-footer clearfix">
+          <div class="right-section left">
+          </div>
+          <div class="right-section right grid_summary_description">
+            <div class="item-result">
+              <div class="table-row">
+                <%= f.hidden_field :sub_total %>
+                <span><strong>Subtotal</strong></span>
+                <span><strong><%= label_tag '', '', :id => 'invoice_sub_total_lbl' %></strong></span>
               </div>
-              <div class="grid_summary_description">
-                <%= f.hidden_field :sub_total, id: 'log_invoice_sub_total' %>
-                <%= label_tag '', '', :id => 'log_invoice_sub_total_lbl' %>
+              <div class="table-row">
+                <span>
+                    Discount  &nbsp;&nbsp;
+                  <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                </span>
+                <span class="input-field">
+                  <%= f.hidden_field :discount_amount %>
+                  <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip right-align", placeholder:  "00.00" %>
+                  <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                </span>
               </div>
-            </div>
-
-            <div class="grid_summary_row discount">
-              <div class="grid_summary_title">
-                Discount <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select chzn-select", :id => "discount_type"} %>
+              <div class="table-row">
+                <span>
+                    Invoice Tax  &nbsp;&nbsp;
+                  <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id), { prompt: 'Select', include_blank: true},{:class => "discount_select inline-select small-select"} %>
+                </span>
+                <span class="input-field invoice_tax">
+                  <%= f.text_field :invoice_tax_amount, class: "invoice_tax line_item_qtip right-align", placeholder:  "00.00", readOnly: true %>
+                </span>
               </div>
-
-              <div class="grid_summary_description custom">
-                <%= f.hidden_field :discount_amount %>
-                <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
-                <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip" %>
-              </div>
-            </div>
-
-            <%= f.hidden_field :tax_amount %>
-            <div class="grid_summary_row taxes_total">
-              <ul>
+              <%= f.hidden_field :tax_amount %>
+              <div class="taxes_total">
                 <% @invoice.tax_detail_with_discount.map do |tax, amount| %>
-                    <li><span class='grid_summary_title'><%= tax %></span>
-                      <span class='grid_summary_description tax_amount'></span>
-                    </li>
+                    <div class="table-row">
+                      <span><%= tax %></span>
+                      <span class="grid_summary_description tax_amount"><%= amount%></span>
+                    </div>
                 <% end %>
-              </ul>
-            </div>
-
-            <div class="grid_summary_row net_total">
-              <div class="grid_summary_title">
-                <%= t('views.invoices.net_total') %>
-              </div>
-              <div class="grid_summary_description">
-                <%= f.hidden_field :invoice_total, id: 'log_invoice_total' %>
-                <%= label_tag '', '', id: 'log_invoice_total_lbl', class: 'net_total_value' %>
               </div>
             </div>
+              <div class="item-total net_total">
+                <div class="table-row">
+                  <span><strong><%= t('views.invoices.net_total') %></strong></span>
+                  <%= f.hidden_field :invoice_total %>
+                  <span><strong><%= label_tag '', '0', :id => 'invoice_total_lbl', :class => 'net_total_value' %></strong></span>
+                </div>
+              </div>
           </div>
         </div>
-        <!--grid_summary-->
-
-        <div class="fields_content_data new_invoice_fields">
-
-          <div class="field_row textarea">
-            <div class="label_field textarea"><%= f.label :notes %></div>
-            <div class="large_field">
-              <%= f.text_area :notes, maxlength: 400 %>
-              <ul class="field_description">
-                <li class="text-limit">
-                </li>
-              </ul>
-            </div>
+        <div class="commentSection clearfix">
+          <div class="comments-content">
+            <a href="#" class="chatIcon"><i class="material-icons">chat</i></a>
+            <%= f.text_area :notes, maxlength: 400 %>
           </div>
-          <!--field_row-->
-
         </div>
-        <!--fields_content_data-->
-
-      </div>
-      <!--content_middle-->
-      <%= f.hidden_field :invoice_type %>
-      <%= f.hidden_field :project_id %>
-      <%= f.hidden_field :client_id %>
-      <div class="content_bottom">
-        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
-        <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit' %>
-        <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
-        <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, :class => 'btn_large grey' %>
-      </div>
-      <!--content_bottom-->
-
-    </div>
-    <!--invoice_form-->
-<% end %>
+        <%= f.hidden_field :invoice_type %>
+        <%= f.hidden_field :project_id %>
+        <%= f.hidden_field :client_id %>
+        <!--invoice_form-->
+    <% end %>
+  </div>
+</div>

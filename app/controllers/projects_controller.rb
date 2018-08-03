@@ -15,8 +15,9 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     params[:status] = params[:status] || 'active'
+    @status = params[:status]
     load_projects
-    @projects = filter_by_company(@projects)
+    @projects = filter_by_company(@projects) if @projects
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -25,16 +26,37 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    @status = @project.deleted_at.present? ? 'deleted' : ( @project.archived? ? 'archived?' : 'active' )
+    params[:status] = params[:status] || 'active'
+    load_projects
+    @project_logs = @project.logs.order('date desc')
+    @project_tasks = @project.project_tasks.order('updated_at desc').page(params[:page]).per(@per_page)
   end
 
   # GET /projects/new
   def new
+    managers = load_managers_for_project('new', get_company_id, nil)
+    redirect_to staffs_path, alert: t('views.projects.staff_required_msg') and return if managers.count <= 0
+    params[:status] = params[:status] || 'active'
+    @status = params[:status]
+    load_projects
+    @projects = filter_by_company(@projects)
     @project = Project.new
     3.times { @project.project_tasks.build(); @project.team_members.build() }
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+    end
   end
 
   # GET /projects/1/edit
   def edit
+    3.times { @project.project_tasks.build() } if @project.project_tasks.blank?
+    3.times { @project.team_members.build() } if @project.team_members.blank?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+    end
   end
 
   # POST /projects
@@ -42,7 +64,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.company_id = get_company_id
     if @project.save
-      redirect_to projects_path, notice: 'Project was successfully created.'
+      redirect_to @project, notice: t('views.projects.created_msg')
     else
       render :new
     end
@@ -51,7 +73,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to projects_path, notice: 'Project was successfully updated.'
+      redirect_to @project , notice: t('views.projects.updated_msg')
     else
       render :edit
     end
@@ -60,14 +82,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+
+    respond_to do |format|
+      format.html { redirect_to projects_url, notice: t('views.projects.destroyed_msg') }
+      format.json { render_json(@project) }
+    end
   end
 
   def sort_column
     params[:sort] ||= 'created_at'
     Project.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
   end
-
 
   def sort_direction
     params[:direction] ||= 'desc'
@@ -80,7 +105,7 @@ class ProjectsController < ApplicationController
     @project_has_deleted_clients = project_has_deleted_clients?(@projects)
     @message = get_intimation_message(result[:action_to_perform], result[:project_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    redirect_to projects_path, notice: t('views.projects.bulk_action_msg', action: @action)
   end
 
   def undo_actions
@@ -118,7 +143,7 @@ class ProjectsController < ApplicationController
   def project_has_deleted_clients?(projects)
     project_with_deleted_clients = []
     projects.each do |project|
-      if project.unscoped_client.deleted_at.present?
+      if project.unscoped_client.present? && project.unscoped_client.deleted_at.present?
         project_with_deleted_clients << project.project_name
       end
     end
@@ -132,8 +157,21 @@ class ProjectsController < ApplicationController
   end
 
   def load_projects
-    projects = (current_user.has_role? :staff)? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
-    @projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    if (current_user.has_role? :staff)
+      projects = current_user.staff.projects if current_user.staff.present?
+    else
+      projects = Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    end
+
+    if projects
+      projects = ((current_user.has_role? :staff) && current_user.staff ) ? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+      projects = projects.search(params[:search]).records if params[:search].present?
+      projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    else
+      projects = nil
+    end
+
+    @projects = projects
   end
 
 end

@@ -19,8 +19,10 @@
 #
 class Client < ActiveRecord::Base
 
+  include ClientSearch
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
 
   # associations
   has_many :estimates
@@ -104,6 +106,10 @@ class Client < ActiveRecord::Base
     self.send(method).page(params[:page]).per(params[:per])
   end
 
+  def self.is_exists? email, association
+    association.present? ? association.clients.where(email: email).exists? : where(email: email).exists?
+  end
+
   def credit_payments
     credit = []
     invoices.with_deleted.each { |invoice| credit << invoice.payments.where("payment_type = 'credit'").order("created_at ASC") }
@@ -156,7 +162,7 @@ class Client < ActiveRecord::Base
   end
 
   def add_available_credit(available_credit, company_id)
-    payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
+    #payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
   end
 
   def update_available_credit(available_credit)
@@ -172,17 +178,37 @@ class Client < ActiveRecord::Base
   end
 
   def self.get_clients(params)
-    account = params[:user].current_account
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    # get the company
+    company =  Company.find_by(id: params[:company_id])
 
     # get the clients associated with companies
-    company_clients = Company.find(params[:company_id]).clients.send(params[:status])
-    #company_clients
+    company_clients = company.clients
+    company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
+    company_clients = company_clients.send(mappings[params[:status].to_sym])
+    company_clients = company_clients.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+
+    # get the account
+    account = params[:user].current_account
+
+    # get the clients associated with accounts
+    account_clients = account.clients
+    account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
+    account_clients = account_clients.send(mappings[params[:status].to_sym])
+    account_clients = account_clients.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
 
     # get the unique clients associated with companies and accounts
-    clients = (account.clients.send(params[:status]) + company_clients).uniq
+    clients = ( account_clients + company_clients).uniq
 
     # sort clients in ascending or descending order
-    clients.sort! do |a, b|
+    clients = clients.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
@@ -196,5 +222,13 @@ class Client < ActiveRecord::Base
     return true if self.currency.present?
     self.currency = Currency.default_currency
     self.save
+  end
+
+  def group_date
+    created_at.strftime('%B %Y')
+  end
+
+  def client_name
+    "#{first_name.first.capitalize}#{last_name.first.capitalize}"
   end
 end

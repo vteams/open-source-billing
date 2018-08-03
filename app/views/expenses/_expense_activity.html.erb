@@ -1,0 +1,68 @@
+<!--- Activity sidebar --->
+<span class="btn-activity">Activities</span>
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'/>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+    <div class="status-info active">
+      <h5>
+        <%= link_to t('views.common.active'), "expenses?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@expense_activity[:active_expenses_total], unit: default_currency_unit) %></div>
+      <% @expense_activity[:active_expense_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @expense_activity[:active_expenses_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.deleted'), "expenses?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@expense_activity[:deleted_expenses_total], unit: default_currency_unit )%></div>
+      <% @expense_activity[:deleted_expense_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @expense_activity[:deleted_expenses_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.archived'), "expenses?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@expense_activity[:archived_expenses_total], unit: default_currency_unit )%></div>
+      <% @expense_activity[:archived_expenses_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @expense_activity[:archived_expenses_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</aside>

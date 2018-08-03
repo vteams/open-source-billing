@@ -30,10 +30,11 @@ class ClientsController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
     @status = params[:status]
+
+    @clients = Client.get_clients(params.merge(get_args))
+    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -42,18 +43,19 @@ class ClientsController < ApplicationController
   end
 
   def filter_clients
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
+    @clients = Client.get_clients(params.merge(get_args))
   end
 
   # GET /clients/1
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
-
+    @invoices = @client.invoices
+    @payments = Payment.payments_history(@client)
+    @detail = Services::ClientDetail.new(@client).get_detail
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @client }
     end
   end
@@ -65,19 +67,32 @@ class ClientsController < ApplicationController
     @client.client_contacts.build()
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render :json => @client }
     end
+
   end
 
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
+    respond_to do |format|
+      format.html
+      format.js
+      format.json { render :json => @client }
+    end
   end
 
   # POST /clients
   # POST /clients.json
   def create
+    if Client.is_exists?(params[:client][:email], get_association_obj)
+      @client_exists = true
+      redirect_to(clients_path, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
+      return
+    end
+
     @client = Client.new(client_params)
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
@@ -90,9 +105,7 @@ class ClientsController < ApplicationController
       if @client.save
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
-        new_client_message = new_client(@client.id)
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => new_client_message) unless params[:quick_create]
-        return
+        format.html { redirect_to(clients_path, :notice => new_client(@client.id)) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @client.errors, :status => :unprocessable_entity }
@@ -113,9 +126,9 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes(client_params)
-        format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
+        format.html { redirect_to @client, :notice => t('views.clients.updated_msg') }
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => 'Your client has been updated successfully.')
+        redirect_to(clients_path, :notice => t('views.clients.updated_msg'))
         return
       else
         format.html { render :action => "edit" }
@@ -127,12 +140,12 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
-    @client = Client.find(params[:id])
+    @client = Client.unscoped.find(params[:id])
     @client.destroy
 
     respond_to do |format|
       format.html { redirect_to clients_url }
-      format.json { head :no_content }
+      format.json { render_json(@client) }
     end
   end
 
@@ -140,15 +153,19 @@ class ClientsController < ApplicationController
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform
     @clients = result[:clients]#.order("#{sort_column} #{sort_direction}")
-    @message = get_intimation_message(result[:action_to_perform], result[:client_ids])
-    @action = result[:action]
-    respond_to { |format| format.js }
+    #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
+    @action =  result[:action]
+    respond_to do |format|
+      format.html { redirect_to clients_url, notice: t('views.clients.bulk_action_msg', action: @action) }
+      format.js
+    end
   end
 
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
-    @clients = Client.get_clients(params.merge(get_args('unarchived')))
+    params[:status] = 'active'
+    @clients = Client.get_clients(params.merge(get_args))
     respond_to { |format| format.js }
   end
 
@@ -196,8 +213,8 @@ class ClientsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  def get_args(status)
-    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+  def get_args
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   private
 

@@ -1,62 +1,35 @@
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-<div class="taxes">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t('views.taxes.taxes') %><span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('views.taxes.new'))),
-                  new_tax_path,
-                  :class => 'btn_large' %>
+<%= render partial: 'tax_activity' %>
+    <!--- content --->
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel ">
+        <div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('views.taxes.taxes'), taxes_path %></span>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(taxes_path(layout_toggle_params(view: 'card')),
+                                        taxes_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "taxes/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='tax' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render 'filter_links' %>
-          </div>
-        </div>
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing tax_listing">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-            </colgroup>
-            <thead id="tax_head">
-            <%= render partial: 'tax_header' %>
-            </thead>
-            <tbody id="tax_body">
-            <%= render 'taxes' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('views.taxes.new'))),
-                    new_tax_path,
-                    :class => 'btn_large' %>
-      </div>
-      <!--content_bottom-->
+  <%= render 'filters' %>
+  <div class="invoice-box tax-box">
+      <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+          <div class="search_result_container"><%= render 'taxes_container' %></div>
+          <%= render partial: 'bulk_actions'%>
+      <% end %>
+  </div>
+</div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#percentage_min,#percentage_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date percentage_min percentage_max)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   <% end %>
-</div><!--taxes-->
-
+</script>

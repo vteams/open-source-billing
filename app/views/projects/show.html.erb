@@ -1,4 +1,75 @@
-<p id="notice"><%= notice %></p>
+<%= render 'project_activity'%>
+<div id="main-content" class='mCustomScrollbar <%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="row">
+    <div class="col s12 task-detail">
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar activebar">
+        <div class="card-white-panel">
+          <h3>
+            <i class="zmdi zmdi-arrow-left project-back-icon" onclick="window.location.href = '/<%= I18n.locale %>/projects'"></i>
+            <%= t('views.projects.project_detail') %>
+          </h3>
+          <div class="page-action-btn-group">
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_task')}'>assignment</i>"), new_project_project_task_path(@project), remote: true %>
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_staff')}'>person</i>"), new_staff_path(project_id: @project.id), remote: true %>
+            <a href="#" class="edit-detail"><i class="material-icons" title="<%= t('helpers.links.edit') %>">create</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+            <%= link_to raw("<i class='material-icons'>delete</i>"), @project, method: :delete,
+                        data:{confirm: t('helpers.messages.confirm'),
+                              success: t('views.projects.destroyed_msg'),
+                              redirect: projects_path},
+                        title: t('helpers.links.delete') %>
+          </div>
+        </div>
+      </div>
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar mainbar">
+        <div class="card-white-panel ">
+
+          <%= link_to raw('<i class="material-icons">arrow_back</i>'), projects_path %>
+          <h3><%= t('header.links.time_tracking.time_tracking') %> :
+            <select onchange="location = this.value;">
+              <% @projects.each do |project|%>
+                  <option value="<%= project_path(project) %>" <%= "#{ 'selected' if project.id.eql?(@project.id)}"%> ><%= project.project_name %></option>
+              <% end %>
+            </select>
+          </h3>
+          <a href="#" class="btn-slide right">
+            <i class="material-icons">keyboard_arrow_up</i>
+          </a>
+        </div>
+      </div>
+      <%= render 'project_detail', can_edit: false %>
+    </div>
+  </div>
+
+  <% if @project_tasks.present?  %>
+      <div class="row">
+        <div class="col s12 task-detail">
+          <!--- breadcrum Bar --->
+          <div class="task-box clearfix">
+            <!--- Invoices Card Title--->
+            <div class="view-btn-group clearfix">
+              <div class="btn-inline right">
+                <!--ToDo-->
+                <!-- Followings action actions will be implements later. -->
+                <div class="btn-icons">
+                  <a href="<%= project_path(@project, view: 'card', group: params[:group]) %>" class="<%= 'active' if render_card_view? %>"><i class="material-icons">view_comfy</i></a>
+                  <a href="<%= project_path(@project, view: 'table', group: params[:group]) %>" class="<%= 'active' unless render_card_view? %>"><i class="material-icons">view_list</i></a>
+                </div>
+                <div class="btn-calender">
+                  <a href='<%= project_path(@project, group: :day, view: params[:view]) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
+                  <a href="<%= project_path(@project, group: :week, view: params[:view]) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
+                  <a href="<%= project_path(@project, view: params[:view]) %>" class="<%= 'active' unless params[:group].present? %>"><%= t('views.tasks.month') %></a>
+                </div>
+              </div>
+            </div>
+            <!--- task Card --->
+            <%= render render_card_view? ? 'task_card_view' : 'task_table_view' %>
+            <%= render partial: 'shared/pagination', locals: {model_object: @project_tasks} %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

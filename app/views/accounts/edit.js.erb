@@ -1,0 +1,10 @@
+$('body').append("<%= escape_javascript render partial: 'account_form_popup', locals: {account: @account}  %>");
+$('select').material_select();
+$('#account_form_popup  input').each(function(){
+   if($(this).val() != ""){
+       $(this).parent().find('label').addClass('active');
+   }
+});
+elem = $("#account_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

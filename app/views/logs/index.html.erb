@@ -1,33 +1,38 @@
-<%- model_class = Log -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<div class="log">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-      </h1>
+<%= render 'log_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="row">
+    <!--- breadcrum Bar --->
+    <div class="col s12 breadcrum-bar">
+      <div class="card-white-panel">
+        <h3>
+          <%= t('header.links.time_tracking.time_tracking') %>:
+          <select onchange="location = this.value;">
+            <option value="<%= "/#{I18n.locale}/projects" %>"> <%= t('header.links.time_tracking.project') %></option>
+            <option value="<%= "/#{I18n.locale}/tasks" %>"><%= t('header.links.time_tracking.task') %></option>
+            <option value="<%= "/#{I18n.locale}/staffs" %>"><%= t('header.links.time_tracking.staff') %></option>
+            <option value="<%= "/#{I18n.locale}/logs" %>" selected><%= t('header.links.time_tracking.time_sheet') %></option>
+          </select>
+        </h3>
+      </div>
     </div>
-    <%= link_to 'Start Timer', '#',
-                :onclick => "window.open('/en/logs/timer', 'newwindow', 'resizable, width=400, height=650'); return false;",class: "btn_large timer_button" %>
-    <div class="primary_btn">
-      <% link_to (content_tag(:span, t('header.links.logs.new'))),
-                  new_log_path,
-                  :class => 'btn_large' %>
+
+    <div class="invoice-box log-box clearfix noCollapse card-white-panel time-log-container">
+        <div class="row month" id="calendar_divs">
+          <div class="col s12 m8 l8 xl8" id="calendar"></div>
+          <div class="col s12 m4 l4 xl4 inline_form" id="calendar_form">
+            <%= render 'new_form' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <div class="content_middle logs_table">
+              <%= render 'logs/logs_table' %>
+            </div>
+          </div>
+
+        </div>
     </div>
   </div>
-  <!--content_top-->
-  <div id="calendar_div" class="month">
-    <div id='calendar'></div>
-    <div id="calendar_form" > <%= render 'logs/form' %>  </div>
-  </div>
-      <div class="content_middle logs_table">
-        <%= render 'logs/logs_table' %>
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <% link_to (content_tag(:span, t('header.links.logs.new'))),
-                    new_log_path,
-                    :class => 'btn_large' %>
-      </div>
-  <!--content_bottom-->
 </div>

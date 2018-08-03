@@ -26,13 +26,10 @@ class PaymentsController < ApplicationController
   helper_method :sort_column, :sort_direction, :get_org_name
 
   def index
-    @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
-    @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
-    @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
-    @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
-
+    @payments = Payment.filter(params, @per_page)
     #filter invoices by company
     @payments = filter_by_company(@payments)
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -44,6 +41,7 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @payment }
     end
   end
@@ -59,8 +57,12 @@ class PaymentsController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
-    if @payment.payment_method and @payment.payment_method == 'paypal'
-      redirect_to payments_path,alert: "You can not edit payment with paypal!"
+    # if @payment.payment_method and @payment.payment_method == 'paypal'
+    #   redirect_to payments_path,alert: "You can not edit payment with paypal!"
+    # end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
     end
   end
 
@@ -69,7 +71,9 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, :notice => 'The payment has been recorded successfully.' }
+        Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
+        @payment.notify_client(current_user) if params[:payment] && params[:payment][:send_payment_notification]
+        format.html { redirect_to payments_path, :notice => t('views.payments.saved_msg') }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else
         format.html { render :action => "new" }
@@ -86,7 +90,7 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(payment_params)
         @payment.update_attribute(:send_payment_notification,params[:payments][0][:send_payment_notification]) if params[:payments] and params[:payments][0][:send_payment_notification]
         @payment.notify_client(current_user)  if params[:payments] and params[:payments][0][:send_payment_notification]
-        format.html { redirect_to(edit_payment_url(@payment), :notice => 'Your Payment has been updated successfully.') }
+        format.html { redirect_to(payments_url, :notice => t('views.payments.updated_msg')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
@@ -99,11 +103,17 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1.json
   def destroy
     @payment = Payment.find(params[:id])
-    @payment.destroy
+    @payment.destroy unless OSB::CONFIG::DEMO_MODE
 
     respond_to do |format|
       format.html { redirect_to payments_url }
-      format.json { head :no_content }
+      format.json do
+        if OSB::CONFIG::DEMO_MODE
+          render json: {message: t('views.common.demo_restriction_msg') }, status: :ok
+        else
+          render_json(@payment)
+        end
+      end
     end
   end
 
@@ -115,6 +125,8 @@ class PaymentsController < ApplicationController
       company_id = Invoice.find(inv_id).company_id
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
     end
+
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
   end
 
   def update_individual_payment
@@ -123,10 +135,10 @@ class PaymentsController < ApplicationController
     notice = ""
     alert = ""
     if paid_invoice_ids.present?
-      notice =  "Payment(s) against invoice(s) with invoice # #{paid_invoice_ids.join(",")} have been recorded successfully."
+      notice =  t('views.payments.bulk_payment_recorded_msg', paid_ids: paid_invoice_ids.join(','))
     end
     if unpaid_invoice_ids.present?
-      alert = "Payment(s) against invoice(s) with invoice # #{unpaid_invoice_ids.join(",")} have failed due to client's insufficiant credit balance."
+      alert = t('views.payments.bulk_payment_failed_msg', unpaid_ids: unpaid_invoice_ids.join(','))
     end
     redirect_to(where_to_redirect, :notice => notice , :alert => alert)
   end
@@ -134,6 +146,7 @@ class PaymentsController < ApplicationController
   def bulk_actions
     per = params[:per].present? ? params[:per] : @per_page
     ids = params[:payment_ids]
+    redirect_to payments_url, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
     if Payment.is_credit_entry? ids
       @action = "credit entry"
       @payments_with_credit = Payment.payments_with_credit ids
@@ -150,13 +163,18 @@ class PaymentsController < ApplicationController
       @action = "deleted"
       @message = payments_deleted(ids) unless ids.blank?
     end
-    respond_to { |format| format.js }
-    #redirect_to payments_url
+    respond_to do |format|
+      format.html { redirect_to payments_url, notice: t('views.payments.bulk_action_msg', action: @action) }
+      format.js
+      format.json
+    end
   end
 
   def payments_history
-    client = Invoice.find_by_id(params[:id]).unscoped_client
-    @payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
+    #client = Invoice.find_by_id(params[:id]).unscoped_client
+    #@payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
+    invoice = Invoice.find_by_id params[:id]
+    @payments = invoice.payments
   end
 
   def invoice_payments_history
@@ -176,7 +194,7 @@ class PaymentsController < ApplicationController
     @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
     #filter invoices by company
     @payments = filter_by_company(@payments)
-    flash[:notice] = 'Payment(s) are deleted successfully'
+    flash[:notice] = t('views.payments.bulk_deleted_msg')
     respond_to { |format| format.js }
   end
 

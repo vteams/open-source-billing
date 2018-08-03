@@ -1,61 +1,32 @@
-<%- model_class = Estimate -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<div class="estimate">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
-                  new_estimate_path,
-                  :class => 'btn_large' %>
+<%= render 'estimate_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item  breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.estimates.estimates'), estimates_path %></span>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(estimates_path(layout_toggle_params(view: 'card')),
+                                        estimates_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <%= form_tag "estimates/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
+  <%= render 'filters' %>
+  <div class="invoice-box clearfix">
+    <%= form_tag "estimates/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render partial: 'estimates_container' %></div>
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render "filter_links" %>
-          </div>
-        </div>
-
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing estimate_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-
-            </colgroup>
-            <thead id="estimate_head">
-            <%= render partial: 'estimate_header' %>
-            </thead>
-            <tbody id="estimate_body">
-            <%= render 'estimate' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.estimates.new'))),
-                    new_estimate_path,
-                    :class => 'btn_large' %>
-      </div>
-  <% end %>
 </div>
+<script>
+  initFilterEvents('#estimate_start_date,#estimate_end_date,#estimate_number_min,#estimate_number_max');
+  <% if is_filter_applied?(%w(estimate_start_date estimate_end_date estimate_number_min estimate_number_max client_id type)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  <% end %>
+</script>

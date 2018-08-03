@@ -8,16 +8,28 @@ class DateFormats
     format = 'yyyy-mm-dd'
     s_format = @server_format()
     switch s_format
-      when '%m/%d/%y'
-        format = 'mm/dd/y'
+      when '%d-%b-%Y'
+        format = 'dd-mmm-yyyy'
+      when '%m/%d/%Y'
+        format = 'mm/dd/yyyy'
+      when '%d/%m/%Y'
+        format = 'dd/mm/yyyy'
+      when '%Y-%m-%d'
+        format = 'yyyy-mm-dd'
+      else
+        format = 'yyyy-mm-dd'
+    format
+
+  @jqueryFormat: ->
+    format = 'yyyy-mm-dd'
+    s_format = @server_format()
+    switch s_format
+      when '%d-%b-%Y'
+        format = 'dd-M-yy'
       when '%m/%d/%Y'
         format = 'mm/dd/yy'
-      when '%d/%m/%y'
-        format = 'dd/mm/y'
       when '%d/%m/%Y'
         format = 'dd/mm/yy'
-      when '%y-%m-%d'
-        format = 'y-mm-dd'
       when '%Y-%m-%d'
         format = 'yy-mm-dd'
       else
@@ -30,19 +42,12 @@ class DateFormats
     day = date.split('-')[2]
     format = @server_format()
     switch format
-      when '%m/%d/%y'
-        year = String(year).substr(2,3)
-        date = "#{month}/#{day}/#{year}"
+      when '%d-%b-%Y'
+        date = "#{day}-#{moment(date).format('MMM')}-#{year}"
       when '%m/%d/%Y'
         date = "#{month}/#{day}/#{year}"
-      when '%d/%m/%y'
-        year = String(year).substr(2,3)
-        date = "#{day}/#{month}/#{year}"
       when '%d/%m/%Y'
         date = "#{day}/#{month}/#{year}"
-      when '%y-%m-%d'
-        year = String(year).substr(2,3)
-        date = "#{year}-#{month}-#{day}"
       when '%Y-%m-%d'
         date = "#{year}-#{month}-#{day}"
       else
@@ -55,26 +60,18 @@ class DateFormats
     month = 4
     day = 15
     switch date_format
-      when '%m/%d/%y'
-        day = date.split('/')[1]
-        month = date.split('/')[0]
-        year = date.split('/')[2]
+      when '%d-%b-%Y'
+        month = date.split('-')[1]
+        year = date.split('-')[2]
+        day = date.split('-')[0]
       when '%m/%d/%Y'
         day = date.split('/')[1]
         month = date.split('/')[0]
-        year = date.split('/')[2]
-      when '%d/%m/%y'
-        day = date.split('/')[0]
-        month = date.split('/')[1]
         year = date.split('/')[2]
       when '%d/%m/%Y'
         day = date.split('/')[0]
         month = date.split('/')[1]
         year = date.split('/')[2]
-      when '%y-%m-%d'
-        day = date.split('-')[2]
-        month = date.split('-')[1]
-        year=date.split('-')[0]
       when '%Y-%m-%d'
         day = date.split('-')[2]
         month = date.split('-')[1]
@@ -109,7 +106,7 @@ class DateFormats
   @validate_date:(date = null) ->
     returnState = false
     try
-      jQuery.datepicker.parseDate @format(), date
+      jQuery.datepicker.parseDate @jqueryFormat(), date
       returnState = true
     catch err
       returnState = false

@@ -1,3 +1,7 @@
-$('#calendar_form').html('<%= escape_javascript render('logs/form') %>');
+
+$('#calendar_form').html('<%= escape_javascript render('logs/new_form') %>');
+$('select').material_select();
+$('label').addClass('active');
 var view = $('#calendar').fullCalendar('getView');
 $('#view').val(view.name);
+initLogFormValidation();

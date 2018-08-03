@@ -1,103 +1,30 @@
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%- model_class = Payment -%>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-<div class="payment">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => t("views.payments.payments") %>
-        <span></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.payments.new'))),
-                  '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
-                  :class => 'btn_large', :remote => true %>
+<%= render 'payment_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.payments.payments'), 'javascript:;' %></span>
+          <%= index_layout_toggle_icons(payments_path(layout_toggle_params(view: 'card')),
+                                        payments_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "payments/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-
-          <div class="grid_control_right" id="active_links">
-            <%#= render 'filter_links' %>
-          </div>
-        </div>
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing payment_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-            </colgroup>
-            <thead id="payments_header">
-            <%= render 'payments_header'%>
-            </thead>
-            <tbody id="payment_body">
-            <%= render 'payment' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("views.payments.new"))),
-                    '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal",
-                    :class => 'btn_large', :remote => true %>
-      </div>
-      <!--content_bottom-->
+  <%= render 'filters' %>
+  <div class="invoice-box clearfix">
+    <%= form_tag "payments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+        <div class="search_result_container"><%= render 'payments_container' %></div>
+        <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
+</div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#payment_start_date,#payment_end_date,#invoice_number_min,#invoice_number_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date payment_start_date payment_end_date invoice_number_min invoice_number_max client_id)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   <% end %>
-
-  <!-- START: Unpaid invoices popup -->
-
-  <!-- END: Unpaid invoices popup -->
-
-  <!-- START: Credit entries -->
-  <%= form_tag "/payments/delete_non_credit_payments", :id => "delete_non_credit_payments", :remote => true do %>
-      <div id="credit_payments" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="model_grey_container">
-          <div class="modal-header">
-            <h1>Following credit payments are applied to invoices and can't be deleted.</h1>
-
-            <div class="cross_btn" style="margin:-50px -1px 0 0">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
-              </button>
-            </div>
-          </div>
-          <div class="modal-body">
-
-          </div>
-          <p class="continue_delete_msg">To continue deleting other payments please press the Delete Payments button
-            below.</p>
-
-          <div class="footer ">
-            <%= hidden_field_tag :non_credit_payments %>
-            <%= submit_tag "Delete Payments", :class => "btn_large submit" %>
-            <a class="btn_large grey" href="#" data-dismiss="modal">cancel</a>
-          </div>
-        </div>
-      </div>
-  <% end %>
-  <!-- END: Credit entries -->
-
-</div><!--payment-->
-
+</script>

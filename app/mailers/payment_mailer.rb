@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
 
   def payment_notification_email(current_user, payment)
    # @client, @invoice, @amount = client, invoice, payment.payment_amount
@@ -42,7 +42,7 @@ class PaymentMailer < ActionMailer::Base
   def get_email_template(user = nil, invoice, template_type)
     #find company level template of a template_type
     get_user = user.is_a?(String)? User.find_by_email(user) : user
-    template = invoice.company.email_templates.where(:template_type => template_type).first
+    template = EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of a template_type if no company level template
     template  = get_user.accounts.first.email_templates.where(:template_type => template_type).first if template.blank? && user.present?
     template
@@ -66,4 +66,13 @@ class PaymentMailer < ActionMailer::Base
     template.subject = template.subject.to_s.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
     template
   end
+
+  def payment_failure(stripe_data={})
+    @attempt = stripe_data[:attempt]
+    @user    = stripe_data[:customer_email]
+    @amount  = stripe_data[:amount]
+    @message  = stripe_data[:message]
+    mail(:to => @user, :subject => "Payment Failed")
+  end
+
 end

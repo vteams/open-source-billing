@@ -1,0 +1,33 @@
+<!--- Activity sidebar --->
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <div class="status-info active">
+      <h5>
+        <%= link_to t('views.common.active'), projects_path(status: 'active') %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.archive'), projects_path(status: 'archived') %>
+        <span id="actives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.deleted'), projects_path(status: 'deleted') %>
+        <span id="actives">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
+      </h5>
+    </div>
+    <% if @project.present? && !@project.new_record? %>
+      <div class="status-info actionState">
+        <h5 class="text-blue"><%= link_to t('views.projects.add_task'), new_project_project_task_path(@project), remote: true %></h5>
+        <h5 class="text-blue"><%= link_to t('views.projects.add_staff'), new_staff_path(project_id: @project.id), remote: true %></h5>
+      </div>
+    <% end %>
+  </div>
+
+</aside>

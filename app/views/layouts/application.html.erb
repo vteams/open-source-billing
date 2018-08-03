@@ -1,259 +1,52 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Open Source Billing</title>
-  <%= favicon_link_tag %>
-  <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <%= include_gon %>
-</head>
-<body currency-unit="<%= t("currency_unit") %>">
-<div class="main_container">
-  <div class="white_container">
+<html lang="<%= I18n.locale %>">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <div class="primary_header">
-      <div class="logo">
-        <%= link_to image_tag("logo.png", :size => "218x30"), get_url %>
-      </div>
-      <div class="primary_menu">
+      <title>:: Open Source Billing ::</title>
+      <%#= favicon_link_tag %>
 
-        <div class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.user_name || current_user.email %>
-            <b class="caret"></b></a>
-          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-            <div class="top_arrow"><%=image_tag "dd_top.png" %></div>
-            <ul>
-              <li><%= link_to "Edit Profile", new_account_path, tabindex: "-1" %></li>
-              <li><%= link_to "Change password", edit_user_registration_path, tabindex: "-1" %></li>
-              <li><%= link_to "Logout", destroy_user_session_path, :method => :delete, tabindex: "-1" %></li>
-            </ul>
+      <%= stylesheet_link_tag "application", :media => "all" %>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Dosis:400,500" rel="stylesheet">
+
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+      <%= javascript_include_tag "application" %>
+      <script>
+          I18n.locale = "<%= I18n.locale %>";
+      </script>
+      <%= csrf_meta_tags %>
+      <%= include_gon %>
+    </head>
+    <body currency-unit="<%= t("currency_unit") %>" class="invoice-report full-page">
+
+        <%= render 'layouts/header' %>
+
+        <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}"%> ">
+          <div class="container-fluid">
+            <div id='overly-container'>
+              </div>
+            <!--- side vertical menu --->
+            <%= render 'layouts/side_nav'%>
+            <%= render 'layouts/flash_messages'%>
+
+            <%= yield %>
+
           </div>
+        </main>
+        <%= render 'layouts/new_actions_buttons'%>
+        <div id="loading-indicator" class="hidden">
+          <%= image_tag 'ring.gif' %>
         </div>
-
-        <div class="dropdown_sep"></div>
-
-        <div class="dropdown">
-          <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <span id="current_selected_company"><%= get_company_name %></span>
-            <b class="caret"></b>
-          </a>
-          <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-            <div class="top_arrow"><%= image_tag "dd_top.png" %></div>
-            <%= filter_by_companies() %>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <!--header-->
-
-    <div class="navigation">
-      <div class="nav_container">
-        <div id="nav">
-          <ul class="select">
-            <li><%= active_link_to t("header.links.dashboard"), get_url %></li>
-
-            <li class="dropdown">
-                <%= active_link_to t("header.links.invoices.invoices"), invoices_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.invoices.invoices"), invoices_path %></li>
-                <li><%= active_link_to t("header.links.invoices.recurring"), recurring_profiles_path %></li>
-              </ul>
-                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <ul>
-                    <li><%= active_link_to t("header.links.invoices.listing"), invoices_path %></li>
-                    <li><%= active_link_to t("header.links.invoices.new"), new_invoice_path %></li>
-                    <li><%= active_link_to t("header.links.invoices.recurring"), recurring_profiles_path %></li>
-                  </ul>
-                </div>
-            </li>
-            <li class="dropdown">
-              <%= active_link_to "Estimates", estimates_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
-              <ul class="sub">
-                <li><%= active_link_to "Estimates", estimates_path %></li>
-                <li><%= active_link_to "New Estimate", new_estimate_path %></li>
-              </ul>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to "Estimate Listing", estimates_path %></li>
-                  <li><%= active_link_to "New Estimate", new_estimate_path %></li>
-                </ul>
-              </div>
-            </li>
-            <li class="dropdown">
-              <%= active_link_to t("header.links.time_tracking.time_tracking"), logs_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.time_tracking.time_sheet"), logs_path %></li>
-                <li><%= active_link_to t("header.links.time_tracking.project"), projects_path %></li>
-                <li><%= active_link_to t("header.links.time_tracking.task"), tasks_path %></li>
-                <li><%= active_link_to t("header.links.time_tracking.staff"), staffs_path %></li>
-                <li><%= active_link_to t("header.links.time_tracking.invoice"), invoice_logs_path %></li>
-              </ul>
-                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                   <ul>
-                    <li><%= active_link_to t("header.links.time_tracking.time_sheet"), logs_path %></li>
-                    <li><%= active_link_to t("header.links.time_tracking.project"), projects_path %></li>
-                    <li><%= active_link_to t("header.links.time_tracking.task"), tasks_path %></li>
-                     <li><%= active_link_to t("header.links.time_tracking.staff"), staffs_path %></li>
-                     <li><%= active_link_to t("header.links.time_tracking.invoice"), invoice_logs_path %></li>
-
-                   </ul>
-                </div>
-            </li>
-
-            <li class="dropdown">
-              <%= active_link_to t("header.links.expenses.expenses"), expenses_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.expenses.listing"), "/#{I18n.locale}/expenses" %></li>
-                <li><%= active_link_to t("header.links.expenses.new"), "/#{I18n.locale}/expenses/new" %></li>
-              </ul>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to t("header.links.expenses.listing"), "/#{I18n.locale}/expenses" %></li>
-                  <li><%= active_link_to t("header.links.expenses.new"), "/#{I18n.locale}/expenses/new" %></li>
-
-                </ul>
-              </div>
-            </li>
-
-            <li class="dropdown">
-              <%= active_link_to t("header.links.clients.clients"), clients_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.clients.clients"), clients_path %></li>
-                <li><%= active_link_to t("header.links.clients.sent_emails"), sent_emails_path %></li>
-              </ul>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to t("header.links.clients.listing"), clients_path %></li>
-                  <li><%= active_link_to t("header.links.clients.new"), new_client_path %></li>
-                  <li><%= active_link_to t("header.links.clients.sent_emails"), sent_emails_path %></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="dropdown">
-              <%= active_link_to t("header.links.items.items"), items_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.items.items"), items_path %></li>
-                <li><%= active_link_to t("header.links.items.taxes"), taxes_path %></li>
-              </ul>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to t("header.links.items.listing"), items_path %></li>
-                  <li><%= active_link_to t("header.links.items.new"), new_item_path %></li>
-                  <li><%= active_link_to t("header.links.items.taxes"), taxes_path %></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="dropdown">
-              <%= active_link_to t("header.links.payments.payments"), payments_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to t("header.links.payments.listing"), payments_path %></li>
-                  <li><%= active_link_to t("header.links.payments.new"), '/invoices/unpaid_invoices', "data-toggle" => "modal", "data-target" => "#myModal", :remote => true  %></li>
-                </ul>
-              </div>
-            </li>
-            <% if has_access_right?(:manage, Reporting) %>
-                <li class="dropdown">
-                  <%= active_link_to t("header.links.reports.reports"), reports_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-                  <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                    <ul>
-                      <li><%= active_link_to t("header.links.reports.payment_collected"), "/#{I18n.locale}/reports/payments_collected" %></li>
-                      <li><%= active_link_to t("header.links.reports.revenue_by_client"), "/#{I18n.locale}/reports/revenue_by_client" %></li>
-                      <li><%= active_link_to t("header.links.reports.aged_account_receivable"), "/#{I18n.locale}/reports/aged_accounts_receivable" %></li>
-                      <li><%= active_link_to t("header.links.reports.item_sales"), "/#{I18n.locale}/reports/item_sales" %></li>
-                      <li><%= active_link_to t("header.links.reports.invoice_detail"), "/#{I18n.locale}/reports/invoice_detail" %></li>
-                    </ul>
-                  </div>
-                </li>
-            <% end %>
-            <li class="dropdown">
-              <%= active_link_to t("header.links.setting.setting"), companies_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
-
-              <ul class="sub">
-                <li><%= active_link_to t("header.links.setting.companies"), companies_path %></li>
-                <li class="secondary"><%= active_link_to t("header.links.setting.email_templates"), email_templates_path %></li>
-                <% if has_access_right?(:manage, User) %>
-                    <li class="secondary_02"><%= link_to t("header.links.setting.users"), sub_users_path,class: "#{'active' if params[:controller] == 'sub_users' and params[:action] != 'user_settings'}" %></li>
-                <% end %>
-                <li class="secondary_03"><%= link_to t("header.links.setting.basic_settings"), user_settings_sub_users_path,class: "#{'active' if params[:action]=='user_settings'}" %></li>
-                <li class="secondary_04"><%= active_link_to  t("header.links.setting.import_data"), import_data_path %></li>
-              </ul>
-              <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <ul>
-                  <li><%= active_link_to  t("header.links.setting.companies"), companies_path %></li>
-                  <li><%= active_link_to  t("header.links.setting.email_templates"), email_templates_path %></li>
-                  <% if has_access_right?(:manage, User) %>
-                      <li><%= active_link_to  t("header.links.setting.users"), sub_users_path %></li>
-                  <% end %>
-
-                  <li><%= active_link_to  t("header.links.setting.basic_settings"), user_settings_sub_users_path %></li>
-                  <li><%= active_link_to  t("header.links.setting.import_data"), import_data_path %></li>
-                </ul>
-              </div>
-            </li>
-
-            <li><%= active_link_to  t("header.links.help"), help_index_path %></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- NAVIGATION END -->
-
-
-    <!-- CONTENT AREA START-->
-    <div class="content <%= controller.controller_name %>-main">
-      <div class="content_container">
-        <div class="alert alert-success" style="display:<%= notice.blank? ? 'none' : 'block' %>">
-          <button type="button" class="close">&times;</button>
-          <table>
-            <tbody>
-            <tr>
-              <td>
-                <span><%= notice %></span>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="alert alert-error" style="display:<%= alert.blank? ? 'none' : 'block' %>">
-          <button type="button" class="close">&times;</button>
-          <table>
-            <tbody>
-            <tr>
-              <td>
-                <span><%= alert %></span>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <%= yield %>
-        <%= render 'payments/unpaid_invoices' %>
-      </div>
-    </div>
-    <!--content-->
-
-    <div class="footer_primary">
-      <div class="footer_container">
-        <div class="footer_content">
-          <ul>
-            <li class="copy_right">Copyright © 2018 by <a href="http://www.presstigers.com/">PressTigers</a>. All rights reserved.</li>
-            <li class="privacy_policy"><a href="#" class="no_links">Privacy Policy</a></li>
-            <li class="contact_us"><a href="mailto:support@opensourcebilling.org">Contact Us</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!--footer_primary-->
-  </div>
-  <!--white_container-->
-</div>
-<!--main_container-->
-<div id="progress_indicator" style="display: none;"></div>
-</body>
+    </body>
 </html>
-

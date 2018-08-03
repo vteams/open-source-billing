@@ -8,11 +8,6 @@ Osb::Application.routes.draw do
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
   scope "(:locale)" do
-    resources :email_templates do
-      collection do
-        get 'bulk_actions'
-      end
-    end
 
     resources :tasks do
       collection do
@@ -38,6 +33,8 @@ Osb::Application.routes.draw do
         post 'get_clients_and_items'
         get 'filter_companies'
         get 'undo_actions'
+        get :settings_listing
+        delete :destroy_bulk
       end
       member do
         get 'select'
@@ -47,10 +44,18 @@ Osb::Application.routes.draw do
     resources :sub_users do
       collection do
         get 'user_settings'
+        get :settings_listing
+        delete :destroy_bulk
       end
     end
 
-    resources :settings
+    resources :settings do
+      member do
+        get 'set_default_currency'
+      end
+    end
+
+    resources :email_templates
 
     resources :payment_terms
 
@@ -148,6 +153,9 @@ Osb::Application.routes.draw do
         get 'credit_card_info'
         get 'selected_currency'
       end
+      member do
+        get 'stop_recurring'
+      end
     end
 
 
@@ -156,11 +164,13 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'undo_actions'
       end
+      resources :project_tasks
     end
 
     post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
     post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
     post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
+    post '/invoices/payment_with_credit_card' => 'invoices#payment_with_credit_card'
 
     resources :recurring_profile_line_items
 
@@ -222,6 +232,9 @@ Osb::Application.routes.draw do
         get 'undo_actions'
         get 'preview'
       end
+      member do
+        get 'convert_to_invoice'
+      end
     end
 
     #get 'calendar' => 'calendar#index'
@@ -233,9 +246,11 @@ Osb::Application.routes.draw do
         get 'load_view'
         get 'timer'
         get 'invoice'
-        post 'invoice_form'
+        #post 'invoice_form'
         post 'create_invoice'
-
+      end
+      member do
+        get 'invoice_form'
       end
     end
 

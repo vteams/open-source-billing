@@ -1,7 +1,10 @@
-if (confirm('Your changes will be discarded by switching company. Are you sure you want to switch company?')) {
-    // Set the session and reload the new item page
-    jQuery.get("/application/new_selected_company_name?company_id=" + "<%= params[:company_id] %>", function(response) {
-        jQuery("#current_selected_company").text(response);
-    });
-    setTimeout(function(){location.reload();},1000);
-}
+$('body').append("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
+Item.load_functions();
+$("#account_association").change(function() {
+    if ($(this).is(':checked')) {
+        return $('.company_checkbox').prop('checked', true);
+    }
+});
+elem = $("#item_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

@@ -1,5 +1,6 @@
 class Expense < ActiveRecord::Base
   include DateFormats
+  include ExpenseSearch
   belongs_to :client
   belongs_to :category, class_name: 'ExpenseCategory', foreign_key: 'category_id'
   belongs_to :tax1, :foreign_key => 'tax_1', :class_name => 'Tax'
@@ -18,7 +19,8 @@ class Expense < ActiveRecord::Base
   def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    Expense.send(method).page(params[:page]).per(params[:per_page])
+    expenses = params[:search].present?  ? Expense.search(params[:search]).records : Expense
+    expenses.send(method).page(params[:page]).per(params[:per_page])
   end
 
   def self.recover_archived(ids)
@@ -43,6 +45,27 @@ class Expense < ActiveRecord::Base
 
   def tax2_amount
     tax2.present? ? amount * (tax2.percentage / 100.0) : 0.0
+  end
+
+  def expense_name
+    "#{client.first_name.first.camelize}#{client.last_name.first.camelize }"
+  end
+
+
+  def group_date
+    created_at.strftime('%B %Y')
+  end
+
+  def currency
+    Currency.default_currency
+  end
+
+  def tax1_name
+    Tax.unscoped.find_by_id(tax_1).name rescue ''
+  end
+
+  def tax2_name
+    Tax.unscoped.find_by_id(tax_2).name rescue ''
   end
 
 end

@@ -1,0 +1,56 @@
+<div id="project_task_form_popup" class="modal viewModal taskModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" onclick="$('.simple_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action waves-effect" onclick="$('#project_task_form_popup').modal('close');">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left text-blue">
+        <% if task.new_record? %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('task'), default: "New  #{Task.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('task'), default: "Edit #{Task.model_name.human}") %>
+        <% end %>
+      </h5>
+    </div>
+    <%= simple_form_for [@project,task], html: { class: 'project_task_form' } do |f| %>
+    <div class="modal-body">
+      <div class="row">
+        <%= f.submit class: 'simple_submit submit hidden' %>
+        <div class="col s12 m8 l9">
+          <div class="content-detail">
+            <div class="card-white-panel clearfix">
+              <div class="left-content">
+                <div class="checkbox-item">
+                  <div class="invoice-name green-light"><%= @project.image_name%></div>
+                </div>
+                <div class="invoice-details">
+                  <div class="row">
+                    <%= f.input :name, label: false, wrapper_html: { class: 'input-field col s12 required' },
+                                input_html: { placeholder: t('views.tasks.name') } %>
+                    <%= f.input :description, label: false, wrapper_html: { class: 'input-field col s12 required' },
+                                input_html: { class: 'materialize-textarea task_description',
+                                              placeholder: t('views.tasks.description') }, as: :text %>
+                    <%= render 'date_fields', f: f, task: task %>
+                    <%= f.input :hours, label: t('views.tasks.hours'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker titlebold'}, input_html: {min: 0}, as: :float %>
+                    <%= f.input :spent_time, label: t('views.tasks.spent_time'), label_html: { class: 'placeholder-position active'},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6 datepicker titlebold'}, input_html: {min: 0}, as: :float %>
+                    <%= f.input :rate, label: t('views.tasks.rate_'), label_html: { class: 'placeholder-position active'}, input_html: {min: 0},
+                                wrapper_html: { class: 'input-field col s12 m9 l9 xl6  datepicker clearfix titlebold placeholder-position'}, as: :float %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%= render 'project_staff' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

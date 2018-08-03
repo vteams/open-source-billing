@@ -1,67 +1,32 @@
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-
-<div class="items">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t('header.links.items.items') %><span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.items.new'))),
-        new_item_path,
-        :class => 'btn_large' %>
+<%= render partial: 'item_activity' %>
+    <!--- content --->
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.items.items'), items_path %></span>
+          <a class="active"><%= "/ #{t('views.common.' + status_text)}" %></a>
+          <%= index_layout_toggle_icons(items_path(layout_toggle_params(view: 'card')),
+                                        items_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "items/bulk_actions", method: :get,  :remote => true do -%>
-    <div class="content_middle">
-
-      <div class="grid_control">
-        <div class="grid_control_left">
-          <ul value='item' id="bulk_actions">
-            <%= render "bulk_actions" %>
-          </ul>
-        </div>
-
-        <div class="grid_control_right" id="active_links">
-          <%= render 'items/filter_links' %>
-        </div>
-      </div>
-      <!--grid_control-->
-      <div class="grid_table">
-        <table cellpadding="0" cellspacing="0" class="table table_listing item_listing <%= I18n.locale %>">
-          <colgroup>
-            <col class="one"/>
-            <col class="two"/>
-            <col class="three"/>
-            <col class="four"/>
-            <col class="five"/>
-            <col class="six"/>
-            <col class="seven"/>
-            <col class="eight"/>
-          </colgroup>
-          <thead id="item_head">
-            <%= render 'item_header'%>
-          </thead>
-          <tbody id="item_body">
-            <%= render 'items' %>
-          <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-          </tfoot>
-          </tbody>
-        </table>
-      </div>
-      <!--grid_table-->
-    </div>
-    <!--content_middle-->
-    <div class="content_bottom">
-      <%= link_to (content_tag(:span,  t('header.links.items.new'))),
-        new_item_path,
-        :class => 'btn_large' %>
-    </div>
-    <!--content_bottom-->
+  <%= render 'filters' %>
+  <div class="invoice-box items-box clearfix">
+    <%= form_tag bulk_actions_items_path, {method: :get, id: "bulk_action_form"} do -%>
+        <div class="search_result_container"><%= render 'items_container'%></div>
+        <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
+</div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#unit_cost_min,#unit_cost_max,#quantity_min,#quantity_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date unit_cost_min unit_cost_max quantity_min quantity_max tax_1)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   <% end %>
-</div><!--items-->
+</script>

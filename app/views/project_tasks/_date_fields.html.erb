@@ -1,0 +1,11 @@
+<div class="input-field col s12 m9 l9 xl6  datepicker">
+  <label class="active"><%= t('views.invoices.recurring.start_date') %></label>
+  <%= f.input :start_date, as: :string, input_html: { value: f.object.start_date, class: 'project_task_start_date' }, label: false %>
+  <i class="material-icons">date_range</i>
+</div>
+
+<div class="input-field col s12 m9 l9 xl6 datepicker">
+  <label class="active"><%= t('views.invoices.due_date') %></label>
+  <%= f.input :due_date, as: :string, input_html: { value: f.object.due_date, class: 'project_task_due_date' }, label: false %>
+  <i class="material-icons">date_range</i>
+</div>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="<%= "ie#{browser.version}" if browser.ie? %>">
+<head>
+  <title>Open Source Billing</title>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag "landing_page", "image", :media => "all" %>
+  <%= javascript_include_tag "landing_page" %>
+  <%= csrf_meta_tags %>
+
+  <style>
+
+  </style>
+</head>
+<body id="page-top" data-spy="scroll" data-target=".main-nav" >
+<!-- MAIN CONTAINER START-->
+<div id="main-container" style="background: transparent;">
+  <!-- HEADER START -->
+  <div class="header">
+    <div class="logo">
+      <!--<%= image_tag "logo.png", :size => "185x30" %>-->
+    </div>
+  </div>
+  <!-- HEADER END -->
+  <!-- CONTENT AREA START-->
+  <div class="content">
+    <!-- <div class="notice"><%#= notice %></div> -->
+    <%= yield %>
+  </div>
+  <!-- CONTENT AREA END-->
+
+</div>
+<div id="modalContainer">
+
+</div>
+<!-- MAIN CONTAINER END -->
+</body>
+</html>

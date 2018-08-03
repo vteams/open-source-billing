@@ -1,37 +1,67 @@
-<%
-   no_record_message = t('views.items.no_item_msg')
-   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
-     no_record_message = t('views.items.no_archived_msg')
-   elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = t('views.items.no_deleted_msg')
-   end
-%>
-<% if @items.length > 0 %>
-    <% @items.each do |item| %>
-        <tr>
-          <td class="align_center"> <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}" %></td>
-          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_name %></td>
-          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_description %></td>
-          <td class="align_right"><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></td>
-          <td class="align_right"><%= item.quantity %></td>
-          <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax1.name rescue "" %></td>
-          <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax2.name rescue "" %></td>
-          <td class="align_center">
-            <% if item.deleted_at.nil? %>
-                <%= link_to 'Edit', edit_item_path(item), :class => "edit_action" %>
-            <% else %>
-                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
-                            "javascript:;", class: "single-recover-link" %>
-            <% end %>
-          </td>
-        </tr>
-    <% end %>
-<% else %>
-    <tr>
-      <td colspan="9">
-        <div class="no_record_container">
-          <%= no_record_message %>
+<div class="flex-item box">
+  <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' unless item.deleted? %>
+  <div class="card-white-panel invoice-card" data-item_id= <%=item.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
+      <label for="<%= "item_#{item.id}" %>"></label>
+      <div class="invoice-name green-light"><%= item.item_name[0] %></div>
+    </div>
+    <div class="invoice-details item-details">
+      <strong><%= item.item_name %></strong>
+      <em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em>
+      <div class="item-description">
+        <%= item.item_description %>
+      </div>
+      <div class="card-footer">
+        <div class="amount-box">
+          <span><%= t('views.items.quantity') %></span>
+          <strong><%= item.quantity %></strong>
         </div>
-      </td>
-    </tr>
-<% end %>
+        <% if item.tax_1.present? %>
+            <div class="amount-box">
+              <span><%= t('views.invoice_line_item.tax_1') %></span>
+              <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
+            </div>
+        <% end %>
+        <% if item.tax_2.present? %>
+            <div class="amount-box">
+              <span><%= t('views.invoice_line_item.tax_2') %></span>
+              <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="action-btn-group">
+      <% if item.deleted? %>
+        <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+          <i class="material-icons">unarchive</i>
+        </a>
+      <% else %>
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
+                    remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
+                    data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
+                    title: t('helpers.links.edit') %>
+        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
+          <% if !item.archived? %>
+            <li>
+              <a href="javascript:;" class="single_archive">
+                <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
+              </a>
+            </li>
+          <% else %>
+            <li>
+              <a href="javascript:;" class="single_recover">
+                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

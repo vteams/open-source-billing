@@ -1,0 +1,6 @@
+$('body').append("<%= escape_javascript render partial: 'staff_form_popup', locals: {staff: @staff}  %>");
+Staff.load_functions();
+$('div.required label').addClass('active');
+elem = $("#staff_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

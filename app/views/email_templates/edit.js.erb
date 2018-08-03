@@ -1,0 +1,23 @@
+$("body").append("<%= escape_javascript(render partial: 'email_template_form_popup', locals: {email_template: @email_template})%>")
+
+elem = $("#emailTemplateModal");
+Popup.initialize(elem);
+Popup.open(elem)
+
+$('#form_submit_btn').on('click', function () {
+  if ($("#email_template_email_from").val() === '') {
+    applyPopover($("#email_template_email_from"), "bottomMiddle", "topLeft", I18n.t("views.email_templates.from_email_required"));
+  }
+  else if($("#email_template_subject").val() === '') {
+    hidePopover($("#email_template_email_from"));
+    applyPopover($("#email_template_subject"), "bottomMiddle", "topLeft", I18n.t("views.email_templates.subject_required"));
+  }
+  else if (tinyMCE.activeEditor.getContent() === '') {
+    hidePopover($("#email_template_subject"));
+    applyPopover($("#email_template_body_ifr"), "bottomMiddle", "topLeft", I18n.t("views.email_templates.boy_required"));
+  }
+  else {
+    hidePopover($("#email_template_body_ifr"));
+    $('input.submit').click();
+  }
+});

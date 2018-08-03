@@ -1,118 +1,32 @@
-<%- model_class = Invoice -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-
-<div class="invoice">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
-                  new_invoice_path,
-                  :class => 'btn_large' %>
+<%= render 'invoice_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.invoices.invoices'), invoices_path %> </span>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(invoices_path(layout_toggle_params(view: 'card')),
+                                        invoices_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "invoices/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
+  <%= render 'filters' %>
+  <div class="invoice-box clearfix">
+    <%= form_tag "invoices/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render partial: 'invoices_container' %></div>
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
-        <!--<div class="company_select">-->
-          <!--<p>Select a Company</p>-->
-          <!--<%#= filter_by_companies() %>-->
-        <!--</div>-->
-
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render "filter_links" %>
-          </div>
-        </div>
-        <!--grid_control-->
-
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-              <col class="eight"/>
-              <col class="nine"/>
-            </colgroup>
-            <thead id="invoice_head">
-                <%= render partial: 'invoice_header' %>
-            </thead>
-            <tbody id="invoice_body">
-                <%= render 'invoice' %>
-                <tfoot id="paging_links">
-                    <%= render "application_partials/paging" %>
-                </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
-                    new_invoice_path,
-                    :class => 'btn_large' %>
-      </div>
-      <!--content_bottom-->
+</div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date,#due_start_date,#due_end_date,#invoice_number_min,#invoice_number_max');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date due_start_date due_end_date invoice_number_min invoice_number_max client_id type)) %>
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   <% end %>
-</div><!--invoice-->
-
-<div class="invoice_model">
-  <%= render 'pay_invoice' %>
-<%# b = "" %>
-<%# a = open(File.join(Rails.root, 'app', 'assets', '/stylesheets/','application.css'), 'rb') {|f| b += f.read} %>
-<%#= a %>
-  <!-- START: invoices with payments popup -->
-  <%= form_tag "invoices/delete_invoices_with_payments", :remote => true do -%>
-      <div id="invoices_with_payments" class="modal hide fad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="model_grey_container">
-          <div class="modal-header">
-            <div id="invoice_popup_error" class="alert alert-error" style="display:none;">
-              <button class="close" type="button" style="margin:0px;">×</button>
-              <table>
-                <tbody>
-                <tr>
-                  <td>
-                    <span><%= t('views.invoices.no_invoice_selected') %></span>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <h1><%= t('views.invoices.how_to_handle_invoice_payments') %></h1>
-
-            <p><%= t('views.invoices.handle_associated_payments') %></p>
-
-            <div class="cross_btn">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                <%= image_tag "cross.png", :size => "7x7", :alt => "" %>
-              </button>
-            </div>
-          </div>
-          <div class="modal-body">
-          </div>
-          <div class="footer ">
-            <%= submit_tag t("views.invoices.convert_payment_to_credit"), :name => "convert_to_credit", :class => "btn_large submit small_case" %>
-            <%= submit_tag t("views.invoices.permanently_delete_payment"), :name => "destroy", :class => "btn_large submit small_case" %>
-            <a href="#" data-dismiss="modal" class="btn_large grey"><%= t('views.common.cancel') %></a>
-          </div>
-        </div>
-      </div>
-  <% end %>
-  <!-- END: invoices with payments popup -->
-</div><!--invoice_model-->
+</script>

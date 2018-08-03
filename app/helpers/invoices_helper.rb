@@ -21,56 +21,45 @@
 module InvoicesHelper
   include ApplicationHelper
   def new_invoice id, is_draft
-    message = is_draft ? "The invoice has been saved as draft." : "Invoice has been created and sent to #{@invoice.client.organization_name}."
+    message = is_draft ? t('views.invoices.saved_as_draft_msg') : t('views.invoices.created_and_sent_msg', org_name: @invoice.client.organization_name)
     notice = <<-HTML
        <p>#{message}.</p>
-       <ul>
-         <li><a href="/invoices/enter_single_payment?ids=#{id}">Enter payment against this invoice</a></li>
-         <li><a href="/invoices/new">Create another invoice</a></li>
-         <li><a href="/invoices/new?id=#{id}">Create another by duplicating this invoice</a></li>
-         <li><a href="/#{I18n.locale}/invoices/invoice_pdf/#{OSB::Util::encrypt(id)}.pdf" target="_blank">Download this invoice as PDF</a></li>
-       </ul>
     HTML
     notice.html_safe
   end
 
   def invoices_archived ids
     notice = <<-HTML
-     <p>#{ids.size} invoice(s) have been archived. You can find them under
-     <a href="?status=archived#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Archived</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&archived=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move archived invoices back to active.</p>
+     <p>#{ids.size} #{t('views.invoices.bulk_archived_msg')}
     HTML
     notice.html_safe
   end
 
   def invoices_deleted ids
     notice = <<-HTML
-     <p>#{ids.size} invoice(s) have been deleted. You can find them under
-     <a href="?status=deleted" data-remote="true">Deleted</a> section on this page.</p>
-     <p><a href='invoices/undo_actions?ids=#{ids.join(",")}&deleted=true#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}'  data-remote="true">Undo this action</a> to move deleted invoices back to active.</p>
+     <p>#{ids.size} #{t('views.invoices.bulk_deleted_msg')}
     HTML
     notice.html_safe
   end
 
   def payment_for_invoices ids
     notice = <<-HTML
-     <p>Payments of ${amount} against <a>N invoices</a> have been recorded successfully.
-     <a href="invoices/filter_invoices?status=deleted#{query_string(params.merge(per: session["#{controller_name}-per_page"]))}" data-remote="true">Deleted</a> section on this page.</p>
+     <p>#{t('views.invoices.bulk_payment_msg', amount: amount)}
     HTML
     notice.html_safe
   end
 
   def send_invoice _message
     notice = <<-HTML
-     <p>Invoice sent successfully.</p>
+     <p>#{t('views.invoices.sent_msg')}</p>
     HTML
     notice.html_safe
   end
 
   def dispute_invoice_message company_name
     notice = <<-HTML
-     <p>Invoice disputed.</p>
-     <p> #{company_name} has been notified of the dispute.</p>
+     <p>#{t('views.invoices.disputed_msg')}</p>
+     <p>#{t('views.invoices.disputed_detail_msg', company_name: company_name)}</p>
     HTML
     notice.html_safe
   end
@@ -89,17 +78,45 @@ module InvoicesHelper
     currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
     for tax, amount in list
       tax_list += <<-HTML
+      <div class="table-row"><span>#{tax}</span><span>#{number_to_currency(amount,unit: currency_unit)}</span></div>
+      HTML
+    end
+    tax_list.html_safe
+  end
+
+  def taxes_list_print list,invoice=nil
+    tax_list = ""
+    currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
+    for tax, amount in list
+      tax_list += <<-HTML
       <div class="top_right_row"><div class="preview_right_label">#{tax}</div><div class="preview_right_description">#{number_to_currency(amount,unit: currency_unit)}</div></div>
       HTML
     end
     tax_list.html_safe
   end
 
+
+  def taxes_latest_list_print list,invoice=nil
+    tax_list = '<div class="new-invoice-footer-row">'
+    currency_unit = invoice.nil? ? '$' : (invoice.currency.present? ? invoice.currency.unit : '$')
+    for tax, amount in list
+      tax_list += <<-HTML
+      <span>#{tax}</span>
+      <select class="inline-select small-select" disabled>
+        <option value="1">#{number_to_currency(amount,unit: currency_unit)}</option>
+      </select>
+      </div>
+      HTML
+    end
+    tax_list.html_safe
+  end
+
+
   def invoice_not_updated
     notice = <<-HTML
        <ul>
-         <li>You cannot reduce the invoice total below the amount paid.</li>
-         <li>If you entered a payment by mistake, you can edit it in your payment history.</li>
+         <li>#{t('views.invoices.cannot_reduce_total_msg')}</li>
+         <li>#{t('views.invoices.cannot_reduce_total_detail_msg')}</li>
        </ul>
     HTML
     notice.html_safe
@@ -230,4 +247,62 @@ module InvoicesHelper
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
+
+  def amount_to_pay_by_client(invoice)
+    ((invoice.unpaid_amount || 0).to_f * 100).to_i
+  end
+
+  def invoice_owner_publish_key(invoice)
+    invoice.owner.stripe_publishable_key
+  end
+
+  def random_card_color
+    %w(green-light orange-light blue-light purple-light).shuffle.first
+  end
+
+
+  def pick_status_color
+    {sent: 'text-blue', paid: 'text-green', partial: 'text-orange', draft: 'text-grey', viewed: 'text-green', draft_partial: 'text-draft-partial', disputed: 'text-red', invoiced: 'text-orange'}
+  end
+
+  def activities_invoices_path(status)
+    invoices_path(invoice_params(per: @per_page, status: status))
+  end
+
+  def invoice_params(custom_params)
+    params.except(:page).slice(:per, :company_id, :sort, :direction).merge(custom_params)
+  end
+
+  def edit_invoice_link(invoice)
+    if invoice.invoice_type.eql?('ProjectInvoice')
+      link_to raw("<i class='material-icons disabled-style'>create</i>"), '#', class: 'edit_invoice_icon', title: t('views.invoices.project_invoice_cannot_be_edit'), class: 'disabled'
+    else
+      link_to raw("<i class='material-icons'>create</i>"),edit_invoice_path(invoice), class: 'edit_invoice_icon',
+              title: t('helpers.links.edit')
+    end
+  end
+
+  def payment_terms_options
+    PaymentTerm.unscoped.map { |p|
+      [t('views.invoices.' + p.description.parameterize.underscore), p.id, {'number_of_days' => p.number_of_days}] }
+  end
+
+  def invoice_selected_currency(invoice)
+    if params[:action].eql?('new')
+      Currency.default_currency.id
+    else
+      (@client.present? ? @client.currency_id : invoice.currency_id)
+    end
+  end
+
+  def filters_status_select_options
+    statuses = [
+        [t('views.common.active'), 'active'],
+        [t('views.common.archived'), 'archived'],
+        [t('views.common.deleted'), 'deleted']
+    ]
+    statuses << [t('views.common.recurring'), 'recurring'] if params[:controller] == 'invoices'
+
+    statuses
+  end
 end

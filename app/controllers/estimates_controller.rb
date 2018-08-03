@@ -12,9 +12,10 @@ class EstimatesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    #@estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    @estimates = Estimate.all.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    #@estimates = filter_by_company(@estimates)
+    @status = params[:status]
+    @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @estimates = filter_by_company(@estimates)
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params.deep_dup)
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -31,6 +32,7 @@ class EstimatesController < ApplicationController
     @client = Client.unscoped.find_by_id @estimate.client_id
     respond_to do |format|
       format.html # show.html.erb
+      format.js
     end
   end
 
@@ -41,6 +43,7 @@ class EstimatesController < ApplicationController
     @estimate.currency = @client.currency if @client.present?
     get_clients_and_items
     @discount_types = @estimate.currency.present? ? ['%', @estimate.currency.unit] : DISCOUNT_TYPE
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -57,7 +60,7 @@ class EstimatesController < ApplicationController
       if @estimate.save
         @estimate.notify(current_user, @estimate.id)  if params[:commit].present?
         new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft])
-        redirect_to(edit_estimate_url(@estimate), :notice => new_estimate_message)
+        redirect_to(estimates_url, :notice => new_estimate_message)
         return
       else
         format.html { render :action => 'new' }
@@ -71,6 +74,7 @@ class EstimatesController < ApplicationController
     @estimate.estimate_line_items.build()
     get_clients_and_items
     @discount_types = @estimate.currency.present? ? ['%', @estimate.currency.unit] : DISCOUNT_TYPE
+    @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to {|format| format.js; format.html}
   end
 
@@ -83,12 +87,22 @@ class EstimatesController < ApplicationController
         @estimate.update_line_item_taxes()
         @estimate.notify(current_user, @estimate.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "estimates", :id => @estimate.id}, :notice => 'Your Estimate has been updated successfully.')
+        redirect_to({:action => "index", :controller => "estimates"}, :notice => t('views.estimates.saved_msg'))
         return
       else
         format.html { render :action => "edit" }
         format.json { render :json => @estimate.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @estimate = Estimate.find(params[:id])
+    @estimate.destroy
+
+    respond_to do |format|
+      format.html { redirect_to estimates_url }
+      format.json { render_json(@estimate) }
     end
   end
 
@@ -107,7 +121,7 @@ class EstimatesController < ApplicationController
                                 footer:{
                                     right: 'Page [page] of [topage]'
                                 }
-        send_data pdf, filename: file_name
+        send_data pdf, filename: file_name, disposition: 'inline'
       end
     end
   end
@@ -115,7 +129,7 @@ class EstimatesController < ApplicationController
   def send_estimate
     estimate = Estimate.find(params[:id])
     estimate.send_estimate(current_user, params[:id])
-    redirect_to(estimate_path(estimate), notice: 'Estimate sent successfully.')
+    redirect_to(estimates_url, notice: t('views.estimates.sent_msg'))
   end
 
   def bulk_actions
@@ -124,7 +138,10 @@ class EstimatesController < ApplicationController
     @estimate_has_deleted_clients = estimate_has_deleted_clients?(@estimates)
     @message = get_intimation_message(result[:action_to_perform], result[:estimate_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    respond_to do |format|
+      format.js
+      format.html {redirect_to estimates_url, notice: t('views.estimates.bulk_action_msg', action: @action)}
+    end
   end
 
   def undo_actions
@@ -138,7 +155,7 @@ class EstimatesController < ApplicationController
   def convert_to_invoice
     estimate = Estimate.find(params[:id])
     estimate.convert_to_invoice
-    redirect_to(estimate_path(estimate), notice: 'Estimate successfully converted to invoice.')
+    redirect_to(estimates_url, notice: t('views.estimates.converted_to_invoice_msg'))
   end
 
   def set_per_page_session
@@ -161,7 +178,12 @@ class EstimatesController < ApplicationController
 
   def preview
     @estimate = Services::EstimateService.get_estimate_for_preview(params[:inv_id])
-    render action: 'estimate_deleted_message', notice: "This estimate has been deleted." if @estimate == 'Estimate deleted'
+    render action: 'estimate_deleted_message', notice: t('views.estimates.estimate_deleted_msg') if @estimate == 'Estimate deleted'
+
+    respond_to do |format|
+      format.html {render template: 'estimates/preview.html.erb', layout:  'pdf_mode'}
+      format.js
+    end
   end
 
   private
@@ -183,7 +205,7 @@ class EstimatesController < ApplicationController
   def estimate_has_deleted_clients?(estimates)
     estimate_with_deleted_clients = []
     estimates.each do |estimate|
-      if estimate.unscoped_client.deleted_at.present?
+      if estimate.unscoped_client && estimate.unscoped_client.deleted_at.present?
         estimate_with_deleted_clients << estimate.estimate_number
       end
     end

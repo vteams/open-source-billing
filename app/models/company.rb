@@ -1,6 +1,7 @@
 class Company < ActiveRecord::Base
-
+  include CompanySearch
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
 
   mount_uploader :logo, ImageUploader
   skip_callback :commit, :after, :remove_logo!
@@ -26,8 +27,16 @@ class Company < ActiveRecord::Base
   # filter companies i.e active, archive, deleted
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    params[:account].companies.send(method).page(params[:page]).per(params[:per])
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    companies = params[:search].present? ? params[:account].companies.search(params[:search]).records : params[:account].companies
+    companies = companies.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+    companies = companies.send(mappings[params[:status].to_sym]) if params[:status].present?
+
+    companies.page(params[:page]).per(params[:per])
   end
 
   def self.recover_archived(ids)
@@ -38,4 +47,11 @@ class Company < ActiveRecord::Base
     multiple(ids).only_deleted.each { |company| company.restore; company.unarchive }
   end
 
+  def image_name
+    company_name.first.camelize
+  end
+
+  def group_date
+    created_at.strftime('%B %Y')
+  end
 end

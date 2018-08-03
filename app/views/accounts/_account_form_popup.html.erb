@@ -1,0 +1,73 @@
+<div id="account_form_popup" class="modal editableModal editPaymentModal editAccountModal">
+  <div class="modal-content">
+    <%= form_for(@account, :html => {:novalidate => ""}) do |f| %>
+        <div class="modal-header clearfix text-content">
+          <h5 class="left text-blue">
+            Edit Profile
+          </h5>
+          <div class="modal-action-btn right">
+            <a href="javascript:void(0);" onclick="$('.submit').click();" title="Save" class="modal-action waves-effect">
+              <i class="material-icons" >done</i>
+            </a>
+            <%= f.submit :class => "btn_large submit hidden" %>
+            <a href="javascript:void(0);" title="Cancel" class="modal-action modal-close waves-effect">
+              <i class="material-icons close">close</i>
+            </a>
+          </div>
+        </div>
+        <div class="info-section clearfix">
+          <div class="row">
+            <div class="input-field col s6 m6">
+              <%= f.text_field :org_name, :required => 'required' %>
+              <%= f.label :org_name, t('views.companies.name'), class: 'active' %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :admin_first_name, :required => 'required' %>
+              <%= f.label :admin_first_name, t('views.clients.first_name') %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :admin_last_name, :required => 'required' %>
+              <%= f.label :admin_last_name, t('views.clients.last_name') %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.select :country, COUNTRY_LIST, {:prompt => t("views.common.select_a_country")} %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :street_address_1 %>
+              <%= f.label :street_address_1, "#{t('views.common.street_address')} # 1" %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :street_address_2 %>
+              <%= f.label :street_address_2, "#{t('views.common.street_address')} # 2" %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :province_or_state %>
+              <%= f.label :province_or_state, "#{t('views.common.province')}" %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :city %>
+              <%= f.label :city, "#{t('views.common.city')}" %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :postal_or_zip_code %>
+              <%= f.label :postal_or_zip_code, "#{t('views.common.zip_code')}" %>
+            </div>
+
+            <div class="input-field col s6 m6">
+              <%= f.text_field :phone_business %>
+              <%= f.label :phone_business, "#{t('views.common.phone')}" %>
+            </div>
+
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

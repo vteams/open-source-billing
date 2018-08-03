@@ -1,0 +1,50 @@
+<div id="payment_modal" class="modal viewModal paymentModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left text-blue"><%= payment.unscoped_client.organization_name rescue ''%></h5>
+    </div>
+    <% invoice = payment.unscoped_invoice %>
+    <div class="info-section clearfix">
+      <div class="info-left-section left">
+        <h6 class="text-grey"><%= invoice.invoice_number rescue "" %></h6>
+        <span>Invoice : <small> <%= invoice.invoice_date rescue "" %> </small></span>
+        <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
+        <div class="paymentInfo">
+          <strong><%= invoice.currency.code rescue '' %><%= "#{number_to_currency(payment.payment_amount, unit: '')} " rescue '' %> <small><%= invoice.currency.unit rescue '' %></small></strong>
+        </div>
+      </div>
+      <% if invoice && invoice.company.logo_url.present? %>
+          <div class="info-right-section right circle">
+            <%= image_tag(invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
+      <% end %>
+    </div>
+    <div class="modal-body">
+      <div class="info-right-section">
+        <div class="row">
+          <div class="field-block col s6">
+            <label>Payment (<%= invoice.currency.unit rescue '' %>)</label>
+            <span><%= "#{number_to_currency(payment.payment_amount, unit: '')} " rescue ''%></span>
+          </div>
+          <div class="field-block col s6">
+            <label>Method</label>
+            <span><%= (payment.payment_method || payment.payment_type || "") %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="text-info col l6">
+          <p><strong>Note</strong><%= payment.notes %></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

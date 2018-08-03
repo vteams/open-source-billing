@@ -1,70 +1,34 @@
-<%- model_class = Client -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-<div class="clients">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => t("clients") %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t("header.links.clients.new"))),
-                  new_client_path,
-                  :class => 'btn_large' %>
+<%= render 'client_activity'%>
+
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('views.clients.clients'), clients_path %></span>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(clients_path(layout_toggle_params(view: 'card')),
+                                        clients_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag "clients/bulk_actions", {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-
-        <div class="grid_control">
-          <div class="grid_control_left">
-            <ul value='<%= model_class.model_name %>' id="bulk_actions">
-              <%= render "bulk_actions" %>
-            </ul>
-          </div>
-          <div class="grid_control_right" id="active_links">
-            <%= render 'clients/filter_links' %>
-          </div>
-
+  <%= render 'filters' %>
+  <div class="invoice-box client-box clearfix">
+    <%= form_tag "clients/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+        <div class="search_result_container">
+          <%= render 'clients_container' %>
         </div>
-        <!--grid_control-->
-        <div class="grid_table">
-          <table cellpadding="0" cellspacing="0" class="table table_listing client_listing <%= I18n.locale %>">
-            <colgroup>
-              <col class="one"/>
-              <col class="two"/>
-              <col class="three"/>
-              <col class="four"/>
-              <col class="five"/>
-              <col class="six"/>
-              <col class="seven"/>
-            </colgroup>
-            <thead  id="client_head">
-            <%= render 'client_header' %>
-            </thead>
-            <tbody id="client_body">
-            <%= render 'clients' %>
-            <tfoot id="paging_links">
-            <%= render "application_partials/paging" %>
-            </tfoot>
-            </tbody>
-          </table>
-        </div>
-        <!--grid_table-->
-      </div>
-      <!--content_middle-->
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("header.links.clients.new"))),
-                    new_client_path,
-                    :class => 'btn_large' %>
-      </div>
-      <!--content_bottom-->
-      </div><!--clients-->
+        <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
+</div>
+<script>
+  initFilterEvents('#create_at_start_date,#create_at_end_date');
+  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date)) %>
+  $('#filters').slideDown('slow');
+  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
   <% end %>
-
-  <%= render 'payments/unpaid_invoices' %>
-
+</script>

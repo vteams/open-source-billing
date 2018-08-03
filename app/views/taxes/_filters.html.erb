@@ -1,0 +1,42 @@
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag taxes_path, method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="create_at_start_date" id="create_at_start_date">
+          <input type="hidden" name="create_at_end_date" id="create_at_end_date">
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:created_at] %>" readonly/>
+          <label class="input_field_label"><%= t('views.projects.created_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m2">
+          <%= select_tag(:status, options_for_select(filters_status_select_options, {selected: params[:status] || ''}),
+                         include_blank: false, class: 'small_list') %>
+          <label><%= t('views.common.type') %></label>
+        </div>
+        <div class="col s12 m7">
+          <p class="range-field">
+            <label><%= t('views.taxes.percentage_range') %></label>
+            <input type="hidden" name="min_percentage" id="percentage_min" value="0">
+            <input type="hidden" name="max_percentage" id="percentage_max" value="100">
+          <div class="label-range">
+            <span class="label_left"><%= t('views.invoices.min') %>: <span id="percentage_min_label"></span></span>
+            <span class="label_right"><%= t('views.invoices.max') %>: <span id="percentage_max_label"></span></span>
+          </div>
+          <div id="percentage"
+               min="0"
+               max="100"
+               class="range_selector"
+               data-min="<%= params[:min_rate] %>"
+               data-max="<%= params[:max_rate] %>"></div>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

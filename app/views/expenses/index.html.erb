@@ -1,67 +1,24 @@
-<%- model_class = Expense -%>
-<div id="sort_direction" style="display: none;"><%= params[:direction] %></div>
-<%= hidden_field_tag :direction, params[:direction] %>
-<%= hidden_field_tag :sort, params[:sort] %>
-<div class="expense">
-  <div class="content_top">
-    <div class="primary_heading">
-      <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
-        <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
-      </h1>
-    </div>
-    <div class="primary_btn">
-      <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
-        new_expense_path,
-        :class => 'btn_large' %>
+<%= render 'expense_activity'%>
+
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3>
+          <span><%= link_to 'Expenses', expenses_path %></span>
+          <%= link_to "/ #{@status.humanize}", 'javascript:;', class: 'active' %>
+        </h3>
+      </div>
     </div>
   </div>
-  <!--content_top-->
-  <%= form_tag bulk_actions_expenses_path, {method: :get, :remote => true} do -%>
-      <div class="content_middle">
-          <div class="grid_control">
-            <div class="grid_control_left">
-              <ul value='<%= model_class.model_name %>' id="bulk_actions">
-                <%= render "bulk_actions" %>
-              </ul>
 
-            </div>
-            <div class="grid_control_right" id="active_links">
-              <%= render "filter_links" %>
-            </div>
-          </div>
-            <!--grid_control-->
-          <div class="grid_table">
-            <table cellpadding="0" cellspacing="0" class="table table_listing client_listing <%= I18n.locale %>">
-              <colgroup>
-                <col class="one"/>
-                <col class="two"/>
-                <col class="three"/>
-                <col class="four"/>
-                <col class="five"/>
-                <col class="six"/>
-                <col class="seven"/>
-              </colgroup>
-              <thead  id="expenses_head">
-              <%= render 'expenses/expenses_header' %>
-              </thead>
-              <tbody id="expense_body">
-              <%= render 'expenses' %>
-              <tfoot id="paging_links">
-              <%= render "application_partials/paging" %>
-              </tfoot>
-              </tbody>
-            </table>
-          </div>
-          <!--grid_table-->
-    </div>
-    <!--content_middle-->
-    <div class="content_bottom">
-      <%= link_to (content_tag(:span, t("header.links.expenses.new"))),
-                  new_expense_path,
-                  :class => 'btn_large' %>
-    </div>
-  <% end %>
-<!--content_bottom-->
-</div><!--expenses-->
+  <div class="invoice-box expense-box mCustomScrollbar clearfix">
+    <%= form_tag bulk_actions_expenses_path, {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render 'expenses_container'%></div>
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
 
+</div>

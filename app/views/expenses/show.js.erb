@@ -1,0 +1,4 @@
+$('body').append("<%= escape_javascript render partial: 'expense_popup', locals: {expense: @expense}  %>");
+elem = $("#expense_modal");
+Popup.initialize(elem);
+Popup.open(elem);

@@ -1,0 +1,3 @@
+<% if params[:search].present? %>
+window.location = '<%= projects_url(search: params[:search]) %>'
+<% end %>

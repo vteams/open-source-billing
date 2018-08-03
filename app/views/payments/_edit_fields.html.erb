@@ -1,5 +1,6 @@
+
 <div class="pay_invoice">
-  <% client_credit = payment.invoice.unscoped_client.client_credit
+  <% client_credit = payment.invoice.try(:unscoped_client).try(:client_credit )
      client_credit += payment.payment_amount if payment.payment_method == "Credit"
   %>
   <div class="fields_content">
@@ -8,7 +9,7 @@
 
         <div class="payment_left">
 
-          <div class="payment_serial <%= payment.invoice.status %>"></div>
+          <div class="payment_serial <%= payment.invoice.status if payment.invoice.present? %>"></div>
           <!--payment_serial-->
 
           <div class="payment_summary">
@@ -24,28 +25,28 @@
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('invoice') %>#<span>:</span></div>
-                <div class="inovice_description"><%= h payment.invoice.invoice_number %></div>
+                <div class="inovice_description"><%= h payment.invoice.try(:invoice_number) %></div>
               </div>
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('views.invoices.due_date') %><span>:</span></div>
-                <div class="inovice_description"><%= (payment.invoice.due_date || payment.invoice.invoice_date).to_date.strftime(get_date_format) rescue "" %></div>
+                <div class="inovice_description"><%= (payment.invoice.try(:due_date) || payment.invoice.try(:invoice_date)).to_date.strftime(get_date_format) rescue "" %></div>
               </div>
 
               <div class="invoice_data_row">
                 <div class="invoice_label"><%= t('views.invoices.invoice_amount') %><span>:</span></div>
-                <div class="inovice_description amount"><%= number_to_currency(payment.invoice.invoice_total, unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
+                <div class="inovice_description amount"><%= number_to_currency(payment.invoice.try(:invoice_total), unit: payment.invoice.try(:currency).present? ? payment.invoice.try(:currency).unit : "$") %></div>
               </div>
 
-              <% if %w(partial draft-partial).include?(payment.invoice.status) && payment.invoice.invoice_total > Payment.invoice_remaining_amount(payment.invoice.id) %>
+              <% if %w(partial draft-partial).include?(payment.invoice.try(:status)) && payment.invoice.try(:invoice_total) > Payment.invoice_remaining_amount(payment.invoice.try(:id)) %>
                   <div class="invoice_data_row">
                     <div class="invoice_label"><%= t('views.common.received') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(payment.invoice.invoice_total - Payment.invoice_remaining_amount(payment.invoice.id),unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
+                    <div class="inovice_description"><%= number_to_currency(payment.invoice.try(:invoice_total) - Payment.invoice_remaining_amount(payment.invoice.try(:id)),unit: payment.invoice.currency.present? ? payment.invoice.try(:currency).try(:unit): "$") %></div>
                   </div>
 
                   <div class="invoice_data_row">
                     <div class="invoice_label"><%= t('views.payments.net_due') %><span>:</span></div>
-                    <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.id),unit: payment.invoice.currency.present? ? payment.invoice.currency.unit : "$") %></div>
+                    <div class="inovice_description"><%= number_to_currency(Payment.invoice_remaining_amount(payment.invoice.try(:id)),unit: payment.invoice.currency.present? ? payment.invoice.try(:currency).try(:unit) : "$") %></div>
                   </div>
               <% end %>
 
@@ -54,10 +55,10 @@
 
             <!--<div class="payment_person">-->
             <!--
-            <% if payment.invoice.status == 'partial' or payment.invoice.status == 'draft-partial' %>-->
-                <!--<p><b><%= payment.invoice.status.gsub(/-/, ' ').capitalize %> payments</b></p>-->
+            <% if payment.invoice.try(:status) == 'partial' or payment.invoice.try(:status) == 'draft-partial' %>-->
+                <!--<p><b><%= payment.invoice.try(:status).gsub(/-/, ' ').capitalize %> payments</b></p>-->
                 <!--
-                <% payment.invoice.payments.each do |partial_payment| %>-->
+                <% payment.invoice.try(:payments).each do |partial_payment| %>-->
                     <!--<p><%= "#{partial_payment.payment_date} - #{number_to_currency(partial_payment.payment_amount)}" %></p>-->
                     <!--
                 <% end %>-->
@@ -71,14 +72,14 @@
         </div>
         <!--payment_left-->
 
-        <div class="payment_right client_<%= payment.invoice.unscoped_client.id%>">
+        <div class="payment_right client_<%= payment.invoice.try(:unscoped_client).try(:id)%>">
 
           <div class="field_row">
             <%= f.hidden_field :invoice_id %>
-            <div class="label_field left single"><%= t('payment') %> (<%= payment.invoice.currency.unit %>)</div>
+            <div class="label_field left single"><%= t('payment') %> (<%= payment.invoice.try(:currency).try(:unit) %>)</div>
             <div class="small_field">
               <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :required => "", :class => "payment_amount" %>
-              <div id="<%= index %>" style="display:none" class="rem_payment_amount" value="<%= payment.invoice.invoice_total  %>"></div>
+              <div id="<%= index %>" style="display:none" class="rem_payment_amount" value="<%= payment.invoice.try(:invoice_total)  %>"></div>
             </div>
           </div>
           <label id="rem_credit_<%= index %>" value="<%= client_credit %>"></label>

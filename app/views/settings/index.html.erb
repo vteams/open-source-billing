@@ -1,0 +1,19 @@
+<%= render 'setting_activity' %>
+
+<!--- content --->
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%> mCustomScrollbar' >
+  <!--- main content --->
+  <!--- breadcrum Bar --->
+  <div class="breadcrum-bar card-white-panel clearfix">
+    <h3> <%= t('views.settings.settings') %> </h3>
+  </div>
+  <%= render 'basic_setting'%>
+
+  <div class="page-box">
+    <%= render 'email_templates'%>
+  </div>
+</div>
+<script>
+  loadUsersActivitiesSection();
+  loadCompaniesActivitiesSection();
+</script>

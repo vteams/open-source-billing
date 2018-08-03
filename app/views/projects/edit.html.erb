@@ -1,18 +1,74 @@
-<%- model_class = Project -%>
+<%= render 'project_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="row new-project-page">
+    <div class="col s12 task-detail">
+      <!--- breadcrum Bar --->
+      <div class="breadcrum-bar activebar">
+        <div class="card-white-panel noCollapse">
+          <h3>
+            <i class="zmdi zmdi-arrow-left project-back-icon" onclick="window.location.href = '/<%= I18n.locale %>/projects'"></i>
+            <%= t '.title', :default => t('helpers.titles.edit', :model => t(Project.model_name.singular),
+                                          :default => "Edit #{Project.model_name.human}") %>
+          </h3>
+          <div class="page-action-btn-group">
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_task')}'>assignment</i>"), new_project_project_task_path(@project), remote: true %>
+            <%= link_to raw("<i class='material-icons' title='#{t('views.projects.add_staff')}'>person</i>"), new_staff_path(project_id: @project.id), remote: true %>
+            <a href="#" class="edit-detail"><i class="material-icons">create</i></a>
+            <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="submitProject hidden"> <i class="material-icons" >done</i></a>
 
-<div class="content_top">
-  <div class="primary_heading">
-    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                      :default => "Edit #{model_class.model_name.human}") %></h1>
+            <%= link_to raw("<i class='material-icons'>delete</i>"),@project, method: :delete,
+                        data:{confirm: t('helpers.messages.confirm'), success: t('views.projects.destroyed_msg'), redirect: projects_path}, title: t('helpers.links.delete') %>
+          </div>
+        </div>
+      </div>
+      <%= render 'project_detail', can_edit: false %>
+    </div>
   </div>
-</div><!--content_top-->
 
-<%= render :partial => 'form' %>
+  <% if @project.project_tasks.present?  %>
+      <div class="row">
+        <div class="col s12 task-detail">
+          <!--- breadcrum Bar --->
+          <div class="task-box clearfix">
+            <!--- Invoices Card Title--->
+            <div class="view-btn-group clearfix">
+              <div class="btn-inline right">
+                <!--ToDo-->
+                <!-- Followings action actions will be implements later. -->
 
-<div id="tasks_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'tasks/new_task' %>
+                <% if @project.project_tasks.count > 0 %>
+                    <div class="btn-icons">
+                      <a href="<%= project_path(@project, view: 'card', group: params[:group]) %>" class="<%= 'active' if render_card_view? %>" title=<%= t('views.settings.card_view') %>><i class="material-icons">view_comfy</i></a>
+                      <a href="<%= project_path(@project, view: 'table', group: params[:group]) %>" class="<%= 'active' unless render_card_view?%>"  title=<%= t('views.settings.table_view') %>><i class="material-icons">view_list</i></a>
+                    </div>
+                    <div class="btn-calender">
+                      <a href='<%= project_path(@project, group: :day, view: params[:view]) %>' class="<%= 'active' if params[:group] == 'day' %>"><%= t('views.tasks.day') %></a>
+                      <a href="<%= project_path(@project, group: :week, view: params[:view]) %>" class="<%= 'active' if params[:group] == 'week' %>"><%= t('views.tasks.week') %></a>
+                      <a href="<%= project_path(@project, view: params[:view]) %>" class="<%= 'active' unless params[:group].present? %>"><%= t('views.tasks.month') %></a>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+            <!--- task Card --->
+            <% if @project.project_tasks.count > 0 %>
+                <% @project.project_tasks.group_by { |d| d.group_date(project_task_date_format) }.each do |date, tasks| %>
+                    <p>
+                      <span class="activity-date"><%= params[:group] == 'week' ? month_date_range(date) : date %></span>
+                    </p>
+                    <div class="flex-wrapper">
+                      <%= render partial: 'tasks', collection: tasks, as: :task %>
+                    </div>
+                <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+  <% end %>
 </div>
 
-<div id="clients_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'clients/new_client' %>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".edit-detail").click();
+    })
+
+</script>

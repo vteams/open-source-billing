@@ -19,7 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Payment < ActiveRecord::Base
- include DateFormats
+  include DateFormats
+  include PaymentSearch
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
@@ -32,6 +33,13 @@ class Payment < ActiveRecord::Base
 
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
+
+  #socpes
+  scope :invoice_number, -> (invoice_number) { where(invoice_id: invoice_number) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :payment_date, -> (payment_date) { where(payment_date: payment_date) }
+  scope :payment_method, -> (payment_method) { where(payment_method: payment_method) }
+  scope :client_id, -> (client_id) { where(client_id: client_id) }
 
   paginates_per 10
 
@@ -77,10 +85,11 @@ class Payment < ActiveRecord::Base
     return_v
   end
 
-  def self.update_invoice_status_credit(inv_id, c_pay)
+  def self.update_invoice_status_credit(inv_id, c_pay, pay = nil)
     invoice = Invoice.find(inv_id)
-    diff = (self.invoice_paid_amount(invoice.id) + c_pay) - invoice.invoice_total
-    if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
+    diff = (self.invoice_old_paid_amount(invoice.id, pay.try(:id)) + c_pay) - invoice.invoice_total
+    #if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
+    if diff < 0
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
       return_v = diff < 0 ? c_pay : invoice.client.client_credit
     else
@@ -124,6 +133,17 @@ class Payment < ActiveRecord::Base
     invoice_paid_amount
   end
 
+ def self.invoice_old_paid_amount(inv_id, pay_id)
+   invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
+   invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
+
+   invoice_paid_amount = 0
+   invoice_old_payments.all.each do |inv_p|
+     invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
+   end
+   invoice_paid_amount
+ end
+
   def self.invoice_paid_detail(inv_id)
     Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id).all
   end
@@ -146,6 +166,25 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  def self.filter(params, per_page)
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+
+    payments = params[:search].present? ? Payment.search(params[:search]).records : Payment.all
+
+    payments = payments.payment_method(params[:type]) if params[:type].present?
+    payments = payments.client_id(params[:client_id]) if params[:client_id].present?
+    payments = payments.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
+    payments = payments.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+    payments = payments.payment_date(
+        (Date.strptime(params[:payment_start_date], date_format).in_time_zone .. Date.strptime(params[:payment_end_date], date_format).in_time_zone)
+    ) if params[:payment_start_date].present?
+
+    payments.unarchived.page(params[:page]).per(per_page)
+  end
+
   def destroy_credit_applied(payment_id)
     CreditPayment.where('credit_id = ?', payment_id).map(&:destroy)
   end
@@ -165,8 +204,9 @@ class Payment < ActiveRecord::Base
 
   def self.total_payments_amount(currency=nil, company=nil)
     invoice_ids = currency.present? ? Invoice.where(currency_id: currency.id ).pluck(:id).map(&:to_s).join(",") : ""
-    payment_currency_filter = (currency.present? and invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
-    company_filter = company.present? ? "company_id=#{company}" : ""
+    payment_currency_filter = (currency.present? && invoice_ids.present?) ? "invoice_id IN (#{invoice_ids})" : ""
+    payment_currency_filter =  'invoice_id IN (-1)' if (currency.present? && invoice_ids.empty?)
+    company_filter = company.present? ? "company_id=#{company}" : ''
     where('payment_type is null or payment_type != "credit"').where(payment_currency_filter).where(company_filter).sum('payment_amount')
   end
 
@@ -183,7 +223,12 @@ class Payment < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find_by_id self.client_id
+    Client.unscoped.find self.client_id rescue unscoped_invoice.client
+  end
+
+  def unscoped_invoice
+    return invoice if invoice.present?
+    Invoice.unscoped.find invoice_id if invoice_id.present?
   end
 
   def add_company_id
@@ -192,4 +237,26 @@ class Payment < ActiveRecord::Base
     end
   end
 
+ def payment_name
+   "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
+ end
+
+  def group_date
+    created_at.strftime('%B %Y')
+  end
+
+ def self.sum_per_month(client_ids, company_id)
+   payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
+   payments_per_month = {}
+
+   payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
+     payments_per_month[date] = payments.map(&:payment_amount).sum
+   end
+
+   payments_per_month
+ end
+
+ def group_payment_date
+    payment_date.to_date.strftime('%B %Y')
+ end
 end

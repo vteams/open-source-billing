@@ -20,10 +20,15 @@
 #
 class Item < ActiveRecord::Base
 
+  include ItemSearch
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
   scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
+  scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :tax_1, -> (tax_1) { where(tax_1: tax_1) }
+  scope :quantity, -> (quantity) { where(quantity: quantity) }
+  scope :unit_cost, -> (unit_cost) { where(unit_cost: unit_cost) }
 
   # associations
   has_many :invoice_line_items
@@ -38,9 +43,8 @@ class Item < ActiveRecord::Base
 
   paginates_per 10
 
-  def self.is_exists? item_name, company_id = nil
-    company = Company.find company_id if company_id.present?
-    company.present? ? company.items.where(:item_name => item_name).present? : where(:item_name => item_name).present?
+  def self.is_exists? item_name, association
+    association.present? ? association.items.where(:item_name => item_name).present? : where(:item_name => item_name).present?
   end
 
   def self.recover_archived(ids)
@@ -58,17 +62,44 @@ class Item < ActiveRecord::Base
   end
 
   def self.get_items(params)
-    account = params[:user].current_account
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    user = User.current
+    date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+    # get the company
+    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
+    company = Company.find_by(id: company_id)
 
     # get the items associated with companies
-    company_id = params['current_company'] || params[:user].current_company || params[:user].current_account.companies.first.id
-    company_items = Company.find(company_id).items.send(params[:status])
+    company_items = company.items
+    company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
+    company_items = company_items.send(mappings[params[:status].to_sym])
+    company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
+    company_items = company_items.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+    company_items = company_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
+    company_items = company_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
+
+    # get the account
+    account = params[:user].current_account
+
+    # get the items associated with account
+    account_items = account.items
+    account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
+    account_items = account_items.send(mappings[params[:status].to_sym])
+    account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
+    account_items = account_items.created_at(
+        (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
+    ) if params[:create_at_start_date].present?
+    account_items = account_items.quantity((params[:min_quantity].to_i .. params[:max_quantity].to_i)) if params[:min_quantity].present?
+    account_items = account_items.unit_cost((params[:min_unit_cost].to_i .. params[:max_unit_cost].to_i)) if params[:min_unit_cost].present?
 
     # get the unique items associated with companies and accounts
-    items = (account.items.send(params[:status]) + company_items).uniq
+
+    items = (account_items + company_items).uniq
 
     # sort items in ascending or descending order
-    items.sort! do |a, b|
+    items = items.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
 
       if %w(tax1.name tax2.name).include?(params[:sort_column])
@@ -88,5 +119,33 @@ class Item < ActiveRecord::Base
 
     Kaminari.paginate_array(items).page(params[:page]).per(params[:per])
 
+  end
+
+  def tax1_name
+    return '' if tax_1.blank?
+    Tax.unscoped.find_by(id: tax_1).name
+  end
+
+  def tax2_name
+    return '' if tax_2.blank?
+    Tax.unscoped.find_by(id: tax_2).name
+  end
+
+  def tax1_percentage
+    return '' if tax_1.blank?
+    Tax.unscoped.find_by(id: tax_1).percentage.to_s + "%"
+  end
+
+  def tax2_percentage
+    return '' if tax_2.blank?
+    Tax.unscoped.find_by(id: tax_2).percentage.to_s + "%"
+  end
+  
+  def group_date
+    created_at.strftime('%B %Y')
+  end
+
+  def item_total
+    unit_cost * quantity rescue 0
   end
 end

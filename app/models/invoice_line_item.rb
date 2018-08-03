@@ -19,6 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoiceLineItem < ActiveRecord::Base
+
+  include ItemSearch
   # associations
   belongs_to :invoice
   belongs_to :estimate
@@ -35,4 +37,22 @@ class InvoiceLineItem < ActiveRecord::Base
   def unscoped_item
     Item.unscoped.find_by_id self.item_id
   end
+
+  def item_total
+    item_unit_cost * item_quantity rescue 0.0
+  end
+
+  def item_tax_amount
+    tax_amount = 0
+    return 0 if tax_1.blank? and tax_2.blank?
+    tax_amount +=  (item_total * tax1.percentage)/100 unless tax_1.blank?
+    tax_amount +=  (item_total * tax2.percentage)/100 unless tax_2.blank?
+    tax_amount
+  end
+
+  def item_total_amount
+    item_tax_amount + item_total
+  end
+
+
 end

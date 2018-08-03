@@ -28,10 +28,9 @@ class TaxesController < ApplicationController
 
   def index
     params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
+    @status = params[:status]
 
-    @taxes = Tax.send(method).page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+    @taxes = Tax.filter(params, @per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,11 +42,12 @@ class TaxesController < ApplicationController
   # GET /taxes/1
   # GET /taxes/1.json
   def show
-    @taxis = Tax.find(params[:id])
+    @tax = Tax.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @taxis }
+      format.js
+      format.json { render json: @tax }
     end
   end
 
@@ -58,6 +58,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render json: @taxis }
     end
   end
@@ -72,7 +73,7 @@ class TaxesController < ApplicationController
   def create
     if Tax.is_exits?(params[:tax][:name])
       @tax_exists = true
-      redirect_to(new_tax_path, :alert => "Tax with same name already exists") unless params[:quick_create]
+      redirect_to(taxes_path, :alert => t('views.taxes.duplicate_name')) unless params[:quick_create]
       return
     end
     @taxis = Tax.new(taxes_params)
@@ -80,10 +81,10 @@ class TaxesController < ApplicationController
     respond_to do |format|
       if @taxis.save
         format.js
-        format.html { redirect_to @taxis, notice: 'Tax was successfully created.' }
+        format.html { redirect_to @taxis, notice: t('views.taxes.created_msg') }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
-        redirect_to({:action => "edit", :controller => "taxes", :id => @taxis.id}, :notice => new_tax_message) unless params[:quick_create]
+        redirect_to({:action => "index", :controller => "taxes"}, :notice => new_tax_message) unless params[:quick_create]
         return
       else
         format.html { render action: "new" }
@@ -99,7 +100,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       if @taxis.update_attributes(taxes_params)
-        format.html { redirect_to taxes_url, notice: 'Tax was successfully updated.' }
+        format.html { redirect_to taxes_url, notice: t('views.taxes.updated_msg') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -116,7 +117,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to taxes_url }
-      format.json { head :no_content }
+      format.json { render_json(@taxis) }
     end
   end
 
@@ -125,7 +126,10 @@ class TaxesController < ApplicationController
     @taxes = result[:taxes].order("#{sort_column} #{sort_direction}")
     @message = get_intimation_message(result[:action_to_perform], result[:tax_ids])
     @action = result[:action]
-    respond_to { |format| format.js }
+    respond_to { |format|
+      format.js
+      format.html {redirect_to taxes_url, notice: t('views.taxes.bulk_action_msg', action: @action)}
+    }
   end
 
   def filter_taxes

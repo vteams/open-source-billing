@@ -1,0 +1,10 @@
+$('body').append("<%= escape_javascript render partial: 'company_form_popup', locals: {company: @company}  %>");
+Company.load_functions();
+$('input').each(function(){
+    if($(this).val() != ""){
+        $(this).parent().find('label').addClass('active');
+    }
+});
+elem = $("#company_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

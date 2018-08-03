@@ -13,6 +13,8 @@ class Ability
       cannot :delete, :all
       cannot :manage, Reporting
       can [:read, :create, :update], ENTITIES.map(&:constantize)
+    else
+      can :manage, :all
     end
 
   end

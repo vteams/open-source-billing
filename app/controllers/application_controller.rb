@@ -28,13 +28,14 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
-  before_filter :authenticate_user!
   before_filter :_reload_libs #reload libs on every request for dev environment only
-                              #layout :choose_layout
-                              #reload libs on every request for dev environment only
+  #layout :choose_layout
+  #reload libs on every request for dev environment only
   before_filter :set_per_page
   before_filter :set_date_format
   before_filter :set_current_user
+  before_filter :set_listing_layout
+  before_filter :authenticate_user!
 
   before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|
@@ -108,7 +109,7 @@ class ApplicationController < ActionController::Base
     elem.where("#{tbl}.company_id IN(?)", get_company_id())
   end
 
-  helper_method :filter_by_company
+  helper_method :filter_by_company, :render_card_view?
 
   def new_selected_company_name
     session['current_company'] = params[:company_id]
@@ -148,10 +149,10 @@ class ApplicationController < ActionController::Base
 
   #set session of company_id
   def set_company_session
-   unless params[:company_id].blank?
-    session['current_company'] = params[:company_id]
-    current_user.update_attributes(current_company: params[:company_id])
-   end
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
+    end
   end
 
   def set_per_page
@@ -168,6 +169,31 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     User.current = current_user
+  end
+
+  def set_listing_layout
+    if params[:view].nil? && current_user
+    session[:view] ||= current_user.settings.index_page_format || 'card'
+    else
+      session[:view] = params[:view]
+    end
+  end
+
+  def render_json(obj)
+    if obj.errors.present?
+      render json: {errors: obj.errors.full_messages.join('.') }, status: :unprocessable_entity
+    else
+      render json: {}
+    end
+  end
+
+  def render_card_view?
+    params[:view] ||= session[:view]
+    params[:view] == 'card'
+  end
+
+  def get_association_obj
+    params[:association] == 'account' ? current_account : Company.find(get_company_id)
   end
 
   protected

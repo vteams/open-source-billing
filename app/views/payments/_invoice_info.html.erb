@@ -1,0 +1,21 @@
+<div class="info-left-section left col m4">
+  <h6 class="text-orange"><%= invoice.invoice_number %> <span> <%= invoice.company.company_name %></span></h6>
+  <div class="date-invoice">
+    <span><%= t('invoice') %>: <small> <%= invoice.invoice_date %> </small></span>
+    <span class="text-blue"> <%= t('views.invoices.due') %>: <small> <%= invoice.due_date %></small></span>
+  </div>
+  <div class="terms">
+    <span><%= t('views.common.terms') %>:</span> <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
+  </div>
+  <div class="paymentInfo">
+    <div>
+      <span><%= t('views.invoices.invoice_amount') %><em>:</em></span><strong><%= number_to_currency(invoice.invoice_total) %> <small><%= invoice.currency.unit %></small></strong>
+    </div>
+    <div>
+      <span><%= t('views.common.received') %><em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id)) %> <small><%= invoice.currency.unit %></small></strong>
+    </div>
+    <div>
+      <span><%= t('views.payments.net_due') %><em>:</em></span><strong><%= number_to_currency(due_amount) %> <small><%= invoice.currency.unit %></strong>
+    </div>
+  </div>
+</div>

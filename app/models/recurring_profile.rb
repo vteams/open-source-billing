@@ -2,6 +2,7 @@ class RecurringProfile < ActiveRecord::Base
 
   include DateFormats
   include Trackstamps
+  include RecurringProfileSearch
   #scope
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
@@ -161,6 +162,10 @@ class RecurringProfile < ActiveRecord::Base
 
   def unscoped_client
     Client.unscoped.find_by_id self.client_id
+  end
+
+  def group_date
+    created_at.strftime("%d/%m/%Y")
   end
 
 end

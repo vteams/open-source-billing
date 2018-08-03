@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+Dear <%= @user %>,
+<p>
+  Your payment is failed. We are downgrading your plan to free plan. Please check you credit card and then upgrade the
+  plan from <%= link_to "Price Plans", my_subscriptions_url %> page.
+</p>
+<strong> Amount Due </strong>: <p> <%= number_to_currency(@amount) %></p>
+<strong> Error Message </strong>: <p> <%= @message %></p>
+</body>
+</html>
+
+

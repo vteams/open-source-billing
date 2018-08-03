@@ -1,0 +1,27 @@
+<!--- Activity sidebar --->
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+    <span class="btn-activity"><i class="material-icons">
+      keyboard_arrow_left
+    </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <div class="status-info active">
+      <h5>
+        <%= link_to t('views.common.active'), "staffs?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.archive'), "staffs?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'archived'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.deleted'), "staffs?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'deleted'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'only_deleted', user: current_user, current_company: session['current_company'])) %>)</span>
+      </h5>
+    </div>
+  </div>
+
+</aside>

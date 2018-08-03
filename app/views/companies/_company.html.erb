@@ -1,0 +1,26 @@
+<div class="list-item" id="company_<%= company.id %>"
+     title="<%= 'Current company cannot be deleted.' if company.id == get_company_id.to_i %>">
+  <div class="checkbox-item">
+    <%= check_box_tag 'company_ids[]', company.id, false, :id => "company_ck_#{company.id}",
+                      class: "filled-in#{ ' disabled' if company.id == get_company_id.to_i }" %>
+    <label for="<%= "company_ck_#{company.id}" %>"></label>
+    <div class="invoice-name circle-img <%= random_card_color unless company.logo_url.present? %>"
+         style="background-image: url('<%= company.logo_url %>');">
+      <%= company.image_name unless company.logo_url.present? %>
+    </div>
+  </div>
+  <div class="invoice-details editContent">
+    <h5><%= company.company_name %></h5>
+    <div class="input-field">
+      <%= link_to company.contact_name || company.company_name, OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company, setting_form: 1), ({remote: true} if !OSB::CONFIG::DEMO_MODE) %>
+    </div>
+    <div class="input-field">
+      <input type="email" value="<%= company.email %>" placeholder="" disabled>
+    </div>
+    <div class="input-field countries">
+      <select disabled>
+        <option value="1"><%= company.country %></option>
+      </select>
+    </div>
+  </div>
+</div>

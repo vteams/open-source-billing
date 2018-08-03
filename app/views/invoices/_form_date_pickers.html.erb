@@ -1,0 +1,20 @@
+<div class="date-wrapper">
+  <span><%=t('invoice')%>:</span>
+  <span>
+    <small>
+      <%= f.input :invoice_date, label: false, wrapper_tag: :span,
+                  input_html: { class: 'date-field-style', value: f.object.invoice_date }, as: :string %>
+      <span><i class="material-icons">date_range</i></span>
+    </small>
+  </span>
+</div>
+<div class="date-wrapper text-blue">
+  <span><%= t('views.invoices.due') %>:</span>
+  <span>
+    <small>
+      <%= f.input :due_date, label: false, wrapper_tag: :span, as: :string,
+                  input_html: { class: 'date-field-style', id: 'invoice_due_date_picker', value: f.object.due_date } %>
+      <span><i class="material-icons">date_range</i></span>
+    </small>
+  </span>
+</div>

@@ -7,11 +7,15 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require flipclock.css.scss
+ *= require materialize
+ *= require font-awesome
+ *= require jquery.mCustomScrollbar.css
+ *= require range-slider
+ *= require material-design-iconic-font.css
  *= require_self
- *= require_tree .
  *= general.css.scss
+ *= require main.css
+ *= require jquery.qtip.min
  *= invoice.css.scss
  *= clients.css.scss
  *= sent_email.css.scss
@@ -25,7 +29,7 @@
  *= invoice_form.css.scss
  *= estimate_form.css.scss
  *= tiny_form_container.css.scss
- *= pay_invoice.css.scss
+ *= require pay_invoice
  *= log_page.css.scss
  *= aged_accounts_receivable.css.scss
  *= revenue_by_client.css.scss
@@ -34,7 +38,6 @@
  *= payment_history.css.scss
  *= dispute_history.css.scss
  *= credit_card.css.scss
- *= jquery.customScrollbar.css
  *= edit_payment.css
  *= item_sales.css
  *= sub_users_form.css.scss
@@ -42,7 +45,20 @@
  *= recurring_profile.css.scss
  *= show_email.css.scss
  *= bootstrap_switch.css
- *= settings.css.scss
+ *= require settings.css.scss
  *= project.css.scss
  *= require fullcalendar
+ *= require custom
+ *= require select2.min
+ *= require search
+ *= require currency-flags
+ *= require table_view.css.scss
+ *= require filters
+ *= require daterangepicker
+ *= require nouislider
 */
+
+.fix-left-and-opacity {
+    left: auto !important;
+    opacity: 1 !important;
+}

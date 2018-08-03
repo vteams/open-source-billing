@@ -1,0 +1,24 @@
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+    <span class="btn-activity"><i class="material-icons">
+      keyboard_arrow_left
+    </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+
+    <div class="status-info">
+      <h5> <%= link_to t('views.common.active'), "?status=active&per=#{@per_page}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span class="item_counts" id="actives">(<%= Tax.unarchived.size %>)</span></h5>
+
+
+    </div>
+    <div class="status-info">
+      <h5> <%= link_to t('views.common.archived'), "?status=archived&per=#{@per_page}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+        <span class="item_counts" id="archives">(<%= Tax.archived.size %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>  <%= link_to t('views.common.deleted'), "?status=deleted&per=#{@per_page}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+        <span class="item_counts" id="deletes">(<%= Tax.only_deleted.size %>)</span></h5>
+    </div>
+  </div>
+</aside>

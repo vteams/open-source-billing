@@ -1,0 +1,16 @@
+<% if @sub_user.errors.present? %>
+  showErrorMsg("<%= @sub_user.errors.full_messages.join('.') %>.");
+<% else %>
+  $('#users').html('<%= escape_javascript render(partial: 'user', collection: @users) %>');
+  initUserListingEvents();
+  $('#user_edit_btn').addClass('disabled').attr('href', 'javascript:;').removeAttr('data-remote');
+  $('#edit_form_popup').modal('close');
+
+  <% if password_has_changed?(params[:user_id], params[:password]) %>
+    <% flash[:notice] = t('views.users.updated_password_msg')%>
+    $(window.location.replace("/users/sign_in"));
+  <% else %>
+    showSuccessMsg("User has been updated successfully.");
+  <% end %>
+
+<% end %>

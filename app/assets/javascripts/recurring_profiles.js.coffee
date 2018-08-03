@@ -118,10 +118,10 @@ jQuery ->
     elem.qtip("hide")
 
   # Hide use as template qtip
-  jQuery('.use_as_template').on "click", ".close_qtip", ->
+  jQuery('.use_as_template .close_qtip').on "click", ->
     hidePopover(jQuery("#recurring_profile_client_id_chzn"))
 
-  jQuery("body").on "click", "#recurring_profile_client_id_chzn,.chzn-container", ->
+  jQuery("#recurring_profile_client_id_chzn,.chzn-container").on "click", ->
     jQuery(this).qtip("hide")
 
   # Don't send an ajax request if an item is deselected.
@@ -134,7 +134,7 @@ jQuery ->
     updateLineTotal(elem)
     updateInvoiceTotal()
 
-  jQuery('#active_links').on 'click', "a", ->
+  jQuery('#active_links a').on 'click', ->
     jQuery('#active_links a').removeClass('active')
     jQuery(this).addClass('active')
 

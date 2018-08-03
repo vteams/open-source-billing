@@ -1,2 +1,10 @@
-<% inlineform_action = params[:add_more] ? "inlineform:save_and_add_more" : "inlineform:save" %>
-<%= "{\"action\": \"#{inlineform_action}\", \"record\": \"<option value='#{@client.id}' selected type='#{params[:association] == "account" ? "account_level" : "company_level"}'>#{@client.organization_name}</option>\"}".html_safe%>
+<% if @client_exists %>
+    showWarningSweetAlert('error', "<%= t('views.clients.duplicate_email') %>", function(){});
+<% else %>
+    last_option = $("#invoice_client_id option:last, #estimate_client_id option:last").clone();
+    $("#invoice_client_id option:last, #estimate_client_id option:last").remove();
+    $("#invoice_client_id, #estimate_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
+    $("#invoice_client_id, #estimate_client_id").trigger('contentChanged');
+    $('.modal').modal('close');
+    swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
+<% end %>

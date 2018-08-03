@@ -1,0 +1,101 @@
+// Styling related to listing table views
+
+.new-invoice-holder {
+  .table-view-heading {
+    padding: 20px 30px;
+    padding-bottom: 0px;
+  }
+  .new-invoice-table-holder {
+    &.page-box { padding: 30px; }
+    thead tr th .fix-left-and-opacity {
+      position: inherit;
+      margin-top: 13px;
+    }
+  }
+}
+
+// Styling for icons in breadcrumb to switch page layout
+.with-grid-icons {
+  width: 100%;
+
+  a.plus-add-icon {
+    i {
+      color: #a6a6a6;
+      vertical-align: bottom;
+      &hover { color: #09b8e2; }
+    }
+  }
+  .right div.separator {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+    background-color: grey;
+    height: 20px;
+    width: 2px;
+    border-radius: 5px;
+  }
+  .right a {
+    &.active i { color: #09b8e2; }
+    i { color: #a6a6a6; }
+    i:hover { color: #09b8e2; }
+    &.show-filters i { font-size: 20px; }
+  }
+}
+
+// table body styling
+.table-view-body {
+  tr.table-group-heading th {
+    padding: 0 13px;
+    margin: 5px 0;
+    border-bottom: 1px solid #dadada;
+    border-top: 1px solid #dadada;
+    background-color: #E2F4F9;
+    span.activity-date {
+      margin: 5px 0;
+    }
+  }
+  td {
+    padding: 13px !important;
+    &:last-child { text-align: center; }
+
+    .fix-left-and-opacity {
+      position: relative;
+      top: 5px;
+    }
+    &.action-btn-group.disabled_link {
+      i {  color: #dadada;  }
+    }
+    i {
+      font-size: 16px;
+      color: #a6a6a6;
+
+      &:hover{  color: #09b8e2;  }
+    }
+
+    ul.dropdown-content.z-depth-4 {
+      min-width: 150px;
+      top: inherit !important;
+
+      li a {
+        font-size: 12px;
+        i {
+          font-size: 16px;
+          color: #a6a6a6;
+          vertical-align: bottom;
+        }
+
+        &:hover {
+          i {  color: #09b8e2;  }
+        }
+      }
+    }
+  }
+}
+
+.new-invoice-holder .new-invoice-table-holder.main-invoice table.grid-view tbody tr.fields.nested-fields td {
+  padding: 1px 8px !important;
+}
+.new-invoice-holder .new-invoice-table-holder.main-invoice table tbody tr td {
+  font-size: 12px !important;
+  input { font-size:  12px; }
+}

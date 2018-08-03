@@ -1,22 +1,18 @@
-<%- model_class = Invoice -%>
-
-<div class="content_top">
-  <div class="primary_heading">
-    <h1><%= t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
-                                      :default => "New #{model_class.model_name.human}") %></h1>
+<%= render 'invoice_activity'%>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="flex-wrapper">
+    <div class="flex-item col-sm-12 breadcrum-bar">
+      <div class="card-white-panel">
+        <h3>
+          <span><%= link_to t('header.links.invoices.invoices'), invoices_url %> </span>
+          <%= link_to "/ #{t('views.common.active')}", invoices_url %>
+        </h3>
+      </div>
+    </div>
   </div>
-</div><!--content_top-->
 
-<%= render :partial => 'form' %>
-<div id="clients_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'clients/new_client' %>
+  <div class="invoice-box-holder">
+    <%= render partial: 'invoice_form', locals: {invoice: @invoice} %>
+  </div>
 </div>
-<div id="items_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'items/new_item' %>
-</div>
-<div id="payment_terms_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'payment_terms/new_term' %>
-</div>
-<div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
-  <%= render 'taxes/new_tax' %>
-</div>
+

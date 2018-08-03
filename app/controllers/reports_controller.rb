@@ -33,6 +33,7 @@ class ReportsController < ApplicationController
     Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
     criteria = get_criteria(params)
     @report = get_report(criteria)
+    @report_activity = Reporting::ReportActivity.get_activity(get_company_id, Currency.default_currency, current_account)
     respond_to do |format|
       format.html # index.html.erb
       format.csv { send_data @report.to_csv }
@@ -47,7 +48,7 @@ class ReportsController < ApplicationController
           footer:{
             right: 'Page [page] of [topage]'
           }
-        send_data pdf,filename: file_name
+        send_data pdf,filename: file_name, disposition: 'inline'
       end
     end
   end

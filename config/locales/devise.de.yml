@@ -1,0 +1,59 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+de:
+  devise:
+    confirmations:
+      confirmed: "Ihr Konto wurde erfolgreich bestätigt."
+      send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
+      send_paranoid_instructions: "Wenn Ihre E-Mail-Adresse in unserer Datenbank vorhanden ist, erhalten Sie in einigen Minuten eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
+    failure:
+      already_authenticated: "Sie sind bereits angemeldet."
+      inactive: "Ihr Konto ist noch nicht aktiviert."
+      invalid: "Ungültige E-Mail-Adresse oder Passwort"
+      locked: "Ihr Konto ist gesperrt."
+      last_attempt: "Sie haben noch einen Versuch, bevor Ihr Konto gesperrt wird."
+      not_found_in_database: "Ungültige E-Mail-Adresse oder Passwort"
+      timeout: "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an, um fortzufahren."
+      unauthenticated: "Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren."
+      unconfirmed: "Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren."
+    mailer:
+      confirmation_instructions:
+        subject: "Bestätigungshinweise"
+      reset_password_instructions:
+        subject: "Passwort-Anweisungen zurücksetzen"
+      unlock_instructions:
+        subject: "Anweisungen entsperren"
+    omniauth_callbacks:
+      failure: "Sie konnten sich nicht von %{kind} wegen \"%{reason}\" authentifizieren."
+      success: "Erfolgreich von %{kind} account authentifiziert."
+    passwords:
+      no_token: "Sie können nicht auf diese Seite zugreifen, ohne von einer E-Mail zum Zurücksetzen des Passworts zu kommen. Wenn Sie aus einer E-Mail zum Zurücksetzen des Passworts kommen, vergewissern Sie sich bitte, dass Sie die vollständige URL verwendet haben."
+      send_instructions: "Sie erhalten eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts in wenigen Minuten."
+      send_paranoid_instructions: "Wenn Ihre E-Mail-Adresse in unserer Datenbank vorhanden ist, erhalten Sie in wenigen Minuten einen Link zur Passwortwiederherstellung unter Ihrer E-Mail-Adresse."
+      updated: "Ihr Passwort wurde erfolgreich geändert. Sie sind jetzt angemeldet."
+      updated_not_active: "Ihr Passwort wurde erfolgreich geändert."
+    registrations:
+      destroyed: "Tschüss! Dein Account wurde erfolgreich storniert. Wir hoffen, dich bald wieder zu sehen."
+      signed_up: "Willkommen! Sie haben sich erfolgreich angemeldet."
+      signed_up_but_inactive: "Sie haben sich erfolgreich angemeldet. Wir konnten Sie jedoch nicht anmelden, da Ihr Konto noch nicht aktiviert ist."
+      signed_up_but_locked: "Sie haben sich erfolgreich angemeldet. Wir konnten Sie jedoch nicht anmelden, weil Ihr Konto gesperrt ist."
+      signed_up_but_unconfirmed: "Eine Nachricht mit einem Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte öffnen Sie den Link, um Ihr Konto zu aktivieren."
+      update_needs_confirmation: "Sie haben Ihr Konto erfolgreich aktualisiert, aber wir müssen Ihre neue E-Mail-Adresse bestätigen. Bitte überprüfen Sie Ihre E-Mail und klicken Sie auf den Bestätigungslink, um die Bestätigung Ihrer neuen E-Mail-Adresse abzuschließen."
+      updated: "Sie haben Ihr Konto erfolgreich aktualisiert."
+    sessions:
+      signed_in: "Erfolgreich angemeldet"
+      signed_out: "Erfolgreich angemeldet."
+    unlocks:
+      send_instructions: "Sie erhalten in einigen Minuten eine E-Mail mit Anweisungen zum Freischalten Ihres Kontos."
+      send_paranoid_instructions: "Wenn Ihr Konto existiert, erhalten Sie eine E-Mail mit Anweisungen, wie Sie es in ein paar Minuten entsperren können."
+      unlocked: "Ihr Konto wurde erfolgreich entsperrt. Melden Sie sich an, um fortzufahren."
+  errors:
+    messages:
+      already_confirmed: "wurde bereits bestätigt, bitte versuchen Sie sich anzumelden"
+      confirmation_period_expired: "muss innerhalb von %{period} bestätigt werden, bitte einen neuen anfordern"
+      expired: "ist abgelaufen, bitte ein neues beantragen"
+      not_found: "nicht gefunden"
+      not_locked: "wurde nicht gesperrt"
+      not_saved:
+        one: "1 Fehler beim Speichern dieses %{resource}:"
+        other: "%{count} errors verboten, dass %{resource} gespeichert wird:"

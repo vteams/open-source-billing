@@ -1,39 +1,12 @@
-<div class="client_contact">
-  <div class="fields">
-    <div class="field_row">
-      <div class="label_field left single"><%= t('views.common.email') %></div>
-      <div class="medium_field">
-        <%= f.text_field :email %>
-      </div>
-      <div class="label_field right"><%= t('views.common.phone') %></div>
-      <div class="small_field"><%= f.text_field :home_phone %></div>
+<div class="client_contact row">
+  <div class="fields nested-fields">
+    <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :last_name, label: t('views.clients.last_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <%= f.input :home_phone, label: t('views.common.phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
+    <%= f.input :mobile_number, label: t('views.common.mobile'), wrapper_html: { class: 'input-field col s6 m4' } %>
+    <div class="input-field col s6 m4">
+      <%= link_to_remove_association t('views.clients.remove_this_contact'), f, class: 'btn moreBtn remove truncate' %>
     </div>
-    <!--field_row-->
-
-    <div class="field_row description">
-      <div class="label_field left single"><%= t('views.common.name') %></div>
-      <div class="small_field">
-        <%= f.text_field :first_name %>
-        <ul class="field_description">
-          <li><%= t('views.clients.first_name') %></li>
-        </ul>
-      </div>
-      <div class="small_field right">
-        <%= f.text_field :last_name %>
-        <ul class="field_description">
-          <li><%= t('views.clients.last_name') %></li>
-        </ul>
-      </div>
-      <div class="label_field right single"><%= t('views.common.mobile') %></div>
-      <div class="small_field"> <%= f.text_field :mobile_number %></div>
-    </div>
-    <div class="options_row">
-      <div class="options_content">
-        <div class="options_content_row">
-          <%= f.link_to_remove t("views.clients.remove_this_contact"), :class => 'remove' %>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>

@@ -34,7 +34,7 @@ module Reporting
       HEADER_COLUMNS = ['Invoice No','Client', 'Invoice Date', 'Status', 'Invoice Total']
 
       def period
-        "Between #{@report_criteria.from_date.strftime(get_date_format)} and #{@report_criteria.to_date.strftime(get_date_format)}"
+        "#{I18n.t('views.common.between')} <strong> #{@report_criteria.from_date.strftime(get_date_format)} </strong> #{I18n.t('views.common.and')} <strong>#{@report_criteria.to_date.strftime(get_date_format)}</strong>"
       end
 
       def get_report_data
@@ -53,7 +53,7 @@ module Reporting
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
           data[:total] = row.collect(&:invoice_total).sum.to_f.round(2)
-          data[:currency_code] = Currency.find(row.first[:currency_id]).code
+          data[:currency_code] = Currency.find(row.first[:currency_id]).unit
           @report_total<<data
         end
       end

@@ -68,9 +68,11 @@
 #      :tax_1 => tax2,
 #      :tax_2 => tax1
 #    }])
-
-templates = EmailTemplate.create(
-    [
+EmailTemplate.delete_all
+ActiveRecord::Base.connection.execute("TRUNCATE email_templates")
+CompanyEmailTemplate.delete_all
+ActiveRecord::Base.connection.execute("TRUNCATE company_email_templates")
+templates = EmailTemplate.create([
         {
             :torder => 1,
             :status => 'Default',
@@ -78,7 +80,7 @@ templates = EmailTemplate.create(
             :email_from => 'nfor20@yahoo.com',
             :subject => '{{client_company}}: {{company_name}} Invoice: {{invoice_number}}',
             :body => '<p>Dear {{client_contact}},</p>
-            <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your records, click the link below:</p>
+            <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your invoice, please click on below link:</p>
             <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
             <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
@@ -174,16 +176,16 @@ templates = EmailTemplate.create(
             :status => 'Default',
             :template_type => 'New User',
             :email_from => 'nfor20@yahoo.com',
-            :subject => 'Important {{company_name}} invoicing details courtesy of Open Source Billing',
-            :body => '<p>Welcome to {{company_name}}\'s secure online services provided by Open Source Billing.</p>
+            :subject => "Welcome to {{company_name}}'s invoicing services provided by Open Source Billing.",
+            :body => "<p>Welcome to {{company_name}}'s secure online services provided by Open Source Billing.</p>
            <p>To securely access your account information and invoices, go to: </p>
-           <p><a href="{{app_url}}">{{app_url}}</a></p>
+           <p><a href='{{app_url}}'>{{app_url}}</a></p>
            <p>Login using the following username and password:<p>
            <p> Username:  {{user_email}}
            <p>Password: {{user_password}}
            <p>If you have any questions please contact {{company_contact}} at {{company_phone}}.
            <p>Thank you.</p>
-           <p>{{company_signature}}</p>'
+           <p>{{company_signature}}</p>"
         },
         {
             :torder => 9,
@@ -197,8 +199,9 @@ templates = EmailTemplate.create(
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
             <p>Thanks,</p>
             <p>{{company_signature}}</p>'
-        },
+        }
     ])
+
 templates.each do |template|
   CompanyEmailTemplate.create(
       :parent_id => (Account.first.id rescue nil),
@@ -206,10 +209,13 @@ templates.each do |template|
       :template_id => template.id
   )
 end
+
 #creating default currencies
 Currency.delete_all
 ActiveRecord::Base.connection.execute("TRUNCATE currencies")
-sample_currencies = Money::Currency.all.collect{|x| {code: x.symbol,unit: x.iso_code,title: x.name}}
+sample_currencies = []
+not_currencies = ['BTC', 'XAG', 'XAU', 'XDR']
+Money::Currency.all.collect{|x| sample_currencies << {code: x.symbol,unit: x.iso_code,title: x.name} if not_currencies.exclude?(x.iso_code)}
 Currency.create(sample_currencies)
 
 # set default currencies to clients
@@ -229,3 +235,9 @@ Role.delete_all
 ROLES.each do |role|
   Role.create name: role
 end
+
+PaymentTerm.delete_all
+PaymentTerm.create(number_of_days: 10, description: "10 days")
+PaymentTerm.create(number_of_days: 7, description: "Weekly")
+PaymentTerm.create(number_of_days: 30, description: "Monthly")
+PaymentTerm.create(number_of_days: 0, description: "Custom")

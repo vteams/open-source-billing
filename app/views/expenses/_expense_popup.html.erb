@@ -1,0 +1,71 @@
+<div id="expense_modal" class="modal viewModal expenseModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue"><%= expense.client.organization_name %></h5>
+      <div class="modal-action-btn right">
+        <a href="#" class="modal-close"><i class="material-icons">done</i></a>
+      </div>
+    </div>
+    <div class="info-section clearfix">
+      <div class="info-left-section left">
+        <h6 class="text-blue title-heading"><%= expense.category.name %></h6>
+        <span>DATE : <small> <%= expense.expense_date %> </small></span>
+        <div class="paymentInfo">
+          <strong><%= number_to_currency(expense.total, unit: '')%><small> <%= expense.currency.unit %></small></strong>
+        </div>
+      </div>
+      <% unless expense.company.logo_url.blank? %>
+          <div class="info-right-section right circle">
+            <%= image_tag(expense.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
+      <% end %>
+    </div>
+    <div class="modal-body">
+      <table class="bordered responsive-table">
+        <thead>
+        <tr>
+          <th>Amount</th>
+          <th width="25%">Tax 1</th>
+          <th width="25%">Tax 2</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= number_to_currency(expense.amount, unit: '')%></td>
+          <td width="25%" class="clearfix">
+            <% if expense.tax_1.present? %>
+                <span class="left"><%= expense.tax1_name%></span>
+                <span class="right"><%= "#{expense.tax1_amount} #{expense.currency.code}" %></span>
+            <% else %>
+                N/A
+            <% end %>
+          </td>
+          <td width="25%" class="clearfix">
+            <% if expense.tax_2.present? %>
+                <span class="left"><%= expense.tax2_name%></span>
+                <span class="right"><%= "#{expense.tax2_amount} #{expense.currency.code}" %></span>
+            <% else %>
+                N/A
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer clearfix">
+      <div class="right-section right">
+        <div class="item-total">
+          <div class="table-row">
+            <span><strong>Total</strong></span>
+            <span><strong><%= "#{expense.currency.unit} #{expense.total}"  %></strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-info col l6">
+          <p><strong>Note</strong><%= expense.note %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

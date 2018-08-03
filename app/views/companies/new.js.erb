@@ -1,0 +1,6 @@
+$('body').append("<%= escape_javascript render partial: 'company_form_popup', locals: {company: @company}  %>");
+$('select').material_select();
+Company.load_functions();
+elem = $("#company_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

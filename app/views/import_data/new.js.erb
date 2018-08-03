@@ -1,0 +1,5 @@
+$("body").append("<%= escape_javascript render partial: 'freshbooks_popup'  %>");
+Import.load_functions();
+elem = $("#freshModal");
+Popup.initialize(elem);
+Popup.open(elem);

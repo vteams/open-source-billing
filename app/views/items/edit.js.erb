@@ -1,0 +1,6 @@
+$('body').append("<%=escape_javascript render partial: 'form', locals: {item: @item} %>");
+Item.load_functions();
+$('#item_form_popup .input-field > label').addClass('active');
+elem = $("#item_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

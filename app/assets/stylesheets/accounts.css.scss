@@ -13,3 +13,14 @@
         width: 226px;
     }
 }
+
+.full_width_table{
+  width: 100% !important;
+  .serial_heading {
+    width: 8%;
+  }
+  .count_heading {
+    width: 10%;
+    text-align: center;
+  }
+}

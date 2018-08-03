@@ -23,7 +23,7 @@ window.tableListing = ->
   #jQuery("select.per_page").val('10');
 
   # Check all checkboxes using from main checkbox
-  jQuery('body').on "click", '#select_all', ->
+  jQuery('#select_all').on "click", ->
     listing_table =  jQuery(this).parents('table.table_listing')
     selected = if @checked then "selected" else ""
     listing_table.find(':checkbox').prop('checked', @checked).parents('tr').removeClass('selected').addClass(selected)
@@ -33,11 +33,11 @@ window.tableListing = ->
 
 
   # Check/uncheck all invoice listing checkboxes using from main checkbox
-  jQuery('body').on "click", '#main-invoice-checkbox', ->
+  jQuery('#main-invoice-checkbox').on "click", ->
     jQuery(this).parents('table.table-striped').find(':checkbox').attr('checked', this.checked)
 
   # Check/uncheck main checkbox if all checkboxes are checked
-  jQuery('table.table_listing').on "click", 'tbody :checkbox', ->
+  jQuery('table.table_listing tbody :checkbox').on "click", ->
     if jQuery(this).is(":checked")
       jQuery(this).parents('tr').addClass('selected')
     else
@@ -64,30 +64,30 @@ window.tableListing = ->
   jQuery("table.table_listing tbody td:empty").html("&nbsp;")
 
   # Alert on no record selection and confirm to delete forever payment
-  jQuery("body").on "click", '.top_links', ->
-    title = jQuery(this).parents("ul").attr "value"
-    title = title.toLowerCase()
-    action = jQuery(this).val().toLowerCase()
-    selected_rows =  jQuery("table.table_listing tbody").find(":checked").length
-    flag = true
-
-    if jQuery(this).hasClass('new_invoice') and selected_rows is 0
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any client. Please select a client and try again."
-      flag = false
-    else if selected_rows is 0
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{if title is 'company' then 'companie' else title}s and try again."
-      flag = false
-    else if jQuery(this).hasClass('new_invoice') and selected_rows > 1
-      jQuery('.alert').hide();
-      jQuery(".alert.alert-error").show().find("span").html "You have selected multiple clients. Please select a single client to create new invoice."
-      flag = false
-    else if title is "payment" and action is "delete forever"
-      flag = confirm("Are you sure you want to delete these payment(s)?")
-    else if title is "invoice" and action is "send"
-      flag = confirm("Are you sure you want to send selected invoice(s)?")
-    flag
+#  jQuery(".top_links").on "click", ->
+#    title = jQuery(this).parents("ul").attr "value"
+#    title = title.toLowerCase()
+#    action = jQuery(this).val().toLowerCase()
+#    selected_rows =  jQuery("table.table_listing tbody").find(":checked").length
+#    flag = true
+#
+#    if jQuery(this).hasClass('new_invoice') and selected_rows is 0
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any client. Please select a client and try again."
+#      flag = false
+#    else if selected_rows is 0
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You haven't selected any #{title} to #{action}. Please select one or more #{if title is 'company' then 'companie' else title}s and try again."
+#      flag = false
+#    else if jQuery(this).hasClass('new_invoice') and selected_rows > 1
+#      jQuery('.alert').hide();
+#      jQuery(".alert.alert-error").show().find("span").html "You have selected multiple clients. Please select a single client to create new invoice."
+#      flag = false
+#    else if title is "payment" and action is "delete forever"
+#      flag = confirm("Are you sure you want to delete these payment(s)?")
+#    else if title is "invoice" and action is "send"
+#      flag = confirm("Are you sure you want to send selected invoice(s)?")
+#    flag
 
   #Add remove sortup sortdown icons in table listing
   jQuery('.table_listing a.sortable').parent('th').click (e) ->
@@ -110,6 +110,6 @@ window.tableListing = ->
     jQuery('#subfile').val(jQuery(this).val())
 
   #
-  jQuery('.options_content').on "click", ':checkbox', ->
+  jQuery('.options_content :checkbox').on "click", ->
     status = jQuery('.options_content input[type=checkbox]:not(:checked)').length
     jQuery('#company_association').attr('checked', status)

@@ -1,0 +1,71 @@
+<% if @items.count > 0 %>
+    <div class="new-invoice-holder">
+      <div class="new-invoice-table-holder main-invoice page-box">
+        <table class="bordered grid-view">
+          <thead>
+          <tr>
+            <th class="align_center td-checkbox checkbox-item">
+              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+            </th>
+            <th width="15%"><%= t('views.common.title') %></th>
+            <th width="30%"><%= t('views.items.description') %></th>
+            <th><%= t('views.common.unit_cost') %></th>
+            <th><%= t('views.items.quantity') %></th>
+            <th width="15%"><%= t('views.items.tax') %></th>
+            <th class="center-align" width="10%;"><%= t('helpers.actions') %></th>
+          </tr>
+          </thead>
+          <tbody class="table-view-body">
+          <% @items.each do |item| %>
+              <tr class="invoice-card">
+                <td class="align_center td-checkbox checkbox-item">
+                  <%= check_box_tag 'item_ids[]', item.id, false, :id => "item_#{item.id}", class: 'fix-left-and-opacity' %>
+                </td>
+                <td><strong><%= link_to_if !item.deleted?, item.item_name, item, remote: true, class: 'invoice_show_link' %></strong></td>
+                <td width="35%"><%= item.item_description %></td>
+                <td><em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em></td>
+                <td><%= item.quantity %></td>
+                <td>
+                  <% if item.tax_1.present? %>
+                    <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
+                  <% end %>
+                </td>
+                <td class="action-btn-group items-action">
+                  <% if item.deleted? %>
+                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+                        <i class="material-icons">unarchive</i>
+                      </a>
+                  <% else %>
+                      <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
+                                  remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                      <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
+                                  data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
+                                  title: t('helpers.links.edit') %>
+                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
+                        <i class="material-icons">more_vert</i>
+                      </a>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
+                        <% if !item.archived? %>
+                            <li>
+                              <a href="javascript:;" class="single_archive">
+                                <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
+                              </a>
+                            </li>
+                        <% else %>
+                            <li>
+                              <a href="javascript:;" class="single_recover">
+                                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+                              </a>
+                            </li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<% end %>

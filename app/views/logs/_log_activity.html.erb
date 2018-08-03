@@ -1,0 +1,28 @@
+<!--- Activity sidebar --->
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+    <span class="btn-activity"><i class="material-icons">
+      keyboard_arrow_left
+    </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <div class="status-info">
+      <h5>
+        <%= link_to t('projects'), projects_url %>
+        <span id="actives">(<%= get_project_count %>)</span>
+      </h5>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('header.links.time_tracking.task'), tasks_path %>
+        <span id="actives">(<%= get_task_count %>)</span>
+      </h5>
+    </div>
+
+    <div class="status-info">
+      <h5>
+        <%= link_to t('header.links.time_tracking.staff'), staffs_path %>
+        <span id="actives">(<%= get_staff_count %>)</span>
+      </h5>
+    </div>
+  </div>
+
+</aside>

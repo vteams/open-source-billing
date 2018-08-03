@@ -2,7 +2,7 @@ jQuery(".alert").hide();
 
 <% unless params[:flag]%>
     <% if @action == "deleted" %>
-        jQuery(".alert.alert-success").show().find('span').html("Payment(s) are <%= @action %> successfully");
+        jQuery(".alert.alert-success").show().find('span').html("<%= t('views.payments.bulk_action_msg', action: @action) %>");
 
     <% elsif @action == "credit entry" %>
         jQuery("#credit_payments .modal-body").html("<%= escape_javascript(render "payments_with_credit", :locals => {:per => params[:per]}) %>");

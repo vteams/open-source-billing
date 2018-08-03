@@ -21,6 +21,7 @@
 class ItemsController < ApplicationController
   #before_filter :authenticate_user!
   load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  protect_from_forgery :except => [:load_item_data]
   before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   # GET /items
@@ -31,9 +32,11 @@ class ItemsController < ApplicationController
     set_company_session
     #@items = Item.get_items(params.merge(user: current_user)).unarchived.page(params[:page]).per(session["#{controller_name}-per_page"]).order(sort_column + " " + sort_direction)
     params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @items = Item.get_items(params.merge(get_args(method)))
+    params[:user]=current_user
+    @status = params[:status]
+    @items = Item.get_items(params.merge(get_args))
+    @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
+
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
 
@@ -45,9 +48,7 @@ class ItemsController < ApplicationController
   end
 
   def filter_items
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @items = Item.get_items(params.merge(get_args(method)))
+    @items = Item.get_items(params.merge(get_args))
   end
 
   # GET /items/1
@@ -57,6 +58,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js
       format.json { render :json => @item }
     end
   end
@@ -67,6 +69,7 @@ class ItemsController < ApplicationController
     @item = params[:id] ? Item.find_by_id(params[:id]).dup : Item.new
     respond_to do |format|
       format.html # new.html.erb
+      format.js
       format.json { render :json => @item }
     end
 
@@ -75,28 +78,30 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
+    respond_to do |format|
+      format.js
+
+    end
   end
 
   # POST /items
   # POST /items.json
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-    if Item.is_exists?(params[:item][:item_name], company_id)
+
+    if Item.is_exists?(params[:item][:item_name], get_association_obj)
       @item_exists = true
-      redirect_to(new_item_path, :alert => "Item with same name already exists") unless params[:quick_create]
+      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:position].present?
       return
     end
     @item = Item.new(item_params)
-    options = params[:quick_create] ? params.merge(company_ids: company_id) : params
+    options = params[:position].present? ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
-
     respond_to do |format|
       if @item.save
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
-        new_item_message = new_item(@item.id)
-        redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => new_item_message) unless params[:quick_create]
-        return
+        format.html { redirect_to items_path,  notice: new_item(@item.id) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
@@ -116,7 +121,7 @@ class ItemsController < ApplicationController
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
-        format.html { redirect_to({:action => "edit", :controller => "items", :id => @item.id}, :notice => 'Your item has been updated successfully.') }
+        format.html { redirect_to(items_path, :notice => t('views.items.item_updated')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
@@ -140,7 +145,7 @@ class ItemsController < ApplicationController
 #  # Load invoice line items data when an item is selected from drop down list
   def load_item_data
     item = Item.find_by_id(params[:id]).present? ?  Item.find(params[:id]) : Item.unscoped.find_by_id(params[:id])
-    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.id]
+    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.tax1_name || "", item.tax2_name || "", item.tax1_percentage || 0, item.tax2_percentage || 0 ]
   end
 
   def bulk_actions
@@ -151,12 +156,17 @@ class ItemsController < ApplicationController
     @message = get_intimation_message(result[:action_to_perform], result[:item_ids])
     @action = result[:action]
 
-    respond_to { |format| format.js }
+    respond_to do |format|
+      format.html { redirect_to items_url, notice: t('views.items.bulk_action_msg', action: @action) }
+      format.js
+      format.json
+    end
   end
 
   def undo_actions
     params[:archived] ? Item.recover_archived(params[:ids]) : Item.recover_deleted(params[:ids])
-    @items = Item.get_items(params.merge(get_args('unarchived')))
+    params[:status] = 'active'
+    @items = Item.get_items(params.merge(get_args))
     respond_to { |format| format.js }
   end
 
@@ -182,8 +192,8 @@ class ItemsController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
-  def get_args(status)
-    {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+  def get_args
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
 
   private

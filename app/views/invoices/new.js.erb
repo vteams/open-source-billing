@@ -1,7 +1,14 @@
-//if (confirm('Your changes will be discarded by switching company. Are you sure you want to switch company?')) {
-//    // Set the session and reload the new invoices page
-//    jQuery.get("/application/new_selected_company_name?company_id=" + "<%= params[:company_id] %>", function(response) {
-//        jQuery("#current_selected_company").text(response);
-//    });
-//    setTimeout(function(){location.reload();},1000);
-//}
+<% if params[:search].present? %>
+    window.location = '<%= invoices_url(search: params[:search]) %>'
+<% else %>
+    $('body').append("<%= escape_javascript render partial: 'invoice_form_popup', locals: {invoice: @invoice}  %>");
+    // call Invoice coffee script functions
+    Invoice.change_invoice_item();
+    Invoice.changeTax();
+    Invoice.load_functions();
+
+    elem = $("#invoice_form_popup");
+    Popup.initialize(elem);
+    Popup.open(elem);
+
+<% end %>

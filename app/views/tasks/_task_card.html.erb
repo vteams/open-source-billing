@@ -1,0 +1,44 @@
+<div class="flex-item box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', task , remote: true, class: 'invoice_show_link', style: 'display: none' unless task.deleted? %>
+  <div class="card-white-panel invoice-card task-card" data-task_id= <%=task.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "task_ids[]", task.id, false, :id => "task_#{task.id}", class: "filled-in" %>
+      <label for="<%= "task_#{task.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= task.image_name %></div>
+    </div>
+    <div class="invoice-details task_details">
+      <h5 class="text-blue"><strong><%= task.name %></strong></h5>
+      <div class="amount-box">
+        <span class="usertitle"><%= truncate(task.description, length: 50) %></span>
+      </div>
+      <div class="card-footer clearfix">
+          <span class="invoice-action text-grey task_rate"> <%= "#{default_currency_unit}"  "#{task.rate}" %> <small>HRS</small> </span>
+      </div>
+    </div>
+    <div class="action-btn-group">
+      <% if task.deleted? %>
+          <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_task_path(task),
+                      remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),task, method: :delete,
+                      data:{confirm: t('helpers.messages.confirm'),
+                            success: t('views.tasks.destroyed_msg') },
+                      title: t('helpers.links.delete') %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= task.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= task.id %>" class='dropdown-content z-depth-4'>
+            <% if !task.archived? %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+            <% else %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

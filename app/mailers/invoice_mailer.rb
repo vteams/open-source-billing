@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoiceMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
   @@response_to_client = ''
   @@reason_by_client =  ''
   def new_invoice_email(client, invoice, e_id , current_user)
@@ -102,7 +102,7 @@ class InvoiceMailer < ActionMailer::Base
 
   def get_email_template(user = nil, invoice, template_type)
     #find company level template of a template_type
-    template = invoice.company.email_templates.where(:template_type => template_type).first
+    template = EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of template_type if no company level template
     if template.blank?
     template  = user.present? ? user.accounts.first.email_templates.where(:template_type => template_type).first : Account.first.email_templates.where(:template_type => template_type).first

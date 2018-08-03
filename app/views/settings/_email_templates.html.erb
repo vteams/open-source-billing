@@ -1,0 +1,25 @@
+<h5 class="text-blue"><%= t('header.links.setting.email_templates') %></h5>
+<div class="simple-responsive">
+  <table class="bordered">
+    <thead>
+    <tr>
+      <th><%= t('views.email_templates.template_type') %></th>
+      <th><%= t('views.email_templates.subject') %></th>
+      <th><%= t('views.email_templates.status') %></th>
+      <th class="center-align"><%= t('helpers.actions') %></th>
+    </tr>
+    </thead>
+    <tbody>
+        <% @email_templates.each do |email_template| %>
+            <tr>
+              <td><%= email_template.template_type %></td>
+              <td><%= email_template.subject %></td>
+              <td><%= email_template.status %></td>
+              <td class="center-align">
+                <%= link_to raw('<i class="material-icons">create</i>'), edit_email_template_path(email_template), remote: true %>
+              </td>
+            </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>

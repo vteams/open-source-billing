@@ -1,0 +1,39 @@
+<div id="modal-invoice-history" class="modal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <h5 class="left text-blue"><%=t('views.payments.payment_history')%></h5>
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+    </div>
+    <div class="modal-body">
+      <table class="bordered responsive-table">
+        <thead>
+        <tr>
+          <th>Invoice</th>
+          <th>Client</th>
+          <th>Type</th>
+          <th>Notes</th>
+          <th>Date</th>
+          <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% payments.each do |payment|%>
+            <tr>
+              <td><%= payment.invoice.invoice_number%></td>
+              <td><%= payment.client_name %></td>
+              <td><%= payment.payment_method || payment.payment_type %></td>
+              <td><%= payment.notes %></td>
+              <td><%= payment.payment_date %></td>
+              <td><%= "#{number_to_currency(payment.payment_amount, unit: payment.invoice.currency.code )}" %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

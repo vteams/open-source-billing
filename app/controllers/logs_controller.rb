@@ -66,7 +66,7 @@ class LogsController < ApplicationController
     if @log.update(log_params)
       @logs = get_logs(@log.date)
       @view = params[:view]
-      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'form'; @date=@log.date
+      @view == 'basicWeek' ? @form_type = 'form_week' : @form_type = 'new_form'; @date=@log.date
       @log = Log.new
       respond_to do |format|
         format.html
@@ -82,6 +82,7 @@ class LogsController < ApplicationController
     respond_to do |format|
       format.html
       format.js
+      format.json { render_json(@log) }
     end
   end
 
@@ -102,7 +103,7 @@ class LogsController < ApplicationController
       @logs = Log.where('company_id IN(?) AND project_id IN(?) AND date BETWEEN ? AND ?', get_company_id ,load_project_ids, Date.parse(params[:date]), Date.parse(params[:date])  + 6 ).order(:created_at).page(params[:page]).per(10)
       @logs = filter_by_company(@logs)
     else
-      @form_type = 'form'
+      @form_type = 'new_form'
       @logs = get_logs(Date.today)
     end
     respond_to do |format|
@@ -132,21 +133,26 @@ class LogsController < ApplicationController
   end
 
   def invoice_form
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:id])
     @client = @project.client
     @invoice = Services::InvoiceService.build_new_project_invoice(@project)
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+    respond_to do |format|
+      format.html{ render layout: 'timer' }
+      format.js
+    end
   end
 
   def create_invoice
     @invoice = Invoice.new(invoice_params)
     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.payment_terms_id = PaymentTerm.where(description: 'Custom').first.id
     @invoice.company_id = get_company_id
     respond_to do |format|
       if @invoice.save
         Services::InvoiceService.create_invoice_tasks(@invoice)
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        redirect_to(invoice_url(@invoice), :notice => 'Invoice successfully created')
+        redirect_to(invoices_url, :notice => t('views.logs.invoice_created'))
         return
       else
         format.html { render :action => 'invoice_form' }
@@ -174,7 +180,7 @@ class LogsController < ApplicationController
                                     :discount_percentage, :invoice_date, :invoice_number,
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :archive_number, :archived_at, :deleted_at,
-                                    :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,
+                                    :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,:tax_id,:invoice_tax_amount
 
     )
   end

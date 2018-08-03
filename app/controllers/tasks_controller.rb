@@ -9,9 +9,8 @@ class TasksController < ApplicationController
   def index
     set_company_session
     params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @tasks = Task.get_tasks(params.merge(get_args(method)))
+    @status = params[:status]
+    @tasks = Task.get_tasks(params.merge(get_args))
 
     respond_to do |format|
       format.js
@@ -29,19 +28,29 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @tasks }
+    end
   end
 
   # GET /tasks/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html # index.html.erb
+      format.json { render :json => @tasks }
+    end
   end
 
   # POST /tasks
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
-    if Task.is_exists?(params[:task][:name], company_id)
+    if Task.is_exists?(params[:task][:name], get_association_obj)
       @task_exists = true
-      redirect_to(new_task_path, :alert => "Task with same name already exists") unless params[:quick_create]
+      redirect_to(new_task_path, :alert => t('views.tasks.duplicate_name')) unless params[:quick_create]
       return
     end
     @task = Task.new(task_params)
@@ -53,7 +62,7 @@ class TasksController < ApplicationController
       if @task.save
         format.js
         format.json { render :json => @task, :status => :created, :location => @task }
-        redirect_to @task, notice: 'Task was successfully created.' unless params[:quick_create]
+        redirect_to tasks_url, notice: t('views.tasks.created_msg') unless params[:quick_create]
         return
       else
         format.js
@@ -67,7 +76,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       associate_entity(params, @task)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to tasks_url, notice: t('views.tasks.updated_msg')
     else
       render :edit
     end
@@ -76,7 +85,11 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+
+    respond_to do |format|
+      format.html { redirect_to tasks_url, notice: t('views.tasks.destroyed_msg') }
+      format.json { render_json(@task) }
+    end
   end
 
   def filter_tasks
@@ -94,8 +107,7 @@ class TasksController < ApplicationController
     @tasks = result[:tasks]
     @message = get_intimation_message(result[:action_to_perform], result[:task_ids])
     @action = result[:action]
-    #end
-    respond_to { |format| format.js }
+    redirect_to tasks_url, notice: t('views.tasks.bulk_action_msg', action: @action)
   end
 
   def undo_actions
@@ -136,8 +148,8 @@ class TasksController < ApplicationController
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
-    def get_args(status)
-      {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+    def get_args
+      {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
     end
 
 end

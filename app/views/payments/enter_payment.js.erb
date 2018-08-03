@@ -1,1 +1,6 @@
-jQuery("#paymentModal .modal-body").html("<%= escape_javascript(render(:partial=>"payments/enter_payment")) %>");
+$("#invoice_model").modal('close');
+$("body").append("<%= escape_javascript(render partial: 'payment_form_popup', locals:{ payment: @payments.first} ) %>");
+Payment.load_functions();
+elem = $("#payment_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

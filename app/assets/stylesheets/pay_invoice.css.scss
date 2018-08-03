@@ -10,10 +10,9 @@
     padding: 0 30px;
   }
   .payment_left {
-    float: left;
     border: 1px solid #D7D7D7;
     border-radius: 3px 3px 3px 3px;
-    width: 263px;
+    max-width: 280px;
     min-height: 234px;
   }
   .payment_serial {
@@ -73,7 +72,7 @@
   .invoice_label{
     font-family: 'Dosis Regular';
     float: left;
-    width: 99px;
+    max-width: 109px;
     font-size: 16px;
     color: #464646;
   }
@@ -81,7 +80,7 @@
     float: right;
   }
   .inovice_description{
-    width: 86px;
+    max-width: 86px;
     font-family: 'Dosis SemiBold';
     float: right;
     font-size: 16px;
@@ -92,14 +91,15 @@
     color: #7eb813;
   }
   .payment_right {
-    float: right;
-    width: 415px;
+    margin-top: 20px;
+    max-width: 415px;
   }
   .label_field.left {
-    width: 105px;
+    max-width: 105px;
+    min-width: 60px;
   }
   .label_field.right {
-    width: 39px;
+    max-width: 39px;
     padding: 5px 0 0 20px;
   }
   .small_field input {
@@ -109,7 +109,7 @@
     width: 125px;
   }
   .large_field textarea {
-    width: 289px;
+    max-width: 289px;
     min-height: 40px;
     margin-bottom: 7px;
   }
@@ -154,4 +154,70 @@
       }
     }
   }
+}
+.heading-style{
+  padding-left: 30px;
+  padding-top: 20px;
+  font-size: 20px;
+}
+.text-field-height{
+  height: 1rem !important;
+}
+.floating-left{
+  float: left;
+}
+
+.checkbox-position{
+  position: relative !important;
+  margin-top: 2px !important;
+}
+.payment-method{
+  display: inline-flex;
+}
+
+.label-font{
+  font-size: 14px !important;
+  color: #454545 !important;
+}
+
+.date-align{
+  padding-left: 40px !important;
+}
+
+.container-block{
+  background: #ffffff;
+  margin-top: -30px;
+  height: 50px;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+
+}
+.payment-btn-style{
+  margin-bottom: 30px;
+  margin-top: 20px;
+  color: #09b8e2;
+  background: transparent;
+  border: 1px solid #09b8e2;
+  font-size: 24px;
+  font-family: "Dosis",sans-serif;
+  min-height: 49px;
+  box-shadow: none;
+  text-transform: capitalize;
+  font-weight: 400;
+  border-radius: 5px;
+  min-width: 140px;
+}
+
+.right-payment-container{
+  margin-right: -40px !important;
+}
+
+.checkbox-lable{
+  margin-bottom: 15px;
+}
+.payment_amount_label{
+  font-size: 14px !important;
 }

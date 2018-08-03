@@ -2,7 +2,7 @@ jQuery('.alert').hide();
 
 <% if @action == "enter payment" %>
 <% if @estimate_has_deleted_clients.length > 0 %>
-jQuery(".alert.alert-error").show().find('span').html("Please recover clients for estimate(s) with estimate# <%= @estimate_has_deleted_clients.join(",") %> to enter payment");
+jQuery(".alert.alert-error").show().find('span').html("<%= t('views.estimates.recover_clients', ids: @estimate_has_deleted_clients.join(",")) %>");
 <% end %>
 <%else%>
 
@@ -19,7 +19,7 @@ jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @
  end
 %>
 <%else%>
-jQuery(".alert.alert-success").show().find('span').html("Estimates(s) are <%= @action %> successfully.");
+jQuery(".alert.alert-success").show().find('span').html("<%= t('views.estimates.bulk_action_msg', action: @action) %>");
 <% end %>
 <% end %>
 

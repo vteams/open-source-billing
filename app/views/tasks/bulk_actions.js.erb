@@ -1,7 +1,7 @@
 jQuery('.alert').hide();
 
 <% if @flag_current_task %>
-    jQuery(".alert.alert-error").show().find('span').html("Sorry, Current Company cannot be <%= @action_for_task %>");
+    jQuery(".alert.alert-error").show().find('span').html("<%= t('views.companies.current_company_action', action: @action_for_task) %>");
 <% else %>
     <% if @action == "archived" or @action == "deleted" %>
         jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");

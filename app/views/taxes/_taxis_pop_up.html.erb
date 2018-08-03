@@ -1,0 +1,24 @@
+<div id="tax_modal" class="modal viewModal itemModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left text-blue"><%= t('views.taxes.taxes') %></h5>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="field-block col s12">
+          <label for="clientname"><%= t('views.common.name') %>:</label>
+          <span><%= tax.name %></span>
+        </div>
+        <div class="field-block col s12">
+          <label for="desc"><%= t('views.common.percentage') %>:</label>
+          <span><%= tax.percentage %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

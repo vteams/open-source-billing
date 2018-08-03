@@ -1,0 +1,18 @@
+<h5>
+  <%= link_to t('views.users.users'), sub_users_path %>
+  <span><%= "(#{@users.count})" %></span>
+</h5>
+<div class="user-list">
+  <div id="users">
+    <%= render partial: 'user', collection: @users %>
+  </div>
+  <div class="list-buttons">
+    <%= render 'sub_user_form' %>
+    <div id="user_btn_container">
+      <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+      <% unless OSB::CONFIG::DEMO_MODE %>
+        <a href="javascript:;" id="user_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+      <% end %>
+    </div>
+  </div>
+</div>

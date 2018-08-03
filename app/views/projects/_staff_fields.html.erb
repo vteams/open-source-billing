@@ -1,0 +1,30 @@
+<div class="list-item nested-fields">
+  <div class="checkbox-item inline_team_member">
+    <% count = count rescue 0 %>
+    <% id = f.object.id ? f.object.id : count.to_i %>
+    <input type="checkbox" class="filled-in" id="project_staff_<%= id %>" />
+    <label class="staff-label" for="project_staff_<%= id %>"></label>
+    <div class="invoice-name">
+      <%= image_tag('img-user.png', alt: 'avatar', class: 'responsive-img circle') %>
+    </div>
+    <%= f.input :_destroy, as: :hidden, label: false, wrapper: false, input_html: { class: 'destroy_staff' } %>
+  </div>
+  <div class="invoice-details editContent">
+    <%= f.input :staff_id, collection: load_staffs_for_project(action_name, @project.company_id, f.object),
+                selected: f.object.staff_id, prompt: t('views.projects.select_a_member'), label: false,
+                input_html: { class: 'members_list' }, wrapper_html: { class: 'input-field' } %>
+    <span class="email"><%= f.object.email %></span>
+    <%= f.input :email, as: :hidden, label: false, disabled: true, wrapper: false, input_html: { class: 'email' } %>
+    <div class="input-field amount">
+      <strong><%= default_currency_unit %>
+        <em class="staff_rate">
+          <span class="rate"><%= f.object.rate %></span>
+          <%= f.input :rate, as: :hidden, label: false, disabled: true, wrapper: false, input_html: { class: 'rate' } %>
+        </em>
+      </strong>
+      <span> <%= default_currency_code %> / <small class="text-blue">hr</small></span>
+
+    </div>
+    <%= f.input :name, as: :hidden, label: false, wrapper: false, input_html: { class: 'name' } %>
+  </div>
+</div>

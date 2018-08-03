@@ -1,0 +1,46 @@
+<div class="flex-item box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', staff , remote: true, class: 'invoice_show_link', style: 'display: none' unless staff.deleted? %>
+  <div class="card-white-panel invoice-card" data-staff_id= <%=staff.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "staff_ids[]", staff.id, false, :id => "staff_#{staff.id}", class: "filled-in" %>
+      <label for="<%= "staff_#{staff.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= staff.image_name %></div>
+    </div>
+    <div class="invoice-details staff_details">
+      <h5 class="text-blue"><strong><%= staff.name %></strong></h5>
+      <div class="amount-box">
+        <span class="usertitle"><%= staff.email %></span>
+      </div>
+      <div class="card-footer clearfix">
+        <span class="invoice-action text-grey staff_rate"> <%= "#{default_currency_unit}"  "#{staff.rate}" %> <small>HRS</small> </span>
+      </div>
+    </div>
+
+
+    <div class="action-btn-group">
+      <% if staff.deleted? %>
+          <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+      <% else %>
+          <%= link_to raw("<i class='material-icons'>create</i>"),edit_staff_path(staff), remote: true,
+                      class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"),staff, method: :delete,
+                      data:{ confirm: t('helpers.messages.confirm'),
+                             success: t('views.staffs.destroyed_msg') },
+                      title: t('helpers.links.delete') %>
+          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= staff.id %>' data-alignment="right" data-beloworigin="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown_<%= staff.id %>" class='dropdown-content z-depth-4'>
+            <% if !staff.archived? %>
+                <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+            <% else %>
+                <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
+</div>

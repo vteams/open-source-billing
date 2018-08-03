@@ -1,4 +1,5 @@
 // // This is a manifest file that'll be compiled into application.js, which will include all the files
+// // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -10,21 +11,23 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+//= require jquery.min
 //= require jquery_ujs
 //= require jquery-ui.js
 //= require twitter/bootstrap
-//= require jquery.jqplot.js
-//= require jqplot.barRenderer.min.js
-//= require jqplot.categoryAxisRenderer.min.js
-//= require jqplot.pointLabels.min.js
-//= require jqplot.highlighter.js
-//= require jquery_nested_form
+//= require materialize.min
+//= require picker
+//= require picker.date
+//= require jquery.mCustomScrollbar.min
+//= require range-slider
+//= require custom
+//= require highcharts
+//= require exporting
+//= require nested_fields
 //= require nav.js
 //= require chosen.jquery
 //= require jquery.css3caching.js
 //= require inline-forms.js.coffee
-//= require invoices.js.coffee
 //= require projects.js.coffee
 //= require estimates.js.coffee
 //= require expenses.js.coffee
@@ -35,6 +38,7 @@
 //= require application.js
 //= require bootstrap.js.coffee
 //= require moment
+//= require daterangepicker.min
 //= require fullcalendar
 //= require calendar.js
 //= require logs.js
@@ -75,13 +79,28 @@
 //= require bootstrap-switch
 //= require bootstrap-checkbox.min.js
 //= require bootstrap-checkbox.js
-//= require settings
+//= require settings.js
 //= require date_formats
 //= require flipclock
 //= require hourlycounter
 //= require timer
-
-
+//= require invoice_card
+//= require new_invoice
+//= require import
+//= require sub_user
+//= require filter_bar
+//= require filter_box
+//= require select2.min
+//= require search
+//= require new_search
+//= require popup
+//= require js.cookie
+//= require jstz
+//= require browser_timezone_rails/set_time_zone
+//= require i18n/translations
+//= require sweetalert.min
+//= require cocoon
+//= require nouislider
 
 jQuery(function () {
 
@@ -90,18 +109,6 @@ jQuery(function () {
         remain = parseInt(max - tlength);
        $('.text-limit').text(remain + "  characters remaining" );
     });
-
-
-    //override default behavior of inserting new subforms into form
-    window.NestedFormEvents.prototype.insertFields = function (content, assoc, link) {
-        if (document.location.pathname.search(/\/invoices\//) != -1 || document.location.pathname.search(/\/recurring_profiles\//) != -1 || document.location.pathname.search(/\/projects\//) != -1 || document.location.pathname.search(/\/estimates\//) != -1) {
-            var $tr = $(link).closest('tr');
-            return $(content).insertBefore($tr);
-        } else if (document.location.pathname.search(/\/clients\//) != -1) {
-            var $contact_container = $(link).parents('#adCntcts').find(".client_contacts_container");
-            return $contact_container.append(content);
-        }
-    };
 
     jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
 
@@ -148,15 +155,24 @@ jQuery(function () {
     }).qtip();
 
     (function ($) {
+        initCustomConfirmPopUp();
+        initLoginPageFormValidation();
+        initCurrencySelect();
         $(window).load(function () {
             $(".scrollContainer").mCustomScrollbar({
-                scrollInertia: 150
+                scrollInertia: 150,
+                advanced: {
+                    updateOnContentResize:true,
+                    autoScrollOnFocus: false
+                }
             });
         });
+        $('.sent,.partial,.draft,.draft-partial,.paid,.disputed,.viewed').qtip();
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
-
+  initDateRangePicker(DateFormats.format().toUpperCase());
+  initRangeSelector();
 });
 
 window.preventDeletedNavigation = function(){
@@ -195,12 +211,284 @@ window.preventDeletedNavigation = function(){
         });
         $("a.deleted_entry").unbind('mouseleave');
         $("a.deleted_entry").mouseleave(function(e){
-              $(this).qtip('hide')
+              $(this).qtip('hide');
               return false;
         });
     }
 };
 window.preventDeletedNavigation();
 $(document).ready(function(){
+    setTimeout(function() {
+        $('#flash_message').fadeOut('slow');
+    }, 5000);
     bind_deleted_entry();
+
+    $('.date-picker').pickadate({
+        format: DateFormats.format()
+    });
+
+    $( ".btn-menu" ).click(function() {
+        if($('#overly-container').hasClass('overlay') == false) {
+            $('#overly-container').addClass('overlay');
+            $('body').addClass('disable-scroll');
+        }else if($('#overly-container').hasClass('overlay') == true) {
+            $('#overly-container').removeClass('overlay');
+            $('body').removeClass('disable-scroll');
+        }
+    });
+
+    initSelectActionLink();
+    initDemoLinksClick();
 });
+
+function initCustomConfirmPopUp() {
+    // Removing rails default confirm popup
+    $.rails.confirm = function () { }
+
+    $("[data-confirm]").off("click");
+    $("[data-confirm]").on("click", function(e) {
+        e.preventDefault();
+        var link = this;
+
+        // Showing Custom Popup
+        swal({
+            title: $(link).data('confirm'),
+            text: I18n.t('helpers.messages.not_be_recoverable'),
+            icon: 'warning',
+            buttons: [true, true],
+        }).then(function(confirmed) {
+
+            // If user confirm the action perform the action
+            if(confirmed) {
+                if($(link).data("method") === 'delete') {
+                    $.ajax({
+                        url: $(link).attr("href"),
+                        dataType: "JSON",
+                        method: "DELETE",
+                        success: function () {
+                            console.log('success')
+                            swal(I18n.t('helpers.links.delete'), $(link).data('success'), 'success').then(
+                                function (confirmed) {
+                                    if($(link).data('redirect')) {
+                                        window.location.href = $(link).data('redirect');
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                });
+                        },
+                        error: function (obj) {
+                            swal(I18n.t('helpers.links.delete'), obj.responseJSON.errors || I18n.t('helpers.messages.unable_to_delete'), 'error');
+                        }
+                    });
+                } else {
+                    window.location.href = $(link).attr("href");
+                }
+            }
+        });
+    });
+}
+
+function initLoginPageFormValidation() {
+    $('#user_login').submit(function () {
+        var flag = true;
+        var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        if($('#email').val() === '') {
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        } else if(!pattern.test($("#email").val())) {
+            hidePopover($('#email'));
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t('views.companies.email_invalid'));
+            flag = false;
+        } else if ($('#password').val() === '') {
+            hidePopover($('#email'));
+            applyPopover($("#password"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        }
+        return flag;
+    });
+}
+
+function initCurrencySelect() {
+    $('.search_currency').keyup(function(){
+        var searchText = $(this).val().toLowerCase();
+        $('#dropdown_currency > li:not(.search-bar)').each(function(){
+            var currentLiText = $(this).text().toLowerCase(),
+                showCurrentLi = currentLiText.indexOf(searchText) === -1;
+            $(this).toggleClass('hide', showCurrentLi);
+        });
+    });
+    $('#dLabel').click(function(e){
+        $('#search_currency_bar').val('').keyup();
+        $('#search_currency_bar').focus();
+        $('#dropdown_currency').scrollTop(0);
+    });
+
+    var li = $('#dropdown_currency > li');
+    var liSelected;
+    $('.search_currency').on('keydown', function(e){
+        var selected;
+        if(e.which === 40){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                next = liSelected.nextAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.eq(1).addClass('selected');
+                }
+            }else{
+                liSelected = li.eq(1).addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 38){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                next = liSelected.prevAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.last().addClass('selected');
+                }
+            }else{
+                liSelected = li.last().addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 13){
+            if(liSelected){
+                liSelected.click();
+            }
+        }
+    });
+}
+
+function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) {
+    swal({
+        title: title,
+        text: message,
+        icon: 'warning',
+        buttons: [true, true],
+    }).then(function(confirmed) {
+
+        // If user confirm the action perform the action
+        if(confirmed) {
+            confirmCallback();
+        } else {
+            if (cancelCallback) {
+                cancelCallback();
+            }
+        }
+    });
+
+}
+
+function initSelectActionLink(){
+    $("select").off();
+    $("select").on("change", function() {
+        var controller_name;
+        if (parseInt($(this).find(':selected').val()) == -1) {
+            $(this).val('');
+            controller_name = $(this).data('action-path');
+            var position = $(this).attr('id');
+            return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
+        }
+    });
+}
+
+function initDateRangePicker(format) {
+  var options = {
+    autoUpdateInput: false,
+    locale: {format: format}
+  };
+  $.each($('input[class="date-range"]'), function(index, element) {
+    $(element).daterangepicker(options, function(start, end) {
+      $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
+      $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
+    });
+
+    $(element).on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+    });
+
+    $(element).on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+      picker.element.val('');
+      $('#' + $(element).attr('id') + '_start_date').val('');
+      $('#' + $(element).attr('id') + '_end_date').val('');
+    });
+  });
+}
+
+function initRangeSelector() {
+  $.each($('.range_selector'), function(index, element) {
+    var min = parseInt($(element).attr('min'));
+    var max = parseInt($(element).attr('max'));
+    var hiddenInputs = [
+      $('#' + $(element).attr('id') + '_min')[0],
+      $('#' + $(element).attr('id') + '_max')[0]
+    ];
+    var labels = [
+      $('#' + $(element).attr('id') + '_min_label')[0],
+      $('#' + $(element).attr('id') + '_max_label')[0]
+    ];
+    noUiSlider.create(element, {
+      start: [$(element).data('min') || min, $(element).data('max') || max],
+      connect: true,
+      step: 1,
+      orientation: 'horizontal',
+      range: {
+        'min': min,
+        'max': max
+      }
+    });
+    element.noUiSlider.on('update', function( values, handle ) {
+      hiddenInputs[handle].value = parseInt(values[handle]);
+      labels[handle].innerHTML = parseInt(values[handle]);
+    });
+
+  });
+}
+
+function resetRangeSelectors() {
+  $.each($('.range_selector'), function(index, element) {
+    element.noUiSlider.destroy();
+  });
+  initRangeSelector();
+}
+
+function initFilterEvents(ids) {
+  $(document).ready( function (event) {
+    $('#toggle_filters').on('click', function (event) {
+      toggleFilters();
+    });
+    $('#filter_reset_btn').on('click', function(event) {
+      $('#filters select').val('');
+      $(ids).val('');
+      resetRangeSelectors();
+      $('#filters_form').submit();
+    });
+    $('#filter_submit_btn').on('click', function (event) {
+      $('#filters_form').submit();
+    })
+  });
+}
+
+function toggleFilters() {
+  if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+  } else {
+    $('#filters').slideUp('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
+  }
+}
+
+function initDemoLinksClick() {
+  $('.demo-mode').off('click');
+  $('.demo-mode').on('click', function (event) {
+    swal({
+      title: 'Demo',
+      text: I18n.t('views.common.demo_restriction_msg'),
+      icon: 'info'
+    });
+  });
+}

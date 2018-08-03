@@ -1,0 +1,6 @@
+<% if @js_response %>
+  showSuccessMsg("<%= t('views.import_data.data_imported_msg') %>");
+ $("#freshModal").modal('close');
+<% else %>
+ $(".fb_error").text('<%= t('views.import_data.quickbooks.unable_to_connect') %>');
+<% end %>

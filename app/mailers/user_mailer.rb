@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class UserMailer < ActionMailer::Base
-  default :from => 'info@osb.com'
+  default :from => 'support@opensourcebilling.org'
 
    def new_user_account(current_user, sub_user)
      #@creator, @account, @sub_user = current_user.user_name || current_user.email , current_user.accounts.first.org_name, sub_user
@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
    end
 
   def get_email_template(user, template_type)
-   user.accounts.first.email_templates.where(:template_type => template_type).first
+   EmailTemplate.unscoped.where(:template_type => template_type).first
   end
 
   def replace_template_body(current_user, sub_user, template_type)
@@ -58,5 +58,4 @@ class UserMailer < ActionMailer::Base
     @module_name = module_name
     mail(to: recipient, subject: "OpenSourceBilling: Quickbooks import data result for #{module_name} module")
   end
-
 end

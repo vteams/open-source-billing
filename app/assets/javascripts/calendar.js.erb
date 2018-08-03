@@ -7,7 +7,7 @@ function init_fullcalendar(){
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,basicWeek'
+            right: false
         },
         buttonText: {
             today: 'Today',
@@ -20,7 +20,7 @@ function init_fullcalendar(){
                 dataType: 'script',
                 type: 'GET',
                 data:{date:date.format()},
-                url: '/en/logs'
+                url: '/' + I18n.locale + '/logs'
             });
             $('#log_date').val(date.format());
             $('#logs_for').html(date.format());
@@ -82,5 +82,6 @@ function init_fullcalendar(){
 }
 
 $(document).ready(function() {
+    $('select').material_select();
     init_fullcalendar();
 });

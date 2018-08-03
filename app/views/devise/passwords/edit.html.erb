@@ -1,60 +1,29 @@
-<!--<h2>Change your password</h2>-->
-<!--<%#= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :put}) do |f| %>-->
-<!--<%#= devise_error_messages! %>-->
-<!--<%#= f.hidden_field :reset_password_token %>-->
-<!--<div>-->
-<%#= f.label :password, "New password" %>
-<!--<br/>-->
-<%#= f.password_field :password, :autofocus => true %>
-<!--</div>-->
-<!--<div>-->
-<%#= f.label :password_confirmation, "Confirm new password" %>
-<!--<br/>-->
-<%#= f.password_field :password_confirmation %>
-<!--</div>-->
-<!--<div><%#= f.submit "Change my password" %></div>-->
-<!--<%# end %>-->
-<!--<%#= render "devise/shared/links" %>-->
+<section id="login-section">
+  <div class="container">
+    <div class="login-container">
+      <span class="side-nav"></span>
+      <a class="logo" href="#">Open<span>Source</span>Billing</a>
+      <h2>Change password</h2>
 
-<!----------- New change password design --------------->
+      <div stlye="color: red"><%= devise_error_messages! %></div>
 
-<div class="log_page">
-  <div class="log_container">
-    <div class="log_content change_password">
-      <div class="log_top">
-        <h1>Change your password</h1>
-      </div>
-      <!--log_top-->
-
-      <div class="notice"><%= devise_error_messages! %></div>
-
-      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :put, :novalidate => '', :id => 'forgot_password'}) do |f| %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put, novalidate: '', id: 'forgot_password', class: 'col s12'}) do |f| %>
           <%= f.hidden_field :reset_password_token %>
-          <div class="log_fields">
 
-            <div class="field_row">
-              <div class="label_field"><%= f.label :password, "New password" %></div>
-              <div class="medium_field change_password_field">
-                <%= f.password_field :password, :autofocus => true, :id => 'login_pswd', :required => '' %>
-              </div>
-            </div>
-
-            <div class="field_row">
-              <div class="label_field"><%= f.label :password_confirmation, "Confirmation" %></div>
-              <div class="medium_field">
-                <%= f.password_field :password_confirmation, class: "confirm_field", :id => 'login_confrm_pswd', :required => '' %>
-              </div>
-            </div>
-
-          </div> <!--log_fields-->
-
-          <div class="log_btm">
-            <%= f.submit "Change password", :class => "btn_large submit" %>
+          <div class='input-field'>
+            <%= f.password_field :password, id: "login_pswd", class: 'validate', required: '' %>
+            <label for='email'>New Password</label>
           </div>
-          <!--log_btm-->
+          <div class='input-field'>
+            <%= f.password_field :password_confirmation, id: "login_confrm_pswd", class: "validate" %>
+            <label for='password'>Password Confirmation</label>
+          </div>
+          <div class="btn-content">
+            <%= f.button 'Submit', type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
+          </div>
+      <%end%>
+      <p class='col s12'>www.opensourcebilling.org.  powered by: www.presstigers.com</p>
 
-      <% end %>
     </div>
   </div>
-</div>
-<%#= render "devise/shared/links" %>
+</section>

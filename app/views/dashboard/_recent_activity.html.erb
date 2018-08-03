@@ -1,32 +1,27 @@
-<div class="activity_wrapper">
-  <div class="dashboard_box">
-    <h1 class="small"><%= t('recent_activity') %></h1>
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <h3><%= t('views.dashboard.recent_activity') %></h3>
+  <div class="activity-scroll-holder mCustomScrollbar">
 
-    <div class="grid_table activity">
-      <table cellpadding="0" cellspacing="0" class="table table_listing invoice_listing">
-        <colgroup>
-          <col class="one"/>
-          <col class="two"/>
-          <col class="three"/>
-          <col class="four"/>
-        </colgroup>
-        <% if @recent_activity.blank? %>
-            <tr>
-              <td colspan="4">No recent activity</td>
-            </tr>
-        <% else %>
-            <%- @recent_activity.each do |activity| %>
-                <tr>
-                  <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path] %></a></td>
-                  <td class="align_left"><%= number_to_currency(activity[:amount], unit: activity[:code]) %> <span>(<%= activity[:unit] %>)</span></td>
-                  <td class="align_left text-overflow-class" data-overflow-rows="2"><%= "#{activity[:activity_action]} #{activity[:client]} on" %> </td>
-                  <td class="align_left"><%= "#{activity[:activity_date].to_date.strftime(get_date_format)}" %> </td>
-                </tr>
+    <% @recent_activity.each do |date, activities| %>
+        <span class="activity-date"><%= date %></span>
+        <ul class="activities-list">
+            <% activities.each do |activity| %>
+               <li>
+                 <div class="activity-name <%= activity[:activity_type]%>">
+                   <%= t(activity[:activity_type]) %>
+                 </div>
+                 <div class="activity-details">
+                   <p>
+                     <%= number_to_currency(activity[:amount], unit: activity[:code]) %> <span>(<%= activity[:unit] %>)</span>
+                   </p>
+                   <em class="author"><%= "#{t('views.invoices.' + activity[:activity_action].parameterize.underscore)} #{activity[:client]}" %></em>
+                 </div>
+               </li>
             <% end %>
-        <% end %>
-      </table>
-    </div>
-    <!--grid_table-->
+        </ul>
+    <% end %>
   </div>
-  <!--overview_box-->
-</div>
+</aside>

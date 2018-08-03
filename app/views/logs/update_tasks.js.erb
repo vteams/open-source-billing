@@ -1,1 +1,15 @@
-$("#log_task_id").empty().append("<%= escape_javascript(render(partial:  'tasks')) %>");
+hidePopover(jQuery("#log_task_id").parents('.select-wrapper'));
+$selectDropdown = $("#log_task_id").empty().html(' ').prop("disabled", false);
+<% if @tasks %>
+    $selectDropdown.append($("<option></option>").attr("value",'').text('Select a task'));
+    <% @tasks.each do |task| %>
+        $selectDropdown.append($("<option></option>").attr("value",<%= task.id %>).text("<%= task.name.titleize %>"));
+    <% end %>
+<% end %>
+$('select').material_select();
+$selectDropdown.trigger('contentChanged');
+
+$('select').on('contentChanged', function() {
+    $(this).material_select();
+});
+applyPopover(jQuery("#log_task_id").parents('.select-wrapper'), "bottomMiddle", "topLeft", I18n.t('views.logs.select_task'));

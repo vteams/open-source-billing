@@ -1,62 +1,64 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-jQuery ->
-#  jQuery(".chzn-select").chosen({allow_single_deselect: true})
-  # Show/hide additional client contact section
-  jQuery("#contact").click ->
-    jQuery("#adCntcts").toggle 500, ->
-      action = $(this).find("#action")
-      action_text = jQuery(action).html()
-      action_text = (if action_text == "expand" then "collaps" else "expand")
-      $(this).find("#id").html action_text
+class @Client
 
-  jQuery("#detail").click ->
-    jQuery("#add_Detail").toggle 500, ->
-      action = $(this).find("#action")
-      action_text = if jQuery(action).html() == "expand" then "collaps" else "expand"
-      $(this).find("#id").html action_text
+  @load_functions = ->
 
-  jQuery("#submit_form").click ->
-    jQuery("#newClient").submit()
+    jQuery('#account_association').change ->
+      if jQuery(this).is ':checked'
+        $('.company_checkbox').prop('checked',true)
 
-  # Validate client
-  jQuery("form#newClient,form#create_client,form#edit_client").submit ->
-    flag = true
-    pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
-    client_email = jQuery("#client_email").val()
-    client_fname = jQuery("#client_first_name").val()
-    client_lname = jQuery("#client_last_name").val()
-    client_phone = jQuery("#client_business_phone").val()
-    client_mobile = jQuery("#client_mobile_number").val()
-    pattern_phone = /^\d+$/
-    if client_email is ""
-      applyQtip(jQuery("#client_email"), "Email is required", 'topRight')
-      flag = false
-    else unless pattern.test(client_email)
-      applyQtip(jQuery("#client_email"), "Invalid email", 'topRight')
-      flag = false
-    else if client_fname is "" and client_lname is ""
-      applyQtip(jQuery("#client_first_name"), "First or Last Name is required", 'topRight')
-      flag = false
-    else if client_phone isnt "" and !pattern_phone.test(client_phone)
-      applyQtip(jQuery("#client_business_phone"), "Invalid business phone number", 'topRight')
-      flag = false
-    else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
-      applyQtip(jQuery("#client_mobile_number"), "Invalid mobile number", 'topRight')
-      flag = false
-#    else if jQuery("#client_organization_name").val() is ""
-      #jQuery("#client_organization_name").val(client_email)
-    else if jQuery('#company_association').is(':checked')
-      if jQuery('.options_content input[type=checkbox]:checked').length is 0
-        applyQtip(jQuery("#company_association").next(),"Select a company", 'topRight')
+    $('.modal').modal complete: ->
+      $('.qtip').remove()
+
+    jQuery("form#newClient").submit ->
+      flag = true
+      pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+      client_email = jQuery("#client_email").val()
+      client_fname = jQuery("#client_first_name").val()
+      client_lname = jQuery("#client_last_name").val()
+      client_phone = jQuery("#client_business_phone").val()
+      client_mobile = jQuery("#client_mobile_number").val()
+      pattern_phone = /^\d+$/
+      association_name = $('input[name=association]:checked').attr("id")
+      no_of_selected_companies = $('.company_checkbox:checked').length
+
+      if jQuery("#client_organization_name").val() is ""
+        applyQtip(jQuery("#client_organization_name"), I18n.t("views.clients.org_name_required"), 'topRight')
         flag = false
-    else if ((jQuery('#company_association').is(':checked') is  false) and (jQuery('#account_association').is(':checked') is  false))
-      jQuery("#company_association").prop('checked', true);
-      flag = false
-    else
-      hideQtip(jQuery("#client_email"))
-    flag
+      else if client_fname is "" and client_lname is ""
+        applyQtip(jQuery("#client_first_name"), I18n.t("views.clients.first_or_last_name_required"), 'topRight')
+        flag = false
+      else if client_email is ""
+        applyQtip(jQuery("#client_email"), I18n.t("views.clients.email_required"), 'topRight')
+        flag = false
+      else unless pattern.test(client_email)
+        applyQtip(jQuery("#client_email"), I18n.t("views.clients.invalid_email"), 'topRight')
+        flag = false
+      else if client_phone isnt "" and !pattern_phone.test(client_phone)
+        applyQtip(jQuery("#client_business_phone"), I18n.t("views.clients.invalid_business_phone"), 'topRight')
+        flag = false
+      else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
+        applyQtip(jQuery("#client_mobile_number"), I18n.t("views.clients.invalid_mobile_number"), 'topRight')
+        flag = false
+      else if association_name == undefined
+        applyPopover($("input[name=association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
+      else if (association_name == "company_association" and no_of_selected_companies == 0)
+        applyPopover($("input[name=association]"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
+        flag = false
+      else
+        flag = true
+        hidePopover($("input[name=association]"))
+      flag
+
+    jQuery('#calculated_credit').change ->
+      client_credit = jQuery(this)
+      field = "<input id='available_credit' name='available_credit' type='hidden' value='#{client_credit.val()}'>"
+      jQuery('#client_credit').html(field)
+
+    jQuery("#client_organization_name, #client_mobile_number ,#client_business_phone, #client_email, #client_first_name, #client_last_name").on "blur keyup", ->
+      hideQtip(jQuery(this))
 
   applyQtip = (elem, message, direction) ->
     elem.qtip
@@ -77,18 +79,28 @@ jQuery ->
   hideQtip = (elem) ->
     elem.qtip("hide")
 
-  jQuery("#client_email, #client_first_name, #client_last_name").click ->
-    hideQtip(jQuery(this))
 
-  jQuery('.edit_client .field_row .medium_field #calculated_credit').change ->
-    client_credit = jQuery(this)
-    field = "<input id='available_credit' name='available_credit' type='hidden' value='#{client_credit.val()}'>"
-    jQuery('.edit_client .field_row .medium_field #client_credit').html(field)
 
+
+jQuery ->
+#  jQuery(".chzn-select").chosen({allow_single_deselect: true})
+  # Show/hide additional client contact section
+  jQuery("#contact").click ->
+    jQuery("#adCntcts").toggle 500, ->
+      action = $(this).find("#action")
+      action_text = jQuery(action).html()
+      action_text = (if action_text == "expand" then "collaps" else "expand")
+      $(this).find("#id").html action_text
+
+  jQuery("#detail").click ->
+    jQuery("#add_Detail").toggle 500, ->
+      action = $(this).find("#action")
+      action_text = if jQuery(action).html() == "expand" then "collaps" else "expand"
+      $(this).find("#id").html action_text
 
 
   # show details when client name is clicked.
-  jQuery('table.client_listing').on 'click', ".client_name", ->
+  jQuery('table.client_listing .client_name').on 'click', ->
     row = jQuery(this).parents('tr')
     detail_row = row.next('tr.client_detail_row')
 
@@ -109,7 +121,7 @@ jQuery ->
                     row.next().find(".scrollContainer").mCustomScrollbar scrollInertia: 150
 
   # remove client detail row by clicking cross
-  jQuery('.client_container_top').on 'click', ".cross_btn", ->
+  jQuery('.client_container_top .cross_btn').on 'click', ->
     jQuery(this).parents('tr').prev('tr').find('.client_name').click()
 
   jQuery('#account_association').change ->

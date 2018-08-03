@@ -1,0 +1,42 @@
+<div id="staff_form_popup" class="modal editableModal ">
+  <div class="modal-content">
+    <%- model_class = Staff -%>
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="javascript:void(0);" onclick="$('.submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect">
+          <i class="material-icons" >done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left">
+        <% if staff.persisted? %>
+            <%= t '.title', default: t('helpers.titles.edit', model: t('staff'), default: "Edit #{model_class.model_name.human}") %>
+        <% else %>
+            <%= t '.title', default: t('helpers.titles.new', model: t('staff'), default: "New  #{model_class.model_name.human}") %>
+        <% end %>
+      </h5>
+    </div>
+    <%= simple_form_for staff, html: {class: 'staff_form form-horizontal', id: 'newStaff'} do |f| %>
+      <div class="modal-body users">
+        <div class="row">
+          <%= f.submit class: 'btn_large submit hidden' %>
+          <%= f.input :name, label: t('views.staffs.name'), wrapper_html: { class: 'input-field col s6 required' } %>
+          <%= f.input :email, as: :string, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 required'} %>
+          <%= f.input :rate, label: t('views.tasks.rate'), wrapper_html: { class: 'input-field col s6 required' },
+                      input_html: { min: 0, step: 'any', class: 'fix-width' } %>
+          <%= hidden_field_tag :project_id, @project_id %>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <h5 class="text-blue title-heading"><%= t('views.staffs.make_this_staff_available_to') %></h5>
+            <div class="input-field col s12">
+              <%= associate_account(controller_name, action_name, staff) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
