@@ -1,7 +1,7 @@
-Open Source Billing
+OpenSourceBilling
 ===================
 
-A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.3.7. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
+[OpenSourceBilling](http://opensourcebilling.org/) is a simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.3.7. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
 
 Features
 ---------
@@ -24,7 +24,7 @@ Features
 * Manage billing for your multiple sister companies under one account
 * Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
-
+Try [OpenSourceBilling](http://demo.opensourcebilling.org)
 
 Caveats
 -------
