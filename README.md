@@ -24,7 +24,7 @@ Features
 * Manage billing for your multiple sister companies under one account
 * Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
-Try [OpenSourceBilling](http://demo.opensourcebilling.org)
+* Try [OpenSourceBilling](http://demo.opensourcebilling.org)
 
 Caveats
 -------
