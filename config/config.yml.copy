@@ -2,7 +2,7 @@ development:
   app_host: APP_HOST_HERE # e.g. osb.mydomain.com
   app_protocol: http
   activemerchant_billing_mode: test
-  demo_mode: true
+  demo_mode: false
   wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH  #run "which wkhtmltopdf" you will get path
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
