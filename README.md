@@ -1,25 +1,27 @@
 Open Source Billing
 ===================
 
-A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.2.2. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
+A simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.3.7. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
 
 Features
 ---------
 
-* A nice looking Dashboard with graph and key metrics
+* Attractive, responsive and adaptive user interface
+* A nice looking dashboard with graph and key metrics
 * Create and send invoices to your clients
-* Create and send estimates to your clients
-* Time Tracking for running projects
-* Generate invoice from project log hours
-* Convert estimate to invoice
 * Recurring invoices
+* Export invoices to PDF
+* Create and send estimates to your clients
+* Convert estimate to invoice
+* Export estimates to PDF
 * Receive payments against sent invoices
 * Partial payments tracking
 * Receive payments through Paypal and credit card
-* Invoice dispute handling
+* Filters for listing pages
+* Full text search feature using elastic search
+* Time Tracking for running projects
+* Generate invoice from project log hours
 * Manage billing for your multiple sister companies under one account
-* Export invoices to PDF
-* Export estimates to PDF
 * Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
 
@@ -60,9 +62,9 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.2.2
+    rvm install 2.3.7
 
-    rvm use 2.2.2 --default
+    rvm use 2.3.7 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
@@ -85,7 +87,7 @@ To clone project code from GitHub, give your GitHub account credential for authe
 
     bundle install
 #### 3.4 Configuring Database
-Copy config/database.yml.sample to config/database.yml and set your mysql username/password. After that run following command from terminal to createMySQL database specified in database.yml file.
+Copy config/database.yml.sample to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
 
     rake db:create
 
@@ -143,7 +145,7 @@ Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oaut
 
 ### Step-4. Run
 #### 4.1 Background Services
-You need to start delayed_job for email delivery and other background tasks required for properly functionality of Open Source Billing by using following command
+You need to start delayed_job for email delivery and other background tasks required for properly functionality of OSB by using following command
 
     RAILS_ENV=development  bin/delayed_job start
 
