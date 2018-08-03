@@ -2,9 +2,8 @@
     <div class="right">
       <div class="header action-btn-group">
         <% if controller_name.eql?('payments') %>
-            <a href="javascript:;" class="delete" title="<%= t('views.payments.delete_forever') %>">
-              <i class="material-icons">delete</i>
-            </a>
+            <%= link_to raw('<i class="material-icons">delete</i>'), 'javascript:void(0);', class: (OSB::CONFIG::DEMO_MODE ? 'demo-mode' : 'delete'),
+                        title: t('views.payments.delete_forever') %>
         <% else %>
             <% if @status.eql?('deleted') %>
                 <a href="javascript:;" class="recover_deleted" title="<%= t('views.common.recover_deleted') %>">
@@ -28,7 +27,7 @@
                       <i class="material-icons">send</i>
                     </a>
                 <% end %>
-                <a href="javascript:;" class="delete" title="<%= t('helpers.links.delete') %>">
+                <a href="javascript:;" class="<%= OSB::CONFIG::DEMO_MODE && controller_name.eql?('companies') ? 'demo-mode' : 'delete' %>" title="<%= t('helpers.links.delete') %>">
                   <i class="material-icons">delete</i>
                 </a>
                 <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown13' data-alignment="right" data-beloworigin="true">

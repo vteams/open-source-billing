@@ -10,7 +10,9 @@
     <%= render 'sub_user_form' %>
     <div id="user_btn_container">
       <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
-      <a href="javascript:;" id="user_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+      <% unless OSB::CONFIG::DEMO_MODE %>
+        <a href="javascript:;" id="user_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+      <% end %>
     </div>
   </div>
 </div>

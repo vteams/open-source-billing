@@ -208,6 +208,7 @@ en:
       reset: "Reset"
       start_date_to_end_date: "Start Date - End Date"
       enter_positive_value: "Please enter only positive value for this field."
+      demo_restriction_msg: "This feature is not available in demo mode."
 
     pagination:
       previous: "Previous"

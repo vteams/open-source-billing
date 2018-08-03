@@ -1,7 +1,7 @@
 <div class="flex-item box">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
-  <%= link_to '', edit_company_path(company) , remote: true, class: 'invoice_show_link', style: 'display: none' unless company.deleted? %>
+  <%= link_to '', OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : edit_company_path(company) , remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", style: 'display: none' unless company.deleted? %>
   <div class="card-white-panel invoice-card" data-company_id= <%=company.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "company_ids[]", company.id, false, :id => "company_#{company.id}", class: "filled-in" %>
@@ -27,11 +27,12 @@
           </a>
       <% else %>
 
-          <%= link_to raw("<i class='material-icons'>create</i>"),edit_company_path(company), remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-          <%= link_to raw("<i class='material-icons'>delete</i>"),company, method: :delete,
+          <%= link_to raw("<i class='material-icons'>create</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0)' : edit_company_path(company), remote: true,
+                      class: ("edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}"), title: t('helpers.links.edit') %>
+          <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0)' : company, method: :delete,
                       data:{confirm: t('helpers.messages.confirm'),
                             success: t('views.companies.deleted_msg') },
-                      title: t('helpers.links.delete') %>
+                      title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
           <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= company.id %>' data-alignment="right" data-beloworigin="true">
             <i class="material-icons">more_vert</i>
           </a>

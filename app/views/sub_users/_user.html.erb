@@ -11,7 +11,7 @@
   </div>
   <div class="invoice-details editContent">
     <div class="input-field">
-      <%= link_to user.user_name, edit_sub_user_path(user, setting_form: 1), data: {remote: true} %>
+      <%= link_to user.user_name, OSB::CONFIG::DEMO_MODE ? '#' : edit_sub_user_path(user, setting_form: 1), data: ({remote: true} if !OSB::CONFIG::DEMO_MODE) %>
     </div>
     <div class="input-field">
       <input type="text" value="<%= user.email %>" placeholder="" disabled>

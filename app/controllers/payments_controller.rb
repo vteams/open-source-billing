@@ -103,11 +103,17 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1.json
   def destroy
     @payment = Payment.find(params[:id])
-    @payment.destroy
+    @payment.destroy unless OSB::CONFIG::DEMO_MODE
 
     respond_to do |format|
       format.html { redirect_to payments_url }
-      format.json { render_json(@payment) }
+      format.json do
+        if OSB::CONFIG::DEMO_MODE
+          render json: {message: t('views.common.demo_restriction_msg') }, status: :ok
+        else
+          render_json(@payment)
+        end
+      end
     end
   end
 
@@ -140,6 +146,7 @@ class PaymentsController < ApplicationController
   def bulk_actions
     per = params[:per].present? ? params[:per] : @per_page
     ids = params[:payment_ids]
+    redirect_to payments_url, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
     if Payment.is_credit_entry? ids
       @action = "credit entry"
       @payments_with_credit = Payment.payments_with_credit ids
