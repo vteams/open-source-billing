@@ -97,8 +97,8 @@ class ClientsController < ApplicationController
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
-    associate_entity(options, @client)
     @client.account_id = current_user.accounts.first.id
+    associate_entity(options, @client)
 
     @client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
 
