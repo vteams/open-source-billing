@@ -24,7 +24,7 @@
     <% @report.report_data.each do |invoice| %>
         <tr>
           <td data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), remote: true, class: "invoices_link") %></td>
-          <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
+          <td class="align_left" data-sort_val="<%= invoice.client.organization_name if invoice.client.present? %>"><%= invoice.client.organization_name if invoice.client.present? %></td>
           <td class="center-align" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
           <td class="center-align" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" >
             <%= t('views.invoices.' + invoice.status ) %>
