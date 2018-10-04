@@ -32,6 +32,7 @@ class Estimate < ActiveRecord::Base
 
   before_create :set_estimate_number
   before_save :set_default_currency
+  after_save :set_estimate_date
 
   acts_as_archival
   acts_as_paranoid
@@ -231,5 +232,12 @@ class Estimate < ActiveRecord::Base
 
   def group_date
     Date.strptime(estimate_date, date_format).strftime('%B %Y')
+  end
+
+  def set_estimate_date
+    if estimate_date.nil? or estimate_date.blank?
+      date_format = Estimate.new.date_format
+      self.update_column(:estimate_date, Date.today.strftime(date_format))
+    end
   end
 end
