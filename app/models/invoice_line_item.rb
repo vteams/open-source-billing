@@ -44,9 +44,9 @@ class InvoiceLineItem < ActiveRecord::Base
 
   def item_tax_amount
     tax_amount = 0
-    return 0 if tax_1.blank? and tax_2.blank?
-    tax_amount +=  (item_total * tax1.percentage)/100 unless tax_1.blank?
-    tax_amount +=  (item_total * tax2.percentage)/100 unless tax_2.blank?
+    return 0 if tax1.blank? and tax2.blank?
+    tax_amount +=  (item_total * tax1.percentage)/100 if tax1.present?
+    tax_amount +=  (item_total * tax2.percentage)/100 if tax2.present?
     tax_amount
   end
 

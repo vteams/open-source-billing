@@ -81,7 +81,7 @@ module Reporting
         @report_total = []
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
-          data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total+p[:payment_amount]  }
+          data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total.to_i + p[:payment_amount].to_i  }
           data[:currency_code] = row.first[:currency_code]
           @report_total<<data
         end
