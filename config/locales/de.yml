@@ -434,7 +434,7 @@ de:
       empty_listing: "Es wurde noch kein Mitarbeiter hinzugefügt!"
       make_this_staff_available_to: "Stellen Sie diesen Stab zur Verfügung"
       duplicate_name: "Mitarbeiter mit derselben E-Mail-Adresse sind bereits vorhanden."
-      created_msg: "Mitarbeiter wurde erfolgreich erstellt."
+      created_msg: "Mitarbeiter wurde erfolgreich angelegt."
       updated_msg: "Mitarbeiter wurde erfolgreich aktualisiert."
       destroyed_msg: "Mitarbeiter wurde erfolgreich zerstört."
       bulk_action_msg: "Mitarbeiter sind %{action} erfolgreich."
