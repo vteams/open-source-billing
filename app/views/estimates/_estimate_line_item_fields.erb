@@ -5,7 +5,7 @@
     </div>
   </td>
   <td>
-    <%= f.input :item_id, collection: (load_line_items(action_name, @estimate.company_id, f.object) << ['Add New', '-1']),
+    <%= f.input :item_id, collection: (load_line_items(action_name, @estimate.company_id, f.object) << ["#{t('views.common.add_new')}", "-1"]),
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
                 include_blank: false, input_html: { class: 'items_list inline-select title-select add_link_select',
                                                     data: {action_path: new_item_path, position: (count rescue 0)} } %>
