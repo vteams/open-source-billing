@@ -182,7 +182,7 @@ class Payment < ActiveRecord::Base
         (Date.strptime(params[:payment_start_date], date_format).in_time_zone .. Date.strptime(params[:payment_end_date], date_format).in_time_zone)
     ) if params[:payment_start_date].present?
 
-    payments.unarchived.page(params[:page]).per(per_page)
+    payments.unarchived.order('created_at DESC').page(params[:page]).per(per_page)
   end
 
   def destroy_credit_applied(payment_id)
