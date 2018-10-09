@@ -5042,3 +5042,73 @@ input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !imp
   }
 }
 .task_form textarea.materialize-textarea { padding: 0; }
+
+#toast-container {
+  .toast.toast-success {
+    position: absolute !important;
+    left: 50% !important;
+    top: 40% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 40% !important;
+    height: 50% !important;
+    top: -25px !important;
+  }
+  button.toast-close-button{
+    line-height: 16px;
+    width: 18px;
+    font-size: 20px !important;
+    margin-top: 1px;
+    margin-right: 2px;
+    position:absolute;
+    top:0;
+    right:0;
+  }
+}
+
+.swal-modal{
+  background-color: #05a4d8;
+  box-shadow: 9px 5px 5px 0px #535353;
+}
+.swal-icon--success:after, .swal-icon--success:before{
+  background: transparent;
+}
+.swal-icon--success__hide-corners{
+  background: transparent;
+}
+.swal-title{
+  color: #fff;
+  font-size: 29px;
+}
+
+.swal-text{
+  color: #fff;
+  font-size: 14px;
+}
+
+.swal-icon--success__line{
+  background-color: #05a4d8;
+  height: 10px;
+}
+
+.swal-icon--success{
+  border-color: #fff;
+}
+
+.swal-icon--success__ring{
+  background-color: #fff;
+  z-index: 0;
+}
+
+
+.swal-icon--error{
+  border-color: #fff;
+}
+
+.swal-icon--error__line{
+  background-color: #f06313;
+  height: 10px;
+}
+
+.swal-icon.swal-icon--error{
+  background-color: #fff;
+}
