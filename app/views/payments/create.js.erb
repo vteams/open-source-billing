@@ -1,0 +1,18 @@
+<% if @payment.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      text: "<%= @payment.errors.full_messages.join('.') %>"
+  });
+<% else %>
+  $('.modal').modal('close');
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.payments.saved_msg') %>"}).then(function(){
+      window.location = '<%= payments_path %>'
+  });
+<% end %>

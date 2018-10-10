@@ -11,7 +11,7 @@
       </div>
       <h5 class="left text-blue"><%= t('views.dashboard.enter_payment') %>: <span><%= invoice.client.organization_name %></span> </h5>
     </div>
-    <%= simple_form_for payment, html: { class: 'payment_form form-horizontal' } do |f| %>
+    <%= simple_form_for payment, html: { class: 'payment_form form-horizontal' }, remote: true do |f| %>
         <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
         <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
         <% client_credit = client_credit.present? ? client_credit : 0 %>
