@@ -1,6 +1,6 @@
 <% dis_type = '' %>
 <div class="new-invoice-holder editInvoice estimate-form-container">
-  <%= simple_form_for estimate, html: { class: 'estimate-form form-horizontal nested-forms' } do |f| %>
+  <%= simple_form_for estimate, remote: true, html: { class: 'estimate-form form-horizontal nested-forms' } do |f| %>
       <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
         <%= render 'form_heading', f: f, estimate: estimate %>

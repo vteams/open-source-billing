@@ -1,0 +1,8 @@
+swal({
+    icon: "success",
+    title: 'Success',
+    buttons: false,
+    timer: 3000,
+    text: "<%= t('views.estimates.converted_to_invoice_msg') %>"}).then(function(){
+    window.location = '<%= estimates_path %>'
+});

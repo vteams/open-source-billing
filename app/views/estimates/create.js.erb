@@ -1,0 +1,17 @@
+<% if @estimate.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      text: "<%= @estimate.errors.full_messages.join('.') %>"
+  });
+<% else %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @new_estimate_message %>"}).then(function(){
+      window.location = '<%= estimates_path %>'
+  });
+<% end %>
