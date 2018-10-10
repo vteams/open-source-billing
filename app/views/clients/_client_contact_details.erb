@@ -1,0 +1,41 @@
+<br>
+<div class="row">
+  <h5 class="text-blue title-heading" id="detail"><%= t('views.common.details') %> <span>(<%= t('views.common.click_to_expand') %>)</span></h5>
+
+  <div id="add_Detail" class="fields_content_data" style="display:none;">
+    <div class="row">
+      <%= f.input :city, wrapper_html: { class: 'input-field col s6 m6' } %>
+      <%= f.input :province_state, wrapper_html: { class: 'input-field col s6 m6' } %>
+    </div>
+
+    <div class="row">
+      <%= f.input :postal_zip_code, wrapper_html: { class: 'input-field col s6 m6' } %>
+      <%= f.input :fax, wrapper_html: { class: 'input-field col s6 m6' } %>
+    </div>
+
+    <div class="row">
+      <%= f.input :address_street1, wrapper_html: { class: 'input-field col s12 m12' } %>
+      <%= f.input :address_street2, wrapper_html: { class: 'input-field col s12 m12' } %>
+    </div>
+
+    <%= f.input :country, collection: COUNTRY_LIST,prompt: t('views.common.select_a_country'),
+                input_html: { class: 'input-select' }, wrapper_html: {class: 'col m3 s6'} %>
+
+    <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] },
+                selected: (@client.currency_id.present? ? @client.currency_id : nil),
+                prompt: t('views.invoices.select_currency'),
+                input_html: { class: 'input-select', disabled: currency_is_off? }, wrapper_html: {class: 'col m3 s6'} %>
+
+    <%= f.input :industry, collection: INDUSTRY_LIST, prompt: t('views.clients.select_an_industry'),
+                input_html: { class: 'small tax2' }, wrapper_html: {class: 'col m3 s6'} %>
+    <%= f.input :company_size, collection: COMPANY_SIZE, prompt: t('views.clients.select_company_size'),
+                input_html: { class: 'small tax2' }, wrapper_html: {class: 'col m3 s6'} %>
+      <div class="invoice-add-notes clients-notes-alignment">
+      <a href="#"><i class="material-icons">chat</i> </a>
+      <%= f.input :internal_notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
+                  wrapper_html: { class: 'invoice-add-notes-textare'} %>
+    </div>
+
+  </div>
+</div>
+
