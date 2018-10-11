@@ -4,7 +4,7 @@
       title: 'Oops..!',
       buttons: false,
       timer: 3000,
-      text: "<%= @tasks.errors.full_messages.join('.') %>"
+      text: "<%= @task.errors.full_messages.join('.') %>"
   });
 <% elsif @task_exists.eql?(true) %>
   swal({
