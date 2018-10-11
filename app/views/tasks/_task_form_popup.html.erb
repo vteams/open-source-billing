@@ -17,7 +17,7 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @task, html: {class: 'task_form form-horizontal', id: 'newTask'} do |f| %>
+    <%= simple_form_for @task, remote: true, html: {class: 'task_form form-horizontal', id: 'newTask'} do |f| %>
       <div class="modal-body users">
         <div class="row">
           <%= f.submit class: 'btn_large submit hidden' %>
