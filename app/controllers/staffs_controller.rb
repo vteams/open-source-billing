@@ -50,8 +50,7 @@ class StaffsController < ApplicationController
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     if Staff.is_exists?(params[:staff][:email], get_association_obj)
       @staff_exists = true
-      redirect_to(staffs_path, :alert => t('views.staffs.duplicate_name')) unless params[:quick_create]
-      return
+      respond_to {|format| format.js} and return
     end
     @project = Project.find_by_id(params[:project_id])
 
@@ -69,11 +68,8 @@ class StaffsController < ApplicationController
         @project.add_to_team(@staff) if @project.present?
         format.js
         format.json { render :json => @staff, :status => :created, :location => @staff }
-        redirect_to (@project.present? ? project_path(@project) : staffs_path) , notice: t('views.staffs.created_msg') unless params[:quick_create]
-        return
       else
         format.js
-        format.html { render :action => "new" }
         format.json { render :json => @staff.errors, :status => :unprocessable_entity }
       end
     end
@@ -81,11 +77,7 @@ class StaffsController < ApplicationController
 
   # PATCH/PUT /staffs/1
   def update
-    if @staff.update(staff_params)
-      redirect_to staffs_path, notice: t('views.staffs.updated_msg')
-    else
-      render :edit
-    end
+    @staff.update(staff_params)
   end
 
   # DELETE /staffs/1

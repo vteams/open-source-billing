@@ -18,7 +18,7 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for staff, html: {class: 'staff_form form-horizontal', id: 'newStaff'} do |f| %>
+    <%= simple_form_for staff, remote: true, html: {class: 'staff_form form-horizontal', id: 'newStaff'} do |f| %>
       <div class="modal-body users">
         <div class="row">
           <%= f.submit class: 'btn_large submit hidden' %>

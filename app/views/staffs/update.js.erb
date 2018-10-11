@@ -1,0 +1,19 @@
+<% if @staff.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @staff.errors.full_messages.join('.') %>"
+  });
+<% else %>
+  $('.modal').modal('close');
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.staffs.updated_msg') %>"}).then(function(){
+      window.location = '<%= staffs_path %>'
+  });
+<% end %>
