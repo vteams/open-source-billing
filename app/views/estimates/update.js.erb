@@ -3,6 +3,7 @@ swal({
     icon: "error",
     title: 'Oops..!',
     buttons: false,
+    timer: 3000,
     text: "<%= @estimate.errors.full_messages.join('.') %>"
 });
 <% else%>
