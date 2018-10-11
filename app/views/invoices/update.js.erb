@@ -12,6 +12,7 @@
       icon: "error",
       title: 'Oops..!',
       buttons: false,
+      timer: 3000,
       text: "<%= @invoice_not_updated_error %>"
   });
 <% elsif @invoice.errors.present? %>
@@ -19,6 +20,7 @@
       icon: "error",
       title: 'Oops..!',
       buttons: false,
+      timer: 3000,
       text: "<%= @invoice.errors.full_messages.join('.') %>"
   });
 <% end %>
