@@ -599,6 +599,8 @@ fr:
       select_task: "Sélectionnez une tâche."
       hours_greated_than_zero: "Entrez une valeur d'heures supérieure ou égale à 0."
       deleted_msg: "Le journal a été supprimé avec succès."
+      created_msg: "Le journal a été créé avec succès."
+      updated_msg: "Le journal a été mis à jour avec succès."
 
     payments:
       payments: "paiement"

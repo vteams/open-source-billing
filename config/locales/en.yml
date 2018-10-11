@@ -658,6 +658,8 @@ en:
       select_task: "Select a task."
       hours_greated_than_zero: "Enter hours value greater than or equal to 0."
       deleted_msg: "Log was deleted successfully."
+      created_msg: "Log was created successfully."
+      updated_msg: "Log was updated successfully."
 
     payments:
       payments: "Payment"

@@ -603,6 +603,8 @@ de:
       select_task: "Wählen Sie eine Aufgabe."
       hours_greated_than_zero: "Geben Sie Stundenwert größer oder gleich 0 ein."
       deleted_msg: "Das Protokoll wurde erfolgreich gelöscht."
+      created_msg: "Das Protokoll wurde erfolgreich erstellt."
+      updated_msg: "Das Protokoll wurde erfolgreich aktualisiert."
 
     payments:
       payments: "Bezahlung"
