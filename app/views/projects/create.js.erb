@@ -3,6 +3,7 @@
       icon: "error",
       title: 'Oops..!',
       buttons: false,
+      timer: 3000,
       text: "<%= @project.errors.full_messages.join('.') %>"
   });
 <% else %>
