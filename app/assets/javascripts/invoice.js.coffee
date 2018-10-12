@@ -92,17 +92,6 @@ class @Invoice
     discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
     if discount_type == "%" then (subtotal * (parseFloat(discount_percentage) / 100.0)) else discount_percentage
 
-  updateLineTotal = (elem) ->
-    container = elem.parents('tr.fields')
-    cost = $(container).find('input.cost').val()
-    qty = $(container).find('input.qty').val()
-    if cost == null or cost == '' or !$.isNumeric(cost)
-      cost = 0
-    if qty == null or qty == '' or !$.isNumeric(qty)
-      qty = 0
-    line_total = (parseFloat(cost) * parseFloat(qty))
-    $(container).find('.line_total').text line_total.toFixed(2)
-
   clearLineTotal = (elem) ->
     container = elem.parents('tr.fields')
     container.find('input.description').val ''
@@ -413,7 +402,6 @@ class @Invoice
       flag
 
 jQuery ->
-  # for custom payment term
   Invoice.applyDatePicker()
   jQuery('body').on "click", '#select_all', ->
     listing_table =  jQuery(this).parents('table.bordered')
