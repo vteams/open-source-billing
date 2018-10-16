@@ -30,6 +30,8 @@
                 <%= f.input :quantity, label: t('views.items.default_quantity'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string %>
                 <%= f.association :tax1, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
                                   wrapper_html: { class: 'input-field col s12 m6' }, label: false %>
+                <%= f.association :tax2, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
+                                  wrapper_html: { class: 'input-field col s12 m6' }, label: false %>
                 <%= hidden_field_tag :position, params[:position] %>
               </div>
               <div class="row">

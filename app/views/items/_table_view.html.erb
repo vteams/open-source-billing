@@ -7,12 +7,13 @@
             <th class="align_center td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th width="15%"><%= t('views.common.title') %></th>
-            <th width="30%"><%= t('views.items.description') %></th>
+            <th width="20%"><%= t('views.common.title') %></th>
+            <th width="15%"><%= t('views.items.description') %></th>
             <th><%= t('views.common.unit_cost') %></th>
             <th><%= t('views.items.quantity') %></th>
-            <th width="15%"><%= t('views.items.tax') %></th>
-            <th class="center-align" width="10%;"><%= t('helpers.actions') %></th>
+            <th width="15%"><%= t('views.items.tax') %>1</th>
+            <th width="15%"><%= t('views.items.tax') %>2</th>
+            <th class="center-align" width="15%;"><%= t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">
@@ -28,6 +29,11 @@
                 <td>
                   <% if item.tax_1.present? %>
                     <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
+                  <% end %>
+                </td>
+                <td>
+                  <% if item.tax_2.present? %>
+                    <div class="amount-box"><strong><%= item.tax2_name %></strong> (<%= item.tax2_percentage %>)</div>
                   <% end %>
                 </td>
                 <td class="action-btn-group items-action">
