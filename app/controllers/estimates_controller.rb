@@ -59,11 +59,10 @@ class EstimatesController < ApplicationController
     respond_to do |format|
       if @estimate.save
         @estimate.notify(current_user, @estimate.id)  if params[:commit].present?
-        new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft])
-        redirect_to(estimates_url, :notice => new_estimate_message)
-        return
+        @new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
+        format.js
       else
-        format.html { render :action => 'new' }
+        format.js
         format.json { render :json => @estimate.errors, :status => :unprocessable_entity }
       end
     end
@@ -87,10 +86,9 @@ class EstimatesController < ApplicationController
         @estimate.update_line_item_taxes()
         @estimate.notify(current_user, @estimate.id) if params[:commit].present?
         format.json { head :no_content }
-        redirect_to({:action => "index", :controller => "estimates"}, :notice => t('views.estimates.saved_msg'))
-        return
+        format.js
       else
-        format.html { render :action => "edit" }
+        format.js
         format.json { render :json => @estimate.errors, :status => :unprocessable_entity }
       end
     end
@@ -129,7 +127,6 @@ class EstimatesController < ApplicationController
   def send_estimate
     estimate = Estimate.find(params[:id])
     estimate.send_estimate(current_user, params[:id])
-    redirect_to(estimates_url, notice: t('views.estimates.sent_msg'))
   end
 
   def bulk_actions
@@ -155,7 +152,6 @@ class EstimatesController < ApplicationController
   def convert_to_invoice
     estimate = Estimate.find(params[:id])
     estimate.convert_to_invoice
-    redirect_to(estimates_url, notice: t('views.estimates.converted_to_invoice_msg'))
   end
 
   def set_per_page_session

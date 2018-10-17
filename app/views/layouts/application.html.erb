@@ -21,7 +21,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
 
+      <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
       <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag "toastr.min.js" %>
       <script>
           I18n.locale = "<%= I18n.locale %>";
       </script>

@@ -214,9 +214,7 @@ window.preventDeletedNavigation = function(){
 };
 window.preventDeletedNavigation();
 $(document).ready(function(){
-    setTimeout(function() {
-        $('#flash_message').fadeOut('slow');
-    }, 5000);
+    display_flash_notice_or_alert_with_toastr();
     bind_deleted_entry();
 
     $('.date-picker').pickadate({
@@ -487,4 +485,33 @@ function initDemoLinksClick() {
       icon: 'info'
     });
   });
+}
+
+function display_flash_notice_or_alert_with_toastr(){
+
+    var success_flash = $('#custom_flash_success').text();
+    var flash_alert = $('#custom_flash_alert').text();
+    toastr.options = {
+        'containerId': 'toast-container',
+        'closeButton': true,
+        'debug': false,
+        'newestOnTop': false,
+        'progressBar': false,
+        'positionClass': "toast-top-center",
+        'preventDuplicates': false,
+        'onclick': null,
+        'showDuration': "300",
+        'hideDuration': "1000",
+        "timeOut": "5000",
+        'extendedTimeOut': "1000",
+        'showEasing': "swing",
+        'hideEasing': "linear",
+        'showMethod': "fadeIn",
+        'hideMethod': "fadeOut"
+    };
+    if (success_flash) {
+        toastr.success('', success_flash);
+    } else if(flash_alert) {
+        toastr.error('', flash_alert);
+    }
 }

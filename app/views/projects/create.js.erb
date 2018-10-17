@@ -1,0 +1,18 @@
+<% if @project.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @project.errors.full_messages.join('.') %>"
+  });
+<% else %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.projects.created_msg') %>"}).then(function(){
+      window.location = '<%= project_path(@project) %>'
+  });
+<% end %>

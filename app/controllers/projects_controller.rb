@@ -63,20 +63,12 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.company_id = get_company_id
-    if @project.save
-      redirect_to @project, notice: t('views.projects.created_msg')
-    else
-      render :new
-    end
+    @project.save
   end
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      redirect_to @project , notice: t('views.projects.updated_msg')
-    else
-      render :edit
-    end
+    @project.update(project_params)
   end
 
   # DELETE /projects/1

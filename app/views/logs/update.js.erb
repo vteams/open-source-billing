@@ -3,8 +3,6 @@ $('.logs_table').html('<%= escape_javascript render('logs/logs_table') %>');
 $('#calendar_form').html('<%= escape_javascript render("logs/#{@form_type}") %>');
 $('select').material_select();
 
-$(".alert.alert-success").show().find('span').html("Log(s) updated successfully.");
-
 var view = $('#calendar').fullCalendar('getView');
 if(view.name == 'basicWeek'){
     var start = $.datepicker.formatDate('yy-mm-dd', new Date(view.start));
@@ -28,3 +26,20 @@ else{
 
 $('#log_date').val($.datepicker.formatDate('yy-mm-dd', new Date()) );
 $('#calendar').fullCalendar( 'refetchEvents' );
+
+<% if @log.errors.present? %>
+swal({
+    icon: "error",
+    title: 'Oops..!',
+    buttons: false,
+    timer: 3000,
+    text: "<%= @log.errors.full_messages.join('.') %>"
+});
+<% else %>
+swal({
+    icon: "success",
+    title: 'Success',
+    buttons: false,
+    timer: 3000,
+    text: "<%= t('views.logs.updated_msg') %>"});
+<% end %>

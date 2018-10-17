@@ -4,15 +4,7 @@
       title: 'Oops..!',
       buttons: false,
       timer: 3000,
-      text: "<%= @task.errors.full_messages.join('.') %>"
-  });
-<% elsif @task_exists.eql?(true) %>
-  swal({
-      icon: "error",
-      title: 'Oops..!',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.tasks.duplicate_name') %>"
+      text: "<%= @tasks.errors.full_messages.join('.') %>"
   });
 <% else %>
   $('.modal').modal('close');
@@ -21,7 +13,7 @@
       title: 'Success',
       buttons: false,
       timer: 3000,
-      text: "<%= t('views.tasks.created_msg') %>"}).then(function(){
+      text: "<%= t('views.tasks.updated_msg') %>"}).then(function(){
       window.location = '<%= tasks_path %>'
   });
 <% end %>

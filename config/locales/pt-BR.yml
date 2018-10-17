@@ -604,6 +604,8 @@ pt-BR:
       select_task: "Selecione uma tarefa."
       hours_greated_than_zero: "Insira o valor de horas maior ou igual a 0."
       deleted_msg: "O registro foi excluído com sucesso."
+      created_msg: "O log foi criado com sucesso."
+      updated_msg: "Log foi atualizado com sucesso."
 
     payments:
       payments: "Pagamento"

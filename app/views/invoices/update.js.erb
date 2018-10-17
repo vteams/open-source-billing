@@ -1,0 +1,26 @@
+<% if @successfully_updated.eql?(true) or @updated_invoice_line_items.eql?(true) %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.invoices.updated_msg') %>"}).then(function(){
+      window.location = '<%= invoices_path %>'
+  });
+<% elsif @invoice_not_updated.eql?(true) %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @invoice_not_updated_error %>"
+  });
+<% elsif @invoice.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @invoice.errors.full_messages.join('.') %>"
+  });
+<% end %>

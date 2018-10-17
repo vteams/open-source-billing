@@ -68,15 +68,15 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = Payment.new(payment_params)
-
     respond_to do |format|
       if @payment.save
         Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
         @payment.notify_client(current_user) if params[:payment] && params[:payment][:send_payment_notification]
+        format.js
         format.html { redirect_to payments_path, :notice => t('views.payments.saved_msg') }
         format.json { render :json => @payment, :status => :created, :location => @payment }
       else
-        format.html { render :action => "new" }
+        format.js
         format.json { render :json => @payment.errors, :status => :unprocessable_entity }
       end
     end

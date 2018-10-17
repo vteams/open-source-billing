@@ -126,11 +126,10 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.save
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
-        redirect_to(invoices_url, :notice => new_invoice_message)
-        return
+        @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
+        format.js
       else
-        format.html { render :action => 'new' }
+        format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -151,20 +150,21 @@ class InvoicesController < ApplicationController
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
           @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-          redirect_to(invoices_url, notice: t('views.invoices.updated_msg'))
-          return
+          @successfully_updated = true
+          format.js
         else
-          redirect_to(invoices_url, alert: invoice_not_updated)
-          return
+          @invoice_not_updated = true
+          @invoice_not_updated_error = invoice_not_updated.gsub(/<\/?[^>]*>/, "").chop
+          format.js
         end
       elsif @invoice.update_attributes(invoice_params)
         @invoice.update_line_item_taxes()
         @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+        @updated_invoice_line_items = true
         format.json { head :no_content }
-        redirect_to({:action => "index", :controller => "invoices"}, :notice => t('views.invoices.updated_msg'))
-        return
+        format.js
       else
-        format.html { render :action => "edit" }
+        format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -295,7 +295,6 @@ class InvoicesController < ApplicationController
   def send_invoice
     invoice = Invoice.find(params[:id])
     invoice.send_invoice(current_user, params[:id])
-    redirect_to(invoices_url, notice: t('views.invoices.sent_msg'))
   end
 
   def stop_recurring
