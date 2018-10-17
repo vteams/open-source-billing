@@ -39,7 +39,7 @@
                     <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
                     <span>
                       <small>
-                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style', value: next_invoice_date, id: 'next_issue_date' },
+                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date' },
                                      wrapper_tag: :small, as: :string %>
                         <span><i class="material-icons calendar-icon">date_range</i></span>
                       </small>
@@ -79,7 +79,8 @@
               <th class="item_desc_width center-align"><%= t('views.common.description') %></th>
               <th class="item_unit_cost_width center-align"><%= t('views.common.unit_cost') %></th>
               <th class="item_quantity_width center-align"><%= t('views.items.quantity') %></th>
-              <th class="item_tax_width center-align"><%= t('views.common.tax') %></th>
+              <th class="item_tax_width center-align"><%= t('views.common.tax') %> 1</th>
+              <th class="item_tax_width center-align"><%= t('views.common.tax') %> 2</th>
               <th class="item_total_width right-align"><%= t('views.common.total') %></th>
             </tr>
             </thead>
@@ -153,6 +154,6 @@
         $('#discount_type').trigger('contentChanged');
         Invoice.change_invoice_item();
         Invoice.changeTax();
-        Invoice.load_functions();
+        OsbPlugins.load_functions();
     });
 </script>

@@ -80,6 +80,8 @@
 //= require timer
 //= require invoice_card
 //= require invoice
+//= require invoice_calculator
+//= require osb_plugins
 //= require import
 //= require sub_user
 //= require filter_bar

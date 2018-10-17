@@ -23,7 +23,7 @@
             if ($('.invoice-form').length > 0) {
                 Invoice.change_invoice_item();
                 Invoice.changeTax();
-                Invoice.load_functions();
+                OsbPlugins.load_functions();
             } else {
                 Estimate.change_estimate_item();
                 Estimate.changeTax();
