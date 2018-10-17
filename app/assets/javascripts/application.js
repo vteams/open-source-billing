@@ -489,8 +489,23 @@ function initDemoLinksClick() {
 
 function display_flash_notice_or_alert_with_toastr(){
 
-    var success_flash = $('#custom_flash_success').text();
-    var flash_alert = $('#custom_flash_alert').text();
+    var success_flash, flash_alert;
+    var success_msg = $('#custom_flash_success').text().trim();
+    var error_msg = $('#custom_flash_alert').text().trim();
+
+    if(success_msg != ''){
+        success_flash = $('#custom_flash_success').text();
+    }
+    else if(success_msg == '' && error_msg == ''){
+        success_flash = $('#custom_flash_success').next('p').text();
+    }
+    else if(error_msg != ''){
+        flash_alert = $('#custom_flash_alert').text();
+    }
+    else{
+        flash_alert = $('#custom_flash_alert').next('p').text();
+    }
+
     toastr.options = {
         'containerId': 'toast-container',
         'closeButton': true,
