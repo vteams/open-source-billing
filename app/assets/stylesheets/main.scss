@@ -5013,7 +5013,8 @@ input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !imp
 }
 
 #toast-container {
-  .toast.toast-success {
+
+  .toast.toast-error, .toast.toast-success {
     position: absolute !important;
     left: 50% !important;
     top: 40% !important;
@@ -5022,6 +5023,8 @@ input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !imp
     height: 50% !important;
     top: -25px !important;
   }
+  .toast.toast-success {background-color: #05a4d8;}
+  .toast.toast-error {background-color: #f06313;}
   button.toast-close-button{
     line-height: 16px;
     width: 18px;
