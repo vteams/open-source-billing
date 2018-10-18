@@ -2,13 +2,19 @@ class @Invoice
 
   jQuery ->
     OsbPlugins.applyDatePicker()
-    InvoiceCalculator.selectUnselectAllCheckboxes
+    OsbPlugins.selectUnselectAllCheckboxes
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
 
   @changeTax = ->
     jQuery("select.tax1, select.tax2").on "change", ->
-      InvoiceCalculator.updateLineTotal()
+      if $(this).val() == ''
+        $(this).parent('div').attr('title', 'Please select').qtip()
+      else
+        vals = $(this).attr('id').split('_')
+        per = $('#' + $(this).attr('id') + ' option:selected').data('tax_' + vals[vals.length - 1])
+        $(this).parent('div').attr('title', per + '%').qtip()
+      InvoiceCalculator.updateLineTotal(jQuery(this))
       InvoiceCalculator.updateInvoiceTotal()
 
   @change_invoice_item  = (elem) ->
@@ -45,8 +51,7 @@ class @Invoice
                 container.find('input.tax-amount').val item[9]
                 container.find('td.tax2').html item[7]
               container.find('input.item_name').val item[5]
-              InvoiceCalculator.updateLineTotal elem
-              InvoiceCalculator.updateInvoiceTotal()
+              $("select.tax1,select.tax2").trigger('change');
 
   @setInvoiceDueDate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null

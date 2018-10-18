@@ -160,5 +160,8 @@
         Invoice.change_invoice_item();
         Invoice.changeTax();
         OsbPlugins.load_functions();
+        <% if params[:action].eql?('edit') %>
+          $("select.tax1,select.tax2").trigger('change');
+        <% end %>
     });
 </script>
