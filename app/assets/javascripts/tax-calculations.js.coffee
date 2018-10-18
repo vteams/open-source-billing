@@ -12,7 +12,7 @@ window.taxByCategory = ->
     discountPct = parseFloat($("#invoice_discount_percentage, #recurring_profile_discount_percentage, #estimate_discount_percentage").val())
     discountType = $("select#discount_type").val()
 
-    lineTotal = parseFloat $(this).find(".line_total").text()
+    lineTotal = ((parseFloat $(this).find(".cost").val())*(parseFloat $(this).find(".qty").val()))
     lineTotal = 0 if isNaN(lineTotal)
     discountAmount = if discountType == "%" then (lineTotal * discountPct / 100.0 ) else discountPct
     discountAmount = 0 if isNaN(discountAmount)
