@@ -7,9 +7,8 @@
       <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
                                     :default => "New  #{model_class.model_name.human}") %>:
   <% end %>
-  <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-  <%= f.select :client_id, (options_for_select((load_clients(action_name, invoice.company_id)),
-                                               selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
-               {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select' %>
+
+  <span title="Invoice Number"><%= invoice.invoice_number %></span>
+
   <%= link_to '', 'javascript:void;', class: 'hidden', data: {remote: true}, id: 'open_new_popup_link' %>
 </h5>

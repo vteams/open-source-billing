@@ -3857,7 +3857,6 @@ html {
   text-transform: capitalize; }
 .new-invoice-holder .info-section .info-left-section span {
   font-size: 11px;
-  display: inline-block;
   text-transform: uppercase;
   line-height: 11px; }
 .new-invoice-holder .info-section .info-left-section span small {
@@ -5010,6 +5009,18 @@ input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !imp
 .task_form textarea.materialize-textarea { padding: 0; }
 .clients-notes-alignment{
   padding: 0 10px 0px !important;
+}
+
+span.label-font{
+  font-size: 11px;
+  text-transform: uppercase;
+  line-height: 11px;
+  color: #9e9e9e !important;
+}
+
+.invoice-form.form-invoice .info-right-section span.invoice_due_date{
+  width: 61.5% !important;
+  display: block !important;
 }
 
 #toast-container {
