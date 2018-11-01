@@ -240,6 +240,7 @@ fr:
 
     invoices:
       invoice: "factures"
+      invoice_numbr: "Numéro de Facture"
       invoice_chart: "Tableau des factures"
       paid_invoices: "Factures payées"
       due_date: "date d'échéance"
@@ -446,6 +447,7 @@ fr:
       select_company: "Sélectionnez au moins une entreprise pour le personnel."
 
     estimates:
+      estimate_number: "Numéro D'estimation"
       this_estimate_was_sent_using: "Cette estimation a été envoyée en utilisant"
       estimate_date: "Date d'estimation"
       saved_draft_msg: "L'estimation a été enregistrée en tant que brouillon."

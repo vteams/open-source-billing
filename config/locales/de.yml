@@ -244,6 +244,7 @@ de:
 
     invoices:
       invoice: "Rechnungen"
+      invoice_numbr: "Rechnungsnummer"
       invoice_chart: "Rechnungsdiagramm"
       paid_invoices: "Bezahlte Rechnungen"
       due_date: "Fälligkeitsdatum"
@@ -450,6 +451,7 @@ de:
       select_company: "Wählen Sie mindestens eine Firma für die Mitarbeiter aus."
 
     estimates:
+      estimate_number: "Anzahl Schätzen"
       this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
       estimate_date: "Schätzdatum"
       saved_draft_msg: "Die Schätzung wurde als Entwurf gespeichert."

@@ -244,6 +244,7 @@ pt-BR:
 
     invoices:
       invoice: "Faturas"
+      invoice_numbr: "Número da Fatura"
       invoice_chart: "Carta de fatura"
       paid_invoices: "Faturas pagas"
       due_date: "Data de vencimento"
@@ -450,6 +451,7 @@ pt-BR:
       select_company: "Selecione pelo menos uma empresa para a equipe."
 
     estimates:
+      estimate_number: "Número Estimado"
       this_estimate_was_sent_using: "Esta estimativa foi enviada usando"
       estimate_date: "Data estimada"
       saved_draft_msg: "A estimativa foi salva como rascunho."

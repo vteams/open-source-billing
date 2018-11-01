@@ -16,10 +16,11 @@
   <td><%= f.input :item_unit_cost, input_html: { class: 'cost center-align' }, label: false, wrapper: false %></td>
   <td><%= f.input :item_quantity, input_html: { class: 'qty center-align', min: 1 }, label: false, wrapper: false %></td>
 
-  <%= f.input :tax_1, as: :hidden, input_html: {class: 'tax1'}, label: false, wrapper: false %>
-  <%= hidden_field_tag :tax_amount, f.object.tax1.try(:percentage), class: 'tax-amount' %>
-  <td class="center-align tax1">
-    <%= f.object.tax1.name rescue '' %>
+  <td class="center-align">
+    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select'}) %>
+  </td>
+  <td class="center-align">
+    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select'}) %>
   </td>
   <td class="right-align"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
 </tr>

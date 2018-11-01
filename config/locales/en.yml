@@ -257,6 +257,7 @@ en:
 
     invoices:
       invoice: "Invoices"
+      invoice_numbr: "Invoice Number"
       invoice_chart: "Invoice Chart"
       paid_invoices: "Paid Invoices"
       due_date: "Due date"
@@ -476,6 +477,7 @@ en:
       select_company: "Select at least one company for the staff."
 
     estimates:
+      estimate_number: "Estimate Number"
       no_estimate_msg: "You haven't created any estimate yet. Please click on New Estimate button to create new estimate."
       no_archived_msg: "You haven't any archived estimate."
       no_deleted_msg: "You haven't any deleted estimate."
