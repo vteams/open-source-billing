@@ -23,6 +23,7 @@ class Estimate < ActiveRecord::Base
   belongs_to :client
   belongs_to :company
   belongs_to :currency
+  belongs_to :tax
 
   has_many :sent_emails, :as => :notification
   has_many :estimate_line_items, :dependent => :destroy, class_name: "InvoiceLineItem"

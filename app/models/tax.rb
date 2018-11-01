@@ -33,6 +33,7 @@ class Tax < ActiveRecord::Base
   has_many :items
   has_many :expenses
   has_many :invoices
+  has_many :estimates
   validates :name, :presence => true
   validates :percentage, :presence => true
 
