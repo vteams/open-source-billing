@@ -7,15 +7,19 @@
   <td>
     <%= f.input :item_id, collection: (load_line_items(action_name, @estimate.company_id, f.object) << ["#{t('views.common.add_new')}", "-1"]),
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
-                include_blank: false, input_html: { class: 'items_list inline-select title-select add_link_select',
+                include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align add_link_select',
                                                     data: {action_path: new_item_path, position: (count rescue 0)} } %>
-
   </td>
-  <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name' }, label: false, wrapper: false %>
-  <td><%= f.input :item_description, input_html: { class: 'description' }, label: false, wrapper: false %></td>
-  <td><%= f.input :item_unit_cost, input_html: { class: 'cost center-align' }, label: false, wrapper: false %></td>
-  <td><%= f.input :item_quantity, input_html: { class: 'qty center-align', min: 1 }, label: false, wrapper: false %></td>
-
+  <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name', value: f.object.item_name }, label: false, wrapper: false %>
+  <td>
+    <%= f.input :item_description, label: false, wrapper: false, input_html: { class: 'description center-align' } %>
+  </td>
+  <td>
+    <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align' } %>
+  </td>
+  <td>
+    <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', min: 1 } %>
+  </td>
   <td class="center-align">
     <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select'}) %>
   </td>

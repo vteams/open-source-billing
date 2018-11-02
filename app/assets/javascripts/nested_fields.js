@@ -27,7 +27,7 @@
             } else {
                 Estimate.change_estimate_item();
                 Estimate.changeTax();
-                Estimate.load_functions();
+                OsbPlugins.estimate_load_functions();
             }
             return false;
         },
