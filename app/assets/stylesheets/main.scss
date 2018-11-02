@@ -2364,7 +2364,17 @@ h6 {
   height: 20px;
   min-width: 136px;
   margin-bottom: 20px;
-  padding: 2px 10px; }
+  padding: 3px 10px;
+  color: #fff;}
+.top-align{
+  padding-top: 5px !important;}
+.right-align{
+  float: right;}
+.add-new-contact-btn{
+  background-color: #09b8e2 !important;
+  color: #fff !important;
+  border-color: #09b8e2 !important;
+  float: right;}
 .editClient .btn.moreBtn:hover {
   background-color: #09b8e2;
   color: #fff;
