@@ -27,6 +27,7 @@
 //= require inline-forms.js.coffee
 //= require projects.js.coffee
 //= require estimates.js.coffee
+//= require estimate_calculator
 //= require expenses.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
