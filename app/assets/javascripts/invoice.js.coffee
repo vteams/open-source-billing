@@ -2,14 +2,14 @@ class @Invoice
 
   jQuery ->
     OsbPlugins.applyDatePicker()
-    OsbPlugins.selectUnselectAllCheckboxes
+    OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
 
   @changeTax = ->
     jQuery("select.tax1, select.tax2").on "change", ->
       if $(this).val() == ''
-        $(this).parent('div').attr('title', 'Please select').qtip()
+        $(this).parent('div').attr('title', I18n.t('views.common.please_select')).qtip()
       else
         vals = $(this).attr('id').split('_')
         per = $('#' + $(this).attr('id') + ' option:selected').data('tax_' + vals[vals.length - 1])

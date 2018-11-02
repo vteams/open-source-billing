@@ -196,6 +196,7 @@ pt-BR:
       start_date_to_end_date: "Data de início - data final"
       enter_positive_value: "Por favor, insira apenas o valor positivo para este campo."
       demo_restriction_msg: "Este recurso não está disponível no modo de demonstração."
+      please_select: "Por favor selecione"
 
     pagination:
       previous: "Anterior"
