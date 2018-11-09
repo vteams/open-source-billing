@@ -4,7 +4,7 @@
       title: 'Success',
       buttons: false,
       timer: 3000,
-      text: "<%= t('views.invoices.updated_msg') %>"}).then(function(){
+      text: "<%= @notify.eql?(false) ? t('views.invoices.updated_and_draft_msg') : t('views.invoices.updated_and_sent_msg', org_name: @invoice.client.organization_name) %>"}).then(function(){
       window.location = '<%= invoices_path %>'
   });
 <% elsif @invoice_not_updated.eql?(true) %>

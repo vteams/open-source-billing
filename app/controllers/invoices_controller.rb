@@ -143,8 +143,8 @@ class InvoicesController < ApplicationController
   def update
     @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
-    notify = params[:commit].present? ? true : false
-    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], notify) unless params[:response_to_client].blank?
+    @notify = params[:commit].present? ? true : false
+    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
