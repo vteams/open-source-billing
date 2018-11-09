@@ -12,7 +12,7 @@ swal({
     title: 'Success',
     buttons: false,
     timer: 3000,
-    text: "<%= t('views.estimates.saved_msg') %>"}).then(function(){
+    text: "<%= @notify.eql?(false) ? t('views.estimates.updated_and_draft_msg') : t('views.estimates.updated_and_sent_msg', org_name: @estimate.client.organization_name) %>"}).then(function(){
     window.location = '<%= estimates_path %>'
 });
 <% end %>

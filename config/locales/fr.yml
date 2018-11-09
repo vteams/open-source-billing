@@ -454,6 +454,8 @@ fr:
       estimate_date: "Date d'estimation"
       saved_draft_msg: "L'estimation a été enregistrée en tant que brouillon."
       saved_and_sent_msg: "L'estimation a été créée et envoyée à %{org_name}."
+      updated_and_draft_msg: "L'estimation a été mise à jour et enregistrée comme brouillon "
+      updated_and_sent_msg: "L'estimation a été mise à jour et envoyée à %{org_name}"
       bulk_archived_msg: "estimation(s) ont été archivés."
       bulk_deleted: "estimation (s) ont été supprimées."
       sent_msg: "Estimation envoyée avec succès."

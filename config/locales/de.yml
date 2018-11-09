@@ -457,6 +457,8 @@ de:
       this_estimate_was_sent_using: "Diese Schätzung wurde mit gesendet"
       estimate_date: "Schätzdatum"
       saved_draft_msg: "Die Schätzung wurde als Entwurf gespeichert."
+      updated_and_draft_msg: "Die Schätzung wurde aktualisiert und als Entwurf gespeichert"
+      updated_and_sent_msg: "Die Schätzung wurde aktualisiert und an gesendet %{org_name}"
       saved_and_sent_msg: "Die Schätzung wurde erstellt und an %{org_name} gesendet."
       bulk_archived_msg: "Schätzung (en) wurden archiviert."
       bulk_deleted: "Schätzung (en) wurden gelöscht."

@@ -497,6 +497,8 @@ en:
       send_estimate: "Send Estimate"
       this_estimate_was_sent_using: "This estimate was sent using"
       saved_draft_msg: "The estimate has been saved as draft."
+      updated_and_draft_msg: "Estimate has been updated and saved as draft"
+      updated_and_sent_msg: "Estimate has been updated and sent to %{org_name}"
       saved_and_sent_msg: "Estimate has been created and sent to %{org_name}."
       bulk_archived_msg: "estimate(s) have been archived."
       bulk_deleted: "estimate(s) have been deleted."

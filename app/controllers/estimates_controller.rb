@@ -80,7 +80,7 @@ class EstimatesController < ApplicationController
   def update
     @estimate = Estimate.find(params[:id])
     @estimate.company_id = get_company_id()
-    notify = params[:commit].present? ? true : false
+    @notify = params[:commit].present? ? true : false
     respond_to do |format|
       if @estimate.update_attributes(estimate_params)
         @estimate.update_line_item_taxes()

@@ -458,6 +458,8 @@ pt-BR:
       estimate_date: "Data estimada"
       saved_draft_msg: "A estimativa foi salva como rascunho."
       saved_and_sent_msg: "A estimativa foi criada e enviada para %{org_name}."
+      updated_and_draft_msg: "A estimativa foi atualizada e salva como rascunho"
+      updated_and_sent_msg: "A estimativa foi atualizada e enviada para %{org_name}"
       bulk_archived_msg: "estimativa (s) foram arquivadas."
       bulk_deleted: "estimativa (s) foram eliminadas."
       sent_msg: "Estimativa enviada com sucesso."
