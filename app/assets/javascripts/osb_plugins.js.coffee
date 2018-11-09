@@ -45,6 +45,9 @@ class @OsbPlugins
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
+  @empty_tax_fields = (tax_container) ->
+    tax_container.find('select.tax1, select.tax2').val('').material_select()
+
   @load_functions = ->
 
     OsbPlugins.updateMaterializeSelect()
