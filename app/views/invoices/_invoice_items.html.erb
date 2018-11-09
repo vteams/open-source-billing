@@ -6,7 +6,7 @@
     <th class="center-align"><%= t('views.common.unit_cost') %></th>
     <th class="center-align"><%= t('views.items.quantity') %></th>
     <th class="center-align"><%= t('views.common.tax') %></th>
-    <th class="right-align"><%= t('views.common.total') %></th>
+    <th class="align_right"><%= t('views.common.total') %></th>
   </tr>
   </thead>
 
@@ -20,7 +20,7 @@
         <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
         <td class="center-align"><%= item.item_quantity.to_i %></td>
         <td class="center-align"><%= item.tax1.name rescue ''%></td>
-        <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+        <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
       </tr>
   <% end %>
   </tbody>

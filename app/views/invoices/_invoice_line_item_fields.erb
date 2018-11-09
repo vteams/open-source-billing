@@ -26,5 +26,5 @@
   <td class="center-align">
     <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select'}) %>
   </td>
-  <td class="right-align"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
+  <td class="align_right"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
 </tr>
