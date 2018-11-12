@@ -571,7 +571,7 @@ en:
       invalid_email: "Invalid email"
       invalid_business_phone: "Invalid business phone number"
       invalid_mobile_number: "Invalid mobile number"
-      atleast_one_company_required: "Select at least one company for the task"
+      atleast_one_company_required: "Select at least one company"
 
     expenses:
       expenses: "Expenses"

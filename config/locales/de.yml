@@ -531,7 +531,7 @@ de:
       invalid_email: "Ungültige E-Mail"
       invalid_business_phone: "Ungültige Geschäftstelefonnummer"
       invalid_mobile_number: "ungültige Telefon-nummer"
-      atleast_one_company_required: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+      atleast_one_company_required: "Wählen Sie mindestens eine Firma aus"
 
     expenses:
       bulk_action_msg: "Ausgaben sind %{action} erfolgreich."
