@@ -63,6 +63,7 @@ class Invoice < ActiveRecord::Base
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :recurring_schedule,  :allow_destroy => true
+  accepts_nested_attributes_for :client
 
   # validation
 

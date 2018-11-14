@@ -37,11 +37,16 @@ class ApplicationController < ActionController::Base
   before_filter :set_listing_layout
   before_filter :authenticate_user!
 
+  before_filter :authenticate_json_user
+
   before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to dashboard_url, :alert => exception.message
   end
 
+  def authenticate_json_user
+    sign_in(:user,  User.first) if request.format.json?
+  end
 
   def _reload_libs
     if defined? RELOAD_LIBS

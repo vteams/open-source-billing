@@ -22,6 +22,7 @@ class InvoicesController < ApplicationController
   load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice, :payment_with_credit_card]
   before_filter :set_per_page_session
+  before_filter :set_client_id, only: :create
   protect_from_forgery :except => [:preview, :paypal_payments, :create]
   helper_method :sort_column, :sort_direction
   include DateFormats
@@ -128,6 +129,7 @@ class InvoicesController < ApplicationController
         @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
         @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
         format.js
+        format.json {render :json=> @invoice, :status=> :ok}
       else
         format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
@@ -308,6 +310,17 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def set_client_id
+    # to create/update client for invoice with JSON API call
+    if invoice_params[:client_attributes].present?
+      existing_client = Client.find_by(email: invoice_params[:client_attributes][:email])
+      if existing_client.present?
+        params[:invoice][:client_id] = existing_client.id
+        params[:invoice].delete :client_attributes
+      end
+    end
+  end
+
   private
 
   def invoice_has_deleted_clients?(invoices)
@@ -358,6 +371,13 @@ class InvoicesController < ApplicationController
                                         [
                                           :id, :invoice_id, :next_invoice_date, :frequency, :occurrences,
                                           :delivery_option, :_destroy
+                                        ],
+                                    client_attributes:
+                                        [
+                                          :address_street1, :address_street2, :business_phone, :city,
+                                          :country, :fax,
+                                          :organization_name, :postal_zip_code, :province_state,
+                                          :email, :home_phone, :first_name, :last_name, :mobile_number
                                         ]
     )
   end
