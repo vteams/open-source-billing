@@ -77,6 +77,7 @@ class SubUsersController < ApplicationController
       options.delete(:password)
       options.delete(:password_confirmation)
     end
+    @sub_user.skip_reconfirmation!
     message = if @sub_user.update_attributes(options)
                 @successfully_updated = true
                 @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
