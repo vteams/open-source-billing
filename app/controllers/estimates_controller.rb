@@ -189,7 +189,7 @@ class EstimatesController < ApplicationController
                                     :discount_percentage, :estimate_date, :estimate_number,
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :estimate_total, :estimate_line_items_attributes, :archive_number,
-                                    :archived_at, :deleted_at, :company_id,:currency_id,
+                                    :archived_at, :deleted_at, :company_id,:currency_id, :estimate_tax_amount,
                                     estimate_line_items_attributes:
                                         [
                                             :id, :estimate_id, :item_description, :item_id, :item_name,
