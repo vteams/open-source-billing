@@ -33,6 +33,7 @@ class Estimate < ActiveRecord::Base
 
   before_create :set_estimate_number
   before_save :set_default_currency
+  before_save :update_estimate_total
   after_save :set_estimate_date
 
   acts_as_archival
@@ -240,5 +241,25 @@ class Estimate < ActiveRecord::Base
       date_format = Estimate.new.date_format
       self.update_column(:estimate_date, Date.today.strftime(date_format))
     end
+  end
+
+  def applyDiscount(line_items_total_with_taxes)
+    discount_type = self.discount_type
+    discount_value = self.discount_percentage.to_f
+    discounted_amount = if discount_value.eql?(0.0)
+                          0.0
+                        else
+                          discount_type.eql?('%') ? (line_items_total_with_taxes * (discount_value.to_f / 100.0)).round(2) : discount_value
+                        end
+    discounted_amount
+  end
+
+  def update_estimate_total
+    line_items_total_with_taxes = self.invoice_line_items.to_a.sum(&:item_total_amount).to_f
+    discounted_amount = applyDiscount(line_items_total_with_taxes)
+    subtotal = line_items_total_with_taxes - discounted_amount
+    invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
+    additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
+    self.invoice_total = (subtotal + additional_invoice_tax).round(2)
   end
 end
