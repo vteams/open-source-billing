@@ -15,7 +15,7 @@
       <th width="15%"><%= t('views.common.type') %></th>
       <th  width="26%"><%= t('views.common.note') %></th>
       <th class="center-align" width="17%"><%= t('views.common.date') %></th>
-      <th class="right-align {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
+      <th class="align-right {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
     </tr>
     </thead>
     <% unless @report.report_data.blank? %>
@@ -41,7 +41,7 @@
             <td class="center-align<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= payment.created_at.to_date.strftime(get_date_format) %>
             </td>
-            <td class="right-align currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
+            <td class="align-right currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
               <%= payment.currency_code %>
               <%= number_to_currency(payment.payment_amount,unit: '') %>
@@ -53,7 +53,7 @@
     <tfoot>
       <tr>
         <td colspan="5"><strong><%= t('views.common.total') %></strong></td>
-        <td class="right-align currency">
+        <td class="align-right currency">
           <% @report.report_total.each do |total| %>
             <span>
               <b>

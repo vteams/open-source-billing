@@ -12,9 +12,9 @@
   <thead>
     <th width="40%"><%= t('views.clients.client') %></th>
     <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each  do |month| %>
-        <th width="15%"  class="right-align"><%= Date::MONTHNAMES[month].to_s[0..2] %></th>
+        <th width="15%"  class="align-right"><%= Date::MONTHNAMES[month].to_s[0..2] %></th>
     <% end %>
-    <th width="15%"  class="right-align"><%= t('views.common.total') %></th>
+    <th width="15%"  class="align-right"><%= t('views.common.total') %></th>
   </thead>
   <tbody>
   <% unless @report.report_data.blank? %>
@@ -22,7 +22,7 @@
       <tr>
         <td class="align_left text-overflow-class" data-sort_val="<%= revenues.first.organization_name %>"><%= revenues.first.organization_name %></td>
         <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-          <td class="right-align" data-sort_val="<%= revenues.sum{|revenue| revenue["#{Date::MONTHNAMES[month]}"] } %>" >
+          <td class="align-right" data-sort_val="<%= revenues.sum{|revenue| revenue["#{Date::MONTHNAMES[month]}"] } %>" >
             <% revenues.each do |revenue| %>
               <%= revenue['currency_code'] %>
               <%= number_to_currency(revenue["#{Date::MONTHNAMES[month]}"],unit: '') %>
@@ -30,7 +30,7 @@
             <% end %>
           </td>
         <% end %>
-        <td class="right-align" data-sort_val="<%= revenues.sum{|revenue| revenue.client_total } %>" >
+        <td class="align-right" data-sort_val="<%= revenues.sum{|revenue| revenue.client_total } %>" >
           <% revenues.each do |revenue| %>
             <%= revenue['currency_code'] %>
             <%= number_to_currency(revenue.client_total,unit: '') %>
@@ -43,7 +43,7 @@
       <tr>
         <td><strong><%= t("views.common.total")%></strong></td>
         <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each do |month| %>
-            <td class="right-align">
+            <td class="align-right">
               <% @report.report_total.each do |total| %>
                 <span>
                   <b>
@@ -54,7 +54,7 @@
               <% end %>
             </td>
         <% end %>
-        <td class="right-align">
+        <td class="align-right">
           <% @report.report_total.each do |total| %>
             <span>
               <b>

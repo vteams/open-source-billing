@@ -14,11 +14,11 @@
 <thead>
 <tr>
   <th width="20%"><%= t('views.clients.client_name') %></th>
-  <th width="16%" class="right-align"><%= t('views.reports.days_0_30') %></th>
-  <th width="16%" class="right-align {sorter:'thousands'}"><%= t('views.reports.days_31_60') %></th>
-  <th width="16%" class="right-align {sorter:'thousands'}"><%= t('views.reports.days_61_90') %></th>
-  <th width="16%" class="right-align {sorter:'thousands'}"><%= t('views.reports.days_above_90') %></th>
-  <th width="16%" class="right-align {sorter:'thousands'}"><%= t('views.reports.client_total_ar') %></th>
+  <th width="16%" class="align-right"><%= t('views.reports.days_0_30') %></th>
+  <th width="16%" class="align-right {sorter:'thousands'}"><%= t('views.reports.days_31_60') %></th>
+  <th width="16%" class="align-right {sorter:'thousands'}"><%= t('views.reports.days_61_90') %></th>
+  <th width="16%" class="align-right {sorter:'thousands'}"><%= t('views.reports.days_above_90') %></th>
+  <th width="16%" class="align-right {sorter:'thousands'}"><%= t('views.reports.client_total_ar') %></th>
 </tr>
 </thead>
 <body>
@@ -28,35 +28,35 @@
         <td class="align_left text-overflow-class" data-overflow-rows="2"  data-sort_val="<%= ages.first.attributes["client_name"] %>">
           <%= ages.first.attributes["client_name"] %>
         </td>
-        <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['zero_to_thirty'] }  %>">
+        <td class="align-right" data-sort_val="<%= ages.sum{|aged| aged.attributes['zero_to_thirty'] }  %>">
           <% ages.each do |aged| %>
             <%= aged.attributes['currency_code'] %>
             <%= number_to_currency(aged.attributes["zero_to_thirty"],unit: '') %>
             <br>
           <% end %>
         </td>
-        <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['thirty_one_to_sixty'] } %>">
+        <td class="align-right" data-sort_val="<%= ages.sum{|aged| aged.attributes['thirty_one_to_sixty'] } %>">
           <% ages.each do |aged| %>
             <%= aged.attributes['currency_code'] %>
             <%= number_to_currency(aged.attributes["thirty_one_to_sixty"],unit: '') %>
             <br>
           <% end %>
         </td>
-        <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['sixty_one_to_ninety'] } %>" >
+        <td class="align-right" data-sort_val="<%= ages.sum{|aged| aged.attributes['sixty_one_to_ninety'] } %>" >
           <% ages.each do |aged| %>
             <%= aged.attributes['currency_code'] %>
             <%= number_to_currency(aged.attributes["sixty_one_to_ninety"],unit: '') %>
             <br>
           <% end %>
         </td>
-        <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes['ninety_one_and_above'] } %>" >
+        <td class="align-right" data-sort_val="<%= ages.sum{|aged| aged.attributes['ninety_one_and_above'] } %>" >
           <% ages.each do |aged| %>
             <%= aged.attributes['currency_code'] %>
             <%= number_to_currency(aged.attributes["ninety_one_and_above"],unit: '') %>
             <br>
           <% end %>
         </td>
-        <td class="right-align" data-sort_val="<%= ages.sum{|aged| aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"]} %>" >
+        <td class="align-right" data-sort_val="<%= ages.sum{|aged| aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"]} %>" >
           <% ages.each do |aged| %>
             <%= aged.attributes['currency_code'] %>
             <%= number_to_currency(aged.attributes["zero_to_thirty"] + aged.attributes["thirty_one_to_sixty"] + aged.attributes["sixty_one_to_ninety"] + aged.attributes["ninety_one_and_above"],unit: '') %>
@@ -74,7 +74,7 @@
   <tfoot>
     <tr>
       <td><strong><%= t("views.common.total") %></strong></td>
-      <td class="right-align">
+      <td class="align-right">
         <% @report.report_total.each do |total| %>
           <span>
             <b>
@@ -85,7 +85,7 @@
 
         <% end %>
       </td>
-      <td class="right-align">
+      <td class="align-right">
         <% @report.report_total.each do |total| %>
           <span>
             <b>
@@ -95,7 +95,7 @@
           </span>
         <% end %>
       </td>
-      <td class="right-align">
+      <td class="align-right">
         <% @report.report_total.each do |total| %>
           <span>
             <b>
@@ -105,7 +105,7 @@
           </span>
         <% end %>
       </td>
-      <td class="right-align">
+      <td class="align-right">
         <% @report.report_total.each do |total| %>
             <span>
               <b>
@@ -115,7 +115,7 @@
             </span>
         <% end %>
       </td>
-      <td class="right-align">
+      <td class="align-right">
         <% @report.report_total.each do |total| %>
            <span>
              <b>
