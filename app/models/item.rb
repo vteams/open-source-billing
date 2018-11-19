@@ -44,7 +44,7 @@ class Item < ActiveRecord::Base
   paginates_per 10
 
   def self.is_exists? item_name, association
-    association.present? ? association.items.where(:item_name => item_name).present? : where(:item_name => item_name).present?
+    association.present? ? association.items.with_deleted.where(:item_name => item_name).present? : with_deleted.where(:item_name => item_name).present?
   end
 
   def self.recover_archived(ids)
