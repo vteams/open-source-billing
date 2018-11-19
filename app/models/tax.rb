@@ -67,8 +67,9 @@ class Tax < ActiveRecord::Base
   end
 
   def self.is_exits? tax_name
-    where(name: tax_name).present?
+    with_deleted.where(name: tax_name).present?
   end
+
   def group_date
     created_at.strftime('%B %Y')
   end
