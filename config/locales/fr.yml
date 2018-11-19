@@ -827,6 +827,7 @@ fr:
       created_date_range: "Plage de dates créée"
       all_managers: "Tous les gestionnaires"
       managers: "Les gestionnaires"
+      duplicate_name: "Le projet portant le même nom existe déjà"
 
     import_data:
       import_data: "Importer des données"

@@ -831,6 +831,7 @@ de:
       created_date_range: "Erstellungsdatumsbereich"
       all_managers: "Alle Manager"
       managers: "Manager"
+      duplicate_name: "Projekt mit demselben Namen existiert bereits"
 
     import_data:
       import_data: "Daten importieren"

@@ -1,10 +1,10 @@
-<% if @project.errors.present? %>
+<% if @project_exists %>
   swal({
       icon: "error",
       title: 'Oops..!',
       buttons: false,
       timer: 3000,
-      text: "<%= @project.errors.full_messages.join('.') %>"
+      text: "<%= t('views.projects.duplicate_name') %>"
   });
 <% else %>
   swal({

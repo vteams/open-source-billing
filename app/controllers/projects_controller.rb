@@ -61,9 +61,13 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
-    @project.company_id = get_company_id
-    @project.save
+    if Project.is_exists?(params[:project][:project_name])
+      @project_exists = true
+    else
+      @project = Project.new(project_params)
+      @project.company_id = get_company_id
+      @project.save
+    end
   end
 
   # PATCH/PUT /projects/1

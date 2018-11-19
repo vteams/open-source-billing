@@ -896,6 +896,7 @@ en:
       created_date_range: "Created Date Range"
       all_managers: "All Managers"
       managers: "Managers"
+      duplicate_name: "Project with same name already exists"
 
     import_data:
       import_data: "Import Data"

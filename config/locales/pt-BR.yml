@@ -833,6 +833,7 @@ pt-BR:
       created_date_range: "Faixa de datas criada"
       all_managers: "Todos os gerentes"
       managers: "Gerentes"
+      duplicate_name: "Projeto com o mesmo nome já existe"
 
     import_data:
       import_data: "Datos de importacion"
