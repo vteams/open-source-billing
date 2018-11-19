@@ -108,7 +108,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.is_exists? email, association
-    association.present? ? association.clients.where(email: email).exists? : where(email: email).exists?
+    association.present? ? association.clients.with_deleted.where(email: email).exists? : with_deleted.where(email: email).exists?
   end
 
   def credit_payments
