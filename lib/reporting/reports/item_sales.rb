@@ -31,7 +31,7 @@ module Reporting
       end
 
       attr_accessor :item_quantity, :total_amount, :discount_pct, :net_total, :discount_amount
-      HEADER_COLUMNS = ['Item Name', 'Invoice Number', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
+      HEADER_COLUMNS = ['Item Name', 'Invoice Number', 'Clients', 'Total Qty Sold', 'Total Amount', 'Total Discount', 'Net Total']
 
       def period
         "#{I18n.t('views.common.between')} <strong>#{@report_criteria.from_date.to_date.strftime(get_date_format)}</strong> #{I18n.t('views.common.and')} <strong>#{@report_criteria.to_date.to_date.strftime(get_date_format)}</strong>"
