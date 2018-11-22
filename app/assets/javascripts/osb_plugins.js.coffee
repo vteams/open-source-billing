@@ -316,6 +316,7 @@ class @OsbPlugins
 
     # Validate client, cost and quantity on estimate save
     $(".estimate-form.form-horizontal").submit ->
+      $('.estimate_submit_button').addClass('disabled')
       discount_percentage = $("#estimate_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
       discount_type = $("select#discount_type").val()
       sub_total = $('#estimate_sub_total').val()
@@ -379,4 +380,5 @@ class @OsbPlugins
               OsbPlugins.applyPopover(qty,"bottomLeft","topLeft",I18n.t('views.invoices.enter_valid_item_quantity'))
               flag = false
             else OsbPlugins.hidePopover(qty)
+      $('.estimate_submit_button').removeClass('disabled') unless flag
       flag
