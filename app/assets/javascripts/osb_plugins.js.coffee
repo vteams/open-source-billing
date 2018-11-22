@@ -149,6 +149,7 @@ class @OsbPlugins
       OsbPlugins.hidePopover($('#add_line_item'))
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
+      $('.invoice_submit_button').addClass('disabled')
       invoice_date_value = new Date(DateFormats.get_original_date($("#invoice_invoice_date").val()))
       due_date_value = new Date(DateFormats.get_original_date($("#invoice_due_date_picker").val()))
       discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
@@ -226,6 +227,7 @@ class @OsbPlugins
             else OsbPlugins.hidePopover(qty)
       if ($('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) >= 1)
         OsbPlugins.hidePopover($('#how_many_rec'))
+      $('.invoice_submit_button').removeClass('disabled') unless flag
       flag
 
   @estimate_load_functions = ->

@@ -126,7 +126,7 @@ class InvoicesController < ApplicationController
     @invoice.create_line_item_taxes()
     respond_to do |format|
       if @invoice.save
-        @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
+        @invoice.notify(current_user, @invoice.id)  if params[:send_and_save].present?
         @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
         format.js
         format.json {render :json=> @invoice, :status=> :ok}
@@ -145,13 +145,13 @@ class InvoicesController < ApplicationController
   def update
     @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
-    @notify = params[:commit].present? ? true : false
+    @notify = params[:send_and_save].present? ? true : false
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
-          @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+          @invoice.notify(current_user, @invoice.id) if params[:send_and_save].present?
           @successfully_updated = true
           format.js
         else
@@ -161,7 +161,7 @@ class InvoicesController < ApplicationController
         end
       elsif @invoice.update_attributes(invoice_params)
         @invoice.update_line_item_taxes()
-        @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+        @invoice.notify(current_user, @invoice.id) if params[:send_and_save].present?
         @updated_invoice_line_items = true
         format.json { head :no_content }
         format.js

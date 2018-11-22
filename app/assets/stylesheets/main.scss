@@ -3807,17 +3807,25 @@ html {
   padding: 0 15px;
   margin-right: 8px;
   font-size: 16px; }
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button,
 .new-invoice-holder .new-invoice-header .new-invoice-action-btn a {
+  background: none;
+  border: none;
   color: #b5b5b5;
   margin-left: 12px;
   line-height: 36px;
   position: relative;
   top: 11px; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a i {
-  font-size: 18px; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:first-child {
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button i,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a i{
+  font-size: 18px;
+  margin-right: -8px;
+}
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button:first-child,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:first-child{
   margin-left: 0; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:hover {
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button:hover,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:hover{
   color: #09b8e2; }
 .new-invoice-holder .new-invoice-header .new-invoice-action-btn a.invoice-check i {
   font-size: 20px; }
@@ -5108,4 +5116,7 @@ span.label-font{
 
 .align_right{
   text-align: right !important;
+}
+.disabled{
+  pointer-events: none;
 }
