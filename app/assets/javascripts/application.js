@@ -234,6 +234,16 @@ $(document).ready(function(){
 
     initSelectActionLink();
     initDemoLinksClick();
+
+    $("body").on("contextmenu",function(){
+        return false;
+    });
+
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+            return false;
+        }
+    }
 });
 
 function initCustomConfirmPopUp() {
