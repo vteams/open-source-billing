@@ -37,9 +37,9 @@
             <tr>
               <th class="left-align"><%= t('views.common.item') %></th>
               <th class="left-align"><%= t('views.common.description') %></th>
-              <th class="right-align"><%= t('views.common.unit_cost') %></th>
-              <th class="right-align"><%= t('views.items.quantity') %></th>
-              <th class="right-align"><%= t('views.invoices.line_total') %></th>
+              <th class="align_right"><%= t('views.common.unit_cost') %></th>
+              <th class="align_right"><%= t('views.items.quantity') %></th>
+              <th class="align_right"><%= t('views.invoices.line_total') %></th>
             </tr>
             </thead>
             <tbody>
@@ -49,9 +49,9 @@
                 <tr>
                   <td class="left-align"><%= item.item_name rescue "" %></td>
                   <td class="left-align"><%= item.item_description %></td>
-                  <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-                  <td class="right-align"><%= item.item_quantity.to_i %></td>
-                  <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+                  <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                  <td class="align_right"><%= item.item_quantity.to_i %></td>
+                  <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
                 </tr>
             <% end %>
             </tbody>
