@@ -49,3 +49,4 @@ Gemfile.lock
 !/public/404.*
 !/public/422.*
 !/public/500.*
+!/public/bg_img.png
