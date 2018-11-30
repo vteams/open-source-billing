@@ -38,15 +38,15 @@
             <td class="align-right<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
               <%= item.attributes["item_quantity"].to_i %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"].to_f}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["total_amount"],unit: '') %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"].to_f}  %>" >
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["discount_amount"],unit: '') %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["net_total"],unit: '') %>
             </td>
