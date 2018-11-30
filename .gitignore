@@ -44,3 +44,8 @@ Gemfile.lock
 
 # Ignore application configuration
 /config/application.yml
+
+# track below files
+!/public/404.*
+!/public/422.*
+!/public/500.*
