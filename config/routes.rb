@@ -49,6 +49,9 @@ Osb::Application.routes.draw do
       end
     end
 
+    #API authentication for create invoice and client
+    post '/token_authentication', to: 'authenticate#token'
+
     resources :settings do
       member do
         get 'set_default_currency'
