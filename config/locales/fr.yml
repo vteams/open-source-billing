@@ -698,6 +698,8 @@ fr:
       table: "Table"
       card_view: "Vue de la carte"
       table_view: "Vue de la table"
+      api_key: "Clé API"
+      api_key_help_text: "Cette clé sera utilisée pour les demandes d'API JSON"
 
     companies:
       companies: "sociétés"

@@ -703,6 +703,8 @@ pt-BR:
       table: "Mesa"
       card_view: "Vista de cartão"
       table_view: "Vista de mesa"
+      api_key: "Chave API"
+      api_key_help_text: "Essa chave será usada para solicitações de APIs JSON"
 
     companies:
       companies: "Empresas"

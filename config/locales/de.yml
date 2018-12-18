@@ -702,6 +702,8 @@ de:
       table: "Tabelle"
       card_view: "Kartenansicht"
       table_view: "Tabellenansicht"
+      api_key: "API-Schlüssel"
+      api_key_help_text: "Dieser Schlüssel wird für JSON-APIs-Anforderungen verwendet"
 
     companies:
       companies: "Unternehmen"
