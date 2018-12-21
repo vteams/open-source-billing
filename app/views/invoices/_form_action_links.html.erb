@@ -1,8 +1,8 @@
 <div class="new-invoice-action-btn right">
-  <%= button_tag :submit, name: 'send_and_save', value: 'send_invoice', title: t('views.common.send'), class: 'invoice_submit_button' do %>
+  <%= button_tag :submit, title: t('views.common.send'), class: 'invoice_submit_button' do %>
       <i class='material-icons'>send</i>
   <% end %>
-  <%= button_tag :submit, name: 'save_as_draft', value: 'save_as_draft', title: t('views.common.save'), class: 'invoice_submit_button' do %>
+  <%= button_tag :submit, name: 'save_as_draft', value: true, title: t('views.common.save'), class: 'invoice_submit_button' do %>
       <i class='material-icons'>done</i>
   <% end %>
   <%= link_to raw("<i class='material-icons close' title='#{t('helpers.links.close')}'>close</i>"), invoices_path %>
