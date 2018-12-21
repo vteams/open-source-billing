@@ -58,7 +58,7 @@ class EstimatesController < ApplicationController
     @estimate.create_line_item_taxes()
     respond_to do |format|
       if @estimate.save
-        @estimate.notify(current_user, @estimate.id)  if params[:save_as_draft].present?
+        @estimate.notify(current_user, @estimate.id) unless params[:save_as_draft].present?
         @new_estimate_message = new_estimate(@estimate.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
         format.js
       else
@@ -84,7 +84,7 @@ class EstimatesController < ApplicationController
     respond_to do |format|
       if @estimate.update_attributes(estimate_params)
         @estimate.update_line_item_taxes()
-        @estimate.notify(current_user, @estimate.id) if params[:send_and_save].present?
+        @estimate.notify(current_user, @estimate.id) unless params[:save_as_draft].present?
         format.json { head :no_content }
         format.js
       else
