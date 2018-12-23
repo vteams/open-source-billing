@@ -263,6 +263,8 @@ module ApplicationHelper
       'german'
     elsif [request_url,language].include? 'fr'
       'french'
+    elsif [request_url,language].include? 'ru'
+      'russian'
     elsif [request_url,language].include? 'en'
       ''
     end
