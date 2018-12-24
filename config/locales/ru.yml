@@ -9,8 +9,8 @@ ru:
   current: Сейчас
   date:
     formats:
-      default: "% Y-% m-% d"
-      long: "% B% d,% Y"
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
       short: "%{SHORT_DATE}"
   edit: Изменить
   email_template: Шаблон письма
