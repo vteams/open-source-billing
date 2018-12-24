@@ -1,0 +1,58 @@
+---
+es:
+  devise:
+    confirmations:
+      confirmed: Tu cuenta fue confirmada exitosamente.
+      send_instructions: Recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos.
+      send_paranoid_instructions: Si su dirección de correo electrónico existe en nuestra base de datos, recibirá un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos.
+    failure:
+      already_authenticated: Ya has iniciado sesión.
+      inactive: Tu cuenta aún no está activada.
+      invalid: Correo electrónico o contraseña no válidos.
+      last_attempt: Tienes un intento más antes de que tu cuenta se bloquee.
+      locked: Tu cuenta esta bloqueada.
+      not_found_in_database: Correo electrónico o contraseña no válidos.
+      timeout: Tu sesión expiró. Por favor, vuelva a iniciar sesión para continuar.
+      unauthenticated: Debes registrarte o registrarte antes de continuar.
+      unconfirmed: Tienes que confirmar tu cuenta antes de continuar.
+    mailer:
+      confirmation_instructions:
+        subject: Instrucciones de confirmación
+      reset_password_instructions:
+        subject: Restablecer las instrucciones de contraseña
+      unlock_instructions:
+        subject: Instrucciones de desbloqueo
+    omniauth_callbacks:
+      failure: No se pudo autenticar desde %{kind} porque "%{reason}".
+      success: Autentificado correctamente desde la cuenta %{kind}.
+    passwords:
+      no_token: No puedes acceder a esta página sin venir de un correo electrónico de restablecimiento de contraseña. Si proviene de un correo electrónico de restablecimiento de contraseña, asegúrese de utilizar la URL completa provista.
+      send_instructions: Recibirá un correo electrónico con instrucciones sobre cómo restablecer su contraseña en unos minutos.
+      send_paranoid_instructions: Si su dirección de correo electrónico existe en nuestra base de datos, recibirá un enlace de recuperación de contraseña en su dirección de correo electrónico en unos minutos.
+      updated: Su contraseña ha sido cambiada con éxito. Ahora estás registrado.
+      updated_not_active: Su contraseña ha sido cambiada con éxito.
+    registrations:
+      destroyed: "¡Adiós! Su cuenta fue cancelada con éxito. Esperamos volver a verte pronto."
+      signed_up: "¡Bienvenido! Te has registrado correctamente."
+      signed_up_but_inactive: Te has registrado correctamente. Sin embargo, no pudimos iniciar sesión porque su cuenta aún no está activada.
+      signed_up_but_locked: Te has registrado correctamente. Sin embargo, no pudimos iniciar sesión porque su cuenta está bloqueada.
+      signed_up_but_unconfirmed: Se ha enviado un mensaje con un enlace de confirmación a su dirección de correo electrónico. Por favor abre el enlace para activar tu cuenta.
+      update_needs_confirmation: Actualizó su cuenta con éxito, pero necesitamos verificar su nueva dirección de correo electrónico. Revise su correo electrónico y haga clic en el enlace de confirmación para finalizar la confirmación de su nueva dirección de correo electrónico.
+      updated: Has actualizado tu cuenta con éxito.
+    sessions:
+      signed_in: Inicia sesión con éxito.
+      signed_out: Se cerró con éxito.
+    unlocks:
+      send_instructions: Recibirá un correo electrónico con instrucciones sobre cómo desbloquear su cuenta en unos minutos.
+      send_paranoid_instructions: Si su cuenta existe, recibirá un correo electrónico con instrucciones sobre cómo desbloquearla en unos minutos.
+      unlocked: Su cuenta ha sido desbloqueada con éxito. Por favor inicie sesión para continuar.
+  errors:
+    messages:
+      already_confirmed: ya fue confirmado, por favor intente iniciar sesión
+      confirmation_period_expired: necesita ser confirmado dentro de %{period}, por favor solicite uno nuevo
+      expired: ha expirado, por favor solicite una nueva
+      not_found: extraviado
+      not_locked: no estaba cerrado
+      not_saved:
+        one: '1 error prohibió que se guardara este %{resource}:'
+        other: 'Los errores de %{count} impidieron que se guardara este %{resource}:'
