@@ -2,7 +2,7 @@
 es:
   amount: Cantidad
   client: Cliente
-  clients: Clientela
+  clients: Clientes
   company: Empresa
   currency_code: Dólar estadounidense
   currency_unit: PS
@@ -14,17 +14,17 @@ es:
       short: "%{SHORT_DATE}"
   edit: Editar
   email_template: Plantilla de correo electrónico
-  estimate: Estimar
+  estimate: Estimado
   header:
     links:
-      api_docs: Documentación API
+      api_docs: Documentación de la API
       applications: Aplicaciones
       clients:
-        clients: Clientela
+        clients: clientes
         listing: Listado de Clientes
         new: Cliente nuevo
         sent_emails: Correos electrónicos enviados
-      dashboard: Tablero
+      dashboard: Panel
       estimates:
         estimates: Estimados
         listing: Lista estimada
@@ -38,22 +38,22 @@ es:
         invoices: Facturas
         listing: Listado de Facturas
         new: Nueva factura
-        recurring: Periódico
+        recurring: Periódico #dude
       items:
         items: Artículos
-        listing: Listado de artículos
+        listing: Lista de artículos
         new: Nuevo artículo
         taxes: Impuestos
       logout: Cerrar sesión
       payments:
-        listing: Listado de pagos
+        listing: Lista de pagos
         new: Nuevo pago
         payments: Pagos
       projects:
-        listing: Listado de proyectos
+        listing: Lista de proyectos
         new: Nuevo proyecto
       reports:
-        aged_account_receivable: Cuenta por cobrar envejecida
+        aged_account_receivable: Cuenta por cobrar vencida
         invoice_detail: Detalle de la factura
         item_sales: Ventas de artículos
         payment_collected: Pagos recogidos
@@ -64,13 +64,13 @@ es:
         basic_settings: Ajustes básicos
         companies: Compañías
         email_templates: Plantillas de correo electrónico
-        pricing_plans: Planes de precios
+        pricing_plans: Planes y precios
         setting: Ajuste
-        stripe_page: Aceptar tarjetas de crédito
+        stripe_page: Aceptar tarjetas de crédito #dude
         users: Usuarios
       staffs:
         Staffs: Personal
-        listing: Listado de personal
+        listing: Lista de personal
         new: Personal nuevo
       tasks:
         new: Nueva tarea
@@ -79,7 +79,7 @@ es:
         project: Proyectos
         staff: Personal
         task: Tareas
-        time_sheet: Hoja de horas
+        time_sheet: Hoja de horas #dude
         time_tracking: Seguimiento del tiempo
   helpers:
     actions: Comportamiento
@@ -92,7 +92,7 @@ es:
       remove: retirar
     messages:
       confirm: "¿Estás seguro?"
-      how_many: "¿Cuántos?"
+      how_many: "¿Cuántos?" #dude
       how_ofter: "¿Con qué frecuencia?"
       not_be_recoverable: Es posible que no pueda revertir esta acción.
       unable_to_delete: No se puede eliminar esta entidad.
@@ -106,7 +106,7 @@ es:
       new: Nuevo %{model}
   invoice: Factura
   invoices: Facturas
-  item: ít
+  item: Item
   manager: Gerente
   number:
     currency:
@@ -131,15 +131,15 @@ es:
       admin_billing_rate_per_hour: Tasa de facturación del administrador por hora
       admin_email: Correo electrónico de administrador
       admin_first_name: Nombre del administrador
-      admin_last_name: Nombre del administrador
-      admin_password: clave de administrador
+      admin_last_name: apellido del administrador
+      admin_password: Contraseña de administrador
       admin_username: Nombre de usuario administrador
       auto_dst_adjustment: Ajuste auto dst
       currency_code: Código de moneda
       currency_symbol: Símbolo de moneda
       org_name: Nombre de la organización
-      phone_business: Negocio del telefono
-      phone_mobile: Teléfono móvil
+      phone_business: Teléfono
+      phone_mobile: Celular
       profession: Profesión
     clients:
       active_clients_tooltip: Estos son pagos cobrados por mes de clientes activos.
@@ -157,8 +157,8 @@ es:
       client: Cliente
       client_id: Identificación del cliente
       client_name: nombre del cliente
-      clients: Clientela
-      company_size: Tamaño de la empresa
+      clients: Clientes
+      company_size: Tamaño de la empresa #dude
       contact: Contacto
       contact_name: Nombre de contacto
       contact_title: Titulo de contacto
@@ -166,9 +166,9 @@ es:
       date: Fecha
       deleted_clients_tooltip: Estos son pagos cobrados por mes de clientes eliminados.
       duplicate_email: Ya existe un cliente con el mismo email
-      email_required: correo electronico es requerido
+      email_required: el correo electronico es requerido
       first_name: Nombre de pila
-      first_or_last_name_required: Se requiere nombre o apellido
+      first_or_last_name_required: nombre o apellido son requeridos
       industry: Industria
       internal_notes: Notas internas
       invalid_business_phone: Número de teléfono comercial no válido
@@ -180,14 +180,14 @@ es:
       new_client: Cliente nuevo
       no_archived_client: No tienes ningún cliente archivado.
       no_deleted_client: No tienes ningún cliente eliminado.
-      no_record_msg: Aún no has creado ningún cliente. Haga clic en el botón Nuevo cliente para crear un nuevo cliente.
+      no_record_msg: Aún no has creado ningún cliente. Haga clic en el botón Nuevo cliente para crear uno nuevo.
       no_sent_emails: No hay correos electrónicos enviados.
       org_name_required: El nombre de la organización es obligatorio
       organization: Organización
       organization_name: Nombre de la Organización
       outstanding_amount: Cantidad Sobresaliente
       recipient: Recipiente
-      remove_this_contact: Quitar este contacto
+      remove_this_contact: Eliminar este contacto
       select_an_industry: Seleccione una industria ...
       select_company_size: Seleccione el tamaño de la empresa ...
       subject: Tema
@@ -204,12 +204,12 @@ es:
       all: Todos
       all_clients: Todos los clientes
       all_companies: Todas las empresas
-      and: Y
+      and: 'Y'
       archive: Archivo
       archived: Archivado
       as_for: A partir de
       available: disponible
-      back: Espalda
+      back: Atras
       between: Entre
       cancel: Cancelar
       city: Ciudad
@@ -220,9 +220,9 @@ es:
       currency: Moneda
       date: Fecha
       delete: Borrar
-      delete_archived: Eliminar archivado
+      delete_archived: Eliminar archivado #dude
       deleted: Eliminado
-      demo_restriction_msg: Esta función no está disponible en modo demo.
+      demo_restriction_msg: Esta función no está disponible en la versión demo.
       description: Descripción
       destroy: Destruir
       details: Detalles
@@ -238,10 +238,10 @@ es:
       industry: Industria
       infinite: infinito
       invoice_type: Tipo de factura
-      item: ít
+      item: Item
       less: Menos
       method: Método
-      mobile: Móvil
+      mobile: Celular
       month: Mes
       more: Más
       name: Nombre
@@ -276,8 +276,8 @@ es:
       selected: Seleccionado
       selected_companies_only: Solo empresas seleccionadas
       send: Enviar
-      send_to_archive: Enviar a archivo
-      show: Show
+      send_to_archive: Enviar archivo
+      show: Mostrar
       show_filters: Mostrar filtros
       start_date_to_end_date: Fecha de inicio Fecha de término
       state: Estado
@@ -296,10 +296,10 @@ es:
       zip_code: Código postal
     companies:
       branding: Marca
-      browse: Vistazo
+      browse: Vistazo #dude
       bulk_action_msg: Las empresas son %{action} con éxito.
-      bulk_archived: Se han archivado empresas. Puedes encontrarlos bajo
-      bulk_deleted_msg: Se han eliminado empresas. Puedes encontrarlos bajo
+      bulk_archived: Se han archivado las empresas. Puedes encontrarlos bajo #dude
+      bulk_deleted_msg: Se han eliminado las empresas. Puedes encontrarlos bajo #dude
       changes_discarded_msg: Sus cambios serán descartados por la empresa de conmutación. ¿Seguro que quieres cambiar de empresa?
       companies: Compañías
       create_msg: La empresa ha sido creada con éxito.
@@ -308,20 +308,20 @@ es:
       email_invalid: El correo electrónico es invalido.
       field_requied: Este campo es requerido.
       logo: Logo
-      memo: Memorándum
+      memo: Memorando
       move_archived_to_active: para mover las empresas archivadas de nuevo a activas.
       move_deleted_to_active: para mover las empresas eliminadas de nuevo a activo.
       name: Nombre de empresa
-      new: Nueva compañia
+      new: Nueva empresa
       no_archived_msg: No tienes ninguna empresa archivada.
       no_deleted_msg: No tienes ninguna empresa eliminada.
-      no_record_msg: Aún no has creado ninguna empresa. Haga clic en el botón Nueva empresa para crear un nuevo cliente.
-      set_your_logo: Establece tu logo
+      no_record_msg: Aún no has creado ninguna empresa. Haga clic en el botón Nueva empresa para crear un nuevo.
+      set_your_logo: Establece tu logo #dude
       tag_line: Etiqueta de la empresa
       updated_msg: Su empresa ha sido actualizada con éxito.
     credit_card:
       card_holder_name: Nombre del titular de la tarjeta
-      cc_number: Número CC
+      cc_number: Número de la  tarjeta
       cc_prompt: Por favor ingrese los datos de su tarjeta de crédito para pagar la factura
       expiry_date: Fecha de caducidad
       pay_by_credit_card: Pagar factura con tarjeta de crédito
@@ -335,7 +335,7 @@ es:
       amount_billed: Cantidad cobrada
       amount_billed_detail: Suma del total de facturas que ha enviado a clientes hasta el momento.
       apply_payment_detail: Seleccione una o más facturas de la lista a continuación para aplicar el pago.
-      days_old: Viejos días
+      days_old: dias de retraso #dude
       due_date: Fecha de vencimiento
       enter_payment: Introducir pago
       no_current_invoices: No hay facturas actuales.
@@ -350,7 +350,7 @@ es:
       ytd_income_detail: Monto total recibido contra facturas enviadas durante este año.
     email_templates:
       body: Cuerpo
-      boy_required: Se requiere cuerpo.
+      boy_required: Se requiere mensaje. #dude
       custom_fields: Campos Personalizados
       days_of_due_date: Días de vencimiento
       email_from: Email de
@@ -358,7 +358,7 @@ es:
       from_email_required: De correo electrónico es necesario.
       new: Nueva plantilla de correo electrónico
       status: Estado
-      subject: Tema
+      subject: Asunto
       subject_required: El sujeto es obligatorio.
       template_type: Tipo de plantilla
       updated_msg: La plantilla de correo electrónico se ha actualizado correctamente.
@@ -393,10 +393,10 @@ es:
       saved_msg: Su presupuesto se ha actualizado con éxito.
       select_estimate_date: Seleccione la fecha estimada
       send_estimate: Enviar presupuesto
-      send_estimate_instructions: o haga clic en el botón "Reenviar estimación" a continuación para reenviar la estimación también.
+      send_estimate_instructions: o haga clic en el botón "Reenviar estimación" a continuación para reenviar la estimación también. #dude
       send_this_note_only: Enviar esta nota solamente
       sent_msg: Estimación enviada con éxito.
-      subtotal: Total parcial
+      subtotal: Subtotal
       this_estimate_was_sent_using: Esta estimación fue enviada usando
       updated_and_draft_msg: La estimación ha sido actualizada y guardada como borrador
       updated_and_sent_msg: La estimación se ha actualizado y enviado a %{org_name}
@@ -414,7 +414,7 @@ es:
       no_deleted_expense: No tienes ningún gasto eliminado.
       no_record_msg: Aún no has creado ningún gasto.
       note: Nota
-    flash: 
+    flash:
     help:
       email_suppoprt: Por favor, póngase en contacto con nuestro equipo de soporte por correo electrónico a
       happy_invoicing: "¡Feliz facturación!"
@@ -435,14 +435,14 @@ es:
         unable_to_connect: No se puede conectar Freshbooks, url de cuenta no válida / token api
     invoice_line_item:
       description: Descripción
-      item: ít
+      item: Item
       name: Nombre
       new: Nueva línea de pedido de factura
       quantity: Cantidad
       select_an_item: Selecciona un artículo..
       tax_1: Impuesto 1
       tax_2: Impuesto 2
-      unit_cost: Costo unitario
+      unit_cost: Valor unitario
     invoices:
       10_days: 10 días
       add_line_item: Agregar elemento de línea
@@ -477,7 +477,7 @@ es:
       draft_partial: Proyecto Parcial
       draft_partial_tooltip: Pago recibido contra el proyecto de factura.
       draft_tooltip: Factura creada, pero no ha notificado a su cliente.
-      due: Debido
+      due: Vencido
       due_date: Fecha de vencimiento
       due_date_range: Rango de fecha de vencimiento
       due_date_should_equal_or_greater: La fecha de vencimiento debe ser igual o mayor que la fecha de facturación
@@ -555,8 +555,8 @@ es:
         payment_hint: Condiciones de pago de esta factura.
         po_number: numero postal
         profile_id: Perfil Id
-        prorate: Prorratear
-        prorate_for: Prorrate para
+        prorate: Prorratear #dude
+        prorate_for: Prorrate para #dude
         recurring_profile: Perfil recurrente
         schedule: Programar
         start_date: Fecha de inicio
@@ -650,8 +650,8 @@ es:
       time_logs: Registros de tiempo para
       updated_msg: El registro se actualizó con éxito.
     pagination:
-      first: ''
-      last: ''
+      first: '' #dude
+      last: '' #dude
       next: Siguiente
       previous: Anterior
     payment_terms:
@@ -715,7 +715,7 @@ es:
       destroyed_msg: Proyecto fue destruido con éxito.
       duplicate_name: Proyecto con el mismo nombre ya existe
       estimate_should_be_greater_than_zero: Tiempo estimado debe ser igual o mayor que cero
-      estimated_time: Hora prevista
+      estimated_time: Hora estimada
       manager_hint: El gerente de proyecto puede generar facturas, ver las hojas de horas del equipo y editar los detalles del proyecto.
       managers: Gerentes
       name_required: El nombre del proyecto es obligatorio
