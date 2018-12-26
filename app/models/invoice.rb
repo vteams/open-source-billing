@@ -250,8 +250,14 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def notify(current_user, id = nil)
-    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user)
+  def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
+    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
+    notify(current_user, self.id, invoice_pdf_file)
+  end
+
+  def notify(current_user, id = nil, invoice_pdf_file = nil)
+    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
   end
 
   def send_invoice current_user, id

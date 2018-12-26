@@ -120,13 +120,17 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new(invoice_params)
-    @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.status = if invoice_params[:status].eql?('paid')
+                        'paid'
+                      else
+                        params[:save_as_draft] ? 'draft' : 'sent'
+                      end
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     respond_to do |format|
       if @invoice.save
-        @invoice.notify(current_user, @invoice.id) unless params[:save_as_draft].present?
+        @invoice.delay.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) unless params[:save_as_draft].present?
         @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
         format.js
         format.json {render :json=> @invoice, :status=> :ok}
