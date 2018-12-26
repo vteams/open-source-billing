@@ -4,7 +4,6 @@
       <h5 class="left">
         <%= t(Invoice.model_name.singular) %>: <span><%= @invoice.client.organization_name rescue '' %></span>
       </h5>
-      <% unless  request.format.pdf? %>
 
           <div class="new-invoice-action-btn right">
 
@@ -24,7 +23,6 @@
           <% if @invoice.status != "paid" and action_name.eql?('preview') %>
               <span class="pull-right"><%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), title: 'Paypal Payment', class: 'btn btn-draft' %></span>
           <% end %>
-      <% end %>
     </div>
 
     <div class="info-section clearfix">
@@ -51,7 +49,7 @@
 
     <div class="new-invoice-table-holder">
       <% if @invoice.invoice_line_items.present? %>
-          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>" cellpadding="0" cellspacing="0">
+          <table class="bordered responsive-table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.item') %></th>
@@ -77,7 +75,7 @@
           </table>
       <% end %>
       <% if @invoice.invoice_tasks.present? %>
-          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>">
+          <table class="bordered responsive-table">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.task') %></th>
@@ -176,7 +174,7 @@
 
 
     </div>
-    <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= request.format.pdf? ? (wicked_pdf_image_tag "m-bottom-logo.jpg", class: 'responsive-img') : (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
+    <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
     <br/>
 
   </div>
