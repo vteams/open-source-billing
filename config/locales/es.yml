@@ -1,12 +1,33 @@
 ---
 es:
   amount: Cantidad
-  client: Cliente
-  clients: Clientes
-  company: Empresa
   currency_code: Dólar estadounidense
   currency_unit: PS
   current: Corriente
+
+  client: Cliente
+  clients: Clientes
+  company: Empresa
+  invoice: "Factura"
+  invoices: "Facturas"
+  project: "Proyecto"
+  projects: "Projectos"
+  project_name: "Nombre del proyecto"
+  payment: "Pago"
+  manager: "Gerente"
+  item: "Item"
+  report: "Reporte"
+  amount: "Total"
+  current: "Current"
+  past: "Anterior"
+  edit: "Editar"
+  estimate: "Estimado"
+  email_template: "Plantilla de correo electrónico"
+  user: "Usuario"
+  task: "Tarea"
+  tax: "Impuesto"
+  staff: "Personal"
+
   date:
     formats:
       default: "%Y-%m-%d"
@@ -165,14 +186,14 @@ es:
       created_msg: El cliente ha sido creado con éxito.
       date: Fecha
       deleted_clients_tooltip: Estos son pagos cobrados por mes de clientes eliminados.
-      duplicate_email: Ya existe un cliente con el mismo email
+      duplicate_email: Ya existe un cliente con el mismo correo
       email_required: el correo electronico es requerido
       first_name: Nombre de pila
       first_or_last_name_required: nombre o apellido son requeridos
       industry: Industria
       internal_notes: Notas internas
       invalid_business_phone: Número de teléfono comercial no válido
-      invalid_email: Email inválido
+      invalid_email: correo electrónico inválido
       invalid_mobile_number: Numero de celular invalido
       last_name: Apellido
       listing_sent_emails: Listado de correos electrónicos enviados
@@ -228,9 +249,9 @@ es:
       details: Detalles
       discount: Descuento
       dispute: Disputa
-      email: Email
+      email: correo electrónico
       enter_positive_value: Por favor, introduzca sólo el valor positivo para este campo.
-      excel: Sobresalir
+      excel: Excel
       'false': 'No'
       fax: Fax
       go: Ir
@@ -330,7 +351,7 @@ es:
       privacy: No almacenamos la información de su tarjeta de crédito.
       verification_code: Código de verificación
     dashboard:
-      aged_ar: AR envejecido
+      aged_ar: AR vencido
       amount: Cantidad
       amount_billed: Cantidad cobrada
       amount_billed_detail: Suma del total de facturas que ha enviado a clientes hasta el momento.
@@ -353,7 +374,7 @@ es:
       boy_required: Se requiere mensaje. #dude
       custom_fields: Campos Personalizados
       days_of_due_date: Días de vencimiento
-      email_from: Email de
+      email_from: correo electrónico de
       email_templates: Plantillas de correo electrónico
       from_email_required: De correo electrónico es necesario.
       new: Nueva plantilla de correo electrónico
@@ -764,8 +785,8 @@ es:
     sessions:
       done: Hecho
       forgot_password: "¿Se te olvidó tu contraseña?"
-      keep_me_signed_in: Mantenerme conectado
-      powered_by: energizado por
+      keep_me_signed_in: Recordarme
+      powered_by: Desarrollado por
       sign_in: Registrarse
       sign_up: Regístrate
       submit: Enviar
@@ -794,7 +815,7 @@ es:
       destroyed_msg: Miembro del personal fue destruido con éxito.
       duplicate_name: Ya existe personal con el mismo correo electrónico.
       edit_staff: Editar Personal
-      email: Email
+      email: correo electrónico
       empty_listing: Aún no se ha agregado ningún miembro del personal
       enter_email: Introduzca un correo electrónico para el personal.
       enter_name: Introduzca un nombre para el personal.
@@ -880,7 +901,7 @@ es:
       bulk_delete: Usuario (s) ha sido eliminado con éxito.
       cannot_delete_current_user: El usuario registrado actual no se puede eliminar.
       confirmation: Confirmación
-      duplicate_email: Ya existe un usuario con el mismo email.
+      duplicate_email: Ya existe un usuario con el mismo correo.
       email_invalid: El correo electrónico es invalido.
       email_required: Correo electronico es requerido.
       full_name: Nombre completo
