@@ -68,7 +68,7 @@ class InvoicesController < ApplicationController
         pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
           layout: 'pdf_mode.html.erb',
           encoding: "UTF-8",
-          template: 'invoices/invoice_pdf.html.erb',
+          template: 'invoices/pdf_invoice.html.erb',
           footer:{
             right: 'Page [page] of [topage]'
           }
