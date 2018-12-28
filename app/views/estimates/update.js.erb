@@ -1,0 +1,18 @@
+<% if @estimate.errors.present? %>
+swal({
+    icon: "error",
+    title: 'Oops..!',
+    buttons: false,
+    timer: 3000,
+    text: "<%= @estimate.errors.full_messages.join('.') %>"
+});
+<% else%>
+swal({
+    icon: "success",
+    title: 'Success',
+    buttons: false,
+    timer: 3000,
+    text: "<%= @notify.eql?(false) ? t('views.estimates.updated_and_draft_msg') : t('views.estimates.updated_and_sent_msg', org_name: @estimate.client.organization_name) %>"}).then(function(){
+    window.location = '<%= estimates_path %>'
+});
+<% end %>

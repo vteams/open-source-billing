@@ -182,7 +182,7 @@ class Payment < ActiveRecord::Base
         (Date.strptime(params[:payment_start_date], date_format).in_time_zone .. Date.strptime(params[:payment_end_date], date_format).in_time_zone)
     ) if params[:payment_start_date].present?
 
-    payments.unarchived.page(params[:page]).per(per_page)
+    payments.unarchived.order('created_at DESC').page(params[:page]).per(per_page)
   end
 
   def destroy_credit_applied(payment_id)
@@ -250,7 +250,7 @@ class Payment < ActiveRecord::Base
    payments_per_month = {}
 
    payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
-     payments_per_month[date] = payments.map(&:payment_amount).sum
+     payments_per_month[date] = payments.sum{|p| p.payment_amount.to_f}
    end
 
    payments_per_month

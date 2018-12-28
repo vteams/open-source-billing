@@ -4,7 +4,6 @@
       <h5 class="left">
         <%= t(Invoice.model_name.singular) %>: <span><%= @invoice.client.organization_name rescue '' %></span>
       </h5>
-      <% unless  request.format.pdf? %>
 
           <div class="new-invoice-action-btn right">
 
@@ -24,7 +23,6 @@
           <% if @invoice.status != "paid" and action_name.eql?('preview') %>
               <span class="pull-right"><%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), title: 'Paypal Payment', class: 'btn btn-draft' %></span>
           <% end %>
-      <% end %>
     </div>
 
     <div class="info-section clearfix">
@@ -51,14 +49,14 @@
 
     <div class="new-invoice-table-holder">
       <% if @invoice.invoice_line_items.present? %>
-          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>" cellpadding="0" cellspacing="0">
+          <table class="bordered responsive-table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.item') %></th>
                   <th class="left-align"><%= t('views.common.description') %></th>
-                  <th class="right-align"><%= t('views.common.unit_cost') %></th>
-                  <th class="right-align"><%= t('views.items.quantity') %></th>
-                  <th class="right-align"><%= t('views.invoices.line_total') %></th>
+                  <th class="align_right"><%= t('views.common.unit_cost') %></th>
+                  <th class="align_right"><%= t('views.items.quantity') %></th>
+                  <th class="align_right"><%= t('views.invoices.line_total') %></th>
                 </tr>
             </thead>
             <tbody>
@@ -68,23 +66,23 @@
                     <tr>
                       <td class="left-align"><%= item.item_name rescue "" %></td>
                       <td class="left-align"><%= item.item_description %></td>
-                      <td class="right-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
-                      <td class="right-align"><%= item.item_quantity.to_i %></td>
-                      <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+                      <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                      <td class="align_right"><%= item.item_quantity.to_i %></td>
+                      <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
                     </tr>
                 <% end %>
             </tbody>
           </table>
       <% end %>
       <% if @invoice.invoice_tasks.present? %>
-          <table class="bordered<%= ' responsive-table' unless request.format.pdf? %>">
+          <table class="bordered responsive-table">
             <thead>
                 <tr>
                   <th class="left-align"><%= t('views.common.task') %></th>
                   <th class="left-align"><%= t('views.common.description') %></th>
-                  <th class="right-align"><%= t('views.tasks.rate') %></th>
-                  <th class="right-align"><%= t('views.tasks.hours') %></th>
-                  <th class="right-align"><%= t('views.tasks.line_total') %></th>
+                  <th class="align_right"><%= t('views.tasks.rate') %></th>
+                  <th class="align_right"><%= t('views.tasks.hours') %></th>
+                  <th class="align_right"><%= t('views.tasks.line_total') %></th>
                 </tr>
             </thead>
             <tbody>
@@ -94,9 +92,9 @@
                     <tr>
                       <td class="left-align"><%= task.name rescue "" %></td>
                       <td class="left-align"><%= task.description %></td>
-                      <td class="right-align"><%= number_to_currency(task.rate, unit: "") %></td>
-                      <td class="right-align"><%= task.hours %></td>
-                      <td class="right-align"><%= number_to_currency(task_total, unit: "") %></td>
+                      <td class="align_right"><%= number_to_currency(task.rate, unit: "") %></td>
+                      <td class="align_right"><%= task.hours %></td>
+                      <td class="align_right"><%= number_to_currency(task_total, unit: "") %></td>
                     </tr>
                 <% end %>
             </tbody>
@@ -176,7 +174,7 @@
 
 
     </div>
-    <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= request.format.pdf? ? (wicked_pdf_image_tag "m-bottom-logo.jpg", class: 'responsive-img') : (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
+    <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
     <br/>
 
   </div>

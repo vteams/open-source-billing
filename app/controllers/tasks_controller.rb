@@ -47,11 +47,9 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
-
     if Task.is_exists?(params[:task][:name], get_association_obj)
       @task_exists = true
-      redirect_to(new_task_path, :alert => t('views.tasks.duplicate_name')) unless params[:quick_create]
-      return
+      respond_to {|format| format.js} and return
     end
     @task = Task.new(task_params)
     @task.billable = task_params[:rate].present?
@@ -62,11 +60,8 @@ class TasksController < ApplicationController
       if @task.save
         format.js
         format.json { render :json => @task, :status => :created, :location => @task }
-        redirect_to tasks_url, notice: t('views.tasks.created_msg') unless params[:quick_create]
-        return
       else
         format.js
-        format.html { render :action => "new" }
         format.json { render :json => @task.errors, :status => :unprocessable_entity }
       end
    end
@@ -76,9 +71,6 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       associate_entity(params, @task)
-      redirect_to tasks_url, notice: t('views.tasks.updated_msg')
-    else
-      render :edit
     end
   end
 

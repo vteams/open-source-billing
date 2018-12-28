@@ -196,6 +196,7 @@ de:
       start_date_to_end_date: "Anfangsdatum - Endtermin"
       enter_positive_value: "Bitte geben Sie nur einen positiven Wert für dieses Feld ein."
       demo_restriction_msg: "Diese Funktion ist im Demo-Modus nicht verfügbar."
+      please_select: "Bitte Auswählen"
 
     pagination:
       previous: "Vorherige"
@@ -244,6 +245,7 @@ de:
 
     invoices:
       invoice: "Rechnungen"
+      invoice_numbr: "Rechnungsnummer"
       invoice_chart: "Rechnungsdiagramm"
       paid_invoices: "Bezahlte Rechnungen"
       due_date: "Fälligkeitsdatum"
@@ -329,7 +331,8 @@ de:
       disputed_detail_msg: "%{company_name} wurde über den Konflikt benachrichtigt."
       cannot_reduce_total_msg: "Sie können den Rechnungsbetrag nicht unter den bezahlten Betrag reduzieren."
       cannot_reduce_total_detail_msg: "Wenn Sie versehentlich eine Zahlung eingegeben haben, können Sie sie in Ihrem Zahlungsverlauf bearbeiten."
-      updated_msg: "Ihre Rechnung wurde erfolgreich aktualisiert."
+      updated_and_draft_msg: "Die Rechnung wurde aktualisiert und als Entwurf gespeichert"
+      updated_and_sent_msg: "Die Rechnung wurde aktualisiert und an gesendet %{org_name}."
       bulk_action_msg: "Rechnung(en) sind %{action} erfolgreich."
       payment_converted_msg: "Entsprechende Zahlungen wurden in Kundenguthaben umgewandelt."
       payment_deleted: "Entsprechende Zahlungen wurden gelöscht."
@@ -434,7 +437,7 @@ de:
       empty_listing: "Es wurde noch kein Mitarbeiter hinzugefügt!"
       make_this_staff_available_to: "Stellen Sie diesen Stab zur Verfügung"
       duplicate_name: "Mitarbeiter mit derselben E-Mail-Adresse sind bereits vorhanden."
-      created_msg: "Mitarbeiter wurde erfolgreich erstellt."
+      created_msg: "Mitarbeiter wurde erfolgreich angelegt."
       updated_msg: "Mitarbeiter wurde erfolgreich aktualisiert."
       destroyed_msg: "Mitarbeiter wurde erfolgreich zerstört."
       bulk_action_msg: "Mitarbeiter sind %{action} erfolgreich."
@@ -450,9 +453,12 @@ de:
       select_company: "Wählen Sie mindestens eine Firma für die Mitarbeiter aus."
 
     estimates:
+      estimate_number: "Anzahl Schätzen"
       this_estimate_was_sent_using: "Dieses Angebot wurde gesendet mit"
       estimate_date: "Angebotsdatum"
       saved_draft_msg: "Das Angebot wurde als Entwurf gespeichert."
+      updated_and_draft_msg: "Die Schätzung wurde aktualisiert und als Entwurf gespeichert"
+      updated_and_sent_msg: "Die Schätzung wurde aktualisiert und an gesendet %{org_name}"
       saved_and_sent_msg: "Das Angebot wurde erstellt und an %{org_name} gesendet."
       bulk_archived_msg: "Angebote wurden archiviert."
       bulk_deleted: "Angebote wurden gelöscht."
@@ -525,7 +531,7 @@ de:
       invalid_email: "Ungültige E-Mail"
       invalid_business_phone: "Ungültige Geschäftstelefonnummer"
       invalid_mobile_number: "ungültige Telefon-nummer"
-      atleast_one_company_required: "Wählen Sie mindestens eine Firma für die Aufgabe aus"
+      atleast_one_company_required: "Wählen Sie mindestens eine Firma aus"
 
     expenses:
       bulk_action_msg: "Ausgaben sind %{action} erfolgreich."
@@ -603,6 +609,8 @@ de:
       select_task: "Wählen Sie eine Aufgabe."
       hours_greated_than_zero: "Geben Sie Stundenwert größer oder gleich 0 ein."
       deleted_msg: "Das Protokoll wurde erfolgreich gelöscht."
+      created_msg: "Das Protokoll wurde erfolgreich erstellt."
+      updated_msg: "Das Protokoll wurde erfolgreich aktualisiert."
 
     payments:
       payments: "Bezahlung"
@@ -694,6 +702,8 @@ de:
       table: "Tabelle"
       card_view: "Kartenansicht"
       table_view: "Tabellenansicht"
+      api_key: "API-Schlüssel"
+      api_key_help_text: "Dieser Schlüssel wird für JSON-APIs-Anforderungen verwendet"
 
     companies:
       companies: "Unternehmen"
@@ -823,6 +833,7 @@ de:
       created_date_range: "Erstellungsdatumsbereich"
       all_managers: "Alle Manager"
       managers: "Manager"
+      duplicate_name: "Projekt mit demselben Namen existiert bereits"
 
     import_data:
       import_data: "Daten importieren"

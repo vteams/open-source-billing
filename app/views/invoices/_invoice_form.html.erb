@@ -1,23 +1,25 @@
 <% dis_type = '' %>
 <div class="new-invoice-holder editInvoice invoice-form-container">
-  <%= simple_form_for invoice, html: { class: 'invoice-form form-invoice form-horizontal nested-forms' } do |f| %>
+  <%= simple_form_for invoice, remote: true, html: { class: 'invoice-form form-invoice form-horizontal nested-forms' } do |f| %>
       <% dis_type = f.object.discount_type || '%' %>
       <div class="new-invoice-header clearfix">
         <%= render 'form_action_links', f: f %>
         <%= render 'form_heading', f: f, invoice: invoice %>
       </div>
 
-
       <div class="scroll-area">
         <div class="info-section clearfix">
           <div class="info-left-section">
-            <h6><%= invoice.invoice_number %></h6>
             <%= render 'form_date_pickers', f: f %>
 
+            <span class="label-font"><%= t('views.clients.client') %> </span>
+            <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+            <%= f.select :client_id, (options_for_select((load_clients(action_name, invoice.company_id)),
+                                                         selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
+                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select' %>
             <div class="terms ">
-              <span><%= t('views.invoices.terms') %>: </span>
-              <%= f.input :payment_terms_id, collection: payment_terms_options, selected: f.object.payment_terms_id, include_blank: false,
-                          input_html: { class: 'inline-select payment-term-dropdown' }, wrapper_tag: :small, label: false %>
+              <span class="label-font"><%= t('views.invoices.terms') %>: </span>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
             </div>
             <div class="paymentInfo">
               <strong><strong class="invoice_total_strong"></strong>
@@ -28,6 +30,9 @@
             </div>
           </div>
           <div class="info-right-section" >
+            <%= f.input :due_date, wrapper_tag: :span,
+                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
+
             <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
             <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
             <label for="recurring"><h6><%= t('views.common.recurring') %></h6></label>
@@ -39,7 +44,7 @@
                     <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
                     <span>
                       <small>
-                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style', value: next_invoice_date, id: 'next_issue_date' },
+                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date' },
                                      wrapper_tag: :small, as: :string %>
                         <span><i class="material-icons calendar-icon">date_range</i></span>
                       </small>
@@ -79,8 +84,9 @@
               <th class="item_desc_width center-align"><%= t('views.common.description') %></th>
               <th class="item_unit_cost_width center-align"><%= t('views.common.unit_cost') %></th>
               <th class="item_quantity_width center-align"><%= t('views.items.quantity') %></th>
-              <th class="item_tax_width center-align"><%= t('views.common.tax') %></th>
-              <th class="item_total_width right-align"><%= t('views.common.total') %></th>
+              <th class="item_tax_width center-align"><%= t('views.common.tax') %> 1</th>
+              <th class="item_tax_width center-align"><%= t('views.common.tax') %> 2</th>
+              <th class="item_total_width align_right"><%= t('views.common.total') %></th>
             </tr>
             </thead>
             <tbody id="invoice_line_items_tbl" class="invoice-line-items-table">
@@ -137,7 +143,7 @@
           <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
                       wrapper_html: { class: 'invoice-add-notes-textare'} %>
         </div>
-    </div>
+      </div>
   <% end %>
 </div>
 
@@ -153,6 +159,9 @@
         $('#discount_type').trigger('contentChanged');
         Invoice.change_invoice_item();
         Invoice.changeTax();
-        Invoice.load_functions();
+        OsbPlugins.load_functions();
+        <% if params[:action].eql?('edit') %>
+          $("select.tax1,select.tax2").trigger('change');
+        <% end %>
     });
 </script>

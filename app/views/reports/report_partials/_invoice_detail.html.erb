@@ -16,7 +16,7 @@
   <th width="20%" class="not-sortable"><%= t('client') %></th>
   <th width="20%" class="not-sortable center-align"><%= t('views.invoices.invoice_date') %></th>
   <th width="20%" class="center-align"><%= t('views.invoices.invoice_status') %></th>
-  <th width="20%" class="right-align not-sortable"><%= t('views.invoices.invoice_amount') %></th>
+  <th width="20%" class="align-right not-sortable"><%= t('views.invoices.invoice_amount') %></th>
 </tr>
 </thead>
 <tbody>
@@ -24,18 +24,18 @@
     <% @report.report_data.each do |invoice| %>
         <tr>
           <td data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), remote: true, class: "invoices_link") %></td>
-          <td class="align_left" data-sort_val="<%= invoice.client.organization_name %>"><%= invoice.client.organization_name %></td>
+          <td class="align_left" data-sort_val="<%= invoice.client.organization_name if invoice.client.present? %>"><%= invoice.client.organization_name if invoice.client.present? %></td>
           <td class="center-align" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
           <td class="center-align" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" >
             <%= t('views.invoices.' + invoice.status ) %>
           </td>
-          <td class="right-align" data-sort_val="<%= invoice.invoice_total %>" ><%= invoice.currency.present? ? invoice.currency.unit : "USD" %>  <%= number_to_currency(invoice.invoice_total, unit: '' ) %></td>
+          <td class="align-right" data-sort_val="<%= invoice.invoice_total %>" ><%= invoice.currency.present? ? invoice.currency.unit : "USD" %>  <%= number_to_currency(invoice.invoice_total, unit: '' ) %></td>
         </tr>
     <% end %>
     <tfoot>
     <tr>
       <td class="align_left"><strong><%= t('views.common.total') %></strong></td>
-      <td colspan="4" class="right-align currency">
+      <td colspan="4" class="align-right currency">
         <% @report.report_total.each do |total| %>
             <span><b><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></b></span>
         <% end %>

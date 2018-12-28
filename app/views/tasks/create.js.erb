@@ -1,6 +1,27 @@
-<%unless @task_exists%>
-<% inlineform_action = params[:add_more] ? "inlineform:save_and_add_more" : "inlineform:save" %>
-<%= "{\"action\": \"#{inlineform_action}\",\"exists\": \"#{@task_exists}\", \"record\": \"<option value='#{@task.id}' selected type='#{params[:association] == "account" ? "account_level" : "company_level"}'>#{@task.name}</option>\"}".html_safe%>
-<%else%>
-<%= "{\"exists\": \"#{@task_exists}\"}".html_safe%>
-<%end%>
+<% if @task.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @task.errors.full_messages.join('.') %>"
+  });
+<% elsif @task_exists.eql?(true) %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.tasks.duplicate_name') %>"
+  });
+<% else %>
+  $('.modal').modal('close');
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.tasks.created_msg') %>"}).then(function(){
+      window.location = '<%= tasks_path %>'
+  });
+<% end %>

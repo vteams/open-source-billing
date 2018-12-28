@@ -48,7 +48,7 @@ class LogsController < ApplicationController
     else #creating bulk log for 1 week
       params[:time].each do |index,value|
         unless value == ''
-          Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, company_id: get_company_id(), notes: nil, date: params[:day][index])
+          @log = Log.create(project_id: params[:log][:project_id], task_id: params[:log][:task_id], hours: value, company_id: get_company_id(), notes: nil, date: params[:day][index])
         end
       end
       @logs = Log.where('date BETWEEN ? AND ?', Date.parse(params[:day]['1']), Date.parse(params[:day]['7']) ).order(:created_at).page(params[:page]).per(10)

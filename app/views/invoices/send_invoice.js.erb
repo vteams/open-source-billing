@@ -1,0 +1,8 @@
+swal({
+    icon: "success",
+    title: 'Success',
+    buttons: false,
+    timer: 3000,
+    text: "<%= t('views.invoices.sent_msg') %>"}).then(function(){
+    window.location = '<%= invoices_path %>'
+});

@@ -14,10 +14,7 @@
 //= require jquery.min
 //= require jquery_ujs
 //= require jquery-ui.js
-//= require twitter/bootstrap
 //= require materialize.min
-//= require picker
-//= require picker.date
 //= require jquery.mCustomScrollbar.min
 //= require range-slider
 //= require custom
@@ -30,13 +27,13 @@
 //= require inline-forms.js.coffee
 //= require projects.js.coffee
 //= require estimates.js.coffee
+//= require estimate_calculator
 //= require expenses.js.coffee
 //= require formatCurrency.js
 //= require tableSorter.js
 //= require tablesorter.staticrow.js
 //= require jquery.metadata.js
 //= require application.js
-//= require bootstrap.js.coffee
 //= require moment
 //= require daterangepicker.min
 //= require fullcalendar
@@ -76,16 +73,16 @@
 //= require tinymce
 //= require email_template.js
 //= require recurring_profiles.js.coffee
-//= require bootstrap-switch
-//= require bootstrap-checkbox.min.js
-//= require bootstrap-checkbox.js
+//= require js/bootstrap/bootstrap-switch
+//= require js/bootstrap/bootstrap-checkbox.min.js
+//= require js/bootstrap/bootstrap-checkbox.js
 //= require settings.js
 //= require date_formats
-//= require flipclock
-//= require hourlycounter
 //= require timer
 //= require invoice_card
-//= require new_invoice
+//= require invoice
+//= require invoice_calculator
+//= require osb_plugins
 //= require import
 //= require sub_user
 //= require filter_bar
@@ -218,9 +215,7 @@ window.preventDeletedNavigation = function(){
 };
 window.preventDeletedNavigation();
 $(document).ready(function(){
-    setTimeout(function() {
-        $('#flash_message').fadeOut('slow');
-    }, 5000);
+    display_flash_notice_or_alert_with_toastr();
     bind_deleted_entry();
 
     $('.date-picker').pickadate({
@@ -239,6 +234,16 @@ $(document).ready(function(){
 
     initSelectActionLink();
     initDemoLinksClick();
+
+    $("body").on("contextmenu",function(){
+        return false;
+    });
+
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+            return false;
+        }
+    }
 });
 
 function initCustomConfirmPopUp() {
@@ -491,4 +496,48 @@ function initDemoLinksClick() {
       icon: 'info'
     });
   });
+}
+
+function display_flash_notice_or_alert_with_toastr(){
+
+    var success_flash, flash_alert;
+    var success_msg = $('#custom_flash_success').text().trim();
+    var error_msg = $('#custom_flash_alert').text().trim();
+
+    if(success_msg != ''){
+        success_flash = $('#custom_flash_success').text();
+    }
+    else if(success_msg == '' && error_msg == ''){
+        success_flash = $('#custom_flash_success').next('p').text();
+    }
+    else if(error_msg != ''){
+        flash_alert = $('#custom_flash_alert').text();
+    }
+    else{
+        flash_alert = $('#custom_flash_alert').next('p').text();
+    }
+
+    toastr.options = {
+        'containerId': 'toast-container',
+        'closeButton': true,
+        'debug': false,
+        'newestOnTop': false,
+        'progressBar': false,
+        'positionClass': "toast-top-center",
+        'preventDuplicates': false,
+        'onclick': null,
+        'showDuration': "300",
+        'hideDuration': "1000",
+        "timeOut": "5000",
+        'extendedTimeOut': "1000",
+        'showEasing': "swing",
+        'hideEasing': "linear",
+        'showMethod': "fadeIn",
+        'hideMethod': "fadeOut"
+    };
+    if (success_flash) {
+        toastr.success('', success_flash);
+    } else if(flash_alert) {
+        toastr.error('', flash_alert);
+    }
 }

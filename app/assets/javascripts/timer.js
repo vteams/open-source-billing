@@ -1,16 +1,3 @@
-var clock
-$(document).ready(function() {
-    clock = $('.timer').FlipClock({
-        autoStart: false,
-        countdown: false
-
-    });
-    $('#timer_wrapper form#new_log').on('ajax:success', function(data){
-        //alert('Log created successfully!');
-
-    });
-
-});
 function start_timer(){
     if($('#log_hours').val() > 24 || $('#log_hours').val() < 0 ){
         applyPopover(jQuery('#log_hours'), 'bottomLeft', 'topLeft', 'Please enter a value between 0 and 24');

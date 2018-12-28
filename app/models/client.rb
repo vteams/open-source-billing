@@ -36,6 +36,7 @@ class Client < ActiveRecord::Base
   has_many :company_entities, :as => :entity
   has_many :expenses
   after_create :create_default_currency
+  after_save :associate_default_companies
 
   acts_as_archival
   acts_as_paranoid
@@ -107,7 +108,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.is_exists? email, association
-    association.present? ? association.clients.where(email: email).exists? : where(email: email).exists?
+    association.present? ? association.clients.with_deleted.where(email: email).exists? : with_deleted.where(email: email).exists?
   end
 
   def credit_payments
@@ -230,5 +231,10 @@ class Client < ActiveRecord::Base
 
   def client_name
     "#{first_name.first.capitalize}#{last_name.first.capitalize}"
+  end
+
+  def associate_default_companies
+    # if client id not associated with any company then associate it all companies
+    User.current.accounts.first.clients << self if self.company_entities.first.nil?
   end
 end

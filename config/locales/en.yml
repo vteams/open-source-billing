@@ -209,6 +209,7 @@ en:
       start_date_to_end_date: "Start Date - End Date"
       enter_positive_value: "Please enter only positive value for this field."
       demo_restriction_msg: "This feature is not available in demo mode."
+      please_select: "Please Select"
 
     pagination:
       previous: "Previous"
@@ -257,6 +258,7 @@ en:
 
     invoices:
       invoice: "Invoices"
+      invoice_numbr: "Invoice Number"
       invoice_chart: "Invoice Chart"
       paid_invoices: "Paid Invoices"
       due_date: "Due date"
@@ -343,7 +345,8 @@ en:
       disputed_detail_msg: "%{company_name} has been notified of the dispute."
       cannot_reduce_total_msg: "You cannot reduce the invoice total below the amount paid."
       cannot_reduce_total_detail_msg: "If you entered a payment by mistake, you can edit it in your payment history."
-      updated_msg: "Your Invoice has been updated successfully."
+      updated_and_draft_msg: "Invoice has been updated and saved as draft"
+      updated_and_sent_msg: "Invoice has been updated and sent to %{org_name}."
       bulk_action_msg: "Invoice(s) are %{action} successfully."
       payment_converted_msg: "Corresponding payments have been converted to client credit."
       payment_deleted: "Corresponding payments have been deleted."
@@ -460,10 +463,10 @@ en:
       make_this_staff_available_to: "Make this Staff available to"
       add_new_staff: "Add New Staff"
       duplicate_name: "Staff with same email already exists."
-      created_msg: "Staff was successfully created."
-      updated_msg: "Staff was successfully updated."
-      destroyed_msg: "Staff was successfully destroyed."
-      bulk_action_msg: "Staff(s) are %{action} successfully."
+      created_msg: "Staff member was successfully created."
+      updated_msg: "Staff member was successfully updated."
+      destroyed_msg: "Staff member was successfully destroyed."
+      bulk_action_msg: "Staff member(s) are %{action} successfully."
       bulk_archived_msg: "staff have been archived. You can find them under"
       move_archived_to_active: "to move archived staffs back to active."
       bulk_deleted_msg: "staff have been deleted. You can find them under"
@@ -476,6 +479,7 @@ en:
       select_company: "Select at least one company for the staff."
 
     estimates:
+      estimate_number: "Estimate Number"
       no_estimate_msg: "You haven't created any estimate yet. Please click on New Estimate button to create new estimate."
       no_archived_msg: "You haven't any archived estimate."
       no_deleted_msg: "You haven't any deleted estimate."
@@ -493,6 +497,8 @@ en:
       send_estimate: "Send Estimate"
       this_estimate_was_sent_using: "This estimate was sent using"
       saved_draft_msg: "The estimate has been saved as draft."
+      updated_and_draft_msg: "Estimate has been updated and saved as draft"
+      updated_and_sent_msg: "Estimate has been updated and sent to %{org_name}"
       saved_and_sent_msg: "Estimate has been created and sent to %{org_name}."
       bulk_archived_msg: "estimate(s) have been archived."
       bulk_deleted: "estimate(s) have been deleted."
@@ -565,7 +571,7 @@ en:
       invalid_email: "Invalid email"
       invalid_business_phone: "Invalid business phone number"
       invalid_mobile_number: "Invalid mobile number"
-      atleast_one_company_required: "Select at least one company for the task"
+      atleast_one_company_required: "Select at least one company"
 
     expenses:
       expenses: "Expenses"
@@ -658,6 +664,8 @@ en:
       select_task: "Select a task."
       hours_greated_than_zero: "Enter hours value greater than or equal to 0."
       deleted_msg: "Log was deleted successfully."
+      created_msg: "Log was created successfully."
+      updated_msg: "Log was updated successfully."
 
     payments:
       payments: "Payment"
@@ -750,6 +758,8 @@ en:
       table: "Table"
       card_view: "Card view"
       table_view: "Table view"
+      api_key: "API Key"
+      api_key_help_text: "This key will be used for JSON APIs requests"
 
     companies:
       companies: "Companies"
@@ -888,6 +898,7 @@ en:
       created_date_range: "Created Date Range"
       all_managers: "All Managers"
       managers: "Managers"
+      duplicate_name: "Project with same name already exists"
 
     import_data:
       import_data: "Import Data"

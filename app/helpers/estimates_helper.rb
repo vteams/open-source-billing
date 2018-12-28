@@ -23,7 +23,7 @@ module EstimatesHelper
   def new_estimate id, is_draft
     message = is_draft ? t('views.estimates.saved_draft_msg') : t('views.estimates.saved_and_sent_msg', org_name: @estimate.client.organization_name)
     notice = <<-HTML
-       <p>#{message}.</p>
+       <p>#{message}</p>
     HTML
     notice.html_safe
   end

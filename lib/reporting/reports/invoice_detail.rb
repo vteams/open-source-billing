@@ -52,7 +52,7 @@ module Reporting
 
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
-          data[:total] = row.collect(&:invoice_total).sum.to_f.round(2)
+          data[:total] = row.map{|row_item| row_item.invoice_total.to_f}.sum.to_f.round(2)
           data[:currency_code] = Currency.find(row.first[:currency_id]).unit
           @report_total<<data
         end

@@ -40,7 +40,7 @@ class Task < ActiveRecord::Base
   end
 
   def self.is_exists? task_name, association = nil
-    association.present? ? association.tasks.where(:name => task_name).present? : where(:name => task_name).present?
+    association.present? ? association.tasks.with_deleted.where(:name => task_name).present? : with_deleted.where(:name => task_name).present?
   end
 
 

@@ -85,4 +85,7 @@ class Project < ActiveRecord::Base
     team_members.create(name: staff.name, email: staff.email, rate: staff.rate, staff_id: staff.id)
   end
 
+  def self.is_exists? project_name
+    with_deleted.where(project_name: project_name).present?
+  end
 end

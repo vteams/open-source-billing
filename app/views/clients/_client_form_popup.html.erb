@@ -47,14 +47,6 @@
                     <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
                 <% end %>
               </div>
-
-              <div class="col s12">
-                <%= link_to_add_association t('views.clients.add_new_contact'), f, :client_contacts,
-                                            partial: 'client_contact_fields',
-                                            class: 'btn moreBtn add',
-                                            data: { association_insertion_node: '#client-contact-container',
-                                                    association_insertion_method: :append } %>
-              </div>
             </div>
 
               <div class="row">
@@ -64,12 +56,22 @@
                     <%= render 'client_contact_fields', f: client_contact %>
                   <% end %>
                 </div>
+
+                <div class="col s12 top-align">
+                  <%= link_to_add_association t('views.clients.add_new_contact'), f, :client_contacts,
+                                              partial: 'client_contact_fields',
+                                              class: 'btn moreBtn add add-new-contact-btn',
+                                              data: { association_insertion_node: '#client-contact-container',
+                                                      association_insertion_method: :append } %>
+                </div>
               </div>
             <div class="row">
                 <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
             </div>
             <%= associate_account(controller_name, action_name, @client) %>
 
+            <%= render 'client_contact_details', f: f %>
+          </div>
           </div>
         </div>
 

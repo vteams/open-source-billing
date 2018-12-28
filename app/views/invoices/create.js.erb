@@ -1,0 +1,18 @@
+<% if @invoice.errors.present? %>
+  swal({
+      icon: "error",
+      title: 'Oops..!',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @invoice.errors.full_messages.join('.') %>"
+  });
+<% else %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= @new_invoice_message %>"}).then(function(){
+      window.location = '<%= invoices_path %>'
+  });
+<% end %>

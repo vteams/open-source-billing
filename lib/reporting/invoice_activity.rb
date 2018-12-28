@@ -66,6 +66,10 @@ module Reporting
         recent_activity.merge!(archived_invoices_progress: archived_invoices_progress)
         recent_activity.merge!(recurring_invoices_progress: recurring_invoices_progress)
 
+        recent_activity[:active_invoice_progress] = recent_activity[:active_invoice_progress].sort_by{name}.reverse
+        recent_activity[:deleted_invoice_progress] = recent_activity[:deleted_invoice_progress].sort_by{name}.reverse
+        recent_activity[:archived_invoices_progress] = recent_activity[:archived_invoices_progress].sort_by{name}.reverse
+        recent_activity[:recurring_invoices_progress] = recent_activity[:recurring_invoices_progress].sort_by{name}.reverse
         recent_activity
     end
   end

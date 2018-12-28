@@ -1,0 +1,903 @@
+---
+ru:
+  amount: Количество
+  client: Клиент
+  clients: Клиенты
+  company: Компания
+  currency_code: RUB
+  currency_unit: "₽"
+  current: Сейчас
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%{SHORT_DATE}"
+  edit: Изменить
+  email_template: Шаблон письма
+  estimate: Оценить
+  header:
+    links:
+      api_docs: Документация по API
+      applications: Приложения
+      clients:
+        clients: Клиенты
+        listing: Список клиентов
+        new: Новый клиент
+        sent_emails: Отправленные письма
+      dashboard: Состояние дел
+      estimates:
+        estimates: Оценки работ
+        listing: Предварительная оценка
+        new: Новая смета
+      expenses:
+        expenses: Расходы
+        listing: Перечень расходов
+        new: Новый Расход
+      help: Помощь
+      invoices:
+        invoices: Счета
+        listing: Список счетов
+        new: Новый Счет
+        recurring: Периодические
+      items:
+        items: Товары
+        listing: Список товаров
+        new: Новый товар
+        taxes: Налоги
+      logout: Выйти
+      payments:
+        listing: Список платежей
+        new: Новый платеж
+        payments: Оплаты
+      projects:
+        listing: Список проектов
+        new: Новый проект
+      reports:
+        aged_account_receivable: Дебиторская задолженность
+        invoice_detail: Выставленные счета
+        item_sales: Проданные товары
+        payment_collected: Оплаты
+        reports: Отчеты
+        revenue_by_client: Доходы по клиентам
+      search: Поиск
+      setting:
+        basic_settings: Базовые настройки
+        companies: Компании
+        email_templates: Шаблоны электронной почты
+        pricing_plans: Ценовые планы
+        setting: Настройка
+        stripe_page: Принимаем кредитные карты
+        users: Пользователи
+      staffs:
+        Staffs: Сотрудники
+        listing: Список сотрудников
+        new: Новый сотрудник
+      tasks:
+        new: Новая задача
+      time_tracking:
+        invoice: Создать счет
+        project: Проекты
+        staff: Сотрудники
+        task: Задачи
+        time_sheet: Табель
+        time_tracking: Учет времени
+  helpers:
+    actions: Действия
+    links:
+      add: Новый
+      close: Закрыть
+      delete: Удалить
+      edit: Изменить
+      recover: Восстановить
+      remove: Удалить
+    messages:
+      confirm: Вы уверены?
+      how_many: Как много?
+      how_ofter: Как часто?
+      not_be_recoverable: Возможно, вы не сможете отменить это действие.
+      unable_to_delete: Невозможно удалить эту запись.
+    page_entries_info:
+      more_pages:
+        display_entries: Показано <strong> %{first}-%{last} </ strong> из <strong> %{total} %{entry_name} </ strong>
+      one_page:
+        display_entries: Показано <strong> все %{count} </ strong> %{entry_name}.
+    titles:
+      edit: Изменить %{model}
+      new: Создать %{model}
+  invoice: Счет
+  invoices: Счета
+  item: Товар
+  manager: Менеджер
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%u%n"
+        precision: 2
+        separator: ","
+  past: Старые
+  payment: Оплата
+  project: Проект
+  project_name: Название проекта
+  projects: Проекты
+  report: Отчет
+  staff: Сотрудники
+  task: Задача
+  tax: Налог
+  user: Пользователь
+  views:
+    accounts:
+      account: Учетная запись
+      admin_billing_rate_per_hour: Тариф администратора за час
+      admin_email: Эектронная почта администратора
+      admin_first_name: Имя администратора
+      admin_last_name: Фамилия администратора
+      admin_password: пароль администратора
+      admin_username: Имя пользователя администратора
+      auto_dst_adjustment: Регулировка автоматической доставки
+      currency_code: Код валюты
+      currency_symbol: Символ валюты
+      org_name: Название организации
+      phone_business: Рабочий телефон
+      phone_mobile: Мобильный телефон
+      profession: Профессия
+    clients:
+      active_clients_tooltip: Это оплаты активных клиентов за месяц.
+      add_new_client: Добавить нового клиента
+      add_new_contact: Добавить новый контакт
+      additional_contacts: Дополнительные контакты
+      archived_clients_tooltip: Это оплаты архивных клиентов за месяц.
+      atleast_one_company_required: Выберите хотя бы одну компанию
+      available_credit: Доступный кредит
+      available_credit_detail: Этот кредит может быть применен к счету для этого клиента.
+      bulk_action_msg: Клиент(ы) успешно %{action}.
+      bulk_archived_msg: Клиент(ы) были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Клиент(ы) были удалены. Вы можете найти их ниже
+      business_phone: Рабочий телефон
+      client: Клиент
+      client_id: ID клиента
+      client_name: Имя клиента
+      clients: Клиенты
+      company_size: Размер компании
+      contact: Контакт
+      contact_name: Контактное лицо
+      contact_title: Название контакта
+      created_msg: Клиент был успешно создан.
+      date: Дата
+      deleted_clients_tooltip: Это оплаты удаленных клиентов за месяц.
+      duplicate_email: Клиент с таким же адресом электронной почты уже существует
+      email_required: Требуется электронная почта
+      first_name: Имя
+      first_or_last_name_required: Требуется имя или фамилия
+      industry: Отрасль
+      internal_notes: Внутренние заметки
+      invalid_business_phone: Неверный номер телефона
+      invalid_email: Неверный адрес электронной почты
+      invalid_mobile_number: Неверный номер мобильного телефона
+      last_name: Фамилия
+      listing_sent_emails: Список отправленных писем
+      make_available_to: Сделать этот клиент доступным для
+      new_client: Новый клиент
+      no_archived_client: У вас нет архивных клиентов.
+      no_deleted_client: У вас нет удаленных клиентов.
+      no_record_msg: Вы еще не создали ни одного клиента. Пожалуйста, нажмите на кнопку Новый Клиент, чтобы создать нового клиента.
+      no_sent_emails: Нет отправленных писем.
+      org_name_required: Название организации обязательно
+      organization: Организация
+      organization_name: Название организации
+      outstanding_amount: Непогашенная сумма
+      recipient: Получатель
+      remove_this_contact: Удалить этот контакт
+      select_an_industry: Выберите отрасль...
+      select_company_size: Выберите размер компании...
+      subject: Предмет
+      total_amount_billed: Общая сумма счета
+      total_payments_received: Всего полученных платежей
+      type: Тип
+      updated_msg: Клиент был успешно обновлен.
+    common:
+      active: Активные
+      activities: Мероприятия
+      add_new: Создать
+      add_notes: Добавить заметки
+      address: Адрес
+      all: Все
+      all_clients: Все клиенты
+      all_companies: Все компании
+      and: А также
+      archive: Архив
+      archived: Архивные
+      as_for: По состоянию на
+      available: Доступно
+      back: Назад
+      between: Между
+      cancel: Отменить
+      city: Город
+      click_to_expand: Нажмите, чтобы развернуть
+      convert_to_invoice: Конвертировать в Счет
+      country: Страна
+      csv: CSV
+      currency: Валюта
+      date: Дата
+      delete: Удалять
+      delete_archived: Удалить архивные
+      deleted: Удаленные
+      demo_restriction_msg: Эта функция недоступна в демонстрационном режиме.
+      description: Описание
+      destroy: Уничтожить
+      details: Подробности
+      discount: Скидка
+      dispute: Спор
+      email: Эл. адрес
+      enter_positive_value: Пожалуйста, введите только положительное значение для этого поля.
+      excel: Excel
+      'false': Нет
+      fax: Факс
+      go: Вперед
+      hide_filters: Скрыть фильтры
+      industry: Отрасль
+      infinite: Бесконечный
+      invoice_type: Тип счета
+      item: Товар
+      less: Меньше
+      method: Метод
+      mobile: Мобильный
+      month: Месяц
+      more: Больше
+      name: Название
+      note: Заметка
+      notes: Заметки
+      pdf: PDF
+      percentage: Процент
+      phone: Телефон
+      please_select: Пожалуйста выберите
+      postal: Почтовый
+      print: Печать
+      province: Провинция
+      qty: Кол-во
+      quarter: четверть
+      received: Получено
+      recover: Восстановить
+      recover_archived: Восстановить архивные
+      recover_deleted: Восстановить удаленные
+      recurring: Периодическая
+      remaining: Остальной
+      reset: Сброс
+      save: Сохранить
+      save_and_add_more: Сохранить и Новый
+      save_as_draft: Сохранить как черновик
+      select: Выбрать
+      select_a_country: Выберите страну...
+      select_default_currency: Выберите валюту по умолчанию...
+      select_estimate_currency: Выберите валюту...
+      select_invoice_currency: Выберите валюту...
+      select_item: Выберите товар
+      select_recurring_profile_currency: Выберите валюту...
+      selected: Выбран
+      selected_companies_only: Только избранные компании
+      send: Отправить
+      send_to_archive: Отправить в архив
+      show: Показать
+      show_filters: Показать фильтры
+      start_date_to_end_date: Дата начала - Дата окончания
+      state: Область
+      status: Статус
+      street: Улица
+      street_address: Адрес
+      tax: Налог
+      terms: Условия
+      time_zone: Часовой пояс
+      title: Заголовок
+      total: Всего
+      'true': Да
+      type: Тип
+      unit_cost: Себестоимость единицы
+      year: Год
+      zip_code: Почтовый индекс
+    companies:
+      branding: Брендинг
+      browse: Просмотр
+      bulk_action_msg: Компании успешно %{action}.
+      bulk_archived: Компании архивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Компании удалены. Вы можете найти их нижк
+      changes_discarded_msg: Ваши изменения будут отклонены из-за переключения компаний. Вы уверены, что хотите сменить компанию?
+      companies: Компании
+      create_msg: Компания была успешно создана.
+      current_company_action: Извините, текущая компания не может быть %{action}.
+      deleted_msg: Компания была успешно удалена.
+      email_invalid: Неверный адрес электронной почты.
+      field_requied: Это поле обязательно к заполнению.
+      logo: Логотип
+      memo: Напоминание
+      move_archived_to_active: переместить архивные компании обратно в активные.
+      move_deleted_to_active: переместить удаленные компании обратно в активные.
+      name: Название компании
+      new: Новая Компания
+      no_archived_msg: У вас нет архивных компаний.
+      no_deleted_msg: У вас нет удаленных компаний.
+      no_record_msg: Вы еще не создали ни одной компании. Пожалуйста, нажмите на кнопку Новая компания, чтобы создать нового клиента.
+      set_your_logo: Установите свой логотип
+      tag_line: Слоган компании
+      updated_msg: Ваша компания была успешно обновлена.
+    credit_card:
+      card_holder_name: Имя владельца карты
+      cc_number: Номер CC
+      cc_prompt: Пожалуйста, введите данные своей кредитной карты для оплаты счета
+      expiry_date: Срок действия
+      pay_by_credit_card: Оплатить счет кредитной картой
+      pay_by_paypal: Оплата с PayPal
+      pay_invoice: Оплатить счет
+      privacy: Мы не храним информацию о вашей кредитной карте
+      verification_code: Код подтверждения
+    dashboard:
+      aged_ar: Задолженность
+      amount: Количество
+      amount_billed: Выставлено на
+      amount_billed_detail: Сумма счетов, которые вы отправили клиентам
+      apply_payment_detail: Выберите один или несколько счетов из списка ниже, чтобы применить платеж.
+      days_old: дней
+      due_date: Срок оплаты
+      enter_payment: Введите платеж
+      no_current_invoices: Нет текущих счетов
+      no_previous_invoices: Нет предыдущих счетов
+      received_payment_detail: За какие счета вы получили оплату?
+      recent_activity: Недавняя активность
+      selected_amount_detail: Вы не выбрали ни одного счета. Пожалуйста, выберите один или несколько счетов и попробуйте снова.
+      total_outstanding: Должны вам
+      total_outstanding_detail: Общая сумма долгов клиентов
+      view_chart_detail: нажмите на панель, чтобы увидеть детали
+      ytd_income: Оплачено
+      ytd_income_detail: Общая сумма оплаченных счетов, отправленных в течение этого года
+    email_templates:
+      body: Тело
+      boy_required: Тело обязательно.
+      custom_fields: Настраиваемые поля
+      days_of_due_date: Дни исполнения
+      email_from: Электронная почта от
+      email_templates: Шаблоны электронной почты
+      from_email_required: С электронной почты требуется.
+      new: Новый шаблон электронной почты
+      status: Статус
+      subject: Предмет
+      subject_required: Тема обязательна.
+      template_type: Тип шаблона
+      updated_msg: Шаблон электронной почты был успешно обновлен.
+      use_this_template_for: Используйте этот шаблон для
+    estimates:
+      add_line_item: Добавить товар
+      auto_generated: Автогенерируемая
+      bulk_action_msg: Оценка(и) успешно %{action}.
+      bulk_archived_msg: Оценка(и) были заархивированы.
+      bulk_deleted: Оценка была удалена.
+      cannot_reduce_amount_detail_msg: Если вы ввели платеж по ошибке, вы можете отредактировать его в своей истории платежей.
+      cannot_reduce_amount_msg: Вы не можете уменьшить итоговую сумму ниже уплаченной суммы.
+      client_hint: Клиент, которому вы хотите отправить оценку
+      company_hint: Компания для этой Оценки работ
+      converted_to_invoice_msg: Оценка успешно конвертирована в счет.
+      disputed_detail_msg: "%{company_name} был уведомлен о споре."
+      disputed_msg: Оценка спорная.
+      estimate_date: Дата Оценки работ
+      estimate_date_range: Расчетный диапазон дат
+      estimate_deleted_msg: Эта оценка была удалена.
+      estimate_number: Сметное число
+      estimate_number_range: Диапазон оценочных номеров
+      line_total: Итого по строке
+      net_total: Общая сумма
+      no_archived_msg: У вас нет каких-либо архивных оценок.
+      no_deleted_msg: У вас нет удаленных оценок работ.
+      no_estimate_msg: Вы еще не создали никакой оценки работ. Пожалуйста, нажмите на кнопку Новая оценка, чтобы создать.
+      no_invoiced_msg: Вы не выставили счет-фактуру.
+      recover_clients: 'Пожалуйста, восстановите клиентов для оценки работ(ы) с оценкой# %{ids}, чтобы ввести платеж.'
+      saved_and_sent_msg: Оценка была создана и отправлена %{org_name}.
+      saved_draft_msg: Оценка была сохранена как черновик.
+      saved_msg: Ваша оценка была успешно обновлена.
+      select_estimate_date: Выберите дату Оценки работ
+      send_estimate: Отправить оценку
+      send_estimate_instructions: или нажмите кнопку «Переслать оценку» ниже, чтобы отправить оценку тоже.
+      send_this_note_only: Отправить только заметку
+      sent_msg: Оценка успешно отправлена.
+      subtotal: Промежуточный итог
+      this_estimate_was_sent_using: Эта оценка была отправлена с использованием
+      updated_and_draft_msg: Оценка была обновлена и сохранена как черновик
+      updated_and_sent_msg: Оценка была обновлена и отправлена %{org_name}
+      use_last_estimate_to_create: Для создания новой Оценки работ используйте последнюю оценку, отправленную '%{client_name}'.
+    expenses:
+      amount: Количество
+      bulk_action_msg: Расходы успешно %{action}.
+      category: Категория
+      client_hint: Выберите клиента для этого счета
+      edit_expense: Изменить расходы
+      expenses: Расходы
+      listing: Список расходов
+      new_expense: Новый Расход
+      no_archived_expense: У вас нет архивных расходов.
+      no_deleted_expense: У вас нет удаленных расходов.
+      no_record_msg: Вы еще не создали никаких расходов.
+      note: Заметка
+    flash: 
+    help:
+      email_suppoprt: 'Пожалуйста, свяжитесь с нашей службой поддержки по электронной почте '
+      happy_invoicing: Счастливое выставление счетов!
+      help: Помощь
+      help_yourself: Помоги себе, и Небеса тоже помогут тебе. :)
+      never_mind_just_kidding: Ладно, шучу... Мы вернемся с подробной помощью. В настоящее время застряли в некоторых других высокоприоритетных вещах.
+      we_hope_you_donot_need_help: Мы надеемся, что вам не понадобится помощь в использовании этого программного обеспечения.
+    import_data:
+      data_imported_msg: Данные были успешно импортированы.
+      fresh_books: FreshBooks
+      freshbooks:
+        freshbooks_subdomain: Поддомен Freshbooks
+        freshbooks_subdomain_hint: 'Подсказка: xy1234.freshbooks.com'
+        remove_http(s)_from_subdomain: Пожалуйста, удалите http(s) из вашего поддомена freshbooks
+      import_data: Импорт данных
+      quickbooks:
+        create_sandbox_companies_first: Сначала создайте песочницу в Quickbooks
+        unable_to_connect: Невозможно подключить Freshbooks, неверный URL-адрес учетной записи
+    invoice_line_item:
+      description: Описание
+      item: Товар
+      name: Название
+      new: Новая позиция Счета
+      quantity: Количество
+      select_an_item: Выберите товар..
+      tax_1: Налог 1
+      tax_2: Налог 2
+      unit_cost: Цена
+    invoices:
+      10_days: 10 дней
+      add_line_item: Добавить товар
+      all_clients: Все клиенты
+      all_statuses: Все статусы
+      all_types: Все типы
+      amount_due: Сумма долга
+      amount_paid: Оплаченная сумма
+      auto_generated: Автогенерируемая
+      bulk_action_msg: Счета успешно %{action}.
+      bulk_archived_msg: Счета были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Счета были удалены. Вы можете найти их ниже
+      bulk_payment_msg: Платежи в размере ${amount} за <a> N счетов </a> были успешно записаны.
+      cannot_paid: Вы не можете оплатить оплаченные счета.
+      cannot_reduce_total_detail_msg: Если вы ввели платеж по ошибке, вы можете отредактировать его в своей истории платежей.
+      cannot_reduce_total_msg: Вы не можете уменьшить сумму счета ниже оплаченной суммы.
+      client_hint: Клиент, которому вы хотите отправить счет
+      company_hint: Компания для этого счета
+      convert_payment_to_credit: Преобразовать платеж в кредит
+      create_draft_and_send_manully: Создавать черновые счета и отправлять вручную
+      created_and_sent_msg: Счет был создан и отправлен %{org_name}.
+      custom: Свой
+      date_to_use: Дата для использования
+      discount_must_be_less_than_sub_total: Скидка должна быть меньше общей суммы
+      dispute_history: История споров
+      dispute_invoice: Спорный Счет
+      disputed: Спорный
+      disputed_detail_msg: "%{company_name} был уведомлен о споре."
+      disputed_invoice: Клиент оспорил этот счет.
+      disputed_msg: Счет оспаривается.
+      draft: Черновик
+      draft_partial: Частичный черновик
+      draft_partial_tooltip: Платеж получен для счета-черновика.
+      draft_tooltip: Счет создан, но вы не уведомили своего клиента.
+      due: Срок
+      due_date: Срок оплаты
+      due_date_range: Диапазон срока оплаты
+      due_date_should_equal_or_greater: Срок оплаты должен быть равен или больше даты выставления счета
+      enter_payment: Введите платеж
+      enter_payment_on_invoice: Введите платеж по счету
+      enter_valid_discount: Введите правильную скидку
+      enter_valid_item_cost: Введите правильную стоимость товара
+      enter_valid_item_quantity: Введите правильное количество товара
+      every: Каждый
+      handle_associated_payments: Со счетом, который вы пытаетесь удалить, связаны оплаты. Вы должны решить, что делать с платежами, прежде чем счет может быть удален.
+      how_to_handle_invoice_payments: Как обрабатывать Счета?
+      invoice: Счета
+      invoice_amount: Сумма счета
+      invoice_chart: График счетов
+      invoice_date: Дата счета
+      invoice_date_range: Диапазон дат счета
+      invoice_deleted: Этот счет был удален.
+      invoice_number: 'Счет-фактура #'
+      invoice_number_range: Диапазон номеров счетов
+      invoice_numbr: Номер счета
+      invoice_status: Статус счета
+      invoice_type: Тип счета
+      invoiced: Фактурная
+      invoices: Автогенерируемая
+      line_total: Итого по строке
+      make_sure_date_format: Убедитесь, что дата в формате '#{date_format}'.
+      max: Максимум
+      min: Минимум
+      monthly: Ежемесячно
+      net_total: Всего
+      next_issue_date: Дата следующего выпуска
+      no_archived_msg: У вас нет архивных счетов.
+      no_deleted_msg: У вас нет удаленных счета.
+      no_invoice_found: Счета не найдены
+      no_invoice_msg: Вы еще не создали ни одного счета. Пожалуйста, нажмите на кнопку Новый счет, чтобы создать новый счет.
+      no_invoice_selected: Вы не выбрали ни одного счета. Пожалуйста, выберите один или несколько счетов и попробуйте снова.
+      no_unpaid_invoices: Нет неоплаченных счетов.
+      paid: Оплаченные
+      paid_cannot_disputed: Оплаченный счет не может быть оспорен.
+      paid_date: Дата оплпты
+      paid_invoices: Оплаченные счета
+      paid_msg: Счет был успешно оплачен
+      paid_tooltip: Клиент полностью оплатил счет.
+      partial: Частичный
+      partial_tooltip: Клиент произвел частичную оплату по счету.
+      payment_converted_msg: Соответствующие оплаты были конвертированы в кредит клиента.
+      payment_deleted: Соответствующие оплаты были удалены.
+      payment_error_msg: Что-то пошло не так во время оплаты.
+      payment_history: История платежей
+      percentage_must_be_hundred_or_less: Процент должен быть сто или меньше
+      permanently_delete_payment: Навсегда удалить платеж
+      project_invoice_cannot_be_edit: Проекта счета не может быть изменен
+      project_invoice_cannot_updated: Проекта счета не может быть обновлен
+      reason_for_dispute: Введите причину для спора.
+      received_from: Получен от
+      recover_clients: 'Восстановите клиентов для счетов с номером %{ids}, чтобы ввести платеж.'
+      recover_to_view_detail: Пожалуйста, восстановитесь, чтобы просмотреть детали.
+      recurring:
+        auto_generated: Автогенерируемая
+        client_hint: Клиент, которому вы хотите отправить счет
+        company_hint: Компания для этого профиля
+        discount_percentage: Процент скидки
+        first_invoice_date: Дата первого выставления счета
+        frequency: Частота
+        gateway: Шлюз
+        heading: Повторяющиеся профили
+        how_many: Как много
+        how_often: Как часто
+        last_sent: Последняя отправка
+        new: Новый повторяющийся профиль
+        no_record_msg: Вы еще не создали ни одного повторяющегося профиля. Пожалуйста, нажмите на кнопку Создать повторяющийся профиль, чтобы создать новый повторяющийся профиль.
+        no_record_msg_archived: У вас нет ни одного заархивированного повторяющегося профиля.
+        no_record_msg_deleted:  У вас нет ни одного удаленного повторяющегося профиля.
+        occurances: Появления
+        payment_hint: Условия оплаты для этого счета
+        po_number: Номер
+        profile_id: ID профиля
+        prorate: Пропорциональная доля
+        prorate_for: Пропорциональная доля для
+        recurring_profile: Повторяющийся профиль
+        schedule: График
+        start_date: Дата начала
+      recurring_cannot_stopped_msg: Повторяющийся счет не может быть остановлен.
+      recurring_stopped_msg: Счет успешно остановлен.
+      remaining: Остаток
+      response_to_client: Ответ клиенту
+      saved_as_draft_msg: Счет был сохранен как черновик.
+      select_a_client: Выберите клиента
+      select_a_company: Выберите компанию
+      select_a_payment_term: Выберите срок оплаты
+      select_client: Выберите клиента
+      select_currency: Выберите валюту
+      select_invoice_date: Выберите дату счета
+      send_invoice: Отправить счет-фактуру
+      send_invoice_automatically: Отправить счета автоматически
+      send_invoice_instructions: или нажмите кнопку «Отправить повторно» ниже, чтобы повторно отправить счет.
+      send_this_note_only: Отправить только заметку
+      sent: Отправлено
+      sent_msg: Счет успешно отправлен.
+      sent_to: Отправлено
+      sent_tooltip: Счет создан и отправлен вашему клиенту.
+      stop_recurring: Остановить повторение
+      subtotal: Промежуточный итог
+      tax1_and_tax2_should_be_diff: Налог1 и Налог2 должны быть разными
+      term_hint: Условия оплаты для этого счета
+      terms: Условия
+      terms_hint: Условия оплаты для этого счета
+      this_invoice_was_sent_using: Этот счет был отправлен с использованием
+      to_create_use_last_sent_invoice: Для создания нового Счета используйте последний счет, отправленный «%{client_name}».
+      updated_and_draft_msg: Счет был обновлен и сохранен как черновик
+      updated_and_sent_msg: Счет был обновлен и отправлен %{org_name}.
+      viewed: Рассматриваемый
+      viewed_tooltip: Клиент нажал на URL-адрес счета в электронном письме и просмотрел его в браузере.
+      weekly: Еженедельно
+      yearly: Каждый год
+    items:
+      add_new_item: Добавить новый товар
+      all_taxes: Все налоги
+      bulk_action_msg: Элемент(ы) успешно %{action}.
+      bulk_archived: Товар(ы) были заархивированы. Вы можете найти их ниже
+      created_msg: Товар был успешно создан.
+      default_quantity: Количество по умолчанию
+      default_unit_cost: Цена по умолчанию
+      deleted_back_to_active: переместить удаленные товары обратно в активное.
+      description: Описание
+      description_required: Требуется описание
+      duplicate_name: Товар с таким именем уже существует
+      item_description: Описание товара
+      item_name: Имя товара
+      item_unit_cost: Цена товара
+      item_updated: Ваш товар был успешно обновлен.
+      items_deleted_msg: Товара(ы) были удалены. Вы можете найти их ниже
+      make_this_item_available_to: Сделать этот товар доступным для
+      must_be_greater_or_equal_to_zero: Количество не должно быть отрицательным значением
+      must_be_greater_than_zero: Должно быть больше нуля
+      must_be_numeric: Должен быть числом
+      name: Название
+      name_required: Название товара обязательно
+      new: Новый товар
+      no_archived_msg: У вас нет ни одного заархивированного товара.
+      no_deleted_msg: У вас нет ни одного удаленного товара.
+      no_item_msg: Вы еще не создали ни одного товара. Пожалуйста, нажмите на кнопку Новый Товар, чтобы создать новый элемент.
+      quantity: Количество
+      quantity_range: Диапазон количества
+      quantity_required: Количество товара обязательно
+      same_tax_applied: Один и тот же налог не применяется к одному товару
+      section_on_page: Раздел на этой странице.
+      select_atleast_one_company: Выберите хотя бы одну компанию для задачи
+      tax: Налог
+      to_move_action: переместить заархивированные товары обратно в активное.
+      undo_action: Отменить это действие
+      unit_code: Цена товара
+      unit_cost_range: Диапазон стоимости единицы
+    logs:
+      create: Создать журнал
+      create_by: Создано
+      created_msg: Журнал был успешно создан.
+      deleted_msg: Журнал был успешно удален.
+      enter_hours: Введите часы.
+      hours: Часов
+      hours_greated_than_zero: Введите значение часов больше или равно 0.
+      info: Выберите дату из календаря, чтобы ввести время журнала.
+      invoice_created: Счет успешно создан.
+      no_log_exist: Нет журналов для
+      notes: Заметки
+      project: Выберите проект
+      select_project: Выберите проект.
+      select_task: Выберите задачу.
+      task: Выберите задачу
+      time_logs: Время журналы для
+      updated_msg: Журнал был успешно обновлен.
+    pagination:
+      first: ''
+      last: ''
+      next: След.
+      previous: Пред.
+    payment_terms:
+      add_new_payment_term: Добавить новый срок оплаты
+      description: Описание
+      editing: Редактирование условий оплаты
+      new: Новый срок оплаты
+      number_of_days: Количество дней
+    payments:
+      add_description: Добавить описание
+      apply_from_credit: Применить из кредита
+      back_to_invoice: Вернуться к счету
+      bank_transfer: Банковский перевод
+      bulk_action_msg: Платеж(ы) спешно %{action}.
+      bulk_deleted_msg: Платеж(ы) успешно удалены.
+      bulk_payment_failed_msg: 'Платеж(ы) на счет(а) с номерами %{unpaid_ids} не выполнен из-за недостаточного кредитного баланса клиента.'
+      bulk_payment_recorded_msg: 'Платеж(ы) на счет(а) с номерами %{paid_ids} были успешно зарегистрированы.'
+      cannot_edit_msg: Вы не можете редактировать платеж по кредиту.
+      cash: Наличные
+      cheque: Чек
+      connot_edit_paypal_msg: Вы не можете редактировать платеж через PayPal.
+      credit: Кредит
+      credit_exceeded_msg: Оплата с кредита не может превышать доступный кредит.
+      debit: Дебет
+      delete_forever: Удалить навсегда
+      editing_payment: Редактирование оплаты
+      exceeded_payment_amount_msg: Сумма платежа не может превышать остаток на счете.
+      negative_value_not_allowed_msg: Платежи с нулевой или отрицательной суммой не допускаются. Введите значение больше 0.
+      net_due: Чистый срок
+      new: Новый платеж
+      no_invoice_selected: Вы не выбрали ни одного счета. Пожалуйста, выберите один или несколько счетов и попробуйте снова.
+      no_payment_found: Платежи не найдены
+      no_unpaid_invoice: Нет неоплаченных счетов, применить оплату.
+      no_unpaid_invoice_msg: Нет неоплаченных счетов, чтобы ввести платеж.
+      paid_full: Оплачен полностью
+      payfull: Оплатить полностью
+      payment_date: Дата оплаты
+      payment_date_range: Диапазон дат оплаты
+      payment_history: История платежей
+      payments: Оплата
+      payments_entered_against_selected_invoices: Платежи, введенные по выбранным счетам
+      paypal: Paypal
+      saved_msg: Платеж был успешно зарегистрирован.
+      select_one_or_more_invoices_from_the_list_below_to_apply_payment: Выберите один или несколько счетов из списка ниже, чтобы применить платеж.
+      send_payment_notification: Отправить уведомление о платеже
+      total_amount_due_against_selected_invoices: Общая сумма к выбранным счетам
+      updated_msg: Ваш платеж был успешно обновлен.
+      value_greater_than_zero_msg: Введите значение платежа больше 0.
+      which_invoices_have_you_received_payment_for: За какие счета вы получили оплату
+    projects:
+      add_staff: Добавить сотрудника
+      add_task: Добавить задачу
+      add_team: Добавить члена команды
+      all_managers: Все менеджеры
+      billing_method_hint: Почасовые ставки могут быть изменены на вкладке вашего персонала путем редактирования профилей команды.
+      bulk_action_msg: Проект(ы) успешно %{action}.
+      bulk_archived_msg: Проект(ы) были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Проект(ы) были удалены. Вы можете найти их ниже
+      created_date_range: Созданный диапазон дат
+      created_msg: Проект был успешно создан.
+      destroyed_msg: Проект был успешно удален.
+      duplicate_name: Проект с таким именем уже существует
+      estimate_should_be_greater_than_zero: Оценка времени должна быть равна или больше нуля
+      estimated_time: Расчетное время
+      manager_hint: Менеджер проектов может создавать счета, просматривать табели команд и редактировать детали проекта.
+      managers: Менеджеры
+      name_required: Название проекта обязательно
+      no_archived_msg: У вас нет ни одного заархивированного проекта.
+      no_deleted_msg: У вас нет ни одного удаленного проекта.
+      no_project_msg: Вы еще не создали ни одного проекта. Пожалуйста, нажмите на кнопку «Новый проект», чтобы создать новый проект.
+      project_description: Описание Проекта
+      project_detail: Детали проекта
+      project_time_log_tooltip: Зарегистрированное время будет автоматически рассчитываться на основе затраченного времени задачи проекта.
+      select_a_client: Выберите клиента
+      select_a_manager: Выберите менеджера
+      select_a_member: Выберите участника...
+      select_a_task: Выберите задачу...
+      staff_required_msg: Пожалуйста, сначала создайте сотрудника, чтобы создать проект.
+      time_estimate_hint: Оценка времени проекта поможет вам отслеживать прогресс по сравнению с прогнозами.
+      time_logged: Время зарегистрировано
+      to_move_archive: переместить архивные проекты обратно в активные.
+      to_move_deleted: переместить удаленные проекты обратно в активные.
+      total_hours: Все часы
+      updated_msg: Проект был успешно обновлен.
+    reports:
+      aged_accounts_receivable: Расчеты с клиентом
+      aged_accounts_receivable_dtl: В этом отчете показана сводная сумма неоплаченных и / или частично оплаченных счетов по каждому клиенту.
+      client_total_ar: Общий долг
+      date_range: Диапазон дат
+      days_0_30: 0-30 дней
+      days_31_60: 31-60 дней
+      days_61_90: 61-90 дней
+      days_above_90: 90+ дней
+      export_to: Экспортировать в
+      invoice_detail: Отчет о счете
+      invoice_detail_dtl: Этот отчет показывает подробные счета для каждого клиента.
+      item_sales: Продажи товаров
+      net_total: Всего
+      payments_collected: Оплаты
+      payments_collected_dtl: Этот отчет показывает историю всех платежей, выполненных для каждого счета, выбираемого клиентом и датой.
+      period_ending: Окончание периода
+      print_report: Распечатать отчет
+      report_no_data: Данные не найдены по выбранным критериям. Пожалуйста, измените критерии и попробуйте снова.
+      reports: Отчеты
+      revenue_by_client: Доход по клиенту
+      to: По
+      total_amount: Итого
+      total_discount: Общая скидка
+      total_qty_sold: Всего кол-во продано
+    sessions:
+      done: Готово
+      forgot_password: Забыли пароль?
+      keep_me_signed_in: Запомни меня
+      powered_by: powered by
+      sign_in: Войти
+      sign_up: Регистрация
+      submit: Отправить
+    settings:
+      card: Блок
+      card_view: Просмотр карточками
+      currency_updated_msg_html: Валюта была успешно обновлена до <strong>%{unit}</strong> .
+      date_format: Формат даты
+      default_currency: Валюта по умолчанию
+      import_data: Импорт данных
+      language: Язык
+      listing_format: Формат списка
+      multi_currency: Много валют
+      records_per_page: Записей на странице
+      settings: Настройки
+      side_nav_open: Навигация открыта
+      table: Список
+      table_view: Табличное представление
+      updated_msg: Настройки успешно обновлены.
+    staffs:
+      add_new_staff: Добавить нового сотрудника
+      bulk_action_msg: Сотрудник(и) успешно %{action}.
+      bulk_archived_msg: Сотрудники были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Сотрудники были удалены. Вы можете найти их ниже
+      created_msg: Сотрудник был успешно создан.
+      destroyed_msg: Сотрудник был успешно удален.
+      duplicate_name: Сотрудник с таким же адресом электронной почты уже существует.
+      edit_staff: Редактировать сотрудника
+      email: Эл. адрес
+      empty_listing: Сотрудник еще не добавлен
+      enter_email: Введите адрес электронной почты для сотрудника.
+      enter_name: Введите имя для сотрудника.
+      enter_rate: Введите ставку в час для сотрудника.
+      enter_valid_email: Введите действительный адрес электронной почты для сотрудника.
+      make_this_staff_available_to: Сделать этого сотрудника доступным для
+      move_archived_to_active: переместить архивных сотрудников обратно в активное состояние.
+      move_deleted_to_active: переместить удаленных сотрудников обратно в активное состояние.
+      name: Имя сотрудника
+      new: Новый сотрудник
+      no_archived_msg: У вас нет ни одного архивного сотрудника.
+      no_deleted_msg: У вас нет ни одного удаленного сотрудника.
+      no_staff_msg: Вы еще не создали ни одного сотрудника. Пожалуйста, нажмите на кнопку Новый сотрудник, чтобы создать новового.
+      password: Пароль
+      password_confirmation: Подтвердите Пароль
+      rate: Стоимость в час
+      rate_must_be_positive: Введите положительное значение ставки в час для персонала.
+      select_company: Выберите хотя бы одну компанию для сотрудника.
+      updated_msg: Сотрудник был успешно обновлен.
+      username: Имя пользователя
+    tasks:
+      add_new_task: Добавить новую задачу
+      atleast_one_company_selected: Выберите хотя бы одну компанию для задачи
+      billable: Счет клиенту
+      bulk_action_msg: Задача(и) успешно %{action}.
+      bulk_archived_msg: Задачи были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Задачи были удалены. Вы можете найти их ниже
+      created_msg: Задача была успешно создана.
+      day: День
+      description: Описание
+      destroyed_msg: Задача была успешно удалена.
+      due_date_should_equal_or_greater: Дата окончания должна быть равна или больше даты начала
+      duplicate_name: Задача с таким именем уже существует
+      edit_task: Изменить задачу
+      enter_hours: Введите часы для задачи
+      enter_name: Введите название для задачи
+      enter_positive_hour: Введите положительное значение часа для задачи
+      enter_positive_rate: Введите положительное значение ставки для задачи
+      enter_positive_spent_time: Введите положительное значение ставки в час для задачи
+      enter_rate: Введите ставку в час для задачи
+      enter_spent_time: Введите потраченное время на задачи
+      hours: часов
+      make_this_task_available_to: Сделать эту задачу доступной для
+      month: Месяц
+      name: Название задачи
+      new: Новая задача
+      rate: Ставка в час
+      rate_: Ставка
+      rate_range: Диапазон тарифов
+      select_due_date: Введите срок выполнения задачи
+      select_start_date: Выберите дату начала для задачи
+      spent_time: Потраченное время
+      task_detail: Информация о задаче
+      to_move_archived: перевести заархивированные расходы обратно в активные.
+      to_move_deleted: перевести удаленные расходы обратно в активные.
+      updated_msg: Задача была успешно обновлена.
+      week: Неделя
+    taxes:
+      add_new_tax: Добавить новый налог
+      bulk_action_msg: Налог(и) успешно %{action}.
+      bulk_archived: Налог(и) были заархивированы. Вы можете найти их ниже
+      bulk_deleted_msg: Налог(и) были удалены. Вы можете найти их ниже
+      created_msg: Налог был успешно создан.
+      duplicate_name: Налог с таким названием уже существует
+      enter_name: Введите название налога
+      enter_percentage: Введите процент налога
+      greater_than_zero: Процент должен быть больше нуля
+      less_than_hundred: Процент должен быть сто или меньше
+      new: Новый налог
+      percentage_must_be_numeric: Процент должен быть числовым значением
+      percentage_range: Процентный диапазон
+      select_a_tax: Выберите налог...
+      tax_name: Название налога
+      taxes: Налоги
+      to_move_deleted_tax: переместить удаленные налоги обратно в активное состояние.
+      to_unarchived_tax: перевести заархивированные налоги обратно в активное состояние.
+      updated_msg: Налог был успешно обновлен.
+    users:
+      admin: Администратор
+      all_roles: Все роли
+      assign_role: Назначить роль
+      avatar: Аватар
+      bulk_delete: Пользователь был успешно удален.
+      cannot_delete_current_user: Текущий зарегистрированный пользователь не может быть удален.
+      confirmation: Подтверждение
+      duplicate_email: Пользователь с таким же адресом электронной почты уже существует.
+      email_invalid: Email недействителен.
+      email_required: Требуется электронная почта.
+      full_name: ФИО
+      full_name_required: Требуется полное имя
+      manager: Менеджер
+      new: Новый пользователь
+      notify_user: Уведомить пользователя
+      pass_and_confirm_pass_should_same: Пароль и подтверждение должны совпадать.
+      pass_confirmation_required: Требуется подтверждение пароля.
+      pass_must_have_8_char: Длина пароля должна быть больше или равна 8.
+      password: Пароль
+      password_required: Необходим пароль.
+      profile: Профиль
+      roles: Роли
+      saved_msg: Пользователь был успешно сохранен.
+      staff: Сотрудники
+      unable_to_save: Не удалось сохранить пользователя. Убедитесь, что вы ввели правильную запись.
+      updated_msg: Пользователь был успешно обновлен.
+      updated_password_msg: Пароль был успешно обновлен.
+      users: Пользователи

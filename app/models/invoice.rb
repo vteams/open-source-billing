@@ -63,6 +63,7 @@ class Invoice < ActiveRecord::Base
 
   accepts_nested_attributes_for :invoice_line_items, :reject_if => proc { |line_item| line_item['item_id'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :recurring_schedule,  :allow_destroy => true
+  accepts_nested_attributes_for :client
 
   # validation
 
@@ -70,6 +71,7 @@ class Invoice < ActiveRecord::Base
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
+  before_save :update_invoice_total
 
   # archive and delete
   acts_as_archival
@@ -248,8 +250,14 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def notify(current_user, id = nil)
-    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user)
+  def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
+    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
+    notify(current_user, self.id, invoice_pdf_file)
+  end
+
+  def notify(current_user, id = nil, invoice_pdf_file = nil)
+    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
   end
 
   def send_invoice current_user, id
@@ -519,4 +527,24 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def applyDiscount(line_items_total_with_taxes)
+    discount_type = self.discount_type
+    discount_value = self.discount_percentage.to_f
+    discounted_amount = if discount_value.eql?(0.0)
+                          0.0
+                        else
+                          discount_type.eql?('%') ? (line_items_total_with_taxes * (discount_value.to_f / 100.0)).round(2) : discount_value
+                        end
+    discounted_amount
+  end
+
+  def update_invoice_total
+    line_items_total_with_taxes = self.invoice_line_items.to_a.sum(&:item_total_amount).to_f
+    discounted_amount = applyDiscount(line_items_total_with_taxes)
+    subtotal = line_items_total_with_taxes - discounted_amount
+    invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
+    additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
+    self.sub_total = line_items_total_with_taxes
+    self.invoice_total = (subtotal + additional_invoice_tax).round(2)
+  end
 end

@@ -43,9 +43,9 @@ class @Client
         applyQtip(jQuery("#client_mobile_number"), I18n.t("views.clients.invalid_mobile_number"), 'topRight')
         flag = false
       else if association_name == undefined
-        applyPopover($("input[name=association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
+        applyPopover($("label[for='company_association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
-        applyPopover($("input[name=association]"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
+        applyPopover($("label[for='company_association']"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
         flag = false
       else
         flag = true

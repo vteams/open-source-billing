@@ -13,10 +13,10 @@
     <th width="15%"><%= t('views.items.item_name') %></th>
     <th width="15%" class="center-align"><%= t('views.invoices.invoice_number') %></th>
     <th width="13%"><%= t('client') %></th>
-    <th width="12%" class="right-align"><%= t('views.reports.total_qty_sold') %></th>
-    <th width="15%" class="right-align {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
-    <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
-    <th width="15%" class="right-align {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
+    <th width="12%" class="align-right"><%= t('views.reports.total_qty_sold') %></th>
+    <th width="15%" class="align-right {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
+    <th width="15%" class="align-right {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
+    <th width="15%" class="align-right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
   </tr>
   </thead>
   <tbody>
@@ -35,18 +35,18 @@
             <td class="<%= 'bottom-bordered' if index == items.count - 1 %>">
               <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true) %>
             </td>
-            <td class="right-align<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
+            <td class="align-right<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
               <%= item.attributes["item_quantity"].to_i %>
             </td>
-            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"]}  %>">
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"].to_f}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["total_amount"],unit: '') %>
             </td>
-            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"]}  %>" >
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"].to_f}  %>" >
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["discount_amount"],unit: '') %>
             </td>
-            <td class="right-align currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"]}  %>">
+            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
               <%= item.attributes["currency_code"] %>
               <%= number_to_currency(item.attributes["net_total"],unit: '') %>
             </td>
@@ -57,7 +57,7 @@
         <tr>
           <td><strong><%= t("views.common.total") %></strong></td>
 
-          <td colspan="4" class="right-align currency ">
+          <td colspan="4" class="align-right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
@@ -67,7 +67,7 @@
               </span>
             <% end %>
           </td>
-          <td class="right-align currency ">
+          <td class="align-right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
@@ -77,7 +77,7 @@
               </span>
             <% end %>
           </td>
-          <td class="right-align currency ">
+          <td class="align-right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>

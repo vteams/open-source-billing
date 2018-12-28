@@ -1231,7 +1231,7 @@ h6 {
   border-radius: 50px 0 0 50px;
   line-height: 23px;
   color: white;
-  font-size: 10px;
+  font-size: 11px;
   z-index: 9999;
   opacity: 0; }
 
@@ -1307,7 +1307,7 @@ h6 {
   margin-bottom: 20px;
   font-family: 'Arial','Helvetica',sans-serif;
   position: relative;
-  cursor: default;
+  cursor: pointer;
   word-wrap: break-word;
 }
 .card-white-panel .invoice-name {
@@ -2364,7 +2364,17 @@ h6 {
   height: 20px;
   min-width: 136px;
   margin-bottom: 20px;
-  padding: 2px 10px; }
+  padding: 3px 10px;
+  color: #fff;}
+.top-align{
+  padding-top: 5px !important;}
+.right-align{
+  float: right;}
+.add-new-contact-btn{
+  background-color: #09b8e2 !important;
+  color: #fff !important;
+  border-color: #09b8e2 !important;
+  float: right;}
 .editClient .btn.moreBtn:hover {
   background-color: #09b8e2;
   color: #fff;
@@ -2484,9 +2494,6 @@ h6 {
   height: 100%; }
 #main .container-fluid {
   height: calc(100% - 30px); }
-//#main #main-content {
-//  height: 100%; }
-
 @media only screen and (max-width: 767px) {
   .report-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content, .full-page #header .header-center .hdr-select-holder .select-wrapper .dropdown-content {
     top: 54px !important; }
@@ -3800,17 +3807,25 @@ html {
   padding: 0 15px;
   margin-right: 8px;
   font-size: 16px; }
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button,
 .new-invoice-holder .new-invoice-header .new-invoice-action-btn a {
+  background: none;
+  border: none;
   color: #b5b5b5;
   margin-left: 12px;
   line-height: 36px;
   position: relative;
   top: 11px; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a i {
-  font-size: 18px; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:first-child {
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button i,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a i{
+  font-size: 18px;
+  margin-right: -8px;
+}
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button:first-child,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:first-child{
   margin-left: 0; }
-.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:hover {
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn button:hover,
+.new-invoice-holder .new-invoice-header .new-invoice-action-btn a:hover{
   color: #09b8e2; }
 .new-invoice-holder .new-invoice-header .new-invoice-action-btn a.invoice-check i {
   font-size: 20px; }
@@ -3860,7 +3875,6 @@ html {
   text-transform: capitalize; }
 .new-invoice-holder .info-section .info-left-section span {
   font-size: 11px;
-  display: inline-block;
   text-transform: uppercase;
   line-height: 11px; }
 .new-invoice-holder .info-section .info-left-section span small {
@@ -4723,29 +4737,10 @@ li:nth-child(7n) .random-colors {
     padding-left: 0 !important;
   }
   table.responsive-table.bordered th{
-//    border-bottom: 0;
-//    border-left: 0;
     padding-right: 21px;
     text-align: left;
-//    color: #fff;
-//    background-color: #ececec;
-//    font-size: 13px;
-//    font-family: Helvetica, sans-serif;
-//    font-weight: 300;
     width: auto;
   }
-//  .new-invoice-holder .new-invoice-table-holder{
-//    padding: 0;
-//  }
-//  .new-invoice-holder .new-invoice-table-holder.main-invoice{
-//    background: #ececec;
-//  }
-//  .new-invoice-holder .new-invoice-table-holder.main-invoice table thead th:first-child{
-//    background-color: #ececec;
-//  }
-//  .new-invoice-holder .new-invoice-table-holder{
-//    padding: 0;
-//  }
   .modal .modal-header .modal-action-btn{
     text-align: right;
   }
@@ -4963,21 +4958,9 @@ input[type=text]{
 .modal-body.modal-body-balance {
   padding: 20px 34px !important;
 }
-//.modal-body.modal-body-balance  .input-field .row .col{
-//  padding: 0;
-//}
-//.modal-body.modal-body-balance .input-field.col{
-//  padding: 0;
-//}
 .remove-padding{
   padding: 0 !important;
 }
-//.modal-body.modal-body-balance .input-field.col label{
-//  left: 0
-//}
-//.modal-body.modal-body-balance .input-field .row .col.s6{
-//  width: 100%;
-//}
 @media (max-width: 480px) {
   .modal-body.modal-body-balance .input-field label {
     font-size: 0.8rem;
@@ -5042,3 +5025,107 @@ input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !imp
   }
 }
 .task_form textarea.materialize-textarea { padding: 0; }
+.clients-notes-alignment{
+  padding: 0 10px 0px !important;
+}
+
+span.label-font{
+  font-size: 11px;
+  text-transform: uppercase;
+  line-height: 11px;
+  color: #9e9e9e !important;
+}
+
+.invoice-form.form-invoice .info-right-section span.invoice_due_date{
+  width: 61.5% !important;
+  display: block !important;
+}
+
+#toast-container {
+
+  .toast.toast-error, .toast.toast-success {
+    position: absolute !important;
+    left: 50% !important;
+    top: 40% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 40% !important;
+    height: 50% !important;
+    top: -25px !important;
+  }
+  .toast.toast-success {background-color: #05a4d8;}
+  .toast.toast-error {background-color: #f06313;}
+  button.toast-close-button{
+    line-height: 16px;
+    width: 18px;
+    font-size: 20px !important;
+    margin-top: 1px;
+    margin-right: 2px;
+    position:absolute;
+    top:0;
+    right:0;
+  }
+}
+
+.swal-modal{
+  background-color: #05a4d8;
+  box-shadow: 9px 5px 5px 0px #535353;
+}
+.swal-icon--success:after, .swal-icon--success:before{
+  background: transparent;
+}
+.swal-icon--success__hide-corners{
+  background: transparent;
+}
+.swal-title{
+  color: #fff;
+  font-size: 29px;
+}
+
+.swal-text{
+  color: #fff;
+  font-size: 14px;
+}
+
+.swal-icon--success__line{
+  background-color: #05a4d8;
+  height: 10px;
+}
+
+.swal-icon--success{
+  border-color: #fff;
+}
+
+.swal-icon--success__ring{
+  background-color: #fff;
+  z-index: 0;
+}
+
+
+.swal-icon--error{
+  border-color: #fff;
+}
+
+.swal-icon--error__line{
+  background-color: #f06313;
+  height: 10px;
+}
+
+.swal-icon.swal-icon--error{
+  background-color: #fff;
+}
+
+.align_right{
+  text-align: right !important;
+}
+.disabled{
+  pointer-events: none;
+}
+.select-wrapper span.caret{
+  right: -9px;
+}
+.bg-img {
+  background-image: url(/assets/bg_img.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

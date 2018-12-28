@@ -12,9 +12,6 @@ class ProjectTasksController < ApplicationController
     @project_task = @project.project_tasks.new(project_task_params)
     if @project_task.save
       @project_task.create_time_log(current_user)
-      redirect_to project_path(@project), notice: 'Task was successfully created.'
-    else
-      redirect_to project_path(@project), alert: 'Task was not successfully created.'
     end
   end
 
@@ -22,9 +19,6 @@ class ProjectTasksController < ApplicationController
     params[:project_task][:spent_time] = 0.0 if params[:project_task][:spent_time].to_f <= 0.0
     if @project_task.update(project_task_params)
       @project_task.update_time_log(current_user)
-      redirect_to project_path(@project), notice: 'Task was successfully updated.'
-    else
-      redirect_to project_path(@project), alert: 'Task was not successfully updated.'
     end
   end
   

@@ -44,7 +44,7 @@ class EstimateMailer < ActionMailer::Base
         'client_contact'=> (estimate.client.first_name rescue 'ERROR'),
         'currency_symbol' => (estimate.currency_symbol  rescue 'ERROR'),
         'estimate_total' => (estimate.estimate_total.to_s  rescue 'ERROR'),
-        'estimate_url' => "#{Account.url(estimate.try(:account_id))}/estimates/preview?inv_id=#{estimate.encrypted_id}",
+        'estimate_url' => "#{Account.url(estimate.try(:account_id))}/#{I18n.locale}/estimates/preview?inv_id=#{estimate.encrypted_id}",
         'dispute_response' => (@@response_to_client  rescue 'ERROR'),
         'user_organization_name' => (user.accounts.first.org_name rescue 'ERROR'),
         'reason' =>  (@@reason_by_client  rescue 'ERROR'),

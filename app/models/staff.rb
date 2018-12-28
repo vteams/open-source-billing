@@ -37,7 +37,7 @@ class Staff < ActiveRecord::Base
   end
 
   def self.is_exists? staff_eamil, association = nil
-    association.present? ? association.staffs.where(:email => staff_eamil).present? : where(:email => staff_eamil).present?
+    association.present? ? association.staffs.with_deleted.where(:email => staff_eamil).present? : with_deleted.where(:email => staff_eamil).present?
   end
 
   def self.get_staffs(params)

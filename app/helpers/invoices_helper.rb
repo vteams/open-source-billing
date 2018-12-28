@@ -23,7 +23,7 @@ module InvoicesHelper
   def new_invoice id, is_draft
     message = is_draft ? t('views.invoices.saved_as_draft_msg') : t('views.invoices.created_and_sent_msg', org_name: @invoice.client.organization_name)
     notice = <<-HTML
-       <p>#{message}.</p>
+       <p>#{message}</p>
     HTML
     notice.html_safe
   end

@@ -1,0 +1,924 @@
+---
+es:
+  amount: Cantidad
+  currency_code: Dólar estadounidense
+  currency_unit: PS
+  current: Corriente
+
+  client: Cliente
+  clients: Clientes
+  company: Empresa
+  invoice: "Factura"
+  invoices: "Facturas"
+  project: "Proyecto"
+  projects: "Projectos"
+  project_name: "Nombre del proyecto"
+  payment: "Pago"
+  manager: "Gerente"
+  item: "Item"
+  report: "Reporte"
+  amount: "Total"
+  current: "Current"
+  past: "Anterior"
+  edit: "Editar"
+  estimate: "Estimado"
+  email_template: "Plantilla de correo electrónico"
+  user: "Usuario"
+  task: "Tarea"
+  tax: "Impuesto"
+  staff: "Personal"
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%{SHORT_DATE}"
+  edit: Editar
+  email_template: Plantilla de correo electrónico
+  estimate: Estimado
+  header:
+    links:
+      api_docs: Documentación de la API
+      applications: Aplicaciones
+      clients:
+        clients: clientes
+        listing: Listado de Clientes
+        new: Cliente nuevo
+        sent_emails: Correos electrónicos enviados
+      dashboard: Panel
+      estimates:
+        estimates: Estimados
+        listing: Lista estimada
+        new: Nueva estimación
+      expenses:
+        expenses: Gastos
+        listing: Listado de Gastos
+        new: Nuevo gasto
+      help: Ayuda
+      invoices:
+        invoices: Facturas
+        listing: Listado de Facturas
+        new: Nueva factura
+        recurring: Periódico #dude
+      items:
+        items: Artículos
+        listing: Lista de artículos
+        new: Nuevo artículo
+        taxes: Impuestos
+      logout: Cerrar sesión
+      payments:
+        listing: Lista de pagos
+        new: Nuevo pago
+        payments: Pagos
+      projects:
+        listing: Lista de proyectos
+        new: Nuevo proyecto
+      reports:
+        aged_account_receivable: Cuenta por cobrar vencida
+        invoice_detail: Detalle de la factura
+        item_sales: Ventas de artículos
+        payment_collected: Pagos recogidos
+        reports: Informes
+        revenue_by_client: Ingresos por cliente
+      search: Buscar
+      setting:
+        basic_settings: Ajustes básicos
+        companies: Compañías
+        email_templates: Plantillas de correo electrónico
+        pricing_plans: Planes y precios
+        setting: Ajuste
+        stripe_page: Aceptar tarjetas de crédito #dude
+        users: Usuarios
+      staffs:
+        Staffs: Personal
+        listing: Lista de personal
+        new: Personal nuevo
+      tasks:
+        new: Nueva tarea
+      time_tracking:
+        invoice: Generar factura
+        project: Proyectos
+        staff: Personal
+        task: Tareas
+        time_sheet: Hoja de horas #dude
+        time_tracking: Seguimiento del tiempo
+  helpers:
+    actions: Comportamiento
+    links:
+      add: Añadir
+      close: Cerrar
+      delete: Borrar
+      edit: Editar
+      recover: Recuperar
+      remove: retirar
+    messages:
+      confirm: "¿Estás seguro?"
+      how_many: "¿Cuántos?" #dude
+      how_ofter: "¿Con qué frecuencia?"
+      not_be_recoverable: Es posible que no pueda revertir esta acción.
+      unable_to_delete: No se puede eliminar esta entidad.
+    page_entries_info:
+      more_pages:
+        display_entries: Mostrando %{entry_name} <strong> %{first}-%{last} </strong> de <strong> %{total} </strong>
+      one_page:
+        display_entries: Mostrando <strong> todos los %{count} </strong> %{entry_name}.
+    titles:
+      edit: Editar %{model}
+      new: Nuevo %{model}
+  invoice: Factura
+  invoices: Facturas
+  item: Item
+  manager: Gerente
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%Naciones Unidas"
+        precision: 2
+        separator: "."
+  past: Pasado
+  payment: Pago
+  project: Proyecto
+  project_name: Nombre del proyecto
+  projects: Proyectos
+  report: Informe
+  staff: Personal
+  task: Tarea
+  tax: Impuesto
+  user: Usuario
+  views:
+    accounts:
+      account: Cuenta
+      admin_billing_rate_per_hour: Tasa de facturación del administrador por hora
+      admin_email: Correo electrónico de administrador
+      admin_first_name: Nombre del administrador
+      admin_last_name: apellido del administrador
+      admin_password: Contraseña de administrador
+      admin_username: Nombre de usuario administrador
+      auto_dst_adjustment: Ajuste auto dst
+      currency_code: Código de moneda
+      currency_symbol: Símbolo de moneda
+      org_name: Nombre de la organización
+      phone_business: Teléfono
+      phone_mobile: Celular
+      profession: Profesión
+    clients:
+      active_clients_tooltip: Estos son pagos cobrados por mes de clientes activos.
+      add_new_client: Agregar nuevo cliente
+      add_new_contact: Añadir nuevo contacto
+      additional_contacts: Contactos adicionales
+      archived_clients_tooltip: Estos son pagos cobrados por mes de clientes archivados.
+      atleast_one_company_required: Seleccione al menos una empresa
+      available_credit: crédito disponible
+      available_credit_detail: Este crédito puede ser aplicado a la factura de este cliente.
+      bulk_action_msg: Los clientes son %{action} con éxito.
+      bulk_archived_msg: cliente (s) han sido archivados Puedes encontrarlos bajo
+      bulk_deleted_msg: Cliente (s) ha sido eliminado. Puedes encontrarlos bajo
+      business_phone: Teléfono de negocios
+      client: Cliente
+      client_id: Identificación del cliente
+      client_name: nombre del cliente
+      clients: Clientes
+      company_size: Tamaño de la empresa #dude
+      contact: Contacto
+      contact_name: Nombre de contacto
+      contact_title: Titulo de contacto
+      created_msg: El cliente ha sido creado con éxito.
+      date: Fecha
+      deleted_clients_tooltip: Estos son pagos cobrados por mes de clientes eliminados.
+      duplicate_email: Ya existe un cliente con el mismo correo
+      email_required: el correo electronico es requerido
+      first_name: Nombre de pila
+      first_or_last_name_required: nombre o apellido son requeridos
+      industry: Industria
+      internal_notes: Notas internas
+      invalid_business_phone: Número de teléfono comercial no válido
+      invalid_email: correo electrónico inválido
+      invalid_mobile_number: Numero de celular invalido
+      last_name: Apellido
+      listing_sent_emails: Listado de correos electrónicos enviados
+      make_available_to: Haga que este cliente esté disponible para
+      new_client: Cliente nuevo
+      no_archived_client: No tienes ningún cliente archivado.
+      no_deleted_client: No tienes ningún cliente eliminado.
+      no_record_msg: Aún no has creado ningún cliente. Haga clic en el botón Nuevo cliente para crear uno nuevo.
+      no_sent_emails: No hay correos electrónicos enviados.
+      org_name_required: El nombre de la organización es obligatorio
+      organization: Organización
+      organization_name: Nombre de la Organización
+      outstanding_amount: Cantidad Sobresaliente
+      recipient: Recipiente
+      remove_this_contact: Eliminar este contacto
+      select_an_industry: Seleccione una industria ...
+      select_company_size: Seleccione el tamaño de la empresa ...
+      subject: Tema
+      total_amount_billed: Importe total facturado
+      total_payments_received: Total pagos recibidos
+      type: Tipo
+      updated_msg: El cliente fue actualizado con éxito.
+    common:
+      active: Activo
+      activities: Ocupaciones
+      add_new: Añadir nuevo
+      add_notes: Añadir notas
+      address: Dirección
+      all: Todos
+      all_clients: Todos los clientes
+      all_companies: Todas las empresas
+      and: 'Y'
+      archive: Archivo
+      archived: Archivado
+      as_for: A partir de
+      available: disponible
+      back: Atras
+      between: Entre
+      cancel: Cancelar
+      city: Ciudad
+      click_to_expand: haga clic para ampliar
+      convert_to_invoice: Convertir a factura
+      country: País
+      csv: CSV
+      currency: Moneda
+      date: Fecha
+      delete: Borrar
+      delete_archived: Eliminar archivado #dude
+      deleted: Eliminado
+      demo_restriction_msg: Esta función no está disponible en la versión demo.
+      description: Descripción
+      destroy: Destruir
+      details: Detalles
+      discount: Descuento
+      dispute: Disputa
+      email: correo electrónico
+      enter_positive_value: Por favor, introduzca sólo el valor positivo para este campo.
+      excel: Excel
+      'false': 'No'
+      fax: Fax
+      go: Ir
+      hide_filters: Ocultar filtros
+      industry: Industria
+      infinite: infinito
+      invoice_type: Tipo de factura
+      item: Item
+      less: Menos
+      method: Método
+      mobile: Celular
+      month: Mes
+      more: Más
+      name: Nombre
+      note: Nota
+      notes: Notas
+      pdf: PDF
+      percentage: Porcentaje
+      phone: Teléfono
+      please_select: Por favor seleccione
+      postal: Postal
+      print: Impresión
+      province: Provincia
+      qty: Cantidad
+      quarter: Trimestre
+      received: Recibido
+      recover: Recuperar
+      recover_archived: Recuperar archivado
+      recover_deleted: Recuperar eliminado
+      recurring: Periódico
+      remaining: Restante
+      reset: Reiniciar
+      save: Salvar
+      save_and_add_more: Guardar y agregar más
+      save_as_draft: Guardar como borrador
+      select: Seleccionar
+      select_a_country: Seleccione un país...
+      select_default_currency: Seleccione la moneda por defecto ...
+      select_estimate_currency: Seleccione el tipo de moneda...
+      select_invoice_currency: Seleccione el tipo de moneda...
+      select_item: Seleccione un artículo
+      select_recurring_profile_currency: Seleccione el tipo de moneda...
+      selected: Seleccionado
+      selected_companies_only: Solo empresas seleccionadas
+      send: Enviar
+      send_to_archive: Enviar archivo
+      show: Mostrar
+      show_filters: Mostrar filtros
+      start_date_to_end_date: Fecha de inicio Fecha de término
+      state: Estado
+      status: Estado
+      street: Calle
+      street_address: Dirección
+      tax: Impuesto
+      terms: Condiciones
+      time_zone: Zona horaria
+      title: Título
+      total: Total
+      'true': Sí
+      type: Tipo
+      unit_cost: Costo unitario
+      year: Año
+      zip_code: Código postal
+    companies:
+      branding: Marca
+      browse: Vistazo #dude
+      bulk_action_msg: Las empresas son %{action} con éxito.
+      bulk_archived: Se han archivado las empresas. Puedes encontrarlos bajo #dude
+      bulk_deleted_msg: Se han eliminado las empresas. Puedes encontrarlos bajo #dude
+      changes_discarded_msg: Sus cambios serán descartados por la empresa de conmutación. ¿Seguro que quieres cambiar de empresa?
+      companies: Compañías
+      create_msg: La empresa ha sido creada con éxito.
+      current_company_action: Lo sentimos, la empresa actual no puede ser %{action}.
+      deleted_msg: La empresa ha sido eliminada con éxito.
+      email_invalid: El correo electrónico es invalido.
+      field_requied: Este campo es requerido.
+      logo: Logo
+      memo: Memorando
+      move_archived_to_active: para mover las empresas archivadas de nuevo a activas.
+      move_deleted_to_active: para mover las empresas eliminadas de nuevo a activo.
+      name: Nombre de empresa
+      new: Nueva empresa
+      no_archived_msg: No tienes ninguna empresa archivada.
+      no_deleted_msg: No tienes ninguna empresa eliminada.
+      no_record_msg: Aún no has creado ninguna empresa. Haga clic en el botón Nueva empresa para crear un nuevo.
+      set_your_logo: Establece tu logo #dude
+      tag_line: Etiqueta de la empresa
+      updated_msg: Su empresa ha sido actualizada con éxito.
+    credit_card:
+      card_holder_name: Nombre del titular de la tarjeta
+      cc_number: Número de la  tarjeta
+      cc_prompt: Por favor ingrese los datos de su tarjeta de crédito para pagar la factura
+      expiry_date: Fecha de caducidad
+      pay_by_credit_card: Pagar factura con tarjeta de crédito
+      pay_by_paypal: Pagar con PayPal
+      pay_invoice: Factura de pago
+      privacy: No almacenamos la información de su tarjeta de crédito.
+      verification_code: Código de verificación
+    dashboard:
+      aged_ar: AR vencido
+      amount: Cantidad
+      amount_billed: Cantidad cobrada
+      amount_billed_detail: Suma del total de facturas que ha enviado a clientes hasta el momento.
+      apply_payment_detail: Seleccione una o más facturas de la lista a continuación para aplicar el pago.
+      days_old: dias de retraso #dude
+      due_date: Fecha de vencimiento
+      enter_payment: Introducir pago
+      no_current_invoices: No hay facturas actuales.
+      no_previous_invoices: No hay facturas anteriores.
+      received_payment_detail: "¿Qué facturas ha recibido el pago?"
+      recent_activity: Actividad reciente
+      selected_amount_detail: No has seleccionado ninguna factura. Por favor seleccione una o más facturas y vuelva a intentarlo.
+      total_outstanding: Total Sobresaliente
+      total_outstanding_detail: Cantidad total que los clientes le deben
+      view_chart_detail: haga clic en una barra para ver los detalles
+      ytd_income: Ingresos YTD
+      ytd_income_detail: Monto total recibido contra facturas enviadas durante este año.
+    email_templates:
+      body: Cuerpo
+      boy_required: Se requiere mensaje. #dude
+      custom_fields: Campos Personalizados
+      days_of_due_date: Días de vencimiento
+      email_from: correo electrónico de
+      email_templates: Plantillas de correo electrónico
+      from_email_required: De correo electrónico es necesario.
+      new: Nueva plantilla de correo electrónico
+      status: Estado
+      subject: Asunto
+      subject_required: El sujeto es obligatorio.
+      template_type: Tipo de plantilla
+      updated_msg: La plantilla de correo electrónico se ha actualizado correctamente.
+      use_this_template_for: Utilice esta plantilla para
+    estimates:
+      add_line_item: Agregar elemento de línea
+      auto_generated: Auto generado
+      bulk_action_msg: Las estimaciones son %{action} con éxito.
+      bulk_archived_msg: las estimaciones han sido archivadas.
+      bulk_deleted: las estimaciones se han eliminado.
+      cannot_reduce_amount_detail_msg: Si ingresó un pago por error, puede editarlo en su historial de pagos.
+      cannot_reduce_amount_msg: No puede reducir el total del estimado por debajo de la cantidad pagada.
+      client_hint: cliente desea enviar presupuesto
+      company_hint: empresa para esta estimación
+      converted_to_invoice_msg: Presupuesto convertido exitosamente a factura.
+      disputed_detail_msg: "%{company_name} ha sido notificado de la disputa."
+      disputed_msg: Presupuesto disputado.
+      estimate_date: Fecha estimada
+      estimate_date_range: Rango estimado de fechas
+      estimate_deleted_msg: Esta estimación ha sido eliminada.
+      estimate_number: Número estimado
+      estimate_number_range: Rango estimado de números
+      line_total: Linea total
+      net_total: Total neto
+      no_archived_msg: No tienes ninguna estimación archivada.
+      no_deleted_msg: No tienes ninguna estimación eliminada.
+      no_estimate_msg: Aún no has creado ninguna estimación. Haga clic en el botón Nueva estimación para crear una nueva estimación.
+      no_invoiced_msg: No tienes ningún presupuesto facturado.
+      recover_clients: 'Por favor, recupere los clientes para las estimaciones con el estimado # %{ids} para ingresar el pago.'
+      saved_and_sent_msg: La estimación se ha creado y enviado a %{org_name}.
+      saved_draft_msg: La estimación se ha guardado como borrador.
+      saved_msg: Su presupuesto se ha actualizado con éxito.
+      select_estimate_date: Seleccione la fecha estimada
+      send_estimate: Enviar presupuesto
+      send_estimate_instructions: o haga clic en el botón "Reenviar estimación" a continuación para reenviar la estimación también. #dude
+      send_this_note_only: Enviar esta nota solamente
+      sent_msg: Estimación enviada con éxito.
+      subtotal: Subtotal
+      this_estimate_was_sent_using: Esta estimación fue enviada usando
+      updated_and_draft_msg: La estimación ha sido actualizada y guardada como borrador
+      updated_and_sent_msg: La estimación se ha actualizado y enviado a %{org_name}
+      use_last_estimate_to_create: Para crear una nueva estimación, use la última estimación enviada a '%{client_name}'.
+    expenses:
+      amount: Cantidad
+      bulk_action_msg: Los gastos son %{action} con éxito.
+      category: Categoría
+      client_hint: Seleccione un cliente para este gasto
+      edit_expense: Gastos de edición
+      expenses: Gastos
+      listing: Listado de Gastos
+      new_expense: Nuevo gasto
+      no_archived_expense: No tienes ningún gasto archivado.
+      no_deleted_expense: No tienes ningún gasto eliminado.
+      no_record_msg: Aún no has creado ningún gasto.
+      note: Nota
+    flash:
+    help:
+      email_suppoprt: Por favor, póngase en contacto con nuestro equipo de soporte por correo electrónico a
+      happy_invoicing: "¡Feliz facturación!"
+      help: Ayuda
+      help_yourself: Ayúdate a ti mismo y el cielo te ayudará también. :)
+      never_mind_just_kidding: No importa, solo bromeo ... Volveremos con ayuda detallada. Actualmente, atascado en algunas otras cosas de alta prioridad.
+      we_hope_you_donot_need_help: Esperamos que no necesite ninguna ayuda para utilizar este software.
+    import_data:
+      data_imported_msg: Los datos se han importado con éxito.
+      fresh_books: Libros nuevos
+      freshbooks:
+        freshbooks_subdomain: Subdominio de Freshbooks
+        freshbooks_subdomain_hint: 'Pista: xy1234.freshbooks.com'
+        remove_http(s)_from_subdomain: Por favor elimine http (s) de su subdominio de libros nuevos
+      import_data: Datos de importacion
+      quickbooks:
+        create_sandbox_companies_first: Crear empresas de sandbox primero en Quickbooks
+        unable_to_connect: No se puede conectar Freshbooks, url de cuenta no válida / token api
+    invoice_line_item:
+      description: Descripción
+      item: Item
+      name: Nombre
+      new: Nueva línea de pedido de factura
+      quantity: Cantidad
+      select_an_item: Selecciona un artículo..
+      tax_1: Impuesto 1
+      tax_2: Impuesto 2
+      unit_cost: Valor unitario
+    invoices:
+      10_days: 10 días
+      add_line_item: Agregar elemento de línea
+      all_clients: Todos los clientes
+      all_statuses: Todos los estados
+      all_types: Todos los tipos
+      amount_due: Cantidad debida
+      amount_paid: Cantidad pagada
+      auto_generated: Auto generado
+      bulk_action_msg: Las facturas son %{action} con éxito.
+      bulk_archived_msg: Las facturas se han archivado. Puedes encontrarlos bajo
+      bulk_deleted_msg: Se han eliminado las facturas. Puedes encontrarlos bajo
+      bulk_payment_msg: Los pagos de $ {monto} contra <a> N facturas </a> se han registrado correctamente.
+      cannot_paid: No puede pagar facturas pagadas.
+      cannot_reduce_total_detail_msg: Si ingresó un pago por error, puede editarlo en su historial de pagos.
+      cannot_reduce_total_msg: No puede reducir el total de la factura por debajo del importe pagado.
+      client_hint: cliente desea enviar factura
+      company_hint: empresa para esta factura
+      convert_payment_to_credit: Convertir el pago en crédito
+      create_draft_and_send_manully: Crear facturas de giros y enviarlos manualmente.
+      created_and_sent_msg: La factura se ha creado y enviado a %{org_name}.
+      custom: Personalizado
+      date_to_use: Fecha de uso
+      discount_must_be_less_than_sub_total: El descuento debe ser inferior al subtotal
+      dispute_history: Historia de disputa
+      dispute_invoice: Disputa factura
+      disputed: Cuestionado
+      disputed_detail_msg: "%{company_name} ha sido notificado de la disputa."
+      disputed_invoice: El cliente ha disputado esta factura.
+      disputed_msg: Factura disputada.
+      draft: Borrador
+      draft_partial: Proyecto Parcial
+      draft_partial_tooltip: Pago recibido contra el proyecto de factura.
+      draft_tooltip: Factura creada, pero no ha notificado a su cliente.
+      due: Vencido
+      due_date: Fecha de vencimiento
+      due_date_range: Rango de fecha de vencimiento
+      due_date_should_equal_or_greater: La fecha de vencimiento debe ser igual o mayor que la fecha de facturación
+      enter_payment: Introducir pago
+      enter_payment_on_invoice: Ingresar pago en factura
+      enter_valid_discount: Ingrese un descuento válido
+      enter_valid_item_cost: Ingrese el costo del artículo válido
+      enter_valid_item_quantity: Ingrese la cantidad de artículo válida
+      every: Cada
+      handle_associated_payments: La factura que está intentando eliminar tiene pagos asociados. Debe decidir qué hacer con los pagos antes de poder eliminar la factura.
+      how_to_handle_invoice_payments: "¿Cómo manejar los pagos de facturas?"
+      invoice: Facturas
+      invoice_amount: Importe de la factura
+      invoice_chart: Gráfico de factura
+      invoice_date: Fecha de la factura
+      invoice_date_range: Intervalo de fechas de la factura
+      invoice_deleted: Esta factura ha sido eliminada.
+      invoice_number: 'Factura #'
+      invoice_number_range: Rango de números de factura
+      invoice_numbr: Número de factura
+      invoice_status: Estado de la factura
+      invoice_type: Tipo de factura
+      invoiced: Facturado
+      invoices: Auto generado
+      line_total: Linea total
+      make_sure_date_format: Asegúrese de que el formato de la fecha esté en el formato '# {date_format}'.
+      max: Max
+      min: Min
+      monthly: Mensual
+      net_total: Total neto
+      next_issue_date: Próxima fecha de emisión
+      no_archived_msg: No tienes ninguna factura archivada.
+      no_deleted_msg: No tienes ninguna factura eliminada.
+      no_invoice_found: No se encontraron facturas
+      no_invoice_msg: Aún no has creado ninguna factura. Haga clic en el botón Nueva factura para crear una nueva factura.
+      no_invoice_selected: No has seleccionado ninguna factura. Por favor seleccione una o más facturas y vuelva a intentarlo.
+      no_unpaid_invoices: No hay facturas impagas.
+      paid: Pagado
+      paid_cannot_disputed: La factura pagada no puede ser disputada.
+      paid_date: Fecha de pago
+      paid_invoices: Facturas pagadas
+      paid_msg: La factura se ha pagado con éxito.
+      paid_tooltip: El cliente ha realizado el pago completo contra la factura.
+      partial: Parcial
+      partial_tooltip: El cliente ha realizado un pago parcial contra la factura.
+      payment_converted_msg: Los pagos correspondientes se han convertido a crédito del cliente.
+      payment_deleted: Se han eliminado los pagos correspondientes.
+      payment_error_msg: Algo salió mal en el pago.
+      payment_history: Historial de pagos
+      percentage_must_be_hundred_or_less: El porcentaje debe ser cien o menos.
+      permanently_delete_payment: Eliminar permanentemente el pago
+      project_invoice_cannot_be_edit: La factura del proyecto no se puede editar
+      project_invoice_cannot_updated: La factura del proyecto no se puede actualizar
+      reason_for_dispute: Introduzca el motivo de la disputa.
+      received_from: Recibido de
+      recover_clients: 'Por favor, recupere a los clientes para las facturas con la factura # %{ids} para ingresar el pago.'
+      recover_to_view_detail: Por favor, recuperar para ver los detalles.
+      recurring:
+        auto_generated: Auto generado
+        client_hint: cliente desea enviar factura
+        company_hint: empresa para este perfil
+        discount_percentage: Porcentaje de descuento
+        first_invoice_date: Primera fecha de facturación
+        frequency: Frecuencia
+        gateway: Puerta
+        heading: Perfiles recurrentes
+        how_many: Cuántos
+        how_often: Con qué frecuencia
+        last_sent: Último enviado
+        new: Nuevo perfil recurrente
+        no_record_msg: Aún no has creado ningún perfil recurrente. Haga clic en el botón Nuevo perfil recurrente para crear un nuevo perfil recurrente.
+        no_record_msg_archived: No tienes ningún perfil recurrente archivado.
+        no_record_msg_deleted: No tienes ningún perfil recurrente eliminado.
+        occurances: Ocurrencias
+        payment_hint: Condiciones de pago de esta factura.
+        po_number: numero postal
+        profile_id: Perfil Id
+        prorate: Prorratear #dude
+        prorate_for: Prorrate para #dude
+        recurring_profile: Perfil recurrente
+        schedule: Programar
+        start_date: Fecha de inicio
+      recurring_cannot_stopped_msg: La factura recurrente no puede detenerse.
+      recurring_stopped_msg: La factura recurrente se detuvo con éxito.
+      remaining: Restante
+      response_to_client: Respuesta al cliente
+      saved_as_draft_msg: La factura se ha guardado como borrador.
+      select_a_client: Selecciona un cliente
+      select_a_company: Selecciona una empresa
+      select_a_payment_term: Seleccione un plazo de pago
+      select_client: Seleccione Cliente
+      select_currency: Seleccione el tipo de moneda
+      select_invoice_date: Seleccionar fecha de factura
+      send_invoice: Enviará la factura
+      send_invoice_automatically: Enviar facturas automáticamente.
+      send_invoice_instructions: o haga clic en el botón "Reenviar factura" a continuación para reenviar la factura también.
+      send_this_note_only: Enviar esta nota solamente
+      sent: Expedido
+      sent_msg: Factura enviada correctamente.
+      sent_to: Enviado a
+      sent_tooltip: Factura creada y enviada a su cliente.
+      stop_recurring: Dejar de recurrir
+      subtotal: Total parcial
+      tax1_and_tax2_should_be_diff: Tax1 y Tax2 deben ser diferentes
+      term_hint: Condiciones de pago de esta factura.
+      terms: Condiciones
+      terms_hint: Condiciones de pago de esta factura.
+      this_invoice_was_sent_using: Esta factura fue enviada usando
+      to_create_use_last_sent_invoice: Para crear una nueva factura, use la última factura enviada a '%{client_name}'.
+      updated_and_draft_msg: La factura ha sido actualizada y guardada como borrador.
+      updated_and_sent_msg: La factura se ha actualizado y enviado a %{org_name}.
+      viewed: Visto
+      viewed_tooltip: El cliente ha hecho clic en la URL de la factura en el correo electrónico y ha visto la factura en el navegador.
+      weekly: Semanal
+      yearly: Anual
+    items:
+      add_new_item: Agregar ítem nuevo
+      all_taxes: Todos los impuestos
+      bulk_action_msg: Los artículos son %{action} con éxito.
+      bulk_archived: Los artículos han sido archivados. Puedes encontrarlos bajo
+      created_msg: El artículo ha sido creado con éxito.
+      default_quantity: Cantidad predeterminada
+      default_unit_cost: Costo unitario por defecto
+      deleted_back_to_active: para mover los elementos eliminados de nuevo a activo.
+      description: Descripción
+      description_required: Se requiere descripción
+      duplicate_name: Ya existe un artículo con el mismo nombre.
+      item_description: Descripción del Artículo
+      item_name: Nombre del árticulo
+      item_unit_cost: Costo unitario
+      item_updated: Su artículo ha sido actualizado con éxito.
+      items_deleted_msg: Se han eliminado elementos. Puedes encontrarlos bajo
+      make_this_item_available_to: Haga este artículo disponible para
+      must_be_greater_or_equal_to_zero: La cantidad no debe ser un valor negativo.
+      must_be_greater_than_zero: Debe ser mayor que cero
+      must_be_numeric: Debe ser numérico
+      name: Nombre
+      name_required: El nombre del artículo es requerido
+      new: Nuevo artículo
+      no_archived_msg: No tienes ningún artículo archivado.
+      no_deleted_msg: No tienes ningún artículo eliminado.
+      no_item_msg: Aún no has creado ningún artículo. Haga clic en el botón Nuevo elemento para crear un nuevo elemento.
+      quantity: Cantidad
+      quantity_range: Rango Cantidad
+      quantity_required: Se requiere cantidad de artículo
+      same_tax_applied: El mismo impuesto no se aplica en un artículo
+      section_on_page: sección en esta página.
+      select_atleast_one_company: Selecciona al menos una empresa para la tarea.
+      tax: Impuesto
+      to_move_action: para mover los elementos archivados de nuevo a activo.
+      undo_action: Deshacer esta accion
+      unit_code: Costo unitario
+      unit_cost_range: Rango de costo unitario
+    logs:
+      create: Crear registro
+      create_by: Creado por
+      created_msg: Log fue creado con éxito.
+      deleted_msg: El registro se ha eliminado correctamente.
+      enter_hours: Introduce horas.
+      hours: Horas
+      hours_greated_than_zero: Introduzca el valor de las horas mayor o igual a 0.
+      info: Seleccione la fecha del calendario para ingresar el registro de tiempo.
+      invoice_created: Factura creada con éxito.
+      no_log_exist: No existen registros para
+      notes: Notas
+      project: Seleccione Proyecto
+      select_project: Seleccione un proyecto.
+      select_task: Seleccione una tarea.
+      task: Seleccionar tarea
+      time_logs: Registros de tiempo para
+      updated_msg: El registro se actualizó con éxito.
+    pagination:
+      first: '' #dude
+      last: '' #dude
+      next: Siguiente
+      previous: Anterior
+    payment_terms:
+      add_new_payment_term: Añadir nuevo término de pago
+      description: Descripción
+      editing: Edición de condiciones de pago
+      new: Nuevo plazo de pago
+      number_of_days: Número de días
+    payments:
+      add_description: Agregar descripción
+      apply_from_credit: Aplicar de crédito
+      back_to_invoice: Volver a factura
+      bank_transfer: Transferencia bancaria
+      bulk_action_msg: Los pagos son %{action} con éxito.
+      bulk_deleted_msg: Los pagos se eliminan con éxito.
+      bulk_payment_failed_msg: 'Los pagos contra facturas con la factura # %{unpaid_ids} han fallado debido al saldo de crédito insuficiente del cliente.'
+      bulk_payment_recorded_msg: 'Los pagos contra facturas con la factura # %{paid_ids} se han registrado correctamente.'
+      cannot_edit_msg: No puede editar el pago de crédito.
+      cash: Efectivo
+      cheque: Comprobar
+      connot_edit_paypal_msg: No puedes editar el pago con paypal.
+      credit: Crédito
+      credit_exceeded_msg: El pago del crédito no puede exceder el crédito disponible.
+      debit: Débito
+      delete_forever: Borrar para siempre
+      editing_payment: Edición de pago
+      exceeded_payment_amount_msg: El importe del pago no puede exceder el saldo de la factura.
+      negative_value_not_allowed_msg: No se permiten pagos con 0 o importe negativo. Introduzca un valor mayor que 0.
+      net_due: Neto vencido
+      new: Nuevo pago
+      no_invoice_selected: No has seleccionado ninguna factura. Por favor seleccione una o más facturas y vuelva a intentarlo.
+      no_payment_found: No se encontraron pagos
+      no_unpaid_invoice: No hay facturas pendientes de pago contra las cuales ingresar.
+      no_unpaid_invoice_msg: No hay facturas pendientes de pago contra las cuales ingresar.
+      paid_full: Pagado completo
+      payfull: Pagar completo
+      payment_date: Fecha de pago
+      payment_date_range: Rango de fechas de pago
+      payment_history: historial de pagos
+      payments: Pago
+      payments_entered_against_selected_invoices: Pagos ingresados contra facturas seleccionadas
+      paypal: Paypal
+      saved_msg: El pago ha sido registrado con éxito.
+      select_one_or_more_invoices_from_the_list_below_to_apply_payment: Seleccione una o más facturas de la lista a continuación para aplicar el pago.
+      send_payment_notification: Enviar notificación de pago
+      total_amount_due_against_selected_invoices: Importe total adeudado contra las facturas seleccionadas
+      updated_msg: Su pago se ha actualizado con éxito.
+      value_greater_than_zero_msg: Introduzca el valor de pago mayor que 0.
+      which_invoices_have_you_received_payment_for: Cuales facturas has recibido pago por
+    projects:
+      add_staff: Añadir personal
+      add_task: Agregar tarea
+      add_team: Añadir miembro del equipo
+      all_managers: Todos los gerentes
+      billing_method_hint: Las tarifas por hora se pueden cambiar desde la pestaña de personal al editar los perfiles del equipo.
+      bulk_action_msg: Los proyectos son %{action} exitosamente.
+      bulk_archived_msg: proyecto (s) se han archivado. Puedes encontrarlos bajo
+      bulk_deleted_msg: proyecto (s) ha sido eliminado. Puedes encontrarlos bajo
+      created_date_range: Rango de Fecha de Creación
+      created_msg: El proyecto fue creado exitosamente.
+      destroyed_msg: Proyecto fue destruido con éxito.
+      duplicate_name: Proyecto con el mismo nombre ya existe
+      estimate_should_be_greater_than_zero: Tiempo estimado debe ser igual o mayor que cero
+      estimated_time: Hora estimada
+      manager_hint: El gerente de proyecto puede generar facturas, ver las hojas de horas del equipo y editar los detalles del proyecto.
+      managers: Gerentes
+      name_required: El nombre del proyecto es obligatorio
+      no_archived_msg: No tienes ningún proyecto archivado.
+      no_deleted_msg: No tienes ningún proyecto eliminado.
+      no_project_msg: Aún no has creado ningún proyecto. Haga clic en el botón Nuevo proyecto para crear un nuevo proyecto.
+      project_description: Descripción del Proyecto
+      project_detail: Detalle del proyecto
+      project_time_log_tooltip: El tiempo registrado se calculará automáticamente sobre la base del tiempo empleado en la tarea del proyecto.
+      select_a_client: Selecciona un cliente
+      select_a_manager: Seleccione un gerente
+      select_a_member: Seleccione un miembro ..
+      select_a_task: Seleccione una tarea ..
+      staff_required_msg: Por favor, crea un miembro del personal primero para crear un proyecto.
+      time_estimate_hint: Una estimación del tiempo del proyecto le ayuda a seguir el progreso en comparación con las proyecciones.
+      time_logged: Tiempo registrado
+      to_move_archive: para mover proyectos archivados de nuevo a activo.
+      to_move_deleted: para mover proyectos borrados de nuevo a activo.
+      total_hours: Horas totales
+      updated_msg: Proyecto fue actualizado con éxito.
+    reports:
+      aged_accounts_receivable: AG por cobrar
+      aged_accounts_receivable_dtl: Este informe muestra un resumen del importe pendiente de las facturas impagas y / o parcialmente pagadas para cada cliente.
+      client_total_ar: Cliente Total AR
+      date_range: Rango de fechas
+      days_0_30: 0-30 días
+      days_31_60: 31-60 días
+      days_61_90: 61-90 días
+      days_above_90: 90+ días
+      export_to: Exportar a
+      invoice_detail: Informe de factura
+      invoice_detail_dtl: Este informe muestra las facturas detalladas de cada cliente.
+      item_sales: Ventas de artículos
+      net_total: Total neto
+      payments_collected: Pagos recogidos
+      payments_collected_dtl: Este informe muestra un historial de todos los pagos realizados por cada factura seleccionable por cliente y por fecha.
+      period_ending: Final del periodo
+      print_report: Imprimir reporte
+      report_no_data: No se encontraron datos contra los criterios seleccionados. Por favor, cambie los criterios y vuelva a intentarlo.
+      reports: Informes
+      revenue_by_client: Ingresos por cliente
+      to: A
+      total_amount: Cantidad total
+      total_discount: Descuento total
+      total_qty_sold: Cantidad total vendida
+    sessions:
+      done: Hecho
+      forgot_password: "¿Se te olvidó tu contraseña?"
+      keep_me_signed_in: Recordarme
+      powered_by: Desarrollado por
+      sign_in: Registrarse
+      sign_up: Regístrate
+      submit: Enviar
+    settings:
+      card: Tarjeta
+      card_view: Vista de tarjeta
+      currency_updated_msg_html: La moneda se ha actualizado a <strong>%{unit} con</strong> éxito.
+      date_format: Formato de fecha
+      default_currency: Moneda predeterminada
+      import_data: Datos de importacion
+      language: Idioma
+      listing_format: Formato de listado
+      multi_currency: Multi moneda
+      records_per_page: Registros por página
+      settings: Ajustes
+      side_nav_open: Navegación lateral abierta
+      table: Mesa
+      table_view: Vista de tabla
+      updated_msg: Los ajustes se actualizan con éxito.
+    staffs:
+      add_new_staff: Añadir nuevo personal
+      bulk_action_msg: Los miembros del personal son %{action} con éxito.
+      bulk_archived_msg: El personal ha sido archivado. Puedes encontrarlos bajo
+      bulk_deleted_msg: El personal ha sido eliminado. Puedes encontrarlos bajo
+      created_msg: Miembro del personal fue creado con éxito.
+      destroyed_msg: Miembro del personal fue destruido con éxito.
+      duplicate_name: Ya existe personal con el mismo correo electrónico.
+      edit_staff: Editar Personal
+      email: correo electrónico
+      empty_listing: Aún no se ha agregado ningún miembro del personal
+      enter_email: Introduzca un correo electrónico para el personal.
+      enter_name: Introduzca un nombre para el personal.
+      enter_rate: Introduzca la tarifa por hora para el personal.
+      enter_valid_email: Ingrese un correo electrónico válido para el personal.
+      make_this_staff_available_to: Haga este personal disponible para
+      move_archived_to_active: para mover el personal archivado de nuevo a activo.
+      move_deleted_to_active: para mover personal eliminado de nuevo a activo.
+      name: Nombre del personal
+      new: Personal nuevo
+      no_archived_msg: No has archivado ningún personal.
+      no_deleted_msg: No has eliminado ningún pentagrama.
+      no_staff_msg: Aún no has creado ningún staff. Haga clic en el botón Nuevo personal para crear nuevo personal.
+      password: Contraseña
+      password_confirmation: Confirmar contraseña
+      rate: Índice por hora
+      rate_must_be_positive: Introduzca el valor positivo de la tarifa por hora para el personal.
+      select_company: Seleccione al menos una empresa para el personal.
+      updated_msg: Miembro del personal fue actualizado con éxito.
+      username: Nombre de usuario
+    tasks:
+      add_new_task: Agregar nueva tarea
+      atleast_one_company_selected: Seleccione aleast one company para la tarea.
+      billable: Factura al cliente
+      bulk_action_msg: Las tareas son %{action} con éxito.
+      bulk_archived_msg: Las tareas han sido archivadas. Puedes encontrarlos bajo
+      bulk_deleted_msg: Las tareas se han eliminado. Puedes encontrarlos bajo
+      created_msg: La tarea fue creada con éxito.
+      day: Día
+      description: Descripción
+      destroyed_msg: La tarea fue destruida con éxito.
+      due_date_should_equal_or_greater: La fecha de vencimiento debe ser igual o mayor que la fecha de inicio
+      duplicate_name: La tarea con el mismo nombre ya existe
+      edit_task: Editar tarea
+      enter_hours: Ingrese hora (s) para la tarea
+      enter_name: Ingrese un nombre para la tarea
+      enter_positive_hour: Introduzca valor positivo de hora para la tarea.
+      enter_positive_rate: Introduzca el valor positivo de la tasa para la tarea
+      enter_positive_spent_time: Introduzca el valor positivo de la tasa por hora para la tarea
+      enter_rate: Introduzca la tarifa por hora para la tarea.
+      enter_spent_time: Ingrese el tiempo dedicado para la tarea
+      hours: Horas
+      make_this_task_available_to: Haga esta tarea disponible para
+      month: Mes
+      name: Nombre de la tarea
+      new: Nueva tarea
+      rate: Índice por hora
+      rate_: Tarifa
+      rate_range: Rango de tasa
+      select_due_date: Ingrese una fecha de vencimiento para la tarea
+      select_start_date: Seleccione la fecha de inicio de la tarea.
+      spent_time: Pasar tiempo
+      task_detail: Detalle de la tarea
+      to_move_archived: para mover los gastos archivados de nuevo a activo.
+      to_move_deleted: para mover los gastos eliminados de nuevo a activo.
+      updated_msg: La tarea se actualizó con éxito.
+      week: Semana
+    taxes:
+      add_new_tax: Añadir nuevo impuesto
+      bulk_action_msg: Impuestos (s) son %{action} con éxito.
+      bulk_archived: Se han archivado impuestos. Puedes encontrarlos bajo
+      bulk_deleted_msg: impuesto (s) ha sido eliminado. Puedes encontrarlos bajo
+      created_msg: El impuesto se ha creado con éxito.
+      duplicate_name: Ya existe impuesto con el mismo nombre.
+      enter_name: Ingrese el nombre del impuesto
+      enter_percentage: Ingrese el porcentaje de impuestos
+      greater_than_zero: El porcentaje debe ser mayor que cero
+      less_than_hundred: El porcentaje debe ser cien o menos.
+      new: Nuevo impuesto
+      percentage_must_be_numeric: El porcentaje debe ser valor numérico
+      percentage_range: Rango porcentual
+      select_a_tax: Seleccione un impuesto ...
+      tax_name: Nombre del impuesto
+      taxes: Impuestos
+      to_move_deleted_tax: para mover los impuestos eliminados de nuevo a activo.
+      to_unarchived_tax: para mover los impuestos archivados de nuevo a activos.
+      updated_msg: Impuestos fue actualizado con éxito.
+    users:
+      admin: Administración
+      all_roles: Todos los roles
+      assign_role: Asignar rol
+      avatar: Avatar
+      bulk_delete: Usuario (s) ha sido eliminado con éxito.
+      cannot_delete_current_user: El usuario registrado actual no se puede eliminar.
+      confirmation: Confirmación
+      duplicate_email: Ya existe un usuario con el mismo correo.
+      email_invalid: El correo electrónico es invalido.
+      email_required: Correo electronico es requerido.
+      full_name: Nombre completo
+      full_name_required: Se requiere nombre completo
+      manager: Gerente
+      new: Nuevo usuario
+      notify_user: Notificar al usuario
+      pass_and_confirm_pass_should_same: La contraseña y la confirmación deben coincidir.
+      pass_confirmation_required: Se requiere confirmación de contraseña.
+      pass_must_have_8_char: La longitud de la contraseña debe ser mayor o igual a 8.
+      password: Contraseña
+      password_required: Se requiere contraseña.
+      profile: Perfil
+      roles: Roles
+      saved_msg: El usuario se ha guardado correctamente.
+      staff: Personal
+      unable_to_save: Error al guardar usuario. Asegúrese de haber ingresado el registro correcto.
+      updated_msg: El usuario ha sido actualizado con éxito.
+      updated_password_msg: La contraseña se ha actualizado correctamente.
+      users: Usuarios

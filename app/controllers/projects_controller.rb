@@ -61,22 +61,18 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
-    @project.company_id = get_company_id
-    if @project.save
-      redirect_to @project, notice: t('views.projects.created_msg')
+    if Project.is_exists?(params[:project][:project_name])
+      @project_exists = true
     else
-      render :new
+      @project = Project.new(project_params)
+      @project.company_id = get_company_id
+      @project.save
     end
   end
 
   # PATCH/PUT /projects/1
   def update
-    if @project.update(project_params)
-      redirect_to @project , notice: t('views.projects.updated_msg')
-    else
-      render :edit
-    end
+    @project.update(project_params)
   end
 
   # DELETE /projects/1

@@ -22,6 +22,7 @@ class InvoicesController < ApplicationController
   load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice, :payment_with_credit_card]
   before_filter :set_per_page_session
+  before_filter :set_client_id, only: :create
   protect_from_forgery :except => [:preview, :paypal_payments, :create]
   helper_method :sort_column, :sort_direction
   include DateFormats
@@ -67,7 +68,7 @@ class InvoicesController < ApplicationController
         pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
           layout: 'pdf_mode.html.erb',
           encoding: "UTF-8",
-          template: 'invoices/invoice_pdf.html.erb',
+          template: 'invoices/pdf_invoice.html.erb',
           footer:{
             right: 'Page [page] of [topage]'
           }
@@ -119,18 +120,22 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new(invoice_params)
-    @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+    @invoice.status = if invoice_params[:status].eql?('paid')
+                        'paid'
+                      else
+                        params[:save_as_draft] ? 'draft' : 'sent'
+                      end
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     respond_to do |format|
       if @invoice.save
-        @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
-        new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
-        redirect_to(invoices_url, :notice => new_invoice_message)
-        return
+        @invoice.delay.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) unless params[:save_as_draft].present?
+        @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
+        format.js
+        format.json {render :json=> @invoice, :status=> :ok}
       else
-        format.html { render :action => 'new' }
+        format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -144,27 +149,28 @@ class InvoicesController < ApplicationController
   def update
     @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
-    notify = params[:commit].present? ? true : false
-    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], notify) unless params[:response_to_client].blank?
+    @notify = params[:save_as_draft].present? ? false : true
+    @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)
-          @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-          redirect_to(invoices_url, notice: t('views.invoices.updated_msg'))
-          return
+          @invoice.notify(current_user, @invoice.id) unless params[:save_as_draft].present?
+          @successfully_updated = true
+          format.js
         else
-          redirect_to(invoices_url, alert: invoice_not_updated)
-          return
+          @invoice_not_updated = true
+          @invoice_not_updated_error = invoice_not_updated.gsub(/<\/?[^>]*>/, "").chop
+          format.js
         end
       elsif @invoice.update_attributes(invoice_params)
         @invoice.update_line_item_taxes()
-        @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+        @invoice.notify(current_user, @invoice.id) unless params[:save_as_draft].present?
+        @updated_invoice_line_items = true
         format.json { head :no_content }
-        redirect_to({:action => "index", :controller => "invoices"}, :notice => t('views.invoices.updated_msg'))
-        return
+        format.js
       else
-        format.html { render :action => "edit" }
+        format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -295,7 +301,6 @@ class InvoicesController < ApplicationController
   def send_invoice
     invoice = Invoice.find(params[:id])
     invoice.send_invoice(current_user, params[:id])
-    redirect_to(invoices_url, notice: t('views.invoices.sent_msg'))
   end
 
   def stop_recurring
@@ -306,6 +311,17 @@ class InvoicesController < ApplicationController
       redirect_to(invoices_url, notice: t('views.invoices.recurring_stopped_msg'))
     else
       redirect_to(invoices_url, alert: t('views.invoices.recurring_cannot_stopped_msg'))
+    end
+  end
+
+  def set_client_id
+    # to create/update client for invoice with JSON API call
+    if invoice_params[:client_attributes].present?
+      existing_client = Client.find_by(email: invoice_params[:client_attributes][:email])
+      if existing_client.present?
+        params[:invoice][:client_id] = existing_client.id
+        params[:invoice].delete :client_attributes
+      end
     end
   end
 
@@ -359,6 +375,13 @@ class InvoicesController < ApplicationController
                                         [
                                           :id, :invoice_id, :next_invoice_date, :frequency, :occurrences,
                                           :delivery_option, :_destroy
+                                        ],
+                                    client_attributes:
+                                        [
+                                          :address_street1, :address_street2, :business_phone, :city,
+                                          :country, :fax,
+                                          :organization_name, :postal_zip_code, :province_state,
+                                          :email, :home_phone, :first_name, :last_name, :mobile_number
                                         ]
     )
   end
