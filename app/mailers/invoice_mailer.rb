@@ -22,9 +22,10 @@ class InvoiceMailer < ActionMailer::Base
   default :from => 'support@opensourcebilling.org'
   @@response_to_client = ''
   @@reason_by_client =  ''
-  def new_invoice_email(client, invoice, e_id , current_user)
+  def new_invoice_email(client, invoice, e_id , current_user, invoice_pdf_file=nil)
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
+    attachments['attachment.pdf'] = invoice_pdf_file if invoice_pdf_file
     email_body = mail(:to => client.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -117,7 +118,7 @@ class InvoiceMailer < ActionMailer::Base
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'invoice_total' => (invoice.invoice_total.to_s  rescue 'ERROR'),
-        'invoice_url' => "#{Account.url(invoice.try(:account_id))}/invoices/preview?inv_id=#{invoice.encrypted_id}",
+        'invoice_url' => "#{Account.url(invoice.try(:account_id))}/#{I18n.locale}/invoices/preview?inv_id=#{invoice.encrypted_id}",
         'dispute_response' => (@@response_to_client  rescue 'ERROR'),
         'user_organization_name' => (user.accounts.first.org_name rescue 'ERROR'),
         'reason' =>  (@@reason_by_client  rescue 'ERROR'),

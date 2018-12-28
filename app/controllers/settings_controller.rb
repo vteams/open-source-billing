@@ -37,6 +37,7 @@ class SettingsController < ApplicationController
 
   def index
     @email_templates = EmailTemplate.all
+    @authentication_token = current_user.authentication_token
   end
 
   def set_default_currency

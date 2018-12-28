@@ -250,8 +250,14 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def notify(current_user, id = nil)
-    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user)
+  def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
+    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
+    notify(current_user, self.id, invoice_pdf_file)
+  end
+
+  def notify(current_user, id = nil, invoice_pdf_file = nil)
+    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
   end
 
   def send_invoice current_user, id
@@ -538,6 +544,7 @@ class Invoice < ActiveRecord::Base
     subtotal = line_items_total_with_taxes - discounted_amount
     invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
     additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
+    self.sub_total = line_items_total_with_taxes
     self.invoice_total = (subtotal + additional_invoice_tax).round(2)
   end
 end

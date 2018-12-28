@@ -20,7 +20,7 @@
 #
 class User < ActiveRecord::Base
   include UserSearch
-  # acts_as_token_authenticatable
+  acts_as_token_authenticatable
   rolify
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,

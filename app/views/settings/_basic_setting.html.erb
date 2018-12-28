@@ -61,6 +61,17 @@
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
                       input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+
+          <div class="api_key">
+            <span>
+              <b><%= t('views.settings.api_key') %>:</b>
+              <%= @authentication_token %>
+            </span>
+            <span class="icon-styling">
+              <i class="material-icons" title="<%= t('views.settings.api_key_help_text') %>">help_outline</i>
+            </span>
+          </div>
+
         </div>
       </div>
     <% end %>

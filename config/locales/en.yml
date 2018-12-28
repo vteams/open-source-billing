@@ -758,6 +758,8 @@ en:
       table: "Table"
       card_view: "Card view"
       table_view: "Table view"
+      api_key: "API Key"
+      api_key_help_text: "This key will be used for JSON APIs requests"
 
     companies:
       companies: "Companies"

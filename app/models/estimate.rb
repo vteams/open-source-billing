@@ -260,6 +260,7 @@ class Estimate < ActiveRecord::Base
     subtotal = line_items_total_with_taxes - discounted_amount
     estimate_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
     additional_estimate_tax = estimate_tax_amount.eql?(0.0) ? 0.0 : (subtotal * estimate_tax_amount/100.0).round(2)
+    self.sub_total = line_items_total_with_taxes
     self.estimate_total = (subtotal + additional_estimate_tax).round(2)
   end
 end
