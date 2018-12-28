@@ -303,7 +303,7 @@ module ApplicationHelper
   def current_user_client_limit_exceed?
     return false if current_user.blank? or current_user.god_user?
     current_user.client_limit <= current_user.clients.count
-  end>>>>>>> master
+  end
 
   def contain_bulk_actions
     %w(invoices estimates expenses payments clients items taxes companies projects tasks staffs)
