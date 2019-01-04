@@ -128,6 +128,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
+    assign_company_to_client if request.format.json?
     respond_to do |format|
       if @invoice.save
         @invoice.delay.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) unless params[:save_as_draft].present?
@@ -137,6 +138,20 @@ class InvoicesController < ApplicationController
       else
         format.js
         format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def assign_company_to_client
+    if params[:invoice][:client_attributes].present?
+      client = Client.new(client_params)
+      associate_entity(client_params.merge(controller: 'clients', company_ids: [Company.first.id]), client)
+      if client.save
+        @invoice.client_id = client.id
+      else
+        respond_to do |format|
+          format.json { render :json => client.errors, :status => :unprocessable_entity } and return
+        end
       end
     end
   end
@@ -383,6 +398,14 @@ class InvoicesController < ApplicationController
                                           :organization_name, :postal_zip_code, :province_state,
                                           :email, :home_phone, :first_name, :last_name, :mobile_number
                                         ]
+    )
+  end
+
+  def client_params
+    params[:invoice].require(:client_attributes).permit(:address_street1, :address_street2, :business_phone,
+                                                       :city,:country, :fax, :organization_name, :postal_zip_code,
+                                                        :province_state, :email, :home_phone, :first_name,
+                                                        :last_name, :mobile_number
     )
   end
 
