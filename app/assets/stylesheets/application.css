@@ -16,8 +16,7 @@
  *= require main
  *= require jquery.qtip.min
  *= require pay_invoice
- *= require settings.css.scss
- *= project.css.scss
+ *= require settings
  *= require fullcalendar
  *= require custom
  *= require select2.min
