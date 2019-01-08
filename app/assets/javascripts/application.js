@@ -234,16 +234,8 @@ $(document).ready(function(){
 
     initSelectActionLink();
     initDemoLinksClick();
-
-    // $("body").on("contextmenu",function(){
-    //     return false;
-    // });
-    //
-    // document.onkeydown = function(e) {
-    //     if(event.keyCode == 123) {
-    //         return false;
-    //     }
-    // }
+    disable_right_click_for_browser();
+    disable_f12_key_in_browser();
 });
 
 function initCustomConfirmPopUp() {
@@ -397,6 +389,20 @@ function initSelectActionLink(){
             return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
         }
     });
+}
+
+function disable_right_click_for_browser() {
+    $("body").on("contextmenu", function () {
+        return false;
+    });
+}
+
+function disable_f12_key_in_browser(){
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+            return false;
+        }
+    }
 }
 
 function initDateRangePicker(format) {
