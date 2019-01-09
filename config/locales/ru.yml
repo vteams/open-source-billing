@@ -195,6 +195,8 @@ ru:
       total_payments_received: Всего полученных платежей
       type: Тип
       updated_msg: Клиент был успешно обновлен.
+      business_email: "Деловая электронная почта"
+
     common:
       active: Активные
       activities: Мероприятия

@@ -532,6 +532,7 @@ pt-BR:
       invalid_business_phone: "Número de telefone comercial inválido"
       invalid_mobile_number: "número de celular inválido"
       atleast_one_company_required: "Selecione pelo menos uma empresa"
+      business_email: "Email Comercial"
 
     expenses:
       bulk_action_msg: "As despesas são %{action} com sucesso."

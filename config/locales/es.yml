@@ -216,6 +216,8 @@ es:
       total_payments_received: Total pagos recibidos
       type: Tipo
       updated_msg: El cliente fue actualizado con éxito.
+      business_email: "Email de negocios"
+
     common:
       active: Activo
       activities: Ocupaciones
