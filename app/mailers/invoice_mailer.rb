@@ -56,6 +56,22 @@ class InvoiceMailer < ActionMailer::Base
     mail(:to => client.email, :subject => template.subject)
   end
 
+  def soft_payment_reminder_email(invoice_id, template_type)
+    invoice = Invoice.find(invoice_id)
+    client = invoice.client
+    template = replace_template_body(nil, invoice, template_type) #(logged in user,invoice,email type)
+    @email_html_body = template.body
+    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    invoice.sent_emails.create({
+                                   :content => email_body,
+                                   :recipient => client.email, #client email
+                                   :subject => template.subject,
+                                   :type => template_type,
+                                   :company_id => invoice.company_id,
+                                   :date => Date.today
+                               })
+  end
+
   def late_payment_reminder_email(invoice_id, template_type)
     invoice = Invoice.find(invoice_id)
     client = invoice.client
