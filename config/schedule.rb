@@ -21,3 +21,11 @@
 every :day, at: '11:59pm' do
   rake "rucurring_invoice:generate"
 end
+
+every :day, at: '12:01am' do
+  rake "payment_reminders:soft_payment_reminder"
+end
+
+every :day, at: '12:30am' do
+  rake "payment_reminders:late_payment_reminder"
+end
