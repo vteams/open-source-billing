@@ -199,6 +199,20 @@ templates = EmailTemplate.create([
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
             <p>Thanks,</p>
             <p>{{company_signature}}</p>'
+        },
+        {   :torder => 10,
+            :status => 'Default',
+            :template_type => 'Soft Payment Reminder',
+            :email_from => 'nfor20@yahoo.com',
+            :subject => '{{client_company}}: {{company_name}} Invoice will Due After 3 Days',
+            :body => '<p>Dear {{client_contact}},</p>
+           <p>This is a soft reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} will due after 3 days.</p>
+           <p>To access your invoice go to: </p>
+           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
+           <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
+            <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
+            <p>Thanks,</p>
+           <p>{{company_signature}}</p>'
         }
     ])
 

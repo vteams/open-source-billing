@@ -398,6 +398,19 @@ CUSTOM_FIELDS = {
             {label: 'Company Signature', token: '{{company_signature}}'},
             {label: 'Invoice URL', token: '{{invoice_url}}'}
         ],
+    'Soft Payment Reminder' =>
+        [
+            {label: 'Company Name', token: '{{company_name}}'},
+            {label: 'Company Contact', token: '{{company_contact}}'},
+            {label: 'Company Phone', token: '{{company_phone}}'},
+            {label: 'Currency Symbol', token: '{{currency_symbol}}'},
+            {label: 'Client Company', token: '{{client_company}}'},
+            {label: 'Client Name', token: '{{client_contact}}'},
+            {label: 'Due Payment Amount', token: '{{payment_amount_due}}'},
+            {label: 'Invoice Number', token: '{{invoice_number}}'},
+            {label: 'Company Signature', token: '{{company_signature}}'},
+            {label: 'Invoice URL', token: '{{invoice_url}}'}
+        ]
 }
 
 ROLES = ['admin', 'manager', 'staff']
