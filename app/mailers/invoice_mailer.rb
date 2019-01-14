@@ -56,35 +56,35 @@ class InvoiceMailer < ActionMailer::Base
     mail(:to => client.email, :subject => template.subject)
   end
 
-  def soft_payment_reminder_email(invoice_id, template_type)
+  def soft_payment_reminder_email(invoice_id)
     invoice = Invoice.find(invoice_id)
     client = invoice.client
-    template = replace_template_body(nil, invoice, template_type) #(logged in user,invoice,email type)
+    template = replace_template_body(nil, invoice, 'Soft Payment Reminder') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    mail(to: client.email, subject: template.subject)
     invoice.sent_emails.create({
-                                   :content => email_body,
-                                   :recipient => client.email, #client email
-                                   :subject => template.subject,
-                                   :type => template_type,
-                                   :company_id => invoice.company_id,
-                                   :date => Date.today
+                                   content: @email_html_body,
+                                   recipient: client.email, #client email
+                                   subject: template.subject,
+                                   type: 'Soft Payment Reminder',
+                                   company_id: invoice.company_id,
+                                   date: Date.today
                                })
   end
 
-  def late_payment_reminder_email(invoice_id, template_type)
+  def late_payment_reminder_email(invoice_id)
     invoice = Invoice.find(invoice_id)
     client = invoice.client
-    template = replace_template_body(nil, invoice, template_type) #(logged in user,invoice,email type)
+    template = replace_template_body(nil, invoice, 'First Late Payment Reminder') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    mail(to: client.email, subject: template.subject)
     invoice.sent_emails.create({
-                                   :content => email_body,
-                                   :recipient => client.email, #client email
-                                   :subject => template.subject,
-                                   :type => template_type,
-                                   :company_id => invoice.company_id,
-                                   :date => Date.today
+                                   content: @email_html_body,
+                                   recipient: client.email, #client email
+                                   subject: template.subject,
+                                   type: 'First Late Payment Reminder',
+                                   company_id: invoice.company_id,
+                                   date: Date.today
                                })
   end
 
