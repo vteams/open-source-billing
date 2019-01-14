@@ -99,8 +99,8 @@ templates = EmailTemplate.create([
                 <p>Thank you. </p>
                 <p>{{company_signature}}</p>'
         },
-        {   :no_of_days => 2,
-            :is_late_payment_reminder => true,
+        {   #:no_of_days => 2,
+            #:is_late_payment_reminder => true,
             :torder => 3,
             :status => 'Default',
             :template_type => 'First Late Payment Reminder',
@@ -114,36 +114,36 @@ templates = EmailTemplate.create([
            <p>Thank you.</p>
            <p>{{company_signature}}</p>'
         },
-        {   :no_of_days => 5,
-            :is_late_payment_reminder => true,
-            :torder => 4,
-            :status => 'Default',
-            :template_type => 'Second Late Payment Reminder',
-            :email_from => 'nfor20@yahoo.com',
-            :subject => '{{client_company}}: {{company_name}} Invoice is Past Due',
-            :body => '<p>Dear {{client_contact}},</p>
-           <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
-           <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
-           <p>To access your invoice go to: </p>
-           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
-           <p>Thank you.</p>
-           <p>{{company_signature}}</p>'
-        },
-        {   :no_of_days => 7,
-            :is_late_payment_reminder => true,
-            :torder => 5,
-            :status => 'Default',
-            :template_type => 'Third Late Payment Reminder',
-            :email_from => 'nfor20@yahoo.com',
-            :subject => '{{client_company}}: {{company_name}} Invoice is Past Due',
-            :body => '<p>Dear {{client_contact}},</p>
-           <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
-           <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
-           <p>To access your invoice go to: </p>
-           <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a></p>
-           <p>Thank you.</p>
-           <p>{{company_signature}}</p>'
-        },
+        # {   :no_of_days => 5,
+        #     :is_late_payment_reminder => true,
+        #     :torder => 4,
+        #     :status => 'Default',
+        #     :template_type => 'Second Late Payment Reminder',
+        #     :email_from => 'nfor20@yahoo.com',
+        #     :subject => '{{client_company}}: {{company_name}} Invoice is Past Due',
+        #     :body => '<p>Dear {{client_contact}},</p>
+        #    <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
+        #    <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
+        #    <p>To access your invoice go to: </p>
+        #    <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
+        #    <p>Thank you.</p>
+        #    <p>{{company_signature}}</p>'
+        # },
+        # {   :no_of_days => 7,
+        #     :is_late_payment_reminder => true,
+        #     :torder => 5,
+        #     :status => 'Default',
+        #     :template_type => 'Third Late Payment Reminder',
+        #     :email_from => 'nfor20@yahoo.com',
+        #     :subject => '{{client_company}}: {{company_name}} Invoice is Past Due',
+        #     :body => '<p>Dear {{client_contact}},</p>
+        #    <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
+        #    <p>If there is a billing matter that you would like to discuss before submitting payment, please contact us as soon as possible at {{company_phone}}.</p>
+        #    <p>To access your invoice go to: </p>
+        #    <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a></p>
+        #    <p>Thank you.</p>
+        #    <p>{{company_signature}}</p>'
+        # },
         {
             :torder => 6,
             :status => 'Default',
@@ -204,7 +204,7 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'Soft Payment Reminder',
             :email_from => 'nfor20@yahoo.com',
-            :subject => '{{client_company}}: {{company_name}} Invoice will Due After 3 Days',
+            :subject => '{{client_company}}: {{company_name}} Invoice will Due after 3 Days',
             :body => '<p>Dear {{client_contact}},</p>
            <p>This is a soft reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} will due after 3 days.</p>
            <p>To access your invoice go to: </p>
