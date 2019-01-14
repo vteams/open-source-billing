@@ -17,8 +17,9 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-# Learn more: http://github.com/javan/whenever
-every :day, at: '11:59pm' do
+set :output, "log/cron_log.log"
+
+every :day, at: '1:00am' do
   rake "rucurring_invoice:generate"
 end
 
