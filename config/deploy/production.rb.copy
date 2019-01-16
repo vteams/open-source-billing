@@ -2,13 +2,13 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
+set :application, 'single_tenant'
+set :repo_url, 'git@github.com:vteams/open-source-billing.git'
+set :deploy_to, '/home/deploy/single_tenant' # Directory path of remote server
 
-#server 'opensourcebilling.vteamslabs.com', user: 'deploy', roles: %w{app db web}, port: 22020
-server 'osbpaid-staging.vteamslabs.com', user: 'osbstage', roles: %w{app db web}, port: 22016
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
-# server 'db.example.com', user: 'deploy', roles: %w{db}
-
-
+server 'opensourcebilling.my_domain.com:22', user: 'root', roles: %w{app db web}
+set :rails_env, 'production'
 
 # role-based syntax
 # ==================
@@ -47,7 +47,6 @@ server 'osbpaid-staging.vteamslabs.com', user: 'osbstage', roles: %w{app db web}
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
