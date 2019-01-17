@@ -2,14 +2,13 @@ workers 2
 threads 4, 16
 port 9191
 
-app_dir = File.expand_path("../..", _FILE_)
-shared_dir = "#{app_dir}/shared"
+app_dir = File.expand_path("../..", __FILE__)
 
 # Default to production
 rails_env = ENV['RAILS_ENV'] || "production"
 environment rails_env
 
-pidfile "#{shared_dir}/tmp/pids/puma.pid"
+pidfile "#{app_dir}/tmp/pids/puma.pid"
 preload_app!
 
 on_worker_boot do
