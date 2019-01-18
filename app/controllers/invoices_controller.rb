@@ -145,7 +145,7 @@ class InvoicesController < ApplicationController
   def assign_company_to_client
     if params[:invoice][:client_attributes].present?
       client = Client.new(client_params)
-      associate_entity(client_params.merge(controller: 'clients', company_ids: [Company.first.id]), client)
+      associate_entity(client_params.merge(controller: 'clients', company_ids: [get_company_id]), client)
       if client.save
         @invoice.client_id = client.id
       else
