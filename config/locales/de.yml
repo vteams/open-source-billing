@@ -533,6 +533,7 @@ de:
       invalid_mobile_number: "ungültige Telefon-nummer"
       atleast_one_company_required: "Wählen Sie mindestens eine Firma aus"
       business_email: "Geschäftliche E-Mail"
+      vat_number: "Umsatzsteuer-Identifikationsnummer"
 
     expenses:
       bulk_action_msg: "Ausgaben sind %{action} erfolgreich."

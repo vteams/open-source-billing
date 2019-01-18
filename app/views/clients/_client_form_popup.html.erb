@@ -35,6 +35,7 @@
               <%= f.input :business_phone, label: t('views.clients.business_phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
               <%= hidden_field_tag :type, params[:type] if params[:type] %>
               <%= f.input :billing_email, label: t('views.clients.business_email'), wrapper_html: {class: 'input-field col s6 m4'} %>
+              <%= f.input :vat_number, label: t('views.clients.vat_number'), wrapper_html: {class: 'input-field col s6 m4'} %>
               <div id="client_credit"></div>
               <div class="input-field col s12 m4">
                 <% @readonly = is_client_credit_payments @client %>

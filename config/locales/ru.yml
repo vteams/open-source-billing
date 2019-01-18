@@ -1,4 +1,5 @@
----
+# This file contains Russian translation
+
 ru:
   amount: Количество
   client: Клиент
@@ -196,6 +197,7 @@ ru:
       type: Тип
       updated_msg: Клиент был успешно обновлен.
       business_email: "Деловая электронная почта"
+      vat_number: "Номер НДС"
 
     common:
       active: Активные

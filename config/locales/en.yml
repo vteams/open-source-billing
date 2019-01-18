@@ -573,6 +573,7 @@ en:
       invalid_mobile_number: "Invalid mobile number"
       atleast_one_company_required: "Select at least one company"
       business_email: "Business Email"
+      vat_number: "VAT Number"
 
     expenses:
       expenses: "Expenses"

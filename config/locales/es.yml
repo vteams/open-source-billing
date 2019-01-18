@@ -1,4 +1,5 @@
----
+# This file contains Spanish translation
+
 es:
   amount: Cantidad
   currency_code: Dólar estadounidense
@@ -217,6 +218,7 @@ es:
       type: Tipo
       updated_msg: El cliente fue actualizado con éxito.
       business_email: "Email de negocios"
+      vat_number: "Número de valor agregado"
 
     common:
       active: Activo

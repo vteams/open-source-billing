@@ -533,6 +533,7 @@ pt-BR:
       invalid_mobile_number: "número de celular inválido"
       atleast_one_company_required: "Selecione pelo menos uma empresa"
       business_email: "Email Comercial"
+      vat_number: "Número de IVA"
 
     expenses:
       bulk_action_msg: "As despesas são %{action} com sucesso."

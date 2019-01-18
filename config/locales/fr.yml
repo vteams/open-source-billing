@@ -529,6 +529,7 @@ fr:
       invalid_mobile_number: "Numéro de portable invalide"
       atleast_one_company_required: "Sélectionnez au moins une entreprise"
       business_email: "Courriel professionnel"
+      vat_number: "Numéro de TVA"
 
     expenses:
       bulk_action_msg: "Les dépenses sont %{action} réussies."
