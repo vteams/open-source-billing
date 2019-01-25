@@ -78,6 +78,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'New Invoice',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{client_company}}: {{company_name}} Invoice: {{invoice_number}}',
             :body => '<p>Dear {{client_contact}},</p>
             <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your invoice, please click on below link:</p>
@@ -92,6 +94,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'Payment Received',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{company_name}} has received your payment for invoice {{invoice_number}}',
             :body => '<p>We have received your payment in the amount of {{currency_symbol}}{{payment_amount}}  for invoice {{invoice_number}}.
                 <p>To view the paid invoice or download a PDF copy for your records, click the link below:</p>
@@ -105,6 +109,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'First Late Payment Reminder',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{client_company}}: {{company_name}} Invoice is Past Due',
             :body => '<p>Dear {{client_contact}},</p>
            <p>This is a friendly reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} is past due.</p>
@@ -149,6 +155,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'Dispute Invoice',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => 'Client Dispute Notification: {{client_company}}',
             :body => '<p>{{company_contact}},</p>
            <p>{{client_company}} wishes to dispute {{company_name}} invoice {{invoice_number}}, citing:</p>
@@ -162,6 +170,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'Dispute Reply',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{company_name}} Dispute Response regarding invoice {{invoice_number}}',
             :body => '<p>Dear {{client_contact}},</p>
            <p>We have carefully reviewed your request regarding invoice number {{invoice_number}}. This is our response:</p>
@@ -176,6 +186,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'New User',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => "Welcome to {{company_name}}'s invoicing services provided by Open Source Billing.",
             :body => "<p>Welcome to {{company_name}}'s secure online services provided by Open Source Billing.</p>
            <p>To securely access your account information and invoices, go to: </p>
@@ -192,6 +204,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'New Estimate',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{client_company}}: {{company_name}} Estimate: {{estimate_number}}',
             :body => '<p>Dear {{client_contact}},</p>
             <p>Thank you for your continued service with {{company_name}}, to download a PDF copy for your records, click the link below:</p>
@@ -204,6 +218,8 @@ templates = EmailTemplate.create([
             :status => 'Default',
             :template_type => 'Soft Payment Reminder',
             :email_from => 'nfor20@yahoo.com',
+            :cc => '',
+            :bcc => '',
             :subject => '{{client_company}}: {{company_name}} Invoice will Due after 3 Days',
             :body => '<p>Dear {{client_contact}},</p>
            <p>This is a soft reminder that payment for your {{company_name}} invoice: {{invoice_number}} in the amount of {{currency_symbol}}{{payment_amount_due}} will due after 3 days.</p>
