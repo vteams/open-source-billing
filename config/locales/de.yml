@@ -741,6 +741,8 @@ de:
       status: "Status"
       days_of_due_date: "Tage nach Fälligkeit"
       email_from: "Email von"
+      cc: "CC"
+      bcc: "BCC"
       custom_fields: "Benutzerdefinierte Felder"
       use_this_template_for: "Diesen Entwurf benutzen für"
       body: "Inhalt"

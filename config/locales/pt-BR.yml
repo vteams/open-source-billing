@@ -743,6 +743,8 @@ pt-BR:
       status: "Status"
       days_of_due_date: "Dias para data de vencimento"
       email_from: "Email para"
+      cc: "CC"
+      bcc: "BCC"
       custom_fields: "Campos adicionais"
       use_this_template_for: "Usar este template para"
       body: "Corpo"

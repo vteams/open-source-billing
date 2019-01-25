@@ -379,6 +379,8 @@ es:
       custom_fields: Campos Personalizados
       days_of_due_date: Días de vencimiento
       email_from: correo electrónico de
+      cc: "CC"
+      bcc: "BCC"
       email_templates: Plantillas de correo electrónico
       from_email_required: De correo electrónico es necesario.
       new: Nueva plantilla de correo electrónico

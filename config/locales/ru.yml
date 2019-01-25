@@ -358,6 +358,8 @@ ru:
       custom_fields: Настраиваемые поля
       days_of_due_date: Дни исполнения
       email_from: Электронная почта от
+      cc: "CC"
+      bcc: "BCC"
       email_templates: Шаблоны электронной почты
       from_email_required: С электронной почты требуется.
       new: Новый шаблон электронной почты

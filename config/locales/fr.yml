@@ -737,6 +737,8 @@ fr:
       status: "statut"
       days_of_due_date: "Jours de la date d'échéance"
       email_from: "email De"
+      cc: "CC"
+      bcc: "BCC"
       custom_fields: "Les champs personnalisés"
       use_this_template_for: "Utilisez ce modèle pour"
       body: "corps"

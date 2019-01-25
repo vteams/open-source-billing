@@ -797,6 +797,8 @@ en:
       status: "Status"
       days_of_due_date: "Days of due date"
       email_from: "Email From"
+      cc: "CC"
+      bcc: "BCC"
       custom_fields: "Custom fields"
       use_this_template_for: "Use this Template for"
       body: "Body"
