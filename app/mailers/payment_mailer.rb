@@ -27,7 +27,7 @@ class PaymentMailer < ActionMailer::Base
     client = payment.invoice.unscoped_client
     template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    email_body = mail(to: client.email, cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
     payment.sent_emails.create({
                                    :content => email_body,
                                    :sender => get_user.email, #User email
@@ -72,7 +72,7 @@ class PaymentMailer < ActionMailer::Base
     @user    = stripe_data[:customer_email]
     @amount  = stripe_data[:amount]
     @message  = stripe_data[:message]
-    mail(:to => @user, :subject => "Payment Failed")
+    mail(to: @user, cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: "Payment Failed")
   end
 
 end
