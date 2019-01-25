@@ -39,7 +39,7 @@ class EmailTemplatesController < ApplicationController
   private
 
   def email_template_params
-    params.require(:email_template).permit(:body, :email_from, :subject, :template_type, :status, :torder, :no_of_days, :is_late_payment_reminder, :send_email)
+    params.require(:email_template).permit(:body, :email_from, :subject, :template_type, :status, :torder, :no_of_days, :is_late_payment_reminder, :send_email, :cc, :bcc)
   end
 
 end

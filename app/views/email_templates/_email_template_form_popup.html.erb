@@ -37,6 +37,8 @@
                 <%# end%>
 
                 <%= f.input :email_from, label: t('views.email_templates.email_from'), label_html: {class: 'active' }, wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :cc, label: t('views.email_templates.cc'), label_html: {class: 'active' }, wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :bcc, label: t('views.email_templates.bcc'), label_html: {class: 'active' }, wrapper_html: { class: 'input-field col s12' } %>
                 <%= f.input :subject, label: t('views.clients.subject'), label_html: {class: 'active' }, wrapper_html: { class: 'input-field col s12' } %>
                 <%= f.input :body, label: false, wrapper_html: { class: 'input-field col s12' }, input_html: {class: 'tinymce'}, as: :text %>
               </div>
