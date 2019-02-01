@@ -5129,3 +5129,24 @@ span.label-font{
   background-position: center;
   background-size: cover;
 }
+
+/*----------------------- Table sorter scss start -------------- */
+table.table_listing, table.report-data-table {
+  thead {
+    tr {
+      .header {
+        background-image: asset-url('bg.png');
+        background-repeat: no-repeat;
+        background-position: center right;
+        cursor: pointer;
+      }
+      .headerSortUp {
+        background-image: asset-url('asc.png');
+      }
+      .headerSortDown {
+        background-image: asset-url('desc.png');
+      }
+    }
+  }
+}
+/*----------------------- Table sorter scss ended -------------- */
