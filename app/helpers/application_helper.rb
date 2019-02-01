@@ -62,7 +62,9 @@ module ApplicationHelper
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to title, params.merge(:sort => column, :direction => direction, :page => 1), {:class => "#{css_class} sortable", :remote => true}
+    link_to(params.merge(sort: column, direction: direction, page: 1), {class: "#{css_class} sortable", remote: true}) do
+      "#{title} #{sortable_icon(column)}".html_safe
+    end
   end
 
   def sortable_class(column)
@@ -73,6 +75,13 @@ module ApplicationHelper
     end
   end
 
+  def sortable_icon(column)
+    if column == sort_column
+      sort_direction == "asc" ? "<i class='fa fa-sort-asc'></i>" : "<i class='fa fa-sort-desc'></i>"
+    else
+      "<i class='fa fa-sort'></i>"
+    end
+  end
 
   def associate_account(controller, action, item)
     list, checked, global_status = '', '', ''
