@@ -4,15 +4,15 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center td-checkbox checkbox-item">
-              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+            <th class="align_center not-sortable td-checkbox checkbox-item">
+              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity ', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th><%= t('invoice') %></th>
-            <th><%= t('client') %></th>
-            <th><%= t('views.invoices.due_date') %></th>
-            <th><%= t('views.common.total') %></th>
-            <th><%= t('views.common.status') %></th>
-            <th class="center-align"><%= t('helpers.actions') %></th>
+            <th class="align_center sorting header <%= sortable_class('invoice_number') %>"><%= sortable('invoice_number', "#{t('invoice')}") %></th>
+            <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
+            <th class="align_left header <%= sortable_class('due_date') %>"><%= sortable('due_date', t('views.invoices.due_date')) %></th>
+            <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('invoice_total') %>"><%= sortable('invoice_total', t('views.common.total')) %></th>
+            <th class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
+            <th class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">
