@@ -4,16 +4,17 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center td-checkbox checkbox-item">
+            <th class="align_center not-sortable td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th width="20%"><%= t('views.common.title') %></th>
-            <th width="15%"><%= t('views.items.description') %></th>
-            <th><%= t('views.common.unit_cost') %></th>
-            <th><%= t('views.items.quantity') %></th>
-            <th width="15%"><%= t('views.items.tax') %>1</th>
-            <th width="15%"><%= t('views.items.tax') %>2</th>
-            <th class="center-align" width="15%;"><%= t('helpers.actions') %></th>
+
+            <th width="20%" class="align_center sorting header <%= sortable_class('item_name') %>"><%= sortable('item_name', "#{t('views.common.title')}") %></th>
+            <th width="10%" class="align_left header <%= sortable_class('item_description') %>"><%= sortable('item_description', t('views.items.description')) %></th>
+            <th width="15%" class="align_left header <%= sortable_class('unit_cost') %>"><%= sortable('unit_cost', t('views.common.unit_cost')) %></th>
+            <th width="10%" class="align_left header sorting {sorter:'thousands'} <%= sortable_class('quantity') %>"><%= sortable('quantity', t('views.common.qty')) %></th>
+            <th width="15%" class="align_center header <%= sortable_class('tax_1') %>"><%= sortable('tax_1', t('views.items.tax')+'1') %></th>
+            <th width="15%" class="align_center header <%= sortable_class('tax_2') %>"><%= sortable('tax_2', t('views.items.tax')+'2') %></th>
+            <th width="15%;" class="center-align not-sortable"><%= t '.actions', default: t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">
