@@ -4,15 +4,15 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center td-checkbox checkbox-item">
+            <th class="align_center not-sortable td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th><%= t('invoice') %></th>
-            <th><%= t('client') %></th>
-            <th><%= t('views.payments.payment_date') %></th>
-            <th><%= t('views.common.type') %></th>
-            <th><%= t('views.invoices.amount_paid') %></th>
-            <th class="center-align"><%= t('helpers.actions') %></th>
+            <th class="align_center header <%= sortable_class('invoices.invoice_number') %>"><%= sortable('invoices.invoice_number', t('invoice')) %></th>
+            <th class="align_left header <%= sortable_class(get_org_name) %>"><%= sortable(get_org_name, t('client')) %></th>
+            <th class="align_center header <%= sortable_class('payment_date') %>"><%= sortable('payment_date', t('views.common.date')) %></th>
+            <th class="align_center header <%= sortable_class('IFNULL(payment_method,payment_type)') %>"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
+            <th class="align_center header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
+            <th class="center-align not-sortable"><%= t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">

@@ -166,11 +166,15 @@ class Payment < ActiveRecord::Base
     end
   end
 
-  def self.filter(params, per_page)
+  def self.filter(params)
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
+    @payments = Payment.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id')
+                       .joins('LEFT JOIN companies ON companies.id = payments.company_id')
+                       .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
+                       .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients ON clients.id = invs.client_id')
 
-    payments = params[:search].present? ? Payment.search(params[:search]).records : Payment.all
+    payments = params[:search].present? ? @payments.search(params[:search]).records : @payments
 
     payments = payments.payment_method(params[:type]) if params[:type].present?
     payments = payments.client_id(params[:client_id]) if params[:client_id].present?
@@ -182,7 +186,7 @@ class Payment < ActiveRecord::Base
         (Date.strptime(params[:payment_start_date], date_format).in_time_zone .. Date.strptime(params[:payment_end_date], date_format).in_time_zone)
     ) if params[:payment_start_date].present?
 
-    payments.unarchived.order('created_at DESC').page(params[:page]).per(per_page)
+    payments.unarchived
   end
 
   def destroy_credit_applied(payment_id)
