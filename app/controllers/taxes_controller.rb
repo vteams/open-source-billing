@@ -29,8 +29,7 @@ class TaxesController < ApplicationController
   def index
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-
-    @taxes = Tax.filter(params, @per_page)
+    @taxes = Tax.filter(params, @per_page).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
       format.html # index.html.erb

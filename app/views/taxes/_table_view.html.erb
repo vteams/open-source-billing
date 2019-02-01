@@ -4,12 +4,12 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center td-checkbox checkbox-item">
+            <th class="align_center not-sortable td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th><%= t('views.common.name') %></th>
-            <th width="35%"><%= t('views.common.percentage') %></th>
-            <th class="center-align"><%= t('helpers.actions') %></th>
+            <th class="align_center header <%= sortable_class('name') %>"><%= sortable('name', "#{t('views.taxes.tax_name')}") %></th>
+            <th width="35%" class="align_center header <%= sortable_class('percentage') %>"><%= sortable('percentage', t('views.common.percentage')) %></th>
+            <th width="15%;" class="center-align not-sortable"><%= t '.actions', default: t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">
