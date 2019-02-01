@@ -8,7 +8,7 @@
   <%= render 'reports/report_partials/format_links'%>
 </div>
 
-<table class="bordered">
+<table class="bordered table_listing">
   <thead>
     <th width="40%"><%= t('views.clients.client') %></th>
     <% (@report.report_criteria.from_month..@report.report_criteria.to_month).each  do |month| %>
