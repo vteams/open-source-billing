@@ -4,15 +4,15 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center td-checkbox checkbox-item">
+            <th class="align_center not-sortable td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
-            <th><%= t('estimate') %></th>
-            <th><%= t('client') %></th>
-            <th><%= t('views.common.date') %></th>
-            <th><%= t('views.common.total') %></th>
-            <th><%= t('views.common.status') %></th>
-            <th class="center-align"><%= t('helpers.actions') %></th>
+            <th class="align_center sorting header <%= sortable_class('estimate_number') %>"><%= sortable('estimate_number', "#{t('estimate')}") %></th>
+            <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
+            <th class="align_left header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.estimates.estimate_date')) %></th>
+            <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('views.common.total')) %></th>
+            <th class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
+            <th class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
           </tr>
           </thead>
           <tbody class="table-view-body">
