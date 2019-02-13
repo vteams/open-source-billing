@@ -25,9 +25,9 @@ class InvoiceMailer < ActionMailer::Base
   def new_invoice_email(client, invoice, e_id , current_user, invoice_pdf_file=nil)
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    attachments['attachment.pdf'] = invoice_pdf_file if invoice_pdf_file
+    attachments["Invoice-#{invoice.invoice_number}.pdf"] = invoice_pdf_file if invoice_pdf_file
     email_body = mail(to: (client.billing_email if client.billing_email.present?),
-                      cc: (client.email+","+(template.cc if template.cc.present?)), bcc: (template.bcc if template.bcc.present?) , subject: template.subject).body.to_s
+                      cc: (template.cc.present? ? client.email+","+template.cc : client.email), bcc: (template.bcc if template.bcc.present?) , subject: template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email
