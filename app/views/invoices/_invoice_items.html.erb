@@ -17,10 +17,10 @@
       <tr>
         <td><%= item.item_name rescue "" %></td>
         <td><%= item.item_description %></td>
-        <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+        <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
         <td class="center-align"><%= item.item_quantity.to_i %></td>
         <td class="center-align"><%= item.tax1.name rescue ''%></td>
-        <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+        <td class="align_right"><%= number_to_currency(item_line_total, unit: invoice.currency.code) %></td>
       </tr>
   <% end %>
   </tbody>

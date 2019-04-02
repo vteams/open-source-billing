@@ -24,6 +24,10 @@
     </div>
 
     <div class="info-section clearfix">
+      <div>
+        <center><%= image_tag @invoice.company.logo %></center>
+        <br>
+      </div>
       <div class="info-left-section">
         <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
         <br><br>
@@ -53,9 +57,9 @@
                     <tr>
                       <td class="left-align"><%= item.item_name rescue "" %></td>
                       <td class="left-align"><%= item.item_description %></td>
-                      <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                      <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: @invoice.currency.code) %></td>
                       <td class="align_right"><%= item.item_quantity.to_i %></td>
-                      <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+                      <td class="align_right"><%= number_to_currency(item_line_total, unit: @invoice.currency.code) %></td>
                     </tr>
                 <% end %>
             </tbody>
@@ -123,38 +127,38 @@
           <strong class="invoice-total-title"><%= t('views.invoices.amount_due') %></strong>
         </div>
         <div class="invoice-total-right">
-          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.sub_total, unit: '' ) %></span></strong>
+          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.sub_total, unit: @invoice.currency.code ) %></span></strong>
 
           <% if @invoice.discount_percentage.present? %>
               <div class="new-invoice-footer-row">
                 <span><%=  @invoice.currency.unit %></span>
-                <em class="f-invoice-price"><%= number_to_currency(@invoice.discount_amount, unit: '' )%></em>
+                <em class="f-invoice-price"><%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency.code )%></em>
               </div>
           <% end %>
 
           <% if @invoice.tax.present? %>
               <div class="new-invoice-footer-row invicetax">
                 <span><%=  @invoice.currency.unit %></span>
-                <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_tax_amount, unit: '' )%></em>
+                <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_tax_amount, unit: @invoice.currency.code )%></em>
               </div>
           <% end %>
           <% @invoice.tax_detail_with_discount.each do |tax, amount| %>
               <div class="new-invoice-footer-row invicetax">
                 <span><%=  @invoice.currency.unit %></span>
-                <em class="f-invoice-price"><%= number_to_currency(amount, unit: '' )%></em>
+                <em class="f-invoice-price"><%= number_to_currency(amount, unit: @invoice.currency.code )%></em>
               </div>
           <% end %>
 
           <div class="new-invoice-footer-row">
             <span><%=  @invoice.currency.unit %></span>
-            <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_total, unit: '' )%></em>
+            <em class="f-invoice-price"><%= number_to_currency(@invoice.invoice_total, unit: @invoice.currency.code )%></em>
           </div>
           <div class="new-invoice-footer-row">
             <span><%=  @invoice.currency.unit %></span>
-            <em class="f-invoice-price"><%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit:  '' )%></em>
+            <em class="f-invoice-price"><%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit:  @invoice.currency.code )%></em>
           </div>
 
-          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: '') %></span></strong>
+          <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.code) %></span></strong>
         </div>
 
       </div>

@@ -35,7 +35,7 @@
             </div>
             <% end %>
             <div class="paymentInfo">
-              <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: '') %> <small><%= invoice.currency.unit %></small></strong>
+              <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: @invoice.currency.code) %> <small><%= invoice.currency.unit %></small></strong>
             </div>
           </div>
             <% unless invoice.company.logo_url.blank? %>
@@ -57,16 +57,16 @@
             <div class="item-result">
               <div class="table-row">
                 <span><strong><%= t('views.invoices.subtotal') %></strong></span>
-                <span><strong><%= number_to_currency(invoice.sub_total, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.sub_total, unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
               </div>
               <div class="table-row">
                 <span><%= t('views.common.discount') %> <%= invoice.discount_percentage %><%= invoice.discount_type %></span>
-                <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+                <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.code : '$') %></span>
               </div>
               <% if invoice.tax.present? %>
               <div class="table-row">
                 <span><%= t('views.common.tax') %>: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
-                <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+                <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.code : '$') %></span>
               </div>
               <% end %>
               <% unless invoice.tax_detail_with_discount.blank? %>
@@ -80,17 +80,17 @@
             <div class="item-total">
               <div class="table-row">
                 <span><strong><%= t('views.common.total') %></strong></span>
-                <span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
               </div>
               <div class="table-row">
                 <span class="text-blue"><strong><%= t('views.invoices.amount_paid') %></strong></span>
-                <span class="text-blue"><strong>-<%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+                <span class="text-blue"><strong>-<%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
               </div>
             </div>
             <div class="item-due">
               <div class="table-row">
                 <span><strong><%= t('views.invoices.amount_due') %></strong></span>
-                <span><strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
               </div>
             </div>
           </div>

@@ -129,7 +129,7 @@
             <div class="table-row">
                 <span>
                     Invoice Tax  &nbsp;&nbsp;
-                  <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id), { prompt: 'Select', include_blank: true},{:class => "discount_select inline-select small-select"} %>
+                  <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id), {}, {:class => "discount_select inline-select small-select"} %>
                 </span>
                 <span class="input-field invoice_tax">
                   <%= f.text_field :invoice_tax_amount, class: "invoice_tax line_item_qtip right-align", placeholder:  "00.00", readOnly: true %>
