@@ -64,15 +64,14 @@ class InvoicesController < ApplicationController
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.pdf do
-        file_name = "Invoice-#{Date.today.to_s}.pdf"
-        pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
-          layout: 'pdf_mode.html.erb',
-          encoding: "UTF-8",
-          template: 'invoices/pdf_invoice.html.erb',
-          footer:{
-            right: 'Page [page] of [topage]'
-          }
-        send_data pdf, filename: file_name, disposition: 'inline'
+        render  pdf: "#{@invoice.invoice_number}",
+                layout: 'pdf_mode.html.erb',
+                encoding: "UTF-8",
+                show_as_html: false,
+                template: 'invoices/pdf_invoice.html.erb',
+                footer:{
+                    right: 'Page [page] of [topage]'
+                }
       end
     end
   end

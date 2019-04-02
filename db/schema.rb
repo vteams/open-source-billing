@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426110541) do
+ActiveRecord::Schema.define(version: 20190125144843) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -38,17 +38,11 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "admin_first_name",            limit: 255
     t.string   "admin_last_name",             limit: 255
     t.string   "admin_email",                 limit: 255
-    t.decimal  "admin_billing_rate_per_hour",               precision: 10
+    t.decimal  "admin_billing_rate_per_hour",             precision: 10
     t.string   "admin_user_name",             limit: 255
     t.string   "admin_password",              limit: 255
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
-    t.integer  "account_id",                  limit: 4
-    t.string   "subdomain",                   limit: 255
-    t.text     "pp_login",                    limit: 65535
-    t.text     "pp_password",                 limit: 65535
-    t.text     "pp_signature",                limit: 65535
-    t.text     "pp_business",                 limit: 65535
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   create_table "api_keys", force: :cascade do |t|
@@ -58,7 +52,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",   limit: 4
   end
 
   add_index "api_keys", ["access_token"], name: "index_api_keys_on_access_token", unique: true, using: :btree
@@ -68,7 +61,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "category",   limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "account_id", limit: 4
   end
 
   create_table "client_contacts", force: :cascade do |t|
@@ -83,7 +75,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "deleted_at"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "clients", force: :cascade do |t|
@@ -114,7 +105,8 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "currency_id",       limit: 4
     t.string   "provider",          limit: 255
     t.string   "provider_id",       limit: 255
-    t.integer  "account_id",        limit: 4
+    t.string   "billing_email",     limit: 255
+    t.string   "vat_number",        limit: 255
   end
 
   create_table "companies", force: :cascade do |t|
@@ -147,7 +139,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "parent_type", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "account_id",  limit: 4
   end
 
   create_table "company_entities", force: :cascade do |t|
@@ -157,7 +148,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "parent_type", limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "account_id",  limit: 4
   end
 
   create_table "credit_payments", force: :cascade do |t|
@@ -167,7 +157,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.integer  "credit_id",  limit: 4
-    t.integer  "account_id", limit: 4
   end
 
   create_table "currencies", force: :cascade do |t|
@@ -176,7 +165,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "unit",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id", limit: 4
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -192,7 +180,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.integer  "recurring_profile_id", limit: 4
-    t.integer  "account_id",           limit: 4
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
@@ -209,7 +196,8 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.boolean  "send_email",                             default: true
     t.integer  "no_of_days",               limit: 4
     t.boolean  "is_late_payment_reminder",               default: false
-    t.integer  "account_id",               limit: 4
+    t.string   "cc",                       limit: 255
+    t.string   "bcc",                      limit: 255
   end
 
   create_table "estimates", force: :cascade do |t|
@@ -237,7 +225,8 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "currency_id",         limit: 4
     t.string   "provider",            limit: 255
     t.string   "provider_id",         limit: 255
-    t.integer  "account_id",          limit: 4
+    t.decimal  "estimate_tax_amount",               precision: 10, scale: 2
+    t.integer  "tax_id",              limit: 4
   end
 
   create_table "expense_categories", force: :cascade do |t|
@@ -246,7 +235,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "updated_at"
     t.string   "provider",    limit: 255
     t.string   "provider_id", limit: 255
-    t.integer  "account_id",  limit: 4
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -265,7 +253,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "updated_at"
     t.string   "provider",       limit: 255
     t.string   "provider_id",    limit: 255
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "invoice_line_items", force: :cascade do |t|
@@ -284,7 +271,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "updated_at",                                                          null: false
     t.decimal  "actual_price",                 precision: 10, scale: 2, default: 0.0
     t.integer  "estimate_id",      limit: 4
-    t.integer  "account_id",       limit: 4
   end
 
   create_table "invoice_tasks", force: :cascade do |t|
@@ -295,7 +281,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "invoice_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",  limit: 4
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -329,9 +314,8 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "provider",            limit: 255
     t.string   "provider_id",         limit: 255
     t.integer  "tax_id",              limit: 4
-    t.decimal  "invoice_tax_amount",                precision: 10
+    t.decimal  "invoice_tax_amount",                precision: 10, scale: 2
     t.integer  "parent_id",           limit: 4
-    t.integer  "account_id",          limit: 4
   end
 
   create_table "items", force: :cascade do |t|
@@ -351,7 +335,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.decimal  "actual_price",                 precision: 10, scale: 2, default: 0.0
     t.string   "provider",         limit: 255
     t.string   "provider_id",      limit: 255
-    t.integer  "account_id",       limit: 4
   end
 
   create_table "line_item_taxes", force: :cascade do |t|
@@ -364,7 +347,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "archive_number",       limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.integer  "account_id",           limit: 4
   end
 
   create_table "logs", force: :cascade do |t|
@@ -379,7 +361,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "provider",    limit: 255
     t.string   "provider_id", limit: 255
     t.integer  "user_id",     limit: 4
-    t.integer  "account_id",  limit: 4
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -391,7 +372,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "created_at",                      null: false
     t.datetime "revoked_at"
     t.string   "scopes",            limit: 255
-    t.integer  "account_id",        limit: 4
   end
 
   add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
@@ -405,7 +385,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "revoked_at"
     t.datetime "created_at",                    null: false
     t.string   "scopes",            limit: 255
-    t.integer  "account_id",        limit: 4
   end
 
   add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
@@ -420,7 +399,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "scopes",       limit: 255,   default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",   limit: 4
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
@@ -430,7 +408,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "description",    limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "payments", force: :cascade do |t|
@@ -453,18 +430,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "status",                    limit: 255
     t.string   "provider",                  limit: 255
     t.string   "provider_id",               limit: 255
-    t.integer  "account_id",                limit: 4
-  end
-
-  create_table "plans", force: :cascade do |t|
-    t.string   "name",              limit: 255
-    t.string   "stripe_plan_id",    limit: 255
-    t.integer  "amount",            limit: 4
-    t.string   "interval",          limit: 255
-    t.integer  "trial_period_days", limit: 4
-    t.integer  "client_limit",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "project_tasks", force: :cascade do |t|
@@ -481,7 +446,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "due_date"
     t.float    "hours",          limit: 24
     t.float    "spent_time",     limit: 24
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "projects", force: :cascade do |t|
@@ -501,7 +465,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "updated_at"
     t.string   "provider",       limit: 255
     t.string   "provider_id",    limit: 255
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "recurring_profile_line_items", force: :cascade do |t|
@@ -518,7 +481,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "archive_number",       limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.integer  "account_id",           limit: 4
   end
 
   create_table "recurring_profiles", force: :cascade do |t|
@@ -552,7 +514,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "currency_id",         limit: 4
     t.integer  "created_by",          limit: 4
     t.integer  "updated_by",          limit: 4
-    t.integer  "account_id",          limit: 4
   end
 
   create_table "recurring_schedules", force: :cascade do |t|
@@ -565,7 +526,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "enable_recurring",              default: true
-    t.integer  "account_id",        limit: 4
   end
 
   create_table "roles", force: :cascade do |t|
@@ -574,7 +534,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "resource_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",    limit: 4
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
@@ -592,7 +551,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "notification_id",   limit: 4
     t.string   "notification_type", limit: 255
     t.integer  "company_id",        limit: 4
-    t.integer  "account_id",        limit: 4
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -600,7 +558,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.text     "data",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id", limit: 4
   end
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
@@ -613,7 +570,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "thing_type", limit: 30
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id", limit: 4
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
@@ -633,22 +589,7 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "provider",       limit: 255
     t.string   "provider_id",    limit: 255
     t.integer  "user_id",        limit: 4
-    t.integer  "account_id",     limit: 4
   end
-
-  create_table "subscriptions", force: :cascade do |t|
-    t.integer  "plan_id",     limit: 4
-    t.string   "full_name",   limit: 255
-    t.string   "company",     limit: 255
-    t.string   "email",       limit: 255
-    t.string   "card_token",  limit: 255
-    t.date     "end_date"
-    t.string   "customer_id", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -665,7 +606,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "updated_at"
     t.string   "provider",       limit: 255
     t.string   "provider_id",    limit: 255
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "taxes", force: :cascade do |t|
@@ -678,7 +618,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.datetime "deleted_at"
     t.string   "provider",       limit: 255
     t.string   "provider_id",    limit: 255
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "team_members", force: :cascade do |t|
@@ -691,7 +630,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "staff_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id",     limit: 4
   end
 
   create_table "users", force: :cascade do |t|
@@ -716,8 +654,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.integer  "current_company",        limit: 4
     t.string   "authentication_token",   limit: 255
     t.string   "avatar",                 limit: 255
-    t.integer  "account_id",             limit: 4
-    t.integer  "subscription_id",        limit: 4
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
@@ -725,9 +661,8 @@ ActiveRecord::Schema.define(version: 20180426110541) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id",    limit: 4
-    t.integer "role_id",    limit: 4
-    t.integer "account_id", limit: 4
+    t.integer "user_id", limit: 4
+    t.integer "role_id", limit: 4
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
@@ -739,7 +674,6 @@ ActiveRecord::Schema.define(version: 20180426110541) do
     t.string   "whodunnit",  limit: 255
     t.text     "object",     limit: 65535
     t.datetime "created_at"
-    t.integer  "account_id", limit: 4
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree

@@ -38,13 +38,16 @@ Osb::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
-  config.middleware.use ExceptionNotification::Rack,
-                            :ignore_if => lambda { |env, exception| !env.nil? },
-                            :email => {
-                                :sender_address => %{"notifier" <support@opensourcebilling.org>},
-                                :exception_recipients => %w{suneel.kumar@nxb.com.pk}
-                            }
 
-      ExceptionNotifier::Rake.configure
-  end
+=begin
+  config.middleware.use ExceptionNotification::Rack,
+                        :ignore_if => lambda { |env, exception| !env.nil? },
+                        :email => {
+                            :sender_address => %{"notifier" <sender@sample.com>},
+                            :exception_recipients => %w{receiver@sample.com}
+                        }
+
+  ExceptionNotifier::Rake.configure
+=end
+
 end

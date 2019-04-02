@@ -229,6 +229,10 @@ class Client < ActiveRecord::Base
   end
 
   def client_name
-    "#{first_name.first.capitalize}#{last_name.first.capitalize}"
+    [first_name.first.capitalize, last_name.first.capitalize].compact.join
+  end
+
+  def full_name
+    [first_name.capitalize, last_name.capitalize].compact.join(' ')
   end
 end

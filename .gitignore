@@ -18,16 +18,9 @@ capybara-*.html
 /public/system
 /public/*
 config/initializers/secret_token.rb
-config/environments/*.rb
-config/secrets.yml
 config/database.yml
-config/environments/development.rb
-config/environments/staging.rb
-config/environments/production.rb
 config/deploy/*.rb
-
-app/controllers/csv_files/*.csv
-app/controllers/csv_files/*.txt
+config/config.yml
 
 ## Environment normalisation:
 /.bundle
@@ -41,12 +34,8 @@ app/controllers/csv_files/*.txt
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
-/config/config.yml
 node_modules/*
 Gemfile.lock
-
-# Ignore application configuration
-/config/application.yml
 
 # track below files
 !/public/404.*

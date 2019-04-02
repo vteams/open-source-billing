@@ -456,6 +456,9 @@ body{
   overflow: hidden;
   height: 100%;
 }
+.new-invoice-holder .info-section .info-right-section {
+  width: 40%;
+}
 .new-invoice-holder .info-section .info-left-section {
   width: 60%;
 }
@@ -466,4 +469,16 @@ body{
   .invoice-total-left {
     .new-invoice-footer-row { padding-bottom: 10px; }
   }
+}
+
+.new-invoice-holder{
+  margin: 0 !important;
+}
+
+.container-fluid {
+  padding: 0 !important;
+}
+
+body {
+  padding: 0 !important;
 }

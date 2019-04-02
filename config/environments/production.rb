@@ -48,7 +48,7 @@ Osb::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( *.js *.css *.css.erb general.css.scss show_invoice.css.scss )
+  # config.assets.precompile += %w( )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -62,9 +62,17 @@ Osb::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  config.action_dispatch.tld_length = OSB::CONFIG::TLD_LENGTH
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+=begin
+  config.middleware.use ExceptionNotification::Rack,
+                              :ignore_if => lambda { |env, exception| !env.nil? },
+                              :email => {
+                                  :sender_address => %{"notifier" <sender@sample.com>},
+                                  :exception_recipients => %w{receiver@sample.com}
+                              }
 
+  ExceptionNotifier::Rake.configure
+=end
 end

@@ -1,0 +1,10 @@
+<div>
+  <strong><%= client.organization_name %></strong><br>
+</div>
+<div>
+  <%= client.full_name %>
+</div>
+<div>
+  <%= [client.address_street1, client.address_street2].compact.join(', ') || 'n/a' %>, <%= client.city || 'n/a' %>, <%= client.country || 'n/a' %><br>
+  Tel: <%= client.business_phone || 'n/a' %>
+</div>

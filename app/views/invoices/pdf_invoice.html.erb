@@ -3,32 +3,18 @@
 <div id="main-content" class="side-show">
   <div class="invoice_template">
     <div class="new-invoice-holder">
-      <div class="new-invoice-header clearfix">
-        <h5 class="left">
-          <%= t(Invoice.model_name.singular) %>: <span><%= invoice.client.organization_name rescue '' %></span>
-        </h5>
-      </div>
 
       <div class="info-section clearfix">
         <div class="info-left-section">
-          <h6><%= invoice.invoice_number %>: <span><bold><%= invoice.company.company_name %></bold></span></h6>
-          <span><%= t(Invoice.model_name.singular) %>: <small> <%= invoice.invoice_date %></small></span>
-          <span class="text-blue"> <%= t('views.invoices.due') %>: <small> <%= invoice.due_date %></small></span>
-          <div class="terms">
-            <span><%= t('views.common.terms') %>: </span> <em><%= t('views.invoices.' + invoice.term.downcase) %></em>
-          </div>
-          <div class="paymentInfo">
-            <strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.code ) %>
-              <select disabled>
-                <option value="1"><%= invoice.currency.unit %></option>
-              </select>
-            </strong>
-          </div>
+          <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
+          <br><br>
+          <%= render partial: 'client_contact_info', locals: {client: @invoice.client} %>
         </div>
         <div class="info-right-section">
-          <span class="btn-invoice-draft"><%= t('views.invoices.' + invoice.status.downcase) %></span>
+          <%= render 'invoice_summary' %>
         </div>
       </div>
+
 
       <div class="new-invoice-table-holder">
         <% if invoice.invoice_line_items.present? %>
