@@ -104,6 +104,7 @@ en:
 
   views:
     common:
+      serial_number: "S. No."
       currency: "Currency"
       cancel: "Cancel"
       type: "Type"

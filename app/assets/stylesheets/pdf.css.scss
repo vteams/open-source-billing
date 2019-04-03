@@ -464,7 +464,7 @@ body{
 }
 .new-invoice-footer .right-section.right {
   width: 400px !important;
-  padding: 0 38px;
+  padding: 0px !important;
 
   .invoice-total-left {
     .new-invoice-footer-row { padding-bottom: 10px; }
@@ -482,3 +482,6 @@ body{
 body {
   padding: 0 !important;
 }
+
+.new-invoice-holder .new-invoice-table-holder {
+  padding: 5px 5px 3px; }
