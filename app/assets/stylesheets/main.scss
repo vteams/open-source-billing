@@ -3860,7 +3860,7 @@ html {
 .new-invoice-holder .info-section {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   padding: 30px 35px 8px;
-  border-bottom: 1px solid #dfdede; }
+   }
 .new-invoice-holder .info-section .info-left-section {
   float: left;
   width: 37%; }
@@ -4240,8 +4240,7 @@ html {
   margin-bottom: 8px;
   right: 0px; }
 
-.new-invoice-footer {
-  padding: 0 6px 10px; }
+.new-invoice-footer { }
 .new-invoice-footer:after {
   display: block;
   content: " ";
