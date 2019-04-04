@@ -137,7 +137,7 @@ class InvoiceMailer < ActionMailer::Base
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'invoice_total' => (invoice.invoice_total.to_s  rescue 'ERROR'),
-        'invoice_url' => "#{Account.url(invoice.try(:account_id))}/#{I18n.locale}/invoices/preview?inv_id=#{invoice.encrypted_id}",
+        'invoice_url' => "#{Account.url(invoice.try(:account_id))}/#{I18n.locale}/invoices/#{invoice.id}",
         'dispute_response' => (@@response_to_client  rescue 'ERROR'),
         'user_organization_name' => (user.accounts.first.org_name rescue 'ERROR'),
         'reason' =>  (@@reason_by_client  rescue 'ERROR'),

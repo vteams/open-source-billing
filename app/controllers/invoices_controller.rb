@@ -19,16 +19,22 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
-  before_filter :authenticate_user!, :except => [:preview, :invoice_pdf, :paypal_payments, :pay_with_credit_card, :dispute_invoice, :payment_with_credit_card]
-  before_filter :set_per_page_session
-  before_filter :set_client_id, only: :create
-  protect_from_forgery :except => [:preview, :paypal_payments, :create]
+  load_and_authorize_resource only: %i[index show create destroy update new edit]
+
+  before_action :authenticate_user!, except: %i[preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
+  before_action :set_per_page_session
+  before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy]
+  before_action :verify_authenticity_token, only: :show #if: ->{ action_name == 'show' and request.format.pdf? }
+  before_action :set_client_id, only: :create
+
+  protect_from_forgery :except => %i[preview paypal_payments create]
+
   helper_method :sort_column, :sort_direction
+
   include DateFormats
+  include InvoicesHelper
 
   layout :choose_layout
-  include InvoicesHelper
 
   def index
     params[:status] = params[:status] || 'active'
@@ -42,50 +48,22 @@ class InvoicesController < ApplicationController
     end
   end
 
-  def filter_invoices
-    @invoices = Invoice.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    @invoices = filter_by_company(@invoices)
-  end
-
   def show
-    @invoice = Invoice.find(params[:id])
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html {render template: 'invoices/invoice_pdf.html.erb', layout:  'pdf_mode'}
       format.js
-    end
-  end
-
-  def invoice_pdf
-    # to be used in invoice_pdf view because it requires absolute path of image
-    @images_path = "#{request.protocol}#{request.host_with_port}/assets"
-    invoice_id = OSB::Util.decrypt(params[:id])
-    @invoice = Invoice.find(invoice_id)
-    @client = Client.unscoped.find_by_id @invoice.client_id
-    respond_to do |format|
       format.pdf do
         render  pdf: "#{@invoice.invoice_number}",
                 layout: 'pdf_mode.html.erb',
                 encoding: "UTF-8",
                 show_as_html: false,
-                template: 'invoices/pdf_invoice.html.erb',
+                template: 'invoices/show.html.erb',
                 footer:{
                     right: 'Page [page] of [topage]'
                 }
       end
     end
-  end
-
-  def preview
-    @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
-    render :action => 'invoice_deleted_message', :notice => t('views.invoices.invoice_deleted') if @invoice == 'invoice deleted'
-    respond_to do |format|
-      format.html {render template: 'invoices/preview.html.erb', layout:  'pdf_mode'}
-      format.js
-    end
-  end
-
-  def invoice_deleted_message
   end
 
   def new
@@ -104,7 +82,6 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    @invoice = Invoice.find(params[:id])
     @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     if @invoice.invoice_type.eql?("ProjectInvoice")
       redirect_to :back, alert:  t('views.invoices.project_invoice_cannot_updated')
@@ -114,7 +91,7 @@ class InvoicesController < ApplicationController
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to {|format| format.js; format.html}
-   end
+    end
   end
 
   def create
@@ -141,27 +118,7 @@ class InvoicesController < ApplicationController
     end
   end
 
-  def assign_company_to_client
-    if params[:invoice][:client_attributes].present?
-      client = Client.new(client_params)
-      associate_entity(client_params.merge(controller: 'clients', company_ids: [get_company_id]), client)
-      if client.save
-        @invoice.client_id = client.id
-      else
-        respond_to do |format|
-          format.json { render :json => client.errors, :status => :unprocessable_entity } and return
-        end
-      end
-    end
-  end
-
-  def enter_single_payment
-    invoice_ids = [params[:ids]]
-    redirect_to({:action => 'enter_payment', :controller => 'payments', :invoice_ids => invoice_ids})
-  end
-
   def update
-    @invoice = Invoice.find(params[:id])
     @invoice.company_id = get_company_id()
     @notify = params[:save_as_draft].present? ? false : true
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
@@ -190,21 +147,57 @@ class InvoicesController < ApplicationController
     end
   end
 
-
-  def send_note_only
-    @invoice = Invoice.find(params[:inv_id])
-    @invoice.send_note_only params[:response_to_client], current_user
-    render :text => ''
-  end
-
   def destroy
-    @invoice = Invoice.find(params[:id])
     @invoice.destroy
 
     respond_to do |format|
       format.html { redirect_to invoices_url }
       format.json { render_json(@invoice) }
     end
+  end
+
+  def filter_invoices
+    @invoices = Invoice.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @invoices = filter_by_company(@invoices)
+  end
+
+
+  def preview
+    @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
+    render :action => 'invoice_deleted_message', :notice => t('views.invoices.invoice_deleted') if @invoice == 'invoice deleted'
+    respond_to do |format|
+      format.html {render template: 'invoices/preview.html.erb', layout:  'pdf_mode'}
+      format.js
+    end
+  end
+
+  def invoice_deleted_message
+  end
+
+  def assign_company_to_client
+    if params[:invoice][:client_attributes].present?
+      client = Client.new(client_params)
+      associate_entity(client_params.merge(controller: 'clients', company_ids: [get_company_id]), client)
+      if client.save
+        @invoice.client_id = client.id
+      else
+        respond_to do |format|
+          format.json { render :json => client.errors, :status => :unprocessable_entity } and return
+        end
+      end
+    end
+  end
+
+  def enter_single_payment
+    invoice_ids = [params[:ids]]
+    redirect_to({:action => 'enter_payment', :controller => 'payments', :invoice_ids => invoice_ids})
+  end
+
+  # ToDo
+  def send_note_only
+    @invoice = Invoice.find(params[:inv_id])
+    @invoice.send_note_only params[:response_to_client], current_user
+    render :text => ''
   end
 
   def unpaid_invoices
@@ -313,13 +306,11 @@ class InvoicesController < ApplicationController
   end
 
   def send_invoice
-    invoice = Invoice.find(params[:id])
-    invoice.send_invoice(current_user, params[:id])
+    @invoice.send_invoice(current_user, params[:id])
   end
 
   def stop_recurring
-    invoice = Invoice.find(params[:id])
-    recurring = invoice.recurring_parent.recurring_schedule
+    recurring = @invoice.recurring_parent.recurring_schedule
     if recurring.present?
       recurring.update_attributes(enable_recurring: false)
       redirect_to(invoices_url, notice: t('views.invoices.recurring_stopped_msg'))
@@ -340,6 +331,14 @@ class InvoicesController < ApplicationController
   end
 
   private
+
+  def get_invoice
+    @invoice = Invoice.find(params[:id])
+  end
+
+  def verify_authenticity_token
+    # binding.pry
+  end
 
   def invoice_has_deleted_clients?(invoices)
     invoice_with_deleted_clients = []
@@ -370,8 +369,6 @@ class InvoicesController < ApplicationController
     params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
-
-  private
 
   def invoice_params
     params.require(:invoice).permit(:client_id, :discount_amount, :discount_type,

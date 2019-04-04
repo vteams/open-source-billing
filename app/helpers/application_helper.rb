@@ -83,6 +83,14 @@ module ApplicationHelper
     end
   end
 
+  def self.root_path
+    String === Rails.root ? Pathname.new(Rails.root) : Rails.root
+  end
+
+  def image_tag source, options={}
+    request.format.pdf? ? super(wicked_pdf_asset_path(source), options) : super(source, options)
+  end
+
   def associate_account(controller, action, item)
     list, checked, global_status = '', '', ''
     list = "<div class='row'>"

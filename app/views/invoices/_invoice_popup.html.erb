@@ -7,8 +7,8 @@
                         class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
             <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), remote: true,
                         title: t('views.common.send') %>
-            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf',
-                         :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
+            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'show',
+                         :id => @invoice.id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
             <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
                         target: '_blank' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">

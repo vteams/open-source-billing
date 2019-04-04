@@ -1,27 +1,27 @@
 <div class="invoice_template">
   <div class="new-invoice-holder">
-    <div class="new-invoice-header clearfix">
-
-
+    <% if request.format.html? %>
+      <div class="new-invoice-header clearfix">
           <div class="new-invoice-action-btn right">
 
             <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"),
-                        {:controller => 'invoices', :action => 'invoice_pdf',
-                         :id => @invoice.encrypted_id, :format => "pdf"},
+                        {:controller => 'invoices', :action => 'show',
+                         :id => @invoice.id, :format => "pdf"},
                         :target => '_blank', title: t('views.common.pdf') %>
             <%= link_to raw("<i class='material-icons'>print</i>"),
-                        {:controller => 'invoices', :action => 'invoice_pdf',
-                         :id => @invoice.encrypted_id, :format => "pdf"},
+                        {:controller => 'invoices', :action => 'show',
+                         :id => @invoice.id, :format => "pdf"},
                         :target => '_blank', title: t('views.common.print') %>
             <%= link_to raw("<i class='material-icons'>history</i>"),
                         {:controller => 'payments', :action => 'payments_history',
                          id: @invoice.id, encrypted_id: params[:inv_id]},
                         remote: true unless @invoice.payments.blank? %>
           </div>
-          <% if @invoice.status != "paid" and action_name.eql?('preview') %>
+          <% if @invoice.status != "paid" %>
               <span class="pull-right"><%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), title: 'Paypal Payment', class: 'btn btn-draft' %></span>
           <% end %>
-    </div>
+      </div>
+    <% end %>
 
     <div class="info-section clearfix">
       <div>
