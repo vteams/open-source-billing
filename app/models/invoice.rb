@@ -31,6 +31,8 @@ class Invoice < ActiveRecord::Base
   scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
   scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
   scope :due_date, -> (due_date) { where(due_date: due_date) }
+  scope :by_company, -> (company_id) { where("invoices.company_id IN(?)", company_id) }
+  scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ")}
 
   # constants
   STATUS_DESCRIPTION = {

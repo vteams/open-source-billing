@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_user
   before_filter :set_listing_layout
   before_filter :authenticate_user!
-
+  before_filter :set_current_company
 
   before_action :set_locale
   rescue_from CanCan::AccessDenied do |exception|
@@ -84,8 +84,6 @@ class ApplicationController < ActionController::Base
   def associate_entity(params, entity)
     ids, controller = params[:company_ids], params[:controller]
 
-
-
     ActiveRecord::Base.transaction do
       # delete existing associations
       if action_name == 'update'
@@ -99,6 +97,13 @@ class ApplicationController < ActionController::Base
       else
         Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
       end
+    end
+  end
+
+  def set_current_company
+    unless params[:company_id].blank?
+      session['current_company'] = params[:company_id]
+      current_user.update_attributes(current_company: params[:company_id])
     end
   end
 

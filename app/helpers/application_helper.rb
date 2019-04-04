@@ -148,6 +148,10 @@ module ApplicationHelper
     end
   end
 
+  def current_company
+    current_user.current_company || session[:current_company]
+  end
+
   def filter_select_by_companies
     Company.all
   end
