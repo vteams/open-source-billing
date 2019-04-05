@@ -1,6 +1,9 @@
 class Currency < ActiveRecord::Base
   validates :code,:title,:unit , presence: true
 
+  scope :with_invoices, -> { joins("LEFT OUTER JOIN invoices ON invoices.currency_id = currencies.id ")}
+  scope :having_invoices, -> { joins("RIGHT OUTER JOIN invoices ON invoices.currency_id = currencies.id ")}
+
   has_many :invoices
 
   def self.default_currency

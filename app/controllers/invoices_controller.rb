@@ -42,7 +42,6 @@ class InvoicesController < ApplicationController
     @current_company_invoices = Invoice.by_company(current_company)
     @invoices = @current_company_invoices.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
 
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params.deep_dup)
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -68,13 +67,13 @@ class InvoicesController < ApplicationController
   end
 
   def new
+    @current_company_invoices = Invoice.by_company(current_company)
     @invoice = Services::InvoiceService.build_new_invoice(params)
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
     @invoice.currency = @client.currency if @client.present?
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -83,7 +82,7 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    @invoice_activity = Reporting::InvoiceActivity.get_recent_activity(get_company_id, @per_page, params)
+    @current_company_invoices = Invoice.by_company(current_company)
     if @invoice.invoice_type.eql?("ProjectInvoice")
       redirect_to :back, alert:  t('views.invoices.project_invoice_cannot_updated')
     else
