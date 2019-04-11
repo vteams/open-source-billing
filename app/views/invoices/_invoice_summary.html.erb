@@ -10,5 +10,5 @@
 
 <div>
   <div><b>Invoice Type: </b><%= 'Regular' %></div>
-  <div><b>Billing Month: </b><%= @invoice.invoice_date %></div>
+  <div><b>Billing Month: </b><%= "#{@invoice.invoice_date.to_date.strftime("%B")} #{@invoice.invoice_date.to_date.strftime("%Y")}" rescue @invoice.invoice_date %></div>
 </div>

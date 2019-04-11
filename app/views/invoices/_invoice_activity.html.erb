@@ -51,7 +51,7 @@
                         <h5>
                           <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
                           <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
-                          
+
                         </h5>
                       </div>
                     </div>
