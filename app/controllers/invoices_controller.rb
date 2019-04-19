@@ -173,7 +173,7 @@ class InvoicesController < ApplicationController
 
   def set_client_currency
     @client = Client.find params[:client_id]
-
+    @currency = @client.currency
     respond_to do |format|
       format.js
     end
