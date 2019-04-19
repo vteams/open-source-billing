@@ -155,6 +155,7 @@ Osb::Application.routes.draw do
         get 'preview'
         get 'credit_card_info'
         get 'selected_currency'
+        get :set_client_currency
       end
       member do
         get 'stop_recurring'

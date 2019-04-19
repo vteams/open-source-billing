@@ -17,26 +17,6 @@ class @Estimate
       EstimateCalculator.updateLineTotal(jQuery(this))
       EstimateCalculator.updateEstimateTotal()
 
-  @change_invoice_item  = (elem) ->
-    $('.invoice_grid_fields select.items_list').on 'change', ->
-      if parseInt($(this).find(':selected').val()) != -1
-        OsbPlugins.hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
-        elem = undefined
-        elem = $(this)
-        if elem.val() == ''
-          clearLineTotal elem
-          false
-        else
-          $.ajax '/items/load_item_data',
-            type: 'POST'
-            data: 'id=' + $(this).val()
-            dataType: 'html'
-            error: (jqXHR, textStatus, errorThrown) ->
-              alert 'Error: ' + textStatus
-            success: (data, textStatus, jqXHR) ->
-              item = JSON.parse(data)
-              container = elem.parents('tr.fields')
-
   @change_estimate_item  = ->
     $('.estimate_grid_fields select.items_list').on 'change', ->
       if parseInt($(this).find(':selected').val()) != -1

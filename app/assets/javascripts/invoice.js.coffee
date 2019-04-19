@@ -6,6 +6,8 @@ class @Invoice
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
 
+
+
   @changeTax = ->
     jQuery("select.tax1, select.tax2").on "change", ->
       if $(this).val() == ''
@@ -54,6 +56,12 @@ class @Invoice
 
               InvoiceCalculator.updateLineTotal(elem)
               InvoiceCalculator.updateInvoiceTotal()
+
+              $("#add_line_item").click()
+
+
+
+
 
   @setInvoiceDueDate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null

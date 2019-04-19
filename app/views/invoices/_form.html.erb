@@ -160,5 +160,9 @@
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
+
+          jQuery("#invoice_client_id").on('change', function(){
+              $.get('/invoices/set_client_currency?client_id=' + $(this).val())
+          })
       });
   </script>

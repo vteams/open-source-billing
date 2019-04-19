@@ -171,6 +171,14 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def set_client_currency
+    @client = Client.find params[:client_id]
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def invoice_deleted_message
   end
 
