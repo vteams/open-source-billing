@@ -635,6 +635,8 @@ en:
       tax_name: "Tax Name"
       add_new_tax: "Add New Tax"
       select_a_tax: "Select a tax..."
+      select_tax_1: "Tax 1"
+      select_tax_2: "Tax 2"
       duplicate_name: "Tax with same name already exists"
       created_msg: "Tax was successfully created."
       updated_msg: "Tax was successfully updated."

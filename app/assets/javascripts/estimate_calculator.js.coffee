@@ -47,7 +47,7 @@ class @EstimateCalculator
     $('#estimate_total_lbl').text total_balance.toFixed(2)
     $('.estimate_total_strong').html total_balance.toFixed(2)
     $("#estimate_sub_total_lbl, #estimate_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});
-    window.taxByCategory()
+    TaxCalculator.applyAllLineItemTaxes()
 
   getEstimateTax = (total) ->
     tax_percentage = parseFloat($("#estimate_tax_id option:selected").data('tax_percentage'))

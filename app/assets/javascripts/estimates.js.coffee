@@ -72,7 +72,8 @@ class @Estimate
                 container.find('input.tax-amount').val item[9]
                 container.find('td.tax2').html item[7]
               container.find('input.item_name').val item[5]
-              $("select.tax1,select.tax2").trigger('change')
+              EstimateCalculator.updateLineTotal(elem)
+              EstimateCalculator.updateEstimateTotal()
 
   updateCurrencyUnitsAndDiscountSelect = ->
     unit = $('#estimate_currency_id option:selected').text()

@@ -21,10 +21,10 @@
     <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', min: 1 } %>
   </td>
   <td class="center-align">
-    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select'}) %>
+    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_tax_1'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select'}) %>
   </td>
   <td class="center-align">
-    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_a_tax'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select'}) %>
+    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_tax_2'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select'}) %>
   </td>
-  <td class="align_right"><%= label_tag 'line total', '0.00', :class => 'blank_input grid_medium line_total' %></td>
+  <td class="align_right"><%= label_tag 'line total', f.object.item_total_amount, :class => 'blank_input grid_medium line_total' %></td>
 </tr>

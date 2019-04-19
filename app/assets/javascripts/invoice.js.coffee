@@ -21,7 +21,6 @@ class @Invoice
     $('.invoice_grid_fields select.items_list').on 'change', ->
       if parseInt($(this).find(':selected').val()) != -1
         OsbPlugins.hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
-        elem = undefined
         elem = $(this)
         if elem.val() == ''
           clearLineTotal elem
@@ -52,7 +51,9 @@ class @Invoice
                 container.find('input.tax-amount').val item[9]
                 container.find('td.tax2').html item[7]
               container.find('input.item_name').val item[5]
-              $("select.tax1,select.tax2").trigger('change');
+
+              InvoiceCalculator.updateLineTotal(elem)
+              InvoiceCalculator.updateInvoiceTotal()
 
   @setInvoiceDueDate = (invoice_date, term_days) ->
     if term_days != null and invoice_date != null

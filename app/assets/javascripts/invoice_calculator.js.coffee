@@ -1,5 +1,4 @@
 class @InvoiceCalculator
-
   # Calculate the line total for invoice
   @updateLineTotal = (elem) ->
     container = elem.parents("tr.fields")
@@ -24,21 +23,23 @@ class @InvoiceCalculator
       tax_amount += applyTax(line_total, $(this))
     discount_amount = applyDiscount(total)
 
-    $('#invoice_sub_total').val total.toFixed(2)
-    $('#invoice_sub_total_lbl').text total.toFixed(2)
-    $('#invoice_invoice_total').val total.toFixed(2)
-    $('#invoice_total_lbl').text total.toFixed(2)
-    $('.invoice_total_strong').html total.toFixed(2)
+    total = total.toFixed(2)
+
+    $('#invoice_sub_total').val total
+    $('#invoice_sub_total_lbl').text total
+    $('#invoice_invoice_total').val total
+    $('#invoice_total_lbl').text total
+    $('.invoice_total_strong').html total
+
     $('#tax_amount_lbl').text tax_amount.toFixed(2)
     $('#invoice_tax_amount').val tax_amount.toFixed(2)
     $('#invoice_discount_amount').val (discount_amount * -1).toFixed(2)
-    total_balance = parseFloat($('#invoice_total_lbl').text() - discount_amount)
+    total_balance = parseFloat(total - discount_amount)
 
     if $('#invoice_tax_id').val() != ""
       invoice_tax_amount = getInvoiceTax(total_balance).toFixed(2)
-      $("#invoice_invoice_tax_amount").val invoice_tax_amount
-    else
-      $("#invoice_invoice_tax_amount").val invoice_tax_amount
+
+    $("#invoice_invoice_tax_amount").val invoice_tax_amount
 
     invoice_tax_amount = parseFloat(invoice_tax_amount)
     total_balance += invoice_tax_amount
@@ -46,7 +47,7 @@ class @InvoiceCalculator
     $('#invoice_total_lbl').text total_balance.toFixed(2)
     $('.invoice_total_strong').html total_balance.toFixed(2)
     $("#invoice_sub_total_lbl, #invoice_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol})
-    window.taxByCategory()
+    TaxCalculator.applyAllLineItemTaxes()
 
   getInvoiceTax = (total) ->
     tax_percentage = parseFloat($("#invoice_tax_id option:selected").data('tax_percentage'))

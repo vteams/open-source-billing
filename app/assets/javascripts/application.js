@@ -33,13 +33,11 @@
 //= require tableSorter.js
 //= require tablesorter.staticrow.js
 //= require jquery.metadata.js
-//= require application.js
 //= require moment
 //= require daterangepicker.min
 //= require fullcalendar
 //= require calendar.js
 //= require logs.js
-//= require logs_invoice.js.coffee
 //= require clients.js.coffee
 //= require client_additional_contacts.js.coffee
 //= require client_contacts.js.coffee
@@ -57,7 +55,7 @@
 //= require sonic.js
 //= require progress_indicator.js.coffee
 //= require jquery.tablehover.min.js
-//= require tax-calculations.js.coffee
+//= require tax_calculator.js.coffee
 //= require jquery.formatCurrency-1.4.0.js
 //= require table-listing.js.coffee
 //= require credit-payment.js.coffee

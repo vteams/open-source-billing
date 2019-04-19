@@ -240,7 +240,7 @@ jQuery ->
     jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
-    window.taxByCategory()
+    TaxCalculator.applyAllLineItemTaxes()
   updateInvoiceTotal()
 
   # Date formating function
