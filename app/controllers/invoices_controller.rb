@@ -379,7 +379,7 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:client_id, :discount_amount, :discount_type,
+    params.require(:invoice).permit(:client_id, :discount_amount, :discount_type, :conversion_rate, :base_currency_id, :base_currency_equivalent_total,
                                     :discount_percentage, :invoice_date, :invoice_number,
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,

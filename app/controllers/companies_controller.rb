@@ -79,6 +79,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(company_params)
+
         format.html { redirect_to params[:setting_form] == '1' ? settings_path : companies_path,
                                   notice: t('views.companies.updated_msg') }
         format.json { head :no_content }
@@ -191,7 +192,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2)
+    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id)
   end
 
 end

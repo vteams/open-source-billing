@@ -7,3 +7,8 @@ $selectDropdown.append($("<option></option>").attr("value", '%').text("%"));
 $selectDropdown.append($("<option></option>").attr("value", '<%= @currency.unit %>').text('<%= @currency.unit %>'));
 $selectDropdown.val( val === '%' ? val : '<%= @currency.unit %>' );
 $selectDropdown.trigger('contentChanged');
+
+if('<%= @currency.id %>' == $('#invoice_base_currency_id').val()){
+    $('#invoice_conversion_rate').val('1.0').trigger('contentChanged');
+    InvoiceCalculator.updateInvoiceTotal()
+}

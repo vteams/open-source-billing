@@ -8,6 +8,7 @@ class @Invoice
 
 
 
+
   @changeTax = ->
     jQuery("select.tax1, select.tax2").on "change", ->
       if $(this).val() == ''
@@ -18,6 +19,9 @@ class @Invoice
         $(this).parent('div').attr('title', per + '%').qtip()
       InvoiceCalculator.updateLineTotal(jQuery(this))
       InvoiceCalculator.updateInvoiceTotal()
+    jQuery("#invoice_conversion_rate").on 'keyup', ->
+      InvoiceCalculator.updateInvoiceTotal()
+
 
   @change_invoice_item  = (elem) ->
     $('.invoice_grid_fields select.items_list').on 'change', ->

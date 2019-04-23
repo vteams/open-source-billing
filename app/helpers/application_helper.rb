@@ -152,6 +152,11 @@ module ApplicationHelper
     current_user.current_company || session[:current_company]
   end
 
+  def current_company_obj
+    Company.find current_company
+
+  end
+
   def filter_select_by_companies
     Company.all
   end

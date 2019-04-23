@@ -19,6 +19,7 @@ class Company < ActiveRecord::Base
   has_many :payments
   has_many :sent_emails
   belongs_to :account
+  belongs_to :base_currency, class_name: 'Currency', foreign_key: :base_currency_id
 
   # archive and delete
   acts_as_archival

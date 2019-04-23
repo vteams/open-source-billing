@@ -33,6 +33,7 @@
             <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4 md-input' } %>
             <%= f.input :phone_number, label: t('views.common.phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
             <%= f.input :fax_number, label: t('views.common.fax'), wrapper_html: { class: 'input-field col s6 m4' } %>
+            <%= f.input :base_currency_id, label: t('views.common.base_currency'), collection: Currency.all.collect{|c| [c.unit, c.id] }, prompt: t('views.common.currency'), selected: @company.base_currency_id, wrapper_html: { class: 'input-field col s6 m4' } %>
           </div>
 
           <div class="row">
