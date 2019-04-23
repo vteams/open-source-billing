@@ -30,7 +30,7 @@
                             include_blank: false, input_html: { class: 'inline-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
                 <div class="base-currency-conversion">
-                  <%= f.input :conversion_rate %>
+                  <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
                   <strong class="invoice_total_base_currency"></strong>
                   <%= f.input :base_currency_equivalent_total, as: :hidden %>

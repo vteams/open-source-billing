@@ -53,6 +53,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :company
   belongs_to :project
   belongs_to :currency
+  belongs_to :base_currency, class_name: 'Currency', foreign_key: 'base_currency_id'
   belongs_to :tax
 
   has_many :invoice_line_items, :dependent => :destroy

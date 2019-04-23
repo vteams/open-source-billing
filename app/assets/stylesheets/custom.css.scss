@@ -751,3 +751,11 @@ td.action-btn-group.items-action,
 td.action-btn-group.clients-action {
     width: 11% !important;
 }
+td.invoice-total {
+  em.base-currency {
+    color: #8c8c8c;
+    float: right;
+    font-size: 0.9em;
+  }
+
+}
