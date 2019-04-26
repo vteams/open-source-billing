@@ -22,18 +22,36 @@ class ReportsController < ApplicationController
   helper_method :sort_column, :sort_direction
   include Reporting
 
-  def index
+  def invoice_detail
+    @report = Reporting::Reporter.get_report({:report_name => 'invoice_detail', :report_criteria => get_criteria(params)})
 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+      format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        file_name = "#{@report.report_name}_#{Date.today}.pdf"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
+                                layout: 'pdf_mode.html.erb',
+                                template: 'reports/invoice_detail.html.erb',
+                                encoding: "UTF-8",
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                },
+                                margin:  {
+                                    left:               0,                     # default 10 (mm)
+                                    right:            0,
+                                }
+        send_data pdf,filename: file_name, disposition: 'inline'
+      end
+    end
   end
 
+  def item_sales
+    @report = Reporting::Reporter.get_report({:report_name => 'item_sales', :report_criteria => get_criteria(params)})
 
-  # first time report load
-  # reports/:report_name
-  def reports
-    Rails.logger.debug "--> in reports_controller#report... #{params.inspect} "
-    criteria = get_criteria(params)
-    @report = get_report(criteria)
-    @report_activity = Reporting::ReportActivity.get_activity(get_company_id, Currency.default_currency, current_account)
     respond_to do |format|
       format.html # index.html.erb
       format.csv { send_data @report.to_csv }
@@ -42,27 +60,87 @@ class ReportsController < ApplicationController
       format.pdf do
         file_name = "#{@report.report_name}_#{Date.today}.pdf"
         pdf = render_to_string  pdf: "#{@report.report_name}",
-          layout: 'pdf_mode.html.erb',
-          template: 'reports/reports.html.erb',
-          encoding: "UTF-8",
-          footer:{
-            right: 'Page [page] of [topage]'
-          }
+                                layout: 'pdf_mode.html.erb',
+                                template: 'reports/item_sales.html.erb',
+                                encoding: "UTF-8",
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                },
+                                margin:  {
+                                    left:               0,                     # default 10 (mm)
+                                    right:            0,
+                                }
         send_data pdf,filename: file_name, disposition: 'inline'
       end
     end
   end
 
-  # AJAX request to fetch report data after
-  # reports/data/:report_name
-  def reports_data
-    criteria = get_criteria(params)
-    @report = get_report(criteria)
+  def revenue_by_client
+    @report = Reporting::Reporter.get_report({:report_name => 'revenue_by_client', :report_criteria => get_criteria(params)})
 
     respond_to do |format|
-      format.js
+      format.html # index.html.erb
+      format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        file_name = "#{@report.report_name}_#{Date.today}.pdf"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
+                                layout: 'pdf_mode.html.erb',
+                                template: 'reports/reports.html.erb',
+                                encoding: "UTF-8",
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                }
+        send_data pdf,filename: file_name, disposition: 'inline'
+      end
     end
   end
+
+  def payments_collected
+    @report = Reporting::Reporter.get_report({:report_name => 'payments_collected', :report_criteria => get_criteria(params)})
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        file_name = "#{@report.report_name}_#{Date.today}.pdf"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
+                                layout: 'pdf_mode.html.erb',
+                                template: 'reports/reports.html.erb',
+                                encoding: "UTF-8",
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                }
+        send_data pdf,filename: file_name, disposition: 'inline'
+      end
+    end
+  end
+
+  def aged_accounts_receivable
+    @report = Reporting::Reporter.get_report({:report_name => 'aged_accounts_receivable', :report_criteria => get_criteria(params)})
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        file_name = "#{@report.report_name}_#{Date.today}.pdf"
+        pdf = render_to_string  pdf: "#{@report.report_name}",
+                                layout: 'pdf_mode.html.erb',
+                                template: 'reports/reports.html.erb',
+                                encoding: "UTF-8",
+                                footer:{
+                                    right: 'Page [page] of [topage]'
+                                }
+        send_data pdf,filename: file_name, disposition: 'inline'
+      end
+    end
+  end
+
 
   private
 
@@ -73,11 +151,11 @@ class ReportsController < ApplicationController
       options.merge!(criteria: {current_company: current_user.current_company.to_s})
     end
     options
+
+    @criteria = Reporting::Criteria.new(options[:criteria]) # report criteria
   end
 
   def get_report(options={})
-    @criteria = Reporting::Criteria.new(options[:criteria]) # report criteria
-    Reporting::Reporter.get_report({:report_name => options[:report_name], :report_criteria => @criteria})
   end
 
   def sort_column

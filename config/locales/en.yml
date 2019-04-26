@@ -286,6 +286,8 @@ en:
       line_total: "Line Total"
       invoice_number: "Invoice #"
       invoice_amount: "Invoice Amount"
+      amount: "Amount"
+      invoice_amount_base: "Invoice Amount (Base Currency)"
       invoice_status: "Invoice Status"
       date_to_use: "Date to use"
       invoice_type: "Invoice Type"

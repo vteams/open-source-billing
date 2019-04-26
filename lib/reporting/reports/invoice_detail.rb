@@ -56,6 +56,7 @@ module Reporting
           data[:currency_code] = Currency.find(row.first[:currency_id]).unit
           @report_total<<data
         end
+
       end
 
       def to_csv

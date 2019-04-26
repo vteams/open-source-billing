@@ -1,6 +1,6 @@
 <div class="filter-container" id="filters">
   <div class="nav-wrapper subnav-filters">
-    <%= form_tag "/reports/data/#{@report.report_name}", method: :get, remote: true, id: 'reports_form' do %>
+    <%= form_tag "/reports/#{@report.report_name}", method: :get, remote: true, id: 'reports_form' do %>
         <div class="row">
           <div class="input-field col s12 m6 xl3">
             <input type="hidden" name="criteria[from_date]" id="from_date" value="<%= 1.month.ago.to_date.strftime(get_date_format) %>">

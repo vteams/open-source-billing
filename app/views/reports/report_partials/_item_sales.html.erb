@@ -10,13 +10,14 @@
 <table cellpadding="0" cellspacing="0" class="bordered">
   <thead>
   <tr>
-    <th width="15%"><%= t('views.items.item_name') %></th>
-    <th width="15%" class="center-align"><%= t('views.invoices.invoice_number') %></th>
-    <th width="13%"><%= t('client') %></th>
-    <th width="12%" class="align-right"><%= t('views.reports.total_qty_sold') %></th>
-    <th width="15%" class="align-right {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
-    <th width="15%" class="align-right {sorter:'thousands'}"><%= t('views.reports.total_discount') %></th>
-    <th width="15%" class="align-right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
+    <th width="14%"><%= t('views.items.item_name') %></th>
+    <th width="14%" class="center-align"><%= t('views.invoices.invoice_number') %></th>
+    <th width="11%"><%= t('client') %></th>
+    <th width="11%" class="align_right"><%= t('views.items.quantity') %></th>
+    <th width="13%" class="align_right {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
+    <th width="13%" class="align_right {sorter:'total_discount'} "><%= t('views.reports.total_discount') %></th>
+    <th width="13%" class="align_right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
+    <th width="13%" class="align_right {sorter:'thousands'}"><%= "#{t('views.reports.net_total')} (#{current_company_obj.base_currency.unit})" %></th>
   </tr>
   </thead>
   <tbody>
@@ -35,20 +36,24 @@
             <td class="<%= 'bottom-bordered' if index == items.count - 1 %>">
               <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true) %>
             </td>
-            <td class="align-right<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
+            <td class="align_right<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["item_quantity"].to_i}  %>">
               <%= item.attributes["item_quantity"].to_i %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"].to_f}  %>">
-              <%= item.attributes["currency_code"] %>
-              <%= number_to_currency(item.attributes["total_amount"],unit: '') %>
+            <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_amount"].to_f}  %>">
+              <%= number_to_currency(item.attributes["total_amount"],unit: item.attributes["currency_code"]) %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"].to_f}  %>" >
-              <%= item.attributes["currency_code"] %>
-              <%= number_to_currency(item.attributes["discount_amount"],unit: '') %>
+
+            <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["discount_amount"].to_f}  %>">
+              <%= number_to_currency(item.attributes["discount_amount"],unit: item.attributes["currency_code"]) %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
-              <%= item.attributes["currency_code"] %>
-              <%= number_to_currency(item.attributes["net_total"],unit: '') %>
+
+            <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
+              <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
+            </td>
+
+            <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_base_amount"].to_f}  %>" >
+
+              <%= number_to_currency(item.attributes["total_base_amount"], unit: current_company_obj.base_currency.unit) %>
             </td>
           </tr>
         <% end %>
@@ -57,41 +62,45 @@
         <tr>
           <td><strong><%= t("views.common.total") %></strong></td>
 
-          <td colspan="4" class="align-right currency ">
+          <td colspan="4" class="align_right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%=total["currency_code"] %>
-                  <%= number_to_currency(total["total_amount"],unit:'') %>
+                  <%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
           </td>
-          <td class="align-right currency ">
+          <td class="align_right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%=total["currency_code"] %>
-                  <%= number_to_currency(total["discount_amount"],unit:'') %>
+                  <%= number_to_currency(total["total_discount"],unit: total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
           </td>
-          <td class="align-right currency ">
+          <td class="align_right currency ">
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%=total["currency_code"] %>
-                  <%= number_to_currency(total["net_total"],unit:'') %>
+                  <%= number_to_currency(total["net_total"],unit:total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
+          </td>
+          <td class="align_right currency " colspan="6">
+            <b>
+              <%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.total_base_amount rescue 0.0 }, unit: current_company_obj.base_currency.unit) %><br>
+            </b>
           </td>
         </tr>
+
+
       </tfoot>
   <% else %>
       <tr>
-        <td colspan="6"><%= t('views.reports.report_no_data') %></td>
+        <td colspan="7"><%= t('views.reports.report_no_data') %></td>
       </tr>
   <% end %>
   </tbody>

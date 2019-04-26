@@ -64,6 +64,16 @@ Osb::Application.routes.draw do
 
     resources :accounts
     resources :help
+
+    resources :reports, only: [] do
+      collection do
+        get :invoice_detail
+        get :aged_accounts_receivable
+        get :item_sales
+        get :payments_collected
+        get :revenue_by_client
+      end
+    end
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#reports_data"
     get "reports" => "reports#index"

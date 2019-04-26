@@ -1,0 +1,20 @@
+<%= render 'report_activity' unless request.format.pdf? %>
+<div id="main-content" class='reports <%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <!--- main content --->
+  <!--- breadcrum Bar --->
+
+  <%= render 'criteria_controls' unless request.format.pdf? %>
+  <div class="page-box">
+    <%# render 'criteria_controls' unless request.format.pdf? %>
+
+    <div class="simple-responsive report_content report-inner-scroll-container">
+      <div class="report-body-container">
+        <%= render "reports/report_partials/payments_collected" %>
+      </div>
+    </div>
+  </div>
+  <!-- report_content -->
+</div>
+<script>
+    initFilterEvents('#from_date,#to_date,#date_range_picker');
+</script>

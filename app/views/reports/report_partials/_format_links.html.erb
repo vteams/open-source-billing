@@ -1,7 +1,7 @@
 <% unless request.format.pdf? %>
     <div class="report-links">
-      <%= t('views.reports.export_to') %>: <%= link_to t('views.common.csv'), params.except('format','action').merge({format: :csv,action: 'reports'}) %>,
-      <%= link_to t('views.common.excel'), params.except('format','action').merge({format: :xls, action: 'reports'}) %>,
-      <%= link_to t('views.reports.print_report'),params.except('action','format').merge({format: 'pdf', action: 'reports'}) %>
+      <%= t('views.reports.export_to') %>: <%= link_to t('views.common.csv'), params.except('format').merge({format: :csv}) %>,
+      <%= link_to t('views.common.excel'), params.except('format').merge({format: :xls}) %>,
+      <%= link_to t('views.reports.print_report'), params.except('format').merge({format: 'pdf'}) %>
     </div>
 <% end %>

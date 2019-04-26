@@ -46,6 +46,7 @@ module Reporting
                       clients.id as client_id,
                       sum(invoice_line_items.item_quantity) as item_quantity,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity) as total_amount,
+                      sum((invoice_line_items.item_unit_cost / invoices.conversion_rate) * invoice_line_items.item_quantity) as total_base_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0)) as discount_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity -  (invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0))) as net_total,
                       IFNULL(invoices.currency_id,0) as currency_id,
