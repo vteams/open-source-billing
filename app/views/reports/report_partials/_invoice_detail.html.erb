@@ -43,7 +43,7 @@
         <% end %>
       </td>
       <td class="align_right currency">
-        <span><b><%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.base_currency_equivalent_total rescue inv.invoice_total }, unit: current_company_obj.base_currency.unit) %></span></b>
+        <span><b><%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.base_currency_equivalent_total.present? ? inv.base_currency_equivalent_total : inv.invoice_total }, unit: current_company_obj.base_currency.unit) %></span></b>
       </td>
     </tr>
 

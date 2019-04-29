@@ -41,7 +41,7 @@ class ReportsController < ApplicationController
                                     right: 'Page [page] of [topage]'
                                 },
                                 margin:  {
-                                    left:               0,                     # default 10 (mm)
+                                    left:             0,                     # default 10 (mm)
                                     right:            0,
                                 }
         send_data pdf,filename: file_name, disposition: 'inline'
@@ -67,7 +67,7 @@ class ReportsController < ApplicationController
                                     right: 'Page [page] of [topage]'
                                 },
                                 margin:  {
-                                    left:               0,                     # default 10 (mm)
+                                    left:             0,                     # default 10 (mm)
                                     right:            0,
                                 }
         send_data pdf,filename: file_name, disposition: 'inline'
