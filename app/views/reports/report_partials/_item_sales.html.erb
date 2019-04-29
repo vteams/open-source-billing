@@ -11,13 +11,13 @@
   <thead>
   <tr>
     <th width="14%"><%= t('views.items.item_name') %></th>
-    <th width="14%" class="center-align"><%= t('views.invoices.invoice_number') %></th>
-    <th width="11%"><%= t('client') %></th>
-    <th width="11%" class="align_right"><%= t('views.items.quantity') %></th>
-    <th width="13%" class="align_right {sorter:'total_amount'} "><%= t('views.reports.total_amount') %></th>
-    <th width="13%" class="align_right {sorter:'total_discount'} "><%= t('views.reports.total_discount') %></th>
-    <th width="13%" class="align_right {sorter:'thousands'}"><%= t('views.reports.net_total') %></th>
-    <th width="13%" class="align_right {sorter:'thousands'}"><%= "#{t('views.reports.net_total')} (#{current_company_obj.base_currency.unit})" %></th>
+    <th width="6%" class="center-align"><%= t('views.reports.invoice_number') %></th>
+    <th width="24%"><%= t('client') %></th>
+    <th width="4%" class="align_right"><%= t('views.items.quantity') %></th>
+    <th width="13%" class="align_right {sorter:'total_amount'} "><%= t('views.reports.amount') %></th>
+    <th width="13%" class="align_right {sorter:'total_discount'} "><%= t('views.reports.discount') %></th>
+    <th width="13%" class="align_right {sorter:'thousands'}"><%= t('views.reports.total') %></th>
+    <th width="13%" class="align_right {sorter:'thousands'}"><%= "#{t('views.reports.total')} (#{current_company_obj.base_currency.unit})" %></th>
   </tr>
   </thead>
   <tbody>

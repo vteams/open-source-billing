@@ -743,6 +743,10 @@ en:
       client_total_ar: "Client Total AR"
       total_qty_sold: "Total Qty Sold"
       total_amount: "Total Amount"
+      amount: 'Amount'
+      discount: 'Discount'
+      total: 'Total'
+      invoice_number: 'Inv #'
       total_discount: "Total Discount"
       net_total: "Net Total"
       period_ending: "Period Ending"

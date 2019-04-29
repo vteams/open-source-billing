@@ -37,9 +37,7 @@ class ReportsController < ApplicationController
                                 layout: 'pdf_mode.html.erb',
                                 template: 'reports/invoice_detail.html.erb',
                                 encoding: "UTF-8",
-                                footer:{
-                                    right: 'Page [page] of [topage]'
-                                },
+
                                 margin:  {
                                     left:             0,                     # default 10 (mm)
                                     right:            0,
@@ -63,9 +61,6 @@ class ReportsController < ApplicationController
                                 layout: 'pdf_mode.html.erb',
                                 template: 'reports/item_sales.html.erb',
                                 encoding: "UTF-8",
-                                footer:{
-                                    right: 'Page [page] of [topage]'
-                                },
                                 margin:  {
                                     left:             0,                     # default 10 (mm)
                                     right:            0,
