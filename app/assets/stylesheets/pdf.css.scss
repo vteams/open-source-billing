@@ -456,6 +456,12 @@ body{
   overflow: hidden;
   height: 100%;
 }
+
+i.base-currency-equivalent {
+  font-size: 0.8em;
+  color: #8c8c8c;
+}
+
 .new-invoice-holder .info-section .info-right-section {
   width: 40%;
 }
@@ -485,3 +491,7 @@ body {
 
 .new-invoice-holder .new-invoice-table-holder {
   padding: 5px 5px 3px; }
+
+.page-box {
+  margin-top: 0px !important;
+}

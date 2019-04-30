@@ -24,7 +24,7 @@ class ReportsController < ApplicationController
 
   def invoice_detail
     @report = Reporting::Reporter.get_report({:report_name => 'invoice_detail', :report_criteria => get_criteria(params)})
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -32,17 +32,15 @@ class ReportsController < ApplicationController
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        file_name = "#{@report.report_name}_#{Date.today}.pdf"
-        pdf = render_to_string  pdf: "#{@report.report_name}",
-                                layout: 'pdf_mode.html.erb',
-                                template: 'reports/invoice_detail.html.erb',
-                                encoding: "UTF-8",
-
-                                margin:  {
-                                    left:             0,                     # default 10 (mm)
-                                    right:            0,
-                                }
-        send_data pdf,filename: file_name, disposition: 'inline'
+        render pdf: "#{@report.report_name}",
+               layout: 'pdf_mode.html.erb',
+               template: 'reports/invoice_detail.html.erb',
+               encoding: "UTF-8",
+               show_as_html: false,
+               margin:  {
+                   left:             0,                     # default 10 (mm)
+                   right:            0,
+               }
       end
     end
   end
@@ -52,20 +50,20 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.csv { send_data @report.to_csv }
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        file_name = "#{@report.report_name}_#{Date.today}.pdf"
-        pdf = render_to_string  pdf: "#{@report.report_name}",
-                                layout: 'pdf_mode.html.erb',
-                                template: 'reports/item_sales.html.erb',
-                                encoding: "UTF-8",
-                                margin:  {
-                                    left:             0,                     # default 10 (mm)
-                                    right:            0,
-                                }
-        send_data pdf,filename: file_name, disposition: 'inline'
+        render  pdf: "#{@report.report_name}",
+                layout: 'pdf_mode.html.erb',
+                template: 'reports/item_sales.html.erb',
+                encoding: "UTF-8",
+                show_as_html: false,
+                margin:  {
+                    left:             0,                     # default 10 (mm)
+                    right:            0,
+                }
       end
     end
   end
@@ -75,19 +73,19 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.csv { send_data @report.to_csv }
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        file_name = "#{@report.report_name}_#{Date.today}.pdf"
-        pdf = render_to_string  pdf: "#{@report.report_name}",
-                                layout: 'pdf_mode.html.erb',
-                                template: 'reports/reports.html.erb',
-                                encoding: "UTF-8",
-                                footer:{
-                                    right: 'Page [page] of [topage]'
-                                }
-        send_data pdf,filename: file_name, disposition: 'inline'
+        render pdf: "#{@report.report_name}",
+               layout: 'pdf_mode.html.erb',
+               template: 'reports/reports.html.erb',
+               encoding: "UTF-8",
+               show_as_html: false,
+               footer:{
+                   right: 'Page [page] of [topage]'
+               }
       end
     end
   end
@@ -97,19 +95,19 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.csv { send_data @report.to_csv }
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        file_name = "#{@report.report_name}_#{Date.today}.pdf"
-        pdf = render_to_string  pdf: "#{@report.report_name}",
-                                layout: 'pdf_mode.html.erb',
-                                template: 'reports/reports.html.erb',
-                                encoding: "UTF-8",
-                                footer:{
-                                    right: 'Page [page] of [topage]'
-                                }
-        send_data pdf,filename: file_name, disposition: 'inline'
+        render pdf: "#{@report.report_name}",
+               layout: 'pdf_mode.html.erb',
+               template: 'reports/reports.html.erb',
+               encoding: "UTF-8",
+               show_as_html: false,
+               footer:{
+                   right: 'Page [page] of [topage]'
+               }
       end
     end
   end
@@ -119,19 +117,19 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.csv { send_data @report.to_csv }
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        file_name = "#{@report.report_name}_#{Date.today}.pdf"
-        pdf = render_to_string  pdf: "#{@report.report_name}",
-                                layout: 'pdf_mode.html.erb',
-                                template: 'reports/reports.html.erb',
-                                encoding: "UTF-8",
-                                footer:{
-                                    right: 'Page [page] of [topage]'
-                                }
-        send_data pdf,filename: file_name, disposition: 'inline'
+        render pdf: "#{@report.report_name}",
+               layout: 'pdf_mode.html.erb',
+               template: 'reports/reports.html.erb',
+               encoding: "UTF-8",
+               show_as_html: false,
+               footer:{
+                   right: 'Page [page] of [topage]'
+               }
       end
     end
   end
@@ -154,7 +152,7 @@ class ReportsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'clients.organization_name'
     sort_col = params[:sort]
     sort_col
   end

@@ -1,0 +1,32 @@
+<!--- Activity sidebar --->
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <br><br>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+
+    <div class="status-info">
+      <h5><%= link_to t('views.reports.invoice_detail'), "/#{I18n.locale}/reports/invoice_detail", :class => 'invoices_link' %></h5>
+    </div>
+
+    <div class="status-info">
+      <h5><%= link_to t('views.reports.item_sales'), "/#{I18n.locale}/reports/item_sales", :class => 'invoices_link' %></h5>
+    </div>
+
+    <div class="status-info active">
+      <h5><%= link_to t('views.reports.payments_collected'), "/#{I18n.locale}/reports/payments_collected" %></h5>
+
+    </div>
+
+    <div class="status-info">
+      <h5><%= link_to t('views.reports.revenue_by_client'), "/#{I18n.locale}/reports/revenue_by_client", :class => 'invoices_link' %></h5>
+    </div>
+
+    <div class="status-info">
+      <h5><%= link_to t('views.reports.aged_accounts_receivable'), "/#{I18n.locale}/reports/aged_accounts_receivable", :class => 'invoices_link' %></h5>
+    </div>
+
+  </div>
+</aside>

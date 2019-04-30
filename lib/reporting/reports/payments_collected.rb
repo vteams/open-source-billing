@@ -65,7 +65,7 @@ module Reporting
         clients.organization_name as client_name,
         clients.id as client_id,
         IFNULL(invoices.currency_id,0) as currency_id,
-        IFNULL(currencies.unit,'USD') as currency_code,
+        IFNULL(currencies.code,'$') as currency_code,
         payments.payment_type,
         payments.payment_method,
         payments.notes,

@@ -10,15 +10,15 @@
 <table class="bordered">
     <thead>
     <tr>
-      <th width="15%"><%= t('views.clients.client_name') %></th>
-      <th width="10%"><%= t('views.invoices.invoice') %></th>
+      <th width="30%"><%= t('views.clients.client_name') %></th>
+      <th width="15%"><%= t('views.invoices.invoice') %></th>
       <th width="15%"><%= t('views.common.type') %></th>
-      <th  width="26%"><%= t('views.common.note') %></th>
-      <th class="center-align" width="17%"><%= t('views.common.date') %></th>
-      <th class="align-right {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
+      <th class="center-align" width=20%"><%= t('views.common.date') %></th>
+      <th class="align_right" width="20%"><%= t('views.dashboard.amount') %></th>
     </tr>
     </thead>
     <% unless @report.report_data.blank? %>
+      <% total_in_base_currency = 0 %>
       <tbody>
         <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
           <% payments.each_with_index do |payment, index| %>
@@ -35,16 +35,15 @@
             <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= (payment.payment_type || payment.payment_method || "").capitalize %>
             </td>
-            <td class="left-align text-overflow-class<%= ' bottom-bordered' if index == payments.count - 1 %>" data-overflow-rows="2">
-              <%= payment.notes %>
-            </td>
+
             <td class="center-align<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= payment.created_at.to_date.strftime(get_date_format) %>
             </td>
-            <td class="align-right currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
+            <td class="align_right currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
-              <%= payment.currency_code %>
-              <%= number_to_currency(payment.payment_amount,unit: '') %>
+              <%= number_to_currency(payment.payment_amount, unit: payment.currency_code) %><br>
+              <i class="base-currency-equivalent"><%= number_to_currency((payment.payment_amount / payment.invoice.conversion_rate), unit: current_company_obj.base_currency.code) rescue '' %></i>
+              <% total_in_base_currency += ((payment.payment_amount/payment.invoice.conversion_rate) rescue invoice.payment_amount) %>
             </td>
           </tr>
           <% end %>
@@ -52,23 +51,33 @@
       </tbody>
     <tfoot>
       <tr>
-        <td colspan="5"><strong><%= t('views.common.total') %></strong></td>
-        <td class="align-right currency">
+        <td colspan="4"><strong><%= t('views.common.total') %></strong></td>
+        <td class="align_right currency">
           <% @report.report_total.each do |total| %>
-            <span>
+            <div>
               <b>
-                <%= total[:currency_code] %>
-                <%= number_to_currency(total[:total],unit: '') %>
+                <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
               </b>
-            </span>
+            </div>
           <% end %>
         </td>
       </tr>
+      <tr>
+        <td colspan="4"><strong><%= t('views.common.total') %> (<%= current_company_obj.base_currency.unit %>)</strong></td>
+        <td class="align_right currency">
+          <div>
+            <b>
+              <%= number_to_currency(total_in_base_currency, unit: current_company_obj.base_currency.code) %>
+            </b>
+          </div>
+        </td>
+      </tr>
+
     </tfoot>
 <% else %>
       <tbody>
       <tr>
-        <td colspan="6"><%= t('views.reports.report_no_data') %></td>
+        <td colspan="5"><%= t('views.reports.report_no_data') %></td>
       </tr>
       </tbody>
 <% end %>

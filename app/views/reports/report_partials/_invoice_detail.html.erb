@@ -8,30 +8,31 @@
   <%= render 'reports/report_partials/format_links'%>
 </div>
 
-<table class="bordered table_listing item_sales_listing tablesorter">
+<table class="bordered table_listing item_sales_listing">
 
 <thead>
 <tr>
-  <th width="12%"><%= t('views.invoices.invoice_number') %></th>
-  <th width="16%"><%= t('client') %></th>
-  <th width="18%" class="center-align"><%= t('views.invoices.invoice_date') %></th>
-  <th width="18%" class="center-align"><%= t('views.invoices.invoice_status') %></th>
-  <th width="18%" class="align_right"><%= t('views.invoices.amount') %></th>
-  <th width="18%" class="align_right"><%= "#{t('views.invoices.amount')} (#{current_company_obj.base_currency.unit})" %></th>
+  <th width="12%"><%= sortable('invoice_number', t('views.invoices.invoice_number'), false) %></th>
+  <th width="30%"><%= sortable('clients.organization_name', t('client'), false) %></th>
+  <th width="18%" class="center-align"><%= sortable('invoice_date', t('views.invoices.invoice_date'), false) %></th>
+  <th width="18%" class="center-align"><%= sortable('status', t('views.invoices.invoice_status'), false) %></th>
+  <th width="22%" class="align_right"><%= t('views.invoices.amount') %></th>
 </tr>
 </thead>
 <tbody>
   <% unless @report.report_data.blank? %>
-    <% @report.report_data.each do |invoice| %>
+    <% @report.report_data.order("#{sort_column} #{sort_direction}").each do |invoice| %>
         <tr style="page-break-inside: avoid;">
-          <td data-sort_val="<%= invoice.invoice_number %>"><%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), remote: true, class: "invoices_link") %></td>
-          <td class="align_left" data-sort_val="<%= invoice.client.organization_name if invoice.client.present? %>"><%= invoice.client.organization_name if invoice.client.present? %></td>
-          <td class="center-align" data-sort_val="<%= invoice.invoice_date %>" ><%= invoice.invoice_date %></td>
-          <td class="center-align" title="<%= invoice.tooltip %>" data-sort_val="<%= invoice.status %>" >
-            <%= t('views.invoices.' + invoice.status ) %>
+          <td>
+            <%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.invoice_number, invoice_path(invoice), remote: true, class: "invoices_link") %>
           </td>
-          <td class="align_right" data-sort_val="<%= invoice.invoice_total %>" ><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %></td>
-          <td class="align_right" data-sort_val="<%= invoice.base_currency_equivalent_total %>" ><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></td>
+          <td class="align_left"><%= invoice.client.organization_name if invoice.client.present? %></td>
+          <td class="center-align"><%= invoice.invoice_date %></td>
+          <td class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
+          <td class="align_right" data-sort_val="<%= invoice.invoice_total %>" >
+            <%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %><br>
+            <i class="base-currency-equivalent"><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></i>
+          </td>
         </tr>
     <% end %>
     <tfoot>
@@ -42,6 +43,10 @@
             <span><b><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></b></span><br>
         <% end %>
       </td>
+    </tr>
+
+    <tr>
+      <td  colspan="4"  class="align_left"><strong><%= t('views.common.total') %> (<%= current_company_obj.base_currency.unit %>)</strong></td>
       <td class="align_right currency">
         <span><b><%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.base_currency_equivalent_total.present? ? inv.base_currency_equivalent_total : inv.invoice_total }, unit: current_company_obj.base_currency.unit) %></span></b>
       </td>

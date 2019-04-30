@@ -48,7 +48,7 @@
 
             <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
               <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %><br>
-              <i><%= number_to_currency(item.attributes["total_base_amount"], unit: current_company_obj.base_currency.code) %></i>
+              <i class="base-currency-equivalent"><%= number_to_currency(item.attributes["total_base_amount"], unit: current_company_obj.base_currency.code) %></i>
             </td>
           </tr>
         <% end %>

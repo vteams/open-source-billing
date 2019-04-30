@@ -4,7 +4,7 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
-            <th class="align_center not-sortable td-checkbox checkbox-item">
+            <th class="align_center center-align not-sortable td-checkbox checkbox-item">
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity ', title: 'Select All', id: 'select_all_items' %>
             </th>
             <th class="align_center sorting header <%= sortable_class('invoice_number') %>"><%= sortable('invoice_number', "#{t('invoice')}") %></th>
