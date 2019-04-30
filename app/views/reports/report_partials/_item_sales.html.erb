@@ -10,14 +10,13 @@
 <table cellpadding="0" cellspacing="0" class="bordered">
   <thead>
   <tr>
-    <th width="14%"><%= t('views.items.item_name') %></th>
+    <th width="17%"><%= t('views.items.item_name') %></th>
     <th width="6%" class="center-align"><%= t('views.reports.invoice_number') %></th>
-    <th width="24%"><%= t('client') %></th>
+    <th width="30%"><%= t('client') %></th>
     <th width="4%" class="align_right"><%= t('views.items.quantity') %></th>
-    <th width="13%" class="align_right {sorter:'total_amount'} "><%= t('views.reports.amount') %></th>
+    <th width="15%" class="align_right {sorter:'total_amount'} "><%= t('views.reports.amount') %></th>
     <th width="13%" class="align_right {sorter:'total_discount'} "><%= t('views.reports.discount') %></th>
-    <th width="13%" class="align_right {sorter:'thousands'}"><%= t('views.reports.total') %></th>
-    <th width="13%" class="align_right {sorter:'thousands'}"><%= "#{t('views.reports.total')} (#{current_company_obj.base_currency.unit})" %></th>
+    <th width="15%" class="align_right {sorter:'thousands'}"><%= t('views.reports.total') %></th>
   </tr>
   </thead>
   <tbody>
@@ -48,12 +47,8 @@
             </td>
 
             <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["net_total"].to_f}  %>">
-              <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %>
-            </td>
-
-            <td class="align_right currency<%= ' bottom-bordered' if index == items.count - 1 %>" data-sort_val="<%= items.sum{|item| item.attributes["total_base_amount"].to_f}  %>" >
-
-              <%= number_to_currency(item.attributes["total_base_amount"], unit: current_company_obj.base_currency.unit) %>
+              <%= number_to_currency(item.attributes["net_total"],unit: item.attributes["currency_code"]) %><br>
+              <i><%= number_to_currency(item.attributes["total_base_amount"], unit: current_company_obj.base_currency.code) %></i>
             </td>
           </tr>
         <% end %>
@@ -66,7 +61,7 @@
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%= number_to_currency(total["total_amount"],unit:total["currency_code"]) %><br>
+                  <%= number_to_currency(total["total_amount"], unit:total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
@@ -75,7 +70,7 @@
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%= number_to_currency(total["total_discount"],unit: total["currency_code"]) %><br>
+                  <%= number_to_currency(total["total_discount"], unit: total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
@@ -84,14 +79,19 @@
             <% @report.report_total.each do |total| %>
               <span>
                 <b>
-                  <%= number_to_currency(total["net_total"],unit:total["currency_code"]) %><br>
+                  <%= number_to_currency(total["net_total"], unit:total["currency_code"]) %><br>
                 </b>
               </span>
             <% end %>
           </td>
+
+        </tr>
+
+        <tr>
+          <td>Total (<%= current_company_obj.base_currency.unit %>)</td>
           <td class="align_right currency " colspan="6">
             <b>
-              <%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.total_base_amount rescue 0.0 }, unit: current_company_obj.base_currency.unit) %><br>
+              <%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.total_base_amount rescue 0.0 }, unit: current_company_obj.base_currency.code) %><br>
             </b>
           </td>
         </tr>

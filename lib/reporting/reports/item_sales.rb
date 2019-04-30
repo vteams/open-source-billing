@@ -50,7 +50,7 @@ module Reporting
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0)) as discount_amount,
                       sum(invoice_line_items.item_unit_cost * invoice_line_items.item_quantity -  (invoice_line_items.item_unit_cost * invoice_line_items.item_quantity * (case when invoices.discount_type = '%' then abs(IFNULL(invoices.discount_percentage,0)) else abs(IFNULL(invoices.discount_percentage,0)) * 100.0 / invoices.sub_total end / 100.0))) as net_total,
                       IFNULL(invoices.currency_id,0) as currency_id,
-                      IFNULL(currencies.unit,'USD') as currency_code
+                      IFNULL(currencies.code,'$') as currency_code
                        ").joins(:currency, :client).joins(:invoice_line_items => :item).
             group("items.item_name,currency_id, invoice_id, client_id").
             where("invoice_line_items.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day,
