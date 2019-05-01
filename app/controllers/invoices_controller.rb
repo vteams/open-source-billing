@@ -90,7 +90,10 @@ class InvoicesController < ApplicationController
       @invoice.build_recurring_schedule if @invoice.recurring_schedule.blank?
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
-      respond_to {|format| format.js; format.html}
+      respond_to do |format|
+        format.js
+        format.html
+      end
     end
   end
 
@@ -157,18 +160,9 @@ class InvoicesController < ApplicationController
   end
 
   def clone
+    @current_company_invoices = Invoice.by_company(current_company)
     @invoice = @invoice.clone
-    respond_to do |format|
-      if @invoice.save
-        format.html { redirect_to edit_invoice_path(@invoice) }
-        format.js
-        format.json {render :json=> @invoice, :status=> :ok}
-      else
-        format.html { redirect_to invoices_path }
-        format.js
-        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
-      end
-    end
+    render action: 'edit'
   end
 
   def filter_invoices

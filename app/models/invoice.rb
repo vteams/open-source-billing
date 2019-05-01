@@ -199,7 +199,6 @@ class Invoice < ActiveRecord::Base
     invoice.invoice_date = Date.today
     invoice.invoice_line_items << self.invoice_line_items.map(&:dup)
     invoice.status = 'draft'
-    invoice.due_date = Date.today + 10.days
     invoice.parent_id = nil
     invoice
   end
