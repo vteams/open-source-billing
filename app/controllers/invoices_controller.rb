@@ -23,7 +23,7 @@ class InvoicesController < ApplicationController
 
   before_action :authenticate_user!, except: %i[preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
   before_action :set_per_page_session
-  before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy]
+  before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy clone]
   before_action :verify_authenticity_token, only: :show #if: ->{ action_name == 'show' and request.format.pdf? }
   before_action :set_client_id, only: :create
 
@@ -153,6 +153,21 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to invoices_url }
       format.json { render_json(@invoice) }
+    end
+  end
+
+  def clone
+    @invoice = @invoice.clone
+    respond_to do |format|
+      if @invoice.save
+        format.html { redirect_to edit_invoice_path(@invoice) }
+        format.js
+        format.json {render :json=> @invoice, :status=> :ok}
+      else
+        format.html { redirect_to invoices_path }
+        format.js
+        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

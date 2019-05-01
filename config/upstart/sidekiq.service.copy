@@ -1,0 +1,21 @@
+# /etc/systemd/system/puma.service
+[Unit]
+Description=Sidekiq Background Tasks management service
+After=network.target
+[Service]
+Type=simple
+User=ubuntu
+
+WorkingDirectory=/home/deploy/rails_apps/open-source-billing/current
+
+ExecStart=/bin/bash -lc 'bundle exec sidekiq -e production -C /home/deploy/rails_apps/open-source-billing/current/config/sidekiq.yml -L /home/deploy/rails_apps/open-source-billing/current/log/sidekiq.lo$
+Restart=always
+[Install]
+WantedBy=multi-user.target
+
+#sudo systemctl start sidekiq.service
+#sudo systemctl daemon-reload
+#sudo systemctl start sidekiq.service
+#sudo systemctl stop sidekiq.service
+#sudo systemctl restart sidekiq.service
+#sudo systemctl status sidekiq.service

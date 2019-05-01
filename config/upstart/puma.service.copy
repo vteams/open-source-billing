@@ -1,0 +1,38 @@
+
+# /etc/systemd/system/puma.service
+
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+
+WorkingDirectory=/home/deploy/rails_apps/open-source-billing/current
+
+# Helpful for debugging socket activation, etc.
+Environment=PUMA_DEBUG=1
+# Setting secret_key_base for rails production environment. We can set other Environment variables the same way, for example PRODUCTION_DATABASE_PASSWORD
+SECRET_KEY_BASE=b7fbccc14d4018631dd739e8777a3bef95ee8b3c9d8d51f14f1e63e613b17b92d2f4e726ccbd0d388555991c9e90d3924b8aa0f89e43eff800774ba29
+
+# The command to start Puma, use 'which puma' to get puma's bin path, specify your config/puma.rb file
+ExecStart=/bin/bash -lc 'bundle exec puma -C /home/deploy/rails_apps/open-source-billing/current/config/puma.rb'
+
+PIDFile=/home/deploy/rails_apps/open-source-billing/current/tmp/pids/puma.pid
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+# Enable newly created service by executed following command on command line
+#sudo systemctl enable puma.service
+# Reload daemon services
+#systemctl daemon-reload
+# Once service is build, you have following commands available
+#sudo systemctl start puma.service
+#sudo systemctl stop puma.service
+#sudo systemctl restart puma.service
+#sudo systemctl status puma.service
+# Also it would be automatically started on system boot up

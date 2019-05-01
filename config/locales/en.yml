@@ -256,6 +256,8 @@ en:
       apply_payment_detail: "Select one or more Invoices from the list below to apply payment."
       selected_amount_detail: "You haven't selected any invoice. Please select one or more invoices and try again."
       enter_payment: "Enter payment"
+      clone: 'Clone'
+      delete: 'Delete'
 
     invoices:
       invoice: "Invoices"

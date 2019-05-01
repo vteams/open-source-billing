@@ -39,13 +39,12 @@
                   <% else %>
                       <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send'), remote: true %>
                       <%= edit_invoice_link(invoice) %>
-                      <%= link_to raw("<i class='material-icons'>delete</i>"),invoice, title: t('helpers.links.delete'), method: :delete,
-                                  data:{confirm: t('helpers.messages.confirm'),
-                                        success: t('views.invoices.invoice_deleted')} %>
                       <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'), target: '_blank' %>
+                      <%= link_to raw("<i class='material-icons'>file_copy</i>"), clone_invoice_path(invoice), title: t('views.dashboard.clone'), target: '_blank' %>
                       <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
                         <i class="material-icons">more_vert</i>
                       </a>
+
                       <!-- Dropdown Structure -->
                       <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
                         <% if !invoice.archived? %>
@@ -61,6 +60,11 @@
                               </a>
                             </li>
                         <% end %>
+                        <li>
+                          <%= link_to raw("<i class='material-icons'>delete</i>#{t('views.dashboard.delete')}"),invoice, title: t('helpers.links.delete'), method: :delete,
+                                      data:{confirm: t('helpers.messages.confirm'),
+                                            success: t('views.invoices.invoice_deleted')} %>
+                        </li>
                         <li>
                           <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.enter_payment')}"),
                                       enter_payment_payments_path(invoice_ids: invoice.id),

@@ -172,6 +172,7 @@ Osb::Application.routes.draw do
       end
       member do
         get 'stop_recurring'
+        get 'clone'
       end
     end
 

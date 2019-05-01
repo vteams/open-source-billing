@@ -185,20 +185,23 @@ class Invoice < ActiveRecord::Base
     (self.dup.invoice_line_items << self.invoice_line_items.map(&:dup)).save
   end
 
-  def use_as_template
-    invoice = self.dup
-    invoice.invoice_number = Invoice.get_next_invoice_number(nil)
-    invoice.invoice_date = Date.today
-    invoice.invoice_line_items << self.invoice_line_items.map(&:dup)
-    invoice
-  end
-
   def generate_recurring_invoice(recurring)
-    invoice = use_as_template
+    invoice = self.clone
     invoice.status = recurring.delivery_option.eql?('draft_invoice') ? 'draft' : 'sent'
     invoice.due_date = Date.today + eval(recurring.frequency)
     invoice.parent_id = self.id
     invoice.save
+  end
+
+  def clone
+    invoice = self.dup
+    invoice.invoice_number = Invoice.get_next_invoice_number(nil)
+    invoice.invoice_date = Date.today
+    invoice.invoice_line_items << self.invoice_line_items.map(&:dup)
+    invoice.status = 'draft'
+    invoice.due_date = Date.today + 10.days
+    invoice.parent_id = nil
+    invoice
   end
 
   def self.multiple_invoices ids
