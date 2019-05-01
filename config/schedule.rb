@@ -19,14 +19,14 @@
 
 set :output, "log/cron_log.log"
 
-every :day, at: '1:00am' do
-  rake "rucurring_invoice:generate"
-end
-
-every :day, at: '12:01am' do
+every :day, at: '12:15am' do
   rake "payment_reminders:soft_payment_reminder"
 end
 
-every :day, at: '12:30am' do
+every :day, at: '12:45am' do
   rake "payment_reminders:late_payment_reminder"
+end
+
+every :day, at: '1:15am' do
+  rake "rucurring_invoice:generate"
 end

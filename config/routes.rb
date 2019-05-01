@@ -1,7 +1,10 @@
+require 'sidekiq/web'
 Osb::Application.routes.draw do
 
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
+
+  mount Sidekiq::Web => '/sidekiq'
 
   #namespace :OpenSourceBilling do
   #  resources :people

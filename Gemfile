@@ -29,7 +29,6 @@ gem 'kaminari', '0.17.0'
 gem 'acts_as_archival', '1.1.1'
 gem 'paranoia', '2.1.5'
 gem 'activerecord-mysql-adapter', '0.0.1'
-gem 'delayed_job_active_record', '4.1.1'
 gem 'daemons', '1.2.3'
 gem 'hashie_rails', '0.0.4'
 group :development do
@@ -43,6 +42,7 @@ group :development do
   gem 'copyright-header', '1.0.15'
   gem 'capistrano', '3.10.2'
   gem 'capistrano-rails', '1.1.3'
+  gem "letter_opener", '1.4.1'
 end
 gem 'capistrano-rvm', '0.1.2'
 gem 'browser', '2.1.0'
@@ -87,7 +87,6 @@ gem 'qbo_api', '1.8.1'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
-gem "letter_opener", '1.4.1', :group => :development
 gem 'puma', '3.11.0'
 
 
@@ -103,3 +102,4 @@ gem 'simple_form', '3.5.1'
 gem 'cocoon', '~> 1.2', '>= 1.2.11'
 gem 'nouislider-rails', '~> 8.2', '>= 8.2.1'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'sidekiq', '>= 5.2.7'

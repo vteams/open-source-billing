@@ -36,12 +36,6 @@ class @Client
       else unless pattern.test(client_email)
         applyQtip(jQuery("#client_email"), I18n.t("views.clients.invalid_email"), 'topRight')
         flag = false
-      else if client_phone isnt "" and !pattern_phone.test(client_phone)
-        applyQtip(jQuery("#client_business_phone"), I18n.t("views.clients.invalid_business_phone"), 'topRight')
-        flag = false
-      else  if client_mobile isnt "" and !pattern_phone.test(client_mobile)
-        applyQtip(jQuery("#client_mobile_number"), I18n.t("views.clients.invalid_mobile_number"), 'topRight')
-        flag = false
       else if association_name == undefined
         applyPopover($("label[for='company_association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
