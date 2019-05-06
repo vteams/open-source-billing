@@ -9,13 +9,13 @@
   </div>
   <div class="paymentInfo">
     <div>
-      <span><%= t('views.invoices.invoice_amount') %><em>:</em></span><strong><%= number_to_currency(invoice.invoice_total) %> <small><%= invoice.currency.unit %></small></strong>
+      <span><%= t('views.invoices.invoice_amount') %><em>:</em></span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit) %> </strong>
     </div>
     <div>
-      <span><%= t('views.common.received') %><em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id)) %> <small><%= invoice.currency.unit %></small></strong>
+      <span><%= t('views.common.received') %><em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.unit) %></strong>
     </div>
     <div>
-      <span><%= t('views.payments.net_due') %><em>:</em></span><strong><%= number_to_currency(due_amount) %> <small><%= invoice.currency.unit %></strong>
+      <span><%= t('views.payments.net_due') %><em>:</em></span><strong><%= number_to_currency due_amount, unit: invoice.currency.unit %></strong>
     </div>
   </div>
 </div>

@@ -188,7 +188,7 @@ en:
       recover_deleted: "Recover deleted"
       recover_archived: "Recover archived"
       delete_archived: "Delete archived"
-      send_to_archive: "Send to Archive"
+      send_to_archive: "Archive"
       recurring: "Recurring"
       deleted: "Deleted"
       archived: "Archived"

@@ -42,6 +42,7 @@
                                          success: t('views.payments.bulk_deleted_msg')},
                                   title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
                   <% end %>
+                  <%= link_to raw("<i class='material-icons'>visibility</i>"), payment, title: t('views.common.show'), remote: true %>
                 </td>
               </tr>
           <% end %>
