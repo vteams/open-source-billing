@@ -26,9 +26,8 @@ class PaymentsController < ApplicationController
   helper_method :sort_column, :sort_direction, :get_org_name
 
   def index
-    @payments = Payment.filter(params)
-    @payments = filter_by_company(@payments).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
-    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
+    @current_company_payments = Payment.by_company(get_company_id)
+    @payments = @current_company_payments.filter(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
     respond_to do |format|
       format.html # index.html.erb
       format.js

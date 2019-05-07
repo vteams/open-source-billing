@@ -26,10 +26,14 @@ class Payment < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :client
   belongs_to :company
+
+  belongs_to :currency
+
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
   after_create :add_company_id
+  after_create :set_currency_id
 
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
@@ -40,6 +44,8 @@ class Payment < ActiveRecord::Base
   scope :payment_date, -> (payment_date) { where(payment_date: payment_date) }
   scope :payment_method, -> (payment_method) { where(payment_method: payment_method) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
+
+  scope :by_company, -> (company_id){ where("payments.company_id IN (?)", company_id) }
 
   paginates_per 10
 
@@ -236,9 +242,11 @@ class Payment < ActiveRecord::Base
   end
 
   def add_company_id
-    if self.company_id.blank?
-      self.update_attribute(:company_id, self.invoice.company_id)
-    end
+    self.update_attribute(:company_id, self.invoice.company_id) if self.company_id.blank?
+  end
+
+  def set_currency_id
+    self.update_attribute(:currency_id, self.invoice.currency_id) if self.currency_id.blank?
   end
 
  def payment_name

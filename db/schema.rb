@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190422065035) do
+ActiveRecord::Schema.define(version: 20190507075140) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -434,6 +434,7 @@ ActiveRecord::Schema.define(version: 20190422065035) do
     t.string   "status",                    limit: 255
     t.string   "provider",                  limit: 255
     t.string   "provider_id",               limit: 255
+    t.integer  "currency_id",               limit: 4
   end
 
   create_table "project_tasks", force: :cascade do |t|

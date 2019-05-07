@@ -40,25 +40,23 @@
                                   data:{confirm: t('helpers.messages.confirm'),
                                         success: t('views.clients.bulk_action_msg', action: 'deleted') },
                                   title: t('helpers.links.delete') %>
-                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= client.id %>' data-alignment="right" data-beloworigin="true">
-                        <i class="material-icons">more_vert</i>
-                      </a>
-                      <!-- Dropdown Structure -->
-                      <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
+
+
+
                         <% if !client.archived? %>
-                            <li>
-                              <a href="javascript:;" class="single_archive">
-                                <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
+
+                              <a href="javascript:;" class="single_archive" title="Archive">
+                                <i class="material-icons">archive</i>
                               </a>
-                            </li>
+
                         <% else %>
-                            <li>
-                              <a href="javascript:;" class="single_recover">
-                                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+
+                              <a href="javascript:;" class="single_recover" title="Recover Archive">
+                                <i class="material-icons">unarchive</i>
                               </a>
-                            </li>
+
                         <% end %>
-                      </ul>
+
                   <% end %>
                 </td>
               </tr>
