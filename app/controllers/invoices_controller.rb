@@ -39,7 +39,7 @@ class InvoicesController < ApplicationController
   def index
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-    @current_company_invoices = Invoice.by_company(current_company)
+    @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
     @invoices = @current_company_invoices.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
@@ -67,7 +67,6 @@ class InvoicesController < ApplicationController
   end
 
   def new
-    @current_company_invoices = Invoice.by_company(current_company)
     @invoice = Services::InvoiceService.build_new_invoice(params)
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
@@ -77,12 +76,10 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.js
-      #format.json { render :json => @invoice }
     end
   end
 
   def edit
-    @current_company_invoices = Invoice.by_company(current_company)
     if @invoice.invoice_type.eql?("ProjectInvoice")
       redirect_to :back, alert:  t('views.invoices.project_invoice_cannot_updated')
     else
@@ -160,7 +157,6 @@ class InvoicesController < ApplicationController
   end
 
   def clone
-    @current_company_invoices = Invoice.by_company(current_company)
     @invoice = @invoice.clone
     render action: 'edit'
   end

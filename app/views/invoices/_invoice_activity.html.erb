@@ -1,4 +1,5 @@
 <!--- Activity sidebar --->
+<% @current_company_invoices = Invoice.by_company(current_company).joins(:currency) if @current_company_invoices.nil? %>
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <span class="btn-activity"><i class="material-icons">
     keyboard_arrow_left
@@ -7,14 +8,14 @@
     <!--- activities list--->
 
     <div class="status-info active">
-      <% current_company_active_invoices = @current_company_invoices %>
+      <% current_company_active_invoices = @current_company_invoices.unarchived %>
       <h5>
         <%= link_to t('views.common.active'), invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= current_company_active_invoices.count %>)</span>
       </h5>
 
-      <% current_company_active_invoices.group_by{|i| i.currency }.each do |currency, invoices| %>
-        <div class="amount"><%= number_to_currency(invoices.sum(&:invoice_total), unit: currency.code) %></div>
+      <% current_company_active_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
       <% end %>
 
     </div>
@@ -25,8 +26,8 @@
         <%= link_to t('views.common.deleted'), invoices_path(status: 'deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
-      <% current_company_deleted_invoices.group_by{|i| i.currency }.each do |currency, invoices| %>
-        <div class="amount"><%= number_to_currency(invoices.sum(&:invoice_total), unit: currency.code) %></div>
+      <% current_company_deleted_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
       <% end %>
     </div>
 
@@ -36,8 +37,8 @@
         <%= link_to t('views.common.archived'), invoices_path(status: 'archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
-      <% current_company_archived_invoices.group_by{|i| i.currency }.each do |currency, invoices| %>
-        <div class="amount"><%= number_to_currency(invoices.sum(&:invoice_total), unit: currency.code) %></div>
+      <% current_company_archived_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
       <% end %>
     </div>
 
