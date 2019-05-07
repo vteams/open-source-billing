@@ -127,6 +127,7 @@ class Client < ActiveRecord::Base
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
     # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
     client_total_credit
+    0
   end
 
   def update_payment_status(payments)

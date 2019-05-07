@@ -49,7 +49,7 @@
             <th><%= t('invoice') %> #</th>
             <th><%= t('views.dashboard.due_date') %></th>
             <th><%= t('company') %></th>
-            <th class="right-align"><%= t('amount') %></th>
+            <th><%= t('amount') %></th>
           </tr>
           </thead>
           <tbody>
@@ -58,7 +58,7 @@
                     <td><%= link_to invoice.invoice_number, invoice, remote: true %></td>
                     <td><%= invoice.due_date%></td>
                     <td><%= invoice.company.company_name%></td>
-                    <td  class="right-align"><%= invoice.currency.unit %> <%= number_to_currency(invoice.invoice_total, unit: '')%></td>
+                    <td><%= invoice.currency.unit %> <%= number_to_currency(invoice.invoice_total, unit: '')%></td>
                   </tr>
               <% end %>
           </tbody>
@@ -73,7 +73,7 @@
             <th><%= t('invoice') %> #</th>
             <th><%= t('views.invoices.due_date') %></th>
             <th><%= t('company') %></th>
-            <th class="right-align"><%= t('amount') %></th>
+            <th><%= t('amount') %></th>
           </tr>
           </thead>
           <tbody>
@@ -82,7 +82,7 @@
                 <td><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></td>
                 <td><%= payment.unscoped_invoice.due_date%></td>
                 <td><%= payment.unscoped_invoice.company.company_name%></td>
-                <td  class="right-align"><%= payment.unscoped_invoice.currency.unit %> <%= number_to_currency(payment.payment_amount, unit: '')%></td>
+                <td><%= payment.unscoped_invoice.currency.unit %> <%= number_to_currency(payment.payment_amount, unit: '')%></td>
               </tr>
             <% end %>
           </tbody>
