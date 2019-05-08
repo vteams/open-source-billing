@@ -16,20 +16,20 @@
         <div class="amount-wrapper">
           <div class="amountInfo">
             <span class="truncate"><%= t('views.clients.available_credit') %></span>
-            <strong class="text-color"><%= number_to_currency(client.available_credit, unit: '')%></strong>
+            <strong class="text-color"><%= number_to_currency(client.available_credit, unit: @client.currency_code)%></strong>
           </div>
           <div class="amountInfo">
             <span class="truncate"><%= t('views.clients.total_amount_billed') %></span>
-            <strong class="text-blue"><%= number_to_currency(@detail[:amount_billed], unit: '') %></strong>
+            <strong class="text-blue"><%= number_to_currency(@client.amount_billed, unit: @client.currency_code) %></strong>
           </div>
           <div class="amountInfo">
             <span class="truncate"><%= t('views.clients.total_payments_received') %></span>
-            <strong class="text-green"><%= number_to_currency(@detail[:payments], unit: '') %></strong>
+            <strong class="text-green"><%= number_to_currency(@client.payments_received, unit: @client.currency_code) %></strong>
           </div>
 
           <div class="amountInfo">
             <span class="truncate"><%= t('views.clients.outstanding_amount') %></span>
-            <strong class="text-orange"><%= number_to_currency(@detail[:outstanding_amount], unit: '') %></strong>
+            <strong class="text-orange"><%= number_to_currency(@client.outstanding_amount, unit: @client.currency_code) %></strong>
           </div>
 
         </div>

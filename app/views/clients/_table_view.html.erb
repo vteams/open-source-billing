@@ -8,10 +8,10 @@
               <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
             </th>
             <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('organization_name', t('views.clients.organization')) %></th>
-            <th class="align_center sorting header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', "#{t('client')}") %></th>
+            <th class="align_center sorting header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', "#{t('views.clients.contact')}") %></th>
             <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email', t('views.common.email')) %></th>
-            <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('business_phone') %>"><%= sortable('business_phone', t('views.common.phone')) %></th>
-            <th class="align_center header <%= sortable_class('available_credit') %>"><%= sortable('available_credit', t('views.clients.available_credit')) %></th>
+            <th class="align_center header"><%= t('views.clients.invoiced') %></th>
+            <th class="align_center header"><%= t('views.clients.received') %></th>
             <th class="center-align not-sortable" width="10%"><%= t '.actions', default: t('helpers.actions') %></th>
           </tr>
           </thead>
@@ -24,9 +24,12 @@
                 <td><strong><%= link_to_if !client.deleted?, client.organization_name, client , remote: true, class: 'invoice_show_link' %></strong></td>
                 <td><%= client.contact_name %></td>
                 <td><%= mail_to client.email, client.email , class: 'email-link' %></td>
-                <td><%= client.business_phone %></td>
+
                 <td>
-                  <strong><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
+                  <strong><%= number_to_currency(client.amount_billed, unit: client.currency_code)%></strong>
+                </td>
+                <td>
+                  <strong><%= number_to_currency(client.payments_received, unit: client.currency_code)%></strong>
                 </td>
                 <td class="action-btn-group clients-action">
                   <% if client.deleted? %>
@@ -40,7 +43,6 @@
                                   data:{confirm: t('helpers.messages.confirm'),
                                         success: t('views.clients.bulk_action_msg', action: 'deleted') },
                                   title: t('helpers.links.delete') %>
-
 
 
                         <% if !client.archived? %>

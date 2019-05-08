@@ -579,6 +579,8 @@ en:
       atleast_one_company_required: "Select at least one company"
       business_email: "Business Email"
       vat_number: "VAT Number"
+      invoiced: "Invoiced"
+      received: "Received"
 
     expenses:
       expenses: "Expenses"

@@ -52,7 +52,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
     @invoices = @client.invoices.last(5)
     @payments = Payment.payments_history(@client).last(5)
-    @detail = Services::ClientDetail.new(@client).get_detail
+
     respond_to do |format|
       format.html # show.html.erb
       format.js
@@ -98,7 +98,7 @@ class ClientsController < ApplicationController
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @client)
 
-    @client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
+    #@client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
 
     respond_to do |format|
       if @client.save
@@ -119,9 +119,11 @@ class ClientsController < ApplicationController
     associate_entity(params, @client)
 
     #add/update available credit
+=begin
     if params[:available_credit].present?
     @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], get_company_id()) : @client.update_available_credit(params[:available_credit])
     end
+=end
 
     respond_to do |format|
       if @client.update_attributes(client_params)

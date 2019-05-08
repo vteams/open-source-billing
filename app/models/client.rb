@@ -236,4 +236,24 @@ class Client < ActiveRecord::Base
   def full_name
     [first_name.capitalize, last_name.capitalize].compact.join(' ')
   end
+
+  def outstanding_amount
+    amount = 0
+    self.invoices.each do |invoice|
+      amount += Payment.invoice_remaining_amount(invoice.id)
+    end unless invoices.blank?
+    amount
+  end
+
+  def payments_received
+    payments = 0
+    self.invoices.each do |invoice|
+      payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount).to_f
+    end  unless invoices.blank?
+    payments
+  end
+
+  def amount_billed
+    self.invoices.sum(:invoice_total).to_f
+  end
 end
