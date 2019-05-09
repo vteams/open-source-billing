@@ -58,11 +58,11 @@ module ApplicationHelper
     link_to_function (block_given? ? capture(&block) : args[0]), "jQuery(this).closest('form').submit();", args.extract_options!
   end
 
-  def sortable(column, title = nil, remote = true)
+  def sortable(column, title = nil, options={})
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    request.format.pdf? ? title : link_to(params.merge(sort: column, direction: direction, page: 1), {class: "#{css_class} sortable", remote: remote}) do
+    request.format.pdf? ? title : link_to(params.merge(sort: column, direction: direction, page: 1), {class: "#{css_class} sortable"}.merge(options)) do
       "#{title} #{sortable_icon(column)}".html_safe
     end
   end
