@@ -19,15 +19,15 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  load_and_authorize_resource only: %i[index show create destroy update new edit]
+  load_and_authorize_resource only: %i[index create destroy update new edit]
 
-  before_action :authenticate_user!, except: %i[preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
+  before_action :authenticate_user!, except: %i[show preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
   before_action :set_per_page_session
   before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy clone]
   before_action :verify_authenticity_token, only: :show #if: ->{ action_name == 'show' and request.format.pdf? }
   before_action :set_client_id, only: :create
 
-  protect_from_forgery :except => %i[preview paypal_payments create]
+  protect_from_forgery :except => %i[show preview paypal_payments create]
 
   helper_method :sort_column, :sort_direction
 
@@ -320,6 +320,7 @@ class InvoicesController < ApplicationController
 
   def send_invoice
     @invoice.send_invoice(current_user, params[:id])
+    redirect_to invoices_path
   end
 
   def stop_recurring
