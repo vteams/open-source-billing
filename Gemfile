@@ -103,3 +103,7 @@ gem 'cocoon', '~> 1.2', '>= 1.2.11'
 gem 'nouislider-rails', '~> 8.2', '>= 8.2.1'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'sidekiq', '>= 5.2.7'
+
+gem 'groupdate'
+gem 'chartkick'
+

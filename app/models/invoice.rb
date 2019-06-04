@@ -34,6 +34,8 @@ class Invoice < ActiveRecord::Base
   scope :by_company, -> (company_id) { where("invoices.company_id IN(?)", company_id) }
   scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ")}
 
+  scope :in_year, ->(year) { where('extract(year from invoices.created_at) = ?', year) }
+
   # constants
   STATUS_DESCRIPTION = {
       draft: I18n.t('views.invoices.draft_tooltip'),

@@ -3,60 +3,45 @@
   <div class="dashboard-whitebox">
     <div class="row">
       <div class="col m6 total-income">
-        <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path(type: ['paid']) %></h4>
-        <div class="amount">
-          <%= number_to_currency_dashboard(@ytd_income,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'})  %>
-        </div>
+
         <h4><%= link_to t("views.dashboard.amount_billed"), invoices_path %></h4>
         <div class="amount">
-          <%= number_to_currency_dashboard(@amount_billed,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
+          <% @current_company_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+              <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+
         </div>
-        <h4><%= link_to t("views.dashboard.total_outstanding"), invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
+        <h4><%= link_to t("views.payments.payments"), invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
         <div class="amount">
-          <%= number_to_currency_dashboard(@outstanding_invoices, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'span'}) %>
+          <% @current_company_payments.group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
+              <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
         </div>
       </div>
       <div class="col m6">
-        <h4><%= link_to t("views.dashboard.aged_ar"), "/#{I18n.locale}/reports/aged_accounts_receivable" %></h4>
-        <div class="agedWrapper">
-          <div class="aged-ar">
-            <strong>0 - 30 <em><%= t("views.dashboard.days_old") %></em> </strong>
-            <span>
-              <%= number_to_currency_dashboard(@aged_invoices.attributes["zero_to_thirty"].to_f,{unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %>
-            </span>
-          </div>
-          <div class="progress">
-            <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(@aged_invoices.attributes["zero_to_thirty"],@aged_invoices_total) %>%;">
-              <span class="sr-only">60% Complete</span>
-            </div>
-          </div>
-        </div>
-        <div class="agedWrapper">
-          <div class="aged-ar">
-            <strong>30 - 60 <em><%= t("views.dashboard.days_old") %></em> </strong>
-            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["thirty_one_to_sixty"].to_f, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
-          </div>
-          <div class="progress">
-            <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(@aged_invoices.attributes["thirty_one_to_sixty"],@aged_invoices_total) %>%;">
-              <span class="sr-only">80% Complete</span>
-            </div>
-          </div>
-        </div>
-        <div class="agedWrapper">
-          <div class="aged-ar">
-            <strong>over 90 <em><%= t("views.dashboard.days_old") %></em> </strong>
-            <span><%= number_to_currency_dashboard(@aged_invoices.attributes["sixty_one_to_ninety"].to_f, {unit: @currency.present? ? @currency.unit : default_currency_code, unit_size: @unit_size, dom: 'em'}) || "#{t('currency_unit')}0.00" %></span>
-          </div>
-          <div class="progress">
-            <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(@aged_invoices.attributes["sixty_one_to_ninety"], @aged_invoices_total) %>%;">
-              <span class="sr-only">100% Complete</span>
-            </div>
-          </div>
+        <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path(type: ['paid']) %></h4>
+        <div class="amount">
+          <% @ytd_invoices.group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
+              <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
         </div>
       </div>
     </div>
+
     <div class="graph-holder">
-      <div id="graph_container"></div>
+      <h2>Invoices</h2>
+      <%= line_chart @invoices_chart_data,
+                     legend: 'bottom',
+                     download: true,
+                     colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC']
+      %>
+      <!--<div id="graph_container"></div>-->
+      <h2>Payments</h2>
+      <%= line_chart @payments_chart_data,
+                     legend: 'bottom',
+                     download: true,
+                     colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC']
+      %>
     </div>
   </div>
 </div>

@@ -96,6 +96,8 @@
 //= require sweetalert.min
 //= require cocoon
 //= require nouislider
+//= require chartkick
+//= require Chart.bundle
 
 jQuery(function () {
 

@@ -23,18 +23,24 @@ class DashboardController < ApplicationController
   def index
     @current_company_id = get_company_id
     @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
-    gon.currency_code= @currency_code = @currency.present? ? @currency.code : '$'
-    gon.currency_id = @currency.present? ? @currency.id : ""
-    gon.chart_data = Reporting::Dashboard.get_chart_data(@currency, @current_company_id)
+
+    @invoices_chart_data = Invoice.by_company(current_company).where('invoices.invoice_date > ?', 6.months.ago).joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
+    @payments_chart_data = Payment.by_company(current_company).where('payments.created_at > ?', 6.months.ago).joins(:currency).group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
+
     @recent_activity = Reporting::Dashboard.get_recent_activity(@currency, @current_company_id).group_by { |d| d[:activity_date] }
-    @aged_invoices = Reporting::Dashboard.get_aging_data(@currency, @current_company_id)
     @current_invoices = Invoice.current_invoices(@current_company_id)
     @past_invoices = Invoice.past_invoices(@current_company_id)
-    @amount_billed = Invoice.total_invoices_amount(@currency, @current_company_id)
-    @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices(@currency, @current_company_id)
-    @ytd_income = Reporting::Dashboard.get_ytd_income(@currency, @current_company_id)
+
+    @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
+    @current_company_payments = Payment.by_company(current_company).joins(:currency)
+
+    @ytd_invoices = Invoice.by_company(current_company).in_year(Date.today.year).joins(payments: :currency)
+
     @unit_size='medium-unit'
-    @aged_invoices_total = @aged_invoices.attributes["thirty_one_to_sixty"] + @aged_invoices.attributes["zero_to_thirty"] + @aged_invoices.attributes["sixty_one_to_ninety"] rescue 0
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def chart_details

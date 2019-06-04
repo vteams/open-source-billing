@@ -41,6 +41,8 @@ module Reporting
 
     # get chart data
     def self.get_chart_data(currency=nil, company_id=nil)
+      #invoices = Invoice.where("created_at > ?", 6.months.ago.to_date.at_beginning_of_month).joins(:currency).group('currencies.unit')
+
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}
