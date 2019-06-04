@@ -24,8 +24,8 @@ class DashboardController < ApplicationController
     @current_company_id = get_company_id
     @currency = params[:currency].present? ? Currency.find_by_id(params[:currency]) : Currency.default_currency
 
-    @invoices_chart_data = Invoice.by_company(current_company).where('invoices.invoice_date > ?', 6.months.ago).joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
-    @payments_chart_data = Payment.by_company(current_company).where('payments.created_at > ?', 6.months.ago).joins(:currency).group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
+    @invoices_chart_data = Invoice.by_company(current_company).where('invoices.invoice_date > ?', 6.months.ago).order('invoice_date asc').joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
+    @payments_chart_data = Payment.by_company(current_company).where('payments.created_at > ?', 6.months.ago).order('payments.created_at asc').joins(:currency).group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
 
     @recent_activity = Reporting::Dashboard.get_recent_activity(@currency, @current_company_id).group_by { |d| d[:activity_date] }
     @current_invoices = Invoice.current_invoices(@current_company_id)
