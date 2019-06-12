@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col m6 total-income">
+
+    <h4><%= link_to t("views.dashboard.amount_billed"), invoices_path %></h4>
+    <div class="amount">
+      <div><%= number_to_currency_dashboard(@current_company_invoices.sum("invoices.base_currency_equivalent_total"), unit: @currenct_company_base_currency.unit, unit_size: @unit_size, dom: 'span') %></div>
+    </div>
+  </div>
+  <div class="col m6">
+    <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path %></h4>
+    <div class="amount">
+      <div><%= number_to_currency_dashboard(@ytd_invoices.sum("invoices.base_currency_equivalent_total"), unit: @currenct_company_base_currency.unit, unit_size: @unit_size, dom: 'span') %></div>
+    </div>
+  </div>
+</div>
+
+<div class="graph-holder">
+
+  <h4>Invoices</h4>
+  <%= area_chart @invoices_chart_data_base,
+                 legend: 'bottom',
+                 download: true,
+                 colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC']
+  %>
+<!--  &lt;!&ndash;<div id="graph_container"></div>&ndash;&gt;
+  <h4>Payments</h4>
+  <%#= area_chart @payments_chart_data,
+                 legend: 'bottom',
+                 download: true,
+                 colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC']
+  %>-->
+</div>

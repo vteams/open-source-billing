@@ -92,8 +92,8 @@ $(document).ready(function(){
       else{
           $("#invoices-list #radioBtn a").removeClass("active");
           $(this).addClass('active');
-          $(".data-wrapper > ul").hide();
-          $(".data-wrapper > ul").eq(ind).show();
+          $("#invoices-list .data-wrapper > ul").hide();
+          $("#invoices-list .data-wrapper > ul").eq(ind).show();
       }
   });
 
@@ -336,4 +336,18 @@ function initBulkActionCheckboxes() {
       $("input.top_links.recover_deleted").click();
     }
   });
+
+    $('.dashboard-whitebox #radioBtn a').on('click', function(){
+        var ind = $(this).index();
+        if($(this).hasClass('active')){
+            return
+        }
+        else{
+            $(".dashboard-whitebox #radioBtn a").removeClass("active");
+            $(this).addClass('active');
+            $(".dashboard-whitebox .data-wrapper > ul").hide();
+            $(".dashboard-whitebox .data-wrapper > ul").eq(ind).show();
+        }
+    });
+
 }

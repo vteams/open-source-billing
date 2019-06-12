@@ -951,49 +951,59 @@ h6 {
 
   .btn-activity {
     top: 16px; } }
-#invoices-list {
+#invoices-list, .dashboard-whitebox {
   background: #fff;
-  height: calc(100vh - 122px);
   margin-bottom: 30px;
   box-shadow: 0 0 9px #e0e0e0;
   -webkit-box-shadow: 0 0 9px #e0e0e0;
   -moz-box-shadow: 0 0 9px #e0e0e0;
-  -ms-box-shadow: 0 0 9px #e0e0e0; }
-#invoices-list h3 {
-  padding: 14px 20px;
-  border-bottom: 1px solid #dbdbdb;
-  margin: 0 0 2px; }
-#invoices-list h3 #radioBtn {
-  float: right;
-  margin: 0 10px 0 0; }
-#invoices-list h3 #radioBtn .btn {
-  border: 1px solid #f0f0f1;
-  border-radius: 20px;
-  height: 22px;
-  line-height: 22px;
-  padding: 0 10px;
-  font-size: 11px;
-  font-weight: 500;
-  box-shadow: none;
-  text-transform: uppercase;
-  margin: 0 -10px;
-  z-index: 9;
-  color: #909090;
-  background: #fff;
-  min-width: 70px;
-  text-align: center; }
-#invoices-list h3 #radioBtn .btn:first-child {
-  padding-right: 14px; }
-#invoices-list h3 #radioBtn .active {
-  background: #09b8e2;
-  color: #fff;
-  z-index: 10;
-  position: relative;
-  text-align: center;
-  padding: 0 10px;
-  border-color: transparent; }
-#invoices-list h3 #radioBtn .active:first-child {
-  padding-right: 10px; }
+  -ms-box-shadow: 0 0 9px #e0e0e0;
+
+  h3 {
+    padding: 14px 20px;
+    border-bottom: 1px solid #dbdbdb;
+    margin: 0 0 2px;
+    #radioBtn {
+      float: right;
+      margin: 0 10px 0 0;
+      .btn {
+        border: 1px solid #f0f0f1;
+        border-radius: 20px;
+        height: 22px;
+        line-height: 22px;
+        padding: 0 10px;
+        font-size: 11px;
+        font-weight: 500;
+        box-shadow: none;
+        text-transform: uppercase;
+        margin: 0 -10px;
+        z-index: 9;
+        color: #909090;
+        background: #fff;
+        min-width: 70px;
+        text-align: center;
+      }
+      .btn:first-child {
+        padding-right: 14px;
+      }
+      .active {
+        background: #09b8e2;
+        color: #fff;
+        z-index: 10;
+        position: relative;
+        text-align: center;
+        padding: 0 10px;
+        border-color: transparent;
+      }
+      .active:first-child {
+        padding-right: 10px;
+      }
+    }
+  }
+
+}
+
+
 #invoices-list ul {
   margin: 0;
   padding: 0 20px 12px; }
@@ -1103,6 +1113,7 @@ h6 {
   margin: 0 0 30px;
   background: #fff;
   @inlude box-shadow;
+  padding-top: 0px !important;
   padding: 30px;
   position: relative; }
 @media only screen and (max-width: 992px) {
@@ -5150,3 +5161,15 @@ table.table_listing, table.report-data-table {
   }
 }
 /*----------------------- Table sorter scss ended -------------- */
+
+.dashboard-whitebox {
+  h3 {
+    padding: 14px 0px !important;
+    #radioBtn {
+      .btn {
+        min-width: 132px !important;
+
+      }
+    }
+  }
+}

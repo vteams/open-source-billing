@@ -26,6 +26,8 @@
             </li>
         <% end %>
 
+
+
       </ul>
       <ul class="pastData">
         <% @past_invoices.each do |past_invoice| %>
@@ -43,6 +45,17 @@
             </li>
         <% end %>
       </ul>
+
+      <br><br><br>
+
+      <h4> &nbsp;&nbsp;&nbsp;Invoices by Currency (count)</h4>
+      <br>
+      <%= pie_chart @currencies_chart_data,
+                    legend: 'bottom',
+                    download: true,
+                    colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC']
+      %>
+
     </div>
   </div>
 </div>
