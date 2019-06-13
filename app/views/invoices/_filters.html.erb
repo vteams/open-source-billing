@@ -1,6 +1,6 @@
 <div class="filter-container" id="filters">
   <div class="nav-wrapper subnav-filters">
-    <%= form_tag invoices_path(), method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
+    <%= form_tag invoices_path(), method: :get, class: 'col s12', id: 'filters_form' do %>
       <div class="row">
         <div class="input-field col s12 m3">
           <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
