@@ -1,71 +1,82 @@
 <% if @items.count > 0 %>
-    <div class="new-invoice-holder">
-      <div class="new-invoice-table-holder main-invoice page-box">
-        <table class="bordered grid-view">
-          <thead>
-          <tr>
-            <th width="3%" class="align_center not-sortable td-checkbox checkbox-item">
-              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
-            </th>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-table-holder main-invoice page-box">
+      <table class="bordered grid-view">
+        <thead>
+        <tr>
+          <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
+            <div class="">
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="<%= "select_all_items" %>"></label>
+              </div>
+            </div>
+          </th>
+          <th width="15%" class="align_center sorting header <%= sortable_class('item_name') %>"><%= sortable('item_name', "#{t('views.common.title')}") %></th>
+          <th width="30%" class="align_left header <%= sortable_class('item_description') %>"><%= sortable('item_description', t('views.items.description')) %></th>
+          <th width="15%" class="align_left header <%= sortable_class('unit_cost') %>"><%= sortable('unit_cost', t('views.common.unit_cost')) %></th>
+          <th width="10%" class="align_left header sorting {sorter:'thousands'} <%= sortable_class('quantity') %>"><%= sortable('quantity', t('views.common.qty')) %></th>
+          <th width="6%" class="align_center header <%= sortable_class('tax_1') %>"><%= sortable('tax_1', t('views.items.tax')+'1') %></th>
+          <th width="6%" class="align_center header <%= sortable_class('tax_2') %>"><%= sortable('tax_2', t('views.items.tax')+'2') %></th>
+          <th width="15%;" class="center-align not-sortable"><%= t '.actions', default: t('helpers.actions') %></th>
+        </tr>
+        </thead>
+        <tbody class="table-view-body">
+        <% @items.each do |item| %>
+          <tr class="invoice-card item-card client-card">
+            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item">
+              <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-item_id= <%=item.id %>>
+                <div class="checkbox-item invoice_checkbox">
+                  <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
+                  <label for="<%= "item_#{item.id}" %>"></label>
+                  <div class="invoice-name-initials invoice-name green-light"><%= item.item_name[0] %></div>
+                </div>
+              </div>
+              <%#= check_box_tag 'item_ids[]', item.id, false, :id => "item_#{item.id}", class: 'fix-left-and-opacity' %>
+            </td>
+            <td><strong><%= link_to_if !item.deleted?, item.item_name, item, remote: true, class: 'invoice_show_link' %></strong></td>
+            <td><%= item.item_description %></td>
+            <td><em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em></td>
+            <td><%= item.quantity %></td>
+            <td>
+              <% if item.tax_1.present? %>
+                <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
+              <% end %>
+            </td>
+            <td>
+              <% if item.tax_2.present? %>
+                <div class="amount-box"><strong><%= item.tax2_name %></strong> (<%= item.tax2_percentage %>)</div>
+              <% end %>
+            </td>
+            <td class="action-btn-group items-action">
+              <% if item.deleted? %>
+                <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+                  <i class="material-icons">unarchive</i>
+                </a>
+              <% else %>
+                <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
+                            remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
+                            data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
+                            title: t('helpers.links.edit') %>
 
-            <th width="15%" class="align_center sorting header <%= sortable_class('item_name') %>"><%= sortable('item_name', "#{t('views.common.title')}") %></th>
-            <th width="30%" class="align_left header <%= sortable_class('item_description') %>"><%= sortable('item_description', t('views.items.description')) %></th>
-            <th width="15%" class="align_left header <%= sortable_class('unit_cost') %>"><%= sortable('unit_cost', t('views.common.unit_cost')) %></th>
-            <th width="10%" class="align_left header sorting {sorter:'thousands'} <%= sortable_class('quantity') %>"><%= sortable('quantity', t('views.common.qty')) %></th>
-            <th width="6%" class="align_center header <%= sortable_class('tax_1') %>"><%= sortable('tax_1', t('views.items.tax')+'1') %></th>
-            <th width="6%" class="align_center header <%= sortable_class('tax_2') %>"><%= sortable('tax_2', t('views.items.tax')+'2') %></th>
-            <th width="15%;" class="center-align not-sortable"><%= t '.actions', default: t('helpers.actions') %></th>
+                <% if !item.archived? %>
+                  <a href="javascript:;" class="single_archive" title="Archive">
+                    <i class="material-icons">archive</i>
+                  </a>
+                <% else %>
+                  <a href="javascript:;" class="single_recover" title="Recover">
+                    <i class="material-icons">unarchive</i>
+                  </a>
+
+                <% end %>
+                </ul>
+              <% end %>
+            </td>
           </tr>
-          </thead>
-          <tbody class="table-view-body">
-          <% @items.each do |item| %>
-              <tr class="invoice-card">
-                <td class="align_center td-checkbox checkbox-item">
-                  <%= check_box_tag 'item_ids[]', item.id, false, :id => "item_#{item.id}", class: 'fix-left-and-opacity' %>
-                </td>
-                <td><strong><%= link_to_if !item.deleted?, item.item_name, item, remote: true, class: 'invoice_show_link' %></strong></td>
-                <td><%= item.item_description %></td>
-                <td><em><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></em></td>
-                <td><%= item.quantity %></td>
-                <td>
-                  <% if item.tax_1.present? %>
-                    <div class="amount-box"><strong><%= item.tax1_name %></strong> (<%= item.tax1_percentage %>)</div>
-                  <% end %>
-                </td>
-                <td>
-                  <% if item.tax_2.present? %>
-                    <div class="amount-box"><strong><%= item.tax2_name %></strong> (<%= item.tax2_percentage %>)</div>
-                  <% end %>
-                </td>
-                <td class="action-btn-group items-action">
-                  <% if item.deleted? %>
-                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
-                        <i class="material-icons">unarchive</i>
-                      </a>
-                  <% else %>
-                      <%= link_to raw("<i class='material-icons'>create</i>"),edit_item_path(item),
-                                  remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-                      <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
-                                  data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
-                                  title: t('helpers.links.edit') %>
-
-                        <% if !item.archived? %>
-                              <a href="javascript:;" class="single_archive" title="Archive">
-                                <i class="material-icons">archive</i>
-                              </a>
-                        <% else %>
-                              <a href="javascript:;" class="single_recover" title="Recover">
-                                <i class="material-icons">unarchive</i>
-                              </a>
-
-                        <% end %>
-                      </ul>
-                  <% end %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
+        <% end %>
+        </tbody>
+      </table>
     </div>
+  </div>
 <% end %>

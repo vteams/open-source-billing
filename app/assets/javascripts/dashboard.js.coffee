@@ -54,3 +54,13 @@ jQuery ->
   $("#currency").change ->
     window.location = '/dashboard?currency=' + $(this).val()
   Dashboard.plot_graph();
+
+$(document).ready ->
+  $('#show_more').click ->
+    $("#all_invoice_amounts").show()
+    $("#show_more").hide()
+    return
+  $('#show_less').click ->
+    $("#all_invoice_amounts").hide()
+    $("#show_more").show()
+    return

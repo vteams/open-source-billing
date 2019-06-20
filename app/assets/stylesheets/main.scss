@@ -1308,7 +1308,6 @@ h6 {
 }
 
 .card-white-panel {
-  background-color: #fff;
   padding: 15px;
   -moz-box-shadow: 0 2px 10px rgba(139, 139, 139, 0.12);
   -webkit-box-shadow: 0 2px 10px rgba(139, 139, 139, 0.12);
@@ -1320,6 +1319,38 @@ h6 {
   cursor: pointer;
   word-wrap: break-word;
 }
+.card-white-panel-bg-color{
+  background-color: #fff;
+}
+.check_all_behaviour{
+  color: #09b8e2;
+  background-color: #ECECEC;
+}
+.check_all_behaviour .tabel-panel{
+  background-color: #ECECEC;
+}
+.tabel-panel{
+  min-height: 20px !important;
+  box-shadow: none;
+  margin: 0;
+  padding: 10px;
+  padding-left: 15px;
+}
+.tabel-panel-heading{
+  background-color: #ECECEC;
+  min-height: 10px !important;
+}
+.new-invoice-table-holder .grid-view .table-view-body .invoice-card .checkbox-item .card-white-panel .invoice-name-initials {
+  float: left;
+  width: 27px;
+  height: 27px;
+  border-radius: 40px;
+  text-align: center;
+  line-height: 26px;
+  margin: 7px 10px 0 5px;
+  font-size: 14px;
+
+}
 .card-white-panel .invoice-name {
   float: left;
   width: 40px;
@@ -1327,8 +1358,7 @@ h6 {
   border-radius: 40px;
   text-align: center;
   line-height: 40px;
-  color: #fff;
-  margin: 0 10px 0 0;
+  margin: 0px 10px 0 0px;
   font-size: 14px;
 }
 .card-white-panel .invoice-details {
@@ -1426,12 +1456,64 @@ h6 {
 .card-white-panel div.action-btn-group .dropdown-content li.selected {
   background-color: transparent;
 }
+.grid-view thead tr th .card-white-panel {
+  padding: 0px;
+}
+.new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item input + label {
+  top: 5px;
+  left: 18px;
+}
+.new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item .invoice-name{
+}
+.new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel{
+  height: 25px ;
+}
+.invoice-table-row:hover{
+  background-color: #ECECEC;
+}
+.grid-view .table-view-body tr td .card-white-panel {
+  padding: 0px;
+}
+.new-invoice-holder .new-invoice-table-holder th:first-child{
+  width: 75px;
+}
+.new-invoice-holder .new-invoice-table-holder.main-invoice table tbody tr td:first-child{
+  padding: 0px !important;
+}
+.new-invoice-holder .new-invoice-table-holder .table-view-body .invoice-card .invoice-row .card-white-panel .checkbox-item input + label{
+  top: 15px;
+  //left: 20px;
+}
+.new-invoice-holder .new-invoice-table-holder .table-view-body .client-card .td-checkbox .card-white-panel .checkbox-item input + label {
+  top: 10px;
+}
+.new-invoice-holder .new-invoice-table-holder .table-view-body .item-card .td-checkbox .card-white-panel .checkbox-item input + label {
+  top: 10px;
+  left: 12px;
+}
+.client-card:hover{
+  background-color: #ECECEC;
+}
+.new-invoice-table-holder table tr th [type="checkbox"] + label {
+  opacity: 1 !important;
+  top: 7px;
+  left: 5px;
+}
+.new-invoice-table-holder table tr th [type="checkbox"] + label:hover {
+  opacity: 0.5 !important;
+  top: 7px;
+  left: 5px;
+}
 .card-white-panel .checkbox-item input + label {
   position: absolute;
   top: 25px;
   left: 25px;
+  //right: 0;
+  width: 20px;
+  margin: auto;
   z-index: 100;
-  opacity: 0; }
+  opacity: 0;
+}
 .card-white-panel .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
   border-color: #6a6a6a; }
@@ -3732,7 +3814,7 @@ h6 {
 }
 
 .flex-item .card-white-panel .invoice-details {
-  display: flex;
+  //display: flex;
   flex-direction: column;
   flex: 1; }
 .flex-item .card-white-panel .card-footer {
@@ -4084,7 +4166,7 @@ html {
 .new-invoice-holder .new-invoice-table-holder th {
   border-right: 1px solid #fff;
   background-color: #ececec;
-  padding: 10px 8px;
+  padding: 4px 8px;
   font-weight: bold;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px; }
@@ -5140,7 +5222,23 @@ span.label-font{
   background-position: center;
   background-size: cover;
 }
-
+.toggle-btns{
+  font-size: small;
+  float: right;
+  color: rgba(42, 42, 42, 0.39);
+}
+.show-more{
+  margin-top: 76px;
+  //display: none;
+}
+//.amount:hover{
+//  .show-more{
+//    display: block !important;
+//  }
+//}
+.show-less{
+  margin-top: 215px;
+}
 /*----------------------- Table sorter scss start -------------- */
 table.table_listing, table.report-data-table {
   thead {

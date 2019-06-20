@@ -104,3 +104,23 @@ class @Invoice
   addLineItemRow = (elem) ->
     if elem.parents('tr.fields').next('tr.fields:visible').length == 1
       $('.invoice_grid_fields .add_nested_fields').click()
+
+#$(document).ready ->
+#  $('.invoice-table-row').mouseenter ->
+#    $(this).css('background-color', '#ECECEC')
+#    $('.invoice-id-holder').css('background-color', '#ECECEC')
+#    return
+#  $('.check_all_behaviour').mouseenter ->
+#    $('#select_all_items').show()
+#    $('.num').hide()
+#    return
+#  $('.check_all_behaviour').mouseleave ->
+#    $('#select_all_items').hide()
+#    $('.num').show()
+#    return
+
+#  $('.invoice-row').mouseenter ->
+#    $('.invoice-checkbox').show()
+#    return
+#  $('.invoice-row').mouseleave ->
+#    $('.invoice-checkbox').hide()
