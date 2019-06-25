@@ -17,13 +17,13 @@
           <th class="align_center header <%= sortable_class('payment_date') %>"><%= sortable('payment_date', t('views.common.date')) %></th>
           <th class="align_center header <%= sortable_class('IFNULL(payment_method,payment_type)') %>"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
           <th class="align_center header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
-          <th class="center-align not-sortable"><%= t('helpers.actions') %></th>
+          <th width="10%" class="center-align not-sortable"><%= t('helpers.actions') %></th>
         </tr>
         </thead>
         <tbody class="table-view-body">
         <% @payments.each do |payment| %>
-          <tr class="invoice-card client-card">
-            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item">
+          <tr class="invoice-card client-card invoice-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-payment_id= <%=payment.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}", class: "filled-in" %>

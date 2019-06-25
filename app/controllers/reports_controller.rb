@@ -24,7 +24,7 @@ class ReportsController < ApplicationController
 
   def invoice_detail
     @report = Reporting::Reporter.get_report({:report_name => 'invoice_detail', :report_criteria => get_criteria(params)})
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -32,15 +32,16 @@ class ReportsController < ApplicationController
       format.xls { send_data @report.to_xls }
       format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
       format.pdf do
-        render pdf: "#{@report.report_name}",
-               layout: 'pdf_mode.html.erb',
-               template: 'reports/invoice_detail.html.erb',
-               encoding: "UTF-8",
-               show_as_html: false,
-               margin:  {
-                   left:             0,                     # default 10 (mm)
-                   right:            0,
-               }
+        render :pdf          => "#{@report.report_name}",
+              :layout       => 'pdf_mode.html.erb',
+              :template     => 'reports/invoice_detail.html.erb',
+               :margin       => {:top    => 0,
+                                 :bottom => 10
+               },
+               footer:{
+                   right: 'Page [page] of [topage]'
+               },
+              show_as_html: false
       end
     end
   end
@@ -60,10 +61,13 @@ class ReportsController < ApplicationController
                 template: 'reports/item_sales.html.erb',
                 encoding: "UTF-8",
                 show_as_html: false,
-                margin:  {
-                    left:             0,                     # default 10 (mm)
-                    right:            0,
+                :margin       => {:top    => 3,
+                                  :bottom => 10
+                },
+                footer:{
+                    right: 'Page [page] of [topage]'
                 }
+
       end
     end
   end
@@ -102,7 +106,7 @@ class ReportsController < ApplicationController
       format.pdf do
         render pdf: "#{@report.report_name}",
                layout: 'pdf_mode.html.erb',
-               template: 'reports/reports.html.erb',
+               template: 'reports/payments_collected.html.erb',
                encoding: "UTF-8",
                show_as_html: false,
                footer:{

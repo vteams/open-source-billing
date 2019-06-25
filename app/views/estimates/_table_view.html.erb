@@ -17,13 +17,13 @@
           <th class="align_left header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.estimates.estimate_date')) %></th>
           <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('views.common.total')) %></th>
           <th class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
-          <th class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
+          <th width="10%" class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
         </tr>
         </thead>
         <tbody class="table-view-body">
         <% @estimates.each do |estimate| %>
-          <tr class="invoice-card client-card">
-            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item">
+          <tr class="invoice-card client-card invoice-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox invoice-row checkbox-item">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-estimate_id= <%= estimate.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in" %>
@@ -49,14 +49,8 @@
               <% if estimate.deleted? %>
                 <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
               <% else %>
-                <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_path(id: estimate.id),
-                            title: t('views.common.send'), remote: true %>
                 <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon',
                             title: t('helpers.links.edit') %>
-                <%= link_to raw("<i class='material-icons'>delete</i>"),estimate, method: :delete,
-                            data:{confirm: t('helpers.messages.confirm'),
-                                  success: t('views.estimates.estimate_deleted_msg')},
-                            title: t('helpers.links.delete') %>
                 <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
                   <i class="material-icons">more_vert</i>
                 </a>
@@ -80,6 +74,17 @@
                   <li>
                     <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.common.convert_to_invoice')}"),
                                 convert_to_invoice_estimate_path(estimate), remote: true %>
+                  </li>
+
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>send</i>Send"), send_estimate_estimates_path(id: estimate.id),
+                                title: t('views.common.send'), remote: true %>
+                  </li>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>delete</i>Delete"),estimate, method: :delete,
+                                data:{confirm: t('helpers.messages.confirm'),
+                                      success: t('views.estimates.estimate_deleted_msg')},
+                                title: t('helpers.links.delete') %>
                   </li>
                 </ul>
               <% end %>

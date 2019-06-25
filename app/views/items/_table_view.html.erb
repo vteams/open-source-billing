@@ -23,13 +23,13 @@
         </thead>
         <tbody class="table-view-body">
         <% @items.each do |item| %>
-          <tr class="invoice-card item-card client-card">
-            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item">
+          <tr class="invoice-card item-card client-card invoice-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-item_id= <%=item.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
                   <label for="<%= "item_#{item.id}" %>"></label>
-                  <div class="invoice-name-initials invoice-name green-light"><%= item.item_name[0] %></div>
+                  <div class="invoice-name-initials invoice-name green-light <%= random_card_color %>"><%= item.item_name[0] %></div>
                 </div>
               </div>
               <%#= check_box_tag 'item_ids[]', item.id, false, :id => "item_#{item.id}", class: 'fix-left-and-opacity' %>

@@ -33,10 +33,10 @@ $(document).ready(function(){
 
   $('#btn-help').click(function(){
         $(this).next().find('.total-income').toggleClass('show-panel');
-    }); 
+    });
 
   $('.menudd').click(function(){
-        $(this).parent().toggleClass('activedd'); 
+        $(this).parent().toggleClass('activedd');
      });
 
   initBulkActionCheckboxes()
@@ -192,7 +192,7 @@ function initBulkActionCheckboxes() {
     $('.card-white-panel .action-btn-group').show();
     $('.table-view-body .action-btn-group').removeClass('disabled_link');
     $('.checkbox-item').find('.invoice-name').css('opacity', '1');
-    // $('.checkbox-item').find('label').css('opacity', '0');
+    $('.checkbox-item').find('label').css('opacity', '0');
     $(".header-right").removeClass("chekbox-show");
     $('#header').removeClass("chkbox-content");
 

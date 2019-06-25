@@ -379,6 +379,12 @@ h6 {
   font-size: 19px;
   line-height: 36px;
   font-weight: 400; }
+.select-wrapper input.select-dropdown{
+  width: 95%;
+}
+#date_range_picker{
+  height: 3rem;
+}
 @media only screen and (max-width: 1199px) {
   #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
     margin-right: 3px; } }
@@ -1003,7 +1009,15 @@ h6 {
 
 }
 
-
+.invoice-name{
+  color: white;
+}
+.invoice-id{
+  color: #454545;
+}
+.invoice-client{
+  color: #454545;
+}
 #invoices-list ul {
   margin: 0;
   padding: 0 20px 12px; }
@@ -1471,6 +1485,12 @@ h6 {
 .invoice-table-row:hover{
   background-color: #ECECEC;
 }
+.invoice-table-row:hover .item-name{
+  background-color: #FFFFFF;
+}
+.invoice-item-row:first-child:hover .invoice-item-row{
+  background-color: #FFFFFF;
+}
 .grid-view .table-view-body tr td .card-white-panel {
   padding: 0px;
 }
@@ -1481,7 +1501,7 @@ h6 {
   padding: 0px !important;
 }
 .new-invoice-holder .new-invoice-table-holder .table-view-body .invoice-card .invoice-row .card-white-panel .checkbox-item input + label{
-  top: 15px;
+  top: 10px;
   //left: 20px;
 }
 .new-invoice-holder .new-invoice-table-holder .table-view-body .client-card .td-checkbox .card-white-panel .checkbox-item input + label {
@@ -1490,6 +1510,17 @@ h6 {
 .new-invoice-holder .new-invoice-table-holder .table-view-body .item-card .td-checkbox .card-white-panel .checkbox-item input + label {
   top: 10px;
   left: 12px;
+}
+.new-invoice-table-holder .grid-view .table-view-body tr{
+  cursor: pointer;
+}
+.table_listing thead tr th {
+  border-right: 1px solid #fff;
+  background-color: #ececec;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
 }
 .client-card:hover{
   background-color: #ECECEC;
@@ -1516,15 +1547,16 @@ h6 {
 }
 .card-white-panel .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
-  border-color: #6a6a6a; }
-.card-white-panel .checkbox-item:hover input ~ label {
+   }
+.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ label {
   opacity: 1 !important; }
-.card-white-panel .checkbox-item:hover input ~ .invoice-name {
+.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ .invoice-name {
   opacity: 0 !important;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s; }
+
 .card-white-panel .checkbox-item input:checked ~ label {
   opacity: 1; }
 .card-white-panel .checkbox-item input:checked ~ .invoice-name {
@@ -1539,6 +1571,12 @@ h6 {
   transition: all 0.5s;
   z-index: 5;
   opacity: 1; }
+.report-invoice-number{
+  padding-left: 10px !important;
+}
+.invoices_link {
+  padding: 10px !important;
+}
 
 #header .header-right .right .action-btn-group a {
   color: #b9b9b9;
@@ -2932,7 +2970,15 @@ h6 {
 .user-list .list-item .invoice-details .input-field.countries .select-wrapper .select-dropdown {
   color: #454545;
   font-weight: normal; }
-
+.set-positions{
+  position: relative;
+}
+.show-less{
+  position: absolute; bottom: 0px; right: 0px;
+}
+.show-more{
+  position: absolute; bottom: 0px; right: 0px;
+}
 .user-list .list-item .invoice-details.contentHolder .input-field.datepicker input:disabled + i {
   display: none; }
 .user-list .list-item .invoice-details.contentHolder .caret {
@@ -5224,20 +5270,14 @@ span.label-font{
 }
 .toggle-btns{
   font-size: small;
-  float: right;
+  //float: right;
+  //position: absolute;
+  //bottom: 0px;
+  //right: 0px;
   color: rgba(42, 42, 42, 0.39);
 }
-.show-more{
-  margin-top: 76px;
-  //display: none;
-}
-//.amount:hover{
-//  .show-more{
-//    display: block !important;
-//  }
-//}
-.show-less{
-  margin-top: 215px;
+.hide-class{
+  display: none;
 }
 /*----------------------- Table sorter scss start -------------- */
 table.table_listing, table.report-data-table {

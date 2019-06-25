@@ -22,8 +22,8 @@
         </thead>
         <tbody class="table-view-body">
         <% @clients.each do |client| %>
-          <tr class="client-card invoice-card">
-            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item">
+          <tr class="client-card invoice-card invoice-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-client_id= <%=client.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}", class: "filled-in" %>

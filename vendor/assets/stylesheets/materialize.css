@@ -6652,7 +6652,7 @@ form p:last-child {
   top: 0;
   width: 20px;
   height: 20px;
-  border: 2px solid #26a69a;
+  /*border: 2px solid #26a69a;*/
   background-color: #26a69a;
   z-index: 0;
 }

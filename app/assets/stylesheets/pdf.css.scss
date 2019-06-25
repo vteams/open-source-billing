@@ -495,3 +495,30 @@ body {
 .page-box {
   margin-top: 0px !important;
 }
+.client{
+  text-align: left;
+}
+table tbody tr {
+  border-bottom: 2px solid #D0D0D0;
+}
+//@media all{
+//  tr
+//  {
+//    page-break-inside:avoid;
+//    page-break-after:auto;
+//  }
+//}
+.new-invoice-table-holder .grid-view .table-view-body tr{
+  cursor: unset;
+}
+
+.avoid_page_break {
+  page-break-inside: avoid !important;
+}
+
+.page_break {
+  clear: both;
+  //  overflow: hidden;
+  display: block;
+  page-break-after: always;
+}
