@@ -12,12 +12,10 @@
               </div>
             </div>
           </th>
-          <th class="align_center header <%= sortable_class('invoices.invoice_number') %>"><%= sortable('invoices.invoice_number', t('invoice')) %></th>
-          <th class="align_left header <%= sortable_class(get_org_name) %>"><%= sortable(get_org_name, t('client')) %></th>
+          <th class="align_left header <%= sortable_class(get_org_name) %>"><%= sortable('created_at', t('client / Inv #')) %></th>
           <th class="align_center header <%= sortable_class('payment_date') %>"><%= sortable('payment_date', t('views.common.date')) %></th>
           <th class="align_center header <%= sortable_class('IFNULL(payment_method,payment_type)') %>"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
-          <th class="align_center header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
-          <th width="10%" class="center-align not-sortable"><%= t('helpers.actions') %></th>
+          <th width="15%" class="align_center header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
         </tr>
         </thead>
         <tbody class="table-view-body">
@@ -32,28 +30,39 @@
                 </div>
               </div>
             </td>
-            <td>
-              <strong><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></strong>
+            <td><%= payment.unscoped_client.organization_name rescue '' %><br>
+              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true, class: ' estimate-number' %></em>
             </td>
-            <td><%= payment.unscoped_client.organization_name rescue '' %></td>
             <td><%= payment.payment_date rescue "" %></td>
             <td>
               <% type = payment.payment_method ? payment.payment_method.parameterize.underscore : ((payment.payment_type.parameterize.underscore if payment.payment_type.present?)  || '') %>
               <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if type.present? %></span>
             </td>
             <td>
-              <em>
+              <em style="float: left">
                 <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.unit : "$")} " %></em>
               </em>
-            </td>
-            <td class="action-btn-group">
-              <%= link_to raw("<i class='material-icons'>visibility</i>"), payment, title: t('views.common.show'), remote: true %>
-              <% unless payment.payment_type == "credit" %>
-                <%= link_to raw("<i class='material-icons'>delete</i>"),(OSB::CONFIG::DEMO_MODE ? 'javascript:void' : payment), method: :delete,
-                            data:{ confirm: t('helpers.messages.confirm'),
-                                   success: t('views.payments.bulk_deleted_msg')},
-                            title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
-              <% end %>
+              <div class="action-btn-group" style="float: right">
+                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= payment.id %>' data-alignment="right" data-beloworigin="true">
+                  <i class="material-icons">more_vert</i>
+                </a>
+
+                <ul id="dropdown_<%= payment.id %>" class='dropdown-content z-depth-4'>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>visibility</i>Show"), payment, title: t('views.common.show'), remote: true %>
+                  </li>
+                  <li>
+                    <% unless payment.payment_type == "credit" %>
+                      <%= link_to raw("<i class='material-icons'>delete</i>Delete"),(OSB::CONFIG::DEMO_MODE ? 'javascript:void' : payment), method: :delete,
+                                  data:{ confirm: t('helpers.messages.confirm'),
+                                         success: t('views.payments.bulk_deleted_msg')},
+                                  title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
+                    <% end %>
+
+                  </li>
+                </ul>
+              </div>
+
             </td>
           </tr>
         <% end %>

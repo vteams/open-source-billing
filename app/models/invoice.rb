@@ -23,6 +23,8 @@ class Invoice < ActiveRecord::Base
   include DateFormats
   include Trackstamps
   include InvoiceSearch
+  include Hashid::Rails
+
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('due_date DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('due_date DESC')}

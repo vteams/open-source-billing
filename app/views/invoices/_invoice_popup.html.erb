@@ -8,7 +8,7 @@
             <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), remote: true,
                         title: t('views.common.send') %>
             <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'show',
-                         :id => @invoice.id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
+                         :id => @invoice.hashid, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
             <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
                         target: '_blank' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">

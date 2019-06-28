@@ -12,9 +12,25 @@
             <a href="javascript:;"><%= t('header.links.payments.payments') %></a>
           </h5>
       </h5>
-      <% @current_company_payments.joins(:currency).group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
-        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+      <% company_payments = @current_company_payments.joins(:currency).group("currencies.unit").sum("payment_amount") %>
+      <% if company_payments.count > 3 %>
+        <div class="first-three-invoices set-positions">
+        <% @current_company_payments.limit(3).joins(:currency).group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
+        </div>
+    <% else %>
+        <% company_payments.each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
       <% end %>
+      <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
+        <% @current_company_payments.offset(3).joins(:currency).group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
+      </div>
       <% 0.upto(2) do |num| %>
         <% monthly_payments = @current_company_payments.joins(:currency).where("extract(year from payments.created_at) = ? AND extract(month from payments.created_at) = ?", num.months.ago.year, num.months.ago.month) %>
         <% if monthly_payments.present? %>

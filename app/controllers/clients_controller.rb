@@ -31,7 +31,6 @@ class ClientsController < ApplicationController
     set_company_session
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-
     @clients = Client.get_clients(params.merge(get_args))
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
 

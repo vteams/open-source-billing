@@ -14,7 +14,6 @@
           </th>
           <th class="align_center header <%= sortable_class('name') %>"><%= sortable('name', "#{t('views.taxes.tax_name')}") %></th>
           <th width="35%" class="align_center header <%= sortable_class('percentage') %>"><%= sortable('percentage', t('views.common.percentage')) %></th>
-          <th width="15%;" class="center-align not-sortable"><%= t '.actions', default: t('helpers.actions') %></th>
         </tr>
         </thead>
         <tbody class="table-view-body">
@@ -28,42 +27,45 @@
                   <div class="invoice-name-initials invoice-name green-light <%= random_card_color %>"><%= tax.name[0] %></div>
                 </div>
               </div>
-              <%#= check_box_tag 'tax_ids[]', tax.id, false, id: "tax_#{tax.id}", class: 'fix-left-and-opacity' %>
             </td>
             <td><strong><%= link_to_if !tax.deleted?, tax.name, tax, remote: true, class: 'invoice_show_link' %></strong></td>
-            <td><strong><%= tax.percentage %>%</strong></td>
-            <td class="action-btn-group">
-              <% if tax.deleted? %>
-                <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
-                  <i class="material-icons">unarchive</i>
-                </a>
-              <% else %>
-                <%= link_to raw("<i class='material-icons'>create</i>"), edit_tax_path(tax),
-                            remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-                <%= link_to raw("<i class='material-icons'>delete</i>"), tax, method: :delete,
-                            data: {confirm: t('helpers.messages.confirm'),
-                                   success: t('views.taxes.bulk_action_msg', action: 'deleted')},
-                            title: t('helpers.links.delete') %>
-                <a id="dLabel" class='dropdown-button' href='javascript:void(0);' data-activates='dropdown_<%= tax.id %>' data-alignment="right" data-beloworigin="true">
-                  <i class="material-icons">more_vert</i>
-                </a>
-                <!-- Dropdown Structure -->
-                <ul id="dropdown_<%= tax.id %>" class='dropdown-content z-depth-4'>
-                  <% if !tax.archived? %>
+            <td><strong style="float: left"><%= tax.percentage %>%</strong>
+              <div class="action-btn-group" style="float: right">
+                <% if tax.deleted? %>
+                  <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+                    <i class="material-icons">unarchive</i>
+                  </a>
+                <% else %>
+                  <%= link_to raw("<i class='material-icons'>create</i>"), edit_tax_path(tax),
+                              remote: true, class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                  <a id="dLabel" class='dropdown-button' href='javascript:void(0);' data-activates='dropdown_<%= tax.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= tax.id %>" class='dropdown-content z-depth-4'>
                     <li>
-                      <a href="javascript:;" class="single_archive">
-                        <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
-                      </a>
+                      <%= link_to raw("<i class='material-icons'>delete</i>Delete"), tax, method: :delete,
+                                  data: {confirm: t('helpers.messages.confirm'),
+                                         success: t('views.taxes.bulk_action_msg', action: 'deleted')},
+                                  title: t('helpers.links.delete') %>
                     </li>
-                  <% else %>
-                    <li>
-                      <a href="javascript:;" class="single_recover">
-                        <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
-                      </a>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
+                    <% if !tax.archived? %>
+                      <li>
+                        <a href="javascript:;" class="single_archive">
+                          <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
+                        </a>
+                      </li>
+                    <% else %>
+                      <li>
+                        <a href="javascript:;" class="single_recover">
+                          <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+                        </a>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </div>
+
             </td>
           </tr>
         <% end %>

@@ -8,16 +8,31 @@
     <!--- activities list--->
 
     <div class="status-info active">
+
       <% current_company_active_invoices = @current_company_invoices.unarchived %>
       <h5>
         <%= link_to t('views.common.active'), invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= current_company_active_invoices.count %>)</span>
       </h5>
 
-      <% current_company_active_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+      <% if current_company_active_invoices.count > 3 %>
+        <div class="first-three-invoices set-positions">
+          <% current_company_active_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
+        </div>
+      <% else %>
+        <% current_company_active_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
       <% end %>
-
+      <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
+        <% current_company_active_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
+      </div>
     </div>
 
     <div class="status-info">
@@ -26,9 +41,24 @@
         <%= link_to t('views.common.deleted'), invoices_path(status: 'deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
-      <% current_company_deleted_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+      <% if current_company_deleted_invoices.count > 3 %>
+        <div class="first-three-invoices set-positions">
+          <% current_company_deleted_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_deleted_invoices' %>
+        </div>
+      <% else %>
+        <% current_company_deleted_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
           <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+    <% end %>
+      <div class="all-deleted-invoices hide-class set-positions" id="all_invoice_amounts">
+      <% current_company_deleted_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
       <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_deleted_invoices' %>
+      </div>
     </div>
 
     <div class="status-info">
@@ -37,29 +67,44 @@
         <%= link_to t('views.common.archived'), invoices_path(status: 'archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
-      <% current_company_archived_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+      <% if current_company_archived_invoices.count > 3 %>
+        <div class="first-three-invoices set-positions">
+        <% current_company_archived_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
           <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_archived_invoices' %>
+        </div>
+        <% else %>
+        <% current_company_archived_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
       <% end %>
+      <div class="all-archived-invoices hide-class set-positions" id="all_invoice_amounts">
+      <% current_company_archived_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+      <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_archived_invoices' %>
+      </div>
     </div>
 
     <% if action_name.eql?('index') %>
-        <div class="status-info actionState">
-          <%= form_tag '', method: :get, remote: true do %>
-             <div class="ui list">
-                <% Invoice::STATUS_DESCRIPTION.each do |status, description|%>
-                    <div class="item">
-                      <div class="ui checkbox">
-                        <h5>
-                          <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
-                          <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
+      <div class="status-info actionState">
+        <%= form_tag '', method: :get, remote: true do %>
+          <div class="ui list">
+            <% Invoice::STATUS_DESCRIPTION.each do |status, description|%>
+              <div class="item">
+                <div class="ui checkbox">
+                  <h5>
+                    <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
+                    <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
 
-                        </h5>
-                      </div>
-                    </div>
-                <% end %>
-             </div>
-         <% end %>
-        </div>
+                  </h5>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </aside>

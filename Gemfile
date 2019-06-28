@@ -106,4 +106,4 @@ gem 'sidekiq', '>= 5.2.7'
 
 gem 'groupdate'
 gem 'chartkick'
-
+gem "hashid-rails", "~> 1.0"

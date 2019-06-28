@@ -12,12 +12,10 @@
               </div>
             </div>
           </th>
-          <th class="align_center sorting header <%= sortable_class('estimate_number') %>"><%= sortable('estimate_number', "#{t('estimate')}") %></th>
-          <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('clients.organization_name', t('client')) %></th>
-          <th class="align_left header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.estimates.estimate_date')) %></th>
-          <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('views.common.total')) %></th>
-          <th class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
-          <th width="10%" class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
+          <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('created_at', t('client / Est #')) %></th>
+          <th width="15%" class="align_left header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.estimates.estimate_date')) %></th>
+          <th width="16%" class="align_left header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('Amount')) %></th>
+          <th width="20%" class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
         </tr>
         </thead>
         <tbody class="table-view-body">
@@ -32,10 +30,8 @@
                 </div>
               </div>
             </td>
-            <td>
-              <strong><%= link_to_if !estimate.deleted?, estimate.estimate_number, estimate , remote: true, class: 'invoice_show_link'%></strong>
-            </td>
-            <td><%= estimate.unscoped_client.organization_name rescue '' %></td>
+            <td><%= estimate.unscoped_client.organization_name rescue '' %><br>
+              <em class="inv-number" title="Estimate Number"><%= link_to_if !estimate.deleted?, estimate.estimate_number, estimate , remote: true, class: 'invoice_show_link estimate-number'%></em></td>
             <td><%= estimate.estimate_date rescue '' %></td>
             <td>
               <em>
@@ -43,51 +39,51 @@
               </em>
             </td>
             <td class="<%= estimate.status %>" title="<%= estimate.tooltip %>">
-              <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= t('views.invoices.' + estimate.status.downcase) %></span>
-            </td>
-            <td class="action-btn-group">
-              <% if estimate.deleted? %>
-                <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
-              <% else %>
-                <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon',
-                            title: t('helpers.links.edit') %>
-                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
-                  <i class="material-icons">more_vert</i>
-                </a>
-                <!-- Dropdown Structure -->
-                <ul id="dropdown_<%= estimate.id %>" class='dropdown-content z-depth-4'>
-                  <% if !estimate.archived? %>
+              <span style="float: left" class="invoice-action  class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= t('views.invoices.' + estimate.status.downcase) %></span>
+              <div class="action-btn-group" style="float: right">
+                <% if estimate.deleted? %>
+                  <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+                <% else %>
+                  <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon',
+                              title: t('helpers.links.edit') %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= estimate.id %>" class='dropdown-content z-depth-4'>
+                    <% if !estimate.archived? %>
+                      <li>
+                        <a href="javascript:;" class="single_archive">
+                          <i class="material-icons">archive</i>
+                          <%= t('views.common.send_to_archive') %>
+                        </a>
+                      </li>
+                    <% else %>
+                      <li>
+                        <a href="javascript:;" class="single_recover">
+                          <i class="material-icons">unarchive</i>
+                          <%= t('helpers.links.recover') %>
+                        </a>
+                      </li>
+                    <% end %>
                     <li>
-                      <a href="javascript:;" class="single_archive">
-                        <i class="material-icons">archive</i>
-                        <%= t('views.common.send_to_archive') %>
-                      </a>
+                      <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.common.convert_to_invoice')}"),
+                                  convert_to_invoice_estimate_path(estimate), remote: true %>
                     </li>
-                  <% else %>
-                    <li>
-                      <a href="javascript:;" class="single_recover">
-                        <i class="material-icons">unarchive</i>
-                        <%= t('helpers.links.recover') %>
-                      </a>
-                    </li>
-                  <% end %>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.common.convert_to_invoice')}"),
-                                convert_to_invoice_estimate_path(estimate), remote: true %>
-                  </li>
 
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>send</i>Send"), send_estimate_estimates_path(id: estimate.id),
-                                title: t('views.common.send'), remote: true %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>delete</i>Delete"),estimate, method: :delete,
-                                data:{confirm: t('helpers.messages.confirm'),
-                                      success: t('views.estimates.estimate_deleted_msg')},
-                                title: t('helpers.links.delete') %>
-                  </li>
-                </ul>
-              <% end %>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>send</i>Send"), send_estimate_estimates_path(id: estimate.id),
+                                  title: t('views.common.send'), remote: true %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>delete</i>Delete"),estimate, method: :delete,
+                                  data:{confirm: t('helpers.messages.confirm'),
+                                        success: t('views.estimates.estimate_deleted_msg')},
+                                  title: t('helpers.links.delete') %>
+                    </li>
+                  </ul>
+                <% end %>
+              </div>
             </td>
           </tr>
         <% end %>

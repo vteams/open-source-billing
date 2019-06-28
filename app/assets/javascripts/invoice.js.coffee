@@ -5,6 +5,7 @@ class @Invoice
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
+    showClipboard()
 
 
 
@@ -105,22 +106,29 @@ class @Invoice
     if elem.parents('tr.fields').next('tr.fields:visible').length == 1
       $('.invoice_grid_fields .add_nested_fields').click()
 
-#$(document).ready ->
-#  $('.invoice-table-row').mouseenter ->
-#    $(this).css('background-color', '#ECECEC')
-#    $('.invoice-id-holder').css('background-color', '#ECECEC')
-#    return
-#  $('.check_all_behaviour').mouseenter ->
-#    $('#select_all_items').show()
-#    $('.num').hide()
-#    return
-#  $('.check_all_behaviour').mouseleave ->
-#    $('#select_all_items').hide()
-#    $('.num').show()
-#    return
+  showClipboard = ->
+    $('.get_clipboard_url').click ->
+      u = $(this).data('url')
+      swal
+        title: "URL"
+        buttons: false
+        timer: false
+        text: u
 
-#  $('.invoice-row').mouseenter ->
-#    $('.invoice-checkbox').show()
-#    return
-#  $('.invoice-row').mouseleave ->
-#    $('.invoice-checkbox').hide()
+$(document).ready ->
+  $('#more_deleted_invoices').click ->
+    $('.all-deleted-invoices').show()
+    $('#more_deleted_invoices').hide()
+  $('#less_deleted_invoices').click ->
+    $('.all-deleted-invoices').hide()
+    $('#more_deleted_invoices').show()
+
+  $('#more_archived_invoices').click ->
+    $('.all-archived-invoices').show()
+    $('#more_archived_invoices').hide()
+  $('#less_archived_invoices').click ->
+    $('.all-archived-invoices').hide()
+    $('#more_archived_invoices').show()
+
+
+

@@ -12,11 +12,12 @@
               </div>
             </div>
           </th>
-          <th class="align_left header"><%= sortable('clients.organization_name', t('client')) %></th>
-          <th class="align_left header"><%= sortable('due_date', t('views.invoices.due_date')) %></th>
-          <th class="align_left header"><%= sortable('invoice_total', t('views.common.total')) %></th>
-          <th width="10%" class="align_center header"><%= sortable('status', t('views.common.status')) %></th>
-          <th width="10%" class="center-align not-sortable "><%= t '.actions', default: t('helpers.actions') %></th>
+          <th class="align_left header"><%= sortable('created_at', t('client / Inv #')) %>
+          </th>
+          <th width="17%" class="align_left header"><%= sortable('due_date', t('Invoiced')) %></th>
+          <th width="16%" class="align_left header"><%= sortable('invoice_total', t('Amount')) %></th>
+          <th width="20%" class="align_center header"><%= sortable('status', t('views.common.status')) %></th>
+          <!--          <th width="10%" class="center-align not-sortable "><%#= t '.actions', default: t('helpers.actions') %></th>-->
         </tr>
         </thead>
         <tbody class="table-view-body">
@@ -27,68 +28,75 @@
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in f-l" %>
                   <label for="<%= "invoice_#{invoice.id}" %>"></label>
-                  <div class="invoice-name invoice-id"><%= invoice.invoice_number %></div>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name%></div>
                 </div>
               </div>
             </td>
-            <td><%= link_to invoice.unscoped_client.organization_name,  invoice, remote: true, class: 'invoice_show_link invoice-client' %></td>
-            <td><%= invoice.due_date rescue '' %></td>
+            <td><%= link_to invoice.unscoped_client.organization_name,  invoice, remote: true, class: 'invoice_show_link invoice-client' %><br>
+              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>
+            </td>
+            <td><em title="Invoice Date"><%= invoice.created_at.strftime("%Y-%m-%d") %></em><br>
+              <%= invoices_due_dates(invoice) %>
+            </td>
             <td class='invoice-total'>
-              <em class='core-currency'><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : default_currency_uniq)} " %></em>
+              <em class='core-currency'><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : default_currency_uniq)} " %></em><br>
               <em class='base-currency' title="Invoice total equivalent in Base Currency"><%= "#{number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.present? ? invoice.base_currency.unit : default_currency_unit)} " %></em>
             </td>
             <td class="<%= invoice.status %>" title="<%= invoice.tooltip %>">
-              <span class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= t('views.invoices.' + invoice.status) %></span>
-            </td>
-            <td class="action-btn-group">
-              <% if invoice.deleted? %>
-                <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
-              <% else %>
-                <%= edit_invoice_link(invoice) %>
-                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
-                  <i class="material-icons">more_vert</i>
-                </a>
+              <span style="float: left" class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= t('views.invoices.' + invoice.status) %></span>
+              <div class="action-btn-group" style="float: right">
+                <% if invoice.deleted? %>
+                  <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+                <% else %>
+                  <%= edit_invoice_link(invoice) %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
 
-                <!-- Dropdown Structure -->
-                <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
-                  <% if !invoice.archived? %>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
+                    <% if !invoice.archived? %>
+                      <li>
+                        <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
+                          <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
+                        </a>
+                      </li>
+                    <% else %>
+                      <li>
+                        <a href="javascript:;" class="single_recover" title="<%= t('helpers.links.recover') %>">
+                          <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+                        </a>
+                      </li>
+                    <% end %>
                     <li>
-                      <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
-                        <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
-                      </a>
+                      <%= link_to raw("<i class='material-icons'>delete</i>#{t('views.dashboard.delete')}"),invoice, title: t('helpers.links.delete'), method: :delete,
+                                  data:{confirm: t('helpers.messages.confirm'),
+                                        success: t('views.invoices.invoice_deleted')} %>
                     </li>
-                  <% else %>
                     <li>
-                      <a href="javascript:;" class="single_recover" title="<%= t('helpers.links.recover') %>">
-                        <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
-                      </a>
+                      <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.enter_payment')}"),
+                                  enter_payment_payments_path(invoice_ids: invoice.id),
+                                  remote: true  unless invoice.status.eql?("paid") %>
                     </li>
-                  <% end %>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>delete</i>#{t('views.dashboard.delete')}"),invoice, title: t('helpers.links.delete'), method: :delete,
-                                data:{confirm: t('helpers.messages.confirm'),
-                                      success: t('views.invoices.invoice_deleted')} %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.enter_payment')}"),
-                                enter_payment_payments_path(invoice_ids: invoice.id),
-                                remote: true  unless invoice.status.eql?("paid") %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons close'>close</i>#{t('views.invoices.stop_recurring')}"),
-                                stop_recurring_invoice_path(invoice) if invoice.is_recurring_invoice? %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>send</i>Send"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send'), remote: true %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>visibility</i>Show"), invoice, title: t('views.common.show'), target: '_blank' %>
-                  </li>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>file_copy</i>Clone"), clone_invoice_path(invoice), title: t('views.dashboard.clone') %>
-                  </li>
-                </ul>
-              <% end %>
+                    <li>
+                      <%= link_to raw("<i class='material-icons close'>close</i>#{t('views.invoices.stop_recurring')}"),
+                                  stop_recurring_invoice_path(invoice) if invoice.is_recurring_invoice? %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>send</i>Send"), send_invoice_invoices_path(id: invoice.id), title: t('views.common.send'), remote: true %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>visibility</i>Show"), invoice, title: t('views.common.show'), target: '_blank' %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>file_copy</i>Clone"), clone_invoice_path(invoice), title: t('views.dashboard.clone') %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>open_in_browser</i>Get url"), 'javascript:;', class: 'get_clipboard_url', data: {url: request.protocol + request.host_with_port + url_for(invoice)} %>
+                    </li>
+                  </ul>
+                <% end %>
+              </div>
             </td>
           </tr>
         <% end %>
@@ -97,3 +105,4 @@
     </div>
   </div>
 <% end %>
+

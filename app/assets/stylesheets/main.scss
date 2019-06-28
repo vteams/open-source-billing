@@ -756,7 +756,23 @@ h6 {
   overflow-y: auto;
   max-height: calc(100% - 95px);
   height: 100%; }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1472px) {
+  .btn-activity {
+    z-index: 99999;
+    position: fixed;
+    display: inline-block;
+    right: 0;
+    margin-right: 0;
+    top: 121px !important;
+    moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    padding: 13px 1px;
+    top: 114px;
+    height: 49px;
+    border-radius: 7px 0px 0px 7px;
+  }
   #activity-sidebar {
     width: 200px;
     padding: 20px; }
@@ -765,8 +781,17 @@ h6 {
     -moz-transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -ms-transition: all 0.5s;
-    transition: all 0.5s; } }
-@media only screen and (max-width: 992px) {
+    transition: all 0.5s; }
+  #main-content.side-show{
+    padding-right: 0px !important;
+  }}
+@media only screen and (max-width: 1472px) {
+  #activity-sidebar.show-activity  ~  #main-content {
+    margin-right: 300px !important;
+  }
+  #activity-sidebar ~ #main-content{
+    margin-right: 0px !important;
+  }
   #activity-sidebar {
     margin-right: -330px;
     right: 25px;
@@ -774,6 +799,7 @@ h6 {
     -webkit-transition: all 0.5s;
     -ms-transition: all 0.5s;
     transition: all 0.5s; }
+
   #activity-sidebar.show-activity {
     margin-right: -50px;
     -moz-transition: all 0.5s;
@@ -783,7 +809,8 @@ h6 {
     background: #f4f4f4;
     width: 250px;
     padding: 20px;
-    z-index: 11; } }
+    z-index: 11; }
+}
 #activity-sidebar h3 {
   padding: 14px 0;
   border-bottom: 1px solid #dbdbdb;
@@ -875,6 +902,7 @@ h6 {
   color: #454545; }
 #activity-sidebar:hover .activities-list li .activity-details p {
   color: #454545; }
+
 @media only screen and (max-width: 992px) {
   #activity-sidebar {
     right: 58px;
@@ -915,7 +943,7 @@ h6 {
 @media only screen and (max-width: 767px) {
   #header .header-center {
     margin-left: -40px; } }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1472px) {
   #header .header-center {
     margin-left: 0px; }
 
@@ -1008,7 +1036,6 @@ h6 {
   }
 
 }
-
 .invoice-name{
   color: white;
 }
@@ -2761,7 +2788,9 @@ h6 {
 
 /*---report Page-close---*/
 .page-box {
-  padding: 30px;
+  //padding: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   background-color: #fff;
   height: 100%;
   margin-top: 20px; }
@@ -4700,7 +4729,10 @@ i.base-currency-equivalent {
   font-size: 0.8em;
   color: #8c8c8c;
 }
-
+.due-date{
+  color: #8c8c8c;
+  font-size: 0.9em;
+}
 .td-checkbox { padding-top: 0 !important; }
 
 #log_date { color: #454545; }
@@ -5268,6 +5300,13 @@ span.label-font{
   background-position: center;
   background-size: cover;
 }
+.inv-number{
+  color: #8c8c8c;
+  font-size: 0.9em;
+}
+.estimate-number{
+  color: #8c8c8c;
+}
 .toggle-btns{
   font-size: small;
   //float: right;
@@ -5278,6 +5317,15 @@ span.label-font{
 }
 .hide-class{
   display: none;
+}
+.invoice-due{
+  color: #05a4d8;
+}
+.invoice-over-due{
+  color: red;
+}
+.invoice-paid{
+  color: #88CA4A;
 }
 /*----------------------- Table sorter scss start -------------- */
 table.table_listing, table.report-data-table {

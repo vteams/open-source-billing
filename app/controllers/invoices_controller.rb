@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.js
+      # format.js
     end
   end
 
@@ -351,7 +351,6 @@ class InvoicesController < ApplicationController
   end
 
   def verify_authenticity_token
-    # binding.pry
   end
 
   def invoice_has_deleted_clients?(invoices)
@@ -376,7 +375,7 @@ class InvoicesController < ApplicationController
 
   def sort_column
     params[:sort] ||= 'created_at'
-    Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+    Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 
   def sort_direction

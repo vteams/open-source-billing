@@ -99,6 +99,7 @@
 //= require chartkick
 //= require Chart.bundle
 
+
 jQuery(function () {
 
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {

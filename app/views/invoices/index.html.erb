@@ -1,4 +1,5 @@
 <%= render 'invoice_activity'%>
+
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
   <div class="flex-wrapper">
@@ -24,6 +25,7 @@
   </div>
 
 </div>
+
 <script>
   initFilterEvents('#create_at_start_date,#create_at_end_date,#due_start_date,#due_end_date,#invoice_number_min,#invoice_number_max');
   <% if is_filter_applied?(%w(create_at_start_date create_at_end_date due_start_date due_end_date invoice_number_min invoice_number_max client_id type)) %>

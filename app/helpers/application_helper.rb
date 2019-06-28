@@ -79,7 +79,7 @@ module ApplicationHelper
     if column == sort_column
       sort_direction == "asc" ? "<i class='fa fa-sort-asc'></i>" : "<i class='fa fa-sort-desc'></i>"
     else
-      "<i class='fa fa-sort'></i>"
+      # "<i class='fa fa-sort'></i>"
     end
   end
 

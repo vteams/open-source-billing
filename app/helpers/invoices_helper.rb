@@ -20,6 +20,18 @@
 #
 module InvoicesHelper
   include ApplicationHelper
+  def invoices_due_dates invoice
+    if invoice.due_date.to_time > Date.today && invoice.status != "paid"
+      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'>Due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
+    elsif invoice.due_date.to_time == Date.today.to_time
+      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'> Due Today </span>".html_safe
+    elsif invoice.due_date.to_time < Date.today && invoice.status != "paid"
+      "<span class = 'invoice-over-due' title='Due Date: #{invoice.due_date}'>Due Over #{distance_of_time_in_words(Time.now - invoice.due_date.to_time)}</span>".html_safe
+    elsif invoice.status == "paid"
+      "<span class = 'invoice-paid'> Paid on #{invoice.payments.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe
+    end
+  end
+
   def new_invoice id, is_draft
     message = is_draft ? t('views.invoices.saved_as_draft_msg') : t('views.invoices.created_and_sent_msg', org_name: @invoice.client.organization_name)
     notice = <<-HTML
@@ -237,13 +249,13 @@ module InvoicesHelper
   end
 
   def load_line_item_taxes2(line_item)
-      if line_item.tax_2.present? and line_item.tax2.nil?
-        load_deleted_tax2(line_item)
-      elsif line_item.tax_2.present? and line_item.tax2.archived?.present?
-        load_archived_tax2(line_item)
-      else
-        load_taxes2
-      end
+    if line_item.tax_2.present? and line_item.tax2.nil?
+      load_deleted_tax2(line_item)
+    elsif line_item.tax_2.present? and line_item.tax2.archived?.present?
+      load_archived_tax2(line_item)
+    else
+      load_taxes2
+    end
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
