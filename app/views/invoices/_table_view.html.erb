@@ -32,8 +32,9 @@
                 </div>
               </div>
             </td>
-            <td><%= link_to invoice.unscoped_client.organization_name,  invoice, remote: true, class: 'invoice_show_link invoice-client' %><br>
-              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>
+            <td>
+              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>: <%= link_to invoice.unscoped_client.organization_name,  invoice, remote: true, class: 'invoice_show_link invoice-client' %><br>
+              <%= invoice.unscoped_client.full_name %>
             </td>
             <td><em title="Invoice Date"><%= invoice.created_at.strftime("%Y-%m-%d") %></em><br>
               <%= invoices_due_dates(invoice) %>

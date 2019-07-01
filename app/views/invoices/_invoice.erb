@@ -11,8 +11,12 @@
 <% if  @invoices.length > 0 %>
     <% @invoices.each do |invoice| %>
         <tr>
-          <td class="align_center"> <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}" %></td>
-          <td class="align_center"><%= link_to(invoice.invoice_number, invoice_path(invoice), :class => "invoices_link #{'deleted_entry' if invoice.deleted?}") %></td>
+          <td class="align_center">
+            <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}" %>
+          </td>
+          <td class="align_center">
+            <%= link_to(invoice.invoice_number, invoice_path(invoice), :class => "invoices_link #{'deleted_entry' if invoice.deleted?}") %>
+          </td>
           <td class="align_left text-overflow-class" data-overflow-rows="2" ><%=  invoice.client.try(:organization_name).blank??  invoice.unscoped_client.try(:organization_name) : invoice.client.organization_name %></td>
           <td class="align_right"><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : "$")}" %></td>
           <td class="align_center"><%= link_to invoice.invoice_date, "/invoices/preview?inv_id=#{invoice.encrypted_id}", :target => "_blank" rescue "" %></td>

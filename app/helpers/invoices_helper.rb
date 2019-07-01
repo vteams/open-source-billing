@@ -22,13 +22,13 @@ module InvoicesHelper
   include ApplicationHelper
   def invoices_due_dates invoice
     if invoice.due_date.to_time > Date.today && invoice.status != "paid"
-      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'>Due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
+      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'>due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
     elsif invoice.due_date.to_time == Date.today.to_time
-      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'> Due Today </span>".html_safe
+      "<span class = 'invoice-due' title='Due Date: #{invoice.due_date}'> due Today </span>".html_safe
     elsif invoice.due_date.to_time < Date.today && invoice.status != "paid"
-      "<span class = 'invoice-over-due' title='Due Date: #{invoice.due_date}'>Due Over #{distance_of_time_in_words(Time.now - invoice.due_date.to_time)}</span>".html_safe
+      "<span class = 'invoice-over-due' title='Due Date: #{invoice.due_date}'>#{distance_of_time_in_words(Time.now - invoice.due_date.to_time)} overdue</span>".html_safe
     elsif invoice.status == "paid"
-      "<span class = 'invoice-paid'> Paid on #{invoice.payments.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe
+      "<span class = 'invoice-paid'> paid on #{invoice.payments.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe
     end
   end
 
