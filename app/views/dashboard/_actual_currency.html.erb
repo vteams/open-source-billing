@@ -13,8 +13,6 @@
           <div>
             <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
           </div>
-
-          </div>
         <% else %>
           <% ammount_paid = @current_company_invoices.group("currencies.unit").sum("invoices.invoice_total") %>
           <% ammount_paid.each do |currency_unit, amount| %>
@@ -29,7 +27,10 @@
           <% end %>
           <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
         </div>
-        </div>
+      </div>
+    </div>
+
+
     <h4><%= link_to t("views.payments.payments"), invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
     <div class="amount">
       <div class="first-three-payments set-positions">
@@ -40,9 +41,7 @@
             <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
           <% end %>
           <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_payments' %>
-          </div>
         <% else %>
-
           <% payment = @current_company_payments.group("currencies.unit").sum("payments.payment_amount") %>
           <% payment.each do |currency_unit, amount| %>
             <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
@@ -55,7 +54,8 @@
           <% end %>
           <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_payments' %>
         </div>
-        </div>
+      </div>
+    </div>
   </div>
   <div class="col m6">
     <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path(type: ['paid']) %></h4>
