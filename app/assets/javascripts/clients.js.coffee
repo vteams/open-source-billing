@@ -12,40 +12,6 @@ class @Client
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    jQuery("form#newClient").submit ->
-      flag = true
-      pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
-      client_email = jQuery("#client_email").val()
-      client_fname = jQuery("#client_first_name").val()
-      client_lname = jQuery("#client_last_name").val()
-      client_phone = jQuery("#client_business_phone").val()
-      client_mobile = jQuery("#client_mobile_number").val()
-      pattern_phone = /^\d+$/
-      association_name = $('input[name=association]:checked').attr("id")
-      no_of_selected_companies = $('.company_checkbox:checked').length
-
-      if jQuery("#client_organization_name").val() is ""
-        applyQtip(jQuery("#client_organization_name"), I18n.t("views.clients.org_name_required"), 'topRight')
-        flag = false
-      else if client_fname is "" and client_lname is ""
-        applyQtip(jQuery("#client_first_name"), I18n.t("views.clients.first_or_last_name_required"), 'topRight')
-        flag = false
-      else if client_email is ""
-        applyQtip(jQuery("#client_email"), I18n.t("views.clients.email_required"), 'topRight')
-        flag = false
-      else unless pattern.test(client_email)
-        applyQtip(jQuery("#client_email"), I18n.t("views.clients.invalid_email"), 'topRight')
-        flag = false
-      else if association_name == undefined
-        applyPopover($("label[for='company_association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
-      else if (association_name == "company_association" and no_of_selected_companies == 0)
-        applyPopover($("label[for='company_association']"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
-        flag = false
-      else
-        flag = true
-        hidePopover($("input[name=association]"))
-      flag
-
     jQuery('#calculated_credit').change ->
       client_credit = jQuery(this)
       field = "<input id='available_credit' name='available_credit' type='hidden' value='#{client_credit.val()}'>"
