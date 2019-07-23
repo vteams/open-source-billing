@@ -1,32 +1,32 @@
 <table class="invoice-items bordered" cellpadding="0" cellspacing="0">
   <thead>
-    <colgroup>
-      <col style="width:8%;">
-      <col style="width:52%;">
-      <col style="width:15%;">
-      <col style="width:10%;">
-      <col style="width:15%;">
-    </colgroup>
-    <tr>
-      <th class="align_left s_no_col"><%= t('views.common.serial_number') %></th>
-      <th><%= t('views.common.description') %></th>
-      <th class="center-align"><%= t('views.common.unit_cost') %></th>
-      <th class="center-align"><%= t('views.items.quantity') %></th>
-      <th class="align_right"><%= t('views.common.total') %></th>
-    </tr>
+  <colgroup>
+    <col style="width:8%;">
+    <col style="width:52%;">
+    <col style="width:15%;">
+    <col style="width:10%;">
+    <col style="width:15%;">
+  </colgroup>
+  <tr>
+    <th class="align_left s_no_col"><%= t('views.common.serial_number') %></th>
+    <th><%= t('views.common.description') %></th>
+    <th class="center-align"><%= t('views.common.unit_cost') %></th>
+    <th class="center-align"><%= t('views.items.quantity') %></th>
+    <th class="align_right"><%= t('views.common.total') %></th>
+  </tr>
   </thead>
 
   <tbody>
   <% invoice.invoice_line_items.each_with_index do |item, i|
     item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
   %>
-      <tr>
-        <td class="align_left"><%= i + 1 %></td>
-        <td><%= "#{item.item_name}: #{item.item_description}" %></td>
-        <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
-        <td class="center-align"><%= item.item_quantity.to_i %></td>
-        <td class="align_right"><%= number_to_currency(item_line_total, unit: invoice.currency.code) %></td>
-      </tr>
+    <tr class="alwaysbreak">
+      <td class="align_left"><%= i + 1 %></td>
+      <td><%= "#{item.item_name}: #{item.item_description}" %></td>
+      <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
+      <td class="center-align"><%= item.item_quantity.to_i %></td>
+      <td class="align_right"><%= number_to_currency(item_line_total, unit: invoice.currency.code) %></td>
+    </tr>
   <% end %>
   </tbody>
 </table>

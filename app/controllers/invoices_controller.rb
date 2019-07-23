@@ -62,8 +62,8 @@ class InvoicesController < ApplicationController
                 footer:{
                     right: 'Page [page] of [topage]'
                 },
-                margin:  {   top:               0,                     # default 10 (mm)
-                             bottom:            0,
+                margin:  {   top:               2,                     # default 10 (mm)
+                             bottom:            5,
                              left:              0,
                              right:             0 }
       end

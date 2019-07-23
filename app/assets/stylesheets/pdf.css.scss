@@ -463,10 +463,12 @@ i.base-currency-equivalent {
 }
 
 .new-invoice-holder .info-section .info-right-section {
+  margin-top: 48px;
   width: 40%;
 }
 .new-invoice-holder .info-section .info-left-section {
   width: 60%;
+  margin-top: 48px !important;
 }
 .new-invoice-footer .right-section.right {
   width: 400px !important;
@@ -515,7 +517,9 @@ table tbody tr {
 .avoid_page_break {
   page-break-inside: avoid !important;
 }
-
+.alwaysbreak {
+  page-break-before: always;
+}
 .page_break {
   clear: both;
   //  overflow: hidden;
