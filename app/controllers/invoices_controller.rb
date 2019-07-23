@@ -60,7 +60,7 @@ class InvoicesController < ApplicationController
                 show_as_html: false,
                 template: 'invoices/show.html.erb',
                 footer:{
-                    right: 'Page [page] of [topage]'
+                    right: 'Page [page] of [topage] '
                 },
                 margin:  {   top:               2,                     # default 10 (mm)
                              bottom:            5,
