@@ -23,7 +23,7 @@
           <% end %>
         </div>
       <% end %>
-      <div class="info-section clearfix container">
+      <div class="info-section clearfix container company-info-section">
         <div>
           <center><%= image_tag @invoice.company.logo %></center>
         </div>
@@ -36,7 +36,7 @@
           <%= render 'invoice_summary' %>
         </div>
       </div>
-      <div class="container">
+      <div class="container items">
         <div class="new-invoice-table-holder">
           <% if @invoice.invoice_type.eql?("ProjectInvoice")%>
             <%= render partial: 'project_invoice_tasks', locals: {invoice: @invoice} %>

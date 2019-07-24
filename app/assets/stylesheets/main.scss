@@ -1521,8 +1521,24 @@ h6 {
 .grid-view .table-view-body tr td .card-white-panel {
   padding: 0px;
 }
-.new-invoice-holder .new-invoice-table-holder th:first-child{
-  width: 75px;
+.new-invoice-holder .new-invoice-table-holder{
+  th, td{
+    width: 13%;
+    &:first-child{
+      width: 6%;
+    }
+    &:nth-child(2){
+      width: 55%;
+    }
+
+  }
+}
+.company-info-section{
+  width: 95%;
+}
+.info-right-section{
+  text-align: center;
+  width: 40% !important;
 }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table tbody tr td:first-child{
   padding: 0px !important;
@@ -1574,7 +1590,7 @@ h6 {
 }
 .card-white-panel .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
-   }
+}
 .invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ label {
   opacity: 1 !important; }
 .invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ .invoice-name {
@@ -2787,6 +2803,7 @@ h6 {
     overflow: auto; } }
 
 /*---report Page-close---*/
+
 .page-box {
   //padding: 30px;
   padding-left: 30px;
@@ -2815,7 +2832,7 @@ h6 {
   color: #454545;
   float: left;
   max-width: 600px;
- }
+}
 .page-box .page-box-header .report-links {
   text-align: right;
   font-size: 11px;
@@ -4027,7 +4044,7 @@ html {
 .new-invoice-holder .info-section {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   padding: 30px 35px 8px;
-   }
+}
 .new-invoice-holder .info-section .info-left-section {
   float: left;
   width: 37%; }
@@ -4997,7 +5014,7 @@ li:nth-child(7n) .random-colors {
   }
 }
 .form-invoice .scroll-area{
-padding-bottom: 0px;
+  padding-bottom: 0px;
 }
 @media (max-width: 992px){
   .new-invoice-holder .new-invoice-table-holder.main-invoice{
@@ -5346,6 +5363,12 @@ table.table_listing, table.report-data-table {
     }
   }
 }
+.items{
+  width: 100%;
+}
+.printable{
+  width: 100%;
+}
 /*----------------------- Table sorter scss ended -------------- */
 
 .dashboard-whitebox {
@@ -5367,5 +5390,5 @@ table.table_listing, table.report-data-table {
     }
   }
 
-  
+
 }
