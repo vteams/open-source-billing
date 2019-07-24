@@ -3,25 +3,26 @@
  *= require main
 */
 
-body{
+body {
   padding-top: 10px !important;
 }
 
-.header{
-  .fl{
+.header {
+  .fl {
     float: left;
   }
-  .fr{
+  .fr {
     float: right;
   }
 }
-.show_invoice{
-  .invoice_preview{
+
+.show_invoice {
+  .invoice_preview {
     float: left;
     width: 100%;
     padding: 0 0 60px 0;
   }
-  .inovice_preview_contianer{
+  .inovice_preview_contianer {
     margin: auto;
     width: 100%;
     border: 1px solid #d7d7d7;
@@ -29,69 +30,71 @@ body{
     border-radius: 4px;
     min-height: 90px;
   }
-  .invoice_tag{
+  .invoice_tag {
     position: absolute;
     margin: -1px 0 0 -1px;
     width: 90px;
     height: 90px;
     *margin: -1px 0 0 -839px;
   }
-
-  .invoice_preview_content{
+  .invoice_preview_content {
     width: 95%;
     padding: 20px;
   }
-  .preview_content_top{
+  .preview_content_top {
     padding-bottom: 11px;
   }
-  .preview_top{
+  .preview_top {
     padding-bottom: 25px !important;
     float: left;
   }
-  .preview_top, .preview_btm{
+  .preview_top,
+  .preview_btm {
     width: 95%;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 0 30px 0;
-    .preview_top_left{
+    .preview_top_left {
       float: left;
       width: 60%;
       padding-left: 10px;
-      .invoice_date{
+      .invoice_date {
         float: left;
         width: 100%;
         padding: 0 0 21px 0;
-        h2{
+        h2 {
           color: #00BDE5;
           font-size: 18px;
-          font-family: "Dosis Medium",sans-serif;;
+          font-family: "Dosis Medium", sans-serif;
+        ;
           text-transform: capitalize;
-          span{
+          span {
             text-transform: capitalize;
             font-size: 18px;
-            font-family: "Dosis Regular",sans-serif;
+            font-family: "Dosis Regular", sans-serif;
           }
         }
       }
-      .invoice_name{
+      .invoice_name {
         float: left;
         width: 100%;
         font-weight: bold;
       }
     }
-    .preview_top_right, pr{
+    .preview_top_right,
+    pr {
       float: right;
       width: 40%;
       padding: 5px 0 0 0;
-      .company_logo{
+      .company_logo {
         float: right;
         position: relative;
         width: auto;
         padding-right: 10px;
-        img{
+        img {
           padding-bottom: 5px;
         }
       }
-      .logo_tagline{
+      .logo_tagline {
         width: auto;
         float: right;
         padding: 16px 0 0 0;
@@ -99,134 +102,133 @@ body{
       }
     }
   }
-  .preview_btm{
+  .preview_btm {
     float: left;
     width: 100%;
     padding: 25px 0 0 0;
     border: none;
-    .preview_top_right{
+    .preview_top_right {
       padding-top: 0px;
       overflow: hidden;
-      .top_right_row{
+      .top_right_row {
         float: left;
         margin-bottom: -2px;
       }
-      .top_right_row:last-child{
+      .top_right_row:last-child {
         height: auto;
       }
-      .preview_right_label{
+      .preview_right_label {
         float: left;
         width: 82px;
         text-align: left;
-        span{
+        span {
           float: right;
         }
       }
-      .preview_right_description{
+      .preview_right_description {
         float: left;
         width: 152px;
         text-align: right;
       }
     }
   }
-
-  .invoice_address{
+  .invoice_address {
     float: left;
     width: 100%;
   }
-  .invoice_address p, .invoice_organization p{
+  .invoice_address p,
+  .invoice_organization p {
     float: left;
     width: 100%;
     line-height: normal;
     padding: 0 0 2px 0;
   }
-  .invoice_organization{
+  .invoice_organization {
     float: left;
     width: 100%;
   }
-  .preview_heading{
+  .preview_heading {
     font-weight: bold;
   }
-  .preview_right{
+  .preview_right {
     float: right;
     width: 256px;
   }
-
-  .preview_content_middle{
+  .preview_content_middle {
     width: 100%;
     padding: 0 0 25px 0;
   }
-
-  .preview_content_btm{
+  .preview_content_btm {
     float: left;
     width: 100%;
     padding: 25px 0 30px 0;
   }
-  .preview_btm_top{
+  .preview_btm_top {
     float: right;
     width: 100%;
   }
-  .preview_left.btm{
+  .preview_left.btm {
     padding-left: 0px;
     width: 500px;
   }
-  .preview_terms{
+  .preview_terms {
     float: left;
     width: 100%;
     padding: 0 0 22px 0;
   }
-  .preview_terms p, .preview_notes p{
+  .preview_terms p,
+  .preview_notes p {
     float: left;
     width: 100%;
     padding: 0 0 6px 0;
     line-height: normal;
   }
-  .preview_notes{
+  .preview_notes {
     float: left;
     width: 75%;
   }
-  .preview_right.btm{
+  .preview_right.btm {
     padding-top: 0px;
-    .preview_right_label{
+    .preview_right_label {
       float: left;
       width: auto;
       text-align: left;
     }
-    .preview_right_description{
+    .preview_right_description {
       float: right;
     }
   }
-  .top_right_row{
+  .top_right_row {
     overflow: hidden;
     padding: 0 10px;
   }
-  .top_right_row.border{
+  .top_right_row.border {
     border-bottom: 1px solid #d7d7d7;
     margin-bottom: 5px;
     padding-bottom: 3px;
     overflow: hidden;
   }
-  .top_right_row.amt_paid{
+  .top_right_row.amt_paid {
     color: #00ace5;
   }
-  .preview_btm_footer{
+  .preview_btm_footer {
     float: left;
     width: 95%;
     padding: 90px 0 0 0;
   }
-  .preview_btm_footer ul{
+  .preview_btm_footer ul {
     float: right;
   }
-  .preview_btm_footer ul li{
+  .preview_btm_footer ul li {
     float: left;
     display: block;
     padding: 0 0 0 4px;
   }
-  .footer_txt{
+  .footer_txt {
     font-size: 10px;
     padding: 1px 0 0 0 !important;
   }
-  .border-row{
+  .border-row {
     border-top: 1px solid #D7D7D7;
     padding-top: 3px;
     margin-top: 5px;
@@ -234,13 +236,13 @@ body{
   }
 }
 
-.show_estimate{
-  .estimate_preview{
+.show_estimate {
+  .estimate_preview {
     float: left;
     width: 100%;
     padding: 0 0 60px 0;
   }
-  .estimate_preview_contianer{
+  .estimate_preview_contianer {
     margin: auto;
     width: 100%;
     border: 1px solid #d7d7d7;
@@ -248,69 +250,71 @@ body{
     border-radius: 4px;
     min-height: 90px;
   }
-  .estimate_tag{
+  .estimate_tag {
     position: absolute;
     margin: -1px 0 0 -1px;
     width: 90px;
     height: 90px;
     *margin: -1px 0 0 -839px;
   }
-
-  .estimate_preview_content{
+  .estimate_preview_content {
     width: 95%;
     padding: 65px 29px 0 29px;
   }
-  .preview_content_top{
+  .preview_content_top {
     padding-bottom: 11px;
   }
-  .preview_top{
+  .preview_top {
     padding-bottom: 25px !important;
     float: left;
   }
-  .preview_top, .preview_btm{
+  .preview_top,
+  .preview_btm {
     width: 95%;
     border-bottom: 1px solid #d7d7d7;
     padding: 0 0 30px 0;
-    .preview_top_left{
+    .preview_top_left {
       float: left;
       width: 60%;
       padding-left: 10px;
-      .estimate_date{
+      .estimate_date {
         float: left;
         width: 100%;
         padding: 0 0 21px 0;
-        h2{
+        h2 {
           color: #00BDE5;
           font-size: 18px;
-          font-family: "Dosis Medium",sans-serif;;
+          font-family: "Dosis Medium", sans-serif;
+        ;
           text-transform: capitalize;
-          span{
+          span {
             text-transform: capitalize;
             font-size: 18px;
-            font-family: "Dosis Regular",sans-serif;
+            font-family: "Dosis Regular", sans-serif;
           }
         }
       }
-      .estimate_name{
+      .estimate_name {
         float: left;
         width: 100%;
         font-weight: bold;
       }
     }
-    .preview_top_right, pr{
+    .preview_top_right,
+    pr {
       float: right;
       width: 40%;
       padding: 5px 0 0 0;
-      .company_logo{
+      .company_logo {
         float: right;
         position: relative;
         width: auto;
         padding-right: 10px;
-        img{
+        img {
           padding-bottom: 5px;
         }
       }
-      .logo_tagline{
+      .logo_tagline {
         width: auto;
         float: right;
         padding: 16px 0 0 0;
@@ -318,140 +322,140 @@ body{
       }
     }
   }
-  .preview_btm{
+  .preview_btm {
     float: left;
     width: 100%;
     padding: 25px 0 0 0;
     border: none;
-    .preview_top_right{
+    .preview_top_right {
       padding-top: 0px;
       overflow: hidden;
-      .top_right_row{
+      .top_right_row {
         float: left;
         margin-bottom: -2px;
       }
-      .top_right_row:last-child{
+      .top_right_row:last-child {
         height: auto;
       }
-      .preview_right_label{
+      .preview_right_label {
         float: left;
         width: 82px;
         text-align: left;
-        span{
+        span {
           float: right;
         }
       }
-      .preview_right_description{
+      .preview_right_description {
         float: left;
         width: 152px;
         text-align: right;
       }
     }
   }
-
-  .estimate_address{
+  .estimate_address {
     float: left;
     width: 100%;
   }
-  .estimate_address p, .estimate_organization p{
+  .estimate_address p,
+  .estimate_organization p {
     float: left;
     width: 100%;
     line-height: normal;
     padding: 0 0 2px 0;
   }
-  .estimate_organization{
+  .estimate_organization {
     float: left;
     width: 100%;
   }
-  .preview_heading{
+  .preview_heading {
     font-weight: bold;
   }
-  .preview_right{
+  .preview_right {
     float: right;
     width: 256px;
   }
-
-  .preview_content_middle{
+  .preview_content_middle {
     width: 97%;
     padding: 0 0 25px 0;
   }
-
-  .preview_content_btm{
+  .preview_content_btm {
     float: left;
     width: 100%;
     padding: 25px 0 30px 0;
   }
-  .preview_btm_top{
+  .preview_btm_top {
     float: left;
     width: 95%;
   }
-  .preview_left.btm{
+  .preview_left.btm {
     padding-left: 0px;
     width: 500px;
   }
-  .preview_terms{
+  .preview_terms {
     float: left;
     width: 100%;
     padding: 0 0 22px 0;
   }
-  .preview_terms p, .preview_notes p{
+  .preview_terms p,
+  .preview_notes p {
     float: left;
     width: 100%;
     padding: 0 0 6px 0;
     line-height: normal;
   }
-  .preview_notes{
+  .preview_notes {
     float: left;
     width: 75%;
   }
-  .preview_right.btm{
+  .preview_right.btm {
     padding-top: 0px;
-    .preview_right_label{
+    .preview_right_label {
       float: left;
       width: 100px;
       text-align: left;
     }
-    .preview_right_description{
+    .preview_right_description {
       float: right;
     }
   }
-  .top_right_row{
+  .top_right_row {
     overflow: hidden;
     padding: 0 10px;
   }
-  .top_right_row.border{
+  .top_right_row.border {
     border-bottom: 1px solid #d7d7d7;
     margin-bottom: 5px;
     padding-bottom: 3px;
     overflow: hidden;
   }
-  .top_right_row.amt_paid{
+  .top_right_row.amt_paid {
     color: #00ace5;
   }
-  .preview_btm_footer{
+  .preview_btm_footer {
     float: left;
     width: 95%;
     padding: 90px 0 0 0;
   }
-  .preview_btm_footer ul{
+  .preview_btm_footer ul {
     float: right;
   }
-  .preview_btm_footer ul li{
+  .preview_btm_footer ul li {
     float: left;
     display: block;
     padding: 0 0 0 4px;
   }
-  .footer_txt{
+  .footer_txt {
     font-size: 10px;
     padding: 1px 0 0 0 !important;
   }
-  .border-row{
+  .border-row {
     border-top: 1px solid #D7D7D7;
     padding-top: 3px;
     margin-top: 5px;
     overflow: hidden;
   }
 }
+
 .simple-responsive.report_content.report-inner-scroll-container {
   overflow: hidden;
   height: 100%;
@@ -466,20 +470,23 @@ i.base-currency-equivalent {
   margin-top: 48px;
   width: 40%;
 }
+
 .new-invoice-holder .info-section .info-left-section {
   width: 60%;
   margin-top: 48px !important;
 }
+
 .new-invoice-footer .right-section.right {
   width: 400px !important;
   padding: 0px !important;
-
   .invoice-total-left {
-    .new-invoice-footer-row { padding-bottom: 10px; }
+    .new-invoice-footer-row {
+      padding-bottom: 10px;
+    }
   }
 }
 
-.new-invoice-holder{
+.new-invoice-holder {
   margin: 0 !important;
 }
 
@@ -492,17 +499,45 @@ body {
 }
 
 .new-invoice-holder .new-invoice-table-holder {
-  padding: 5px 5px 3px; }
+  padding: 5px 5px 3px;
+}
+.custbreak{
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.custbreak:last-child{
+  margin-top: 10px;
+}
+
+.a4invtbl{
+  display: block;
+  clear: both;
+  height: 1020px !important;
+  &:last-child{
+    height: auto !important;
+  }
+  &.primary {
+    display: block;
+    clear: both;
+    height: 700px !important;
+  }
+}
 
 .page-box {
   margin-top: 0px !important;
 }
-.client{
+
+.client {
   text-align: left;
 }
+
 table tbody tr {
   border-bottom: 2px solid #D0D0D0;
 }
+table tbody tr td{
+ height:30px;
+}
+
 //@media all{
 //  tr
 //  {
@@ -510,16 +545,21 @@ table tbody tr {
 //    page-break-after:auto;
 //  }
 //}
-.new-invoice-table-holder .grid-view .table-view-body tr{
+.new-invoice-table-holder .grid-view .table-view-body tr {
   cursor: unset;
 }
 
+.description{
+  font-size: 11px !important;
+}
 .avoid_page_break {
   page-break-inside: avoid !important;
 }
+
 .alwaysbreak {
   page-break-before: always;
 }
+
 .page_break {
   clear: both;
   //  overflow: hidden;
@@ -534,11 +574,13 @@ table tbody tr {
 .align_left {
   text-align: left !important;
 }
-.s_no_col{
+
+.s_no_col {
   width: 8% !important;
 }
 
-.invoice-items, .new-invoice-footer {
+.invoice-items,
+.new-invoice-footer {
   width: 95%;
   margin: auto;
 }
