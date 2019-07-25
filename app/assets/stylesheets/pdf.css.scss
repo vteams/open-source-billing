@@ -513,19 +513,19 @@
     display: block;
     clear: both;
     height: 1020px !important;
-    &:last-child{
-      height: auto !important;
-    }
     &.secondary{
       thead{
         display: table-row-group !important;
-
       }
     }
     &.primary {
       display: block;
       clear: both;
       height: 700px !important;
+    }
+
+    &:last-child{
+      height: auto !important;
     }
   }
 

@@ -28,13 +28,13 @@
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in f-l" %>
                   <label for="<%= "invoice_#{invoice.id}" %>"></label>
-                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name%></div>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name rescue 'n/a' %></div>
                 </div>
               </div>
             </td>
             <td>
-              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>: <%= link_to invoice.unscoped_client.organization_name,  invoice, remote: true, class: 'invoice_show_link invoice-client' %><br>
-              <%= invoice.unscoped_client.full_name %>
+              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %><br>
+              <%= invoice.unscoped_client.full_name rescue 'n/a' %>
             </td>
             <td><em title="Invoice Date"><%= invoice.created_at.strftime("%Y-%m-%d") %></em><br>
               <%= invoices_due_dates(invoice) %>
