@@ -7,7 +7,7 @@
           <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
             <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align">
               <div class="checkbox-item invoice_checkbox">
-                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in hidden', title: 'Select All', id: 'select_all_items' %>
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
                 <label for="select_all_items"></label>
               </div>
             </div>
@@ -26,7 +26,7 @@
             <td class="td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-invoice_id= <%=invoice.id %>>
                 <div class="checkbox-item invoice_checkbox">
-                  <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in f-l" %>
+                  <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in checked-invoice f-l" %>
                   <label for="<%= "invoice_#{invoice.id}" %>"></label>
                   <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name rescue 'n/a' %></div>
                 </div>

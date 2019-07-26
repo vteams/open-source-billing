@@ -1502,7 +1502,11 @@ h6 {
 }
 .new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item input + label {
   top: 5px;
-  left: 18px;
+  left: 17px;
+}
+.new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item{
+  //text-align: left;
+  //margin-left: 15px;
 }
 .new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item .invoice-name{
 }
@@ -1522,7 +1526,8 @@ h6 {
   padding: 0px;
 }
 
-.new-invoice-holder .new-invoice-table-holder{
+
+.new-invoice-holder .new-invoice-table-holder, .invoice-popup .new-invoice-table-holder{
   &.without_tax {
     th, td{
       width: 13%;
@@ -1598,8 +1603,8 @@ h6 {
 }
 .new-invoice-holder .new-invoice-table-holder .table-view-body .item-card .td-checkbox .card-white-panel .checkbox-item input + label {
   top: 10px;
-  left: 12px;
 }
+
 .new-invoice-table-holder .grid-view .table-view-body tr{
   cursor: pointer;
 }
@@ -1622,18 +1627,42 @@ h6 {
 .new-invoice-table-holder table tr th [type="checkbox"] + label:hover {
   opacity: 0.5 !important;
   top: 7px;
-  left: 5px;
 }
-.card-white-panel .checkbox-item input + label {
+.invoice-table-row .card-white-panel .checkbox-item input + label {
   position: absolute;
   top: 25px;
-  left: 25px;
+  //left: 37px;
   //right: 0;
   width: 20px;
   margin: auto;
   z-index: 100;
   opacity: 0;
 }
+.invoice-table-row .invoice-row .card-white-panel .checkbox-item [type="checkbox"].checked-invoice + label:before, [type="checkbox"].checked-invoice + label:after{
+  left: -12px;
+}
+[type="checkbox"].filled-in:checked + label:before{
+  left: -11px !important;
+}
+.new-invoice-table-holder table tr th [type="checkbox"] + label{
+  left: 17px;
+}
+//.estimate-table-row .card-white-panel .checkbox-item input + label {
+//  left: 54px;
+//}
+//.clients-table-row .card-white-panel .checkbox-item input + label {
+//  left: 22px;
+//}
+//.items-table-row .card-white-panel .checkbox-item input + label {
+//  left: 26px !important;
+//}
+//.taxes-table-row .card-white-panel .checkbox-item input + label {
+//  left: 87px !important;
+//}
+//.payments-table-row .card-white-panel .checkbox-item input + label {
+//  left: 49px !important;
+//}
+
 .card-white-panel .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
 }
@@ -4308,6 +4337,9 @@ html {
   font-weight: bold;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px; }
+.new-invoice-holder .new-invoice-table-holder th:first-child{
+  width: 3%;
+}
 .new-invoice-holder .new-invoice-table-holder td {
   border-bottom: 1px solid #d0d0d0;
   font-size: 13px;
@@ -5429,9 +5461,7 @@ table.table_listing, table.report-data-table {
 
 .invoice-card {
   .invoice-total {
-    .base-currency {
-      float: right;
-    }
+    text-align: right;
   }
 }
 

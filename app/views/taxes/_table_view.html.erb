@@ -7,7 +7,7 @@
           <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
             <div class="">
               <div class="checkbox-item invoice_checkbox">
-                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in hidden', title: 'Select All', id: 'select_all_items' %>
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
                 <label for="<%= "select_all_items" %>"></label>
               </div>
             </div>
@@ -18,11 +18,11 @@
         </thead>
         <tbody class="table-view-body">
         <% @taxes.each do |tax| %>
-          <tr class="invoice-card client-card invoice-table-row">
+          <tr class="invoice-card client-card invoice-table-row taxes-table-row">
             <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-tax_id= <%=tax.id %>>
                 <div class="checkbox-item invoice_checkbox">
-                  <%= check_box_tag 'tax_ids[]', tax.id, false, id: "tax_#{tax.id}", class: 'filled-in' %>
+                  <%= check_box_tag 'tax_ids[]', tax.id, false, id: "tax_#{tax.id}", class: 'filled-in checked-invoice' %>
                   <label for="<%= "tax_#{tax.id}" %>"></label>
                   <div class="invoice-name-initials invoice-name green-light <%= random_card_color %>"><%= tax.name[0] %></div>
                 </div>

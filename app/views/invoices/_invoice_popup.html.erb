@@ -46,11 +46,15 @@
           </div>
 
         <div class="modal-body">
-          <% if invoice.invoice_type.eql?("ProjectInvoice")%>
-            <%= render partial: 'project_invoice_tasks', locals: {invoice: invoice} %>
-          <% else %>
-            <%= render partial: 'invoice_items', locals: {invoice: invoice} %>
-          <% end %>
+          <div class="invoice-popup">
+            <div class="new-invoice-table-holder <%= tax_class %>">
+              <% if @invoice.invoice_type.eql?("ProjectInvoice")%>
+                <%= render partial: 'project_invoice_tasks', locals: {invoice: @invoice} %>
+              <% else %>
+                <%= render partial: 'invoice_items', locals: {invoice: @invoice} %>
+              <% end %>
+            </div>
+          </div>
         </div>
         <div class="modal-footer clearfix">
           <div class="right-section right">
