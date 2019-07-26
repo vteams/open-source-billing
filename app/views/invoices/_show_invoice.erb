@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="container items">
-        <div class="new-invoice-table-holder">
+        <div class="new-invoice-table-holder <%= tax_class %>">
           <% if @invoice.invoice_type.eql?("ProjectInvoice")%>
             <%= render partial: 'project_invoice_tasks', locals: {invoice: @invoice} %>
           <% else %>

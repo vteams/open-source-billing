@@ -1,9 +1,16 @@
-<% @num = 0 %>
+<%
+  @num = 0
+  page = 0
+%>
 <div class="invoice-items-table primary">
   <%= render partial: 'invoice_line_items_table', locals: {invoice: invoice, items: invoice.invoice_line_items.order(created_at: :desc).offset(0).limit(12), headers: true} %>
 </div>
-<% invoice.invoice_line_items.order(created_at: :desc).offset(12).find_in_batches(batch_size: 18).each do |items| %>
+
+<% line_items = invoice.invoice_line_items.order(created_at: :desc).offset(12 + page*18).limit(18) %>
+<% while(line_items.present?) do %>
   <div class="invoice-items-table secondary">
-    <%= render partial: 'invoice_line_items_table', locals: {invoice: invoice, items: items, headers: request.format.pdf?} %>
+    <%= render partial: 'invoice_line_items_table', locals: {invoice: invoice, items: line_items, headers: request.format.pdf?} %>
   </div>
+  <% page+=1 %>
+  <% line_items = invoice.invoice_line_items.order(created_at: :desc).offset(12 + page*18).limit(18) %>
 <% end %>

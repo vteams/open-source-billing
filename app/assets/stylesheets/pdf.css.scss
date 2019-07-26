@@ -590,3 +590,62 @@
     width: 95%;
     margin: auto;
   }
+  .new-invoice-holder .new-invoice-table-holder{
+    &.without_tax {
+      th, td{
+        width: 13%;
+        &:first-child{
+          width: 6%;
+        }
+        &:nth-child(2){
+          width: 55%;
+        }
+        &:nth-child(4){
+          width: 13%;
+        }
+        &:nth-child(5){
+          width: 13%;
+        }
+
+      }
+    }
+    &.with_single_tax {
+      th, td{
+        width: 13%;
+        &:first-child{
+          width: 6%;
+        }
+        &:nth-child(2){
+          width: 50%;
+        }
+        &:nth-child(4){
+          width: 9%;
+        }
+        &:nth-child(5){
+          width: 9%;
+        }
+
+      }
+    }
+    &.with_dual_tax {
+      th, td{
+        width: 10%;
+        &:first-child{
+          width: 6%;
+        }
+        &:nth-child(2){
+          width: 50%;
+        }
+        &:nth-child(4){
+          width: 8%;
+        }
+        &:nth-child(5){
+          width: 8%;
+        }
+        &:nth-child(6){
+          width: 8%;
+        }
+
+      }
+    }
+  }

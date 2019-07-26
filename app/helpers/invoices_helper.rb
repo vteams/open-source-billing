@@ -40,6 +40,11 @@ module InvoicesHelper
     notice.html_safe
   end
 
+  def tax_class
+    ['without_tax', 'with_single_tax', 'with_dual_tax'][[@invoice.has_tax_one?, @invoice.has_tax_two?].compact.length]
+  end
+
+
   def invoices_archived ids
     notice = <<-HTML
      <p>#{ids.size} #{t('views.invoices.bulk_archived_msg')}

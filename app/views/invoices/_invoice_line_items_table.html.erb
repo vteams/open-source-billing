@@ -6,6 +6,12 @@
         <th><%= t('views.common.description') %></th>
         <th class="center-align"><%= t('views.common.unit_cost') %></th>
         <th class="center-align"><%= t('views.items.quantity') %></th>
+        <% if invoice.has_tax_one? %>
+          <th class="center-align"><%= t('Tax 1') %></th>
+        <% end %>
+        <% if invoice.has_tax_two? %>
+          <th class="center-align"><%= t('Tax 2') %></th>
+        <% end %>
         <th class="align_right"><%= t('views.common.total') %></th>
       </tr>
     <% end %>
@@ -13,15 +19,19 @@
 
   <tbody>
 
-    <%  items.each do |item|
-      item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
-    %>
+    <%  items.each do |item| %>
       <tr class="invoice-pdf-row">
         <td class="align_left"><%= @num+=1 %></td>
         <td class="description"><%= "#{item.item_name}: #{item.item_description}" %></td>
         <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
         <td class="center-align"><%= item.item_quantity.to_i %></td>
-        <td class="align_right"><%= number_to_currency(item_line_total, unit: invoice.currency.code) %></td>
+        <% if invoice.has_tax_one? %>
+          <td class="center-align"><%= "#{item.tax1.percentage}%" if item.tax1.present? %></td>
+        <% end %>
+        <% if invoice.has_tax_two? %>
+          <td class="center-align"><%= "#{item.tax2.percentage}%" if item.tax2.present?  %></td>
+        <% end %>
+        <td class="align_right"><%= number_to_currency(item.item_total_amount, unit: invoice.currency.code) %></td>
       </tr>
     <% end %>
   </tbody>

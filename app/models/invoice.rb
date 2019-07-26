@@ -297,6 +297,14 @@ class Invoice < ActiveRecord::Base
     credit_pay.save
   end
 
+  def has_tax_one?
+    self.invoice_line_items.where(tax_1: true).exists?
+  end
+
+  def has_tax_two?
+    self.invoice_line_items.where(tax_2: true).exists?
+  end
+
   def partial_payments
     where("status = 'partial'")
   end
