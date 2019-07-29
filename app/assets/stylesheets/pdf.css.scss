@@ -649,3 +649,65 @@
       }
     }
   }
+
+  .estimate-popup .new-estimate-table-holder{
+    &.without_tax {
+      th, td{
+        width: 12.5%;
+        &:first-child{
+          width: 7%;
+        }
+        &:nth-child(3){
+          width: 48%;
+        }
+        &:nth-child(4){
+          width: 11%;
+        }
+        &:nth-child(5){
+          width: 9%;
+        }
+      }
+    }
+    &.with_single_tax {
+      th, td{
+        width: 10%;
+        &:first-child{
+          width: 7%;
+        }
+        &:nth-child(3){
+          width: 43%;
+        }
+        &:nth-child(4){
+          width: 11%;
+        }
+        &:nth-child(5){
+          width: 9%;
+        }
+        &:nth-child(6){
+          width: 9%;
+        }
+
+      }
+    }
+    &.with_dual_tax {
+      th, td{
+        width: 11%;
+        &:first-child{
+          width: 7%;
+        }
+        &:nth-child(3){
+          width: 37%;
+        }
+        &:nth-child(5){
+          width: 8%;
+        }
+        &:nth-child(6){
+          width: 8%;
+        }
+        &:nth-child(7){
+          width: 8%;
+        }
+
+      }
+    }
+  }

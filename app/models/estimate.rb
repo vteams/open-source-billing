@@ -40,6 +40,14 @@ class Estimate < ActiveRecord::Base
   acts_as_paranoid
   paginates_per 10
 
+  def has_tax_one?
+    self.estimate_line_items.where(tax_1: true).exists?
+  end
+
+  def has_tax_two?
+    self.estimate_line_items.where(tax_2: true).exists?
+  end
+
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
   end

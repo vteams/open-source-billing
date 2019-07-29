@@ -1,0 +1,7 @@
+<h3><b>ESTIMATE</b></h3>
+<div>
+  <div><b>Estimate #</b> <%= @estimate.estimate_number %></div>
+  <div><b>Estimate Date:</b> <%= @estimate.estimate_date %></div>
+  <div><b>Estimate Total:</b>   <strong><%= number_to_currency(@estimate.estimate_total, unit: @estimate.currency.code ) %></strong>
+  </div>
+</div>

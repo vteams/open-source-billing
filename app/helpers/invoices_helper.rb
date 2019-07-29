@@ -21,13 +21,13 @@
 module InvoicesHelper
   include ApplicationHelper
   def invoices_due_dates invoice
-    if invoice.due_date.to_time > Date.today && invoice.status != "paid"
+    if invoice.due_date.present? && invoice.due_date.to_time > Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'>due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
-    elsif invoice.due_date.to_time == Date.today.to_time
+    elsif invoice.due_date.present? && invoice.due_date.to_time == Date.today.to_time
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'> due Today </span>".html_safe
-    elsif invoice.due_date.to_time < Date.today && invoice.status != "paid"
+    elsif invoice.due_date.present? && invoice.due_date.to_time < Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-over-due' title='Due Date: #{invoice.due_date}'>#{distance_of_time_in_words(Time.now - invoice.due_date.to_time)} overdue</span>".html_safe
-    elsif invoice.status == "paid"
+    elsif invoice.due_date.present? && invoice.status == "paid"
       "<span class = 'idd invoice-paid'> paid on #{invoice.payments.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe
     end
   end
@@ -41,7 +41,7 @@ module InvoicesHelper
   end
 
   def tax_class
-    ['without_tax', 'with_single_tax', 'with_dual_tax'][[@invoice.has_tax_one?, @invoice.has_tax_two?].compact.length]
+    ['without_tax', 'with_single_tax', 'with_dual_tax'][[@invoice.has_tax_one?, @invoice.has_tax_two?].select{|bol| bol == true }.length]
   end
 
 

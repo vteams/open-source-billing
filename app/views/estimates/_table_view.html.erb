@@ -75,6 +75,11 @@
                       <%= link_to raw("<i class='material-icons'>send</i>Send"), send_estimate_estimates_path(id: estimate.id),
                                   title: t('views.common.send'), remote: true %>
                     </li>
+
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>visibility</i>Show"), estimate, title: t('views.common.show'), target: '_blank' %>
+                    </li>
+
                     <li>
                       <%= link_to raw("<i class='material-icons'>delete</i>Delete"),estimate, method: :delete,
                                   data:{confirm: t('helpers.messages.confirm'),

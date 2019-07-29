@@ -1,0 +1,41 @@
+<table class="invoice-items bordered" cellpadding="0" cellspacing="0" style="table-layout: auto">
+  <thead>
+  <% if headers %>
+    <tr>
+      <th class="align_left s_no_col"><%= t('views.common.serial_number') %></th>
+      <th><%= t('views.common.item') %></th>
+      <th><%= t('views.common.description') %></th>
+      <th class="center-align"><%= t('views.common.unit_cost') %></th>
+      <th class="center-align"><%= t('views.items.quantity') %></th>
+      <% if estimate.has_tax_one? %>
+        <th class="center-align"><%= t('Tax 1') %></th>
+      <% end %>
+      <% if estimate.has_tax_two? %>
+        <th class="center-align"><%= t('Tax 2') %></th>
+      <% end %>
+      <th class="align_right"><%= t('views.common.total') %></th>
+    </tr>
+  <% end %>
+  </thead>
+
+  <tbody>
+  <% estimate.estimate_line_items.each do |item|
+    item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+%>
+    <tr>
+      <td class="align_left"><%= @num+=1 %></td>
+      <td><%= item.item_name rescue "" %></td>
+      <td><%= item.item_description %></td>
+      <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+      <td class="center-align"><%= item.item_quantity.to_i %></td>
+      <% if estimate.has_tax_one? %>
+        <td class="center-align"><%= "#{item.tax1.percentage}%" if item.tax1.present? %></td>
+      <% end %>
+      <% if estimate.has_tax_two? %>
+        <td class="center-align"><%= "#{item.tax2.percentage}%" if item.tax2.present?  %></td>
+      <% end %>
+      <td class="align_right"><%= number_to_currency(item.item_total_amount, unit: "") %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

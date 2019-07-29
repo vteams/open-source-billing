@@ -49,6 +49,10 @@ module EstimatesHelper
     notice.html_safe
   end
 
+  def taxes_class
+    ['without_tax', 'with_single_tax', 'with_dual_tax'][[@estimate.has_tax_one?, @estimate.has_tax_two?].select{|bol| bol == true }.length]
+  end
+
   def convert_to_invoices
     notice = <<-HTML
      <p>#{ids.size} #{t('views.estimates.converted_to_invoice_msg')}</p>
