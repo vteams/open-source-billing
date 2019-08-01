@@ -1,0 +1,16 @@
+<div class="new-invoice-holder editInvoice invoice-form-container">
+  <%= simple_form_for @role, remote: true, html: { class: 'role-form form-invoice form-horizontal nested-forms' } do |f| %>
+    <div class="new-invoice-header clearfix">
+      <%= render partial: 'form_action_links' %>
+      <%= render partial: 'form_heading', locals:{form: f, role: @role} %>
+    </div>
+
+    <div class="scroll-area">
+      <div class="info-section clearfix">
+        <div class="info-left-section">
+          <%= f.input :name, wrapper_html: { class: 'input-field col s12' }  %>
+        </div>
+      </div>
+    </div>
+    </div>
+<% end %>

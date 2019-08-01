@@ -1,0 +1,21 @@
+<div id="new_form_popup" class="modal editableModal importModal">
+  <%= simple_form_for @role, remote: true, html: { class: 'role-form form-invoice form-horizontal nested-forms' } do |f| %>
+    <div class="modal-content">
+      <div class="modal-header clearfix text-content">
+        <div class="modal-action-btn right">
+          <%= render partial: 'form_action_links' %>
+        </div>
+          <%= render partial: 'form_heading', locals:{form: f, role: @role} %>
+      </div>
+      <div class="modal-body role-modal-body">
+        <div class="scroll-area">
+          <div class="clearfix">
+            <div class="row">
+              <%= f.input :name, wrapper_html: { class: 'input-field col s12' }  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

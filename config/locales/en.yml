@@ -27,6 +27,7 @@ en:
   task: "Task"
   tax: "Tax"
   staff: "Staff"
+  role: "Role"
 
   date:
     formats:
@@ -801,6 +802,10 @@ en:
       field_requied: "This field is required."
       email_invalid: "Email is Invalid."
       changes_discarded_msg: "Your changes will be discarded by switching company. Are you sure you want to switch company?"
+
+    Roles:
+      roles: "Roles"
+      name: "Role Name"
 
     email_templates:
       email_templates: "Email Templates"

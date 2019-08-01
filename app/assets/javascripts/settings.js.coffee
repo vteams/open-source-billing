@@ -167,3 +167,12 @@ jQuery ->
     url = "/settings/"+user_id+"/set_default_currency?currency_id="+currency_id
     jQuery.get url, (response) ->
       window.location.reload()
+
+  $('#role_add_btn,#role_cancel_btn').on "click", ->
+    $('.role-side-form').toggleClass('hidden')
+    $('#role_reset_form').click()
+    $('#role_btn_container').toggleClass('hidden')
+
+  $('#role_save_btn').on "click", (event)->
+    $('.submit-role-form').click()
+

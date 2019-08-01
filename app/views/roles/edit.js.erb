@@ -1,0 +1,4 @@
+$('body').append("<%= escape_javascript render partial: 'edit_form_popup', locals: {role: @role}  %>");
+elem = $("#edit_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

@@ -1650,6 +1650,99 @@ h6 {
     }
   }
 }
+.roles-container{
+  width: 100%;
+}
+.roles-container .invoice-box-holder{
+  width: 95%;
+}
+.roles-list li .invoice-name{
+  text-align: center;
+  font-size: 18px;
+  float: left;
+  padding-top: 5px;
+}
+.roles-list li{
+  padding-bottom: 10px;
+}
+.roles-list li .role-name{
+  padding: 8px;
+}
+.roles-list li .role-name a{
+  padding-left: 10px;
+}
+.setting-roles-list h5{
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.setting-roles-list h5 span{
+  color: #b3b3b3;
+  float: right;
+  font-size: 12px;
+}
+#role_btn_container .sidebar-btn{
+  min-width: 52px;
+  color: #909090;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  display: inline-block;
+  margin-right: 1px;
+  text-align: center;
+  line-height: 11px;
+  background: #fff;
+  text-transform: uppercase;
+  border-radius: 22px;
+  border: 1px solid #dfdede;
+}
+.role-action-btns .sidebar-btn{
+  min-width: 52px;
+  color: #909090;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  display: inline-block;
+  margin-right: 1px;
+  text-align: center;
+  line-height: 11px;
+  background: #fff;
+  text-transform: uppercase;
+  border-radius: 22px;
+  border: 1px solid #dfdede;
+}
+#role_btn_container .sidebar-btn:hover{
+  color: white;
+  background-color: #09B7E2;
+}
+.role-action-btns .sidebar-btn:hover{
+  color: white;
+  background-color: #09B7E2;
+}
+
+.role-form .scroll-area .info-section .info-left-section .input-field.col label{
+  left: 0rem;
+}
+.role-box table tbody tr td{
+  padding: 10px !important;
+}
+.role-box table tbody tr td p{
+  display: inline-block;
+  float: left;
+  color: #454545;
+}
+.role-box table tbody tr td .role-actions{
+  float: right;
+}
+.role-box table tbody tr{
+  cursor: default !important;
+}
+#users .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
+  left: 0px!important;
+}
+#companies .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
+  left: 0px!important;
+}
+
 .primary_links .grid_control_right .estimate-links li {
   display: inline-block;
 }
@@ -1657,7 +1750,7 @@ h6 {
   width: 95%;
 }
 .new-invoice-holder .new-invoice-table-holder.main-invoice table tbody tr td:first-child{
-  padding: 0px !important;
+  padding: 0px;
 }
 .new-invoice-holder .new-invoice-table-holder .table-view-body .invoice-card .invoice-row .card-white-panel .checkbox-item input + label{
   top: 10px;
@@ -2048,6 +2141,18 @@ h6 {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 13px;
   padding: 10px 12px; }
+.modal-action-btn button{
+  color: #b5b5b5;
+  line-height: normal;
+  background: none;
+  border: none;
+}
+.modal-action-btn button:hover{
+  color: #09b8e2;
+}
+.role-modal-body .scroll-area .clearfix .row .input-field label{
+  position: unset;
+}
 @media only screen and (max-width: 992px) {
   .modal .modal-body table tr td {
     padding: 9px 10px 10px; }

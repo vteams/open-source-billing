@@ -29,6 +29,10 @@
           <%= f.input :password_confirmation, label: t('views.staffs.password_confirmation'),
                       input_html: {id: 'password_confirmation', name: 'password_confirmation'},
                       wrapper_html: { class: 'input-field col s12 m6 editMode' } %>
+          <%= f.input :role_ids, collection: load_user_roles, label: false, as: :select, selected: @sub_user.role_ids.first,
+                      input_html: {id: 'side_form_role_ids', name: 'role_ids'},
+                      wrapper_html: { class: 'input-field col s12 editMode' } %>
+
           <%= hidden_field_tag 'user_id',@sub_user.id %>
           <% unless @sub_user.id == current_user.id %>
             <%= f.input :role_ids, collection: load_user_roles, selected: @sub_user.role_ids.first, label: false,

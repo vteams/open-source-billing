@@ -1,0 +1,48 @@
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="container roles-container">
+    <div class="flex-wrapper">
+      <!--- breadcrum Bar --->
+      <div class="flex-item breadcrum-bar">
+        <div class="card-white-panel">
+          <h3 class="with-grid-icons">
+            Roles
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="new-invoice-holder">
+      <div class="new-invoice-table-holder main-invoice page-box role-box">
+        <table class="bordered grid-view">
+          <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody class="table-view-body">
+          <% @roles.each do |role| %>
+            <tr>
+              <td>
+                <p><%= role.name %></p>
+                <div class="role-actions">
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= role.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <ul id="dropdown_<%= role.id %>" class="dropdown-content z-depth-4">
+                    <li><%= link_to raw("<i class='material-icons'>delete</i>Delete"), role, method: :delete,
+                                    data:{confirm: t('helpers.messages.confirm'),
+                                          success: t('views.invoices.invoice_deleted')} %></li>
+                    <li><%= link_to raw("<i class='material-icons'>create</i>Edit"), edit_role_url(role), remote: true %></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <%= link_to 'Add new role', new_role_path, remote: true %>
+    </div>
+  </div>
+</div>

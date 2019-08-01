@@ -59,6 +59,9 @@ Osb::Application.routes.draw do
       member do
         get 'set_default_currency'
       end
+      collection do
+        resources :roles
+      end
     end
 
     resources :email_templates

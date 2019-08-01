@@ -1,0 +1,11 @@
+<% model_class = Role %>
+<h5 class="left">
+  <% if form.object.persisted? %>
+    <%= t '.title', default: t('helpers.titles.edit', model: t(model_class.model_name.singular),
+                               default: "Edit #{model_class.model_name.human}")
+    %>
+  <% else %>
+    <%= t '.title', :default => t('helpers.titles.new', :model => t(model_class.model_name.singular),
+                                  :default => "New  #{model_class.model_name.human}") %>
+  <% end %>
+</h5>

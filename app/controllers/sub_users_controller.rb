@@ -71,7 +71,6 @@ class SubUsersController < ApplicationController
     options = {user_name: params[:user_name], email: params[:email],
                password: params[:password], password_confirmation: params[:password],
                avatar: params[:avatar]}
-
     # don't update password if not provided
     if params[:password].blank?
       options.delete(:password)
@@ -85,7 +84,6 @@ class SubUsersController < ApplicationController
               else
                 {alert: t('views.users.unable_to_save')}
               end
-
     respond_to do |format|
       format.html {
         if password_has_changed?(params[:user_id], params[:password]) && @successfully_updated.eql?(true)

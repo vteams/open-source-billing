@@ -9,6 +9,13 @@ class Role < ActiveRecord::Base
             :inclusion => { :in => Rolify.resource_types },
             :allow_nil => true
 
+  validates :name, presence:  {message: "cannot be blank"}
+  validates :name, uniqueness: {message: "should be unique"}
+
   scopify
+
+  def role_name
+    name.first.camelize
+  end
 
 end
