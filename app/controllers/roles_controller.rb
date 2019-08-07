@@ -12,12 +12,14 @@ class RolesController < ApplicationController
 
   def new
     @role = Role.new
+    # @role.permissions.build
     respond_to do |format|
       format.js
     end
   end
 
   def edit
+    build_permissions unless @role.permissions.exists?
     respond_to do |format|
       format.js
     end
@@ -52,10 +54,16 @@ class RolesController < ApplicationController
   private
 
   def role_params
-    params.require(:role).permit(:name)
+    params.require(:role).permit(:name, permissions_attributes: [:id, :role_id, :can_create, :can_update, :can_delete, :can_read, :entity_type])
   end
 
   def set_role
     @role = Role.find(params[:id])
+  end
+
+  def build_permissions
+    ENTITY_TYPES.each do |e|
+      @role.permissions.build(entity_type: e)
+    end
   end
 end

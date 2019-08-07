@@ -12,6 +12,13 @@
           <div class="clearfix">
             <div class="row">
               <%= f.input :name, label: "Name", wrapper_html: { class: 'input-field col s12' }  %>
+              <h3>Permissions</h3>
+
+              <div id="edit_permission_table">
+                <%= f.simple_fields_for :permissions do |permission| %>
+                  <%= render partial: 'permission_fields', locals: {permission: permission} %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>

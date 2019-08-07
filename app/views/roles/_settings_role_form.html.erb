@@ -5,6 +5,11 @@
     <div class="modal-body users">
       <%= f.input :name, label: false, placeholder: '*' + t('views.Roles.name'), wrapper_html: { class: 'input-field' }, input_html: { id: 'role_name' } %>
     </div>
+    <!--    <div id="permission_table">-->
+    <%#= f.simple_fields_for :permissions do |permission| %>
+    <%#= render 'settings/permission_fields', f: permission %>
+    <%# end %>
+    <!--    </div>-->
     <div class="role-action-btns">
       <a href="javascript:;" id="role_save_btn" class="sidebar-btn"><%= t('views.common.save') %></a>
       <a href="javascript:;" id="role_cancel_btn" class="sidebar-btn"><%= t('views.common.cancel') %></a>

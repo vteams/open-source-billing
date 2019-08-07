@@ -7,7 +7,10 @@
     <% @roles.each do |role| %>
       <li>
         <div class="invoice-name circle-img <%= random_card_color %>"><%= role.role_name %></div>
-        <div class="role-name"><%= link_to role.name, "#{edit_role_url(role)}", remote: true   %></div>
+        <div class="role-name">
+          <%= link_to role.name, "#{edit_role_url(role)}", remote: true   %><br>
+          <span class="role-date"><%= role.created_at.strftime('%d %b, %Y') %></span>
+        </div>
       </li>
     <% end %>
   </ul>
