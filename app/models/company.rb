@@ -55,4 +55,12 @@ class Company < ActiveRecord::Base
   def group_date
     created_at.strftime('%B %Y')
   end
+
+  def state
+    province_or_state
+  end
+
+  def zipcode
+    postal_or_zipcode
+  end
 end
