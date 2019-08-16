@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190507075140) do
+ActiveRecord::Schema.define(version: 20190719104408) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 20190507075140) do
     t.datetime "archived_at"
     t.datetime "deleted_at"
     t.integer  "base_currency_id",  limit: 4,   default: 1
+    t.string   "color_code",        limit: 255
   end
 
   create_table "company_email_templates", force: :cascade do |t|
@@ -288,20 +289,20 @@ ActiveRecord::Schema.define(version: 20190507075140) do
     t.string   "invoice_number",                 limit: 255
     t.datetime "invoice_date"
     t.string   "po_number",                      limit: 255
-    t.decimal  "discount_percentage",                          precision: 10, scale: 2
+    t.decimal  "discount_percentage",                          precision: 15, scale: 3
     t.integer  "client_id",                      limit: 4
     t.text     "terms",                          limit: 65535
     t.text     "notes",                          limit: 65535
     t.string   "status",                         limit: 255
-    t.decimal  "sub_total",                                    precision: 10, scale: 2
-    t.decimal  "discount_amount",                              precision: 10, scale: 2
-    t.decimal  "tax_amount",                                   precision: 10, scale: 2
-    t.decimal  "invoice_total",                                precision: 10, scale: 2
+    t.decimal  "sub_total",                                    precision: 15, scale: 3
+    t.decimal  "discount_amount",                              precision: 15, scale: 3
+    t.decimal  "tax_amount",                                   precision: 15, scale: 3
+    t.decimal  "invoice_total",                                precision: 15, scale: 3
     t.string   "archive_number",                 limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                                          null: false
-    t.datetime "updated_at",                                                                          null: false
+    t.datetime "created_at",                                                                            null: false
+    t.datetime "updated_at",                                                                            null: false
     t.integer  "payment_terms_id",               limit: 4
     t.date     "due_date"
     t.string   "last_invoice_status",            limit: 255
@@ -320,6 +321,10 @@ ActiveRecord::Schema.define(version: 20190507075140) do
     t.integer  "base_currency_id",               limit: 4,                              default: 1
     t.float    "conversion_rate",                limit: 24,                             default: 1.0
     t.float    "base_currency_equivalent_total", limit: 24
+    t.boolean  "is_compact",                                                            default: false
+    t.string   "batch_number",                   limit: 255
+    t.integer  "batch_id",                       limit: 4
+    t.boolean  "is_batched"
   end
 
   create_table "items", force: :cascade do |t|

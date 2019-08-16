@@ -24,8 +24,8 @@
         </div>
       <% end %>
       <div class="info-section clearfix container company-info-section">
-        <div>
-          <center><%= image_tag @invoice.company.logo %></center>
+        <div style="text-align: center; width: 92%">
+          <%= image_tag @invoice.company.logo %>
         </div>
         <div class="info-left-section">
           <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
@@ -117,8 +117,8 @@
         </div>
         <br>
         <div>
-          <%= @invoice.notes %>
-          <br/><br/><br/>
+          <p class="invoice-note"><%= @invoice.notes %></p>
+          <br/>
         </div>
         <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
         <br/>
