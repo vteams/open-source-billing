@@ -7,6 +7,7 @@ development:
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
   paypal:
+    enabled: false
     url: https://www.sandbox.paypal.com/cgi-bin/webscr?
     login: YOUR_PAYPAL_LOGIN
     password: YOUR_PAYPAL_PASSWORD
@@ -34,6 +35,7 @@ production:
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
   paypal:
+    enabled: false
     url: https://www.sandbox.paypal.com/cgi-bin/webscr?
     login: YOUR_PAYPAL_LOGIN
     password: YOUR_PAYPAL_PASSWORD
