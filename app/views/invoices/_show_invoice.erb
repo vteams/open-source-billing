@@ -18,14 +18,14 @@
                          id: @invoice.id, encrypted_id: params[:inv_id]},
                         remote: true unless @invoice.payments.blank? %>
           </div>
-          <% if @invoice.status != "paid" %>
+          <% if @invoice.status != "paid" and OSB::CONFIG::PAYPAL[:enabled] == true %>
             <span class="pull-right"><%= link_to t('pay_by_paypal'), @invoice.paypal_url("#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/preview/?inv_id=#{@invoice.encrypted_id}", "#{OSB::CONFIG::APP_PROTOCOL}://#{OSB::CONFIG::APP_HOST}/en/invoices/paypal_payments", current_user), title: 'Paypal Payment', class: 'btn btn-draft' %></span>
           <% end %>
         </div>
       <% end %>
       <div class="info-section clearfix container company-info-section">
-        <div>
-          <center><%= image_tag @invoice.company.logo %></center>
+        <div style="text-align: center; width: 92%">
+          <%= image_tag @invoice.company.logo %>
         </div>
         <div class="info-left-section">
           <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
@@ -117,9 +117,13 @@
         </div>
         <br>
         <div>
-          <%= @invoice.notes %>
-          <br/><br/><br/>
+          <div style="float:left; width: 50%;">
+            <p class="invoice-note"><%= @invoice.notes %></p>
+          </div>
+
+          <br/>
         </div>
+        <div class="clearfix"></div>
         <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
         <br/>
       </div>

@@ -258,4 +258,12 @@ class Client < ActiveRecord::Base
   def amount_billed
     self.invoices.sum(:invoice_total).to_f
   end
+
+  def state
+    province_state
+  end
+
+  def zipcode
+    postal_zip_code
+  end
 end
