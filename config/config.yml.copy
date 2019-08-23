@@ -9,9 +9,6 @@ development:
   paypal:
     enabled: false
     url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-    login: YOUR_PAYPAL_LOGIN
-    password: YOUR_PAYPAL_PASSWORD
-    signature: YOUR_PAYPAL_SIGNATURE
     business: YOUR_PAYPAL_BUSINESS
 
   smtp_setting:
@@ -37,9 +34,6 @@ production:
   paypal:
     enabled: false
     url: https://www.sandbox.paypal.com/cgi-bin/webscr?
-    login: YOUR_PAYPAL_LOGIN
-    password: YOUR_PAYPAL_PASSWORD
-    signature: YOUR_PAYPAL_SIGNATURE
     business: YOUR_PAYPAL_BUSINESS
 
   smtp_setting:

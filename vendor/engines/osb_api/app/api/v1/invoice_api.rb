@@ -87,10 +87,6 @@ module V1
       end
       get :pay_with_credit_card do
 
-        def pay_with_credit_card
-          paypal = PaypalService.new(params[:invoice_id])
-          @result = paypal.process_payment
-        end
       end
 
       params do

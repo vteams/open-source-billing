@@ -283,7 +283,7 @@ class InvoicesController < ApplicationController
 
   def paypal_payments
     # send a post request to paypal to verify payment data
-    response = RestClient.post(OSB::CONFIG::PAYPAL[:url], params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
+    response = RestClient.post("#{OSB::CONFIG::PAYPAL[:url]}/cgi-bin/webscr", params.merge({"cmd" => "_notify-validate"}), :content_type => "application/x-www-form-urlencoded")
     invoice = Invoice.find(params["invoice"])
     # if status is verified make an entry in payments and update the status on invoice
     if response == "VERIFIED"
@@ -291,37 +291,12 @@ class InvoicesController < ApplicationController
                                   :payment_method => "paypal",
                                   :payment_amount => params[:payment_gross],
                                   :payment_date => Date.today,
-                                  :notes => params[:txn_id],
+                                  :notes => params.map{|k, v| "#{k.humanize}: #{v}" }.join("\n"),
                                   :paid_full => 1
                               })
       invoice.update_attribute('status', 'paid')
     end
     render :nothing => true
-  end
-
-  def pay_with_credit_card
-    paypal = PaypalService.new(params)
-    @result = paypal.process_payment
-
-    respond_to { |format| format.js }
-  end
-
-  def payment_with_credit_card
-    begin
-      @invoice = Invoice.unscoped.where(id: params[:invoice_id]).first
-      @invoice.payments.create({
-                                  :payment_method => "Stripe",
-                                  :payment_amount => params[:amount].to_f/100,
-                                  :payment_date => Date.today,
-                                  :paid_full => 1,
-                                  :company_id => @invoice.company_id
-                              })
-      @invoice.update_attributes(status: 'paid')
-      flash[:notice] = t('views.invoices.paid_msg')
-    rescue
-      flash[:alert] = t('views.invoices.payment_error_msg')
-    end
-    redirect_to preview_invoices_url(inv_id: params[:inv_id])
   end
 
   def send_invoice
