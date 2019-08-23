@@ -1,6 +1,5 @@
 class SubUsersController < ApplicationController
   include SubUsersHelper
-  load_and_authorize_resource :user, :only => [:index, :show, :create, :destroy, :update, :new, :edit, :destroy_bulk]
 
   helper_method :sort_column, :sort_direction
 
@@ -24,11 +23,11 @@ class SubUsersController < ApplicationController
   def create
     @sub_user = User.new({user_name: params[:user_name], email: params[:email],
                          password: params[:password],
-                         password_confirmation: params[:password_confirmation]
+                         password_confirmation: params[:password_confirmation], role_id: params[:role_id]
                         })
 
     @sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
-    @sub_user.role_ids = params[:role_ids]
+    @sub_user.role_id = params[:role_id] if params[:role_id].present?
     # skip email confirmation for login
     @sub_user.skip_confirmation!
     respond_to do |format|
@@ -70,7 +69,7 @@ class SubUsersController < ApplicationController
     @sub_user = User.find(params[:user_id])
     options = {user_name: params[:user_name], email: params[:email],
                password: params[:password], password_confirmation: params[:password],
-               avatar: params[:avatar]}
+               avatar: params[:avatar], role_id: params[:role_id]}
     # don't update password if not provided
     if params[:password].blank?
       options.delete(:password)
@@ -79,7 +78,7 @@ class SubUsersController < ApplicationController
     @sub_user.skip_reconfirmation!
     message = if @sub_user.update_attributes(options)
                 @successfully_updated = true
-                @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
+                @sub_user.role_id = params[:role_id] if params[:role_id].present?
                 {notice: t('views.users.updated_msg')}
               else
                 {alert: t('views.users.unable_to_save')}

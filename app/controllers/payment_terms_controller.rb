@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentTermsController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   # GET /payment_terms
   # GET /payment_terms.json
   def index

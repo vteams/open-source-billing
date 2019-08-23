@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class RecurringProfilesController < ApplicationController
-  load_and_authorize_resource :recurring_profile
   helper_method :sort_column, :sort_direction
   include RecurringProfilesHelper
   before_filter :set_per_page_session

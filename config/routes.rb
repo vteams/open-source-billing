@@ -61,6 +61,7 @@ Osb::Application.routes.draw do
       end
       collection do
         resources :roles
+        get :invoice_number_format
       end
     end
 
@@ -81,7 +82,7 @@ Osb::Application.routes.draw do
       end
     end
     get "reports/:report_name" => "reports#reports"
-    get "reports/data/:report_name" => "reports#reports_data"
+    get "reports/data/:report_name" => "reports#payments_collected"
     get "reports" => "reports#index"
 
     get "dashboard" => "dashboard#index"

@@ -1,5 +1,4 @@
 class StaffsController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
   before_action :set_staff, only: [:show, :edit, :update, :destroy]

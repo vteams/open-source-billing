@@ -1,0 +1,4 @@
+$('body').append("<%= escape_javascript render partial: 'invoice_number_format_popup' %>")
+elem = $("#invoice_number_formatModal");
+Popup.initialize(elem);
+Popup.open(elem);

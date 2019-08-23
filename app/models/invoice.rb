@@ -266,7 +266,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil, invoice_pdf_file = nil)
-    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
+    current_company = Company.find(current_user.current_company)
+    NotificationWorker.perform_async('InvoiceMailer','new_invoice_email',[self.client_id, self.id, self.encrypted_id, current_user.id, invoice_pdf_file], current_company.smtp_settings)
   end
 
   def send_invoice current_user, id

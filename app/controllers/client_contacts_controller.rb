@@ -21,7 +21,6 @@
 class ClientContactsController < ApplicationController
   # GET /client_contacts
   # GET /client_contacts.json
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   def index
     @client_contacts = ClientContact.all
 

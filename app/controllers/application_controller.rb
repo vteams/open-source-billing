@@ -24,8 +24,11 @@ class ApplicationController < ActionController::Base
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
   #before_filter :authenticate_user_from_token!
   # This is Devise's authentication
-
+  include Pundit
   include ApplicationHelper
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   acts_as_token_authentication_handler_for User, if: lambda { |env| env.request.format.json? && controller_name != 'authenticate' }
   before_filter :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery
@@ -40,9 +43,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_company
 
   before_action :set_locale
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to dashboard_url, :alert => exception.message
-  end
 
 
   def _reload_libs
@@ -218,4 +218,17 @@ class ApplicationController < ActionController::Base
   def default_url_options(options = {})
     { locale: I18n.locale }.merge options
   end
+
+
+  private
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    if request.format.js?
+      render js:  "window.location = '#{request.referrer || root_path}'"
+    else
+      redirect_to(request.referrer || root_path)
+    end
+  end
+
 end

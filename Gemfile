@@ -85,7 +85,6 @@ gem 'nokogiri', '1.8.2'
 gem 'quickbooks-ruby', '0.6.1'
 gem 'qbo_api', '1.8.1'
 gem 'ruby-freshbooks', '0.4.1'
-gem 'cancancan', '1.15.0'
 gem 'rolify', '5.1.0'
 gem 'puma', '3.11.0'
 
@@ -103,7 +102,8 @@ gem 'cocoon', '~> 1.2', '>= 1.2.11'
 gem 'nouislider-rails', '~> 8.2', '>= 8.2.1'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'sidekiq', '>= 5.2.7'
-
+gem 'sidekiq-symbols', '0.2.0'
+gem "pundit"
 gem 'groupdate'
 gem 'chartkick'
 gem "hashid-rails", "~> 1.0"

@@ -1,5 +1,4 @@
 class LogsController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   include DateFormats
   before_action :set_log, only: [:show, :edit, :update, :destroy]
   layout 'application'

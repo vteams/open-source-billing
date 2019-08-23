@@ -22,11 +22,15 @@ class InvoiceMailer < ActionMailer::Base
   default :from => 'support@opensourcebilling.org'
   @@response_to_client = ''
   @@reason_by_client =  ''
-  def new_invoice_email(client, invoice, e_id , current_user, invoice_pdf_file=nil)
+  def new_invoice_email(client_id, invoice_id, e_id , current_user_id, invoice_pdf_file=nil)
+    client = Client.find_by_id client_id
+    invoice = Invoice.find_by_id invoice_id
+    current_user = User.find_by_id current_user_id
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
     attachments["Invoice-#{invoice.invoice_number}.pdf"] = invoice_pdf_file if invoice_pdf_file
-    email_body = mail(to: (client.billing_email if client.billing_email.present?),
+    client_email = [client.email, client.billing_email]
+    email_body = mail(to: (client_email),
                       cc: (template.cc.present? ? client.email+","+template.cc : client.email), bcc: (template.bcc if template.bcc.present?) , subject: template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,

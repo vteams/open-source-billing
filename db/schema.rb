@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190805145808) do
+ActiveRecord::Schema.define(version: 20190819063649) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -372,6 +372,21 @@ ActiveRecord::Schema.define(version: 20190805145808) do
     t.integer  "user_id",     limit: 4
   end
 
+  create_table "mail_configs", force: :cascade do |t|
+    t.string   "address",              limit: 255
+    t.integer  "port",                 limit: 4
+    t.string   "authentication",       limit: 255
+    t.string   "user_name",            limit: 255
+    t.string   "password",             limit: 255
+    t.boolean  "enable_starttls_auto"
+    t.integer  "company_id",           limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "from",                 limit: 255
+  end
+
+  add_index "mail_configs", ["company_id"], name: "index_mail_configs_on_company_id", using: :btree
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", limit: 4,     null: false
     t.integer  "application_id",    limit: 4,     null: false
@@ -677,18 +692,13 @@ ActiveRecord::Schema.define(version: 20190805145808) do
     t.integer  "current_company",        limit: 4
     t.string   "authentication_token",   limit: 255
     t.string   "avatar",                 limit: 255
+    t.integer  "role_id",                limit: 4
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id", limit: 4
-    t.integer "role_id", limit: 4
-  end
-
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
+  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  limit: 255,   null: false
@@ -701,5 +711,7 @@ ActiveRecord::Schema.define(version: 20190805145808) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "mail_configs", "companies"
   add_foreign_key "permissions", "roles"
+  add_foreign_key "users", "roles"
 end

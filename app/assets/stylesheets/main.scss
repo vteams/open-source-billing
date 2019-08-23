@@ -1665,8 +1665,8 @@ h6 {
 .roles-list li{
   padding-bottom: 10px;
 }
-.roles-list li .role-name{
-  //padding: 8px;
+.roles-list li .role-name a{
+  padding: 10px;
 }
 .roles-list li .role-name a{
   padding-left: 10px;
@@ -5663,4 +5663,24 @@ table.table_listing, table.report-data-table {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   margin-bottom: 0;
   padding-left: 10px;
+}
+.ui.checkbox h5 [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.company-mail-config [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.company-checkbox [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.settings-row .col{
+  min-height: 40px;
+}
+.api_key{
+  font-size: 12px;
+}
+a.invoice-number-format-btn i{
+  color: #b5b5b5;
+  font-size: 16px;
+  margin-left: -14px;
 }

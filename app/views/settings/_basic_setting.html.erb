@@ -1,7 +1,8 @@
 <div class="basic-setting hide" id="basic_settings_container">
-  <div class="row">
-    <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
-      <div class="col s12 m12 xl8">
+  <div class="row settings-row">
+
+    <div class="col s12 m12 xl8">
+      <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
         <div class="card-white-panel clearfix">
           <h5 class="text-blue">
             <%= t('header.links.setting.basic_settings') %>
@@ -61,35 +62,39 @@
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
                       input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+          <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format',
+                                                           value: current_user.settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
+                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+          <%= link_to raw('<i class="material-icons">create</i>'), invoice_number_format_settings_path, class: 'invoice-number-format-btn', remote: true %>
 
-          <div class="api_key">
+        </div>
+      <% end %>
+    </div>
+    <div class="col s12 m12 xl4">
+      <div class="card-white-panel importData">
+        <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
+        <div class="importElement">
+          <div class="col s6 m6 xl12">
+            <%= link_to new_import_datum_path, remote: true do
+              image_tag('freshbooks.png', class: 'img-responsive', width: 100)
+            end %>
+          </div>
+          <div class="col s6 m6 xl12">
+            <%= render 'import_data/qb_connect' %>
+          </div>
+        </div>
+        <div class="api_key">
             <span>
               <b><%= t('views.settings.api_key') %>:</b>
               <%= @authentication_token %>
             </span>
-            <span class="icon-styling">
+          <span class="icon-styling">
               <i class="material-icons" title="<%= t('views.settings.api_key_help_text') %>">help_outline</i>
             </span>
-          </div>
+        </div>
 
-        </div>
       </div>
-    <% end %>
-    <div class="col s12 m12 xl4">
-        <div class="card-white-panel importData">
-          <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
-          <div class="importElement">
-            <div class="col s6 m6 xl12">
-              <%= link_to new_import_datum_path, remote: true do
-                image_tag('freshbooks.png', class: 'img-responsive', width: 100)
-              end %>
-            </div>
-            <div class="col s6 m6 xl12">
-              <%= render 'import_data/qb_connect' %>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
   </div>
 </div>
 

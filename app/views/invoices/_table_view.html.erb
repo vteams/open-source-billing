@@ -69,11 +69,13 @@
                         </a>
                       </li>
                     <% end %>
+                    <%# if policy(invoice).destroy? %>
                     <li>
                       <%= link_to raw("<i class='material-icons'>delete</i>#{t('views.dashboard.delete')}"),invoice, title: t('helpers.links.delete'), method: :delete,
                                   data:{confirm: t('helpers.messages.confirm'),
                                         success: t('views.invoices.invoice_deleted')} %>
                     </li>
+                    <%# end %>
                     <li>
                       <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.enter_payment')}"),
                                   enter_payment_payments_path(invoice_ids: invoice.id),

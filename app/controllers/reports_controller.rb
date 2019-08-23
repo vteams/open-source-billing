@@ -24,7 +24,7 @@ class ReportsController < ApplicationController
 
   def invoice_detail
     @report = Reporting::Reporter.get_report({:report_name => 'invoice_detail', :report_criteria => get_criteria(params)})
-
+    authorize @report
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -48,6 +48,7 @@ class ReportsController < ApplicationController
 
   def item_sales
     @report = Reporting::Reporter.get_report({:report_name => 'item_sales', :report_criteria => get_criteria(params)})
+    authorize @report
 
     respond_to do |format|
       format.html # index.html.erb
@@ -74,6 +75,7 @@ class ReportsController < ApplicationController
 
   def revenue_by_client
     @report = Reporting::Reporter.get_report({:report_name => 'revenue_by_client', :report_criteria => get_criteria(params)})
+    authorize @report
 
     respond_to do |format|
       format.html # index.html.erb
@@ -96,6 +98,7 @@ class ReportsController < ApplicationController
 
   def payments_collected
     @report = Reporting::Reporter.get_report({:report_name => 'payments_collected', :report_criteria => get_criteria(params)})
+    authorize @report
 
     respond_to do |format|
       format.html # index.html.erb
@@ -118,6 +121,7 @@ class ReportsController < ApplicationController
 
   def aged_accounts_receivable
     @report = Reporting::Reporter.get_report({:report_name => 'aged_accounts_receivable', :report_criteria => get_criteria(params)})
+    authorize @report
 
     respond_to do |format|
       format.html # index.html.erb

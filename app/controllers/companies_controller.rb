@@ -1,5 +1,4 @@
 class CompaniesController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   include CompaniesHelper
@@ -43,6 +42,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1/edit
   def edit
     @company = Company.find(params[:id])
+    @company.build_mail_config if @company.mail_config.blank?
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -192,7 +192,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id)
+    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes: [:id, :address, :port, :authentication, :from, :user_name, :password, :enable_starttls_auto,  :_destroy])
   end
 
 end

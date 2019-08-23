@@ -1,6 +1,6 @@
 class Role < ActiveRecord::Base
   #include Osbm
-  has_and_belongs_to_many :users, :join_table => :users_roles
+  has_one :user
   has_many :permissions
 
   belongs_to :resource,

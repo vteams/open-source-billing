@@ -20,12 +20,26 @@ class Company < ActiveRecord::Base
   has_many :sent_emails
   belongs_to :account
   belongs_to :base_currency, class_name: 'Currency', foreign_key: :base_currency_id
+  has_one :mail_config
+
+  accepts_nested_attributes_for :mail_config, reject_if: :all_blank, allow_destroy: true
 
   # archive and delete
   acts_as_archival
   acts_as_paranoid
 
   # filter companies i.e active, archive, deleted
+  def smtp_settings
+    {
+        address: self.mail_config.address,
+        port: self.mail_config.port,
+        authentication: self.mail_config.authentication,
+        enable_starttls_auto: self.mail_config.enable_starttls_auto,
+        user_name: self.mail_config.user_name,
+        password: self.mail_config.password
+    }
+  end
+
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     user = User.current

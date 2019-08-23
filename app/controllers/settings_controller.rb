@@ -32,11 +32,19 @@ class SettingsController < ApplicationController
       user.settings.index_page_format = 'table'
       session[:view] = 'table'
     end
+    if params[:invoice_number_format].present?
+      user.settings.invoice_number_format = params[:invoice_number_format]
+    end
     respond_to { |format| format.js }
+  end
+
+  def invoice_number_format
+
   end
 
   def index
     @email_templates = EmailTemplate.all
+    authorize @email_templates
     @roles = Role.all
     @authentication_token = current_user.authentication_token
   end

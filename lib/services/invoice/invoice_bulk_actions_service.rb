@@ -94,6 +94,13 @@ module Services
     private
 
     def send_invoice_to_client(invoice)
+      # invoice_hash = {
+      #     invoice_client: invoice.client,
+      #     invoice: invoice,
+      #     encrypted_id: invoice.encrypted_id,
+      #     user: @current_user
+      # }
+      # NotificationWorker.perform_async('InvoiceMailer','new_invoice_email',[invoice_hash], smtp_settings = Company.smtp_settings)
       InvoiceMailer.delay.new_invoice_email(invoice.client, invoice, invoice.encrypted_id, @current_user)
     end
 

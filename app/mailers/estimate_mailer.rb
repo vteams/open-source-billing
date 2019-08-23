@@ -22,10 +22,14 @@ class EstimateMailer < ActionMailer::Base
   default :from => 'support@opensourcebilling.org'
   @@response_to_client = ''
   @@reason_by_client =  ''
-  def new_estimate_email(client, estimate, e_id , current_user)
+  def new_estimate_email(client_id, estimate_id, e_id , current_user_id)
+    client = Client.find(client_id)
+    estimate = Estimate.find(estimate_id)
+    current_user = User.find(current_user_id)
     template = replace_template_body(current_user, estimate, 'New Estimate') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    client_email = [client.email, client.billing_email]
+    email_body = mail(:to => client_email, :subject => template.subject).body.to_s
     estimate.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email

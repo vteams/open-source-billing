@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentsController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   before_filter :authenticate_user!, :set_per_page_session , :except => [:payments_history]
   layout :choose_layout
   include PaymentsHelper
@@ -28,6 +27,8 @@ class PaymentsController < ApplicationController
   def index
     @current_company_payments = Payment.by_company(get_company_id)
     @payments = @current_company_payments.filter(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
+    authorize @payments
+
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -36,6 +37,7 @@ class PaymentsController < ApplicationController
 
   def show
     @payment = Payment.find(params[:id])
+    authorize @payment
 
     respond_to do |format|
       format.html # show.html.erb
@@ -46,6 +48,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
+    authorize @payment
 
     respond_to do |format|
       format.html # new.html.erb
@@ -55,6 +58,7 @@ class PaymentsController < ApplicationController
 
   def edit
     @payment = Payment.find(params[:id])
+    authorize @payment
     # if @payment.payment_method and @payment.payment_method == 'paypal'
     #   redirect_to payments_path,alert: "You can not edit payment with paypal!"
     # end
@@ -66,6 +70,7 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = Payment.new(payment_params)
+    authorize @payment
     respond_to do |format|
       if @payment.save
         Payment.update_invoice_status_credit(@payment.invoice.id, @payment.payment_amount, @payment)
@@ -82,6 +87,7 @@ class PaymentsController < ApplicationController
 
   def update
     @payment = Payment.find(params[:id])
+    authorize @payment
     latest_amount = Payment.update_invoice_status params[:payment][:invoice_id], params[:payment][:payment_amount].to_f, @payment.payment_amount.to_f
     params[:payment][:payment_amount] = latest_amount
     respond_to do |format|
@@ -101,6 +107,7 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1.json
   def destroy
     @payment = Payment.find(params[:id])
+    authorize @payment
     @payment.destroy unless OSB::CONFIG::DEMO_MODE
 
     respond_to do |format|
@@ -122,6 +129,7 @@ class PaymentsController < ApplicationController
     ids.each do |inv_id|
       company_id = Invoice.find(inv_id).company_id
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
+      authorize @payments, :create?
     end
 
     @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))

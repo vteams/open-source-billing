@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientsController < ApplicationController
-  load_and_authorize_resource :client
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
 
@@ -49,6 +48,7 @@ class ClientsController < ApplicationController
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
+    authorize @client
     @invoices = @client.invoices.last(5)
     @payments = Payment.payments_history(@client).last(5)
 
@@ -63,6 +63,7 @@ class ClientsController < ApplicationController
   # GET /clients/new.json
   def new
     @client = Client.new
+    authorize @client
     @client.client_contacts.build()
     respond_to do |format|
       format.html # new.html.erb
@@ -75,6 +76,7 @@ class ClientsController < ApplicationController
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
+    authorize @client
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
     respond_to do |format|
       format.html
@@ -93,6 +95,7 @@ class ClientsController < ApplicationController
     end
 
     @client = Client.new(client_params)
+    authorize @client
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @client)
@@ -115,6 +118,7 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
+    authorize @client
     associate_entity(params, @client)
 
     #add/update available credit
@@ -141,6 +145,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     @client = Client.unscoped.find(params[:id])
+    authorize @client
     @client.destroy
 
     respond_to do |format|

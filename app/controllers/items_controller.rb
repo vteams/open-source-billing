@@ -20,7 +20,6 @@
 #
 class ItemsController < ApplicationController
   #before_filter :authenticate_user!
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   protect_from_forgery :except => [:load_item_data]
   before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
@@ -36,6 +35,7 @@ class ItemsController < ApplicationController
     @status = params[:status]
     @items = Item.get_items(params.merge(get_args))
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
+    authorize @items
 
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
@@ -55,6 +55,7 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
+    authorize @item
 
     respond_to do |format|
       format.html # show.html.erb
@@ -67,6 +68,7 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = params[:id] ? Item.find_by_id(params[:id]).dup : Item.new
+    authorize @item
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -78,6 +80,7 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
+    authorize @item
     respond_to do |format|
       format.js
 
@@ -95,6 +98,7 @@ class ItemsController < ApplicationController
       return
     end
     @item = Item.new(item_params)
+    authorize @item
     options = params[:position].present? ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
     respond_to do |format|
@@ -118,6 +122,7 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
+    authorize @item
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
@@ -134,6 +139,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1.json
   def destroy
     @item = Item.find(params[:id])
+    authorize @item
     @item.destroy
 
     respond_to do |format|

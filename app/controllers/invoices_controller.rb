@@ -19,7 +19,6 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class InvoicesController < ApplicationController
-  load_and_authorize_resource only: %i[index create destroy update new edit]
 
   before_action :authenticate_user!, except: %i[show preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
   before_action :set_per_page_session
@@ -41,7 +40,7 @@ class InvoicesController < ApplicationController
     @status = params[:status]
     @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
     @invoices = @current_company_invoices.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-
+    authorize @invoices
     respond_to do |format|
       format.html # index.html.erb
       # format.js
@@ -49,6 +48,7 @@ class InvoicesController < ApplicationController
   end
 
   def show
+    authorize @invoice
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html {render template: 'invoices/show.html.erb'}
@@ -69,6 +69,7 @@ class InvoicesController < ApplicationController
 
   def new
     @invoice = Services::InvoiceService.build_new_invoice(params)
+    authorize @invoice
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
     @invoice.currency = @client.currency if @client.present?
@@ -81,6 +82,7 @@ class InvoicesController < ApplicationController
   end
 
   def edit
+    authorize @invoice
     if @invoice.invoice_type.eql?("ProjectInvoice")
       redirect_to :back, alert:  t('views.invoices.project_invoice_cannot_updated')
     else
@@ -106,6 +108,7 @@ class InvoicesController < ApplicationController
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     assign_company_to_client if request.format.json?
+    authorize @invoice
     respond_to do |format|
       if @invoice.save
         @invoice.delay.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) unless params[:save_as_draft].present?
@@ -120,6 +123,7 @@ class InvoicesController < ApplicationController
   end
 
   def update
+    authorize @invoice
     @invoice.company_id = get_company_id()
     @notify = params[:save_as_draft].present? ? false : true
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
@@ -149,6 +153,7 @@ class InvoicesController < ApplicationController
   end
 
   def destroy
+    authorize @invoice
     @invoice.destroy
 
     respond_to do |format|

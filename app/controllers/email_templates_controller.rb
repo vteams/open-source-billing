@@ -1,5 +1,4 @@
 class EmailTemplatesController < ApplicationController
-  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
 
 
   # GET /email_templates/1/edit

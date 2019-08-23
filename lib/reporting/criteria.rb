@@ -38,8 +38,8 @@ module Reporting
       Rails.logger.debug "--> Criteria init... #{options.to_yaml}"
       options ||= {} # if explicitly nil is passed then convert it to empty hash
       options = set_filter_date_formats(options)
-      @from_date = options[:from_date].present? ? options[:from_date].to_date : 1.month.ago.to_date
-      @to_date = options[:to_date].present? ? options[:to_date].to_date : Date.today.to_date
+      @from_date = options[:from_date].present? ? Date.strptime(options[:from_date], '%Y-%m-%d').in_time_zone : 1.month.ago.to_date
+      @to_date = options[:to_date].present? ? Date.strptime(options[:to_date], '%Y-%m-%d').in_time_zone : Date.today.to_date
       @client_id = (options[:client_id] || 0).to_i # default to all i.e. 0
       @company_id = (options[:current_company] || 0).to_i # default to all i.e. 0
       @payment_method = (options[:payment_method] || "") # default to all i.e. ""

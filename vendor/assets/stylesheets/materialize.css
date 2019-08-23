@@ -6676,7 +6676,7 @@ form p:last-child {
 
 [type="checkbox"].filled-in:disabled:not(:checked) + label:after {
   border-color: transparent;
-  background-color: #BDBDBD;
+  /*background-color: #BDBDBD;*/
 }
 
 [type="checkbox"].filled-in:disabled:checked + label:before {

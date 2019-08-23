@@ -7,8 +7,9 @@
                   label: false, wrapper_html: { class: 'input-field' } %>
       <%= f.input :email, label: t('views.common.email'), input_html: {id: 'side_form_user_email', name: 'email', placeholder: t('views.staffs.email')},
                   label: false, wrapper_html: { class: 'input-field' } %>
-      <%= f.input :role_ids, collection: load_user_roles, label: false, as: :select, selected: @sub_user.role_ids.first,
-                  input_html: {id: 'side_form_role_ids', name: 'role_ids'},
+      <%= f.input :role_id, collection: load_user_roles, label: false, as: :select, selected: @sub_user.role_id,
+                  prompt: "Choose a Role",
+                  input_html: {id: 'side_form_role_ids', name: 'role_id'},
                   wrapper_html: { class: 'input-field' } %>
       <%= f.input :password, label: false, input_html: {id: 'side_form_password', name: 'password', placeholder: t('views.staffs.password')},
                   wrapper_html: { class: 'input-field' } %>

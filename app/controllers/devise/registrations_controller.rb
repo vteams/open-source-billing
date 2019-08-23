@@ -42,6 +42,7 @@ class Devise::RegistrationsController < DeviseController
       else
         company = resource.current_account.companies.first
       end
+      resource.role_id = Role.first.id if resource.role_id.blank?
       resource.update(current_company: company.id)
       #update email templates for first user
       CompanyEmailTemplate.update_all(parent_id: resource.id) if User.count == 1

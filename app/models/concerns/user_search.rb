@@ -4,7 +4,7 @@ module UserSearch
   included do
     include Elasticsearch::Model
     include Searchable
-    after_update { self.roles.map(&:touch)}
+    # after_update { self.role.touch }
 
     settings index: { number_of_shards: 1 } do
       mappings dynamic: 'false' do

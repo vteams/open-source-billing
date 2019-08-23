@@ -228,7 +228,9 @@ class Estimate < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil)
-    EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
+    current_company = Company.find(current_user.current_company)
+    NotificationWorker.perform_async('EstimateMailer','new_estimate_email',[self.client_id, self.id, self.encrypted_id, current_user.id], current_company.smtp_settings)
+    # EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end
 
   def send_estimate current_user, id

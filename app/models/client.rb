@@ -178,7 +178,7 @@ class Client < ActiveRecord::Base
     self.currency.present? ? self.currency.unit : 'USD'
   end
 
-  def self.get_clients(params)
+  def self. get_clients(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')

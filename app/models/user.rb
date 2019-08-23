@@ -26,11 +26,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
-  after_create :set_default_settings, :set_default_role
+  after_create :set_default_settings
 
   mount_uploader :avatar, ImageUploader
 
   has_one :staff
+  belongs_to :role
   has_many :logs, dependent: :destroy
   has_many :invoices
 
@@ -40,12 +41,16 @@ class User < ActiveRecord::Base
 
   #Scopes
   scope :created_at, -> (created_at) { where(created_at: created_at) }
-  scope :role_ids, -> (role_ids) { joins(:users_roles).where(users_roles: {role_id: role_ids}) }
+  scope :role_id, -> (role_id) { where(role_id: role_id) }
 
   class << self
     def current=(user)
       Thread.current[:current_user] = user
     end
+
+    # def entity
+    #   role.permissions.entity_type
+    # end
 
     def current
       Thread.current[:current_user]
@@ -72,11 +77,11 @@ class User < ActiveRecord::Base
     self.settings.index_page_format = 'cart'
   end
 
-  def set_default_role
-    # sign up user only has admin role
-    return self.add_role :staff if self.staff.present?
-    self.add_role :admin if self.roles.blank?
-  end
+  # def set_default_role
+  #   # sign up user only has admin role
+  #   # return self.add_role :staff if self.staff.present?
+  #   self.role = Role.first if self.role.blank?
+  # end
 
   def currency_symbol
     "$"
