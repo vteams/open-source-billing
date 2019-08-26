@@ -8,7 +8,7 @@
                                     :default => "New  #{model_class.model_name.human}") %>:
   <% end %>
 
-  <span title="Invoice Number"><%= invoice.invoice_number %></span>
+  <span title="Invoice Number"><%= invoice.formatted_invoice_number %></span>
 
   <%= link_to '', 'javascript:void;', class: 'hidden', data: {remote: true}, id: 'open_new_popup_link' %>
 </h5>

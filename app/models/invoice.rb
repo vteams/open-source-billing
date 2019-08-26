@@ -565,4 +565,17 @@ class Invoice < ActiveRecord::Base
     self.sub_total = line_items_total_with_taxes
     self.invoice_total = (subtotal + additional_invoice_tax).round(2)
   end
+
+  def formatted_invoice_number
+    param_values = {
+        'invoice_number' => (self.invoice_number),
+        'client_contact' => (self.client.first_name rescue 'Client'),
+        'company_name' => (self.company.company_name rescue 'Company'),
+        'company_contact' => (self.company.company_name rescue 'Company'),
+        'invoice_year' => (self.created_at.year rescue 'Invoice Year'),
+        'invoice_month' => (self.created_at.strftime("%B") rescue 'Invoice Month'),
+        'invoice_day' => (self.created_at.strftime("%d") rescue 'Invoice Day')
+    }
+    Settings.invoice_number_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
+  end
 end

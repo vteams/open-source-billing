@@ -3,7 +3,7 @@
 
     <div class="col s12 m12 xl8">
       <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
-        <div class="card-white-panel clearfix">
+        <div class="card-white-panel clearfix settings-panel">
           <h5 class="text-blue">
             <%= t('header.links.setting.basic_settings') %>
             <%= f.submit '', class:  'btn_large submit_currency hidden' %>
@@ -15,7 +15,7 @@
             <div class="col s5 m3 xl4">
               <div class="setting-btns">
                 <span><%= t('views.settings.multi_currency')  %></span>
-                <% multi_currency = (current_user.settings.currency.present? and current_user.settings.currency == "On") ? true : false %>
+                <% multi_currency = (Settings.currency.present? and Settings.currency == "On") ? true : false %>
                 <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
                 <div id="radioBtn" class="btn-group mutli_currency_btn">
                   <a class="btn btn-primary btn-sm multi_currency <%= "#{'active bold-white-txt' if multi_currency}" %>"><%= t('views.common.yes') %></a>
@@ -50,21 +50,21 @@
               </div>
             </div>
           </div>
-          <%= f.input :default_currency, collection: currency_list, selected: current_user.settings.default_currency,
+          <%= f.input :default_currency, collection: currency_list, selected: Settings.default_currency,
                       input_html: {name: 'default_currency', id: 'default_currency'}, label: t('views.settings.default_currency'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
           <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
                       input_html: {name: 'locale', id: 'locale'}, label: t('views.settings.language'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
-          <%= f.input :date_format, collection: (DATE_FORMATS), selected: current_user.settings.date_format,
+          <%= f.input :date_format, collection: (DATE_FORMATS), selected: Settings.date_format,
                       input_html: {name: 'date_format', id: 'date_format', class: 'date-formats'}, label: t('views.settings.date_format'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
                       input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
           <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format',
-                                                           value: current_user.settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+                                                           value: Settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
+                      wrapper_html: { class: 'input-field col s12' }, label_html: { class: 'active' }%>
           <%= link_to raw('<i class="material-icons">create</i>'), invoice_number_format_settings_path, class: 'invoice-number-format-btn', remote: true %>
 
         </div>

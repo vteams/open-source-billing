@@ -32,7 +32,7 @@
                   </td>
               <% end %>
             <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
-              <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true,  class: "invoices_link invoice_show_link") %>
+              <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.formatted_invoice_number, invoice_path(payment.invoice),remote: true,  class: "invoices_link invoice_show_link") %>
             </td>
             <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= (payment.payment_type || payment.payment_method || "").capitalize %>

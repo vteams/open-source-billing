@@ -31,7 +31,7 @@
               </div>
             </td>
             <td><%= payment.unscoped_client.organization_name rescue '' %><br>
-              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true, class: ' estimate-number' %></em>
+              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment.unscoped_invoice, remote: true, class: ' estimate-number' %></em>
             </td>
             <td><%= payment.payment_date rescue "" %></td>
             <td>

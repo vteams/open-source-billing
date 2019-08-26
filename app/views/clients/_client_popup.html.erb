@@ -56,7 +56,7 @@
           <tbody>
               <% @invoices.each do |invoice|%>
                   <tr>
-                    <td><%= link_to invoice.invoice_number, invoice, remote: true %></td>
+                    <td><%= link_to invoice.formatted_invoice_number, invoice, remote: true %></td>
                     <td><%= invoice.due_date%></td>
                     <td><%= invoice.company.company_name%></td>
                     <td><%= invoice.currency.unit %> <%= number_to_currency(invoice.invoice_total, unit: '')%></td>

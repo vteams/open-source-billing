@@ -129,7 +129,7 @@ class PaymentsController < ApplicationController
     ids.each do |inv_id|
       company_id = Invoice.find(inv_id).company_id
       @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
-      authorize @payments, :create?
+      authorize Payment, :create?
     end
 
     @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))

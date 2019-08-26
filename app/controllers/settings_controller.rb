@@ -3,9 +3,9 @@ class SettingsController < ApplicationController
     user = current_user
     @language_changed = false
     if params[:multi_currency].present? and params[:multi_currency].eql?('On')
-      user.settings.currency = "On"
+      Settings.currency = "On"
     else
-      user.settings.currency = "Off"
+      Settings.currency = "Off"
     end
     if params[:side_nav_opened].present? and params[:side_nav_opened].eql?('Open')
       user.settings.side_nav_opened = true
@@ -13,7 +13,7 @@ class SettingsController < ApplicationController
       user.settings.side_nav_opened = false
     end
     if params[:date_format].present?
-      user.settings.date_format = params[:date_format]
+      Settings.date_format = params[:date_format]
     end
     if params[:records_per_page].present?
       user.settings.records_per_page = params[:records_per_page]
@@ -23,7 +23,7 @@ class SettingsController < ApplicationController
       @language_changed = true
     end
     if params[:default_currency].present?
-      user.settings.default_currency = params[:default_currency]
+      Settings.default_currency = params[:default_currency]
     end
     if params[:index_page_format].present? && params[:index_page_format].eql?('card')
       user.settings.index_page_format = 'card'
@@ -33,7 +33,7 @@ class SettingsController < ApplicationController
       session[:view] = 'table'
     end
     if params[:invoice_number_format].present?
-      user.settings.invoice_number_format = params[:invoice_number_format]
+      Settings.invoice_number_format = params[:invoice_number_format]
     end
     respond_to { |format| format.js }
   end

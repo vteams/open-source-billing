@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
     @status = params[:status]
     @items = Item.get_items(params.merge(get_args))
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
-    authorize @items
+    authorize Item
 
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'

@@ -1,4 +1,4 @@
-<div class="flex-item box">
+<div class="flex-item box invoice-table-row">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <%= link_to '', invoice , remote: true, class: 'invoice_show_link', style: 'display: none' unless invoice.deleted? %>

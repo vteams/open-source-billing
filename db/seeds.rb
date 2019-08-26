@@ -280,3 +280,9 @@ PaymentTerm.create(number_of_days: 10, description: "10 days")
 PaymentTerm.create(number_of_days: 7, description: "Weekly")
 PaymentTerm.create(number_of_days: 30, description: "Monthly")
 PaymentTerm.create(number_of_days: 0, description: "Custom")
+
+Settings.delete_all
+Settings.currency = "On"
+Settings.default_currency = "USD"
+Settings.date_format = "%Y-%m-%d"
+Settings.invoice_number_format = "{{invoice_number}}"
