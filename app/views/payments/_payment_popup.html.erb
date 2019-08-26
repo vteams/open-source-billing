@@ -41,7 +41,7 @@
     <div class="modal-footer">
       <div class="row">
         <div class="text-info col l6">
-          <p><strong>Note</strong><%= payment.notes %></p>
+          <p><strong>Note</strong><%= raw payment.notes.gsub("\n", "<br>") %></p>
         </div>
       </div>
 

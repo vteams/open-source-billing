@@ -1,14 +1,14 @@
 <div class="setting-roles-list">
   <h5>
     <%= link_to t('views.Roles.roles'), roles_url %>
-    <span><%= "(#{@roles.count})" %></span>
+    <span>(<%= @roles.count %>)</span>
   </h5>
   <ul class="roles-list">
     <% @roles.each do |role| %>
       <li>
         <div class="invoice-name circle-img <%= random_card_color %>"><%= role.role_name %></div>
         <div class="role-name">
-          <%= link_to role.name, "#{edit_role_url(role)}", remote: true   %><br>
+          <%= link_to role.name, edit_role_path(role), remote: true   %><br>
           <span class="role-date"><%= role.created_at.strftime('%d %b, %Y') %></span>
         </div>
       </li>

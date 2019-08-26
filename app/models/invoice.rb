@@ -315,7 +315,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def fetch_paypal_url user
-    OSB::Paypal::URL
+    "#{OSB::CONFIG::PAYPAL[:url]}/cgi-bin/webscr?"
   end
 
   def paypal_business user
@@ -331,6 +331,7 @@ class Invoice < ActiveRecord::Base
         :notify_url => notify_url,
         :invoice => id,
         :item_name => "Invoice",
+        :item_number => id,
         :amount => unpaid_amount
     }
     fetch_paypal_url(user) + values.to_query
