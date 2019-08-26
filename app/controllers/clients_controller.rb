@@ -32,6 +32,7 @@ class ClientsController < ApplicationController
     @status = params[:status]
     @clients = Client.get_clients(params.merge(get_args))
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
+    authorize Client
 
     respond_to do |format|
       format.html # index.html.erb

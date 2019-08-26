@@ -33,7 +33,7 @@
               </div>
             </td>
             <td>
-              <em class="inv-number" title="Invoice Number"><%= invoice.invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %><br>
+              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %><br>
               <%= invoice.unscoped_client.full_name rescue 'n/a' %>
             </td>
             <td><em title="Invoice Date"><%= invoice.invoice_date.present? ? invoice.invoice_date : invoice.created_at.strftime("%Y-%m-%d") %></em><br>

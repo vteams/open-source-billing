@@ -5679,8 +5679,18 @@ table.table_listing, table.report-data-table {
 .company-checkbox [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;
 }
+.settings-row{
+  display: flex;
+}
 .settings-row .col{
-  min-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  }
+form.simple_form.settings .select-wrapper{
+    width: 100%;
+    }
+.basic-setting .card-white-panel.importData .importElement .col{
+  justify-content: center;
 }
 .api_key{
   font-size: 12px;
@@ -5689,4 +5699,21 @@ a.invoice-number-format-btn i{
   color: #b5b5b5;
   font-size: 16px;
   margin-left: -14px;
+}
+.settings-panel{
+  position: relative;
+}
+a.invoice-number-format-btn{
+  position: absolute;
+  margin-top: 124px;
+}
+.settings_invoice_number_format label{
+  top: 0;
+}
+.invoice-format-custom-fields li{
+  display: inline-block !important;
+  padding-left: 20px;
+}
+.invoice-number-format-row{
+  height: 86px;
 }

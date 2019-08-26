@@ -410,6 +410,16 @@ CUSTOM_FIELDS = {
             {label: 'Invoice Number', token: '{{invoice_number}}'},
             {label: 'Company Signature', token: '{{company_signature}}'},
             {label: 'Invoice URL', token: '{{invoice_url}}'}
+        ],
+    'Invoice Number Format' =>
+        [
+            {label: 'Invoice Number', token: '{{invoice_number}}'},
+            {label: 'Client Name', token: '{{client_contact}}'},
+            {label: 'Company Name', token: '{{company_name}}'},
+            {label: 'Company Contact', token: '{{company_contact}}'},
+            {label: 'Invoice Year', token: '{{invoice_year}}'},
+            {label: 'Invoice Month', token: '{{invoice_month}}'},
+            {label: 'Invoice Day', token: '{{invoice_day}}'}
         ]
 }
 

@@ -1,4 +1,4 @@
 <% flash[:notice] = t('views.settings.updated_msg') %>
-<% if @language_changed.present? and @language_changed == true  %>
+<%# if @language_changed.present? and @language_changed == true  %>
 window.location.href = "/<%= current_user.settings.language.to_sym %>/settings";
-<% end %>
+<%# end %>

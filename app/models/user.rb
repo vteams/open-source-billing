@@ -69,19 +69,10 @@ class User < ActiveRecord::Base
   end
 
   def set_default_settings
-    self.settings.date_format = "%Y-%m-%d"
-    self.settings.currency = "On"
     self.settings.records_per_page = 9
-    self.settings.default_currency = "USD"
     self.settings.side_nav_opened = true
     self.settings.index_page_format = 'cart'
   end
-
-  # def set_default_role
-  #   # sign up user only has admin role
-  #   # return self.add_role :staff if self.staff.present?
-  #   self.role = Role.first if self.role.blank?
-  # end
 
   def currency_symbol
     "$"

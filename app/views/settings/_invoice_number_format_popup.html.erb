@@ -13,17 +13,17 @@
     <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
       <div class="modal-body">
         <div class="row">
-          <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format', value: current_user.settings.invoice_number_format  }, label: t('Invoice Number Format'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+          <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format', value: Settings.invoice_number_format  }, label: t('Invoice Number Format'),
+                      wrapper_html: { class: 'input-field col s12' }, label_html: { class: 'active' }%>
 
           <%= f.submit '', class:  'btn_large submit_invoice_format hidden' %>
         </div>
-        <div class="row">
-          <aside class="col s12 m12 l3">
+        <div class="row invoice-number-format-row">
+          <div class="col s12">
             <nav class="templatsidebar">
               <h5><%= t('views.email_templates.custom_fields') %>:</h5>
-              <ul>
-                <% CUSTOM_FIELDS['New Invoice'].each do |cf|%>
+              <ul class="invoice-format-custom-fields">
+                <% CUSTOM_FIELDS['Invoice Number Format'].each do |cf|%>
                   <li>
                     <strong><%= cf[:label] %> </strong>
                     <span><%= cf[:token] %> </span>
@@ -31,7 +31,7 @@
                 <% end %>
               </ul>
             </nav>
-          </aside>
+          </div>
 
         </div>
       </div>
