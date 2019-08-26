@@ -332,7 +332,8 @@ class Invoice < ActiveRecord::Base
         :invoice => id,
         :item_name => "Invoice",
         :item_number => id,
-        :amount => unpaid_amount
+        :amount => unpaid_amount,
+        :currency_code => (self.currency.unit rescue 'USD')
     }
     fetch_paypal_url(user) + values.to_query
   end
