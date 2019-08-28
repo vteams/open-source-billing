@@ -132,7 +132,7 @@ class ReportsController < ApplicationController
       format.pdf do
         render pdf: "#{@report.report_name}",
                layout: 'pdf_mode.html.erb',
-               template: 'reports/reports.html.erb',
+               template: 'reports/aged_accounts_receivable.html.erb',
                encoding: "UTF-8",
                show_as_html: false,
                footer:{

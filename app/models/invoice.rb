@@ -87,6 +87,10 @@ class Invoice < ActiveRecord::Base
 
   paginates_per 10
 
+  def draft?
+    status == 'draft'
+  end
+
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
   end
