@@ -4,7 +4,7 @@
 </h5>
 <div class="user-list">
   <div id="companies">
-    <%= render partial: 'company', collection: @companies %>
+    <%= render partial: 'company', collection: current_user.companies %>
   </div>
   <div class="list-buttons">
     <%= render 'settings_company_form' %>

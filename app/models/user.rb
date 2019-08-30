@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   belongs_to :role
   has_many :logs, dependent: :destroy
   has_many :invoices
+  has_and_belongs_to_many :companies
 
   attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend

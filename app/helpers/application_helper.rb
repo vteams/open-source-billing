@@ -158,7 +158,7 @@ module ApplicationHelper
   end
 
   def filter_select_by_companies
-    Company.all
+    current_user.companies
   end
 
   # generate drop down to filter listings by company

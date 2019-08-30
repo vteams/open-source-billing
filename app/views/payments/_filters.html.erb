@@ -14,16 +14,16 @@
           <input type="text" class="date-range" name="payment" id="payment" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:payment] %>" readonly/>
           <label class="input_field_label"><%= t('views.payments.payment_date_range') %></label>
         </div>
-        <div class="input-field col s12 m3">
+        <div class="input-field col s12 m3 select-client">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), t('all_clients'),
                                                           {selected: params[:client_id] || ''}),
-                         include_blank: false, multiple: true, class: 'small_list') %>
+                         include_blank: false, class: 'small_list invoice-filter-select') %>
           <label><%= t('clients') %></label>
         </div>
-        <div class="input-field col s12 m3">
+        <div class="input-field col s12 m3 select-client">
           <%= select_tag(:type, multi_select_options(PAYMENT_METHODS.map{|pm| [t('views.payments.' + pm.parameterize.underscore).capitalize, pm]},
                                                      t('views.invoices.all_statuses'), {selected: params[:type] || ''}),
-                         include_blank: false, multiple: true, class: 'small_list') %>
+                         include_blank: false, class: 'small_list invoice-filter-select') %>
           <label><%= t('views.common.type') %></label>
         </div>
       </div>

@@ -33,3 +33,6 @@ jQuery ->
 #    validate_form(this)
   jQuery('#new_subscription input').on 'change', ->
     validate_form(this)
+
+  $('#side_form_role_ids').material_select('destroy');
+  $('#side_form_role_ids').select2()

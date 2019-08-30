@@ -24,7 +24,9 @@ class @SubUser
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    $('select').material_select();
+#    $('select').material_select();
+#    $('.select2').material_select('destroy');
+
 
     $("input").on 'keypress', ->
       hidePopover($(this))

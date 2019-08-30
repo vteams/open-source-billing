@@ -3,3 +3,9 @@ SubUser.load_functions();
 elem = $("#edit_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
+$('.edit-user-select2').material_select('destroy');
+$('.edit-user-select2').select2();
+$('.companies-select2').material_select('destroy');
+$('.companies-select2').select2({
+    placeholder: 'Choose Companies'
+});

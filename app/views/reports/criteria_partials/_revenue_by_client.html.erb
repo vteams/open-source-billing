@@ -2,16 +2,16 @@
   <div class="nav-wrapper subnav-filters">
     <%= form_tag "/reports/data/#{@report.report_name}", method: :get, remote: true, id: 'filters_form' do %>
       <div class="row">
-        <div class="input-field col s12 m6 xl3">
-          <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS)%>
+        <div class="input-field col s12 m6 xl3 select-client reports-filter">
+          <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS), {class: 'invoice-filter-select'}%>
           <label><%= t('views.common.quarter') %> </label>
         </div>
-        <div class="input-field col s12 m6 xl3">
-          <%= select_tag "criteria[year]", options_for_select(((Date.today.year - 1)..(Date.today.year + 5)).each { |y| [y, y] }, Date.today.year) %>
+        <div class="input-field col s12 m6 xl3 select-client reports-filter">
+          <%= select_tag "criteria[year]", options_for_select(((Date.today.year - 1)..(Date.today.year + 5)).each { |y| [y, y] }, Date.today.year), {class: 'invoice-filter-select'} %>
           <label><%= t('views.common.year') %></label>
         </div>
-        <div class="input-field col s12 m6 xl3">
-          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')} %>
+        <div class="input-field col s12 m6 xl3 select-client reports-filter">
+          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name => t('views.common.all')})] + get_report_clients, :id, :organization_name, {:prompt => t('views.common.all')}, {class: 'invoice-filter-select'} %>
           <label><%= t('header.links.clients.clients') %></label>
         </div>
       </div>
