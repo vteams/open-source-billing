@@ -57,7 +57,6 @@
             swal(I18n.t('helpers.links.delete'), data.notice, 'success')
             $('#users_listing').html(data.html)
             initUserListingEvents()
-
   $('select').material_select()
 
   $('input[id^=user_ck_]').on "change", ->
@@ -76,6 +75,19 @@
   $('.user-side-form').addClass('hidden')
 
   @SubUser.init_settings_form()
+#  $('select').material_select()
+  $('.select2').material_select('destroy')
+  $('.select2').select2()
+  $('.role-select2').material_select('destroy')
+  $('.role-select2').select2({
+    placeholder: "Choose a Role"
+  })
+  $('.company-select2').material_select('destroy')
+  $('.company-select2').select2({
+    placeholder: "Choose Companies"
+  })
+
+
 
   setTimeout (->
     # made italic to the date formats samples in drop down
@@ -133,7 +145,7 @@
 
   @Company.init_settings_form()
 
-  $('select').material_select()
+
 
   $('input[id^=company_ck_]').on "change", ->
     # disable/enable delete btn on selecting/deselecting companies
@@ -176,3 +188,5 @@ jQuery ->
   $('#role_save_btn').on "click", (event)->
     $('.submit-role-form').click()
 
+#  $('.select2').material_select('destroy');
+#  $('.select2').select2()

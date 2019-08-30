@@ -3962,7 +3962,7 @@ h6 {
   border-radius: 4px; }
 #login-section .login-container .checkboxsection [type="checkbox"].filled-in:checked + label:before {
   top: 0;
-  left: 4px;
+  left: 3px !important;
   width: 9px;
   height: 18px; }
 @media only screen and (max-width: 480px) {
@@ -5710,10 +5710,119 @@ a.invoice-number-format-btn{
 .settings_invoice_number_format label{
   top: 0;
 }
+.settings_invoice_number_format{
+  margin-top: 35px;
+}
 .invoice-format-custom-fields li{
   display: inline-block !important;
   padding-left: 20px;
 }
 .invoice-number-format-row{
   height: 86px;
+}
+ul.select2-choices .select2-search-choice a:not(.form-action){
+  background: none;
+  border: 0px;
+}
+.user_company_ids{
+  height: unset !important;
+  background-color: #F4F4F4;
+}
+.select2-container .select2-choice{
+  background-image: none !important;
+  background-color: transparent !important;
+  border-width: 0px 0px 1px 0px !important;
+  border-color: #dadada !important;
+}
+
+.select2-arrow{
+  display: none !important;
+}
+.input-field .fa-caret-down:before{
+  font-size: 10px;
+  float: right;
+  color: #B5B5BB;
+}
+#s2id_side_form_role_ids{
+  width: 100% !important;
+}
+.edit-user-row{
+  position: relative;
+}
+.edit-user-row .fa-caret-down{
+  position: absolute;
+  margin-top: 154px;
+  font-size: 12px;
+  margin-left: -15px;
+  color: #B5B5BB;
+}
+.select2-container a{
+  box-shadow: none !important;
+  outline: none !important;
+}
+.user_role_id .select2-container a{
+  width: 100%;
+  border-width: 0px 0px 1px 0px;
+}
+.users.fields-container .input-field:nth-child(3) a{
+  border-radius: 0px !important;
+  text-align: left;
+  padding-left: 0px;
+}
+.user_company_ids .select2-container .select2-choices{
+  background: transparent;
+  border-bottom: 1px solid #DADADA !important;
+}
+a.select2-search-choice-close::before {
+  position: absolute;
+  content: '\f00d';
+  color: black;
+  bottom: -2px;
+  font-family: 'FontAwesome';
+  font-size: 13px;
+  width: 20px;
+}
+.users.fields-container .user_company_ids .select2-container .select2-choices .select2-search-choice a.select2-search-choice-close::before{
+  left: 0;
+}
+.editMode.user_company_ids{
+  padding: 0px;
+  background: transparent;
+}
+.editMode.user_company_ids .select2-container{
+  width: 100% !important;
+}
+.select2-container.edit-company-select2{
+  width: 100% !important;
+  top: 15px;
+}
+.select2-search-field{
+  width: 10px;
+  margin-bottom: 0px !important;
+}
+.select2-search-field input{
+  margin-bottom: 0px !important;
+}
+ .select-client .select2-container{
+   width: 100% !important;
+ }
+.select-client .select2-container a.select2-choice{
+   height: 40px !important;
+  border-radius: 0px !important;
+  border-color: #9E9D9E !important;
+ }
+.select-client .select2-container a.select2-choice .select2-chosen{
+  margin-top: 10px !important;
+}
+.select-client label{
+  top: -15px !important;
+}
+.reports-filter .select2-container a.select2-choice{
+  height: 46px !important;
+}
+.company_mail_config_from{
+  width: 33.5% !important;
+}
+.company_mail_config_password{
+  width: 33% !important;
 }

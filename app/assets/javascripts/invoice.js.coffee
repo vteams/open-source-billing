@@ -130,5 +130,9 @@ $(document).ready ->
     $('.all-archived-invoices').hide()
     $('#more_archived_invoices').show()
 
+  $('.invoice-filter-select').material_select('destroy');
+  $('.invoice-filter-select').select2();
+
+
 
 

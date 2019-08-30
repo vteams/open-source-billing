@@ -25,7 +25,7 @@ class @Company
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    $('select').material_select();
+#    $('select').material_select();
 
     jQuery("#company_contact_name,#company_email,#company_company_name").keypress ->
       hideQtip(jQuery(this))

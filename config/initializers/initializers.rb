@@ -419,7 +419,8 @@ CUSTOM_FIELDS = {
             {label: 'Company Contact', token: '{{company_contact}}'},
             {label: 'Invoice Year', token: '{{invoice_year}}'},
             {label: 'Invoice Month', token: '{{invoice_month}}'},
-            {label: 'Invoice Day', token: '{{invoice_day}}'}
+            {label: 'Invoice Day', token: '{{invoice_day}}'},
+            {label: 'Company Abbreviation', token: '{{company_abbreviation}}'}
         ]
 }
 

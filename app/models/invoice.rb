@@ -575,7 +575,8 @@ class Invoice < ActiveRecord::Base
         'company_contact' => (self.company.company_name rescue 'Company'),
         'invoice_year' => (self.created_at.year rescue 'Invoice Year'),
         'invoice_month' => (self.created_at.strftime("%B") rescue 'Invoice Month'),
-        'invoice_day' => (self.created_at.strftime("%d") rescue 'Invoice Day')
+        'invoice_day' => (self.created_at.strftime("%d") rescue 'Invoice Day'),
+        'company_abbreviation' => (self.company.abbreviation rescue 'Company Abbreviation')
     }
     Settings.invoice_number_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
   end

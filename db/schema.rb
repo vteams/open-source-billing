@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190819063649) do
+ActiveRecord::Schema.define(version: 20190827063001) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -133,6 +133,12 @@ ActiveRecord::Schema.define(version: 20190819063649) do
     t.datetime "deleted_at"
     t.integer  "base_currency_id",  limit: 4,   default: 1
     t.string   "color_code",        limit: 255
+    t.string   "abbreviation",      limit: 255
+  end
+
+  create_table "companies_users", id: false, force: :cascade do |t|
+    t.integer "user_id",    limit: 4
+    t.integer "company_id", limit: 4
   end
 
   create_table "company_email_templates", force: :cascade do |t|

@@ -51,17 +51,21 @@
             </div>
           </div>
           <%= f.input :default_currency, collection: currency_list, selected: Settings.default_currency,
-                      input_html: {name: 'default_currency', id: 'default_currency'}, label: t('views.settings.default_currency'),
+                      input_html: {name: 'default_currency', id: 'default_currency', class: 'select2 fa fa-caret-down'}, label: t('views.settings.default_currency'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+<!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
-                      input_html: {name: 'locale', id: 'locale'}, label: t('views.settings.language'),
+                      input_html: {name: 'locale', id: 'locale', class: 'select2 fa fa-caret-down'}, label: t('views.settings.language'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+<!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :date_format, collection: (DATE_FORMATS), selected: Settings.date_format,
-                      input_html: {name: 'date_format', id: 'date_format', class: 'date-formats'}, label: t('views.settings.date_format'),
+                      input_html: {name: 'date_format', id: 'date_format', class: 'date-formats select2 fa fa-caret-down'}, label: t('views.settings.date_format'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+<!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
-                      input_html: {name: 'records_per_page', id: 'records_per_page'}, label: t('views.settings.records_per_page'),
+                      input_html: {name: 'records_per_page', id: 'records_per_page', class: 'select2 fa fa-caret-down'}, label: t('views.settings.records_per_page'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+<!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format',
                                                            value: Settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
                       wrapper_html: { class: 'input-field col s12' }, label_html: { class: 'active' }%>
