@@ -87,6 +87,10 @@ class Invoice < ActiveRecord::Base
 
   paginates_per 10
 
+  def draft?
+    status == 'draft'
+  end
+
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
   end
@@ -332,7 +336,8 @@ class Invoice < ActiveRecord::Base
         :invoice => id,
         :item_name => "Invoice",
         :item_number => id,
-        :amount => unpaid_amount
+        :amount => unpaid_amount,
+        :currency_code => (self.currency.unit rescue 'USD')
     }
     fetch_paypal_url(user) + values.to_query
   end
