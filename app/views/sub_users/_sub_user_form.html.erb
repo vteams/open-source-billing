@@ -8,10 +8,10 @@
       <%= f.input :email, label: t('views.common.email'), input_html: {id: 'side_form_user_email', name: 'email', placeholder: t('views.staffs.email')},
                   label: false, wrapper_html: { class: 'input-field' } %>
       <%= f.input :role_id, collection: load_user_roles, label: false, as: :select,
-                    input_html: {id: 'side_form_role_ids', name: 'role_id', class: 'role-select2'},
+                    input_html: {id: 'side_form_role_ids', name: 'role_id', class: 'role-select2 select_2'},
                   wrapper_html: { class: 'input-field' } %>
       <%= f.input :company_ids, collection: Company.all.map{|c| [c.company_name.humanize, c.id]}, label: false, as: :select, selected: @sub_user.company_ids,
-                  input_html: {id: 'side_form_company_ids', class: 'company-select2', multiple: true, name: 'company_ids[]'},
+                  input_html: {id: 'side_form_company_ids', class: 'company-select2 select_2', multiple: true, name: 'company_ids[]'},
                   wrapper_html: { class: 'input-field' } %>
       <%= f.input :password, label: false, input_html: {id: 'side_form_password', name: 'password', placeholder: t('views.staffs.password')},
                   wrapper_html: { class: 'input-field' } %>

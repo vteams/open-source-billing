@@ -9,18 +9,18 @@
 
       <div class="scroll-area">
         <div class="info-section clearfix">
-          <div class="info-left-section">
+          <div class="info-left-section new-invoice-section">
 
 
             <span class="label-font"><%= t('views.clients.client') %> </span>
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
             <%= f.select :client_id, (options_for_select((load_clients(action_name, invoice.company_id)),
                                                          selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
-                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select' %>
+                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select select_2' %>
 
             <div class="terms ">
               <span class="label-font"><%= t('views.invoices.terms') %>: </span>
-              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select  select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
             </div>
 
             <div class="paymentInfo">
@@ -121,7 +121,7 @@
           <div class="invoice-total-left">
             <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
             <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('views.common.discount'),
-                        input_html: { class: 'discount_select inline-select small-select', id: 'discount_type' },
+                        input_html: { class: 'discount_select inline-select small-select invoice-client-select', id: 'discount_type' },
                         wrapper_html: { class: 'new-invoice-footer-row' } %>
             <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
                         label: t('views.common.tax'), prompt: t('views.common.select'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
@@ -177,9 +177,13 @@
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
+          $('.select_2').material_select('destroy');
+          // $('.select_2').select2();
+
 
           jQuery("#invoice_client_id").on('change', function(){
               $.get('/invoices/set_client_currency?client_id=' + $(this).val())
           })
+
       });
   </script>

@@ -3,9 +3,25 @@ SubUser.load_functions();
 elem = $("#edit_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
-$('.edit-user-select2').material_select('destroy');
 $('.edit-user-select2').select2();
-$('.companies-select2').material_select('destroy');
 $('.companies-select2').select2({
     placeholder: 'Choose Companies'
 });
+// setting class and name attributes to checkboxes
+$('.companies-list > label > input').addClass( "filled-in select_company_checkbox" );
+$('.companies-list > label > input').attr('name', 'company_ids[]');
+$('#user_have_all_companies_access_true').attr('name', 'have_all_companies_access');
+$('#user_have_all_companies_access_false').attr('name', 'have_all_companies_access');
+
+if($('#user_have_all_companies_access_true').is(':checked')){
+    $('.company-selection').hide();
+}
+else if ($('#user_have_all_companies_access_false').is(':checked')){
+    $('.company-selection').show();
+}
+$('#user_have_all_companies_access_true').click(function () {
+    $('.company-selection').hide();
+})
+$('#user_have_all_companies_access_false').click(function () {
+    $('.company-selection').show();
+})

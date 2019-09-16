@@ -49,13 +49,10 @@ class User < ActiveRecord::Base
       Thread.current[:current_user] = user
     end
 
-    # def entity
-    #   role.permissions.entity_type
-    # end
-
     def current
       Thread.current[:current_user]
     end
+
 
     def filter(params, per_page)
       date_format = current.nil? ? '%Y-%m-%d' : (current.settings.date_format || '%Y-%m-%d')
@@ -66,6 +63,14 @@ class User < ActiveRecord::Base
       ) if params[:create_at_start_date].present?
 
       users.page(params[:page]).per(per_page)
+    end
+  end
+
+  def assigned_companies
+    if self.have_all_companies_access?
+      Company.all
+    else
+      self.companies
     end
   end
 

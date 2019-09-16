@@ -4,6 +4,8 @@
     });
     showWarningSweetAlert('error', "<%= t('views.items.duplicate_name') %>", function(){});
     $('#' + '<%= params[:position] %>').val('').material_select();
+    $('.select_2').material_select('destroy');
+    $('.select_2').select2();
 
 <% else %>
     $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields, table.estimate-grid-table > tbody.estimate-line-items-table > tr.line-items-fields').each(function(){
@@ -25,4 +27,8 @@
     });
     $('.modal').modal('close');
     swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
+    $('.select_2').material_select('destroy');
+    $('.select_2').select2('destroy');
+    $('.select_2').select2();
+
 <% end %>

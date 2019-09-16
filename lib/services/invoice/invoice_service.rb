@@ -24,7 +24,6 @@ module Services
     include DateFormats
     # build a new invoice object
     def self.build_new_invoice(params)
-      #binding.pry
       date_format = self.new.date_format
       if params[:invoice_for_client]
         company_id = get_company_id(params[:invoice_for_client])

@@ -15,7 +15,7 @@
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
             <%= f.select :client_id, (options_for_select((load_clients(action_name, estimate.company_id)),
                                                          selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
-                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select' %>
+                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select estimate-select-client select_2' %>
 
             <div class="paymentInfo">
               <strong><strong class="estimate_total_strong"></strong>
@@ -117,5 +117,8 @@
         Estimate.change_estimate_item();
         Estimate.changeTax();
         OsbPlugins.estimate_load_functions();
+
+        $('.estimate-select-client').material_select('destroy');
+        // $('.estimate-select-client').select2();
     });
 </script>

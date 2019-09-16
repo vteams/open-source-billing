@@ -11,12 +11,12 @@
           </div>
           <div class="input-field col s12 m6 xl3 select-client reports-filter">
             <%= select_tag "criteria[date_to_use]", options_for_select(INVOICE_DATE_TO_USE.map{|k, v| [t('views.invoices.' + v), v]}),
-                           {:class => "invoice-status invoice-filter-select"} %>
+                           {:class => "invoice-status invoice-filter-select select_2"} %>
             <label><%= t('views.invoices.date_to_use') %></label>
           </div>
           <div class="input-field col s12 m6 xl3 select-client reports-filter">
             <%= select_tag "criteria[invoice_status]", options_for_select(INVOICE_STATUS.map{|k, v| [t('views.invoices.' + v), v]}),
-                           {:prompt => t('views.common.all'), :class => "invoice-status invoice-filter-select"} %>
+                           {:prompt => t('views.common.all'), :class => "invoice-status invoice-filter-select select_2"} %>
             <label><%= t('views.invoices.invoice_status') %></label>
           </div>
         </div>

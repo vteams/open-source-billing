@@ -1502,7 +1502,7 @@ h6 {
 }
 .new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item input + label {
   top: 5px;
-  left: 17px;
+  left: 18px;
 }
 .new-invoice-holder .new-invoice-table-holder .grid-view thead tr th  .card-white-panel .checkbox-item{
   //text-align: left;
@@ -1803,7 +1803,7 @@ h6 {
   left: -11px !important;
 }
 .new-invoice-table-holder table tr th [type="checkbox"] + label{
-  left: 17px;
+  left: 18px;
 }
 //.estimate-table-row .card-white-panel .checkbox-item input + label {
 //  left: 54px;
@@ -4305,7 +4305,7 @@ html {
 .new-invoice-holder .info-section .info-left-section span {
   font-size: 11px;
   text-transform: uppercase;
-  line-height: 11px; }
+  line-height: 15px; }
 .new-invoice-holder .info-section .info-left-section span small {
   font-weight: bold;
   font-size: 11px; }
@@ -4320,7 +4320,9 @@ html {
   top: -1px;
   position: relative; }
 .new-invoice-holder .info-section .info-left-section .terms {
-  line-height: 12px; }
+  line-height: 12px;
+  margin-top: 27px;
+}
 .new-invoice-holder .info-section .info-left-section .terms small {
   font-weight: bold; }
 .new-invoice-holder .info-section .info-left-section .terms em {
@@ -4623,12 +4625,12 @@ html {
 .new-invoice-holder .new-invoice-table-holder .inline-select input:focus + label {
   color: #aeaeae; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select {
-  width: 130px;
+  width: 130px !important;
   vertical-align: middle; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.title-select .dropdown-content {
   min-width: 100px; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.table-select {
-  width: 50px;
+  width: 50px !important;
   vertical-align: middle; }
 .new-invoice-holder .new-invoice-table-holder .inline-select.table-select .dropdown-content {
   min-width: 70px; }
@@ -5825,4 +5827,61 @@ a.select2-search-choice-close::before {
 }
 .company_mail_config_password{
   width: 33% !important;
+}
+.new-invoice-section .select2-container{
+  width: 100% !important;
+}
+.new-invoice-section .select2-container a.select2-choice{
+  width: 95% !important;
+  margin-top:  15px;
+  border-radius: 0px !important;
+  border-color: #9E9D9E !important;
+}
+.new-invoice-section .select2-container a.select2-choice span,
+.info-left-section .estimate-select-client  a.select2-choice span{
+  font-size: 14px !important;
+  text-transform: capitalize;
+}
+.line-items-fields td  .select2-container a.select2-choice{
+  border: 0px;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+}
+#s2id_item_tax_1,
+#s2id_item_tax_2,
+#s2id_payments_0_payment_method{
+  width: 100% !important;
+}
+.info-left-section .estimate-select-client{
+  width: 100% !important;
+  top: 12px;
+}
+.info-left-section .estimate-select-client  a.select2-choice,
+.payment-select2 a.select2-choice{
+  font-size: 14px !important;
+  border-color: #9E9D9E !important;
+}
+.field_row.payment-method{
+  margin-bottom: 10px !important;
+}
+#invoice_number_formatModal .modal-content .modal-header .modal-action-btn a{
+  line-height: unset;
+}
+.companies-list [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.company-selection{
+  margin-top: 10px;
+}
+.company-selection span {
+  width: 33%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.company-row{
+  display: block;
+  clear: both;
+}
+.user-role{
+margin-bottom: 20px;
 }

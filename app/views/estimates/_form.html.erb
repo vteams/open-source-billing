@@ -1,10 +1,10 @@
 <div class="editInvoice inline_form">
     <%= nested_form_for estimate, :html => {:class => 'estimate-form form-horizontal', :novalidate => ""} do |f| %>
         <div class="info-section clearfix">
-          <div class="info-left-section left">
+          <div class="info-left-section left new-invoice-section">
             <h6>Estimate Number: <%= estimate.estimate_number %>
               <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-              <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select custom_select" } %>
+              <%= f.select :client_id, options_for_select(load_clients(action_name, estimate.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select custom_select estimate-client-select" } %>
             </h6>
             <span>Estimate: <small id="estimate_date"> <%= f.object.estimate_date %></small> <i class="material-icons" id="estimate_date_picker">date_range</i></span>
             <%= f.hidden_field :estimate_date,value: f.object.estimate_date, :required => "" %>

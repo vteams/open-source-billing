@@ -24,7 +24,7 @@ class SubUsersController < ApplicationController
     @sub_user = User.new({user_name: params[:user_name], email: params[:email],
                          password: params[:password],
                          password_confirmation: params[:password_confirmation], role_id: params[:role_id],
-                         company_ids: params[:company_ids]
+                         company_ids: params[:company_ids], have_all_companies_access: params[:have_all_companies_access]
                         })
 
     @sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
@@ -70,7 +70,7 @@ class SubUsersController < ApplicationController
     @sub_user = User.find(params[:user_id])
     options = {user_name: params[:user_name], email: params[:email],
                password: params[:password], password_confirmation: params[:password],
-               avatar: params[:avatar], role_id: params[:role_id], company_ids: params[:company_ids]}
+               avatar: params[:avatar], role_id: params[:role_id], company_ids: params[:company_ids], have_all_companies_access: params[:have_all_companies_access]}
     # don't update password if not provided
     if params[:password].blank?
       options.delete(:password)

@@ -7,7 +7,7 @@
           <label class="input_field_label active"><%= t('views.reports.period_ending') %></label>
         </div>
         <div class="input-field col s6 m6 xl3 select-client">
-          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name =>t("views.common.all")})] + get_report_clients, :id, :organization_name, {:prompt => "All"}, {class: 'invoice-filter-select'} %>
+          <%= collection_select "criteria", "client_id", [Client.new({:id => 0, :organization_name =>t("views.common.all")})] + get_report_clients, :id, :organization_name, {:prompt => "All"}, {class: 'invoice-filter-select select_2'} %>
           <label><%= t('views.clients.clients') %></label>
         </div>
       </div>

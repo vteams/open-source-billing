@@ -151,3 +151,5 @@ jQuery ->
       singleDatePicker: true
       locale: format: DateFormats.format().toUpperCase()
     }
+#  $('.select_2').material_select('destroy');
+#  $('.select_2').select2();

@@ -17,13 +17,13 @@
         <div class="input-field col s12 m3 select-client">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), t('all_clients'),
                                                           {selected: params[:client_id] || ''}),
-                         include_blank: false, class: 'small_list invoice-filter-select') %>
+                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
           <label><%= t('clients') %></label>
         </div>
         <div class="input-field col s12 m3 select-client">
           <%= select_tag(:type, multi_select_options(PAYMENT_METHODS.map{|pm| [t('views.payments.' + pm.parameterize.underscore).capitalize, pm]},
                                                      t('views.invoices.all_statuses'), {selected: params[:type] || ''}),
-                         include_blank: false, class: 'small_list invoice-filter-select') %>
+                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
           <label><%= t('views.common.type') %></label>
         </div>
       </div>

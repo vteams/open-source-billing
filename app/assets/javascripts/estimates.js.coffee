@@ -6,6 +6,7 @@ class @Estimate
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
 
+
   @changeTax = ->
     jQuery("select.tax1, select.tax2").on "change", ->
       if $(this).val() == ''

@@ -75,14 +75,10 @@
   $('.user-side-form').addClass('hidden')
 
   @SubUser.init_settings_form()
-#  $('select').material_select()
-  $('.select2').material_select('destroy')
-  $('.select2').select2()
-  $('.role-select2').material_select('destroy')
+  $('.select_2').material_select('destroy')
   $('.role-select2').select2({
     placeholder: "Choose a Role"
   })
-  $('.company-select2').material_select('destroy')
   $('.company-select2').select2({
     placeholder: "Choose Companies"
   })
@@ -187,6 +183,3 @@ jQuery ->
 
   $('#role_save_btn').on "click", (event)->
     $('.submit-role-form').click()
-
-#  $('.select2').material_select('destroy');
-#  $('.select2').select2()

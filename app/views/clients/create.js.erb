@@ -6,5 +6,10 @@
     $("#invoice_client_id, #estimate_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
     $("#invoice_client_id, #estimate_client_id").trigger('contentChanged');
     $('.modal').modal('close');
-    swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
+
+swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
+$('.select_2').material_select('destroy');
+$('.select_2').select2('destroy');
+$('.select_2').select2();
+
 <% end %>

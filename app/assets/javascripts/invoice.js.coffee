@@ -25,7 +25,8 @@ class @Invoice
 
 
   @change_invoice_item  = (elem) ->
-    $('.invoice_grid_fields select.items_list').on 'change', ->
+
+  $('.invoice_grid_fields select.items_list').on 'change', ->
       if parseInt($(this).find(':selected').val()) != -1
         OsbPlugins.hidePopover($("table#invoice_grid_fields tr.fields:visible:first td:nth-child(2)"))
         elem = $(this)
@@ -63,6 +64,8 @@ class @Invoice
               InvoiceCalculator.updateInvoiceTotal()
 
               $("#add_line_item").click()
+#              $('.invoice-client-select').material_select('destroy');
+#              $('.invoice-client-select').select2();
 
 
 
@@ -130,9 +133,5 @@ $(document).ready ->
     $('.all-archived-invoices').hide()
     $('#more_archived_invoices').show()
 
-  $('.invoice-filter-select').material_select('destroy');
-  $('.invoice-filter-select').select2();
-
-
-
-
+  $('.select_2').material_select('destroy');
+  $('.select_2').select2();

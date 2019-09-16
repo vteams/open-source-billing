@@ -7,6 +7,7 @@ class @Popup
 
     $('.modal-close').on 'click', ->
       $(this).parents('.modal').modal 'close'
+#      $('select').material_select('destroy')
 
   @open = (elem) ->
     $(elem).modal('open')

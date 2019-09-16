@@ -4,6 +4,10 @@ elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
 
+$('.select_2').material_select('destroy');
+$('.select_2').select2();
+
+
 $(".select").trigger('contentChanged');
 $('#client_country').material_select();
 $('#client_currency_id').material_select();

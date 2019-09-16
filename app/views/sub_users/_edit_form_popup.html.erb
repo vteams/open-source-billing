@@ -30,12 +30,16 @@
                       input_html: {id: 'password_confirmation', name: 'password_confirmation'},
                       wrapper_html: { class: 'input-field col s12 m6 editMode' } %>
           <%= f.input :role_id, collection: load_user_roles, label: false, as: :select,
-                      input_html: {id: 'side_form_role_ids', class: 'edit-user-select2', name: 'role_id'},
-                      wrapper_html: { class: 'input-field col s12 editMode' } %>
+                      input_html: {id: 'side_form_role_ids', class: 'edit-user-select2 select_2', name: 'role_id'},
+                      wrapper_html: { class: 'input-field col s12 editMode user-role' } %>
           <span class="fa fa-caret-down"></span>
-          <%= f.input :company_ids, collection: Company.all.map{|c| [c.company_name.humanize, c.id]}, label: false, as: :select, selected: @sub_user.company_ids,
-                      input_html: {id: 'side_form_company_ids', class: 'companies-select2 col s12', multiple: true, name: 'company_ids[]'},
-                      wrapper_html: { class: 'input-field col s12 editMode' } %>
+          <div class="row company-row">
+            <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
+          </div>
+          <%= f.collection_radio_buttons :have_all_companies_access, [[true, 'All Companies'] ,[false, 'Only Selected Companies']], :first, :last %>
+          <div class="company-selection">
+            <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list' %>
+          </div>
 
           <%= hidden_field_tag 'user_id',@sub_user.id %>
           <% unless @sub_user.id == current_user.id %>

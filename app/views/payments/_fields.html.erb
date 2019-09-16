@@ -109,7 +109,7 @@
                       <div class="field_row payment-method">
                         <div class="label_field left single"><%= f.label t('views.common.method'), :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
                         <div class="small_field">
-                          <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
+                          <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select payment-select2 select_2"} %>
                         </div>
                         <span>
                         <div class="date-wrapper">
