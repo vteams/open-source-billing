@@ -57,7 +57,7 @@
             swal(I18n.t('helpers.links.delete'), data.notice, 'success')
             $('#users_listing').html(data.html)
             initUserListingEvents()
-  $('select').material_select()
+#  $('select').material_select()
 
   $('input[id^=user_ck_]').on "change", ->
     # active/deactive delete button on selecting/deselecting users

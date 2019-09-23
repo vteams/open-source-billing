@@ -6,7 +6,7 @@ $selectDropdown = $("#log_task_id").empty().html(' ').prop("disabled", false);
         $selectDropdown.append($("<option></option>").attr("value",<%= task.id %>).text("<%= task.name.titleize %>"));
     <% end %>
 <% end %>
-$('select').material_select();
+//$('select').material_select();
 $selectDropdown.trigger('contentChanged');
 
 $('select').on('contentChanged', function() {

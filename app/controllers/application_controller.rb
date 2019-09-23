@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
   # This is Devise's authentication
   include Pundit
   include ApplicationHelper
+  include PublicActivity::StoreController
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

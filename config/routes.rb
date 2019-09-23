@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Osb::Application.routes.draw do
 
+  get 'activities/index'
+
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
 
@@ -81,6 +83,7 @@ Osb::Application.routes.draw do
         get :revenue_by_client
       end
     end
+    resources :activities
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#payments_collected"
     get "reports" => "reports#index"

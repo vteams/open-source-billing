@@ -24,6 +24,8 @@ class Invoice < ActiveRecord::Base
   include Trackstamps
   include InvoiceSearch
   include Hashid::Rails
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('due_date DESC')}
@@ -303,11 +305,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def has_tax_one?
-    self.invoice_line_items.where(tax_1: true).exists?
+    self.invoice_line_items.where('tax_1 is not null').exists?
   end
 
   def has_tax_two?
-    self.invoice_line_items.where(tax_2: true).exists?
+    self.invoice_line_items.where('tax_2 is not null').exists?
   end
 
   def partial_payments

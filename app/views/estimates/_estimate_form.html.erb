@@ -15,13 +15,13 @@
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
             <%= f.select :client_id, (options_for_select((load_clients(action_name, estimate.company_id)),
                                                          selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
-                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select estimate-select-client select_2' %>
+                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select estimate-select-client estimate_client select_2' %>
 
             <div class="paymentInfo">
               <strong><strong class="estimate_total_strong"></strong>
                 <% selected_currency = estimate_selected_currency(f.object) %>
                   <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] }, selected: selected_currency,
-                              include_blank: false, input_html: { class: 'inline-select large-select', disabled: currency_is_off? },
+                              include_blank: false, input_html: { class: 'inline-select large-select currency_select', disabled: currency_is_off? },
                               wrapper_tag: :small, label: false %>
               </strong>
             </div>
@@ -58,11 +58,11 @@
           <div class="invoice-total-left">
             <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
             <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('views.common.discount'),
-                        input_html: { class: 'discount_select inline-select small-select', id: 'discount_type' },
+                        input_html: { class: 'discount_select inline-select small-select currency_select', id: 'discount_type' },
                         wrapper_html: { class: 'new-invoice-footer-row' } %>
             <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
                         label: t('views.common.tax'), prompt: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
-                        input_html: { class: 'discount_select inline-select small-select' } %>
+                        input_html: { class: 'discount_select inline-select small-select currency_select' } %>
             <div class="new-invoice-footer-row taxes_total"></div>
             <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
           </div>
@@ -118,7 +118,7 @@
         Estimate.changeTax();
         OsbPlugins.estimate_load_functions();
 
-        $('.estimate-select-client').material_select('destroy');
+        // $('.estimate-select-client').material_select('destroy');
         // $('.estimate-select-client').select2();
     });
 </script>

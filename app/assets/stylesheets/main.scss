@@ -5449,6 +5449,7 @@ input[type=text]{
 input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {  box-shadow: none;  }
 .modal.viewModal.taskModal .input-field label { top: 5px; }
 input[type=number]:focus:not([readonly]) { border-bottom: 1px solid #dadada !important; }
+//.select2-results li:last-child .select2-result-label
 .add_link_select ul li:last-child span {
   display: block;
   width: 100%;
@@ -5884,4 +5885,25 @@ a.select2-search-choice-close::before {
 }
 .user-role{
 margin-bottom: 20px;
+}
+.invoice-status-history{
+  padding: 20px;
+}
+.invoice-history{
+  line-height: 2;
+}
+//td.tax-class .tax_select{
+//  width: 100% !important;
+//}
+.tax-class .select2-container a span{
+  width: 100% !important;
+}
+.recurring_checkbox [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.estimate_client{
+  margin-bottom: 15px !important;
+}
+.tax-dropdown{
+  width: 100px !important;
 }

@@ -1,6 +1,9 @@
 <div class="container printable">
   <div class="invoice_template">
     <div class="new-invoice-holder">
+      <% if request.format.pdf? && @invoice.status == 'paid' %>
+        <%= image_tag("paid-stamp.png", size: '150x100') %>
+      <% end %>
       <% if request.format.html? %>
         <div class="new-invoice-header clearfix">
           <div class="new-invoice-action-btn right">
@@ -115,7 +118,8 @@
           </div>
 
         </div>
-        <br>
+<!--        <br>-->
+        <%= render 'invoice_history' %>
         <div>
           <div style="float:left; width: 50%;">
             <p class="invoice-note"><%= @invoice.notes %></p>
@@ -128,6 +132,7 @@
         <br/>
       </div>
     </div>
+
   </div>
 </div>
-
+</div>

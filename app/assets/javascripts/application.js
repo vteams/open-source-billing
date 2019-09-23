@@ -165,6 +165,7 @@ jQuery(function () {
             });
         });
         $('.sent,.partial,.draft,.draft-partial,.paid,.disputed,.viewed').qtip();
+        initPaginationSpanClick();
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
@@ -546,4 +547,12 @@ function display_flash_notice_or_alert_with_toastr(){
     } else if(flash_alert) {
         toastr.error('', flash_alert);
     }
+}
+
+function initPaginationSpanClick() {
+    $('nav.pagination span').click(function (event) {
+        if( $(this).find('a').length > 0 ) {
+            window.location.href = $(this).find('a').attr('href');
+        }
+    });
 }

@@ -9,7 +9,10 @@
             initSelectActionLink();
             var link      = e.currentTarget;
 
-            $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").material_select();
+            $("select.items_list:last, select.tax1, select.tax2, select.tasks_list:last, select.members_list:last").select2({
+                minimumResultsForSearch: -1,
+                dropdownCssClass: "tax-dropdown"
+            });
             if ($('.project-form-inline').length > 0){
                 var id = $('#staff_container').find('.nested-fields').length;
                 var element = $('#staff_container').find('.nested-fields:last');

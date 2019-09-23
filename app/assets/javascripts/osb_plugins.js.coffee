@@ -46,7 +46,7 @@ class @OsbPlugins
       $('.qtip').remove()
 
   @empty_tax_fields = (tax_container) ->
-    tax_container.find('select.tax1, select.tax2').val('').material_select()
+    tax_container.find('select.tax1, select.tax2').val('').select2()
 
   @load_functions = ->
 
@@ -75,7 +75,7 @@ class @OsbPlugins
       InvoiceCalculator.updateInvoiceTotal()
 
     OsbPlugins.removeQtipOnModalClose()
-    $('select').material_select();
+#    $('select').material_select();
 
     # Re calculate the total invoice balance if an item is removed
     $(".remove_nested_fields").on "click", ->
@@ -235,7 +235,7 @@ class @OsbPlugins
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    $('select').material_select();
+#    $('select').material_select();
 
     # Update line and grand total if line item fields are changed
     jQuery("input.cost, input.qty").on "blur", ->

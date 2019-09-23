@@ -41,11 +41,11 @@ class Estimate < ActiveRecord::Base
   paginates_per 10
 
   def has_tax_one?
-    self.estimate_line_items.where(tax_1: true).exists?
+    self.estimate_line_items.where('tax_1 is not null').exists?
   end
 
   def has_tax_two?
-    self.estimate_line_items.where(tax_2: true).exists?
+    self.estimate_line_items.where('tax_2 is not null').exists?
   end
 
   def set_default_currency

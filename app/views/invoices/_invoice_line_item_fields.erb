@@ -7,7 +7,7 @@
   <td>
     <%= f.input :item_id, collection: (load_line_items(action_name, @invoice.company_id, f.object) << ["#{t('views.common.add_new')}", "-1"]),
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
-                include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align add_link_select invoice-client-select select_2',
+                include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align add_link_select invoice-client-select item-select select_2',
                                                     data: {action_path: new_item_path, position: (count rescue 0)} } %>
   </td>
   <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name', value: f.object.item_name }, label: false, wrapper: false %>
@@ -20,11 +20,11 @@
   <td>
     <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', min: 1 } %>
   </td>
-  <td class="center-align">
-    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_tax_1'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select invoice-client-select'}) %>
+  <td class="center-align tax-class">
+    <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_tax_1'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select invoice-client-select tax_select'}) %>
   </td>
-  <td class="center-align">
-    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_tax_2'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select invoice-client-select'}) %>
+  <td class="center-align tax-class">
+    <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_tax_2'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select invoice-client-select tax_select'}) %>
   </td>
   <td class="align_right"><%= label_tag 'line total', f.object.item_total_amount, :class => 'blank_input grid_medium line_total' %></td>
 </tr>

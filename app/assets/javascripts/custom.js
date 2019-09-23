@@ -130,7 +130,7 @@ $(document).ready(function(){
       $('.content-detail, .staff-list').find("input").removeAttr('disabled');
       $('.content-detail, .staff-list').find(".initialized").removeAttr('disabled');
       $('.content-detail, .staff-list').find(".not-editable").attr('disabled', true);
-      $('select').material_select();
+      // $('select').material_select();
       $(".submitProject").removeClass('hidden');
       $(this).addClass('hidden')
       $("strong.project_name, span.project_description").attr('contenteditable', true);
@@ -207,7 +207,7 @@ function initBulkActionCheckboxes() {
       $('a.select2-search-choice-close').click();
     }
   });
-  $('select').material_select();
+  // $('select').material_select();
   $('.modal').modal();
   //---Checkbox Items
   $('.checkbox-item > input[type="checkbox"]').on('change', function () {

@@ -62,7 +62,7 @@ class @Expense
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    $('select').material_select();
+#    $('select').material_select();
 
     applyDatePicker();
 

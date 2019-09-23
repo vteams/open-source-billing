@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('select').material_select();
+    // $('select').material_select();
     var applyPopover, hidePopover;
     applyPopover = function (elem, position, corner, message) {
         elem.qtip({

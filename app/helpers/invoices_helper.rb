@@ -41,6 +41,33 @@ module InvoicesHelper
     notice.html_safe
   end
 
+  def history_of_invoice
+    activities_arr=[]
+    @invoice.activities.each do |activity|
+      unless activity.parameters.empty?
+        if activity.key == "invoice.create"
+          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+        end
+        if activity.present? && activity.parameters['obj'].present? && activity.parameters['obj']['status'].present?
+          if invoice_status(activity) == 'sent'
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} sent invoice to client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+          elsif invoice_status(activity) == 'partial'
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made partial payment for invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+          elsif invoice_status(activity) == 'draft-partial'
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made draft partial payment this invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+          elsif invoice_status(activity) == 'paid'
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made full payment for invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+          end
+        end
+      end
+    end
+    activities_arr.join(", ").gsub(",", '<br/>').html_safe
+  end
+
+  def invoice_status(activity)
+    activity.parameters['obj']['status'][1]
+  end
+
   def tax_class
     ['without_tax', 'with_single_tax', 'with_dual_tax'][[@invoice.has_tax_one?, @invoice.has_tax_two?].select{|bol| bol == true }.length]
   end

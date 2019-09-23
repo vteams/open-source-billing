@@ -34,7 +34,7 @@ class @Payment
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
-    $('select').material_select();
+#    $('select').material_select();
 
     #Autocomplete amount field on paid full checkbox
     $("#payment_paid_full").on "click", ->

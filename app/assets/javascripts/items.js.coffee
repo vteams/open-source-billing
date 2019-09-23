@@ -32,7 +32,7 @@ class @Item
 
   @load_functions = ->
 
-    $('select').material_select()
+#    $('select').material_select()
     jQuery('#account_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)

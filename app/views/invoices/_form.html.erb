@@ -20,14 +20,14 @@
 
             <div class="terms ">
               <span class="label-font"><%= t('views.invoices.terms') %>: </span>
-              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select  select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
             </div>
 
             <div class="paymentInfo">
                 <strong><strong class="invoice_total_strong"></strong>
                 <% selected_currency = invoice_selected_currency(f.object) %>
                 <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
-                            include_blank: false, input_html: { class: 'inline-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                            include_blank: false, input_html: { class: 'inline-select currency_select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
                 <div class="base-currency-conversion">
                   <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
@@ -35,14 +35,14 @@
                   <strong class="invoice_total_base_currency"></strong>
                   <%= f.input :base_currency_equivalent_total, as: :hidden %>
                   <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
-                              include_blank: false, input_html: { class: 'inline-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                              include_blank: false, input_html: { class: 'inline-select currency_select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
                 </div>
 
               </strong>
             </div>
           </div>
-          <div class="info-right-section" >
+          <div class="info-right-section recurring_checkbox" >
             <%= f.input :invoice_date, wrapper_tag: :span,
                         input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date }, as: :string %>
             <%= f.input :due_date, wrapper_tag: :span,
@@ -125,7 +125,7 @@
                         wrapper_html: { class: 'new-invoice-footer-row' } %>
             <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
                         label: t('views.common.tax'), prompt: t('views.common.select'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
-                        input_html: { class: 'discount_select inline-select small-select'} %>
+                        input_html: { class: 'discount_select inline-select small-select currency_select'} %>
             <div class="new-invoice-footer-row taxes_total"></div>
             <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
           </div>
@@ -177,7 +177,7 @@
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
-          $('.select_2').material_select('destroy');
+          // $('.select_2').material_select('destroy');
           // $('.select_2').select2();
 
 

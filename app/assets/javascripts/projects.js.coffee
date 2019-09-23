@@ -105,7 +105,7 @@ class @Project
     $('.content-detail, .staff-list').find("input").removeAttr('disabled');
     $('.content-detail, .staff-list').find(".initialized").removeAttr('disabled');
     $('.content-detail, .staff-list').find(".not-editable").attr('disabled', true);
-    $('select').material_select();
+#    $('select').material_select();
 
   @load_functions = ->
     $('#project_project_name,#project_total_hours').keypress ->
