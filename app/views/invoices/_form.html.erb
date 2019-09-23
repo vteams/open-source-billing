@@ -21,6 +21,7 @@
             <div class="terms ">
               <span class="label-font"><%= t('views.invoices.terms') %>: </span>
               <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select ", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
             </div>
 
             <div class="paymentInfo">
@@ -177,8 +178,6 @@
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
-          // $('.select_2').material_select('destroy');
-          // $('.select_2').select2();
 
 
           jQuery("#invoice_client_id").on('change', function(){

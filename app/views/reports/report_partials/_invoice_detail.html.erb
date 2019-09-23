@@ -33,9 +33,9 @@
         <td class="align_left"><%= invoice.client.organization_name if invoice.client.present? %></td>
         <td class="center-align"><%= invoice.invoice_date %></td>
         <td class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
-        <td class="" style="display: inline-block !important; float: right" data-sort_val="<%= invoice.invoice_total %>" >
-          <%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %><br/>
-          <i class="base-currency-equivalent"><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></i>
+        <td class='align_right' data-sort_val="<%= invoice.invoice_total %>" >
+          <span class='actual-currency'><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %></span><br/>
+          <span class='base-currency-equalent'><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></span>
         </td>
         </tr>
       <% end %>

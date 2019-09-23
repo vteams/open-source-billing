@@ -43,8 +43,8 @@
             </td>
             <td class="align_right currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
               <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
-              <%= number_to_currency(payment.payment_amount, unit: payment.currency_code) %><br>
-              <i class="base-currency-equivalent"><%= number_to_currency((payment.payment_amount / payment.invoice.conversion_rate), unit: current_company_obj.base_currency.code) rescue '' %></i>
+              <span class="actual-currency"><%= number_to_currency(payment.payment_amount, unit: payment.currency_code) %></span><br>
+              <span class="base-currency-equalent"><%= number_to_currency((payment.payment_amount / payment.invoice.conversion_rate), unit: current_company_obj.base_currency.unit) rescue '' %></span>
               <% total_in_base_currency += ((payment.payment_amount/payment.invoice.conversion_rate) rescue invoice.payment_amount) %>
             </td>
           </tr>
@@ -69,7 +69,7 @@
         <td class="align_right currency">
           <div>
             <b>
-              <%= number_to_currency(total_in_base_currency, unit: current_company_obj.base_currency.code) %>
+              <%= number_to_currency(total_in_base_currency, unit: current_company_obj.base_currency.unit) %>
             </b>
           </div>
         </td>

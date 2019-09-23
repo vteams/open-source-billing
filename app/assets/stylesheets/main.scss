@@ -5886,6 +5886,7 @@ a.select2-search-choice-close::before {
 .user-role{
 margin-bottom: 20px;
 }
+
 .invoice-status-history{
   padding: 20px;
 }
@@ -5904,6 +5905,14 @@ margin-bottom: 20px;
 .estimate_client{
   margin-bottom: 15px !important;
 }
-.tax-dropdown{
+.tax-dropdown {
   width: 100px !important;
+}
+
+.actual-currency {
+  font-weight: bold;
+}
+
+.base-currency-equalent {
+  font-size: 12px;
 }

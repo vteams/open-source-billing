@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20190917080311) do
+=======
+ActiveRecord::Schema.define(version: 20190918105919) do
+>>>>>>> 89690ec1ce28bd6929f8c4d9c229900e84e357ac
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -459,7 +463,7 @@ ActiveRecord::Schema.define(version: 20190917080311) do
 
   create_table "payments", force: :cascade do |t|
     t.integer  "invoice_id",                limit: 4
-    t.decimal  "payment_amount",                          precision: 8,  scale: 2
+    t.decimal  "payment_amount",                          precision: 15, scale: 3
     t.string   "payment_type",              limit: 255
     t.string   "payment_method",            limit: 255
     t.date     "payment_date"
@@ -471,7 +475,7 @@ ActiveRecord::Schema.define(version: 20190917080311) do
     t.datetime "deleted_at"
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
-    t.decimal  "credit_applied",                          precision: 10, scale: 2
+    t.decimal  "credit_applied",                          precision: 15, scale: 3
     t.integer  "client_id",                 limit: 4
     t.integer  "company_id",                limit: 4
     t.string   "status",                    limit: 255
