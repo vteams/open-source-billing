@@ -119,7 +119,7 @@
 
         </div>
 <!--        <br>-->
-        <%= render 'invoice_history' %>
+        <%= render 'invoice_history' unless request.format.pdf? %>
         <div>
           <div style="float:left; width: 50%;">
             <p class="invoice-note"><%= @invoice.notes %></p>
