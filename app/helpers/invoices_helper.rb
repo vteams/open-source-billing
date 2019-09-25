@@ -25,7 +25,7 @@ module InvoicesHelper
     if invoice.due_date.present? && invoice.due_date.to_time > Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'>due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
     elsif invoice.due_date.present? && invoice.due_date.to_time == Date.today.to_time
-      "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'> due Today </span>".html_safe
+      "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'> due today </span>".html_safe
     elsif invoice.due_date.present? && invoice.due_date.to_time < Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-over-due' title='Due Date: #{invoice.due_date}'>#{distance_of_time_in_words(Time.now - invoice.due_date.to_time)} overdue</span>".html_safe
     elsif invoice.due_date.present? && invoice.status == "paid"
@@ -61,7 +61,7 @@ module InvoicesHelper
         end
       end
     end
-    activities_arr.join(", ").gsub(",", '<br/>').html_safe
+    activities_arr.reverse.join(", ").gsub(",", '<br/>').html_safe
   end
 
   def invoice_status(activity)

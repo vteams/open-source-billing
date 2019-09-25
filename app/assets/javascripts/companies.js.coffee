@@ -69,6 +69,7 @@ class @Company
 
 jQuery ->
   #/ Change selected company in companies list in header
+  $('.company_select').material_select();
   $(".company_select").on "change", ->
     if parseInt($(this).find(':selected').val()) == -1
       $(this).val('')

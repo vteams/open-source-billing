@@ -214,10 +214,10 @@ en:
       please_select: "Please Select"
 
     pagination:
-      previous: "Previous"
+      previous: "Prev"
       next: "Next"
-      first: ""
-      last: ""
+      first: "First"
+      last: "Last"
 
     flash:
 

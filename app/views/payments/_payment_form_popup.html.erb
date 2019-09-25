@@ -28,9 +28,9 @@
           <div class="row">
             <%= render 'invoice_info', invoice: invoice, due_amount: due_amount %>
             <div class="info-right-section right col m7">
-              <div class="row">
+              <div class="row payment_row">
                 <%= f.input :payment_method, collection: PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]},
-                      label: t('views.common.method'), selected: payment.payment_method, label_html: { class: 'active' },
+                      label: t('views.common.method'), input_html: {class: 'select-payment-method'}, selected: payment.payment_method, label_html: { class: 'active' },
                             wrapper_html: { class: 'input-field col s6' } %>
                 <div class="input-field col s6 datepicker">
                   <%= f.input :payment_date, input_html: { value: f.object.payment_date }, as: :string, label: false %>

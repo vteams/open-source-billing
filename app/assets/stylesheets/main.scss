@@ -4877,46 +4877,84 @@ i.material-icons.close:hover {
 .pagination {
   background: transparent !important;
   box-shadow: none;
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: -13px;
+  //font-size: 18px;
+  //font-weight: bold;
   text-align: center;
-  color: #38BAE1;
+  //color: #38BAE1;
 }
 
-.pagination a { color: #38BAE1; }
+.pagination a { color: #007bff;
+}
 
 .pagination .page {
   padding: 10px;
-  border: 1px solid #14B6E1;
-  margin: 5px;
+  border: solid;
+  border-width: 1px 1px 1px 0px;
+  border-color: #dee2e6;
 }
 
 .pagination .page.current {
-  background-color: #10A2D7;
+  background-color: #097BFF;
   color: white;
+}
+.pagination .page.current:hover {
+  color: black;
 }
 
 .pagination .prev {
   padding: 10px;
-  border: 1px solid #14B6E1;
-  margin: 5px;
+  border: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #dee2e6;
+  //margin: 5px;
+}
+.pagination .first {
+  padding: 10px;
+  border: solid;
+  border-width: 1px 0px 1px 1px;
+  border-color: #dee2e6;
+  //margin: 5px;
+}
+.pagination .last {
+  padding: 10px;
+  border: solid;
+  border-width: 1px 1px 1px 0px;
+  border-color: #dee2e6;
+  //margin: 5px;
+}
+.pagination span:first-child{
+  border-top-left-radius: 0.25em;
+  border-bottom-left-radius: 0.25em;
+}
+.pagination span:last-child{
+  border-top-right-radius: 0.25em;
+  border-bottom-right-radius: 0.25em;
 }
 
-.pagination .prev:before {
-  content: "<";
-}
+//.pagination .prev:before {
+//  content: "<";
+//}
 
 .pagination .next {
   padding: 10px;
-  border: 1px solid #14B6E1;
-  margin: 5px;
+  border: solid;
+  border-width: 1px 1px 1px 0px;
+  border-color: #dee2e6;
+  //margin: 5px;
 }
-.pagination .next:after { content: ">"; }
+//.pagination .next:after { content: ">"; }
 .pagination span:hover {
-  background-color: #10A2D7;
-  color: white;
+  background-color: #E9ECEF;
+  color: #2972BE;
 }
-.pagination span:hover a { color: white; }
+.pagination span{
+  background: white;
+}
+.pagination span:hover{
+  cursor: pointer;
+}
+.pagination span:hover a { color: #2972BE; }
 .paginate-info { margin-top: 30px; }
 #main-content .breadcrum-bar.card-white-panel.clearfix .input-field .select-wrapper.initialized input.select-dropdown {
   padding-left: 5px;
@@ -5915,4 +5953,8 @@ margin-bottom: 20px;
 
 .base-currency-equalent {
   font-size: 12px;
+}
+.payment_row .select2-container{
+  margin-top: 14px !important;
+  width: 100% !important;
 }

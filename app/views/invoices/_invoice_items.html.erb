@@ -3,12 +3,20 @@
   page = 0
 %>
 <div class="invoice-items-table primary">
+  <% if request.format.pdf? && @invoice.status == 'paid' %>
+    <%= image_tag("paid-image.png", size: '150x100', class: 'paid-logo') %>
+  <% end %>
+
   <%= render partial: 'invoice_line_items_table', locals: {invoice: invoice, items: invoice.invoice_line_items.order(created_at: :asc).offset(0).limit(12), headers: true} %>
 </div>
 
 <% line_items = invoice.invoice_line_items.order(created_at: :asc).offset(12 + page*18).limit(18) %>
 <% while(line_items.present?) do %>
   <div class="invoice-items-table secondary">
+    <% if request.format.pdf? && @invoice.status == 'paid' %>
+      <%= image_tag("paid-image.png", size: '150x100', class: 'paid-logo') %>
+    <% end %>
+
     <%= render partial: 'invoice_line_items_table', locals: {invoice: invoice, items: line_items, headers: request.format.pdf?} %>
   </div>
   <% page+=1 %>

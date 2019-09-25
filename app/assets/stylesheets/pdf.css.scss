@@ -6,6 +6,17 @@
   body {
     padding-top: 10px !important;
   }
+  .paid-logo{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 20%;
+    margin: auto;
+    opacity: 0.2;
+    width: 80%;
+    height: auto;
+  }
 
   .header {
     .fl {
@@ -513,6 +524,7 @@
     display: block;
     clear: both;
     height: 1020px !important;
+    position: relative;
     &.secondary{
       thead{
         display: table-row-group !important;

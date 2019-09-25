@@ -21,6 +21,7 @@
 class InvoicesController < ApplicationController
 
   before_action :authenticate_user!, except: %i[show preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
+
   before_action :set_per_page_session
   before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy clone]
   before_action :verify_authenticity_token, only: :show #if: ->{ action_name == 'show' and request.format.pdf? }
@@ -48,7 +49,10 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    authorize @invoice
+    unless !current_user.present?
+      authorize @invoice
+    end
+    skip_authorization
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html {render template: 'invoices/show.html.erb'}

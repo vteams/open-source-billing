@@ -138,4 +138,4 @@ $(document).ready ->
     minimumResultsForSearch: -1,
     dropdownCssClass: "tax-dropdown"
   });
-  $('.currency_select').material_select();
+  $('.currency-select').material_select();
