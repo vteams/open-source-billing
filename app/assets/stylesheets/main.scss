@@ -4884,7 +4884,9 @@ i.material-icons.close:hover {
   //color: #38BAE1;
 }
 
-.pagination a { color: #007bff;
+.pagination a {
+  color: #007bff;
+  padding-left: 3px;
 }
 
 .pagination .page {
