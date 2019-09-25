@@ -116,7 +116,6 @@
 
         </div>
 <!--        <br>-->
-        <%= render 'invoice_history' unless request.format.pdf? %>
         <div>
           <div style="float:left; width: 50%;">
             <p class="invoice-note"><%= @invoice.notes %></p>
@@ -124,7 +123,7 @@
 
           <br/>
         </div>
-        <%= render 'invoice_history' %>
+        <%= render 'invoice_history' unless request.format.pdf? %>
         <div class="clearfix"></div>
         <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
         <br/>
