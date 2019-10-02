@@ -50,6 +50,7 @@
                 <% end %>
               </div>
             </div>
+            <%= render 'client_contact_details', f: f %>
 
               <div class="row">
                 <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
@@ -72,7 +73,6 @@
             </div>
             <%= associate_account(controller_name, action_name, @client) %>
 
-            <%= render 'client_contact_details', f: f %>
           </div>
           </div>
         </div>

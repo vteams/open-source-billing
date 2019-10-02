@@ -3217,6 +3217,30 @@ h6 {
   left: 12px;
   z-index: 100;
   opacity: 0; }
+.roles-list li  .role-item input + label {
+  position: absolute;
+  margin-top: 9px;
+  left: 12px;
+  z-index: 100;
+  opacity: 0;
+}
+.roles-list li  .role-item:hover input ~ label{
+  opacity: 1 !important;
+}
+.roles-list li .role-item:hover input ~ .invoice-name {
+  opacity: 0 !important;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  transition: all 0.5s; }
+.roles-list li .role-item [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.roles-list li .role-item input:checked ~ label {
+  opacity: 1; }
+.roles-list li .role-item input:checked ~ .invoice-name {
+  opacity: 0; }
+
 .user-list .list-item .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
   border-color: #6a6a6a; }
@@ -4321,7 +4345,7 @@ html {
   position: relative; }
 .new-invoice-holder .info-section .info-left-section .terms {
   line-height: 12px;
-  margin-top: 27px;
+  margin-top: 25px;
 }
 .new-invoice-holder .info-section .info-left-section .terms small {
   font-weight: bold; }
@@ -5959,4 +5983,10 @@ margin-bottom: 20px;
 .payment_row .select2-container{
   margin-top: 14px !important;
   width: 100% !important;
+}
+#add_Detail .input .select2-container{
+  margin-top: 10px;
+}
+#add_Detail .input.select{
+  margin-bottom: 20px;
 }

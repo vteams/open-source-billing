@@ -235,8 +235,8 @@ $(document).ready(function(){
 
     initSelectActionLink();
     initDemoLinksClick();
-    disable_right_click_for_browser();
-    disable_f12_key_in_browser();
+    // disable_right_click_for_browser();
+    // disable_f12_key_in_browser();
 });
 
 function initCustomConfirmPopUp() {

@@ -52,11 +52,11 @@ jQuery ->
       action_text = (if action_text == "expand" then "collaps" else "expand")
       $(this).find("#id").html action_text
 
-  jQuery("#detail").click ->
-    jQuery("#add_Detail").toggle 500, ->
-      action = $(this).find("#action")
-      action_text = if jQuery(action).html() == "expand" then "collaps" else "expand"
-      $(this).find("#id").html action_text
+#  jQuery("#detail").click ->
+#    jQuery("#add_Detail").toggle 500, ->
+#      action = $(this).find("#action")
+#      action_text = if jQuery(action).html() == "expand" then "collaps" else "expand"
+#      $(this).find("#id").html action_text
 
 
   # show details when client name is clicked.

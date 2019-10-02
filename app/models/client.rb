@@ -20,6 +20,9 @@
 class Client < ActiveRecord::Base
 
   include ClientSearch
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :created_at, -> (created_at) { where(created_at: created_at) }
@@ -32,10 +35,10 @@ class Client < ActiveRecord::Base
   has_many :projects
   accepts_nested_attributes_for :client_contacts, :allow_destroy => true
   belongs_to :company
-  belongs_to :currency
+  belongs_to :currency, touch: false
   has_many :company_entities, :as => :entity
   has_many :expenses
-  after_create :create_default_currency
+  before_create :create_default_currency
 
   acts_as_archival
   acts_as_paranoid
@@ -224,7 +227,6 @@ class Client < ActiveRecord::Base
   def create_default_currency
     return true if self.currency.present?
     self.currency = Currency.default_currency
-    self.save
   end
 
   def group_date

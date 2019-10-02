@@ -142,7 +142,6 @@
   @Company.init_settings_form()
 
 
-
   $('input[id^=company_ck_]').on "change", ->
     # disable/enable delete btn on selecting/deselecting companies
     if $('input[id^=company_ck_]:checked').length > 0
@@ -158,6 +157,45 @@
 
   $('.company-side-form').addClass('hidden')
 
+@initRoleListingEvents = () ->
+  $('#role_add_btn,#role_cancel_btn').on "click", ->
+    $('#role_reset_form').click()
+    $('.role-side-form,#role_btn_container').toggleClass('hidden')
+#    hidePopover($("#company_name,#contact_name,#companies_email"))
+  $('#role_save_btn').on "click", (event)->
+    event.preventDefault()
+    event.stopPropagation()
+    $('.submit-role-form').click()
+
+
+  $('#role_delete_btn').on "click", (event)->
+    event.preventDefault()
+    event.stopPropagation()
+    roleIds = []
+    currentRoleSelected = false
+    $('input[name^=role_ids].disabled:checked').each (index, element) =>
+      showErrorMsg(I18n.t('views.companies.current_company_action', action: 'deleted'))
+      currentRoleSelected = true
+    $('input[name^=role_ids]:not(.disabled):checked').each (index, element) =>
+      roleIds.push($(element).val())
+    if roleIds.length > 0
+      showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
+        $.ajax '/roles/destroy_bulk',
+          type: 'delete'
+          data: {role_ids: roleIds}
+          dataType: 'json'
+          success: (data, textStatus, jqXHR) ->
+            swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            $('#roles_listing').html(data.html)
+            initRoleListingEvents()
+
+  $('input[id^=role_]').on "change", ->
+    if $('input[id^=role_]:checked').length > 0
+      $('#role_delete_btn').removeClass('disabled')
+    else
+      $('#role_delete_btn').addClass('disabled')
+
+
 @loadUsersActivitiesSection = () ->
   $.get '/sub_users/settings_listing', (data) ->
     $('#users_listing').append(data)
@@ -168,6 +206,12 @@
     $('#companies_listing').append(data)
     initCompanyListingEvents()
 
+@loadRolesActivitiesSection = () ->
+  $.get '/roles/roles_settings', (data) ->
+    $('#roles_listing').append(data)
+    initRoleListingEvents()
+
+
 jQuery ->
   jQuery('.country-item').on "click", ->
     currency_id = $(this).data('id')
@@ -176,10 +220,10 @@ jQuery ->
     jQuery.get url, (response) ->
       window.location.reload()
 
-  $('#role_add_btn,#role_cancel_btn').on "click", ->
-    $('.role-side-form').toggleClass('hidden')
-    $('#role_reset_form').click()
-    $('#role_btn_container').toggleClass('hidden')
+#  $('#role_add_btn,#role_cancel_btn').on "click", ->
+#    $('.role-side-form').toggleClass('hidden')
+#    $('#role_reset_form').click()
+#    $('#role_btn_container').toggleClass('hidden')
 
-  $('#role_save_btn').on "click", (event)->
-    $('.submit-role-form').click()
+#  $('#role_save_btn').on "click", (event)->
+#    $('.submit-role-form').click()

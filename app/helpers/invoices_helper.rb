@@ -41,6 +41,14 @@ module InvoicesHelper
     notice.html_safe
   end
 
+  def selected_payment_term invoice
+    if invoice.new_record?
+      PaymentTerm.last.id
+    else
+      invoice.payment_terms_id
+    end
+  end
+
   def history_of_invoice
     activities_arr=[]
     @invoice.activities.each do |activity|

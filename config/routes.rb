@@ -67,6 +67,13 @@ Osb::Application.routes.draw do
       end
     end
 
+    resources :roles do
+      collection do
+        get :roles_settings
+        delete :destroy_bulk
+      end
+    end
+
     resources :email_templates
 
     resources :payment_terms

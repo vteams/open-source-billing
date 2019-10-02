@@ -1,0 +1,34 @@
+<div class="setting-roles-list">
+  <h5>
+    <%= link_to t('views.Roles.roles'), roles_url %>
+    <span>(<%= @roles.count rescue 0 %>)</span>
+  </h5>
+  <ul class="roles-list">
+    <% @roles.each do |role| %>
+      <li id="roles">
+        <div class="role-item">
+          <%= check_box_tag 'role_ids[]', role.id, false, :id => "role_#{role.id}",
+                            class: "filled-in#{' disabled' if role.id == current_user.role.id}" %>
+          <label for="<%= "role_#{role.id}" %>"></label>
+
+          <div class="invoice-name circle-img <%= random_card_color %>"><%= role.role_name %></div>
+        </div>
+        <div class="role-name">
+          <%= link_to role.name, edit_role_path(role), remote: true   %><br>
+          <span class="role-date"><%= role.created_at.strftime('%d %b, %Y') %></span>
+        </div>
+      </li>
+    <% end %>
+
+    <div class="list-buttons">
+      <%= render 'roles/settings_role_form' %>
+      <div id="role_btn_container">
+        <a href="javascript:;" id="role_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+        <% unless OSB::CONFIG::DEMO_MODE %>
+          <a href="javascript:;" id="role_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+        <% end %>
+      </div>
+    </div>
+
+  </ul>
+</div>

@@ -806,6 +806,7 @@ en:
     Roles:
       roles: "Roles"
       name: "Role Name"
+      deleted_msg: "Role has been deleted successfully."
 
     email_templates:
       email_templates: "Email Templates"

@@ -29,7 +29,7 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
     respond_to do |format|
       if @role.save
-        format.js
+        format.js{@roles = Role.all}
       else
         format.js
       end
@@ -49,6 +49,18 @@ class RolesController < ApplicationController
     if @role.destroy
       redirect_to roles_url
     end
+  end
+
+  def roles_settings
+    @roles = Role.all
+    render layout: false
+  end
+
+  def destroy_bulk
+    @role = Role.where(id: params[:role_ids]).destroy_all
+    @roles = Role.all
+    render json: {notice: t('views.Roles.deleted_msg'),
+                  html: render_to_string(action: :roles_settings, layout: false)}
   end
 
   private

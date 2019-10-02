@@ -14,7 +14,10 @@
      buttons: false,
      timer: 3000,
     text: "Role created successfully"}).then(function(){
-    window.location = '<%= settings_path %>'
+//    window.location = '<%#= settings_path %>'
 
   });
+$('#roles_listing').html('<%= escape_javascript render(template: 'roles/roles_settings',
+   layout: false, format: :html) %>');
+initRoleListingEvents();
 <% end %>

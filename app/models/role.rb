@@ -1,7 +1,7 @@
 class Role < ActiveRecord::Base
   #include Osbm
   has_one :user
-  has_many :permissions
+  has_many :permissions, dependent: :destroy
 
   belongs_to :resource,
              :polymorphic => true

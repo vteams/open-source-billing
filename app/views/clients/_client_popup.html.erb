@@ -80,7 +80,7 @@
           <tbody>
             <% @payments.each do |payment|%>
               <tr>
-                <td><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></td>
+                <td><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment.unscoped_invoice, remote: true %></td>
                 <td><%= payment.unscoped_invoice.due_date%></td>
                 <td><%= payment.unscoped_invoice.company.company_name%></td>
                 <td><%= payment.unscoped_invoice.currency.unit %> <%= number_to_currency(payment.payment_amount, unit: '')%></td>
@@ -89,6 +89,7 @@
           </tbody>
         </table>
       </div>
+      <%= render 'client_history' %>
     </div>
   </div>
 </div>

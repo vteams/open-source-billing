@@ -11,7 +11,7 @@
     <% invoice = payment.unscoped_invoice %>
     <div class="info-section clearfix">
       <div class="info-left-section left">
-        <h6 class="text-grey"><%= invoice.invoice_number rescue "" %></h6>
+        <h6 class="text-grey"><%= invoice.formatted_invoice_number rescue "" %></h6>
         <span>Invoice : <small> <%= invoice.invoice_date rescue "" %> </small></span>
         <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
         <div class="paymentInfo">

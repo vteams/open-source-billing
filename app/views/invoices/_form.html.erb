@@ -20,10 +20,8 @@
 
           <div class="terms ">
             <span class="label-font"><%= t('views.invoices.terms') %>: </span>
-            <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
-            <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select ", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+            <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
           </div>
-
           <div class="paymentInfo">
             <strong><strong class="invoice_total_strong"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
@@ -45,7 +43,7 @@
         </div>
         <div class="info-right-section recurring_checkbox" >
           <%= f.input :invoice_date, wrapper_tag: :span,
-                      input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date }, as: :string %>
+                      input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date, id: 'invoice_date_picker' }, as: :string %>
           <%= f.input :due_date, wrapper_tag: :span,
                       input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
 
