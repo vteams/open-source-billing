@@ -1,6 +1,9 @@
 <div id="invoice_model" class="modal">
   <div class="modal-content">
     <div class="modal-header clearfix">
+      <% if @invoice.status == 'paid' %>
+        <%= image_tag("paid-image.png", size: '150x100', class: 'paid-logo') %>
+      <% end %>
       <div class="modal-action-btn right">
 
         <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),

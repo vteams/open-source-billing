@@ -5990,3 +5990,29 @@ margin-bottom: 20px;
 #add_Detail .input.select{
   margin-bottom: 20px;
 }
+.client-company .select2-container{
+  width: 100% !important;
+}
+.client-company .select2-container .select2-choice{
+  border-radius: 0px !important;
+}
+.paid-logo{
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  opacity: 0.2;
+  width: 50%;
+  height: auto;
+}
+.invoice-position{
+  position: relative;
+}
+#invoice_model .modal-content{
+  position: relative;
+}
+#invoice_model .modal-content .modal-footer{
+  z-index: -1;
+}

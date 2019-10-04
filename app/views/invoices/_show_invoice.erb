@@ -1,6 +1,9 @@
 <div class="container printable">
   <div class="invoice_template">
-    <div class="new-invoice-holder">
+    <div class="new-invoice-holder invoice-position">
+      <% if @invoice.status == 'paid' %>
+        <%= image_tag("paid-image.png", size: '150x100', class: 'paid-logo') %>
+      <% end %>
       <% if request.format.html? %>
         <div class="new-invoice-header clearfix">
           <div class="new-invoice-action-btn right">
@@ -115,7 +118,7 @@
           </div>
 
         </div>
-<!--        <br>-->
+        <!--        <br>-->
         <div>
           <div style="float:left; width: 50%;">
             <p class="invoice-note"><%= @invoice.notes %></p>

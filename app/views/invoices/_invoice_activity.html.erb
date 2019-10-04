@@ -52,11 +52,11 @@
         <% current_company_deleted_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
           <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
         <% end %>
-    <% end %>
-      <div class="all-deleted-invoices hide-class set-positions" id="all_invoice_amounts">
-      <% current_company_deleted_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
       <% end %>
+      <div class="all-deleted-invoices hide-class set-positions" id="all_invoice_amounts">
+        <% current_company_deleted_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
         <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_deleted_invoices' %>
       </div>
     </div>
@@ -69,20 +69,20 @@
       </h5>
       <% if current_company_archived_invoices.count > 3 %>
         <div class="first-three-invoices set-positions">
-        <% current_company_archived_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
-        <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_archived_invoices' %>
+          <% current_company_archived_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_archived_invoices' %>
         </div>
-        <% else %>
+      <% else %>
         <% current_company_archived_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
           <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
         <% end %>
       <% end %>
       <div class="all-archived-invoices hide-class set-positions" id="all_invoice_amounts">
-      <% current_company_archived_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-        <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-      <% end %>
+        <% current_company_archived_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
         <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_archived_invoices' %>
       </div>
     </div>

@@ -19,17 +19,17 @@
     </div>
 
     <%= f.input :country, collection: COUNTRY_LIST,prompt: t('views.common.select_a_country'),
-                input_html: { class: 'input-select client_select_2' }, wrapper_html: {class: 'col m3 s6'} %>
+                input_html: { class: 'input-select client_select_2' }, wrapper_html: {class: 'col m3 s6 client-company'} %>
 
     <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] },
                 selected: (@client.currency_id.present? ? @client.currency_id : nil),
                 prompt: t('views.invoices.select_currency'),
-                input_html: { class: 'input-select client_select_2', disabled: currency_is_off? }, wrapper_html: {class: 'col m3 s6'} %>
+                input_html: { class: 'input-select client_select_2', disabled: currency_is_off? }, wrapper_html: {class: 'col m3 s6 client-company'} %>
 
     <%= f.input :industry, collection: INDUSTRY_LIST, prompt: t('views.clients.select_an_industry'),
-                input_html: { class: 'small tax2 client_select_2' }, wrapper_html: {class: 'col m3 s6'} %>
+                input_html: { class: 'small tax2 client_select_2' }, wrapper_html: {class: 'col m3 s6 client-company'} %>
     <%= f.input :company_size, collection: COMPANY_SIZE, prompt: t('views.clients.select_company_size'),
-                input_html: { class: 'small tax2 client_select_2' }, wrapper_html: {class: 'col m3 s6'} %>
+                input_html: { class: 'small tax2 client_select_2' }, wrapper_html: {class: 'col m3 s6 client-company'} %>
       <div class="invoice-add-notes clients-notes-alignment">
       <a href="#"><i class="material-icons">chat</i> </a>
       <%= f.input :internal_notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},

@@ -3,6 +3,9 @@ class Estimate < ActiveRecord::Base
   include DateFormats
   include Trackstamps
   include EstimateSearch
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :status, -> (status) { where(status: status) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
