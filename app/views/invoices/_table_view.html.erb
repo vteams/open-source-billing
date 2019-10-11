@@ -43,7 +43,7 @@
               <em class='core-currency'><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : default_currency_uniq)} " %></em><br>
               <em class='base-currency' title="Invoice total equivalent in Base Currency"><%= "#{number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.present? ? invoice.base_currency.unit : default_currency_unit)} " %></em>
             </td>
-            <td class="<%= invoice.status %>" title="<%= invoice.tooltip %>">
+            <td class="<%= invoice.status %>">
               <span style="float: left" class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= t('views.invoices.' + invoice.status) %></span>
               <div class="action-btn-group" style="float: right">
                 <% if invoice.deleted? %>
@@ -76,10 +76,15 @@
                                         success: t('views.invoices.invoice_deleted')} %>
                     </li>
                     <%# end %>
-                    <li>
+                    <li class="<%= 'disable_payment' if invoice.status.eql?('paid') %>">
                       <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.enter_payment')}"),
-                                  enter_payment_payments_path(invoice_ids: invoice.id),
-                                  remote: true  unless invoice.status.eql?("paid") %>
+                                 invoice.status.eql?('paid') ? 'javascript:void(0);' : enter_payment_payments_path(invoice_ids: invoice.id),
+                                  remote: true %>
+                    </li>
+                    <li class="<%= 'disable_payment' if invoice_refund(invoice) %>">
+                      <%= link_to raw("<i class='material-icons'>payment</i>#{t('views.dashboard.refund_payment')}"),
+                                  invoice_refund(invoice) ? 'javascript:void(0);' : refund_payment_payments_path(invoice_ids: invoice.id),
+                                  remote: true %>
                     </li>
                     <li>
                       <%= link_to raw("<i class='material-icons close'>close</i>#{t('views.invoices.stop_recurring')}"),

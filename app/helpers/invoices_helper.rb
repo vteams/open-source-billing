@@ -24,12 +24,12 @@ module InvoicesHelper
     return '' if invoice.draft?
     if invoice.due_date.present? && invoice.due_date.to_time > Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'>due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
-    elsif invoice.due_date.present? && invoice.due_date.to_time == Date.today.to_time
+    elsif invoice.due_date.present? && invoice.due_date.to_time == Date.today.to_time && invoice.status != 'paid'
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'> due today </span>".html_safe
     elsif invoice.due_date.present? && invoice.due_date.to_time < Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-over-due' title='Due Date: #{invoice.due_date}'>#{distance_of_time_in_words(Time.now - invoice.due_date.to_time)} overdue</span>".html_safe
     elsif invoice.due_date.present? && invoice.status == "paid"
-      "<span class = 'idd invoice-paid'> paid on #{invoice.payments.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe
+      "<span class = 'idd invoice-paid'> paid on #{invoice.payments.received.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe rescue ''
     end
   end
 
@@ -39,6 +39,12 @@ module InvoicesHelper
        <p>#{message}</p>
     HTML
     notice.html_safe
+  end
+
+  def invoice_refund invoice
+    refund = invoice.payments.refunds.sum('payment_amount').abs
+    received = invoice.payments.received.sum('payment_amount')
+    refund == received
   end
 
   def selected_payment_term invoice
@@ -51,7 +57,8 @@ module InvoicesHelper
 
   def history_of_invoice
     activities_arr=[]
-    @invoice.activities.each do |activity|
+    public_activities = PublicActivity::Activity.where('(trackable_type = ? AND trackable_id = ?) OR (trackable_type = ? AND trackable_id IN (?))', 'Invoice', @invoice.id, 'Payment', @invoice.payments.pluck(:id))
+    public_activities.each do |activity|
       unless activity.parameters.empty?
         if activity.key == "invoice.create"
           activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
@@ -62,9 +69,14 @@ module InvoicesHelper
           elsif invoice_status(activity) == 'partial'
             activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made partial payment for invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           elsif invoice_status(activity) == 'draft-partial'
-            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made draft partial payment this invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made draft partial payment for this invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           elsif invoice_status(activity) == 'paid'
             activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made full payment for invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+          end
+        end
+        if activity.present? && activity.key == 'payment.create' && activity.parameters['obj'].present? && activity.parameters['obj']['payment_amount'].present?
+          if activity.parameters['obj']['payment_amount'][1] < 0
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} refund #{number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  @invoice.currency.code )} on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           end
         end
       end

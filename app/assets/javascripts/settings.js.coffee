@@ -21,6 +21,8 @@
     $('#flash_message').addClass('hidden')
   , 5000
 
+@sideNavToggle = () ->
+  debugger
 @initUserListingEvents = () ->
   $('#user_add_btn,#user_cancel_btn').on "click", ->
     $('#user_reset_form').click()
@@ -219,6 +221,14 @@ jQuery ->
     url = "/settings/"+user_id+"/set_default_currency?currency_id="+currency_id
     jQuery.get url, (response) ->
       window.location.reload()
+
+
+  $('.btn-menu').on "click", ->
+      nav_state = $('#side-nav').hasClass('side-show')
+      $.ajax '/settings/nav_format',
+        type: 'post',
+        data: 'nav_state=' + nav_state
+
 
 #  $('#role_add_btn,#role_cancel_btn').on "click", ->
 #    $('.role-side-form').toggleClass('hidden')

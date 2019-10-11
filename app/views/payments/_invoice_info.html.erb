@@ -15,6 +15,10 @@
       <span><%= t('views.common.received') %><em>:</em></span><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.unit) %></strong>
     </div>
     <div>
+      <span><%= t('views.common.refund') %><em>:</em></span><strong><%= number_to_currency(invoice.payments.refunds.sum('payment_amount'), unit: invoice.currency.unit) %></strong>
+    </div>
+
+    <div>
       <span><%= t('views.payments.net_due') %><em>:</em></span><strong><%= number_to_currency due_amount, unit: invoice.currency.unit %></strong>
     </div>
   </div>

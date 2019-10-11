@@ -71,11 +71,12 @@
         <strong><%= t('views.common.notes') %>: </strong> <%= @estimate.notes %>
       </div>
     </div>
+    <%= render 'estimate_history' %>
     <div class="modal-footer clearfix">
       <div class="left-section left">
-        <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
+        <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= link_to image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img"), 'http://opensourcebilling.org/' %></p>
       </div>
     </div>
-    <%= render 'estimate_history' %>
+
   </div>
 </div>

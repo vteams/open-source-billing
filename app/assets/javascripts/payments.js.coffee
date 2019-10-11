@@ -71,6 +71,57 @@ class @Payment
       flag
 
 
+
+  @refund_functions = ->
+    applyDatePicker();
+    $('.modal').modal complete: ->
+      $('.qtip').remove()
+
+#    $('select').material_select();
+
+    #Autocomplete amount field on paid full checkbox
+    if parseFloat(jQuery(".received_payment_amount").attr("value")) == Math.abs(parseFloat(jQuery(".refunds").attr("value")))
+      $('#payment_payment_amount').attr('readonly', 'readonly')
+      $("#payment_paid_full").attr('disabled', true)
+    $("#payment_paid_full").on "click", ->
+      rem_value = parseFloat($('.due_refunds').attr('value'))
+      if $(this).is ":checked"
+        $('#payment_payment_amount').val('-'.concat(rem_value))
+        $('#payment_payment_amount').attr('readonly', 'readonly')
+      else
+        $('#payment_payment_amount').removeAttr('readonly')
+        $('#payment_payment_amount').val('')
+
+    $("#payment_payment_amount").on "blur keyup", ->
+      hidePopover($('#payment_payment_amount'))
+
+    jQuery('.payment_form.form-horizontal').submit ->
+      pay_amount = parseFloat(jQuery("#payment_payment_amount").val())
+      pay_method = jQuery("#payment_payment_method").val()
+      rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
+      received_amount = parseFloat(jQuery(".received_payment_amount").attr("value"))
+      refund = Math.abs(parseFloat(jQuery(".refunds").attr("value")))
+      rem_credit = parseFloat(jQuery("#rem_credit").attr("value"))
+      if jQuery("#payment_payment_amount").val() is ""
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.value_greater_than_zero_msg"))
+        flag = false
+      else if pay_amount >= 0
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "value should be negative")
+        flag = false
+      else if refund - pay_amount > received_amount
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", "value exceeds received amount")
+        flag = false
+      else if pay_amount > rem_amount
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.exceeded_payment_amount_msg"))
+        flag = false
+      else if pay_amount > rem_credit and rem_credit
+        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.credit_exceeded_msg"))
+        flag = false
+      else
+        flag = true
+      flag
+
+
 jQuery ->
 
   window.creditPayment()

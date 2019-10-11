@@ -98,7 +98,7 @@
         <%= @estimate.notes %>
         <br/><br/><br/>
       </div>
-      <p class="report-copyrights"><%= t('views.estimates.this_estimate_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
+      <p class="report-copyrights"><%= t('views.estimates.this_estimate_was_sent_using') %> <%= link_to image_tag("m-bottom-logo.jpg"), 'http://opensourcebilling.org/',class: 'responsive-img' %></p>
       <br/>
     </div>
   </div>

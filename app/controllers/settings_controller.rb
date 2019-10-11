@@ -32,7 +32,7 @@ class SettingsController < ApplicationController
       user.settings.index_page_format = 'table'
       session[:view] = 'table'
     end
-    if params[:invoice_number_format].present?
+    if params[:invoice_number_format].present? && params[:invoice_number_format].include?('{{invoice_number}}')
       Settings.invoice_number_format = params[:invoice_number_format]
     end
     respond_to { |format| format.js }
@@ -40,6 +40,15 @@ class SettingsController < ApplicationController
 
   def invoice_number_format
 
+  end
+
+  def nav_format
+    if params[:nav_state] == "true"
+      current_user.settings.side_nav_opened = true
+    elsif params[:nav_state] == "false"
+      current_user.settings.side_nav_opened = false
+    end
+    render nothing: true
   end
 
   def index

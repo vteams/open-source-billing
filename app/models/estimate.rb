@@ -11,6 +11,7 @@ class Estimate < ActiveRecord::Base
   scope :client_id, -> (client_id) { where(client_id: client_id) }
   scope :estimate_number, -> (estimate_number) { where(id: estimate_number) }
   scope :estimate_date, -> (estimate_date) { where(estimate_date: estimate_date) }
+  scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id")}
 
   # constants
   STATUS_DESCRIPTION = {

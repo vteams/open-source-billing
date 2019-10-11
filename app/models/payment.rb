@@ -21,6 +21,9 @@
 class Payment < ActiveRecord::Base
   include DateFormats
   include PaymentSearch
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
@@ -46,6 +49,9 @@ class Payment < ActiveRecord::Base
   scope :client_id, -> (client_id) { where(client_id: client_id) }
 
   scope :by_company, -> (company_id){ where("payments.company_id IN (?)", company_id) }
+
+  scope :received, -> { where("payment_amount >= ?", 0) }
+  scope :refunds, -> { where("payment_amount < ?", 0) }
 
   paginates_per 10
 
@@ -95,7 +101,7 @@ class Payment < ActiveRecord::Base
     invoice = Invoice.find(inv_id)
     diff = (self.invoice_old_paid_amount(invoice.id, pay.try(:id)) + c_pay) - invoice.invoice_total
     #if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
-    if diff < 0
+    if diff < 0 && invoice.status != 'paid'
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
       return_v = diff < 0 ? c_pay : invoice.client.client_credit
     else
@@ -134,21 +140,21 @@ class Payment < ActiveRecord::Base
     invoice_payments = self.invoice_paid_detail(inv_id)
     invoice_paid_amount = 0
     invoice_payments.each do |inv_p|
-      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
+      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount if inv_p.payment_amount.present? && inv_p.payment_amount >= 0
     end
     invoice_paid_amount
   end
 
- def self.invoice_old_paid_amount(inv_id, pay_id)
-   invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
-   invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
+  def self.invoice_old_paid_amount(inv_id, pay_id)
+    invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
+    invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
 
-   invoice_paid_amount = 0
-   invoice_old_payments.all.each do |inv_p|
-     invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
-   end
-   invoice_paid_amount
- end
+    invoice_paid_amount = 0
+    invoice_old_payments.all.each do |inv_p|
+      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount if inv_p.payment_amount.present? && inv_p.payment_amount >= 0
+    end
+    invoice_paid_amount
+  end
 
   def self.invoice_paid_detail(inv_id)
     Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id).all
@@ -176,9 +182,9 @@ class Payment < ActiveRecord::Base
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     @payments = Payment.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id')
-                       .joins('LEFT JOIN companies ON companies.id = payments.company_id')
-                       .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
-                       .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients ON clients.id = invs.client_id')
+                    .joins('LEFT JOIN companies ON companies.id = payments.company_id')
+                    .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
+                    .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients ON clients.id = invs.client_id')
 
     payments = params[:search].present? ? @payments.search(params[:search]).records : @payments
 
@@ -249,26 +255,26 @@ class Payment < ActiveRecord::Base
     self.update_attribute(:currency_id, self.invoice.currency_id) if self.currency_id.blank?
   end
 
- def payment_name
-   "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
- end
+  def payment_name
+    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
+  end
 
   def group_date
     created_at.strftime('%B %Y')
   end
 
- def self.sum_per_month(client_ids, company_id)
-   payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
-   payments_per_month = {}
+  def self.sum_per_month(client_ids, company_id)
+    payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
+    payments_per_month = {}
 
-   payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
-     payments_per_month[date] = payments.sum{|p| p.payment_amount.to_f}
-   end
+    payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
+      payments_per_month[date] = payments.sum{|p| p.payment_amount.to_f}
+    end
 
-   payments_per_month
- end
+    payments_per_month
+  end
 
- def group_payment_date
+  def group_payment_date
     payment_date.to_date.strftime('%B %Y')
- end
+  end
 end

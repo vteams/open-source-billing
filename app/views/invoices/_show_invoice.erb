@@ -78,6 +78,9 @@
               <div class="new-invoice-footer-row">
                 <span><%= t('views.invoices.amount_paid') %></span>
               </div>
+              <div class="new-invoice-footer-row">
+                <span><%= t('views.invoices.amount_refund') %></span>
+              </div>
               <strong class="invoice-total-title"><%= t('views.invoices.amount_due') %></strong>
             </div>
             <div class="invoice-total-right">
@@ -111,6 +114,10 @@
                 <span><%=  @invoice.currency.unit %></span>
                 <em class="f-invoice-price"><%= number_to_currency(Payment.invoice_paid_amount(@invoice.id), unit:  @invoice.currency.code )%></em>
               </div>
+              <div class="new-invoice-footer-row">
+                <span><%=  @invoice.currency.unit %></span>
+                <em class="f-invoice-price"><%= number_to_currency(@invoice.payments.refunds.sum('payment_amount'), unit:  @invoice.currency.code )%></em>
+              </div>
 
               <strong class="invoice-total-title"><%=  @invoice.currency.unit %> <span><%= number_to_currency(@invoice.invoice_total - Payment.invoice_paid_amount(@invoice.id), unit: @invoice.currency.code) %></span></strong>
             </div>
@@ -127,7 +134,7 @@
           <br/>
         </div>
         <div class="clearfix"></div>
-        <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= (image_tag "m-bottom-logo.jpg", class: 'responsive-img') %></p>
+        <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= link_to image_tag("m-bottom-logo.jpg", class: 'responsive-img'), 'http://opensourcebilling.org/' %></p>
         <br/>
       </div>
     </div>

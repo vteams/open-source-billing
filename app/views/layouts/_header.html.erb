@@ -44,8 +44,19 @@
     <!--- header search--->
     <div class="col s3 m2 l4  header-right">
       <div class="right">
+        <!-- Dropdown Structure -->
+<!--        <ul id="dropdown" class="notification-dropdown collection">-->
+<!--          <li class="collection-item">-->
+<!--            <p>-->
+              <%# PublicActivity::Activity.all.where.not(owner_id: current_user.id).each do |activity| %>
+                <%#= activity.owner_type %>
+              <%# end %>
+<!--            </p>-->
+<!--          </li>-->
+<!--        </ul>-->
         <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
                     title: t('header.links.search') if search_available_in?(controller_name)%>
+        <a class="dropdown-button" href="#!" data-activates="dropdown" data-beloworigin="true"><i class="material-icons">notifications_none</i></a>
         <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
                     title: t('views.help.help'), remote: true %>
       </div>

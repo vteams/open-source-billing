@@ -2166,7 +2166,7 @@ h6 {
   height: auto;
   position: relative; }
 .modal .modal-footer .left-section p {
-  font-size: 9px;
+  font-size: 14px;
   position: absolute;
   bottom: 10px; }
 .modal .modal-footer .left-section img {
@@ -4743,7 +4743,7 @@ html {
 .new-invoice-footer .right-section .new-invoice-footer-row {
   border-bottom: 1px solid #d3d3d3;
   margin: 0 0 7px;
-  padding: 0 0 7px; }
+  padding: 0 0 10px; }
 .new-invoice-footer .right-section .new-invoice-footer-row:after {
   content: " ";
   clear: both;
@@ -4856,7 +4856,7 @@ html {
   border-bottom: 0; }
 
 .report-copyrights {
-  font-size: 9px;
+  font-size: 14px;
   padding: 0 30px;
   margin: 0 0 30px; }
 
@@ -6015,4 +6015,32 @@ margin-bottom: 20px;
 }
 #invoice_model .modal-content .modal-footer{
   z-index: -1;
+}
+.brand-logo{
+  font-weight:900;
+}
+
+.notification-dropdown {
+  background-color: #FFFFFF;
+  margin: 0;
+  left: 1139px !important;
+  display: none;
+  min-width: 280px !important; /* Changed this to accomodate content width */
+  max-height: auto;
+  margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
+  overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
+  opacity: 0;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  will-change: width, height;
+}
+.payment_paid_full [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+li.disable_payment a{
+  color: #b9b4b4;
+}
+li.disable_payment:hover i{
+  color: #b9b4b4 !important;
 }

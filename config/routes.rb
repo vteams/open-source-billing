@@ -62,6 +62,7 @@ Osb::Application.routes.draw do
         get 'set_default_currency'
       end
       collection do
+        post :nav_format
         resources :roles
         get :invoice_number_format
       end
@@ -101,6 +102,7 @@ Osb::Application.routes.draw do
     resources :payments do
       collection do
         get 'enter_payment'
+        get 'refund_payment'
         put 'update_individual_payment'
         get 'filter_payments'
         get 'bulk_actions'

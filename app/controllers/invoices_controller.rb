@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
     authorize @invoices
     respond_to do |format|
       format.html # index.html.erb
-      # format.js
+      format.js
     end
   end
 

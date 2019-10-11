@@ -135,6 +135,20 @@ class PaymentsController < ApplicationController
     @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
   end
 
+  def refund_payment
+    ids = params[:invoice_ids]
+    @payments = []
+    ids = ids.split(",") if ids and ids.is_a?(String)
+    ids.each do |inv_id|
+      company_id = Invoice.find(inv_id).company_id
+      @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
+      authorize Payment, :create?
+    end
+
+    @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))
+
+  end
+
   def update_individual_payment
     paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
     where_to_redirect = params[:from_invoices] ? invoices_url : payments_url

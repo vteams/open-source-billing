@@ -9,9 +9,12 @@
           <i class="material-icons close">close</i>
         </a>
       </div>
-      <h5 class="left text-blue"><%= t('views.dashboard.enter_payment') %>: <span><%= invoice.client.organization_name %></span> </h5>
+      <h5 class="left text-blue"><%= action_name.eql?("enter_payment") ? t('views.dashboard.enter_payment') : 'Refund payment' %>: <span><%= invoice.client.organization_name %></span> </h5>
     </div>
     <%= simple_form_for payment, html: { class: 'payment_form form-horizontal' }, remote: true do |f| %>
+        <% refund = invoice.payments.refunds.sum('payment_amount') %>
+        <% due_refund = invoice.payments.received.sum('payment_amount') + invoice.payments.refunds.sum('payment_amount') %>
+        <% received_amount = Payment.invoice_paid_amount(invoice.id) %>
         <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
         <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
         <% client_credit = client_credit.present? ? client_credit : 0 %>
@@ -23,6 +26,9 @@
 
         <%= f.submit '', class: 'send_submit submit hidden', name: 'save_as_draft' %>
         <div style="display:none" class="rem_payment_amount" value="<%= due_amount %>"></div>
+        <div style="display:none" class="received_payment_amount" value="<%= received_amount %>"></div>
+        <div style="display:none" class="due_refunds" value="<%= due_refund %>"></div>
+        <div style="display:none" class="refunds" value="<%= refund %>"></div>
 
         <div class="info-section enter-payment clearfix">
           <div class="row">
@@ -39,7 +45,7 @@
                 </div>
               </div>
               <div class="row">
-                <%= f.input :payment_amount, label: "#{t('payment')} #{invoice.currency.unit}",
+                <%= f.input :payment_amount, label: "#{action_name.eql?("enter_payment") ? t('payment') : 'Refund'} (#{invoice.currency.unit})",
                             label_html: { class: 'active' }, wrapper_html: { class: 'input-field col s6' },
                             input_html: { class: 'payment_amount', placeholder: 0, min: 0 } %>
                 <%= f.input :paid_full, label: t('views.payments.payfull'), input_html: { class: 'filled-in pay_full'}, as: :boolean,

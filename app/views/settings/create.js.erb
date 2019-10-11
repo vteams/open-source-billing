@@ -1,4 +1,14 @@
+<% if params[:invoice_number_format].present? && !params[:invoice_number_format].include?('{{invoice_number}}')%>
+swal({
+    text: 'must contain invoice number atleast once',
+    icon: 'warning',
+
+})
+<% else %>
+
 <% flash[:notice] = t('views.settings.updated_msg') %>
 <%# if @language_changed.present? and @language_changed == true  %>
 window.location.href = "/<%= current_user.settings.language.to_sym %>/settings";
-<%# end %>
+
+<% end %>
+

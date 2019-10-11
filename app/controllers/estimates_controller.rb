@@ -12,7 +12,7 @@ class EstimatesController < ApplicationController
   def index
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-    @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @estimates = Estimate.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
     @estimates = filter_by_company(@estimates)
     @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params.deep_dup)
     authorize @estimates

@@ -140,3 +140,4 @@ $(document).ready ->
     dropdownCssClass: "tax-dropdown"
   });
   $('.currency-select').material_select();
+  $('.dropdown-trigger').dropdown();

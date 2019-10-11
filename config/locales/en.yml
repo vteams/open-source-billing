@@ -156,6 +156,7 @@ en:
       fax: "Fax"
       address: "Address"
       received: "Received"
+      refund: "Refund"
       available: "available"
       method: "Method"
       notes: "Notes"
@@ -256,7 +257,8 @@ en:
       received_payment_detail: "Which Invoices have you received payment for?"
       apply_payment_detail: "Select one or more Invoices from the list below to apply payment."
       selected_amount_detail: "You haven't selected any invoice. Please select one or more invoices and try again."
-      enter_payment: "Enter payment"
+      enter_payment: "Payment"
+      refund_payment: "Refund"
       clone: 'Clone'
       delete: 'Delete'
 
@@ -295,6 +297,7 @@ en:
       date_to_use: "Date to use"
       invoice_type: "Invoice Type"
       amount_paid: "Amount Paid"
+      amount_refund: "Amount Refund"
       amount_due: "Amount Due"
       this_invoice_was_sent_using: "This invoice was sent using"
       no_unpaid_invoices: "There are no unpaid invoices."
