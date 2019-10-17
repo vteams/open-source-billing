@@ -1,0 +1,6 @@
+$('body').append("<%= escape_javascript(render partial: 'payment_form_popup', locals:{ payment: @payments.first}) %>")
+Payment.refund_functions();
+elem = $("#payment_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);
+$('.select-payment-method').select2();

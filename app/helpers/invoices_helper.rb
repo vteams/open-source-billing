@@ -57,7 +57,7 @@ module InvoicesHelper
 
   def history_of_invoice
     activities_arr=[]
-    public_activities = PublicActivity::Activity.where('(trackable_type = ? AND trackable_id = ?) OR (trackable_type = ? AND trackable_id IN (?))', 'Invoice', @invoice.id, 'Payment', @invoice.payments.pluck(:id))
+    public_activities = PublicActivity::Activity.where('(trackable_type = ? AND trackable_id = ?) OR (trackable_type = ? AND trackable_id IN (?))', 'Invoice', @invoice.id, 'Payment', @invoice.payments.pluck(:id)).order('created_at desc')
     public_activities.each do |activity|
       unless activity.parameters.empty?
         if activity.key == "invoice.create"
@@ -81,7 +81,7 @@ module InvoicesHelper
         end
       end
     end
-    activities_arr.reverse.join(", ").gsub(",", '<br/>').html_safe
+    activities_arr.join(", ").gsub(",", '<br/>').html_safe
   end
 
   def invoice_status(activity)

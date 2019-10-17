@@ -6041,6 +6041,110 @@ margin-bottom: 20px;
 li.disable_payment a{
   color: #b9b4b4;
 }
+li.disable_payment a i{
+  color: #d0caca !important;
+}
 li.disable_payment:hover i{
-  color: #b9b4b4 !important;
+  color: #d0caca !important;
+}
+.dis_pay i{
+  color: #d0caca;
+}
+.dis_pay:hover i{
+  color: #d0caca !important;;
+}
+.text-align-center{
+  text-align: center;
+}
+.payment-receipt{
+  background: white;
+}
+.payment-receipt table{
+  border-collapse: unset;
+}
+.payment-receipt tbody tr{
+  border: 0px !important;
+}
+.payment-receipt tbody tr:nth-child(3) td:first-child{
+  //width: 70%;
+}
+.border-bottom{
+  border-bottom: 1px solid;
+}
+.received-from{
+  width: 15%;
+  float: left;
+}
+.client-name{
+  width: 65%;
+  float: left;
+}
+.currency_code{
+  width: 5%;
+  float: left;
+}
+.received_payment{
+  width: 10%;
+  float: left;
+}
+.amount_in_words{
+  margin-left: 100px;
+  margin-top: 40px;
+}
+.total_amt_in_words{
+  width: 75%;
+  float: left;
+}
+.currency_title{
+  float: left;
+  width: 25%;
+}
+.payment_for{
+  width: 100%;
+  margin-top: 80px;
+}
+.payment_for div:first-child{
+  width: 4%;
+  float: left;
+}
+.payment_for div:last-child{
+  width: 96%;
+  float: left;
+}
+.received_by{
+  width: 50%;
+  display: inline-flex;
+  float: right;
+  margin-top: 50px;
+}
+.received_by div:first-child{
+  width: 24%;
+  float: left;
+  height: 20px;
+  line-height: 20px;
+  text-align: left;
+  padding-right: 20px;
+}
+.received_by div:last-child{
+  width: 70%;
+  height: 20px;
+  line-height: 20px;
+  float: right;
+}
+.received{
+  display: inline-flex;
+  width: 100%;
+  background: #ffffff !important;
+}
+.receipt-company-info-section{
+  background: #ffffff;
+}
+.receipt-company-info-section .info-left-section{
+  width: 70%;
+  float: left;
+}
+.receipt-company-info-section .info-right-section{
+  width: 30%;
+  float: left;
+  height: 220px;
 }

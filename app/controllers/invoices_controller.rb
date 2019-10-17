@@ -166,6 +166,23 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def invoice_receipt
+    @invoice = Invoice.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        render pdf: 'invoice_receipt',
+               layout: "pdf_mode.html.erb",
+               encoding: "UTF-8",
+               template: 'invoices/invoice_receipt.html.erb',
+               footer: {
+                   html: {
+                       template: 'payments/_payment_tagline'
+                   }
+               }
+      end
+    end
+  end
+
   def clone
     @invoice = @invoice.clone
     render action: 'edit'

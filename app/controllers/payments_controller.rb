@@ -149,6 +149,25 @@ class PaymentsController < ApplicationController
 
   end
 
+  def payment_receipt
+    @payment = Payment.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        render pdf: "payment_receipt",
+               layout: "pdf_mode.html.erb",
+               encoding: "UTF-8",
+               template: "payments/payment_receipt.html.erb",
+               show_as_html: false,
+               footer: {
+                   html: {
+                       template: 'payments/_payment_tagline',
+                       layout: "pdf_mode.html.erb"
+                   }
+               }
+      end
+    end
+  end
+
   def update_individual_payment
     paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
     where_to_redirect = params[:from_invoices] ? invoices_url : payments_url

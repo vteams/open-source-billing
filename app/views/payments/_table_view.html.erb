@@ -60,6 +60,12 @@
                     <% end %>
 
                   </li>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>print</i> Receipt"),
+                                {:controller => 'payments', :action => 'payment_receipt',
+                                 :id => payment.id, :format => "pdf"},
+                                :target => '_blank', title: t('views.common.print') %>
+                  </li>
                 </ul>
               </div>
 

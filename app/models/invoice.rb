@@ -19,9 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Invoice < ActiveRecord::Base
+  include Trackstamps
   include ::OSB
   include DateFormats
-  include Trackstamps
   include InvoiceSearch
   include Hashid::Rails
   include PublicActivity::Model
@@ -139,6 +139,10 @@ class Invoice < ActiveRecord::Base
 
   def unpaid_amount
     invoice_total - payments.where("payment_type is null || payment_type != 'credit'").sum(:payment_amount)
+  end
+
+  def total_received
+    self.payments.received.sum('payment_amount')
   end
 
   # This doesn't actually dispute the invoice. It just updates the invoice status to dispute.

@@ -102,6 +102,10 @@
                     <li>
                       <%= link_to raw("<i class='material-icons'>open_in_browser</i>Get url"), 'javascript:;', class: 'get_clipboard_url', data: {url: request.protocol + request.host_with_port + url_for(invoice)} %>
                     </li>
+                    <li class="<%= 'disable_payment' if invoice.total_received == 0 %>">
+                      <%= link_to raw("<i class='material-icons'>print</i> Receipt"), invoice.total_received == 0 ? 'javascript:void(0);' : {controller: 'invoices', action: 'invoice_receipt', id: invoice.id, format: 'pdf'},
+                                  target: '_blank', title: 'Print' %>
+                    </li>
                   </ul>
                 <% end %>
               </div>

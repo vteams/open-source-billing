@@ -19,6 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Payment < ActiveRecord::Base
+  include Trackstamps
   include DateFormats
   include PaymentSearch
   include PublicActivity::Model
