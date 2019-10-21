@@ -44,7 +44,11 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_company
 
   before_action :set_locale
+  before_action :user_activities
 
+  def user_activities
+    @activities = PublicActivity::Activity.where.not(owner_id: current_user.id).order('created_at desc') if current_user.present?
+  end
 
   def _reload_libs
     if defined? RELOAD_LIBS

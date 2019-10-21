@@ -1,0 +1,6 @@
+<% payment = Payment.find_by(activity.trackable_id) %>
+<% if activity.present? && activity.key == 'payment.create' && activity.parameters['obj'].present? && activity.parameters['obj']['payment_amount'].present? %>
+  <% if activity.parameters['obj']['payment_amount'][1] < 0 %>
+    <div class='col-sm-12'><%= activity.owner.user_name %> refund <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %> on <%= activity.created_at.strftime("%d-%b-%y") %></div>")
+  <% end %>
+<% end %>
