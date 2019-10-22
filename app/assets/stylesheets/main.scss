@@ -6026,14 +6026,25 @@ margin-bottom: 20px;
   left: 1139px !important;
   display: none;
   min-width: 280px !important; /* Changed this to accomodate content width */
-  max-height: auto;
   margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
-  overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
+  overflow: auto; /* Changed this from overflow-y:auto; to overflow:hidden; */
   opacity: 0;
   position: absolute;
   white-space: nowrap;
   z-index: 1;
   will-change: width, height;
+  height: auto !important;
+  width: 427px !important;
+  max-height: 567px !important;
+}
+li.collection-item span time{
+  font-size: 12px;
+}
+li.collection-item span time i{
+  font-size: 12px;
+}
+ul.notification-dropdown:before{
+ content: '';
 }
 .payment_paid_full [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;

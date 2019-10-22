@@ -46,11 +46,7 @@
       <div class="right">
         <!-- Dropdown Structure -->
         <ul id="dropdown" class="notification-dropdown collection">
-          <li class="collection-item">
-            <p>
-              <%= render_activities(@activities) %>
-            </p>
-          </li>
+          <%= render_activities(@activities) %>
         </ul>
         <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
                     title: t('header.links.search') if search_available_in?(controller_name)%>

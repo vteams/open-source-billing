@@ -1,1 +1,6 @@
-<div class='col-sm-12'><%= activity.owner.user_name %> created estimate on <%= activity.created_at.strftime("%d-%b-%y") %></div>
+<li class="collection-item">
+  <span>
+    <p><strong><%= activity.owner.user_name %></strong> created estimate</p>
+    <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+  </span>
+</li>
