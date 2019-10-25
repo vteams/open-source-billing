@@ -1,15 +1,18 @@
+<% estimate = Estimate.find_by_id(activity.trackable_id) %>
 <% if activity.present? && activity.parameters['obj'].present? && activity.parameters['obj']['status'].present? %>
   <li class="collection-item">
+    <a href="<%= estimate_path(estimate) if estimate.present? %>" data-remote="true">
     <% if estimate_status(activity) == 'sent' %>
     <span>
-      <p><strong><%= activity.owner.user_name %> sent estimate to client</strong></p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <p><strong><%= activity.owner.user_name %></strong> sent estimate to client</p>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% elsif estimate_status(activity) == 'invoiced' %>
     <span>
-      <p><strong><%= activity.owner.user_name %> changed this estimate to invoice</strong></p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <p><strong><%= activity.owner.user_name %></strong> changed this estimate to invoice</p>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% end %>
+    </a>
   </li>
 <% end %>

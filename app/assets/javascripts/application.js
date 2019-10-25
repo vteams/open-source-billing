@@ -45,6 +45,8 @@
 //= require dashboard.js.coffee
 //= require invoice_line_items.js.coffee
 //= require items.js.coffee
+//= require activities.js.coffee
+//= require notifications.js.coffee
 //= require jqamp-ui-spinner.min.js
 //= require jquery.qtip.min.js
 //= require jwerty.js
@@ -98,6 +100,8 @@
 //= require nouislider
 //= require chartkick
 //= require Chart.bundle
+//= require jquery.infinite-pages
+
 
 
 jQuery(function () {

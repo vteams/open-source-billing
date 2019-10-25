@@ -1,16 +1,18 @@
 <% payment = Payment.find_by(activity.trackable_id) %>
 <% if activity.present? && activity.key == 'payment.create' && activity.parameters['obj'].present? && activity.parameters['obj']['payment_amount'].present? %>
   <li class="collection-item">
+    <a href="<%= payment_path(payment) if payment.present? %>" data-remote="true">
     <% if activity.parameters['obj']['payment_amount'][1] < 0 %>
       <span>
         <p><strong><%= activity.owner.user_name %></strong> refund <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %></p>
-        <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
       </span>
     <% else %>
       <span>
         <p><strong><%= activity.owner.user_name %></strong> made payment of <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %></p>
-        <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
       </span>
     <% end %>
+    </a>
   </li>
 <% end %>

@@ -1,25 +1,28 @@
+<% invoice = Invoice.find_by_id(activity.trackable_id) %>
 <% if activity.present? && activity.parameters['obj'].present? && activity.parameters['obj']['status'].present? %>
   <li class="collection-item">
+    <a href="<%= invoice_path(invoice) if invoice.present? %>" data-remote="true">
     <% if invoice_status(activity) == 'sent' %>
     <span>
       <p><strong><%= activity.owner.user_name %></strong> sent invoice to client</p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% elsif invoice_status(activity) == 'partial' %>
     <span>
       <p><strong><%= activity.owner.user_name %></strong>  made partial payment for invoice</p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% elsif invoice_status(activity) == 'draft-partial' %>
     <span>
       <p><strong><%= activity.owner.user_name %></strong>  made draft partial payment for invoice</p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% elsif invoice_status(activity) == 'paid' %>
     <span>
       <p><strong><%= activity.owner.user_name %></strong>  made full payment for invoice</p>
-      <time><i class="material-icons">access_time</i> <%= activity.created_at.strftime("%d-%b-%y") %></time>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
     <% end %>
+    </a>
   </li>
 <% end %>

@@ -387,4 +387,8 @@ module ApplicationHelper
 
     condition
   end
+
+  def unread_notifications
+    PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').where(is_read: false).count
+  end
 end

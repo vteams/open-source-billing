@@ -108,3 +108,4 @@ gem 'groupdate'
 gem 'chartkick'
 gem "hashid-rails", "~> 1.0"
 gem 'public_activity'
+gem 'jquery-infinite-pages'

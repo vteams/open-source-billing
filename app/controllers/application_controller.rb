@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   before_action :user_activities
 
   def user_activities
-    @activities = PublicActivity::Activity.where.not(owner_id: current_user.id).order('created_at desc') if current_user.present?
+    @activities = PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').order('created_at desc').page(1).per(10) if current_user.present?
   end
 
   def _reload_libs

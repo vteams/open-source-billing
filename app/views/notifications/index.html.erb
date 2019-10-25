@@ -1,0 +1,6 @@
+<ul id="dropdown" class="notification-dropdown collection infinit-scroll">
+  <%= render 'notifications' %>
+</ul>
+<span class="pagination123">
+  <%= link_to_next_page(@activities, 'Next Page', :remote => true) %>
+</span>
