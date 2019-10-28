@@ -96,7 +96,8 @@ class @Payment
       hidePopover($('#payment_payment_amount'))
 
     jQuery('.payment_form.form-horizontal').submit ->
-      pay_amount = parseFloat(jQuery("#payment_payment_amount").val())
+      pay_amount = -Math.abs(parseFloat(jQuery("#payment_payment_amount").val()))
+      $('#payment_payment_amount').val(pay_amount)
       pay_method = jQuery("#payment_payment_method").val()
       rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
       received_amount = parseFloat(jQuery(".received_payment_amount").attr("value"))

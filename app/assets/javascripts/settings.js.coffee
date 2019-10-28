@@ -22,7 +22,6 @@
   , 5000
 
 @sideNavToggle = () ->
-  debugger
 @initUserListingEvents = () ->
   $('#user_add_btn,#user_cancel_btn').on "click", ->
     $('#user_reset_form').click()
