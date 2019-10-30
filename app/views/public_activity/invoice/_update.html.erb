@@ -22,6 +22,11 @@
       <p><strong><%= activity.owner.user_name %></strong>  made full payment for invoice</p>
       <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
     </span>
+    <% elsif invoice_status(activity) == 'void' %>
+    <span>
+      <p><strong><%= activity.owner.user_name %></strong>  cancelled invoice</p>
+      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+    </span>
     <% end %>
     </a>
   </li>
