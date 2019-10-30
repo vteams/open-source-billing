@@ -3346,10 +3346,18 @@ h6 {
 
 .modal.importModal {
   max-width: 35%; }
-@media only screen and (max-width: 992px) {
-  .modal.importModal { max-width: 85%; }
+//@media only screen and (max-width: 992px) {
+//  .modal.importModal { max-width: 85%; }
+//}
+@media only screen and (max-width: 1507px) {
+  .modal.importModal { max-width: 54%; }
 }
-
+@media only screen and (max-width: 959px) {
+  .modal.importModal { max-width: 65%; }
+}
+@media only screen and (max-width: 797px) {
+  .modal.importModal { max-width: 90%; }
+}
 .modal.importModal .modal-body {
   padding-bottom: 30px; }
 
@@ -6023,18 +6031,22 @@ margin-bottom: 20px;
 .notification-dropdown {
   background-color: #FFFFFF;
   margin: 0;
-  left: 1139px !important;
   display: none;
   min-width: 280px !important; /* Changed this to accomodate content width */
-  max-height: auto;
   margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
-  overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
+  overflow: auto; /* Changed this from overflow-y:auto; to overflow:hidden; */
   opacity: 0;
   position: absolute;
   white-space: nowrap;
   z-index: 1;
   will-change: width, height;
+  height: auto !important;
+  width: 427px !important;
+  max-height: 567px !important;
 }
+//.notification-dropdown.active{
+//  top: 45px !important;
+//}
 .payment_paid_full [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;
 }
@@ -6147,4 +6159,37 @@ li.disable_payment:hover i{
   width: 30%;
   float: left;
   height: 220px;
+}
+
+li.collection-item a{
+  width: 100%;
+}
+.activity-time{
+  font-size: 14px;
+  width: 100%;
+  display: inline-flex;
+}
+.activity-time span{
+  font-size: 12px;
+}
+.activity-time i{
+  width: 6%;
+  padding: 3px;
+  padding-left: 0px;
+  font-size: 14px !important;
+}
+.notification-container{
+  position: relative;
+}
+.notification-container .badge{
+  min-width: 25px !important;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  position: absolute;
+}
+.notification-dropdown li:hover{
+  background: #f3f1f1;
 }

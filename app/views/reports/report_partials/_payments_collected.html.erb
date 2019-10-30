@@ -45,7 +45,7 @@
               <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
               <span class="actual-currency"><%= number_to_currency(payment.payment_amount, unit: payment.currency_code) %></span><br>
               <span class="base-currency-equalent"><%= number_to_currency((payment.payment_amount / payment.invoice.conversion_rate), unit: current_company_obj.base_currency.unit) rescue '' %></span>
-              <% total_in_base_currency += ((payment.payment_amount/payment.invoice.conversion_rate) rescue invoice.payment_amount) %>
+              <% total_in_base_currency += ((payment.payment_amount/payment.invoice.conversion_rate) rescue payment.payment_amount)  unless payment.payment_amount.nil? %>
             </td>
           </tr>
           <% end %>

@@ -1,0 +1,27 @@
+<% client = Client.find_by_id(activity.trackable_id) %>
+<% activity.parameters['obj'].each do |p| %>
+  <% previous_value = p[1][0] %>
+  <% changed_value = p[1][1] %>
+  <% unless p[0].include?('created_at') || p[0].include?('updated_at') %>
+    <li class="collection-item">
+      <a href="<%= client_path(client) if client.present? %>" data-remote="true">
+      <% if previous_value.present? && changed_value.present? %>
+      <span>
+        <p><strong><%= activity.owner.user_name %></strong> changed <%= p[0].humanize %> to <%= changed_value %></p>
+        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      </span>
+      <% elsif (previous_value.nil? || previous_value.empty?) && changed_value.present? %>
+      <span>
+        <p><strong><%= activity.owner.user_name %></strong> added <%= p[0].humanize %>  <%= changed_value %></p>
+        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      </span>
+      <% elsif previous_value.present? && changed_value.empty? %>
+      <span>
+        <p><strong><%= activity.owner.user_name %></strong> removed <%= p[0].humanize %>  <%= previous_value.humanize %></p>
+        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      </span>
+      <% end %>
+      </a>
+    </li>
+  <% end %>
+<% end %>

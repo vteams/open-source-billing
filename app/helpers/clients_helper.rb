@@ -42,7 +42,7 @@ module ClientsHelper
             unless p[0].include?('updated_at')
               if previous_value.present? && changed_value.present?
                 activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} changed #{p[0]} to #{changed_value}</div>")
-              elsif previous_value.empty? && changed_value.present?
+              elsif (previous_value.nil? || previous_value.empty?) && changed_value.present?
                 activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} added #{p[0].humanize}  #{changed_value.humanize}</div>")
               elsif previous_value.present? && changed_value.empty?
                 activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} removed #{p[0].humanize}  #{previous_value.humanize}</div>")
@@ -52,15 +52,6 @@ module ClientsHelper
         end
       end
     end
-    # @client.invoices.each do |c_inv|
-    #   c_inv.activities.each do |inv_activity|
-    #     unless inv_activity.parameters.empty?
-    #       if inv_activity.key == "invoice.create"
-    #         activities_arr << strip_tags("<div class='col-sm-12'>#{inv_activity.owner.user_name} created invoice #{inv_activity.parameters["obj"]["invoice_number"][1]} for this client</div>")
-    #       end
-    #     end
-    #   end
-    # end
     activities_arr.reverse.join(", ").gsub(",", '<br/>').html_safe
   end
 

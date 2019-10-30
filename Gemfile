@@ -110,3 +110,4 @@ gem "hashid-rails", "~> 1.0"
 gem 'public_activity'
 gem 'to_words'
 gem 'trackstamps'
+gem 'jquery-infinite-pages'

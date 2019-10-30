@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Osb::Application.routes.draw do
 
+  resources :notifications, only: :index
+
   get 'activities/index'
 
   mount OsbApi::Engine => "/api"
@@ -91,7 +93,11 @@ Osb::Application.routes.draw do
         get :revenue_by_client
       end
     end
-    resources :activities
+    resources :activities do
+      collection do
+        post :read_notifications
+      end
+    end
     get "reports/:report_name" => "reports#reports"
     get "reports/data/:report_name" => "reports#payments_collected"
     get "reports" => "reports#index"

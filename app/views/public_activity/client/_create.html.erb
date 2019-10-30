@@ -1,0 +1,9 @@
+<% client = Client.find_by_id(activity.trackable_id) %>
+<li class="collection-item">
+  <a href="<%= client_path(client) if client.present? %>" data-remote="true">
+  <span>
+    <p><strong><%= activity.owner.user_name %></strong> created client</p>
+    <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+  </span>
+  </a>
+</li>
