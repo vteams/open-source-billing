@@ -1,9 +1,5 @@
 $("<%=j render(:partial => 'notifications') %>").appendTo($(".infinit-scroll"));
-<% if @activities.last_page? %>
-$('.pagination123').html("");
-<% else %>
 $('.pagination123').html('<a rel="next" data-remote="true" href="/notifications?locale=en&page=<%= params[:page].to_i + 1 %>"></a>');
-<% end %>
 $('.notification-container').infinitePages({
   loading: function () {
     $(this).text('Loading next page...');

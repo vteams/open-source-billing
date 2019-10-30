@@ -6186,9 +6186,10 @@ li.collection-item a{
   position: relative;
 }
 .notification-container .badge{
-  min-width: 25px !important;
-  width: 25px;
-  height: 25px;
+  min-width: 0rem !important;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
   border-radius: 50%;
   background: red;
   color: white;
