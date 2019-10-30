@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191014103028) do
+ActiveRecord::Schema.define(version: 20191022115856) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20191014103028) do
     t.string   "recipient_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_read",                      default: false
   end
 
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree

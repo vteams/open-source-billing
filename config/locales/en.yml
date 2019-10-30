@@ -343,6 +343,7 @@ en:
       partial_tooltip: "Client has made partial payment against the invoice."
       draft_partial_tooltip: "Payment received against the draft invoice."
       disputed_invoice: "Client has disputed this invoice."
+      void_invoice: "This invoice is cancelled."
       project_invoice_cannot_updated: "Project Invoice cannot be updated"
       saved_as_draft_msg: "The invoice has been saved as draft."
       created_and_sent_msg: "Invoice has been created and sent to %{org_name}."

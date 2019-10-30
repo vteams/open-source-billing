@@ -51,7 +51,7 @@ class InvoiceLineItem < ActiveRecord::Base
   end
 
   def item_total_amount
-    item_tax_amount + item_total
+      item_tax_amount + item_total
   end
 
 

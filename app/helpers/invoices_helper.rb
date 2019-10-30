@@ -21,7 +21,7 @@
 module InvoicesHelper
   include ApplicationHelper
   def invoices_due_dates invoice
-    return '' if invoice.draft?
+    return '' if invoice.draft? || invoice.status.eql?('void')
     if invoice.due_date.present? && invoice.due_date.to_time > Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-due' title='Due Date: #{invoice.due_date}'>due in #{distance_of_time_in_words(invoice.due_date.to_time - Time.now)}</span>".html_safe
     elsif invoice.due_date.present? && invoice.due_date.to_time == Date.today.to_time && invoice.status != 'paid'
@@ -39,6 +39,10 @@ module InvoicesHelper
        <p>#{message}</p>
     HTML
     notice.html_safe
+  end
+
+  def invoice_payment_received invoice
+    invoice.status.eql?('paid') || invoice.status.eql?('partial') || invoice.status.eql?('draft-partial')
   end
 
   def invoice_refund invoice

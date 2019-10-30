@@ -251,7 +251,7 @@ function initCustomConfirmPopUp() {
         // Showing Custom Popup
         swal({
             title: $(link).data('confirm'),
-            text: I18n.t('helpers.messages.not_be_recoverable'),
+            text: $(link).data('text') ? $(link).data('text') : I18n.t('helpers.messages.not_be_recoverable'),
             icon: 'warning',
             buttons: [true, true],
         }).then(function(confirmed) {

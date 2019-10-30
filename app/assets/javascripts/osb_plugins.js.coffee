@@ -121,7 +121,7 @@ class @OsbPlugins
       cost = $(container).find("input.cost")
       qty = $(container).find("input.qty")
       cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
-      qty.val(parseInt(qty.val())) if qty.val()
+      qty.val(qty.val()) if qty.val()
 
     InvoiceCalculator.updateInvoiceTotal()
     $('.remove_nested_fields').on 'click', ->
@@ -286,7 +286,7 @@ class @OsbPlugins
       cost = $(container).find("input.cost")
       qty = $(container).find("input.qty")
       cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
-      qty.val(parseInt(qty.val())) if qty.val()
+      qty.val(qty.val()) if qty.val()
 
     EstimateCalculator.updateEstimateTotal()
     $('.remove_nested_fields').on 'click', ->

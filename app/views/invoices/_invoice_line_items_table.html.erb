@@ -24,7 +24,7 @@
         <td class="align_left"><%= @num+=1 %></td>
         <td class="description"><%= "#{item.item_name}: #{item.item_description}" %></td>
         <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
-        <td class="center-align"><%= item.item_quantity.to_i %></td>
+        <td class="center-align"><%= item.item_quantity.to_f %></td>
         <% if invoice.has_tax_one? %>
           <td class="center-align"><%= "#{item.tax1.percentage}%" if item.tax1.present? %></td>
         <% end %>

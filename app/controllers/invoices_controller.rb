@@ -183,6 +183,25 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def void_invoice
+    @invoice = Invoice.find(params[:id])
+    @invoice.status = "void"
+    @invoice.base_currency_equivalent_total = 0
+    @invoice.invoice_total = 0
+    @invoice.sub_total = 0
+    @invoice.invoice_line_items.each do |item|
+      item.item_unit_cost = 0
+      item.tax_1 = 0
+      item.tax_2 = 0
+      item.save
+    end
+    @invoice.save
+    respond_to do |format|
+      format.js
+      format.html { redirect_to invoices_path }
+    end
+  end
+
   def clone
     @invoice = @invoice.clone
     render action: 'edit'
