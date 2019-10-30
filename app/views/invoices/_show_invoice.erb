@@ -8,10 +8,6 @@
         <div class="new-invoice-header clearfix">
           <div class="new-invoice-action-btn right">
 
-            <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"),
-                        {:controller => 'invoices', :action => 'show',
-                         :id => @invoice.hashid, :format => "pdf"},
-                        :target => '_blank', title: t('views.common.pdf') %>
             <%= link_to raw("<i class='material-icons'>print</i>"),
                         {:controller => 'invoices', :action => 'show',
                          :id => @invoice.id, :format => "pdf"},

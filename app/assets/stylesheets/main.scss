@@ -6090,6 +6090,7 @@ li.disable_payment:hover i{
 .client-name{
   width: 65%;
   float: left;
+  font-weight: bold;
 }
 .currency_code{
   width: 5%;
@@ -6101,7 +6102,7 @@ li.disable_payment:hover i{
 }
 .amount_in_words{
   margin-left: 100px;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 .total_amt_in_words{
   width: 75%;
@@ -6113,21 +6114,21 @@ li.disable_payment:hover i{
 }
 .payment_for{
   width: 100%;
-  margin-top: 80px;
+  margin-top: 100px;
 }
 .payment_for div:first-child{
-  width: 4%;
+  width: 13%;
   float: left;
 }
 .payment_for div:last-child{
-  width: 96%;
+  width: 87%;
   float: left;
 }
 .received_by{
   width: 50%;
   display: inline-flex;
   float: right;
-  margin-top: 50px;
+  margin-top: 60px;
 }
 .received_by div:first-child{
   width: 24%;
@@ -6146,6 +6147,7 @@ li.disable_payment:hover i{
 .received{
   display: inline-flex;
   width: 100%;
+  margin-top: 20px;
   background: #ffffff !important;
 }
 .receipt-company-info-section{
@@ -6154,9 +6156,11 @@ li.disable_payment:hover i{
 .receipt-company-info-section .info-left-section{
   width: 70%;
   float: left;
+  margin-top: 30px;
 }
 .receipt-company-info-section .info-right-section{
   width: 30%;
+  margin-top: 30px;
   float: left;
   height: 220px;
 }

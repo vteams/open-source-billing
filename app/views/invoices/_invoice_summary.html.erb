@@ -1,4 +1,4 @@
-<h3><b>INVOICE</b></h3>
+<h3><b><%= action_name.eql?('invoice_receipt') ? 'PAYMENT RECEIPT' : 'INVOICE' %></b></h3>
 <div>
   <div><b>Invoice Date:</b> <%= @invoice.invoice_date %></div>
   <div><b>Due Date:</b> <%= @invoice.due_date %></div>

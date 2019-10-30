@@ -1,5 +1,5 @@
 <div class="payment-receipt">
-  <div style="text-align: center; width: 92%">
+  <div class="receipt-logo" style="text-align: center; width: 92%">
     <%= image_tag @payment.invoice.company.logo %>
   </div>
 </div>
@@ -16,17 +16,17 @@
   <div style="clear: both"></div>
   <div class="received">
     <div class="received-from">Received from</div>
-    <div class="client-name border-bottom"><%= @payment.invoice.client.full_name %></div>
+    <div class="client-name border-bottom text-align-center"><%= @payment.invoice.client.full_name %></div>
     <div class="text-align-center currency_code"><%= @payment.currency.code %></div>
-    <div class="border-bottom received_payment"><%= @payment.payment_amount %></div>
+    <div class="border-bottom received_payment">&nbsp;&nbsp;<%= @payment.payment_amount %></div>
   </div>
   <div class="amount_in_words">
-    <div class="border-bottom total_amt_in_words"><%= @payment.payment_amount.to_i.abs.to_words %></div>
+    <div class="border-bottom total_amt_in_words">&nbsp;&nbsp;<%= @payment.payment_amount.to_i.abs.to_words %></div>
     <div class="currency_title"><%= @payment.currency.title %></div>
   </div>
   <div class="payment_for">
-    <div style="">for</div>
-    <div class="border-bottom"><%= @payment.invoice.formatted_invoice_number %></div>
+    <div style="">for invoice#</div>
+    <div class="border-bottom">&nbsp;&nbsp;<%= @payment.invoice.formatted_invoice_number %></div>
   </div>
   <div class="received_by">
     <div>Received by</div>
