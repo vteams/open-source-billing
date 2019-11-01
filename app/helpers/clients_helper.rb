@@ -39,13 +39,13 @@ module ClientsHelper
           activity.parameters['obj'].each do |p|
             previous_value = p[1][0]
             changed_value = p[1][1]
-            unless p[0].include?('updated_at')
+            unless p[0].include?('updated_at') || p[0].include?('created_at')
               if previous_value.present? && changed_value.present?
                 activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} changed #{p[0]} to #{changed_value}</div>")
               elsif (previous_value.nil? || previous_value.empty?) && changed_value.present?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} added #{p[0].humanize}  #{changed_value.humanize}</div>")
+                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} added #{p[0].humanize}  #{changed_value}</div>")
               elsif previous_value.present? && changed_value.empty?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} removed #{p[0].humanize}  #{previous_value.humanize}</div>")
+                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} removed #{p[0].humanize}  #{previous_value}</div>")
               end
             end
           end

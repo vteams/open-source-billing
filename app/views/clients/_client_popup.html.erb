@@ -3,6 +3,9 @@
 
     <div class="modal-header clearfix text-content">
       <div class="modal-action-btn right">
+        <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true,
+                    class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+
         <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
           <i class="material-icons close">close</i>
         </a>
@@ -35,15 +38,16 @@
         </div>
       </div>
       <% if get_user_current_company.logo.present? %>
-          <div class="info-right-section right circle">
-            <%= image_tag get_user_current_company.logo_url(:thumb), class: 'responsive-img'%>
-          </div>
+        <div class="info-right-section right circle">
+          <%= image_tag get_user_current_company.logo_url(:thumb), class: 'responsive-img'%>
+        </div>
       <% end %>
     </div>
     <div class="modal-body">
-      <div class="panel-table">
+      <div class="panel-table client-invoices-table">
         <h5><%= t('invoice') %></h5>
-        <%= link_to(("+ #{t('header.links.invoices.new')}") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right new-link') %>
+        <%= link_to(("View all") , invoices_path(client_id: client.id), class: 'pull-right new-link view-all') %>
+        <%= link_to(("+ #{t('header.links.invoices.new')} | ") , new_invoice_path(invoice_for_client: client.id), class: 'pull-right new-link') %>
         <table class="bordered responsive-table">
           <thead>
           <tr>
@@ -54,20 +58,21 @@
           </tr>
           </thead>
           <tbody>
-              <% @invoices.each do |invoice|%>
-                  <tr>
-                    <td><%= link_to invoice.formatted_invoice_number, invoice, remote: true %></td>
-                    <td><%= invoice.due_date%></td>
-                    <td><%= invoice.company.company_name%></td>
-                    <td><%= invoice.currency.unit %> <%= number_to_currency(invoice.invoice_total, unit: '')%></td>
-                  </tr>
-              <% end %>
+          <% @invoices.each do |invoice|%>
+            <tr>
+              <td><%= link_to invoice.formatted_invoice_number, invoice, remote: true %></td>
+              <td><%= invoice.due_date%></td>
+              <td><%= invoice.company.company_name%></td>
+              <td><%= invoice.currency.unit %> <%= number_to_currency(invoice.invoice_total, unit: '')%></td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
       </div>
-      <div class="panel-table">
+      <div class="panel-table client-invoices-table">
         <h5><%= t('views.payments.payments') %></h5>
-        <%= link_to("+ #{t('views.payments.new')}", unpaid_client_invoices_path(client.id), class: "new-link pull-right #{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
+        <%= link_to(("View all") , payments_path(client_id: client.id), class: 'pull-right new-link view-all') %>
+        <%= link_to("+ #{t('views.payments.new')} |", unpaid_client_invoices_path(client.id), class: "new-link pull-right #{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
         <table class="bordered responsive-table">
           <thead>
           <tr>
@@ -78,14 +83,14 @@
           </tr>
           </thead>
           <tbody>
-            <% @payments.each do |payment|%>
-              <tr>
-                <td><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment.unscoped_invoice, remote: true %></td>
-                <td><%= payment.unscoped_invoice.due_date%></td>
-                <td><%= payment.unscoped_invoice.company.company_name%></td>
-                <td><%= payment.unscoped_invoice.currency.unit %> <%= number_to_currency(payment.payment_amount, unit: '')%></td>
-              </tr>
-            <% end %>
+          <% @payments.each do |payment|%>
+            <tr>
+              <td><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment.unscoped_invoice, remote: true %></td>
+              <td><%= payment.unscoped_invoice.due_date%></td>
+              <td><%= payment.unscoped_invoice.company.company_name%></td>
+              <td><%= payment.unscoped_invoice.currency.unit %> <%= number_to_currency(payment.payment_amount, unit: '')%></td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
       </div>

@@ -103,6 +103,9 @@ h6 {
 
 .text-color {
   color: #454545; }
+.text-maroon{
+  color: #96251d !important;
+}
 
 /*---Floating btn---*/
 .btn-floating {
@@ -2040,7 +2043,7 @@ h6 {
 .modal .modal-header.text-content {
   padding: 18px 27px; }
 .modal .modal-header.text-content .modal-action-btn a {
-  line-height: normal; }
+   }
 .modal .modal-header.text-content .modal-action-btn a i {
   font-size: 22px; }
 .modal .modal-header.text-content h5 span {
@@ -6197,4 +6200,12 @@ li.collection-item a{
 }
 .notification-dropdown li:hover{
   background: #f3f1f1;
+}
+.client-invoices-table a.view-all{
+  padding-left: 4px;
+}
+.payment-category{
+  color: #8c8c8c8c;
+  font-size: 1em;
+  text-transform: uppercase;
 }

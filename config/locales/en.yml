@@ -324,6 +324,7 @@ en:
       draft_partial: "Draft Partial"
       disputed: "Disputed"
       invoiced: "Invoiced"
+      void: "Void"
       every: "Every"
       remaining: "Remaining"
       stop_recurring: "Stop Recurring"

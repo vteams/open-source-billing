@@ -31,7 +31,11 @@
               </div>
             </td>
             <td><%= payment.unscoped_client.organization_name rescue '' %><br>
-              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment.unscoped_invoice, remote: true, class: ' estimate-number' %></em>
+              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.formatted_invoice_number, payment, remote: true, class: ' estimate-number invoice_show_link' %></em>
+              <span class="right payment-category">
+                <%= payment.payment_amount.present? && payment.payment_amount < 0 ? 'Refund' : ''  %>
+              </span>
+
             </td>
             <td><%= payment.payment_date rescue "" %></td>
             <td>
