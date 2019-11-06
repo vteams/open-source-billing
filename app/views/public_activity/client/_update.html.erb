@@ -7,18 +7,18 @@
       <a href="<%= client_path(client) if client.present? %>" data-remote="true">
       <% if previous_value.present? && changed_value.present? %>
       <span>
-        <p><strong><%= activity.owner.user_name %></strong> changed <%= p[0].humanize %> to <%= changed_value %></p>
-        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+        <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name %></strong> changed <%= p[0].humanize %> of client <%= client.full_name %> to <%= changed_value %></p>
+        <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
       </span>
       <% elsif (previous_value.nil? || previous_value.empty?) && changed_value.present? %>
       <span>
-        <p><strong><%= activity.owner.user_name %></strong> added <%= p[0].humanize %>  <%= changed_value %></p>
-        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+        <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name %></strong> added <%= p[0].humanize %>  <%= changed_value %></p>
+        <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
       </span>
       <% elsif previous_value.present? && changed_value.empty? %>
       <span>
-        <p><strong><%= activity.owner.user_name %></strong> removed <%= p[0].humanize %>  <%= previous_value.humanize %></p>
-        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+        <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name %></strong> removed <%= p[0].humanize %>  <%= previous_value.humanize %></p>
+        <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
       </span>
       <% end %>
       </a>

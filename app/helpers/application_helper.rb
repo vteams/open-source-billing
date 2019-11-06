@@ -391,4 +391,10 @@ module ApplicationHelper
   def unread_notifications
     PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').where(is_read: false).count
   end
+
+  def pick_trackable_color
+    {Invoice: 'text-blue', Client: 'text-green', Estimate: 'text-orange', Payment: 'text-red'}
+  end
+
+
 end

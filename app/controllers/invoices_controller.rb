@@ -61,7 +61,7 @@ class InvoicesController < ApplicationController
         render  pdf: "#{@invoice.invoice_number}",
                 layout: 'pdf_mode.html.erb',
                 encoding: "UTF-8",
-                show_as_html: false,
+                show_as_html: true,
                 template: 'invoices/show.html.erb',
                 margin:  {   top:               10,                     # default 10 (mm)
                              bottom:            10,

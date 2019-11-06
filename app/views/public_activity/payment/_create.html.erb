@@ -4,13 +4,13 @@
     <a href="<%= payment_path(payment) if payment.present? %>" data-remote="true">
     <% if activity.parameters['obj']['payment_amount'][1] < 0 %>
       <span>
-        <p><strong><%= activity.owner.user_name %></strong> refund <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %></p>
-        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+        <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> refund <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %> against invoice <strong>#<%= payment.invoice.invoice_number %></strong></p>
+        <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
       </span>
     <% else %>
       <span>
-        <p><strong><%= activity.owner.user_name %></strong> made payment of <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %></p>
-        <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+        <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> made a payment of <%=number_to_currency(activity.parameters['obj']['payment_amount'][1].abs, unit:  payment.invoice.currency.code ) %> against invoice <strong>#<%= payment.invoice.invoice_number %></strong></p>
+        <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
       </span>
     <% end %>
     </a>

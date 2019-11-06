@@ -8,60 +8,71 @@
 
     <%= render 'reports/report_partials/format_links'%>
   </div>
-  <table class="table_listing item_sales_listing bordered grid-view">
-    <thead>
-    <tr>
-      <th width="15%"><%= sortable('invoice_number', t('views.invoices.invoice_number')) %></th>
-      <th width="30%" class="client"><%= sortable('clients.organization_name', t('client')) %></th>
-      <th width="18%" class="center-align"><%= sortable('invoice_date', t('views.invoices.invoice_date')) %></th>
-      <th width="15%" class="center-align"><%= sortable('status', t('Inv Status')) %></th>
-      <th width="27%" class="align_right"><%= t('views.invoices.amount') %></th>
-    </tr>
-    </thead>
-    <tbody class="table-view-body first-row">
-    <% unless @report.report_data.blank? %>
-      <% @report.report_data.order("#{sort_column} #{sort_direction}").each do |invoice| %>
-        <div class="page_break"></div>
-        <% if request.format.pdf? %>
-          <tr class="avoid_page_break">
-        <% else %>
-          <tr class="invoice-card invoice-table-row">
-        <% end %>
-        <td class="report-invoice-number">
-          <%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.formatted_invoice_number, invoice_path(invoice), remote: true, class: "invoices_link invoice_show_link") %>
-        </td>
-        <td class="align_left"><%= invoice.client.organization_name if invoice.client.present? %></td>
-        <td class="center-align"><%= invoice.invoice_date %></td>
-        <td class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
-        <td class='align_right' data-sort_val="<%= invoice.invoice_total %>" >
-          <span class='actual-currency'><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %></span><br/>
-          <span class='base-currency-equalent'><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></span>
-        </td>
-        </tr>
-      <% end %>
-      <tfoot>
-      <tr class="avoid_page_break" style="">
-        <td  colspan="4"  class="align_left"><strong><%= t('views.common.total') %></strong></td>
-        <td class="align_right currency">
-          <% @report.report_total.each do |total| %>
-            <span><b><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></b></span><br>
+  <% unless @report.report_data.blank? %>
+    <% count = @report.report_data.count %>
+    <% @report.report_data.order("#{sort_column} #{sort_direction}").each_slice(12).with_index do |invoices, index| %>
+      <div class="invoice-items-table">
+        <table class="table_listing item_sales_listing bordered grid-view">
+          <% if index == 0 %>
+            <thead>
+            <tr>
+              <th width="15%"><%= sortable('invoice_number', t('views.invoices.invoice_number')) %></th>
+              <th width="30%" class="client"><%= sortable('clients.organization_name', t('client')) %></th>
+              <th width="18%" class="center-align"><%= sortable('invoice_date', t('views.invoices.invoice_date')) %></th>
+              <th width="15%" class="center-align"><%= sortable('status', t('Inv Status')) %></th>
+              <th width="27%" class="align_right"><%= t('views.invoices.amount') %></th>
+            </tr>
+            </thead>
           <% end %>
-        </td>
-      </tr>
 
-      <tr class="avoid_page_break">
-        <td  colspan="4"  class="align_left"><strong><%= t('views.common.total') %> (<%= current_company_obj.base_currency.unit %>)</strong></td>
-        <td class="align_right currency">
-          <span><b><%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.base_currency_equivalent_total.present? ? inv.base_currency_equivalent_total : inv.invoice_total }, unit: current_company_obj.base_currency.unit) %></span></b>
-        </td>
-      </tr>
+          <tbody class="table-view-body first-row">
+          <% invoices.each do |invoice| %>
+            <div class="page_break"></div>
+            <tr class="<%= request.format.pdf? ? 'avoid_page_break report-border-bottom' : 'invoice-card invoice-table-row bottom-bordered' %>" >
+              <td width="15%" class="report-invoice-number">
+                <%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.formatted_invoice_number, invoice_path(invoice), remote: true, class: "invoices_link invoice_show_link") %>
+              </td>
+              <td width="30%" class="align_left"><%= invoice.client.organization_name if invoice.client.present? %></td>
+              <td width="18%" class="center-align"><%= invoice.invoice_date %></td>
+              <td width="15%" class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
+              <td width="27%" class='align_right' data-sort_val="<%= invoice.invoice_total %>" >
+                <span class='actual-currency'><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %></span><br/>
+                <span class='base-currency-equalent'><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></span>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <% if count >= (index * 12) && count <= ((index + 1) * 12) %>
+          <table>
+            <tbody>
+            <tfoot>
+            <tr class="avoid_page_break" style="">
+              <td  colspan="4"  class="align_left"><strong><%= t('views.common.total') %></strong></td>
+              <td class="align_right currency">
+                <% @report.report_total.each do |total| %>
+                  <span><b><%= total[:currency_code] %> <%= number_to_currency(total[:total],unit: '') %></b></span><br>
+                <% end %>
+              </td>
+            </tr>
 
-      </tfoot>
-    <% else %>
-      <tr class="avoid_page_break">
-        <td colspan="5"><%= t('views.reports.report_no_data') %></td>
-      </tr>
+            <tr class="avoid_page_break">
+              <td  colspan="4"  class="align_left"><strong><%= t('views.common.total') %> (<%= current_company_obj.base_currency.unit %>)</strong></td>
+              <td class="align_right currency">
+                <span><b><%= number_to_currency(@report.report_data.to_a.sum{|inv| inv.base_currency_equivalent_total.present? ? inv.base_currency_equivalent_total : inv.invoice_total }, unit: current_company_obj.base_currency.unit) %></span></b>
+              </td>
+            </tr>
+
+            </tfoot>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+
     <% end %>
-    </tbody>
-    </table>
+  <% else %>
+    <tr class="avoid_page_break">
+      <td colspan="5"><%= t('views.reports.report_no_data') %></td>
+    </tr>
+  <% end %>
 </div>

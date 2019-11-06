@@ -4,13 +4,13 @@
     <a href="<%= estimate_path(estimate) if estimate.present? %>" data-remote="true">
     <% if estimate_status(activity) == 'sent' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong> sent estimate to client</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> sent an estimate <strong><%= estimate.estimate_number %></strong> to client <strong><%= estimate.client.full_name %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% elsif estimate_status(activity) == 'invoiced' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong> changed this estimate to invoice</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> changed estimate <strong><%= estimate.estimate_number %></strong> to invoice for client <strong><%= estimate.client.full_name %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% end %>
     </a>

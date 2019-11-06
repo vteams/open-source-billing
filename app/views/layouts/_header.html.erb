@@ -49,7 +49,7 @@
           <%= render_activities(@activities) %>
         </ul>
         <span class="pagination123">
-          <a rel="next" data-remote="true" href="/notifications?locale=en&page=<%= params[:page].to_i + 1 %>"></a>
+          <a rel="next" data-remote="true" href="/notifications?locale=en&page=<%= 1 %>"></a>
         </span>
         <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
                     title: t('header.links.search') if search_available_in?(controller_name)%>

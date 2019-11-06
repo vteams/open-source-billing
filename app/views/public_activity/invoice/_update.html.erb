@@ -4,28 +4,28 @@
     <a href="<%= invoice_path(invoice) if invoice.present? %>" data-remote="true">
     <% if invoice_status(activity) == 'sent' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong> sent invoice to client</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> sent an invoice <strong><%= invoice.invoice_number %></strong> to client <strong><%= invoice.client.full_name %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% elsif invoice_status(activity) == 'partial' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong>  made partial payment for invoice</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong>  made a partial payment against invoice <strong>#<%= invoice.invoice_number %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% elsif invoice_status(activity) == 'draft-partial' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong>  made draft partial payment for invoice</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong>  made a draft partial payment against invoice <strong>#<%= invoice.invoice_number %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% elsif invoice_status(activity) == 'paid' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong>  made full payment for invoice</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong>  made a full payment against invoice <strong>#<%= invoice.invoice_number %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% elsif invoice_status(activity) == 'void' %>
     <span>
-      <p><strong><%= activity.owner.user_name %></strong>  cancelled invoice</p>
-      <time class="activity-time"><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %></span></time>
+      <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong>  void invoice <strong>#<%= invoice.invoice_number %></strong></p>
+      <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
     </span>
     <% end %>
     </a>

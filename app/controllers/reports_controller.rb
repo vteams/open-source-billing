@@ -35,9 +35,6 @@ class ReportsController < ApplicationController
         render :pdf          => "#{@report.report_name}",
               :layout       => 'pdf_mode.html.erb',
               :template     => 'reports/invoice_detail.html.erb',
-               :margin       => {:top    => 0,
-                                 :bottom => 10
-               },
                footer:{
                    right: 'Page [page] of [topage]'
                },
@@ -62,9 +59,6 @@ class ReportsController < ApplicationController
                 template: 'reports/item_sales.html.erb',
                 encoding: "UTF-8",
                 show_as_html: false,
-                :margin       => {:top    => 3,
-                                  :bottom => 10
-                },
                 footer:{
                     right: 'Page [page] of [topage]'
                 }

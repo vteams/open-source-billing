@@ -1519,9 +1519,6 @@ h6 {
 .invoice-table-row:hover{
   background-color: #ECECEC;
 }
-.invoice-table-row:hover .item-name{
-  background-color: #FFFFFF;
-}
 .invoice-item-row:first-child:hover .invoice-item-row{
   background-color: #FFFFFF;
 }
@@ -6047,6 +6044,10 @@ margin-bottom: 20px;
   width: 427px !important;
   max-height: 567px !important;
 }
+.notification-dropdown li a span p{
+  white-space: normal;
+  word-break: break-word;
+}
 //.notification-dropdown.active{
 //  top: 45px !important;
 //}
@@ -6085,6 +6086,10 @@ li.disable_payment:hover i{
 }
 .border-bottom{
   border-bottom: 1px solid;
+}
+.report-border-bottom{
+  border: none !important;
+  border-bottom: 1px solid black !important;
 }
 .received-from{
   width: 15%;
@@ -6175,15 +6180,24 @@ li.collection-item a{
   font-size: 14px;
   width: 100%;
   display: inline-flex;
+  color: #757474;
 }
-.activity-time span{
+.activity-time{
   font-size: 12px;
+  padding-top: 10px;
 }
 .activity-time i{
-  width: 6%;
-  padding: 3px;
+  width: 25%;
+  padding: 5px 4px;
   padding-left: 0px;
-  font-size: 14px !important;
+  font-size: 12px !important;
+}
+.activity-time div:first-child{
+  width: 93%;
+}
+.activity-time div:last-child{
+  width: auto;
+  display: inline-flex;
 }
 .notification-container{
   position: relative;
@@ -6200,6 +6214,9 @@ li.collection-item a{
 }
 .notification-dropdown li:hover{
   background: #f3f1f1;
+}
+.notification-dropdown li{
+  padding: 5px 20px !important;
 }
 .client-invoices-table a.view-all{
   padding-left: 4px;

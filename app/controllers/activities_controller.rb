@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   end
 
   def read_notifications
-    PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').update_all(is_read: true)
+    PublicActivity::Activity.where.not(owner_id: current_user.id).update_all(is_read: true)
     render nothing: true
   end
 end

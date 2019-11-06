@@ -19,10 +19,10 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ApplicationController < ActionController::Base
-            before_filter :set_trackstamps_user
-            def set_trackstamps_user
-              Thread.current[:current_user] = current_user
-            end
+  before_filter :set_trackstamps_user
+  def set_trackstamps_user
+    Thread.current[:current_user] = current_user
+  end
   #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
   #Time::DATE_FORMATS.merge!(:short=> "%d")
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
@@ -189,7 +189,7 @@ class ApplicationController < ActionController::Base
 
   def set_listing_layout
     if params[:view].nil? && current_user
-    session[:view] ||= current_user.settings.index_page_format || 'card'
+      session[:view] ||= current_user.settings.index_page_format || 'card'
     else
       session[:view] = params[:view]
     end
