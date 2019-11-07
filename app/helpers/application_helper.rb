@@ -396,5 +396,7 @@ module ApplicationHelper
     {Invoice: 'text-blue', Client: 'text-green', Estimate: 'text-orange', Payment: 'text-red'}
   end
 
-
+  def user_activities_listing
+    PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').order('created_at desc').page(1).per(10) if current_user.present?
+  end
 end

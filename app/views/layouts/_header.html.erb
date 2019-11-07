@@ -46,7 +46,7 @@
       <div class="right notification-container">
         <!-- Dropdown Structure -->
         <ul id="dropdown" class="notification-dropdown collection infinit-scroll">
-          <%= render_activities(@activities) %>
+          <%= render_activities(user_activities_listing) %>
         </ul>
         <span class="pagination123">
           <a rel="next" data-remote="true" href="/notifications?locale=en&page=<%= 1 %>"></a>
