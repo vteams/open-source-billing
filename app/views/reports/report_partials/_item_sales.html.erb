@@ -1,4 +1,7 @@
 <div class="new-invoice-table-holder main-invoice page-box">
+  <% if request.format.pdf? %>
+    <h1 class="center-align">Item Sales Report</h1>
+  <% end %>
   <div class="col s12 page-box-header">
     <div class="title-desc">
       <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
@@ -33,7 +36,7 @@
                 <%= item.item_name %>
               </td>
               <td width="6%" class="center-align">
-                <%= request.format.pdf? ? item.attributes["invoice_number"] : (link_to item.invoice.formatted_invoice_number, invoice_path(item.invoice_id),remote: true) %>
+                <%= request.format.pdf? ? item.invoice.formatted_invoice_number : (link_to item.invoice.formatted_invoice_number, invoice_path(item.invoice_id),remote: true) %>
               </td>
               <td width="30%" class="">
                 <%= request.format.pdf? ? item.attributes["client_name"] : (link_to item.attributes["client_name"], client_path(item.client_id),remote: true, class: "invoices_link invoice_show_link") %>

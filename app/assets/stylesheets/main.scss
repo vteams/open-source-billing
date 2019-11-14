@@ -6218,6 +6218,9 @@ li.collection-item a{
 .notification-dropdown li{
   padding: 5px 20px !important;
 }
+#notification-btn.active i{
+  color: black;
+}
 .client-invoices-table a.view-all{
   padding-left: 4px;
 }

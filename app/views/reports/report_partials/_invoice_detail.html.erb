@@ -1,4 +1,7 @@
 <div class="new-invoice-table-holder main-invoice page-box report-box">
+  <% if request.format.pdf? %>
+    <h1 class="center-align">Invoice Report</h1>
+  <% end %>
   <div class="col s12 page-box-header">
     <div class="title-desc">
       <h6><%= t('views.common.' + @report.client_name.parameterize.underscore) %></h6>
@@ -16,10 +19,10 @@
           <% if index == 0 %>
             <thead>
             <tr>
-              <th width="15%"><%= sortable('invoice_number', t('views.invoices.invoice_number')) %></th>
+              <th width="30%"><%= sortable('invoice_number', t('views.invoices.invoice_number')) %></th>
               <th width="30%" class="client"><%= sortable('clients.organization_name', t('client')) %></th>
-              <th width="18%" class="center-align"><%= sortable('invoice_date', t('views.invoices.invoice_date')) %></th>
-              <th width="15%" class="center-align"><%= sortable('status', t('Inv Status')) %></th>
+              <th width="20%" class="center-align"><%= sortable('invoice_date', t('Created')) %></th>
+              <th width="13%" class="center-align"><%= sortable('status', t('Status')) %></th>
               <th width="27%" class="align_right"><%= t('views.invoices.amount') %></th>
             </tr>
             </thead>
@@ -29,12 +32,12 @@
           <% invoices.each do |invoice| %>
             <div class="page_break"></div>
             <tr class="<%= request.format.pdf? ? 'avoid_page_break report-border-bottom' : 'invoice-card invoice-table-row bottom-bordered' %>" >
-              <td width="15%" class="report-invoice-number">
-                <%= request.format.pdf? ? invoice.invoice_number : link_to(invoice.formatted_invoice_number, invoice_path(invoice), remote: true, class: "invoices_link invoice_show_link") %>
+              <td width="30%" class="report-invoice-number">
+                <%= request.format.pdf? ? invoice.formatted_invoice_number : link_to(invoice.formatted_invoice_number, invoice_path(invoice), remote: true, class: "invoices_link invoice_show_link") %>
               </td>
               <td width="30%" class="align_left"><%= invoice.client.organization_name if invoice.client.present? %></td>
-              <td width="18%" class="center-align"><%= invoice.invoice_date %></td>
-              <td width="15%" class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
+              <td width="20%" class="center-align"><%= invoice.invoice_date %></td>
+              <td width="13%" class="center-align"><%= t('views.invoices.' + invoice.status ) %></td>
               <td width="27%" class='align_right' data-sort_val="<%= invoice.invoice_total %>" >
                 <span class='actual-currency'><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit ) %></span><br/>
                 <span class='base-currency-equalent'><%= number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.unit ) %></span>

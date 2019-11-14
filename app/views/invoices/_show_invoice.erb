@@ -10,7 +10,7 @@
 
             <%= link_to raw("<i class='material-icons'>print</i>"),
                         {:controller => 'invoices', :action => 'show',
-                         :id => @invoice.id, :format => "pdf"},
+                         :id => @invoice.hashid, :format => "pdf"},
                         :target => '_blank', title: t('views.common.print') %>
             <%= link_to raw("<i class='material-icons'>history</i>"),
                         {:controller => 'payments', :action => 'payments_history',

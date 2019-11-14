@@ -1,4 +1,7 @@
 <div class="new-invoice-table-holder main-invoice page-box">
+  <% if request.format.pdf? %>
+    <h1 class="center-align">Payments Collected Report</h1>
+  <% end %>
   <div class="col s12 page-box-header">
     <div class="title-desc">
       <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
@@ -35,7 +38,7 @@
                 <%= payment[:client_name] %>
               </td>
               <td width="15%" class="align_left">
-                <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.formatted_invoice_number, invoice_path(payment.invoice),remote: true,  class: "invoices_link invoice_show_link") %>
+                <%= request.format.pdf? ? payment.invoice.formatted_invoice_number : (link_to payment.invoice.formatted_invoice_number, invoice_path(payment.invoice),remote: true,  class: "invoices_link invoice_show_link") %>
               </td>
               <td width="15%" class="align_left">
                 <%= (payment.payment_type || payment.payment_method || "").capitalize %>
