@@ -71,6 +71,8 @@ class @Invoice
 
 
   @setInvoiceDueDate = (invoice_date, term_days) ->
+    $('#invoice_due_date_picker').on 'change', ->
+      $('#invoice_payment_terms_id').val('4').select2()
     if term_days != null and invoice_date != null
       if term_days == '0' and $('#invoice_due_date_picker').val() != null
         $('#invoice_due_date_picker').val($('#invoice_date_picker').val())
@@ -78,6 +80,8 @@ class @Invoice
         if invoice_due_date_custom isnt ""
           $('#invoice_due_date_text').html invoice_due_date_custom
           $('#invoice_due_date').val invoice_due_date_custom
+      else if term_days == '-1'
+
       else
         invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date, parseInt(term_days))
         $('#invoice_due_date_picker').html invoice_due_date

@@ -44,6 +44,8 @@ module Reporting
           invoices = Invoice.with_clients.joins(:payments).where("payments.payment_date",@report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         end
         invoices = invoices.where(status: @report_criteria.invoice_status) unless @report_criteria.invoice_status == ""
+        invoices = invoices.where(["invoices.client_id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
+
         invoices
       end
 

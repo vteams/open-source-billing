@@ -82,8 +82,7 @@ class @OsbPlugins
       setTimeout (->
         InvoiceCalculator.updateInvoiceTotal()
       ), 100
-
-    Invoice.setInvoiceDueDate($("#invoice_invoice_date").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
+    Invoice.setInvoiceDueDate($("#invoice_date_picker").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
     # Subtract discount percentage from subtotal
     $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
@@ -108,7 +107,7 @@ class @OsbPlugins
         false
 
     # re calculate invoice due date on invoice date change
-    $("#invoice_invoice_date").change ->
+    $("#invoice_date_picker").change ->
       $(this).qtip("hide") if $(this).qtip()
       term_days = $("#invoice_payment_terms_id option:selected").attr('number_of_days')
       Invoice.setInvoiceDueDate($(this).val(),term_days)
@@ -132,7 +131,7 @@ class @OsbPlugins
     $('#invoice_payment_terms_id').change ->
       number_of_days = undefined
       number_of_days = $('option:selected', this).attr('number_of_days')
-      Invoice.setInvoiceDueDate $('#invoice_invoice_date').val(), number_of_days
+      Invoice.setInvoiceDueDate $('#invoice_date_picker').val(), number_of_days
 
     $("#invoice_client_id").change ->
       OsbPlugins.hidePopover($("#invoice_client_id").parents('.select-wrapper'));
@@ -150,7 +149,7 @@ class @OsbPlugins
     # Validate client, cost and quantity on invoice save
     $(".invoice-form.form-horizontal").submit ->
       $('.invoice_submit_button').addClass('disabled')
-      invoice_date_value = new Date(DateFormats.get_original_date($("#invoice_invoice_date").val()))
+      invoice_date_value = new Date(DateFormats.get_original_date($("#invoice_date_picker").val()))
       due_date_value = new Date(DateFormats.get_original_date($("#invoice_due_date_picker").val()))
       discount_percentage = $("#invoice_discount_percentage").val() || $("#recurring_profile_discount_percentage").val()
       discount_type = $("select#discount_type").val()

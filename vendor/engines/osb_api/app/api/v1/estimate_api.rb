@@ -23,14 +23,26 @@ module V1
     resource :estimates do
       before  {current_user}
 
-      desc 'Return users estimates'
+      desc 'Return users estimates',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       get do
         params[:status] = params[:status] || 'active'
         @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
         @estimates = filter_by_company(@estimates)
       end
 
-      desc 'Fetch single estimates'
+      desc 'Fetch single estimates',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: String
       end
@@ -39,7 +51,13 @@ module V1
         Estimate.find params[:id]
       end
 
-      desc 'Create Estimate'
+      desc 'Create Estimate',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :estimate, type: Hash do
           optional :estimate_number, type: String
@@ -69,7 +87,13 @@ module V1
         Services::Apis::EstimateApiService.create(params)
       end
 
-      desc 'Update Estimate'
+      desc 'Update Estimate',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :estimate, type: Hash do
           optional :estimate_number, type: String
@@ -99,12 +123,48 @@ module V1
       end
 
 
-      desc 'Delete an Estimate'
+      desc 'Delete an Estimate',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: Integer, desc: "Delete an estimate"
       end
       delete ':id' do
         Services::Apis::EstimateApiService.destroy(params[:id])
+      end
+
+      desc 'Convert to Invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      params do
+        requires :id
+      end
+      get '/:id/convert_to_invoice' do
+        @estimate = Estimate.find(params[:id])
+        @estimate.convert_to_invoice
+      end
+
+      desc 'Send Estimate to Client',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      params do
+        requires :id
+      end
+      get '/send_estimate/:id' do
+        @estimate = Estimate.find(params[:id])
+        @estimate.send_estimate(@current_user, params[:estimate_id])
       end
     end
   end

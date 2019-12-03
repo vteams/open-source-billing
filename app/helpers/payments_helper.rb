@@ -40,4 +40,16 @@ module PaymentsHelper
   def qb_currency?(currency)
     currency.present? && currency['value'].present?
   end
+
+  def capitalize_amount amount
+    a=amount.split(' ')
+    a.map do |word|
+      if word == "and"
+        word.downcase
+      else
+        word.capitalize
+      end
+    end
+  end
+
 end

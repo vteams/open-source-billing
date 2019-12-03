@@ -21,7 +21,7 @@
     <div class="border-bottom received_payment">&nbsp;&nbsp;<%= @payment.payment_amount %></div>
   </div>
   <div class="amount_in_words">
-    <div class="border-bottom total_amt_in_words">&nbsp;&nbsp;<%= @payment.payment_amount.to_i.abs.to_words %></div>
+    <div class="border-bottom total_amt_in_words">&nbsp;&nbsp;<%= capitalize_amount(@payment.payment_amount.to_i.abs.to_words)*' ' %></div>
     <div class="currency_title"><%= @payment.currency.title %></div>
   </div>
   <div class="payment_for">

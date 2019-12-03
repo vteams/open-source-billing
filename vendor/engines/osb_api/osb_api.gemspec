@@ -20,10 +20,12 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.7.1"
   s.add_dependency 'doorkeeper', '~> 1.4.0'
-  s.add_dependency 'grape', '~> 0.9.0'
+  s.add_dependency 'grape', '~> 0.16.2'
   s.add_dependency 'grape-rabl', '~> 0.3.0'
   s.add_dependency 'grape-doorkeeper', '~> 0.0.2'
   s.add_dependency 'rack-cors'
+  s.add_dependency 'grape-swagger'
+  s.add_dependency 'grape-swagger-rails'
 
   #s.add_development_dependency "sqlite3"
 end

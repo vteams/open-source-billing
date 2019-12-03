@@ -47,6 +47,13 @@ module V1
     resource :invoices do
       before {current_user}
 
+      desc 'All invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       get do
         @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
         @invoices = filter_by_company(@invoices)
@@ -65,21 +72,28 @@ module V1
 
       params do
         optional 'client_id'
-       end
-       get :unpaid_invoices do
-         for_client = params[:client_id].present? ? "and client_id = #{params[:client_id]}" : ''
-         @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
-       end
+      end
+      get :unpaid_invoices do
+        for_client = params[:client_id].present? ? "and client_id = #{params[:client_id]}" : ''
+        @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
+      end
 
+      desc 'Dispute Invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
 
       params do
         requires :invoice_id
         requires :reason_for_dispute
       end
       get :dispute_invoice do
-          @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], @current_user)
-          org_name = @current_user.accounts.first.org_name rescue org_name = ''
-          @message = dispute_invoice_message(org_name)
+        @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], @current_user)
+        org_name = @current_user.accounts.first.org_name rescue org_name = ''
+        @message = dispute_invoice_message(org_name)
       end
 
       params do
@@ -89,15 +103,33 @@ module V1
 
       end
 
+      desc "Send invoice to client",
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
-        requires :invoice_id
+        requires :id
       end
-      get :send_invoice do
-        def send_invoice
-          invoice = Invoice.find(params[:invoice_id])
-          invoice.send_invoice(@current_user, params[:invoice_id])
-        end
+      get '/send_invoice/:id' do
+          invoice = Invoice.find(params[:id])
+          if invoice.status == 'sent'
+            {error: 'Invoice already sent'}
+          else
+            invoice.send_invoice(@current_user, params[:invoice_id])
+            {message: 'Invoice sent'}
+          end
       end
+
+      desc 'Create Payment for Invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
 
       params do
         requires :invoice_ids
@@ -118,14 +150,20 @@ module V1
         end
       end
 
-      desc 'Return all invoice line items'
+      desc 'Return all invoice line items',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :invoice_id
       end
       get :invoice_line_items do
         @invoice = Invoice.find_by_id(params[:invoice_id])
         {tax: taxes_list(@invoice.tax_details),
-        invoices: Invoice.find_by_id(params[:invoice_id]).invoice_line_items.joins(:item).select("invoice_line_items.* , items.item_name")}
+         invoices: Invoice.find_by_id(params[:invoice_id]).invoice_line_items.joins(:item).select("invoice_line_items.* , items.item_name")}
       end
 
       desc 'Return all invoices'
@@ -133,7 +171,13 @@ module V1
         Invoice.where('company_id IN (?)', get_company_id)
       end
 
-      desc 'Fetch a single invoice'
+      desc 'Fetch a single invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: String
       end
@@ -142,7 +186,13 @@ module V1
         Invoice.find params[:id]
       end
 
-      desc 'Create Invoice'
+      desc 'Create Single Invoice. You can also create multiple invoice line items for invoice from Rest Clients e.g Postman',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :invoice, type: Hash do
           requires :invoice_number, type: String
@@ -167,14 +217,29 @@ module V1
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
           optional :company_id, type: Integer
+          optional :invoice_line_items_attributes, type: Array do
+            requires :invoice_id, type: Integer
+            requires :item_id, type: Integer
+            requires :item_name, type: String
+            requires :item_description, type: String
+            requires :item_unit_cost, type: Integer
+            requires :item_quantity, type: Integer
+            requires :actual_price, type: String
+          end
         end
       end
       post do
-        params[:log][:company_id] = get_company_id
+         #params[:log][:company_id] = get_company_id
         Services::Apis::InvoiceApiService.create(params)
       end
 
-      desc 'Update Invoice'
+      desc 'Update Invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :invoice, type: Hash do
           requires :invoice_number, type: String
@@ -207,7 +272,13 @@ module V1
       end
 
 
-      desc 'Delete an invoice'
+      desc 'Delete an invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: Integer, desc: "Delete an invoice"
       end
@@ -215,8 +286,48 @@ module V1
         Services::Apis::InvoiceApiService.destroy(params[:id])
       end
 
-      get :get_invoices do
+      desc 'Get current user invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               },
+               "user_id" => {
+                   required: true
+               }
+           }
+      get '/get_invoices/:user_id' do
         @invoices = @current_user.invoices
+      end
+
+      desc 'Void single invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      params do
+        requires :id, type: Integer, desc: "Void single invoice"
+      end
+      get '/void_invoice/:id' do
+        @invoice = Invoice.find(params[:id])
+        @invoice.status = "void"
+        @invoice.base_currency_equivalent_total = 0
+        @invoice.invoice_total = 0
+        @invoice.sub_total = 0
+        @invoice.invoice_line_items.each do |item|
+          item.item_unit_cost = 0
+          item.tax_1 = 0
+          item.tax_2 = 0
+          item.save
+        end
+        if @invoice.save
+          {message: 'Successfully Void'}
+        else
+          {error: @invoice.errors.full_messages}
+        end
+
       end
     end
   end

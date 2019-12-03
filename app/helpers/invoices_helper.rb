@@ -59,6 +59,17 @@ module InvoicesHelper
     end
   end
 
+  def capitalize_amount amount
+    a=amount.split(' ')
+    a.map do |word|
+      if word == "and"
+        word.downcase
+        else
+        word.capitalize
+      end
+    end
+  end
+
   def history_of_invoice
     activities_arr=[]
     public_activities = PublicActivity::Activity.where('(trackable_type = ? AND trackable_id = ?) OR (trackable_type = ? AND trackable_id IN (?))', 'Invoice', @invoice.id, 'Payment', @invoice.payments.pluck(:id)).order('created_at desc')

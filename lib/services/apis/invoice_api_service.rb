@@ -57,7 +57,15 @@ module Services
          :due_date,
          :last_invoice_status,
          :discount_type,
-         :company_id,
+         :company_id,{
+
+         invoice_line_items_attributes:
+             [
+                 :id, :invoice_id, :item_description, :item_id, :item_name,
+                 :item_quantity, :actual_price, :item_unit_cost, :tax_1, :tax_2, :_destroy
+             ]
+         }
+
         )
       end
 
