@@ -21,6 +21,8 @@
 class ClientsController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
+  layout :resolve_layout
+  before_action :authenticate_user!, except: %i[new_password create_password]
 
   # GET /clients
   # GET /clients.json
@@ -96,6 +98,7 @@ class ClientsController < ApplicationController
     end
 
     @client = Client.new(client_params)
+    @client.skip_password_validation = true
     authorize @client
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
@@ -167,6 +170,19 @@ class ClientsController < ApplicationController
     end
   end
 
+  def new_password
+    @client = Client.find(params[:id])
+  end
+
+  def create_password
+    @client = Client.find(params[:id])
+    @client.password = params[:client][:password]
+    @client.password_confirmation = params[:client][:password_confirmation]
+    if @client.save
+      redirect_to new_portal_client_session_path
+    end
+  end
+
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
@@ -235,5 +251,11 @@ class ClientsController < ApplicationController
     )
   end
 
+  def resolve_layout
+    case action_name
+    when "new_password"
+      "login"
+    end
+    end
 
 end

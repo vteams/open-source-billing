@@ -11,10 +11,10 @@ module Services
         fb_clients = clients['clients']
         total = fb_clients['total'].to_i
         page+=1
-        unless fb_clients['client'].blank?
+        unless fb_clients['clients'].blank?
 
-          fb_clients['client'].each do |client|
-            client = fb_clients['client'] if total.eql?(1)
+          fb_clients['clients'].each do |client|
+            client = fb_clients['clients'] if total.eql?(1)
             unless ::Client.find_by_email(client['email'])
               hash = { provider: 'Freshbooks', provider_id: client['client_id'].to_i, first_name: client['first_name'],
                        last_name: client['last_name'], email: client['email'], organization_name: client['organization'],

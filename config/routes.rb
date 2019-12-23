@@ -57,7 +57,7 @@ Osb::Application.routes.draw do
       end
     end
 
-    #API authentication for create invoice and client
+    #API authentication for create invoice and clients
     post '/token_authentication', to: 'authenticate#token'
 
     resources :settings do
@@ -139,6 +139,8 @@ Osb::Application.routes.draw do
         get 'undo_actions'
       end
       member do
+        get :new_password
+        post :create_password
         get 'default_currency'
       end
     end
@@ -147,8 +149,33 @@ Osb::Application.routes.draw do
     resources :client_contacts
 
 
-    devise_for :users, :path_names => {:sign_out => 'logout'}
+    devise_for :users
+    #, controllers: {sessions: "devise/sessions", registrations: "devise/registrations", passwords: "devise/passwords"}
+    scope module: 'portal/client', path: 'portal/client', as: 'portal' do
+      #,  controllers: {sessions: "portal/clients/sessions", registrations: "portal/clients/registrations", passwords: "portal/clients/passwords"}
+      resources :invoices do
+        member do
+          get :invoice_receipt
+        end
+      end
+      resources :estimates
+      resources :payments
+      resources :settings
+      #get "client/dashboard" => "dashboard#index"
+      resources :dashboard, only: :index
+    end
 
+    scope path: 'portal', as: 'portal' do
+      devise_for :clients
+    end
+
+    authenticated :client do
+      root to: 'portal/client/dashboard#index', as: :authenticated_client_root
+    end
+
+    unauthenticated :client do
+      root to: 'devise/sessions#new', as: :unauthenticated_client_root
+    end
     devise_scope :user do
       root :to => "devise/sessions#new"
     end
@@ -199,7 +226,6 @@ Osb::Application.routes.draw do
         get 'clone'
       end
     end
-
 
     resources :projects do
       collection do

@@ -3,9 +3,9 @@
     <div class="modal-header clearfix">
       <div class="modal-action-btn right">
         <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate),
-                    class: 'edit_estimate_icon', title: t('helpers.links.edit') %>
+                    class: 'edit_estimate_icon', title: t('helpers.links.edit') if current_user.present? %>
         <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id),
-                    title: t('views.common.send') %>
+                    title: t('views.common.send') if current_user.present? %>
         <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates',
                                                                  :action => 'estimate_pdf',
                                                                  :id => estimate.encrypted_id,
@@ -37,7 +37,7 @@
     <div class="modal-body">
       <div class="estimate-popup">
         <div class="new-estimate-table-holder <%= taxes_class %>">
-          <%= render partial: 'estimate_items', locals: {estimate: @estimate} %>
+          <%= render partial: 'estimates/estimate_items', locals: {estimate: @estimate} %>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
         <strong><%= t('views.common.notes') %>: </strong> <%= @estimate.notes %>
       </div>
     </div>
-    <%= render 'estimate_history' %>
+    <%= render 'estimates/estimate_history' %>
     <div class="modal-footer clearfix">
       <div class="left-section left">
         <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= link_to image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img"), 'http://opensourcebilling.org/' %></p>

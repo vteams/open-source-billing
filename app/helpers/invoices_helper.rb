@@ -80,7 +80,7 @@ module InvoicesHelper
         end
         if activity.present? && activity.parameters['obj'].present? && activity.parameters['obj']['status'].present?
           if invoice_status(activity) == 'sent'
-            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} sent invoice to client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} sent invoice to clients on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           elsif invoice_status(activity) == 'partial'
             activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} made partial payment for invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           elsif invoice_status(activity) == 'draft-partial'

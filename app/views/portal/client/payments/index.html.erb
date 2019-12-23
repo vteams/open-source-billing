@@ -1,0 +1,30 @@
+<%= render 'payment_activity'%>
+<div id="main-content" class='side-show'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.payments.payments'), 'javascript:;' %></span>
+          <%= index_layout_toggle_icons(portal_payments_path(layout_toggle_params(view: 'card')),
+                                        portal_payments_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <%= render 'filters' %>
+  <div class="invoice-box clearfix">
+    <%= form_tag "payments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render 'payments_container' %></div>
+      <%#= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
+</div>
+<script>
+    initFilterEvents('#create_at_start_date,#create_at_end_date,#payment_start_date,#payment_end_date,#invoice_number_min,#invoice_number_max');
+    <% if is_filter_applied?(%w(create_at_start_date create_at_end_date payment_start_date payment_end_date invoice_number_min invoice_number_max client_id)) %>
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+    <% end %>
+</script>

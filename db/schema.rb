@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191022115856) do
+ActiveRecord::Schema.define(version: 20191204070432) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -96,36 +96,48 @@ ActiveRecord::Schema.define(version: 20191022115856) do
   end
 
   create_table "clients", force: :cascade do |t|
-    t.string   "organization_name", limit: 255
-    t.string   "email",             limit: 255
-    t.string   "first_name",        limit: 255
-    t.string   "last_name",         limit: 255
-    t.string   "home_phone",        limit: 255
-    t.string   "mobile_number",     limit: 255
-    t.string   "send_invoice_by",   limit: 255
-    t.string   "country",           limit: 255
-    t.string   "address_street1",   limit: 255
-    t.string   "address_street2",   limit: 255
-    t.string   "city",              limit: 255
-    t.string   "province_state",    limit: 255
-    t.string   "postal_zip_code",   limit: 255
-    t.string   "industry",          limit: 255
-    t.string   "company_size",      limit: 255
-    t.string   "business_phone",    limit: 255
-    t.string   "fax",               limit: 255
-    t.text     "internal_notes",    limit: 65535
-    t.string   "archive_number",    limit: 255
+    t.string   "organization_name",      limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "home_phone",             limit: 255
+    t.string   "mobile_number",          limit: 255
+    t.string   "send_invoice_by",        limit: 255
+    t.string   "country",                limit: 255
+    t.string   "address_street1",        limit: 255
+    t.string   "address_street2",        limit: 255
+    t.string   "city",                   limit: 255
+    t.string   "province_state",         limit: 255
+    t.string   "postal_zip_code",        limit: 255
+    t.string   "industry",               limit: 255
+    t.string   "company_size",           limit: 255
+    t.string   "business_phone",         limit: 255
+    t.string   "fax",                    limit: 255
+    t.text     "internal_notes",         limit: 65535
+    t.string   "archive_number",         limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
-    t.decimal  "available_credit",                precision: 8, scale: 2, default: 0.0
-    t.integer  "currency_id",       limit: 4
-    t.string   "provider",          limit: 255
-    t.string   "provider_id",       limit: 255
-    t.string   "billing_email",     limit: 255
-    t.string   "vat_number",        limit: 255
+    t.datetime "created_at",                                                                 null: false
+    t.datetime "updated_at",                                                                 null: false
+    t.decimal  "available_credit",                     precision: 8, scale: 2, default: 0.0
+    t.integer  "currency_id",            limit: 4
+    t.string   "provider",               limit: 255
+    t.string   "provider_id",            limit: 255
+    t.string   "billing_email",          limit: 255
+    t.string   "vat_number",             limit: 255
+    t.string   "encrypted_password",     limit: 255,                           default: "",  null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          limit: 4,                             default: 0,   null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
   end
+
+  add_index "client", ["email"], name: "index_clients_on_email", unique: true, using: :btree
+  add_index "client", ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "account_id",        limit: 4

@@ -22,7 +22,7 @@ class PaymentMailer < ActionMailer::Base
   default :from => 'support@opensourcebilling.org'
 
   def payment_notification_email(current_user, payment)
-   # @client, @invoice, @amount = client, invoice, payment.payment_amount
+   # @clients, @invoice, @amount = clients, invoice, payment.payment_amount
     get_user = current_user.is_a?(String)? User.find_by_email(current_user) : current_user
     client = payment.invoice.unscoped_client
     template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
@@ -31,7 +31,7 @@ class PaymentMailer < ActionMailer::Base
     payment.sent_emails.create({
                                    :content => email_body,
                                    :sender => get_user.email, #User email
-                                   :recipient => client.email, #client email
+                                   :recipient => client.email, #clients email
                                    :subject => 'Payment notification',
                                    :type => 'Payment',
                                    :company_id => payment.company_id,

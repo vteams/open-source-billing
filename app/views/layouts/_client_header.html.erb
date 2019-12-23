@@ -1,0 +1,89 @@
+<!--- header --->
+<header id="header">
+  <div class="row">
+    <!--- header logo--->
+    <div class="col s12 m5 l4">
+      <a class="btn-menu" href="javascript:;"><i class="material-icons">menu</i></a>
+      <%= link_to raw('Open<span>Source</span>Billing'), portal_dashboard_index_path, class: 'logo'%>
+    </div>
+    <!--- header company name--->
+    <div class="col s9 m5 l4">
+      <div class="header-center">
+        <div class="hdr-select-holder">
+<!--          <select class="company_select fix-cursor-pointer">-->
+<!--            <option value="" disabled selected><%#= get_company_name%></option>-->
+            <%# filter_select_by_companies.each do |company| %>
+<!--              <option value="<%#= company.id %>" data-company-id="<%#= company.id %>" data-controller="<%#= params[:controller]%>" data-action="<%#= params[:action]%>"><%#= company.company_name %></option>-->
+            <%# end %>
+<!--          </select>-->
+          <%#= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
+          <%# if current_user and Settings.currency.present? and Settings.currency.eql?("On") %>
+<!--            <div class="select-wrapper currency currency_select initialized">-->
+<!--              <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"-->
+<!--                 title="<%#= t('views.settings.default_currency') %>">-->
+<!--                <input class="select-dropdown" value="<%#= current_user.settings.default_currency %>" readonly="readonly">-->
+<!--              </a>-->
+<!--              <ul id="dropdown_currency" class='dropdown-content select-dropdown'>-->
+<!--                <li class="search-bar">-->
+<!--                  <input type="text" class="search_currency" placeholder="<%#= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />-->
+<!--                </li>-->
+                <%# Currency.unscoped.each do |currency| %>
+<!--                  <li class="country-item" data-id="<%#= currency.id %>" data-user-id="<%#= current_user.id %>" title="<%#= currency.unit %>">-->
+<!--                    <div class="currency-flag currency-flag-<%#= currency.unit.downcase %>"></div>-->
+<!--                    <span class="country-name truncate"><%#= currency.title %></span>-->
+<!--                    <span class="currency-code"><%#= currency.code %></span>-->
+<!--                  </li>-->
+                <%# end %>
+<!--              </ul>-->
+<!--            </div>-->
+          <%# end %>
+        </div>
+      </div>
+
+    </div>
+    <!--- header search--->
+    <div class="col s3 m2 l4  header-right">
+      <div class="right notification-container">
+        <!-- Dropdown Structure -->
+<!--        <ul id="dropdown" class="notification-dropdown collection infinit-scroll">-->
+          <%#= render_activities(user_activities_listing) %>
+<!--        </ul>-->
+<!--        <span class="pagination123">-->
+<!--          <a rel="next" data-remote="true" href="/notifications?locale=en&page=<%#= 1 %>"></a>-->
+<!--        </span>-->
+        <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
+                    title: t('header.links.search') if search_available_in?(controller_name)%>
+        <%# if unread_notifications > 0 %>
+<!--          <span class="badge notification-badge"><%#= unread_notifications %></span>-->
+        <%# end %>
+<!--        <a class="dropdown-button" href="#!" data-activates="dropdown" id="notification-btn" data-beloworigin="true" style="padding-right: 0px; margin-right: 28px"><i class="material-icons">notifications_none</i></a>-->
+        <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
+                    title: t('views.help.help'), remote: true %>
+      </div>
+      <!--- header search holder--->
+      <div class="search-holder search-wrap">
+        <a href="#" title="<%= t('views.common.back') %>" class="btn-back"><i class="zmdi zmdi-arrow-left"></i><%= t('views.common.back') %></a>
+        <div class="container">
+          <div class="checkboxinfo row">
+            <div class="left">
+              <div class="chk-text"></div>
+            </div>
+            <%= render 'layouts/bulk_action_links'%>
+          </div>
+        </div>
+<!--        <form action="#">-->
+<!--        <i class="zmdi zmdi-search"></i>-->
+<!--        <input type="text" class="form-control" placeholder="" />-->
+<!--        </form>-->
+        <% if search_available_in?(controller_name)%>
+          <div class="search">
+            <%= form_tag eval("#{controller_name}_path"), method: :get do %>
+              <i class="zmdi zmdi-search"></i>
+              <%= filter_box_for  %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

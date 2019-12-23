@@ -38,7 +38,7 @@ module RecurringProfileSearch
       keys = keyword.keys
       query_base= {query: {bool: {must: []}}}
 
-      query_base[:query][:bool][:must] << {nested: { path: 'client', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} if keys.include?('client')
+      query_base[:query][:bool][:must] << {nested: { path: 'clients', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} if keys.include?('clients')
       query_base[:query][:bool][:must] << {nested: { path: 'recurring_profile_line_items', query: {query_string: { query: keyword[:recurring_profile_line_items], fields: [:item_name, :item_description] }}}} if keys.include?('recurring_profile_line_items')
 
       if keys.include?('invoice_number') or keys.include?('notes') or keys.include?('frequency')
@@ -77,7 +77,7 @@ module RecurringProfileSearch
         if key.eql?('invoice_number') or key.eql?('frequency') or key.eql?('notes')
           query << "recurring_profiles.#{key} like '#{val}%'"
         end
-        if key.eql?('client')
+        if key.eql?('clients')
           query << "(clients.first_name like '#{val}%' or clients.last_name like '#{val}%' or clients.email like '#{keyword[:client]}%' or clients.organization_name like '#{val}%')"
         end
         if key.eql?('recurring_profile_line_items')

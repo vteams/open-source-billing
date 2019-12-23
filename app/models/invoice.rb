@@ -29,13 +29,17 @@ class Invoice < ActiveRecord::Base
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('due_date DESC')}
+  scope :current_client_invoices,->{ where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('due_date DESC')}
+  scope :past_client_invoices,->{ where("IFNULL(due_date, invoice_date) < ?", Date.today).order('due_date DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('due_date DESC')}
   scope :status, -> (status) { where(status: status) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
+  scope :skip_draft, -> { where.not('status = ?', 'draft') }
   scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
   scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
   scope :due_date, -> (due_date) { where(due_date: due_date) }
   scope :by_company, -> (company_id) { where("invoices.company_id IN(?)", company_id) }
+  scope :by_client, -> (client_id) { where('invoices.client_id IN(?)', client_id) }
   scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ")}
 
   scope :in_year, ->(year) { where('extract(year from invoices.created_at) = ?', year) }

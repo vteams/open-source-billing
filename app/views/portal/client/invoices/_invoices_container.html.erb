@@ -1,0 +1,2 @@
+<%= render render_card_view? ? 'card_view' : 'table_view' %>
+<%= render partial: 'shared/pagination', locals: {model_object: @invoices} %>

@@ -1,0 +1,47 @@
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag portal_estimates_path, method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="estimate_start_date" id="estimate_start_date">
+          <input type="hidden" name="estimate_end_date" id="estimate_end_date">
+          <input type="text" class="date-range" name="due" id="estimate" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:due] %>" readonly/>
+          <label class="input_field_label"><%= t('views.estimates.estimate_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m3 select-client">
+          <%= select_tag(:type, multi_select_options(Estimate::STATUS_DESCRIPTION.keys.map{|status| t('views.invoices.' + status.to_s)},
+                                                     t('views.invoices.all_statuses'), {selected: params[:type] || ''}),
+                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
+          <label><%= t('views.common.status') %></label>
+        </div>
+      </div>
+      <% if Estimate.all.unscoped.count > 1 %>
+        <div class="row">
+          <div class="input-filed col s12 m12">
+            <p class="range-field">
+              <label><%= t('views.estimates.estimate_number_range') %></label>
+              <input type="hidden" name="min_estimate_number" id="estimate_number_min" value="1">
+              <input type="hidden" name="max_estimate_number" id="estimate_number_max" value="<%= Estimate.last.id %>">
+            <div class="label-range">
+              <span class="label_left"><%= t('views.invoices.min') %>: <span id="estimate_number_min_label"></span></span>
+              <span class="label_right"><%= t('views.invoices.max') %>: <span id="estimate_number_max_label"></span></span>
+            </div>
+            <div id="estimate_number"
+                 min="1"
+                 max="<%= Estimate.last.id %>"
+                 class="range_selector"
+                 data-min="<%= params[:min_estimate_number] %>"
+                 data-max="<%= params[:max_estimate_number] %>"></div>
+            </p>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

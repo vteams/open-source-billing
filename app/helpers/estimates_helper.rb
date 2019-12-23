@@ -245,7 +245,7 @@ module EstimatesHelper
         end
         if activity.present? && activity.parameters['obj'].present? && activity.parameters['obj']['status'].present?
           if estimate_status(activity) == 'sent'
-            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} sent estimate to client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+            activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} sent estimate to clients on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           elsif estimate_status(activity) == 'invoiced'
             activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} changed this estimate to invoice on #{activity.created_at.strftime("%d-%b-%y")}</div>")
           end

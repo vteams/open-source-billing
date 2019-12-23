@@ -33,7 +33,7 @@ class EstimateMailer < ActionMailer::Base
     estimate.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email
-                                   :recipient => client.email, #client email
+                                   :recipient => client.email, #clients email
                                    :subject => template.subject,
                                    :type => 'Estimate',
                                    :company_id => estimate.company_id,

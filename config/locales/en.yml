@@ -316,6 +316,7 @@ en:
       no_deleted_msg: "You haven't any deleted invoice."
       sent_to: "Sent To"
       received_from: "Received From"
+      received_invoice: "Received Invoice"
       draft: "Draft"
       sent: "Sent"
       viewed: "Viewed"

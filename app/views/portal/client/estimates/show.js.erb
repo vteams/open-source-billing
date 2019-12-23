@@ -1,0 +1,4 @@
+$('body').append("<%= escape_javascript render partial: 'estimates/estimate_popup', locals: {estimate: @estimate} %>")
+elem = $("#invoice_model");
+Popup.initialize(elem);
+Popup.open(elem);

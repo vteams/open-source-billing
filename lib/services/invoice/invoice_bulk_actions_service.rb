@@ -95,7 +95,7 @@ module Services
 
     def send_invoice_to_client(invoice)
       # invoice_hash = {
-      #     invoice_client: invoice.client,
+      #     invoice_client: invoice.clients,
       #     invoice: invoice,
       #     encrypted_id: invoice.encrypted_id,
       #     user: @current_user

@@ -1,0 +1,75 @@
+<% if @payments.count > 0 %>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-table-holder main-invoice page-box">
+      <table class="bordered grid-view">
+        <thead>
+        <tr>
+          <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
+            <div class="">
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="<%= "select_all_items" %>"></label>
+              </div>
+            </div>
+          </th>
+          <th class="align_left header"><%= sortable('created_at', t('client / Inv #')) %></th>
+          <th class="align_center header <%= sortable_class('payment_date') %>"><%= sortable('payment_date', t('views.common.date')) %></th>
+          <th class="align_center header <%= sortable_class('IFNULL(payment_method,payment_type)') %>"><%= sortable('IFNULL(payment_method,payment_type)', t('views.common.type')) %></th>
+          <th width="15%" class="align_center header sorting {sorter:'thousands'} <%= sortable_class('payment_amount') %>"><%= sortable('payment_amount', t('amount')) %></th>
+        </tr>
+        </thead>
+        <tbody class="table-view-body">
+        <% @payments.each do |payment| %>
+          <tr class="invoice-card client-card invoice-table-row payments-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
+              <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-payment_id= <%=payment.id %>>
+                <div class="checkbox-item invoice_checkbox">
+                  <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}", class: "filled-in checked-invoice" %>
+                  <label for="<%= "payment_#{payment.id}" %>"></label>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= payment.payment_name%></div>
+                </div>
+              </div>
+            </td>
+            <td><%= payment.unscoped_client.organization_name rescue '' %><br>
+              <em class="inv-number" title="Invoce Number"><%= link_to payment.unscoped_invoice.formatted_invoice_number, portal_payment_path(payment), remote: true, class: ' estimate-number invoice_show_link' %></em>
+              <span class="right payment-category">
+                <%= payment.payment_amount.present? && payment.payment_amount < 0 ? 'Refund' : ''  %>
+              </span>
+
+            </td>
+            <td><%= payment.payment_date rescue "" %></td>
+            <td>
+              <% type = payment.payment_method ? payment.payment_method.parameterize.underscore : ((payment.payment_type.parameterize.underscore if payment.payment_type.present?)  || '') %>
+              <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if type.present? %></span>
+            </td>
+            <td>
+              <em style="float: left">
+                <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.unit : "$")} " %></em>
+              </em>
+              <div class="action-btn-group" style="float: right">
+                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= payment.id %>' data-alignment="right" data-beloworigin="true">
+                  <i class="material-icons">more_vert</i>
+                </a>
+
+                <ul id="dropdown_<%= payment.id %>" class='dropdown-content z-depth-4'>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>visibility</i>Show"), portal_payment_path(payment), title: t('views.common.show'), remote: true %>
+                  </li>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>receipt</i> Receipt"),
+                                {:controller => 'payments', :action => 'payment_receipt',
+                                 :id => payment.id, :format => "pdf"},
+                                :target => '_blank', title: t('views.common.print') %>
+                  </li>
+                </ul>
+              </div>
+
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>

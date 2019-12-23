@@ -1,0 +1,6 @@
+<% @invoices.group_by { |d| d.group_date }.each do |date, invoices| %>
+  <p><span class="activity-date"><%= date %></span></p>
+  <div class="flex-wrapper">
+    <%= render partial: 'invoice_card', collection: invoices, as: :invoice %>
+  </div>
+<% end %>

@@ -33,8 +33,8 @@ module ClientsHelper
     activities_arr=[]
     @client.activities.each do |activity|
       unless activity.parameters.empty?
-        if activity.key == "client.create"
-          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+        if activity.key == "clients.create"
+          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created clients on #{activity.created_at.strftime("%d-%b-%y")}</div>")
         else
           activity.parameters['obj'].each do |p|
             previous_value = p[1][0]

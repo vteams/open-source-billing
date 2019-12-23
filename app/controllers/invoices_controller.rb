@@ -166,6 +166,9 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def abc
+  end
+
   def invoice_receipt
     @invoice = Invoice.find(params[:id])
     respond_to do |format|

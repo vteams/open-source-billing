@@ -32,7 +32,7 @@ module Services
       new_credit_payment = Payment.create!(payment.permit!)
       new_credit_payment.notify_client(client_email)
 
-      # loop through all the credit payments of client
+      # loop through all the credit payments of clients
       client.credit_payments.each do |credit_payment|
 
         credit_amount, credit_applied = credit_payment.payment_amount.to_f, credit_payment.credit_applied.to_f

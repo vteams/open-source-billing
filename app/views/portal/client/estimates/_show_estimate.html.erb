@@ -1,0 +1,101 @@
+<div class="container printable">
+  <div class="invoice_template">
+    <div class="new-invoice-holder">
+      <div class="new-invoice-header clearfix">
+        <h5 class="left">
+          <%= t('estimate') %>: <span><%= @estimate.client.organization_name rescue '' %></span>
+        </h5>
+        <% unless  request.format.pdf? %>
+          <div class="new-invoice-action-btn right">
+            <%= link_to raw("<i class='material-icons'>picture_as_pdf</i>"),
+                        {:controller => 'estimates', :action => 'estimate_pdf',
+                         :id => @estimate.encrypted_id, :format => "pdf"},
+                        :target => '_blank', title: t('views.common.pdf') %>
+            <%= link_to raw("<i class='material-icons'>print</i>"),
+                        {:controller => 'estimates', :action => 'estimate_pdf',
+                         :id => @estimate.encrypted_id, :format => "pdf"},
+                        :target => '_blank', title: t('views.common.print') %>
+
+          </div>
+        <% end %>
+      </div>
+      <div class="info-section clearfix">
+        <div>
+          <center><%= image_tag @estimate.company.logo %></center>
+        </div>
+
+        <div class="info-left-section">
+          <%= render partial: 'invoices/company_contact_info', locals: {company: @estimate.company} %>
+          <br>
+          <%= render partial: 'invoices/client_contact_info', locals: {client: @estimate.client} %>
+        </div>
+        <div class="info-right-section">
+          <%= render 'estimates/estimate_summary' %>
+        </div>
+
+      </div>
+
+      <div class="container items">
+        <div class="new-invoice-table-holder">
+          <div class="estimate-popup">
+            <div class="new-estimate-table-holder <%= taxes_class %>">
+              <%= render partial: 'estimates/estimate_items', locals: {estimate: @estimate} %>
+            </div>
+          </div>
+        </div>
+        <div class="new-invoice-footer">
+          <div class="right-section right">
+            <div class="invoice-total-left">
+              <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
+              <% if @estimate.discount_percentage.present? %>
+                <div class="new-invoice-footer-row">
+                  <span><%= t('views.common.discount') %></span>
+                  <select class="inline-select small-select" disabled>
+                    <option value="1"><%= @estimate.discount_percentage %><%= @estimate.discount_type %></option>
+                  </select>
+                </div>
+              <% end %>
+              <% @estimate.tax_detail_with_discount.each do |tax, amount| %>
+                <div class="new-invoice-footer-row invicetax">
+                  <span style="float: right;"><%= tax %></span>
+                </div>
+              <% end %>
+
+              <hr />
+              <strong class="invoice-total-title"><%= t('views.common.total') %></strong>
+            </div>
+            <div class="invoice-total-right">
+              <strong class="invoice-total-title"><%=  @estimate.currency.unit %> <span><%= number_to_currency(@estimate.sub_total, unit: '' ) %></span></strong>
+
+              <% if @estimate.discount_percentage.present? %>
+                <div class="new-invoice-footer-row">
+                  <span><%=  @estimate.currency.unit %></span>
+                  <em class="f-invoice-price"><%= number_to_currency(@estimate.discount_amount, unit: '' )%></em>
+                </div>
+              <% end %>
+
+              <% @estimate.tax_detail_with_discount.each do |tax, amount| %>
+                <div class="new-invoice-footer-row invicetax">
+                  <span><%=  @estimate.currency.unit %></span>
+                  <em class="f-invoice-price"><%= number_to_currency(amount, unit: '' )%></em>
+                </div>
+              <% end %>
+
+              <hr />
+              <strong class="invoice-total-title">
+                <%= @estimate.currency.unit %> <span><%= number_to_currency(@estimate.estimate_total, unit: '' ) %></span>
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div><!--content_top-->
+      <br>
+      <div>
+        <%= @estimate.notes %>
+        <br/><br/><br/>
+      </div>
+      <p class="report-copyrights"><%= t('views.estimates.this_estimate_was_sent_using') %> <%= link_to image_tag("m-bottom-logo.jpg"), 'http://opensourcebilling.org/',class: 'responsive-img' %></p>
+      <br/>
+    </div>
+  </div>
+</div>

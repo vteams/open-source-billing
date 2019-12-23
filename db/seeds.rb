@@ -86,6 +86,7 @@ templates = EmailTemplate.create([
             <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
             <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
+            <p>Please login to see your invoice <a href="{{new_password_url}}">Login</a></p>
             <p>Thanks,</p>
             <p>{{company_signature}}</p>'
         },

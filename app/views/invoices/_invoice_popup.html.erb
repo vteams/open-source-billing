@@ -7,11 +7,13 @@
       <div class="modal-action-btn right">
 
         <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice.total_received == 0 ? 'javascript:void(0);' : {controller: 'invoices', action: 'invoice_receipt', id: invoice.id, format: 'pdf'},
-                    target: '_blank', class: invoice.total_received == 0 ? 'dis_pay' : '', title: 'Receipt' %>
+                    target: '_blank', class: invoice.total_received == 0 ? 'dis_pay' : '', title: 'Receipt' if current_user.present? %>
+        <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice.total_received == 0 ? 'javascript:void(0);' : invoice_receipt_portal_invoice_path(id: invoice.hashid, format: :pdf),
+                    target: '_blank', title: 'Print' if current_portal_client.present? %>
         <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),
-                    class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
+                    class: 'edit_invoice_icon' unless (invoice.invoice_type.eql?('ProjectInvoice') || current_portal_client.present?) %>
         <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), remote: true,
-                    title: t('views.common.send') %>
+                    title: t('views.common.send') unless current_portal_client.present?%>
         <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'show',
                                                                  :id => @invoice.hashid, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
         <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),

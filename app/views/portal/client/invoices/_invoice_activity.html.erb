@@ -1,0 +1,36 @@
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+
+    <div class="status-info active">
+
+      <% current_client_active_invoices = @current_client_invoices.unarchived %>
+      <h5>
+        <%= link_to t('views.common.active'), portal_invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= current_client_active_invoices.count %>)</span>
+      </h5>
+
+      <% if current_client_active_invoices.count > 3 %>
+        <div class="first-three-invoices set-positions">
+          <% current_client_active_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
+        </div>
+      <% else %>
+        <% current_client_active_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+      <% end %>
+      <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
+        <% current_client_active_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
+      </div>
+    </div>
+  </div>
+</aside>
