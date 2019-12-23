@@ -36,7 +36,7 @@ class @Tax
       else if isNaN(jQuery("#tax_percentage").val())
         applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.percentage_must_be_numeric'))
         false
-      else if parseFloat(jQuery("#tax_percentage").val()) <= 0
+      else if parseFloat(jQuery("#tax_percentage").val()) < 0
         applyPopover(jQuery("#tax_percentage"), I18n.t('views.taxes.greater_than_zero'))
         false
       else if parseFloat(jQuery("#tax_percentage").val()) > 100
