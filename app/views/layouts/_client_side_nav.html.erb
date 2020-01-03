@@ -53,7 +53,7 @@
         </li>
 
       <li>
-        <%= active_link_to destroy_portal_client_session_path(locale:'en', authenticity_token: form_authenticity_token), method: :delete, class: 'logout text-align' do %>
+        <%= active_link_to session[:masquerade_client_id].present? ? masquerade_path(current_portal_client) : destroy_portal_client_session_path(locale:'en', authenticity_token: form_authenticity_token), method: :delete, class: 'logout text-align' do %>
           <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
           <span><%= t('header.links.logout') %></span>
         <% end %>

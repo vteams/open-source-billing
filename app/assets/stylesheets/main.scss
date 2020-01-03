@@ -362,6 +362,20 @@ h6 {
 #header .header-center {
   max-width: 325px;
   margin: 0 auto; }
+.header-center .login-info-hdr{
+  width: 100%;
+  padding: 10px 0 0 0 !important;
+}
+.header-center .login-info-hdr p{
+  width: 56%;
+  float: left;
+}
+.header-center .login-info-hdr .logout{
+  padding-left: 0px !important;
+}
+.login-center{
+  max-width: 100% !important;
+}
 @media only screen and (max-width: 767px) {
   #header .header-center {
     float: left;

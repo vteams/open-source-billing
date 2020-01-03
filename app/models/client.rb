@@ -26,6 +26,7 @@ class Client < ActiveRecord::Base
   attr_accessor :skip_password_validation
 
   include ClientSearch
+  include Hashid::Rails
   include PublicActivity::Model
   tracked only: [:create, :update], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 

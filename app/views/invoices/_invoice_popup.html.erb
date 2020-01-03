@@ -114,7 +114,7 @@
         <strong><%= t('views.common.notes') %>: </strong> <%= @invoice.notes %>
       </div>
     </div>
-    <%= render 'invoice_history' unless request.format.pdf? %>
+    <%= render 'invoice_history' unless (request.format.pdf? || current_portal_client.present? || session[:masquerade_client_id].present? ) %>
 
     <div class="modal-footer clearfix">
       <div class="left-section left footer-signature">

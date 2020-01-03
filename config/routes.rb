@@ -57,6 +57,8 @@ Osb::Application.routes.draw do
       end
     end
 
+    resources :masquerades, only: [:create, :destroy]
+
     #API authentication for create invoice and clients
     post '/token_authentication', to: 'authenticate#token'
 
@@ -139,11 +141,11 @@ Osb::Application.routes.draw do
         get 'undo_actions'
       end
       member do
-        get :new_password
         post :create_password
         get 'default_currency'
       end
     end
+    get "clients/:id/joinOSB" => 'clients#new_password', as: 'new_password_client'
 
 
     resources :client_contacts
@@ -169,13 +171,6 @@ Osb::Application.routes.draw do
       devise_for :clients
     end
 
-    authenticated :client do
-      root to: 'portal/client/dashboard#index', as: :authenticated_client_root
-    end
-
-    unauthenticated :client do
-      root to: 'devise/sessions#new', as: :unauthenticated_client_root
-    end
     devise_scope :user do
       root :to => "devise/sessions#new"
     end

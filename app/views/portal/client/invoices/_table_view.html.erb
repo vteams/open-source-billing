@@ -63,7 +63,6 @@
                       <%= link_to raw("<i class='material-icons'>open_in_browser</i>Get url"), 'javascript:;', class: 'get_clipboard_url', data: {url: request.protocol + request.host_with_port + url_for(invoice)} %>
                     </li>
                     <li class="<%= 'disable_payment' if invoice.total_received == 0 %>">
-                      <%# binding.pry %>
                       <%= link_to raw("<i class='material-icons'>receipt</i> Receipt"), invoice.total_received == 0 ? 'javascript:void(0);' : invoice_receipt_portal_invoice_path(id: invoice.hashid, format: :pdf),
                                   target: '_blank', title: 'Print' %>
                     </li>

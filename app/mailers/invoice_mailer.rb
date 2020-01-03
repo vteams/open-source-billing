@@ -138,7 +138,7 @@ class InvoiceMailer < ActionMailer::Base
     template = get_email_template(user, invoice, template_type)
     client = invoice.client
     param_values = {
-        'new_password_url' => ( client.encrypted_password.present? ? new_portal_client_session_url(locale: 'en') : new_password_client_url(id: invoice.client.id)),
+        'new_password_url' => (new_password_client_url(id: invoice.client.hashid)),
         'sender_business_name' => 'OSB LLC',
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),

@@ -33,19 +33,19 @@ module ClientsHelper
     activities_arr=[]
     @client.activities.each do |activity|
       unless activity.parameters.empty?
-        if activity.key == "clients.create"
-          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created clients on #{activity.created_at.strftime("%d-%b-%y")}</div>")
+        if activity.key == "client.create"
+          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
         else
           activity.parameters['obj'].each do |p|
             previous_value = p[1][0]
             changed_value = p[1][1]
             unless p[0].include?('updated_at') || p[0].include?('created_at')
               if previous_value.present? && changed_value.present?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} changed #{p[0]} to #{changed_value}</div>")
+                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} changed #{p[0]} to #{changed_value}</div>")
               elsif (previous_value.nil? || previous_value.empty?) && changed_value.present?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} added #{p[0].humanize}  #{changed_value}</div>")
+                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} added #{p[0].humanize}  #{changed_value}</div>")
               elsif previous_value.present? && changed_value.empty?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} removed #{p[0].humanize}  #{previous_value}</div>")
+                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} removed #{p[0].humanize}  #{previous_value}</div>")
               end
             end
           end

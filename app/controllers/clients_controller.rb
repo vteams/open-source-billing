@@ -172,6 +172,9 @@ class ClientsController < ApplicationController
 
   def new_password
     @client = Client.find(params[:id])
+    if @client.encrypted_password.present?
+      redirect_to new_portal_client_session_path
+    end
   end
 
   def create_password
@@ -256,6 +259,6 @@ class ClientsController < ApplicationController
     when "new_password"
       "login"
     end
-    end
+  end
 
 end
