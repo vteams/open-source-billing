@@ -118,6 +118,10 @@
         Estimate.changeTax();
         OsbPlugins.estimate_load_functions();
 
+        jQuery("#estimate_client_id").on('change', function(){
+            $.get('/estimates/set_client_currency?client_id=' + $(this).val())
+        })
+
         // $('.estimate-select-client').material_select('destroy');
         // $('.estimate-select-client').select2();
     });

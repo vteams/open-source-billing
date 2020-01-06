@@ -273,6 +273,7 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'undo_actions'
         get 'preview'
+        get :set_client_currency
       end
       member do
         get 'convert_to_invoice'

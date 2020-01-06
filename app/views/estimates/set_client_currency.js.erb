@@ -1,0 +1,12 @@
+$("#estimate_client_id").val("<%= @currency.id %>");
+$("#estimate_client_id").trigger('contentChanged');
+
+window.currency_symbol = "<%= @currency.code %>";
+$('#subtotal_currency_unit,#discount_amount_currency_unit,#tax_currency_unit,#total_currency_unit').text('<%= @currency.unit %>');
+$("#estimate_sub_total_lbl, #estimate_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});
+val = $('#discount_type').val();
+$selectDropdown = $('#discount_type').empty().html(' ').prop("disabled", false);
+$selectDropdown.append($("<option></option>").attr("value", '%').text("%"));
+$selectDropdown.append($("<option></option>").attr("value", '<%= @currency.unit %>').text('<%= @currency.unit %>'));
+$selectDropdown.val( val === '%' ? val : '<%= @currency.unit %>' );
+$selectDropdown.trigger('contentChanged');

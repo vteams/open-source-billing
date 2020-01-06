@@ -224,7 +224,11 @@ class InvoicesController < ApplicationController
 
   def set_client_currency
     @client = Client.find params[:client_id]
-    @currency = @client.currency
+    if Settings.currency.eql?('Off') && Settings.default_currency.present?
+      @currency = Settings.default_currency
+    else
+      @currency = @client.currency
+    end
     respond_to do |format|
       format.js
     end

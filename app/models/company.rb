@@ -37,7 +37,8 @@ class Company < ActiveRecord::Base
         authentication: self.mail_config.authentication,
         enable_starttls_auto: self.mail_config.enable_starttls_auto,
         user_name: self.mail_config.user_name,
-        password: self.mail_config.password
+        password: self.mail_config.password,
+        openssl_verify_mode: self.mail_config.openssl_verify_mode
     }
   end
 
