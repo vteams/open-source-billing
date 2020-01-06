@@ -191,7 +191,7 @@ class EstimatesController < ApplicationController
   def set_client_currency
     @client = Client.find params[:client_id]
     if Settings.currency.eql?('Off') && Settings.default_currency.present?
-      @currency = Settings.default_currency
+      @currency = Currency.find_by(unit: Settings.default_currency)
     else
       @currency = @client.currency
     end
