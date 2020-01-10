@@ -21,7 +21,7 @@
             <div class="select-wrapper currency currency_select initialized">
               <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"
                  title="<%= t('views.settings.default_currency') %>">
-                <input class="select-dropdown" value="<%= current_user.settings.default_currency %>" readonly="readonly">
+                <input class="select-dropdown" value="<%= Settings.default_currency %>" readonly="readonly">
               </a>
               <ul id="dropdown_currency" class='dropdown-content select-dropdown'>
                 <li class="search-bar">

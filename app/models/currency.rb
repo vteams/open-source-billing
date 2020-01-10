@@ -7,7 +7,7 @@ class Currency < ActiveRecord::Base
   has_many :invoices
 
   def self.default_currency
-    currency = Currency.where(unit: current_user_default_currency_code(current_user)).first || Currency.first
+    currency = Currency.find_by(unit: Settings.default_currency) || Currency.first
     currency
   end
 

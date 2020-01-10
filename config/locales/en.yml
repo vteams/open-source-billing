@@ -110,6 +110,7 @@ en:
       cancel: "Cancel"
       type: "Type"
       date: "Date"
+      payment_date: "Payment Date"
       total: "Total"
       status: "Status"
       invoice_type: "Invoice Type"

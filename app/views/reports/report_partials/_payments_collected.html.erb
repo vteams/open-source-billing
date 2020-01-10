@@ -24,7 +24,7 @@
               <th width="30%"><%= t('views.clients.client_name') %></th>
               <th width="15%"><%= t('views.invoices.invoice') %></th>
               <th width="15%"><%= t('views.common.type') %></th>
-              <th class="center-align" width=20%"><%= t('views.common.date') %></th>
+              <th width=20%"><%= t('views.common.payment_date') %></th>
               <th class="align_right" width="20%"><%= t('views.dashboard.amount') %></th>
             </tr>
             </thead>
@@ -44,8 +44,8 @@
                 <%= (payment.payment_type || payment.payment_method || "").capitalize %>
               </td>
 
-              <td width="20%" class="center-align">
-                <%= payment.created_at.to_date.strftime(get_date_format) %>
+              <td width="20%">
+                <%= payment.payment_date.to_date.strftime(get_date_format) rescue "" %>
               </td>
               <td width="20%" class="align_right currency">
                 <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>

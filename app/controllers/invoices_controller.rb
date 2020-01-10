@@ -76,7 +76,7 @@ class InvoicesController < ApplicationController
     authorize @invoice
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
-    @invoice.currency = @client.currency if @client.present?
+    @invoice.currency = Currency.find_by(unit: Settings.default_currency)
     get_clients_and_items
     @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
     respond_to do |format|
