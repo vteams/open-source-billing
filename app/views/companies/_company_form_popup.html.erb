@@ -64,6 +64,8 @@
               <%= mail.input :password, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :enable_starttls_auto, input_html: { class: 'filled-in'}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
+              <%= mail.input :tls, input_html: { class: 'filled-in'}, as: :boolean,
+                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
               <%= mail.input :openssl_verify_mode, collection: MailConfig::OPEN_SSL_VERIFICATIONS_MODES, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
 
             </div>

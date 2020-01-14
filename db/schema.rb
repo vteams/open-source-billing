@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200106091339) do
+ActiveRecord::Schema.define(version: 20200114074930) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -416,10 +416,11 @@ ActiveRecord::Schema.define(version: 20200106091339) do
     t.string   "password",             limit: 255
     t.boolean  "enable_starttls_auto"
     t.integer  "company_id",           limit: 4
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "from",                 limit: 255
     t.string   "openssl_verify_mode",  limit: 255
+    t.boolean  "tls",                              default: true
   end
 
   add_index "mail_configs", ["company_id"], name: "index_mail_configs_on_company_id", using: :btree
