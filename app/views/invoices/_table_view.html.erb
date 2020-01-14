@@ -104,7 +104,6 @@
                     </li>
                     <li class="<%= 'disable_payment' if invoice.total_received == 0 %>">
                       <%= link_to raw("<i class='material-icons'>receipt</i> Receipt"), invoice.total_received == 0 ? 'javascript:void(0);' : {controller: 'invoices', action: 'invoice_receipt', id: invoice.id, format: 'pdf'}, target: '_blank', title: 'Print' %>
-                      <%= link_to raw("<i class='material-icons'>abc</i> Abc"), invoice.total_received == 0 ? 'javascript:void(0);' : {controller: 'invoices', action: 'abc', id: invoice.id, format: 'pdf'}, target: '_blank', title: 'Print' %>
                     </li>
                     <li class="<%= 'disable_payment' if invoice.status.eql?('void') %>">
                       <%= link_to raw("<i class='material-icons'>cancel</i> Void"), invoice.status.eql?('void') ? 'javascript:void(0);' : {controller: 'invoices', action: 'void_invoice', id: invoice.id},

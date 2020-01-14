@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191204070432) do
+ActiveRecord::Schema.define(version: 20200106091339) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(version: 20191204070432) do
     t.string   "last_sign_in_ip",        limit: 255
   end
 
-  add_index "client", ["email"], name: "index_clients_on_email", unique: true, using: :btree
-  add_index "client", ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
+  add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
+  add_index "clients", ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "account_id",        limit: 4
@@ -419,6 +419,7 @@ ActiveRecord::Schema.define(version: 20191204070432) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.string   "from",                 limit: 255
+    t.string   "openssl_verify_mode",  limit: 255
   end
 
   add_index "mail_configs", ["company_id"], name: "index_mail_configs_on_company_id", using: :btree
