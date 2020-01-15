@@ -198,17 +198,17 @@
 
 
 @loadUsersActivitiesSection = () ->
-  $.get '/sub_users/settings_listing', (data) ->
+  $.get window.user_settings_link, (data) ->
     $('#users_listing').append(data)
     initUserListingEvents()
 
 @loadCompaniesActivitiesSection = () ->
-  $.get '/companies/settings_listing', (data) ->
+  $.get window.comapnies_settings_link, (data) ->
     $('#companies_listing').append(data)
     initCompanyListingEvents()
 
 @loadRolesActivitiesSection = () ->
-  $.get '/roles/roles_settings', (data) ->
+  $.get window.roles_settings_link, (data) ->
     $('#roles_listing').append(data)
     initRoleListingEvents()
 
