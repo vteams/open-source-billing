@@ -62,7 +62,7 @@ class CompaniesController < ApplicationController
           current_user.update_attributes(current_company: @company)
         end
         format.js { @companies = Company.all }
-        format.html { redirect_to companies_path, notice: t('views.companies.create_msg') }
+        format.html { redirect_to params[:setting_form] == '1' ? settings_path : companies_path, notice: t('views.companies.create_msg') }
         format.json { render json: companies_path, status: :created, location: @company }
       else
         format.js {}
@@ -166,8 +166,7 @@ class CompaniesController < ApplicationController
     company = Company.where(id: params[:company_ids]).destroy_all
 
     @companies = Company.all
-    render json: {notice: t('views.companies.deleted_msg'),
-                  html: render_to_string(action: :settings_listing, layout: false)}
+    render json: {notice: t('views.companies.deleted_msg')}, status: :ok
   end
 
   private

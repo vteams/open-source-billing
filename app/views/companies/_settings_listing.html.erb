@@ -1,17 +1,18 @@
 <h5>
   <%= link_to t('views.companies.companies'), companies_path %>
-  <span><%= "(#{@companies.count})" %></span>
+  <span><%= "(#{@companies.count rescue 0})" %></span>
 </h5>
 <div class="user-list">
   <div id="companies">
-    <%= render partial: 'company', collection: current_user.assigned_companies %>
+    <%= render partial: 'companies/company', collection: current_user.assigned_companies %>
   </div>
   <div class="list-buttons">
-    <%= render 'settings_company_form' %>
+    <%= render 'companies/settings_company_form' %>
     <div id="company_btn_container">
       <a href="javascript:;" id="company_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
       <% unless OSB::CONFIG::DEMO_MODE %>
         <a href="javascript:;" id="company_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+        <%= link_to '', '/companies/destroy_bulk', class: 'hide', remote: true, method: :delete, id: 'bluk_delete_companies_link' %>
       <% end %>
     </div>
   </div>

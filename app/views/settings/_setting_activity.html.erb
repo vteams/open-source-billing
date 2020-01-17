@@ -5,9 +5,9 @@
   </i></span>
   <div class="activity-scroll-holder scrollContainer">
     <!--- activities list--->
-    <div class="status-info active" id="users_listing"></div>
-    <div class="status-info" id="companies_listing"></div>
-    <div class="status-info" id="roles_listing"></div>
+    <div class="status-info active" id="users_listing"><%= render partial: 'sub_users/settings_listing' %></div>
+    <div class="status-info" id="companies_listing"><%= render partial: 'companies/settings_listing' %></div>
+    <div class="status-info" id="roles_listing"><%= render partial: 'roles/roles_settings' %></div>
     <%#= render partial: 'roles/settings_roles_listing' %>
   </div>
 </aside>

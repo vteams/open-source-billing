@@ -1,6 +1,6 @@
-<div class="side-form company-side-form">
+<div class="side-form company-side-form hidden">
   <% @company = Company.new() %>
-  <%= simple_form_for(@company, url: '/companies', remote: true, html: { id: 'company_side_form'}) do |f| %>
+  <%= simple_form_for(@company, url: '/companies', html: { id: 'company_side_form'}) do |f| %>
     <%= hidden_field_tag :setting_form, 1, id: 'company_setting_form' %>
     <div class="modal-body users">
       <%= f.input :company_name, label: false, placeholder: '*' + t('views.companies.name'), wrapper_html: { class: 'input-field' }, input_html: { id: 'company_name' } %>

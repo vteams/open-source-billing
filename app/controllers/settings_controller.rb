@@ -55,6 +55,8 @@ class SettingsController < ApplicationController
     @email_templates = EmailTemplate.all
     authorize @email_templates
     @roles = Role.all
+    @companies = Company.all
+    @users = User.all
     @authentication_token = current_user.authentication_token
   end
 

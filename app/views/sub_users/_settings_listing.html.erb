@@ -1,13 +1,13 @@
 <h5>
   <%= link_to t('views.users.users'), sub_users_path %>
-  <span><%= "(#{@users.count})" %></span>
+  <span><%= "(#{@users.count rescue 0})" %></span>
 </h5>
 <div class="user-list">
   <div id="users">
-    <%= render partial: 'user', collection: @users %>
+    <%= render partial: 'sub_users/user', collection: @users %>
   </div>
   <div class="list-buttons">
-    <%= render 'sub_user_form' %>
+    <%= render 'sub_users/sub_user_form' %>
     <div id="user_btn_container">
       <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
       <% unless OSB::CONFIG::DEMO_MODE %>

@@ -46,11 +46,12 @@ class SubUsersController < ApplicationController
         end
         if params[:setting_form] == '1'
           @users = User.unscoped
-          format.js
+          #format.js
+          format.html {redirect_to settings_path}
         else
-          redirect_to(sub_users_url, notice: t('views.users.saved_msg'))
+          redirect_to(params[:setting_form] == '1' ? settings_path : sub_users_url, notice: t('views.users.saved_msg'))
         end
-        return
+        #return
       else
         format.js {}
         format.html { render action: 'new', alert: t('views.users.unable_to_save') }
@@ -109,9 +110,8 @@ class SubUsersController < ApplicationController
   def destroy_bulk
     sub_user = User.where(id: params[:user_ids]).destroy_all
     @users = User.all
-    render json: {notice: t('views.users.bulk_delete'),
-                  html: render_to_string(action: :settings_listing, layout: false)}
-  end
+    render json: {notice: t('views.users.bulk_delete')}, status: :ok
+ end
 
   def user_settings
   end

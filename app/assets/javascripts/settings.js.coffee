@@ -56,6 +56,7 @@
           dataType: 'json'
           success: (data, textStatus, jqXHR) ->
             swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            window.location.reload()
             $('#users_listing').html(data.html)
             initUserListingEvents()
 #  $('select').material_select()
@@ -87,14 +88,13 @@
 
 
   setTimeout (->
-    # made italic to the date formats samples in drop down
+# made italic to the date formats samples in drop down
     $('.settings_date_format .date-formats ul li').each (index, li) ->
       date_format_str = this.innerText.split(' ')
       $(li).html($("<span class='block'></span>")
         .append(date_format_str[0])
         .append($("<span class='red1 italic-text block'></span>")
         .append(date_format_str[1])));
-
     selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
     $('.settings_date_format .date-formats input').val(selected_format)
     $('#basic_settings_container').removeClass('hide')
@@ -138,6 +138,7 @@
           success: (data, textStatus, jqXHR) ->
             swal(I18n.t('helpers.links.delete'), data.notice, 'success')
             $('#companies_listing').html(data.html)
+            window.location.reload()
             initCompanyListingEvents()
 
   @Company.init_settings_form()
@@ -186,6 +187,7 @@
           data: {role_ids: roleIds}
           dataType: 'json'
           success: (data, textStatus, jqXHR) ->
+            window.location.reload()
             swal(I18n.t('helpers.links.delete'), data.notice, 'success')
             $('#roles_listing').html(data.html)
             initRoleListingEvents()

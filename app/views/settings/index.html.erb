@@ -1,5 +1,4 @@
 <%= render 'setting_activity' %>
-
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%> mCustomScrollbar' >
   <!--- main content --->
   <!--- breadcrum Bar --->
@@ -13,11 +12,7 @@
   </div>
 </div>
 <script>
-   window.user_settings_link = "<%= settings_listing_sub_users_path %>";
-   window.comapnies_settings_link = "<%= settings_listing_companies_path %>";
-   window.roles_settings_link = "<%= roles_settings_roles_path %>";
-  loadUsersActivitiesSection();
-  loadCompaniesActivitiesSection();
-  loadRolesActivitiesSection();
-  // initRoleListingEvents();
+    initUserListingEvents();
+    initCompanyListingEvents();
+    initRoleListingEvents();
 </script>

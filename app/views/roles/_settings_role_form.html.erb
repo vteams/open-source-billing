@@ -1,6 +1,6 @@
 <div class="side-form role-side-form hidden">
   <% @role = Role.new() %>
-  <%= simple_form_for(@role, remote: true, html: { id: 'role_side_form'}) do |f| %>
+  <%= simple_form_for(@role, html: { id: 'role_side_form'}) do |f| %>
     <%= hidden_field_tag :setting_form, 1, id: 'role_setting_form' %>
     <div class="modal-body users">
       <%= f.input :name, label: false, placeholder: '*' + t('views.Roles.name'), wrapper_html: { class: 'input-field' }, input_html: { id: 'role_name' } %>
