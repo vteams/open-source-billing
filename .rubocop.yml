@@ -1,0 +1,20 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+
+Layout/LineLength:
+    Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 25
