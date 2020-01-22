@@ -161,7 +161,7 @@ class InvoicesController < ApplicationController
     @invoice.destroy
 
     respond_to do |format|
-      format.html { redirect_to invoices_url }
+      format.html { redirect_to invoices_path }
       format.json { render_json(@invoice) }
     end
   end
@@ -280,7 +280,7 @@ class InvoicesController < ApplicationController
     @invoices_with_payments = result[:invoices_with_payments]
     respond_to do  |format|
       format.js
-      format.html { redirect_to invoices_url, notice: t('views.invoices.bulk_action_msg', action: @action) }
+      format.html { redirect_to invoices_path, notice: t('views.invoices.bulk_action_msg', action: @action) }
     end
   end
 
@@ -352,9 +352,9 @@ class InvoicesController < ApplicationController
     recurring = @invoice.recurring_parent.recurring_schedule
     if recurring.present?
       recurring.update_attributes(enable_recurring: false)
-      redirect_to(invoices_url, notice: t('views.invoices.recurring_stopped_msg'))
+      redirect_to(invoices_path, notice: t('views.invoices.recurring_stopped_msg'))
     else
-      redirect_to(invoices_url, alert: t('views.invoices.recurring_cannot_stopped_msg'))
+      redirect_to(invoices_path, alert: t('views.invoices.recurring_cannot_stopped_msg'))
     end
   end
 

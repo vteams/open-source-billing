@@ -150,7 +150,7 @@ class ClientsController < ApplicationController
     @client.destroy
 
     respond_to do |format|
-      format.html { redirect_to clients_url }
+      format.html { redirect_to clients_path }
       format.json { render_json(@client) }
     end
   end
@@ -162,7 +162,7 @@ class ClientsController < ApplicationController
     #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
     @action =  result[:action]
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: t('views.clients.bulk_action_msg', action: @action) }
+      format.html { redirect_to clients_path, notice: t('views.clients.bulk_action_msg', action: @action) }
       format.js
     end
   end

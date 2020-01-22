@@ -105,7 +105,7 @@ class EstimatesController < ApplicationController
     @estimate.destroy
 
     respond_to do |format|
-      format.html { redirect_to estimates_url }
+      format.html { redirect_to estimates_path }
       format.json { render_json(@estimate) }
     end
   end
@@ -143,7 +143,7 @@ class EstimatesController < ApplicationController
     @action = result[:action]
     respond_to do |format|
       format.js
-      format.html {redirect_to estimates_url, notice: t('views.estimates.bulk_action_msg', action: @action)}
+      format.html {redirect_to estimates_path, notice: t('views.estimates.bulk_action_msg', action: @action)}
     end
   end
 

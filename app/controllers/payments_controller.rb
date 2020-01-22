@@ -94,7 +94,7 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(payment_params)
         @payment.update_attribute(:send_payment_notification,params[:payments][0][:send_payment_notification]) if params[:payments] and params[:payments][0][:send_payment_notification]
         @payment.notify_client(current_user)  if params[:payments] and params[:payments][0][:send_payment_notification]
-        format.html { redirect_to(payments_url, :notice => t('views.payments.updated_msg')) }
+        format.html { redirect_to(payments_path, :notice => t('views.payments.updated_msg')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }
@@ -111,7 +111,7 @@ class PaymentsController < ApplicationController
     @payment.destroy unless OSB::CONFIG::DEMO_MODE
 
     respond_to do |format|
-      format.html { redirect_to payments_url }
+      format.html { redirect_to payments_path }
       format.json do
         if OSB::CONFIG::DEMO_MODE
           render json: {message: t('views.common.demo_restriction_msg') }, status: :ok
@@ -185,7 +185,7 @@ class PaymentsController < ApplicationController
   def bulk_actions
     per = params[:per].present? ? params[:per] : @per_page
     ids = params[:payment_ids]
-    redirect_to payments_url, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
+    redirect_to payments_path, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
     if Payment.is_credit_entry? ids
       @action = "credit entry"
       @payments_with_credit = Payment.payments_with_credit ids
@@ -203,7 +203,7 @@ class PaymentsController < ApplicationController
       @message = payments_deleted(ids) unless ids.blank?
     end
     respond_to do |format|
-      format.html { redirect_to payments_url, notice: t('views.payments.bulk_action_msg', action: @action) }
+      format.html { redirect_to payments_path, notice: t('views.payments.bulk_action_msg', action: @action) }
       format.js
       format.json
     end

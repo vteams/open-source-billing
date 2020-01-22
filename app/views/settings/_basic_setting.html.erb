@@ -2,7 +2,7 @@
   <div class="row settings-row">
 
     <div class="col s12 m12 xl8">
-      <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
+      <%= simple_form_for :settings, url: settings_path, remote: true do |f| %>
         <div class="card-white-panel clearfix settings-panel">
           <h5 class="text-blue">
             <%= t('header.links.setting.basic_settings') %>

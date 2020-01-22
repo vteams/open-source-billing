@@ -104,7 +104,7 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       if @taxis.update_attributes(taxes_params)
-        format.html { redirect_to taxes_url, notice: t('views.taxes.updated_msg') }
+        format.html { redirect_to taxes_path, notice: t('views.taxes.updated_msg') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -121,7 +121,7 @@ class TaxesController < ApplicationController
     @taxis.destroy
 
     respond_to do |format|
-      format.html { redirect_to taxes_url }
+      format.html { redirect_to taxes_path}
       format.json { render_json(@taxis) }
     end
   end
@@ -133,7 +133,7 @@ class TaxesController < ApplicationController
     @action = result[:action]
     respond_to { |format|
       format.js
-      format.html {redirect_to taxes_url, notice: t('views.taxes.bulk_action_msg', action: @action)}
+      format.html {redirect_to taxes_path, notice: t('views.taxes.bulk_action_msg', action: @action)}
     }
   end
 

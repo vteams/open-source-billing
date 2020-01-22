@@ -143,7 +143,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url }
+      format.html { redirect_to items_path }
       format.json { head :no_content }
     end
   end
@@ -163,7 +163,7 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t('views.items.bulk_action_msg', action: @action) }
+      format.html { redirect_to items_path, notice: t('views.items.bulk_action_msg', action: @action) }
       format.js
       format.json
     end

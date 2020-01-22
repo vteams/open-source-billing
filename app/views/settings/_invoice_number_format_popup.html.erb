@@ -10,7 +10,7 @@
         </a>
       </div>
     </div>
-    <%= simple_form_for :settings, url: '/settings', remote: true do |f| %>
+    <%= simple_form_for :settings, url: settings_path, remote: true do |f| %>
       <div class="modal-body">
         <div class="row">
           <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format', value: Settings.invoice_number_format  }, label: t('Invoice Number Format'),
