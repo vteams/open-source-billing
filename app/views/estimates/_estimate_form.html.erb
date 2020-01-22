@@ -114,12 +114,14 @@
     $(document).ready(function (){
         $('#discount_type').val('<%= dis_type %>');
         $('#discount_type').trigger('contentChanged');
+        load_item = "<%= load_item_data_items_path %>"
+        set_client_currency = "<%= set_client_currency_estimates_path %>"
         Estimate.change_estimate_item();
         Estimate.changeTax();
         OsbPlugins.estimate_load_functions();
 
         jQuery("#estimate_client_id").on('change', function(){
-            $.get('/estimates/set_client_currency?client_id=' + $(this).val())
+            $.get(set_client_currency+'?client_id=' + $(this).val())
         })
 
         // $('.estimate-select-client').material_select('destroy');

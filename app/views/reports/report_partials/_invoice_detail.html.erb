@@ -13,7 +13,7 @@
   </div>
   <% unless @report.report_data.blank? %>
     <% count = @report.report_data.count %>
-    <% @report.report_ data.order("#{sort_column} #{sort_direction}").each_slice(12).with_index do |invoices, index| %>
+    <% @report.report_data.order("#{sort_column} #{sort_direction}").each_slice(12).with_index do |invoices, index| %>
       <div class="invoice-items-table">
         <table class="table_listing item_sales_listing bordered grid-view">
           <% if index == 0 %>

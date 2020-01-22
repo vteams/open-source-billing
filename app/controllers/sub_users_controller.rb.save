@@ -33,7 +33,7 @@ class SubUsersController < ApplicationController
     @sub_user.skip_confirmation!
     respond_to do |format|
       if @sub_user.already_exists?(params[:email])
-        redirect_to(sub_users_path, alert: t('views.users.duplicate_email'))
+        redirect_to(sub_users_url, alert: t('views.users.duplicate_email'))
         return
       elsif @sub_user.save
         # assign current user's company to newly created user
@@ -46,10 +46,10 @@ class SubUsersController < ApplicationController
         end
         if params[:setting_form] == '1'
           @users = User.unscoped
-          #format.js
-          format.html {redirect_to settings_path, notice: t('views.users.saved_msg')}
+	p '**************'          #format.js
+          format.html {redirect_to settings_path}
         else
-          redirect_to(params[:setting_form] == '1' ? settings_path : sub_users_path, notice: t('views.users.saved_msg'))
+          redirect_to(params[:setting_form] == '1' ? settings_path : sub_users_url, notice: t('views.users.saved_msg'))
         end
         #return
       else

@@ -170,7 +170,7 @@ class PaymentsController < ApplicationController
 
   def update_individual_payment
     paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
-    where_to_redirect = params[:from_invoices] ? invoices_url : payments_url
+    where_to_redirect = params[:from_invoices] ? invoices_path : payments_path
     notice = ""
     alert = ""
     if paid_invoice_ids.present?

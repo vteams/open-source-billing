@@ -87,7 +87,7 @@ class TaxesController < ApplicationController
         format.html { redirect_to @taxis, notice: t('views.taxes.created_msg') }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
-        redirect_to({:action => "index", :controller => "taxes"}, :notice => new_tax_message) unless params[:quick_create]
+        redirect_to(taxes_path, :notice => new_tax_message) unless params[:quick_create]
         return
       else
         format.html { render action: "new" }

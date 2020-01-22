@@ -41,6 +41,12 @@
             <td>
               <strong style="float: left"><%= number_to_currency(client.payments_received, unit: client.currency_code)%></strong>
               <div class="action-btn-group clients-action" style="float: right">
+                <% if client.deleted? %>
+                    <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+                      <i class="material-icons">unarchive</i>
+                    </a>
+                <% else %>
+
                 <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true,
                             class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
 
@@ -49,13 +55,6 @@
                 </a>
 
                 <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
-                  <% if client.deleted? %>
-                    <li>
-                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
-                        <i class="material-icons">unarchive</i>
-                      </a>
-                    </li>
-                  <% end %>
                   <li>
                     <%= link_to raw("<i class='material-icons'>delete</i>Delete"),client, method: :delete,
                                 data:{confirm: t('helpers.messages.confirm'),
@@ -66,20 +65,19 @@
                   <% if !client.archived? %>
 
                     <li>
-                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
-                        <i class="material-icons">unarchive</i>Recover
+                      <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
+                        <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
                       </a>
-
                     </li>
                   <% else %>
                     <li>
-                      <a href="javascript:;" class="single_recover" title="Recover Archive">
-                        <i class="material-icons">unarchive</i>
+                      <a href="javascript:;" class="single_recover" title="<%= t('helpers.links.recover') %>">
+                        <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
                       </a>
-
                     </li>
                   <% end %>
                 </ul>
+                  <% end %>
               </div>
 
             </td>

@@ -50,7 +50,7 @@
     # Bulk user delete ajax request while clicking on delete btn
     if userIds.length > 0 && !currentUserSelected
       showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
-        $.ajax '/sub_users/destroy_bulk',
+        $.ajax delete_user,
           type: 'delete'
           data: {user_ids: userIds}
           dataType: 'json'
@@ -131,7 +131,7 @@
     # Ajax call for deleteing bulk companies while clicking on delete btn
     if companyIds.length > 0 && !currentCompanySelected
       showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
-        $.ajax '/companies/destroy_bulk',
+        $.ajax delete_company,
           type: 'delete'
           data: {company_ids: companyIds}
           dataType: 'json'
@@ -182,7 +182,7 @@
       roleIds.push($(element).val())
     if roleIds.length > 0
       showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
-        $.ajax '/roles/destroy_bulk',
+        $.ajax delete_role,
           type: 'delete'
           data: {role_ids: roleIds}
           dataType: 'json'

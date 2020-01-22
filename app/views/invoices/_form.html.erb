@@ -181,9 +181,9 @@
           OsbPlugins.load_functions();
 
 
+          set_client_currency = "<%= set_client_currency_invoices_path %>"
           jQuery("#invoice_client_id").on('change', function(){
-              $.get('/invoices/set_client_currency?client_id=' + $(this).val())
+              $.get(set_client_currency+'?client_id=' + $(this).val())
           })
-
       });
   </script>

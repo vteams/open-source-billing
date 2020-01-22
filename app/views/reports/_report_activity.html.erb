@@ -8,24 +8,24 @@
     <!--- activities list--->
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.invoice_detail'), "/#{I18n.locale}/reports/invoice_detail", :class => 'invoices_link' %></h5>
+      <h5><%= link_to t('views.reports.invoice_detail'), invoice_detail_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.item_sales'), "/#{I18n.locale}/reports/item_sales", :class => 'invoices_link' %></h5>
+      <h5><%= link_to t('views.reports.item_sales'), item_sales_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.payments_collected'), "/#{I18n.locale}/reports/payments_collected", :class => 'invoices_link'  %></h5>
+      <h5><%= link_to t('views.reports.payments_collected'), payments_collected_reports_path, :class => 'invoices_link'  %></h5>
 
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.revenue_by_client'), "/#{I18n.locale}/reports/revenue_by_client", :class => 'invoices_link' %></h5>
+      <h5><%= link_to t('views.reports.revenue_by_client'), revenue_by_client_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.aged_accounts_receivable'), "/#{I18n.locale}/reports/aged_accounts_receivable", :class => 'invoices_link' %></h5>
+      <h5><%= link_to t('views.reports.aged_accounts_receivable'), aged_accounts_receivable_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
   </div>

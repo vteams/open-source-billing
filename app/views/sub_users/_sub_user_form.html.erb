@@ -1,6 +1,6 @@
 <div class="side-form user-side-form hidden">
   <% @sub_user = User.new() %>
-  <%= simple_form_for(@sub_user, url: '/sub_users', html: { id: 'user_side_form'}) do |f| %>
+  <%= simple_form_for(@sub_user, url: sub_users_path, html: { id: 'user_side_form'}) do |f| %>
     <%= hidden_field_tag :setting_form, 1 %>
     <div class="modal-body users fields-container">
       <%= f.input :user_name, label: t('views.users.full_name'), input_html: {id: 'side_form_user_name', name: 'user_name', placeholder: t('views.users.full_name')},
