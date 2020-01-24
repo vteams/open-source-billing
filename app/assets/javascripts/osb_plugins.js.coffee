@@ -302,7 +302,7 @@ class @OsbPlugins
       e.preventDefault()
 
     $("#estimate_client_id").change ->
-      OsbPlugins.hidePopover($("#estimate_client_id").parents('.select-wrapper'));
+      OsbPlugins.hidePopover($("#estimate_client_id").parents('.info-left-section').find('.select2-container'));
     $("#add_line_item").click ->
       OsbPlugins.hidePopover($("#add_line_item"))
     # Change currency of estimate
@@ -328,7 +328,7 @@ class @OsbPlugins
         flag = false
       # Check if client is selected
       else if $("#estimate_client_id").val() is ""
-        OsbPlugins.applyPopover($("#estimate_client_id").parents('.select-wrapper'),"bottomMiddle","topLeft",I18n.t('views.invoices.select_a_client'))
+        OsbPlugins.applyPopover($("#estimate_client_id").parents('.info-left-section').find('.select2-container'),"bottomMiddle","topLeft",I18n.t('views.invoices.select_a_client'))
         flag = false
       # if currency is not selected
       else if $("#estimate_currency_id").val() is "" and $("#estimate_currency_id").is( ":hidden" ) == false

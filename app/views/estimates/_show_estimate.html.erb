@@ -25,7 +25,7 @@
       </div>
       <div class="info-section clearfix estimate-img">
         <div>
-          <center><%= image_tag @estimate.company.logo %></center>
+          <center><%= image_tag @estimate.company.logo if @estimate.company.logo.present? %></center>
         </div>
 
         <div class="info-left-section">

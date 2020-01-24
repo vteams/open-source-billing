@@ -164,7 +164,7 @@
                 <div class="field_row description">
                   <div class="label_field left single"></div>
                   <div class="large_field">
-                    <%= image_tag @company.logo_url(:thumb) %>
+                    <%= image_tag @company.logo_url(:thumb) if @company.logo.present? %>
                   </div>
                 </div>
             <% end %>

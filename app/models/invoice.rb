@@ -81,7 +81,7 @@ class Invoice < ActiveRecord::Base
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
-  before_save :update_invoice_total
+  after_save :update_invoice_total
 
   # archive and delete
   acts_as_archival

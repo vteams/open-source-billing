@@ -1,6 +1,6 @@
 <div class="payment-receipt">
   <div style="text-align: center; width: 92%">
-    <%= image_tag @invoice.company.logo %>
+    <%= image_tag @invoice.company.logo if @invoice.company.logo.present? %>
   </div>
 </div>
 <div class="info-section clearfix container company-info-section receipt-company-info-section">

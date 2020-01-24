@@ -1,5 +1,5 @@
-$("#estimate_client_id").val("<%= @currency.id %>");
-$("#estimate_client_id").trigger('contentChanged');
+$("#estimate_currency_id").val("<%= @currency.id %>");
+$("#estimate_currency_id").trigger('contentChanged');
 
 window.currency_symbol = "<%= @currency.code %>";
 $('#subtotal_currency_unit,#discount_amount_currency_unit,#tax_currency_unit,#total_currency_unit').text('<%= @currency.unit %>');
