@@ -141,12 +141,11 @@ class ReportsController < ApplicationController
 
   def get_criteria(options)
     if options[:criteria].present?
-      options[:criteria].merge!(current_company: current_user.current_company.to_s)
+      options[:criteria].merge!(current_company: current_user.current_company.to_s, sort: params[:sort], direction: params[:direction])
     else
-      options.merge!(criteria: {current_company: current_user.current_company.to_s})
+      options.merge!(criteria: {current_company: current_user.current_company.to_s, sort: params[:sort], direction: params[:direction]})
     end
     options
-
     @criteria = Reporting::Criteria.new(options[:criteria]) # report criteria
   end
 

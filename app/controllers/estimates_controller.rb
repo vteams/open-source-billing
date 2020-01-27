@@ -133,6 +133,7 @@ class EstimatesController < ApplicationController
   def send_estimate
     estimate = Estimate.find(params[:id])
     estimate.send_estimate(current_user, params[:id])
+    respond_to {|format| format.js}
   end
 
   def bulk_actions

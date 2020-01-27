@@ -345,7 +345,7 @@ class InvoicesController < ApplicationController
 
   def send_invoice
     @invoice.send_invoice(current_user, params[:id])
-    redirect_to invoices_path
+    respond_to {|format| format.js}
   end
 
   def stop_recurring

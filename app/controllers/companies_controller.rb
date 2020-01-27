@@ -191,7 +191,11 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    params.require(:company).permit(:account_id, :user_ids, :city, :company_name, :company_tag_line, :contact_name, :abbreviation, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes: [:id, :address, :port, :authentication, :from, :user_name, :password, :enable_starttls_auto, :openssl_verify_mode, :tls,  :_destroy])
+    if params[:company][:mail_config_attributes][:password].empty?
+      params.require(:company).permit(:account_id, :user_ids, :city, :company_name, :company_tag_line, :contact_name, :abbreviation, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes: [:id, :address, :port, :authentication, :from, :user_name, :enable_starttls_auto, :openssl_verify_mode, :tls,  :_destroy])
+    else
+      params.require(:company).permit(:account_id, :user_ids, :city, :company_name, :company_tag_line, :contact_name, :abbreviation, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes: [:id, :address, :port, :authentication, :from, :user_name, :password, :enable_starttls_auto, :openssl_verify_mode, :tls,  :_destroy])
+    end
   end
 
 end

@@ -39,12 +39,17 @@ module Reporting
 
       def get_report_data
         if @report_criteria.date_to_use.eql?("invoice_date")
-          invoices = Invoice.with_clients.where(invoice_date: @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day).order('invoice_date asc')
+          invoices = Invoice.with_clients.where(invoice_date: @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         else
           invoices = Invoice.with_clients.joins(:payments).where("payments.payment_date",@report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         end
         invoices = invoices.where(status: @report_criteria.invoice_status) unless @report_criteria.invoice_status == ""
         invoices = invoices.where(["invoices.client_id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
+        if @report_criteria.sort.present?
+          invoices = invoices.order("#{@report_criteria.sort} #{@report_criteria.direction}")
+        else
+          invoices = invoices.order('invoice_date asc')
+        end
 
         invoices
       end

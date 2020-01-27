@@ -32,7 +32,7 @@ module Reporting
     attr_accessor :item_id, :invoice_status
 
     # attributes for *Invoice detail* report
-    attr_accessor :from_date, :to_date, :client_id, :invoice_status, :date_to_use
+    attr_accessor :from_date, :to_date, :client_id, :invoice_status, :date_to_use, :sort, :direction
 
     def initialize(options={})
       Rails.logger.debug "--> Criteria init... #{options.to_yaml}"
@@ -47,6 +47,8 @@ module Reporting
       @invoice_status = (options[:invoice_status] || "") # default for all status i.e ""
       @from_month = (options[:quarter].split('-')[0] rescue 1).to_i
       @to_month = (options[:quarter].split('-')[1] rescue 3).to_i
+      @sort = options[:sort]
+      @direction = options[:direction]
       if @from_date.to_s[0] == '-'
         @from_date = @from_date.to_s[1..@from_date.to_s.length-1]
       end
