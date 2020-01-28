@@ -27,7 +27,7 @@ class Devise::SessionsController < DeviseController
   # GET /resource/sign_in
   def new
     if User.all.empty?
-      redirect_to '/users/sign_up'
+      redirect_to new_user_registration_path
     else
       resource = build_resource(nil, :unsafe => true)
       clean_up_passwords(resource)

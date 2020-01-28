@@ -14,7 +14,7 @@
                                       :default => "Edit #{User.model_name.human}") %>
       </h5>
     </div>
-    <%= simple_form_for(@sub_user, url: '/sub_users/update', method: :put, remote: params[:remote].to_i == 1,
+    <%= simple_form_for(@sub_user, url: sub_user_path, method: :put, remote: params[:remote].to_i == 1,
                         html: { id: 'sub_user_form', multipart: true }) do |f| %>
       <%= hidden_field_tag :setting_form, params[:setting_form] %>
       <div class="modal-body">
