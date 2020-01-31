@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      target: base
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+    env_file:
+      - ./local.env
+    command: bundle exec rails s -b 0.0.0.0
+
+  mysql:
+    image:  mysql:5
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+
+volumes:
+  mysql_data:
