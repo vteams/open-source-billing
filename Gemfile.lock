@@ -294,6 +294,7 @@ GEM
       net-ssh (>= 2.6.5, < 6.0.0)
     net-ssh (5.2.0)
     netrc (0.11.0)
+    nio4r (2.5.2)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     nouislider-rails (8.2.1)
@@ -328,7 +329,8 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
     public_suffix (3.1.0)
-    puma (3.11.0)
+    puma (4.3.1)
+      nio4r (~> 2.0)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
     pygments.rb (1.2.1)
@@ -581,7 +583,7 @@ DEPENDENCIES
   pry (= 0.10.3)
   pry-nav (= 0.2.4)
   public_activity
-  puma (= 3.11.0)
+  puma (= 4.3.1)
   pundit
   qbo_api (= 1.8.1)
   quickbooks-ruby (= 0.6.1)
