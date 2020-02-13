@@ -6,7 +6,7 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active" title="<%= t('views.payments.payments') %>">
-      <h5>
+      <h5 class="intro clients-index-false-intro" data-intro="These are the sum of payments collected per month from active clients">
         <%= link_to t('views.common.active'), "clients?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.active_clients_tooltip') %>">help_outline</i>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span>
@@ -28,7 +28,7 @@
 
     </div>
     <div class="status-info" title="<%= t('views.payments.payments') %>">
-      <h5>
+      <h5 class="intro clients-index-false-intro" data-intro="These are the sum of payments collected per month from deleted clients">
         <%= link_to t('views.common.deleted'), "clients?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.deleted_clients_tooltip') %>">help_outline</i>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted',  user: current_user, current_company: session['current_company'])) %>)</span>
@@ -49,7 +49,7 @@
       <% end %>
     </div>
     <div class="status-info">
-      <h5>
+      <h5 class="intro clients-index-false-intro" data-intro="These are the sum of payments collected per month from archived clients">
         <%= link_to t('views.common.archived'), "clients?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.archived_clients_tooltip') %>">help_outline</i>
         <span id="archives">(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span>

@@ -21,6 +21,7 @@
 class ClientsController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_filter :set_per_page_session
+  after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.client? && current_user.introduction.new_client? }
 
   # GET /clients
   # GET /clients.json

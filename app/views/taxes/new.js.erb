@@ -3,3 +3,29 @@ Tax.load_functions()
 elem = $("#tax_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
+<% get_introduction_parameter %>
+setTimeout(function () {
+    if($('.intro').hasClass("<%= intro_class %>")){
+        intro = introJs();
+        intro.setOptions({
+            steps: [
+                {
+                    element: document.getElementById("step1"),
+                    intro: "Here you can enter the name of tax you want to create"
+                },
+                {
+                    element: document.getElementById("step2"),
+                    intro: "Here you can set the percentage of tax"
+                }
+            ]
+        });
+        intro.start();
+        $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
+        $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
+        $('#tax_form_popup').removeClass("introjs-fixParent");
+        intro.onafterchange(function() {
+            $('#tax_form_popup').removeClass("introjs-fixParent");
+            $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
+        });
+    }
+},1000);

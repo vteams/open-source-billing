@@ -2909,6 +2909,7 @@ h6 {
     width: 100%; } }
 /*---Reports Page Styles--**/
 #main {
+  width: 100%;
   height: 100%; }
 #main .container-fluid {
   height: calc(100% - 30px); }
@@ -6231,4 +6232,69 @@ li.collection-item a{
 }
 .estimate-img{
   height: 100px !important;
+}
+.introjs-tooltip{
+  font-size: 13px;
+  color: #8f8f8f;
+  left: 0px !important;
+}
+.introjs-helperNumberLayer{
+  padding: 0px !important;
+  width: 22px !important;
+  height: 22px !important;
+  line-height: 18px !important;
+  background: #09B7E2 !important;
+  top: -14px !important;
+  left: -9px !important;
+}
+.introjs-helperLayer{
+  border-radius: 13px !important;
+}
+.introjs-tooltip{
+  border-radius: 10px !important;
+}
+.arrow {
+  text-align: center;
+  margin: 8% 0;
+  margin-top: -26px;
+}
+.arrow a{
+  color: white;
+}
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.introjs-progress{
+  display: block !important;
+}
+.introjs-progressbar{
+  background: #09b7e2 !important;
+}
+.introjs-bullets ul li a.active{
+  background: #09b7e2 !important;
+}
+.create-btn-tooltip{
+  left: -281px !important;
+  top: -170px !important;
+}
+.create-btn-tooltip .introjs-arrow{
+  right: 11px !important;
+}
+.client-popup-introjs-helperLayer {
+  mix-blend-mode: overlay !important;
 }

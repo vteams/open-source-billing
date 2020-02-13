@@ -1,4 +1,6 @@
 class SettingsController < ApplicationController
+  after_action :user_introduction, only: [:index], unless: -> { current_user.introduction.setting? }
+
   def create
     user = current_user
     @language_changed = false

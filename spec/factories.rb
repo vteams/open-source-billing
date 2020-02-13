@@ -1,6 +1,9 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :mail_config do
+FactoryGirl.define do  factory :introduction do
+    user nil
+  end
+  factory :mail_config do
     address "MyString"
 port 1
 authentication "MyString"

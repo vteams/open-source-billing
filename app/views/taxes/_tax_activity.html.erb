@@ -6,18 +6,18 @@
     <!--- activities list--->
 
     <div class="status-info">
-      <h5> <%= link_to t('views.common.active'), "?status=active&per=#{@per_page}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+      <h5 class="intro taxes-index-false-intro" data-intro="You can see all your active taxes from here"> <%= link_to t('views.common.active'), "?status=active&per=#{@per_page}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span class="item_counts" id="actives">(<%= Tax.unarchived.size %>)</span></h5>
 
 
     </div>
     <div class="status-info">
-      <h5> <%= link_to t('views.common.archived'), "?status=archived&per=#{@per_page}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+      <h5 class="intro taxes-index-false-intro" data-intro="You can see all your archived taxes from here"> <%= link_to t('views.common.archived'), "?status=archived&per=#{@per_page}", :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span class="item_counts" id="archives">(<%= Tax.archived.size %>)</span>
       </h5>
     </div>
     <div class="status-info">
-      <h5>  <%= link_to t('views.common.deleted'), "?status=deleted&per=#{@per_page}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+      <h5 class="intro taxes-index-false-intro" data-intro="You can see all your deleted taxes from here">  <%= link_to t('views.common.deleted'), "?status=deleted&per=#{@per_page}", :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span class="item_counts" id="deletes">(<%= Tax.only_deleted.size %>)</span></h5>
     </div>
   </div>

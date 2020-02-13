@@ -1,10 +1,10 @@
 <tr class="fields nested-fields line-items-fields">
   <td>
     <div class="elementsAction">
-      <%= link_to_remove_association raw('<i class="material-icons close">close</i>'), f, class: 'remove_item remove_nested_fields removeItem cross-position' %>
+      <%= link_to_remove_association raw('<i class="material-icons close intro invoices-new-false-intro" data-intro="You can remove a line item from here" data-step="11">close</i>'), f, class: 'remove_item remove_nested_fields removeItem cross-position' %>
     </div>
   </td>
-  <td>
+  <td class="intro invoices-new-false-intro" data-intro="Here you can select the invoice item" data-step="10">
     <%= f.input :item_id, collection: (load_line_items(action_name, @invoice.company_id, f.object) << ["#{t('views.common.add_new')}", "-1"]),
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
                 include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align add_link_select invoice-client-select item-select select_2',
@@ -20,7 +20,7 @@
   <td>
     <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', value: f.object.item_quantity.to_f } %>
   </td>
-  <td class="center-align tax-class">
+  <td class="center-align tax-class intro invoices-new-false-intro" data-intro="From here you can apply any tax on a line item" data-step="12">
     <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_tax_1'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select invoice-client-select tax_select'}) %>
   </td>
   <td class="center-align tax-class">

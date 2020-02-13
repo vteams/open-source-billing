@@ -5,7 +5,7 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5> <%= link_to t('views.common.active'), "items?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+      <h5 class="intro items-index-false-intro" data-intro="These are the sum of active items created per month"> <%= link_to t('views.common.active'), "items?status=active#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span>(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
       <div class="amount"><%= number_to_currency(@items_activity[:active_items_total], unit: default_currency_unit) %></div>
       <% @items_activity[:active_items_progress].each do |date, amount| %>
@@ -26,7 +26,7 @@
 
 
     <div class="status-info">
-      <h5><%= link_to t('views.common.archived'), "items?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'archived'}" %>
+      <h5 class="intro items-index-false-intro" data-intro="These are the sum of archived items per month"><%= link_to t('views.common.archived'), "items?status=archived#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_deleted #{'active' if params[:status] == 'archived'}" %>
         <span>(<%= get_count(params.merge(status: 'archived', user: current_user, current_company: session['current_company'])) %>)</span></h5>
       <div class="amount"><%= number_to_currency(@items_activity[:archived_items_total], unit: default_currency_unit) %></div>
       <% @items_activity[:archived_items_progress].each do |date, amount| %>
@@ -46,7 +46,7 @@
     </div>
     <div class="status-info">
 
-      <h5> <%= link_to t('views.common.deleted'), "items?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'deleted'}" %>
+      <h5 class="intro items-index-false-intro" data-intro="These are the sum of deleted items per month"> <%= link_to t('views.common.deleted'), "items?status=deleted#{query_string(params.except(:page).merge(per: @per_page))}", :class => "get_archived #{'active' if params[:status] == 'deleted'}" %>
         <span>(<%= get_count(params.merge(status: 'only_deleted', user: current_user, current_company: session['current_company'])) %>)</span></h5>
       <div class="amount"><%= number_to_currency(@items_activity[:deleted_items_total], unit: default_currency_unit) %></div>
       <% @items_activity[:deleted_items_progress].each do |date, amount| %>

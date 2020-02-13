@@ -23,8 +23,8 @@
     <%= simple_form_for @taxis, defaults: { wrapper_html: { class: 'input-field col s12' } } do |f| %>
         <div class="modal-body">
           <div class="row">
-            <%= f.input :name, label: t('views.common.name') %>
-            <%= f.input :percentage, label: t('views.common.percentage') %>
+            <%= f.input :name, label: t('views.common.name'), label_html: { id: 'step1', class: 'intro taxes-new-false-intro' } %>
+            <%= f.input :percentage, label: t('views.common.percentage'), label_html: { id: 'step2', class: 'intro taxes-new-false-intro' } %>
             <%= f.submit class: 'btn_large submit hidden' %>
           </div>
         </div>

@@ -8,24 +8,24 @@
     <!--- activities list--->
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.invoice_detail'), invoice_detail_reports_path, :class => 'invoices_link' %></h5>
+      <h5 class="intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.invoice_detail_dtl') %>"><%= link_to t('views.reports.invoice_detail'), invoice_detail_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.item_sales'), item_sales_reports_path, :class => 'invoices_link' %></h5>
+      <h5 class="intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.item_sales_dtl') %>"><%= link_to t('views.reports.item_sales'), item_sales_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.payments_collected'), payments_collected_reports_path, :class => 'invoices_link'  %></h5>
+      <h5 class="intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.payments_collected_dtl') %>"><%= link_to t('views.reports.payments_collected'), payments_collected_reports_path, :class => 'invoices_link'  %></h5>
 
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.revenue_by_client'), revenue_by_client_reports_path, :class => 'invoices_link' %></h5>
+      <h5 class="intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.revenue_by_client_dtl') %>"><%= link_to t('views.reports.revenue_by_client'), revenue_by_client_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
     <div class="status-info">
-      <h5><%= link_to t('views.reports.aged_accounts_receivable'), aged_accounts_receivable_reports_path, :class => 'invoices_link' %></h5>
+      <h5 class="intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.aged_accounts_receivable_dtl') %>"><%= link_to t('views.reports.aged_accounts_receivable'), aged_accounts_receivable_reports_path, :class => 'invoices_link' %></h5>
     </div>
 
   </div>

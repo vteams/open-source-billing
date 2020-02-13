@@ -1,3 +1,3 @@
 <% estimate_date = f.object.estimate_date.empty? ? Date.today.strftime(get_date_format) : f.object.estimate_date %>
-<%= f.input :estimate_date, wrapper_tag: :span,
+<%= f.input :estimate_date, wrapper_tag: :span, label_html: { class: 'intro estimates-new-false-intro', :'data-intro' => 'Here you can select your estimate date', :'data-step' => '5'},
             input_html: { class: 'date-field-style1 date_picker', value: estimate_date }, as: :string %>

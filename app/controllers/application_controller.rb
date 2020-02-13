@@ -57,6 +57,41 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_introduction
+    current_user.introduction.update_attribute(cookies[:intro], true)
+    # if params[:controller].eql?('dashboard') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:dashboard, true)
+    # elsif params[:controller].eql?('invoices') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:invoice, true)
+    # elsif params[:controller].eql?('invoices') && params[:action].eql?('new')
+    #   current_user.introduction.update_attribute(:new_invoice, true)
+    # elsif params[:controller].eql?('estimates') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:estimate, true)
+    # elsif params[:controller].eql?('estimates') && params[:action].eql?('new')
+    #   current_user.introduction.update_attribute(:new_estimate, true)
+    # elsif params[:controller].eql?('payments') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:payment, true)
+    # elsif params[:controller].eql?('payments') && params[:action].eql?('enter_payment')
+    #   current_user.introduction.update_attribute(:new_payment, true)
+    # elsif params[:controller].eql?('clients') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:client, true)
+    # elsif params[:controller].eql?('clients') && params[:action].eql?('new')
+    #   current_user.introduction.update_attribute(:new_client, true)
+    # elsif params[:controller].eql?('items') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:item, true)
+    # elsif params[:controller].eql?('items') && params[:action].eql?('new')
+    #   current_user.introduction.update_attribute(:new_item, true)
+    # elsif params[:controller].eql?('taxes') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:tax, true)
+    # elsif params[:controller].eql?('taxes') && params[:action].eql?('new')
+    #   current_user.introduction.update_attribute(:new_tax, true)
+    # elsif params[:controller].eql?('reports') && params[:action].eql?('invoice_detail')
+    #   current_user.introduction.update_attribute(:report, true)
+    # elsif params[:controller].eql?('settings') && params[:action].eql?('index')
+    #   current_user.introduction.update_attribute(:setting, true)
+    # end
+  end
+
   def after_sign_in_path_for(user)
     dashboard_path
   end

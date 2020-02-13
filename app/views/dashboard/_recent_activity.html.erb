@@ -2,7 +2,7 @@
   <span class="btn-activity"><i class="material-icons">
     keyboard_arrow_left
   </i></span>
-  <h3><%= t('views.dashboard.recent_activity') %></h3>
+  <h3 class="intro dashboard-index-false-intro" data-intro='In this section you can see the recent activities you performed' data-step="9"><%= t('views.dashboard.recent_activity') %></h3>
   <div class="activity-scroll-holder mCustomScrollbar">
 
     <% @recent_activity.each do |date, activities| %>

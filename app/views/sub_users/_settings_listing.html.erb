@@ -1,4 +1,4 @@
-<h5>
+<h5 class="intro settings-index-false-intro" data-intro="All of your users will be listed here" data-step="13">
   <%= link_to t('views.users.users'), sub_users_path %>
   <span><%= "(#{@users.count rescue 0})" %></span>
 </h5>
@@ -8,7 +8,7 @@
   </div>
   <div class="list-buttons">
     <%= render 'sub_users/sub_user_form' %>
-    <div id="user_btn_container">
+    <div id="user_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove users from here">
       <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
       <% unless OSB::CONFIG::DEMO_MODE %>
         <a href="javascript:;" id="user_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>

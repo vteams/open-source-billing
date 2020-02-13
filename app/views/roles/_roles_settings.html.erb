@@ -1,5 +1,5 @@
 <div class="setting-roles-list">
-  <h5>
+  <h5 class="intro settings-index-false-intro" data-intro="All of your roles will be listed here">
     <%= link_to t('views.Roles.roles'), roles_url %>
     <span>(<%= @roles.count rescue 0 %>)</span>
   </h5>
@@ -22,7 +22,7 @@
 
     <div class="list-buttons">
       <%= render 'roles/settings_role_form' %>
-      <div id="role_btn_container">
+      <div id="role_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove roles from here">
         <a href="javascript:;" id="role_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
         <% unless OSB::CONFIG::DEMO_MODE %>
           <a href="javascript:;" id="role_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>

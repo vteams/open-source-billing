@@ -1,6 +1,7 @@
 class EstimatesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_per_page_session
+  after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.estimate? && current_user.introduction.new_estimate? }
   protect_from_forgery except: [:preview]
   before_filter :authenticate_user!, except: [:preview]
   helper_method :sort_column, :sort_direction

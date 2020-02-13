@@ -111,3 +111,4 @@ gem 'public_activity'
 gem 'to_words'
 gem 'trackstamps'
 gem 'jquery-infinite-pages'
+gem "introjs-rails"

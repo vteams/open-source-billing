@@ -1,5 +1,5 @@
 <% unless request.format.pdf? %>
-    <div class="report-links">
+    <div class="report-links intro reports-invoice_detail-false-intro" data-intro="You can export this report in any on these formats" data-step="3">
       <%= t('views.reports.export_to') %>: <%= link_to t('views.common.csv'), params.except('format').merge({format: :csv}) %>,
       <%= link_to t('views.common.excel'), params.except('format').merge({format: :xls}) %>,
       <%= link_to t('views.reports.print_report'), params.except('format').merge({format: 'pdf'}) %>

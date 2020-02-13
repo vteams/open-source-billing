@@ -11,5 +11,5 @@ class @Popup
 
   @open = (elem) ->
     $(elem).modal('open')
-    $(elem).css('z-index', '1004')
-    $('.modal-overlay').css('z-index', '1003')
+    $(elem).css('z-index', '1004 !important')
+    $('.modal-overlay').css('z-index', '1005 !important')

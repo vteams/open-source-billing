@@ -1,10 +1,10 @@
 <div class="col s12 l12 xl5">
   <div id="invoices-list" class="scrollContainer">
-    <h3>
+    <h3 class="intro dashboard-index-false-intro" data-intro='In this section you can see all your current and past invoices'>
       <%= t('views.invoices.invoice') %>
       <div id="radioBtn" class="btn-group">
-        <a class="btn btn-primary btn-sm active"><%= "#{t('current')}" %></a>
-        <a class="btn btn-primary btn-sm"><%= "#{t('past')}" %></a>
+        <a class="btn btn-primary btn-sm active intro dashboard-index-false-intro" data-intro='In this section you can see the invoices whose due dates are not over yet' data-step="7"><%= "#{t('current')}" %></a>
+        <a class="btn btn-primary btn-sm intro dashboard-index-false-intro" data-intro='In this section you can see the invoices whose due dates are crossed' data-step="8"><%= "#{t('past')}" %></a>
       </div>
     </h3>
     <!--- Invoices list holder --->

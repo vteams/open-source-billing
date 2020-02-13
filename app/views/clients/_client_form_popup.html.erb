@@ -26,7 +26,7 @@
           <div class="info-right-section">
             <div class="row">
               <%= f.submit class: 'btn_large submit hidden client_submit' %>
-              <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
+              <h5 id="step1" class="text-blue title-heading intro clients-new-false-intro"><%= t('views.clients.organization') %></h5>
               <%= f.input :organization_name, label: t('views.clients.organization_name'), wrapper_html: { class: 'input-field col s12' } %>
               <%= f.input :first_name, label: t('views.clients.first_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= f.input :last_name, label: t('views.clients.last_name'), wrapper_html: { class: 'input-field col s6 m4' } %>
@@ -53,7 +53,7 @@
             <%= render 'client_contact_details', f: f %>
 
               <div class="row">
-                <h5 class="text-blue title-heading"><%= t('views.clients.additional_contacts') %></h5>
+                <h5 id="step3" class="text-blue title-heading intro clients-new-false-intro"><%= t('views.clients.additional_contacts') %></h5>
                 <div class="client_contact_container" id="client-contact-container">
                   <%= f.simple_fields_for :client_contacts do |client_contact| %>
                     <%= render 'client_contact_fields', f: client_contact %>
@@ -69,7 +69,7 @@
                 </div>
               </div>
             <div class="row">
-                <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
+                <h5 id="step4" class="text-blue title-heading intro clients-new-false-intro"><%= t('views.clients.make_available_to') %></h5>
             </div>
             <%= associate_account(controller_name, action_name, @client) %>
 

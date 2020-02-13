@@ -10,7 +10,7 @@
     <div class="status-info active">
 
       <% current_company_active_invoices = @current_company_invoices.unarchived %>
-      <h5>
+      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your active invoices group by currencies">
         <%= link_to t('views.common.active'), invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= current_company_active_invoices.count %>)</span>
       </h5>
@@ -37,7 +37,7 @@
 
     <div class="status-info">
       <% current_company_deleted_invoices = @current_company_invoices.only_deleted %>
-      <h5>
+      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your deleted invoices group by currencies">
         <%= link_to t('views.common.deleted'), invoices_path(status: 'deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
@@ -63,7 +63,7 @@
 
     <div class="status-info">
       <% current_company_archived_invoices = @current_company_invoices.archived %>
-      <h5>
+      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your archived invoices group by currencies">
         <%= link_to t('views.common.archived'), invoices_path(status: 'archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>

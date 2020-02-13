@@ -80,11 +80,11 @@
                       <div class="field_row">
                         <%= f.hidden_field :invoice_id %>
                         <div class="label_field left single payment_amount_label"><%= t('payment') %> (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
-                        <div class="small_field floating-left">
+                        <div class="small_field floating-left intro payments-enter_payment-false-intro" data-intro="You can enter the payment amount here" data-step="2">
                           <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount text-field-height" %>
                           <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
                         </div>
-                        <div class="field_check">
+                        <div class="field_check intro payments-enter_payment-false-intro" data-intro="You can check this to enter full remaining payment" data-step="3">
                           <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full fix-left-and-opacity checkbox-position" name="payments[][paid_full]"/>
 
                           <div id="<%= index %>" style="display:none" class="rem_payment_amount " value="<%= Payment.invoice_remaining_amount(payment.invoice.id) %>"></div>
@@ -108,11 +108,11 @@
 
                       <div class="field_row payment-method">
                         <div class="label_field left single"><%= f.label t('views.common.method'), :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
-                        <div class="small_field">
+                        <div class="small_field intro payments-enter_payment-false-intro" data-intro="Here you can select the payment method" data-step="4">
                           <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select payment-select2 select_2"} %>
                         </div>
                         <span>
-                        <div class="date-wrapper">
+                        <div class="date-wrapper intro payments-enter_payment-false-intro" data-intro="Here you can select the date on which you received payment" data-step="5">
                           <span class="payment-date"><%=t('views.common.date')%>:</span>
                             <span>
                               <small>
@@ -129,7 +129,7 @@
 
                       <div class="field_row">
                         <div class="label_field left single"><%= f.label :notes, t('views.common.notes'), :for => "payments_#{index}_notes", :class=> 'label-font'  %></div>
-                        <div class="large_field">
+                        <div class="large_field intro payments-enter_payment-false-intro" data-intro="Here you can enter notes related to your payment" data-step="6">
                           <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
                         </div>
                       </div>

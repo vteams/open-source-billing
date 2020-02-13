@@ -7,7 +7,7 @@
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
     <div class="status-info active">
-      <h5>
+      <h5 class=" intro estimates-index-false-intro" data-intro="Here you can see the total sum of your active estimates">
         <%= link_to t('views.common.active'), activities_estimates_path('active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
       </h5>
@@ -28,7 +28,7 @@
 
     </div>
     <div class="status-info">
-      <h5>
+      <h5 class="intro estimates-index-false-intro" data-intro="Here you can see the total sum of your deleted estimates">
         <%= link_to t('views.common.deleted'), activities_estimates_path('deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
@@ -48,7 +48,7 @@
       <% end %>
     </div>
     <div class="status-info">
-      <h5>
+      <h5 class=" intro estimates-index-false-intro" data-intro="Here you can see the total sum of your archived estimates">
         <%= link_to t('views.common.archived'), activities_estimates_path('archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>

@@ -51,5 +51,24 @@
         <div id="loading-indicator" class="hidden">
           <%= image_tag 'ring.gif' %>
         </div>
+
+    <script>
+        $(document).ready(function (){
+
+            <% get_introduction_parameter %>
+            <% if params[:controller] != 'dashboard' %>
+              $('.header-intro').removeAttr('data-intro');
+            <% end %>
+            setTimeout(function () {
+                if($('.intro').hasClass("<%= intro_class %>")){
+                    $('#users .list-item:first').attr('data-intro', 'You can click on any user name to edit a user');
+                    $('#companies .list-item:first').attr('data-intro', 'You can click on any company name to edit a company');
+                    $('#roles .list-item:first').attr('data-intro', 'You can click on any role name to edit a company');
+                    introJs().start();
+                    $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
+                }
+            },200)
+        });
+    </script>
     </body>
 </html>

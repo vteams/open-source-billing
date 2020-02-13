@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
-  after_create :set_default_settings
+  after_create :set_default_settings, :set_user_intro
 
   mount_uploader :avatar, ImageUploader
 
@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :logs, dependent: :destroy
   has_many :invoices
   has_and_belongs_to_many :companies
+  has_one :introduction
 
   attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend
@@ -52,7 +53,6 @@ class User < ActiveRecord::Base
       Thread.current[:current_user]
     end
 
-
     def filter(params, per_page)
       date_format = current.nil? ? '%Y-%m-%d' : (current.settings.date_format || '%Y-%m-%d')
       users = params[:search].present? ? self.search(params[:search]).records : self
@@ -63,6 +63,12 @@ class User < ActiveRecord::Base
 
       users.page(params[:page]).per(per_page)
     end
+  end
+
+  def set_user_intro
+    intro = Introduction.new
+    intro.user_id = self.id
+    intro.save
   end
 
   def assigned_companies

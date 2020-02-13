@@ -8,7 +8,7 @@
     <!--- activities list--->
     <div class="status-info active">
       <h5>
-          <h5>
+          <h5 class="intro payments-index-false-intro" data-intro="Here you can see the total sum of all your payments group by currencies and months">
             <a href="javascript:;"><%= t('header.links.payments.payments') %></a>
           </h5>
       </h5>
@@ -58,7 +58,7 @@
     </div>
     <div class="status-info actionState">
       <% PAYMENT_METHODS.each do |method| %>
-          <h5 class="text-blue">
+          <h5 class="text-blue intro payments-index-false-intro" data-intro="Here you can see the total count of payments made through <%= method.sub("_", " ").camelize %>">
             <%= t('views.payments.' + method.parameterize.underscore).capitalize %>
             <span> (<%= @current_company_payments.where(payment_method: method).count %>)</span>
           </h5>

@@ -1,6 +1,5 @@
 <div class="basic-setting hide" id="basic_settings_container">
   <div class="row settings-row">
-
     <div class="col s12 m12 xl8">
       <%= simple_form_for :settings, url: settings_path, remote: true do |f| %>
         <div class="card-white-panel clearfix settings-panel">
@@ -13,7 +12,7 @@
           </h5>
           <div class="row">
             <div class="col s5 m3 xl4">
-              <div class="setting-btns">
+              <div class="setting-btns intro settings-index-false-intro" data-intro="Here you can set the multi currency for your application according to your desire"  data-step="2">
                 <span><%= t('views.settings.multi_currency')  %></span>
                 <% multi_currency = (Settings.currency.present? and Settings.currency == "On") ? true : false %>
                 <%= check_box_tag "multi_currency", multi_currency ? 'On': 'Off',  checked: multi_currency %>
@@ -24,7 +23,7 @@
               </div>
             </div>
             <div class="col s5 m4 xl4">
-              <div class="setting-btns">
+              <div class="setting-btns intro settings-index-false-intro" data-intro="Here you can choose whether you want your side navigation opened or closed" data-step="3">
                 <span><%= t('views.settings.side_nav_open') %></span>
 
                 <% side_nav_opened = current_user.settings.side_nav_opened %>
@@ -37,7 +36,7 @@
               </div>
             </div>
             <div class="col s12 m4 xl4">
-              <div class="setting-btns">
+              <div class="setting-btns intro settings-index-false-intro" data-intro="Here you can choose the listing format for your application" data-step="4">
                 <span><%= t('views.settings.listing_format') %></span>
 
                 <% show_card_view = current_user.settings.index_page_format == 'card' %>
@@ -50,25 +49,25 @@
               </div>
             </div>
           </div>
-          <%= f.input :default_currency, collection: currency_list, selected: Settings.default_currency,
-                      input_html: {name: 'default_currency', id: 'default_currency', class: 'select_2 fa fa-caret-down'}, label: t('views.settings.default_currency'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' }%>
+            <%= f.input :default_currency, collection: currency_list, selected: Settings.default_currency,
+                        input_html: {name: 'default_currency', id: 'default_currency', class: 'select_2 fa fa-caret-down'}, label: t('views.settings.default_currency'),
+                        wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the default currency for your application',  "data-step" => "5" }, label_html: { class: 'active' }%>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
                       input_html: {name: 'locale', id: 'locale', class: 'select2 select_2 fa fa-caret-down'}, label: t('views.settings.language'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+                      wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the default language for your application', "data-step" => "6" }, label_html: { class: 'active' } %>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :date_format, collection: (DATE_FORMATS), selected: Settings.date_format,
                       input_html: {name: 'date_format', id: 'date_format', class: 'date-formats select_2 fa fa-caret-down'}, label: t('views.settings.date_format'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+                      wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the date format for your application', "data-step" => "7" }, label_html: { class: 'active' } %>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :records_per_page, collection: LINES_PER_PAGE, selected: current_user.settings.records_per_page,
                       input_html: {name: 'records_per_page', id: 'records_per_page', class: 'select_2 fa fa-caret-down'}, label: t('views.settings.records_per_page'),
-                      wrapper_html: { class: 'input-field col s12 m6 xl6' }, label_html: { class: 'active' } %>
+                      wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the number of records per page', "data-step" => "8" }, label_html: { class: 'active' } %>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :invoice_number_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format',
                                                            value: Settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
-                      wrapper_html: { class: 'input-field col s12' }, label_html: { class: 'active' }%>
+                      wrapper_html: { class: 'input-field col s12 intro settings-index-false-intro', :"data-intro" => 'Here you can set the invoice number format for your application', "data-step" => "9" }, label_html: { class: 'active' }%>
           <%= link_to raw('<i class="material-icons">create</i>'), invoice_number_format_settings_path, class: 'invoice-number-format-btn', remote: true %>
 
         </div>
@@ -79,7 +78,7 @@
         <h5 class="text-blue"><%= t('views.settings.import_data') %></h5>
         <div class="importElement">
           <div class="col s6 m6 xl12">
-            <%= link_to new_import_datum_path, remote: true do
+            <%= link_to new_import_datum_path, remote: true, class: ' intro settings-index-false-intro', :"data-intro" => 'From here you can import data from Fresh Books', "data-step" => "10" do
               image_tag('freshbooks.png', class: 'img-responsive', width: 100)
             end %>
           </div>
@@ -88,7 +87,7 @@
           </div>
         </div>
         <div class="api_key">
-            <span>
+            <span class="intro settings-index-false-intro" data-intro="This key will be used for JSON APIs requests" data-step="12">
               <b><%= t('views.settings.api_key') %>:</b>
               <%= @authentication_token %>
             </span>

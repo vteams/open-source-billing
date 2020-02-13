@@ -238,7 +238,7 @@ class Client < ActiveRecord::Base
   end
 
   def full_name
-    [first_name.capitalize, last_name.capitalize].compact.join(' ')
+    [first_name, last_name].reject(&:blank?).collect(&:capitalize).join(' ')
   end
 
   def outstanding_amount

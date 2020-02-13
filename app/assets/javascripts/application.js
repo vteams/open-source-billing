@@ -101,6 +101,7 @@
 //= require chartkick
 //= require Chart.bundle
 //= require jquery.infinite-pages
+//= require introjs
 
 
 

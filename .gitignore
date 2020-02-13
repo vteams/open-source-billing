@@ -36,7 +36,6 @@ config/sidekiq.yml
 .rvmrc
 
 node_modules/*
-Gemfile.lock
 
 # track below files
 !/public/404.*

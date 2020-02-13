@@ -11,7 +11,7 @@
           <div class="info-left-section">
             <%= render 'form_date_picker', f: f %>
 
-            <span class="label-font"><%= t('views.clients.client') %> </span>
+            <span class="label-font intro estimates-new-false-intro" data-intro = 'Here you can select the client for which you are creating estimate' data-step= '6'><%= t('views.clients.client') %> </span>
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
             <%= f.select :client_id, (options_for_select((load_clients(action_name, estimate.company_id)),
                                                          selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),

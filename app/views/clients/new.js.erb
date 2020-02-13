@@ -3,7 +3,45 @@ Client.load_functions();
 elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
-
+<% get_introduction_parameter %>
+setTimeout(function () {
+    if($('.intro').hasClass("<%= intro_class %>")){
+        intro = introJs();
+        intro.setOptions({
+          scrollToElement: true,
+          scrollTo: 'tooltip',
+           steps: [
+               {
+                   element: document.getElementById("step1"),
+                   intro: "Here you can provide client's organization information"
+               },
+               {
+                   element: document.getElementById("step2"),
+                   intro: "Here you can provide client's personal information"
+               },
+               {
+                   element: document.getElementById("step3"),
+                   intro: "Here you can provide client's additional information"
+               },
+               {
+                   element: document.getElementById("step4"),
+                   intro: "Here you can assign companies to client"
+               },
+           ]
+        });
+        intro.start();
+        $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
+        $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
+        $('#client_form_popup').removeClass("introjs-fixParent");
+        intro.onafterchange(function() {
+            $('#client_form_popup').removeClass("introjs-fixParent");
+            $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
+            if ($('.introjs-helperNumberLayer').html() == "2"){
+                $("#client_form_popup").animate({ scrollTop: $(document).height() }, 1000);
+            }
+        });
+    }
+},1000);
 //$('.select_2').material_select('destroy');
 $('.client_select_2').select2({});
 
