@@ -18,8 +18,15 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class Client < ActiveRecord::Base
+  # Include default clients modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+  attr_accessor :skip_password_validation
 
   include ClientSearch
+  include Hashid::Rails
   include PublicActivity::Model
   tracked only: [:create, :update], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
@@ -267,5 +274,17 @@ class Client < ActiveRecord::Base
 
   def zipcode
     postal_zip_code
+  end
+
+  def profile_picture
+    'img-user.png'
+  end
+
+
+  protected
+
+  def password_required?
+    return false if skip_password_validation
+    super
   end
 end

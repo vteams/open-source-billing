@@ -1,0 +1,27 @@
+<aside id="activity-sidebar" class='side-show'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <h3><%= t('views.dashboard.recent_activity') %></h3>
+  <div class="activity-scroll-holder mCustomScrollbar">
+
+    <% @recent_client_activity.each do |date, activities| %>
+      <span class="activity-date"><%= date %></span>
+      <ul class="activities-list">
+        <% activities.each do |activity| %>
+          <li>
+            <div class="activity-name <%= activity[:activity_type]%>">
+              <%= t(activity[:activity_type]) %>
+            </div>
+            <div class="activity-details">
+              <p>
+                <%= number_to_currency(activity[:amount], unit: activity[:code]) %> <span>(<%= activity[:unit] %>)</span>
+              </p>
+              <em class="author"><%= "#{t('views.invoices.' + activity[:activity_action].parameterize.underscore)}" %></em>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</aside>

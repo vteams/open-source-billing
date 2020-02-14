@@ -24,6 +24,7 @@ Features
 * Manage billing for your multiple sister companies under one account
 * Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
+* Customer portal
 
 Try [Demo](http://demo.opensourcebilling.org) here
 
@@ -93,8 +94,6 @@ Copy config/config.yml.copy to config/config.yml to set your configurations.
 Edit config/config.yml with your own paypal settings:
 
     paypal:
-      login: YOUR_PAYPAL_LOGIN
-      password: YOUR_PAYPAL_PASSWORD
       signature: YOUR_PAYPAL_SIGNATURE
       business: YOUR_PAYPAL_BUSINESS
 
@@ -113,7 +112,7 @@ Edit config/config.yml with your own application wkhtmltopdf path.
     wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
 
 #### 3.7 SMTP configuration
-Edit config/config.yml with your own application smtp settings.
+To make smtp_settings go to settings, open company edit form by clic.
 
      smtp_setting:
          address: smtp.gmail.com
@@ -171,6 +170,11 @@ and use your application in browser by typing in url: localhost:3000
 
 You can also configure Apache, Nginx or any other web/application server of your choice to execute OSB in production mode.
 
+Customer Portal
+------------
+
+When a customer receive invoice/estimate through email, he will also receive a login link to see all of his invoices. By visiting that url he can login to his account or can create his account if he don't have one.  
+
 Contributing
 ------------
 
@@ -185,6 +189,6 @@ Contact Information
 Mia Mian
 +1 (858) 586 7777
 
-E-mail: <mia@presstgers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstigers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>

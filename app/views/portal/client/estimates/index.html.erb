@@ -1,0 +1,32 @@
+<%= render 'estimate_activity'%>
+<div id="main-content" class=side-show'>
+  <!--- main content --->
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item  breadcrum-bar">
+      <div class="card-white-panel ">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.estimates.estimates'), portal_estimates_path %></span>
+          <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
+          <%= index_layout_toggle_icons(portal_estimates_path(layout_toggle_params(view: 'card')),
+                                        portal_estimates_path(layout_toggle_params(view: 'table'))) %>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <%= render 'filters' %>
+  <div class="invoice-box clearfix">
+    <%= form_tag "estimates/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render partial: 'estimates_container' %></div>
+      <%#= render partial: 'bulk_actions'%>
+    <% end %>
+  </div>
+
+</div>
+<script>
+    initFilterEvents('#estimate_start_date,#estimate_end_date,#estimate_number_min,#estimate_number_max');
+    <% if is_filter_applied?(%w(estimate_start_date estimate_end_date estimate_number_min estimate_number_max client_id type)) %>
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+    <% end %>
+</script>

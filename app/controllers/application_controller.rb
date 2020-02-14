@@ -49,6 +49,9 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+
+  layout Proc.new{ 'login' if devise_controller? }
+
   def _reload_libs
     if defined? RELOAD_LIBS
       RELOAD_LIBS.each do |lib|
@@ -92,13 +95,20 @@ class ApplicationController < ActionController::Base
     # end
   end
 
-  def after_sign_in_path_for(user)
-    dashboard_path
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(User)
+      dashboard_path(locale: :en)
+    else
+      portal_dashboard_index_path(locale: :en)
+    end
   end
 
-  def after_sign_out_path_for(user)
-    #categories_path
-    dashboard_path
+  def after_sign_out_path_for(resource_or_scope)
+    if resource_or_scope == :user
+      new_user_session_path(locale: :en)
+    else
+      new_portal_client_session_path(locale: :en)
+    end
   end
 
   def encryptor

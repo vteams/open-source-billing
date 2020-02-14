@@ -335,7 +335,8 @@ CUSTOM_FIELDS = {
             {label: 'Company Contact', token: '{{company_contact}}'},
             {label: 'Company Phone', token: '{{company_phone}}'},
             {label: 'Company Signature', token: '{{company_signature}}'},
-            {label: 'Invoice URL', token: '{{invoice_url}}'}
+            {label: 'Invoice URL', token: '{{invoice_url}}'},
+            {label: 'Password URL', token: '{{new_password_url}}'},
         ],
 
     'Payment Received' =>

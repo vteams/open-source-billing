@@ -1,0 +1,63 @@
+<nav id="side-nav" class='side-show'>
+  <!--- profile information --->
+  <div class="profile-info">
+    <div class="profile-image">
+      <%= image_tag(current_portal_client.profile_picture, alt: t('views.users.avatar'))%>
+    </div>
+    <div class="profile-details">
+      <div class="dropdown">
+        <!-- Dropdown Trigger -->
+        <a class='dropdown-button '><span><%= current_portal_client.full_name || current_portal_client.email %></span></a>
+        <a  class="email-link"><%= current_portal_client.email %> </a>
+      </div>
+    </div>
+  </div>
+  <!--- side main menu --->
+
+  <div>
+    <ul class="side-menu scrollContainer">
+      <li>
+        <%= active_link_to portal_dashboard_index_path , title: t('header.links.dashboard') do %>
+          <%= image_tag('ico-dashboard.svg', alt: t('header.links.dashboard'))%>
+          <span><%= t('header.links.dashboard') %></span>
+        <% end %>
+      </li>
+
+        <li>
+          <%= active_link_to portal_invoices_path, title: t('header.links.invoices.invoices') do %>
+            <%= image_tag('ico-invoices.svg', alt: t('header.links.invoices.invoices')) %>
+            <span><%= t('header.links.invoices.invoices') %></span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= active_link_to portal_estimates_path, title: t('header.links.estimates.estimates') do %>
+            <%= image_tag('ico-estimates.svg', alt: t('header.links.estimates.estimates'))%>
+            <span><%= t('header.links.estimates.estimates') %></span>
+          <% end %>
+        </li>
+
+
+        <li>
+          <%= active_link_to portal_payments_path, title: t('header.links.payments.payments') do %>
+            <%= image_tag('ico-payments.svg', alt: t('header.links.payments.payments'))%>
+            <span><%= t('header.links.payments.payments') %></span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= active_link_to portal_settings_path do %>
+            <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
+            <span><%= t('views.settings.settings') %></span>
+          <% end %>
+        </li>
+
+      <li>
+        <%= active_link_to session[:masquerade_client_id].present? ? masquerade_path(current_portal_client) : destroy_portal_client_session_path(locale:'en', authenticity_token: form_authenticity_token), method: :delete, class: 'logout text-align' do %>
+          <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
+          <span><%= t('header.links.logout') %></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

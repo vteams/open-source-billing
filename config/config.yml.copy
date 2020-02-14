@@ -33,7 +33,7 @@ production:
 
   paypal:
     enabled: false
-    url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    url: https://www.paypal.com/cgi-bin/webscr?
     business: YOUR_PAYPAL_BUSINESS
 
   smtp_setting:

@@ -1,0 +1,55 @@
+<!--- header --->
+<header id="header">
+  <div class="row">
+    <!--- header logo--->
+    <div class="col s12 m5 l4">
+      <a class="btn-menu" href="javascript:;"><i class="material-icons">menu</i></a>
+      <%= link_to raw('Open<span>Source</span>Billing'), portal_dashboard_index_path, class: 'logo'%>
+    </div>
+    <!--- header company name--->
+    <div class="col s9 m7 l4">
+      <div class="header-center login-center">
+        <div class="hdr-select-holder login-info-hdr">
+          <% if session[:masquerade_client_id].present? %>
+            <p id="" ><%= 'You are logged in as '+current_portal_client.full_name  %></p>
+            <%= link_to '( Cancel )', masquerade_path(current_portal_client), method: :delete, class: 'logout text-align' %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+    <!--- header search--->
+    <div class="col s3 m2 l4  header-right">
+      <div class="right notification-container">
+        <%= link_to raw('<i class="material-icons">search</i>'), 'javascript:;', class:'btn-search',
+                    title: t('header.links.search') if search_available_in?(controller_name)%>
+        <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
+                    title: t('views.help.help'), remote: true %>
+      </div>
+      <!--- header search holder--->
+      <div class="search-holder search-wrap">
+        <a href="#" title="<%= t('views.common.back') %>" class="btn-back"><i class="zmdi zmdi-arrow-left"></i><%= t('views.common.back') %></a>
+        <div class="container">
+          <div class="checkboxinfo row">
+            <div class="left">
+              <div class="chk-text"></div>
+            </div>
+            <%= render 'layouts/bulk_action_links'%>
+          </div>
+        </div>
+        <!--        <form action="#">-->
+        <!--        <i class="zmdi zmdi-search"></i>-->
+        <!--        <input type="text" class="form-control" placeholder="" />-->
+        <!--        </form>-->
+        <% if search_available_in?(controller_name)%>
+          <div class="search">
+            <%= form_tag eval("#{controller_name}_path"), method: :get do %>
+              <i class="zmdi zmdi-search"></i>
+              <%= filter_box_for  %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

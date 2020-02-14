@@ -1,0 +1,67 @@
+<!--- Activity sidebar --->
+<aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <span class="btn-activity"><i class="material-icons">
+    keyboard_arrow_left
+  </i></span>
+  <div class="activity-scroll-holder mCustomScrollbar">
+    <!--- activities list--->
+    <div class="status-info active">
+      <h5>
+        <h5>
+          <a href="javascript:;"><%= t('header.links.payments.payments') %></a>
+        </h5>
+      </h5>
+      <% company_payments = @current_client_payments.joins(:currency).group("currencies.unit").sum("payment_amount") %>
+      <% if company_payments.count > 3 %>
+        <div class="first-three-invoices set-positions">
+          <% @current_client_payments.limit(3).joins(:currency).group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
+            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
+        </div>
+      <% else %>
+        <% company_payments.each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+      <% end %>
+      <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
+        <% @current_client_payments.offset(3).joins(:currency).group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
+          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
+        <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
+      </div>
+      <% 0.upto(2) do |num| %>
+        <% monthly_payments = @current_client_payments.joins(:currency).where("extract(year from payments.created_at) = ? AND extract(month from payments.created_at) = ?", num.months.ago.year, num.months.ago.month) %>
+        <% if monthly_payments.present? %>
+          <h5>
+            <h5>
+              <a href="javascript:;"><%= num.months.ago.strftime("%B %Y") %></a>
+            </h5>
+          </h5>
+          <% monthly_payments.group("currencies.unit").sum("payment_amount").each do |currency_unit, amount| %>
+            <div class="agedWrapper">
+              <div class="aged-ar">
+                <small><%= currency_unit %></small>
+                <span><%= number_to_currency(amount, unit: currency_unit)%></span>
+              </div>
+              <div class="progress">
+                <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                     style="width: 100%;">
+                  <span class="sr-only">60% Complete</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="status-info actionState">
+      <% PAYMENT_METHODS.each do |method| %>
+        <h5 class="text-blue">
+          <%= t('views.payments.' + method.parameterize.underscore).capitalize %>
+          <span> (<%= @current_client_payments.where(payment_method: method).count %>)</span>
+        </h5>
+      <% end %>
+    </div>
+  </div>
+</aside>

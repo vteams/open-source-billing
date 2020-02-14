@@ -80,7 +80,7 @@ module Services
       # create invoice items from recurring profile line items
       create_invoice_line_items(profile, invoice.id)
 
-      # send email to client and reduce the number of occurrences in recurring profile
+      # send email to clients and reduce the number of occurrences in recurring profile
       profile.update_attributes(last_sent_date: invoice.created_at, sent_invoices: profile.sent_invoices + 1) if invoice.notify(user, invoice.id)
 
       # restart the invoice sending schedule in case of infinite occurrences

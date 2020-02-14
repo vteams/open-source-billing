@@ -1,0 +1,53 @@
+<div class="filter-container" id="filters">
+  <div class="nav-wrapper subnav-filters">
+    <%= form_tag portal_payments_path(), method: :get, class: 'col s12', id: 'filters_form' do %>
+      <div class="row">
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="create_at_start_date" id="create_at_start_date" value="<%= params[:create_at_start_date] %>">
+          <input type="hidden" name="create_at_end_date" id="create_at_end_date" value="<%= params[:create_at_end_date] %>">
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:created_at] %>" readonly/>
+          <label class="input_field_label"><%= t('views.invoices.invoice_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="payment_start_date" id="payment_start_date">
+          <input type="hidden" name="payment_end_date" id="payment_end_date">
+          <input type="text" class="date-range" name="payment" id="payment" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:payment] %>" readonly/>
+          <label class="input_field_label"><%= t('views.payments.payment_date_range') %></label>
+        </div>
+        <div class="input-field col s12 m3 select-client">
+          <%= select_tag(:type, multi_select_options(PAYMENT_METHODS.map{|pm| [t('views.payments.' + pm.parameterize.underscore).capitalize, pm]},
+                                                     t('views.invoices.all_statuses'), {selected: params[:type] || ''}),
+                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
+          <label><%= t('views.common.type') %></label>
+        </div>
+      </div>
+      <% if Invoice.all.unscoped.count.to_i > 1 %>
+        <div class="row">
+          <div class="input-filed col s12 m12">
+            <p class="range-field">
+              <label><%= t('views.invoices.invoice_number_range') %></label>
+              <input type="hidden" name="min_invoice_number" id="invoice_number_min" value="1">
+              <input type="hidden" name="max_invoice_number" id="invoice_number_max" value="<%= Invoice.last.id %>">
+            <div class="label-range">
+              <span class="label_left"><%= t('views.invoices.min') %>: <span id="invoice_number_min_label"></span></span>
+              <span class="label_right"><%= t('views.invoices.max') %>: <span id="invoice_number_max_label"></span></span>
+            </div>
+            <div id="invoice_number"
+                 min="1"
+                 max="<%= Invoice.last.id %>"
+                 class="range_selector"
+                 data-min="<%= params[:min_invoice_number] %>"
+                 data-max="<%= params[:max_invoice_number] %>"></div>
+            </p>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="filter-footer">
+          <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>
+          <input type="submit" value="<%= t('views.sessions.submit') %>" id="filter_submit_btn" class="filter-btn"/>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

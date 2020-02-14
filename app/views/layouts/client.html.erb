@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>:: Open Source Billing ::</title>
+  <%= favicon_link_tag %>
+
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Dosis:400,500" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "toastr.min.js" %>
+  <script>
+      I18n.locale = "<%= I18n.locale %>";
+  </script>
+  <%= csrf_meta_tags %>
+  <%= include_gon %>
+</head>
+<body currency-unit="<%= t("currency_unit") %>" class="invoice-report full-page">
+
+<%= render 'layouts/client_header'  unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates')) )%>
+
+<main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}"%> ">
+  <div class="container-fluid">
+    <div id='overly-container'>
+    </div>
+    <!--- side vertical menu --->
+    <%= render 'layouts/client_side_nav' unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates')) )%>
+    <%= render 'layouts/flash_messages'%>
+
+    <%= yield %>
+
+  </div>
+</main>
+<%#= render 'layouts/new_actions_buttons'%>
+<div id="loading-indicator" class="hidden">
+  <%= image_tag 'ring.gif' %>
+</div>
+</body>
+</html>

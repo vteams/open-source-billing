@@ -1,0 +1,61 @@
+<div class="col s12 l12 xl5">
+  <div id="invoices-list" class="scrollContainer">
+    <h3>
+      <%= t('views.invoices.invoice') %>
+      <div id="radioBtn" class="btn-group">
+        <a class="btn btn-primary btn-sm active"><%= "#{t('current')}" %></a>
+        <a class="btn btn-primary btn-sm"><%= "#{t('past')}" %></a>
+      </div>
+    </h3>
+    <!--- Invoices list holder --->
+    <div class="data-wrapper">
+
+      <ul class="currentData">
+        <% @current_invoices.each do |current_invoice| %>
+          <li>
+            <div class="invoice-name" style="background:#<%= (0..2).map{"%0x" % (rand * 0x80 + 0x80)}.join %>"><%= current_invoice.invoice_name %></div>
+            <span class="invoice-date"><%= (current_invoice.due_date || current_invoice.invoice_date) rescue "" %></span>
+            <div class="invoice-details">
+              <h5><%= current_invoice.unscoped_client.organization_name rescue "" %></h5>
+              <strong><%= link_to current_invoice.invoice_number, invoice_path(current_invoice), remote: true %></strong>
+              <% unit = current_invoice.currency.present? ? current_invoice.currency.code : "$"%>
+              <em><%= number_to_currency(current_invoice.invoice_total, unit: unit) %>
+                <span> <%= current_invoice.currency.unit rescue 'usd' %> </span>
+              </em>
+            </div>
+          </li>
+        <% end %>
+
+
+
+      </ul>
+      <ul class="pastData">
+        <% @past_invoices.each do |past_invoice| %>
+          <li>
+            <div class="invoice-name random-colors"><%= past_invoice.invoice_name %></div>
+            <span class="invoice-date"><%= (past_invoice.due_date || past_invoice.invoice_date) rescue "" %></span>
+            <div class="invoice-details">
+              <h5><%= past_invoice.unscoped_client.organization_name rescue "" %></h5>
+              <strong><%= link_to past_invoice.invoice_number, invoice_path(past_invoice), remote: true %></strong>
+              <% unit = past_invoice.currency.present? ? past_invoice.currency.code : "$" %>
+              <em><%= number_to_currency(past_invoice.invoice_total, unit: unit) %>
+                <span><%= past_invoice.currency.unit rescue 'usd' %></span>
+              </em>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+
+      <br><br><br>
+
+      <h4> &nbsp;&nbsp;&nbsp;Invoices by Currency (count)</h4>
+      <br>
+      <%= pie_chart @currencies_chart_data,
+                    legend: 'bottom',
+                    download: true,
+                    colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC', '#FFD502', '#812990', '#04A894', '#650052', '#99728D', '#FF0100', '#0721F8', '#964E27', '#F8E7A0']
+      %>
+
+    </div>
+  </div>
+</div>

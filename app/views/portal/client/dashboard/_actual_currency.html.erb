@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col m6 total-income">
+
+    <h4><%= link_to t("views.dashboard.amount_billed"), portal_invoices_path %></h4>
+    <div class="amount">
+      <div class="first-three-invoices set-positions">
+        <% ammount_paid = @current_client_invoices.group("currencies.unit").sum("invoices.invoice_total") %>
+        <% if ammount_paid.count > 3 %>
+          <% ammount_paid = @current_client_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total") %>
+          <% ammount_paid.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+          <div>
+            <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
+          </div>
+        <% else %>
+          <% ammount_paid = @current_client_invoices.group("currencies.unit").sum("invoices.invoice_total") %>
+          <% ammount_paid.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+        <% end %>
+        <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
+          <% ammount_paid = @current_client_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total") %>
+          <% ammount_paid.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+            <%# end %>
+          <% end %>
+          <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
+        </div>
+      </div>
+    </div>
+
+
+    <h4><%= link_to t("views.payments.payments"), portal_invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
+    <div class="amount">
+      <div class="first-three-payments set-positions">
+        <% payment = @current_client_payments.group("currencies.unit").sum("payments.payment_amount") %>
+        <% if payment.count > 3 %>
+          <% payment = @current_client_payments.limit(3).group("currencies.unit").sum("payments.payment_amount") %>
+          <% payment.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_payments' %>
+        <% else %>
+          <% payment = @current_client_payments.group("currencies.unit").sum("payments.payment_amount") %>
+          <% payment.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+        <% end %>
+        <div class="all-invoices hide-class set-positions" id="all_payments">
+          <% payment = @current_client_payments.offset(3).group("currencies.unit").sum("payments.payment_amount") %>
+          <% payment.each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+          <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_payments' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col m6">
+    <h4><%= link_to t("views.dashboard.ytd_income"), portal_invoices_path(type: ['paid']) %></h4>
+    <div class="amount">
+      <div class="first-three-ytd set-positions">
+        <% ytd_invoices = @ytd_invoices.group("currencies.unit").sum("payments.payment_amount") %>
+        <% if ytd_invoices.count > 3 %>
+          <% ytd = @ytd_invoices.limit(3).group("currencies.unit").sum("payments.payment_amount") %>
+          <% ytd.each do |currency_unit, amount|  %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_ytds' %>
+        <% else %>
+          <% @ytd_invoices.group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="hide-class set-positions" id="more-ytd">
+        <% @ytd_invoices.offset(3).group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
+          <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+        <% end %>
+        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_ytds' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="graph-holder">
+
+  <h4>Invoices</h4>
+  <%= area_chart @client_invoices_chart_data,
+                 legend: 'bottom',
+                 download: true,
+                 colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC', '#FFD502', '#812990', '#04A894', '#650052', '#99728D', '#FF0100', '#0721F8', '#964E27', '#F8E7A0']
+  %>
+  <!--<div id="graph_container"></div>-->
+  <h4>Payments</h4>
+  <%= area_chart @client_payments_chart_data,
+                 legend: 'bottom',
+                 download: true,
+                 colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC', '#FFD502', '#812990', '#04A894', '#650052', '#99728D', '#FF0100', '#0721F8', '#964E27', '#F8E7A0']
+  %>
+</div>

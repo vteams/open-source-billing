@@ -1,0 +1,33 @@
+<div class="flex-item box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', estimate , remote: true, class: 'invoice_show_link', style: 'display: none' unless estimate.deleted? %>
+  <div class="card-white-panel invoice-card" data-estimate_id= <%= estimate.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in" %>
+      <label for="<%= "estimate_#{estimate.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= estimate.estimate_name %></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= estimate.unscoped_client.organization_name rescue '' %></h5>
+      <strong><%= estimate.estimate_number %></strong>
+      <em><%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %><span><%= estimate.currency.unit%></span></em>
+      <div class="card-footer clearfix">
+        <span class="invoice-date"><small><%= t('views.common.date') %></small> <%= estimate.estimate_date rescue "" %></span>
+        <span class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>">
+          <%= t('views.invoices.' + estimate.status.downcase) %>
+        </span>
+      </div>
+    </div>
+    <div class="action-btn-group">
+      <% if estimate.deleted? %>
+        <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>
+      <% else %>
+        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
+        <!-- Dropdown Structure -->
+      <% end %>
+    </div>
+  </div>
+</div>

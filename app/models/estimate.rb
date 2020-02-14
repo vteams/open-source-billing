@@ -12,6 +12,7 @@ class Estimate < ActiveRecord::Base
   scope :estimate_number, -> (estimate_number) { where(id: estimate_number) }
   scope :estimate_date, -> (estimate_date) { where(estimate_date: estimate_date) }
   scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id")}
+  scope :skip_draft, -> { where.not('status = ?', 'draft') }
 
   # constants
   STATUS_DESCRIPTION = {

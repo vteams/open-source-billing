@@ -1,0 +1,80 @@
+<% if @invoices.count > 0 %>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-table-holder main-invoice page-box">
+      <table class="bordered grid-view">
+        <thead>
+        <tr class="first-header">
+          <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
+            <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align">
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="select_all_items"></label>
+              </div>
+            </div>
+          </th>
+          <th class="align_left header"><%= sortable('invoice_number', 'Inv # / Client') %>
+          </th>
+          <th width="17%" class="align_left header"><%= sortable('invoice_date', t('Invoiced')) %></th>
+          <th width="16%" class="align_right header"><%= sortable('invoice_total', t('Amount')) %></th>
+          <th width="20%" class="align_center header"><%= sortable('status', t('views.common.status')) %></th>
+          <!--          <th width="10%" class="center-align not-sortable "><%#= t '.actions', default: t('helpers.actions') %></th>-->
+        </tr>
+        </thead>
+        <tbody class="table-view-body">
+        <% @invoices.each do |invoice| %>
+          <tr class="invoice-card invoice-table-row">
+            <td class="td-checkbox checkbox-item invoice-row">
+              <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-invoice_id= <%=invoice.id %>>
+                <div class="checkbox-item invoice_checkbox">
+                  <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in checked-invoice f-l" %>
+                  <label for="<%= "invoice_#{invoice.id}" %>"></label>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name rescue 'n/a' %></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %><br>
+              <%= invoice.unscoped_client.full_name rescue 'n/a' %>
+            </td>
+            <td><em title="Invoice Date"><%= invoice.invoice_date.present? ? invoice.invoice_date : invoice.created_at.strftime("%Y-%m-%d") %></em><br>
+              <%= invoices_due_dates(invoice) %>
+            </td>
+            <td class='invoice-total'>
+              <em class='core-currency'><%= "#{number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.unit : default_currency_uniq)} " %></em><br>
+              <em class='base-currency' title="Invoice total equivalent in Base Currency"><%= "#{number_to_currency(invoice.base_currency_equivalent_total, unit: invoice.base_currency.present? ? invoice.base_currency.unit : default_currency_unit)} " %></em>
+            </td>
+            <td class="<%= invoice.status %>">
+              <span style="float: left" class="invoice-action <%= pick_status_color[invoice.status.to_sym] %>"><%= t('views.invoices.' + invoice.status) %></span>
+              <div class="action-btn-group" style="float: right">
+                <% if invoice.deleted? %>
+                  <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
+                <% else %>
+                  <%#= edit_invoice_link(invoice) %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>visibility</i>Show"), invoice, title: t('views.common.show'), target: '_blank' %>
+                    </li>
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>open_in_browser</i>Get url"), 'javascript:;', class: 'get_clipboard_url', data: {url: request.protocol + request.host_with_port + url_for(invoice)} %>
+                    </li>
+                    <li class="<%= 'disable_payment' if invoice.total_received == 0 %>">
+                      <%= link_to raw("<i class='material-icons'>receipt</i> Receipt"), invoice.total_received == 0 ? 'javascript:void(0);' : invoice_receipt_portal_invoice_path(id: invoice.hashid, format: :pdf),
+                                  target: '_blank', title: 'Print' %>
+                    </li>
+                  </ul>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+

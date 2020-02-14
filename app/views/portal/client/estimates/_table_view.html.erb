@@ -1,0 +1,71 @@
+<% if @estimates.count > 0 %>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-table-holder main-invoice page-box">
+      <table class="bordered grid-view">
+        <thead>
+        <tr>
+          <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
+            <div class="">
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="<%= "select_all_items" %>"></label>
+              </div>
+            </div>
+          </th>
+          <th class="align_left header <%= sortable_class('clients.organization_name') %>"><%= sortable('created_at', t('client / Est #')) %></th>
+          <th width="15%" class="align_left header <%= sortable_class('estimate_date') %>"><%= sortable('estimate_date', t('views.estimates.estimate_date')) %></th>
+          <th width="16%" class="align_left header sorting {sorter:'thousands'} <%= sortable_class('estimate_total') %>"><%= sortable('estimate_total', t('Amount')) %></th>
+          <th width="20%" class="align_center header <%= sortable_class('status') %>"><%= sortable('status', t('views.common.status')) %></th>
+        </tr>
+        </thead>
+        <tbody class="table-view-body">
+        <% @estimates.each do |estimate| %>
+          <tr class="invoice-card client-card invoice-table-row estimate-table-row">
+            <td class="align_center header align_center center-align not-sortable td-checkbox invoice-row checkbox-item">
+              <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-estimate_id= <%= estimate.id %>>
+                <div class="checkbox-item invoice_checkbox">
+                  <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in checked-invoice" %>
+                  <label for="<%= "estimate_#{estimate.id}" %>"></label>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= estimate.estimate_name %></div>
+                </div>
+              </div>
+            </td>
+            <td><%= estimate.unscoped_client.organization_name rescue '' %><br>
+              <em class="inv-number" title="Estimate Number"><%= link_to_if !estimate.deleted?, estimate.estimate_number, portal_estimate_path(estimate), remote: true, class: 'invoice_show_link estimate-number'%></em></td>
+            <td><%= estimate.estimate_date rescue '' %></td>
+            <td>
+              <em>
+                <%= "#{number_to_currency(estimate.estimate_total, unit: estimate.currency.present? ? estimate.currency.code : "$")} " %> <span><%= estimate.currency.unit%></span>
+              </em>
+            </td>
+            <td class="<%= estimate.status %>" title="<%= estimate.tooltip %>">
+              <span style="float: left" class="invoice-action  class="invoice-action <%= pick_status_color[estimate.status.to_sym] %>"><%= t('views.invoices.' + estimate.status.downcase) %></span>
+              <div class="action-btn-group" style="float: right">
+                <% if estimate.deleted? %>
+<!--                  <a href="javascript:;" class="single_recover_deleted" title="Recover"><i class="material-icons">unarchive</i></a>-->
+                <% else %>
+                  <%#= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate), class: 'edit_estimate_icon',
+                              title: t('helpers.links.edit') %>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= estimate.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown_<%= estimate.id %>" class='dropdown-content z-depth-4'>
+
+
+                    <li>
+                      <%= link_to raw("<i class='material-icons'>visibility</i>Show"), portal_estimate_path(estimate), title: t('views.common.show'), target: '_blank' %>
+                    </li>
+
+                  </ul>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>

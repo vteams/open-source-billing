@@ -37,7 +37,7 @@ module ProjectSearch
       keys = keyword.keys
       query_base= {query: {bool: {must: []}}}
 
-      query_base[:query][:bool][:must] << {nested: { path: 'client', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} if keys.include?('client')
+      query_base[:query][:bool][:must] << {nested: { path: 'clients', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} if keys.include?('clients')
       query_base[:query][:bool][:must] << {nested: { path: 'manager', query: {query_string: { query: keyword[:manager], fields: [:name, :email] }}}} if keys.include?('manager')
       query_base[:query][:bool][:must] << {query_string: { query: keyword[:project_name], fields: [:project_name] }} if keys.include?('project_name')
       query_base
@@ -69,7 +69,7 @@ module ProjectSearch
         if key.eql?('project_name')
           query << "projects.#{key} like '%#{val}%'"
         end
-        if key.eql?('client')
+        if key.eql?('clients')
           query << "(cc.first_name like '%#{val}%' or cc.last_name like '%#{val}%' or cc.email like '%#{keyword[:client]}%' or cc.organization_name like '%#{val}%')"
         end
         if key.eql?('manager')

@@ -1,0 +1,33 @@
+<div class="flex-item l4 box">
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+  <%= link_to '', payment , remote: true, class: 'invoice_show_link', style: 'display: none' %>
+  <div class="card-white-panel invoice-card" data-payment_id= <%=payment.id %>>
+    <div class="checkbox-item">
+      <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}", class: "filled-in" %>
+      <label for="<%= "payment_#{payment.id}" %>"></label>
+      <div class="invoice-name <%= random_card_color %>"><%= payment.payment_name%></div>
+    </div>
+    <div class="invoice-details">
+      <h5><%= payment.unscoped_client.organization_name rescue '' %></h5>
+      <% if payment.unscoped_invoice.present? %>
+        <strong><%= link_to payment.unscoped_invoice.invoice_number, payment.unscoped_invoice, remote: true %></strong>
+        <em><%= "#{number_to_currency(payment.payment_amount, unit: payment.unscoped_invoice.currency.present? ? payment.unscoped_invoice.currency.code : "$")} " %><span><%= payment.unscoped_invoice.currency.unit%></span></em>
+      <% end %>
+      <div class="card-footer clearfix">
+        <span class="invoice-date"><small><%= t('views.payments.payment_date') %>:</small> <%= payment.payment_date rescue "" %></span>
+        <% type = payment.payment_method ? payment.payment_method.parameterize.underscore : ((payment.payment_type.parameterize.underscore if payment.payment_type.present?)  || '') %>
+        <span class="invoice-action text-blue"><%= (t('views.payments.' + type)).capitalize if type.present? %></span>
+      </div>
+    </div>
+
+    <div class="action-btn-group">
+      <% unless payment.payment_type == "credit" %>
+        <%= link_to raw("<i class='material-icons'>delete</i>"),(OSB::CONFIG::DEMO_MODE ? 'javascript:void' : payment), method: :delete,
+                    data:{ confirm: t('helpers.messages.confirm'),
+                           success: t('views.payments.bulk_deleted_msg')},
+                    title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
+      <% end %>
+    </div>
+  </div>
+</div>

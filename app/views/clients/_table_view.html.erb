@@ -56,6 +56,26 @@
 
                 <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
                   <li>
+                    <%= link_to(raw("<i class='material-icons'>receipt</i>New Invoice") , new_invoice_path(invoice_for_client: client.id)) %>
+                  </li>
+                  <li>
+                    <%= link_to(raw("<i class='material-icons'>receipt</i>All Invoices") , invoices_path(client_id: client.id)) %>
+                  </li>
+                  <li>
+                    <%= link_to(raw("<i class='material-icons'>payment</i>New Payment") , unpaid_client_invoices_path(client.id), class: "#{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
+                  </li>
+                  <li>
+                    <%= link_to(raw("<i class='material-icons'>payment</i>All Payments") , payments_path(client_id: client.id)) %>
+                  </li>
+
+                  <% if client.deleted? %>
+                    <li>
+                      <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
+                        <i class="material-icons">unarchive</i>
+                      </a>
+                    </li>
+                  <% end %>
+                  <li>
                     <%= link_to raw("<i class='material-icons'>delete</i>Delete"),client, method: :delete,
                                 data:{confirm: t('helpers.messages.confirm'),
                                       success: t('views.clients.bulk_action_msg', action: 'deleted') },
@@ -76,6 +96,13 @@
                       </a>
                     </li>
                   <% end %>
+                  <li>
+                    <%= link_to raw("<i class='material-icons'>person</i>Login"),masquerades_path(client_id: client.id), method: :post,
+                                target: '_blank'
+                                 %>
+
+                  </li>
+
                 </ul>
                   <% end %>
               </div>
