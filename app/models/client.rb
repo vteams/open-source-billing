@@ -276,6 +276,11 @@ class Client < ActiveRecord::Base
     postal_zip_code
   end
 
+  def profile_picture
+    'img-user.png'
+  end
+
+
   protected
 
   def password_required?
