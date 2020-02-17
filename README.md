@@ -112,15 +112,8 @@ Edit config/config.yml with your own application wkhtmltopdf path.
     wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
 
 #### 3.7 SMTP configuration
-To make smtp_settings go to settings, open company edit form by clic.
+To make smtp_settings, go to settings, open a company edit form by clicking on a company and provide your smtp details in Mail Config section.
 
-     smtp_setting:
-         address: smtp.gmail.com
-         port: 587
-         authentication: :plain
-         enable_starttls_auto: true
-         user_name: YOUR_EMAIL_HERE
-         password: YOUR_PASSWORD_HERE
 
 #### 3.8 QuickBooks configuration
 Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
