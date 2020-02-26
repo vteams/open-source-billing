@@ -32,7 +32,7 @@ module ApplicationHelper
     if params[:action].eql?('new') || params[:action].eql?('enter_payment')
       params[:controller]+"-"+params[:action]+"-"+"#{current_user.introduction.send('new_'+params[:controller].singularize)}"+"-intro"
     else
-      params[:controller]+"-"+params[:action]+"-"+"#{current_user.introduction.send(params[:controller].singularize)}"+"-intro"
+      params[:controller]+"-"+params[:action]+"-"+"#{current_user.introduction.send(params[:controller].singularize)}"+"-intro" unless params[:action].eql?('show')
     end
   end
 
@@ -376,10 +376,10 @@ module ApplicationHelper
 
   def index_layout_toggle_icons(card_path, table_path)
     content_tag(:div,class: 'right') do
-      link_to( raw("<i class='material-icons intro #{params[:controller]}-index-false-intro' data-intro='You can set the card view by clicking on this icon' data-step='2'>view_comfy</i>"), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
-      link_to( raw("<i class='material-icons intro #{params[:controller]}-index-false-intro' data-intro='You can set the table view by clicking on this icon' data-step='3'>view_list</i>"), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view')) +
+      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can set the card view by clicking on this icon' data-step='2'>view_comfy</i>"), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
+      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can set the table view by clicking on this icon' data-step='3'>view_list</i>"), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view')) +
       raw('<div class="separator"></div>') +
-      link_to( raw("<i class='material-icons intro #{params[:controller]}-index-false-intro' data-intro='You can filter your #{params[:controller]} from here' data-step='4'>tune</i>"), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters'))
+      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can filter your #{controller.controller_name} from here' data-step='4'>tune</i>"), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters'))
     end
   end
 

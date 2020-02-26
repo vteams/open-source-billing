@@ -61,43 +61,16 @@ class ApplicationController < ActionController::Base
   end
 
   def user_introduction
-    current_user.introduction.update_attribute(cookies[:intro], true)
-    # if params[:controller].eql?('dashboard') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:dashboard, true)
-    # elsif params[:controller].eql?('invoices') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:invoice, true)
-    # elsif params[:controller].eql?('invoices') && params[:action].eql?('new')
-    #   current_user.introduction.update_attribute(:new_invoice, true)
-    # elsif params[:controller].eql?('estimates') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:estimate, true)
-    # elsif params[:controller].eql?('estimates') && params[:action].eql?('new')
-    #   current_user.introduction.update_attribute(:new_estimate, true)
-    # elsif params[:controller].eql?('payments') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:payment, true)
-    # elsif params[:controller].eql?('payments') && params[:action].eql?('enter_payment')
-    #   current_user.introduction.update_attribute(:new_payment, true)
-    # elsif params[:controller].eql?('clients') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:client, true)
-    # elsif params[:controller].eql?('clients') && params[:action].eql?('new')
-    #   current_user.introduction.update_attribute(:new_client, true)
-    # elsif params[:controller].eql?('items') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:item, true)
-    # elsif params[:controller].eql?('items') && params[:action].eql?('new')
-    #   current_user.introduction.update_attribute(:new_item, true)
-    # elsif params[:controller].eql?('taxes') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:tax, true)
-    # elsif params[:controller].eql?('taxes') && params[:action].eql?('new')
-    #   current_user.introduction.update_attribute(:new_tax, true)
-    # elsif params[:controller].eql?('reports') && params[:action].eql?('invoice_detail')
-    #   current_user.introduction.update_attribute(:report, true)
-    # elsif params[:controller].eql?('settings') && params[:action].eql?('index')
-    #   current_user.introduction.update_attribute(:setting, true)
-    # end
+    current_user.introduction.update_attribute(get_introduction_parameter, true)
   end
 
   def after_sign_in_path_for(resource)
-    if resource.is_a?(User)
-      dashboard_path(locale: :en)
+    if resource.is_a?(User) && OSB::CONFIG::DEMO_MODE
+      resource.reset_default_settings
+      params[:locale] = 'en'
+      dashboard_path(params[:locale])
+    elsif resource.is_a?(User)
+      dashboard_path(params[:locale])
     else
       portal_dashboard_index_path(locale: :en)
     end

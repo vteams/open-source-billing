@@ -5,6 +5,7 @@ module Portal
       before_filter :current_client
       layout 'client'
       helper_method :render_card_view?
+      include ClientsHelper
 
 
 
@@ -37,6 +38,11 @@ module Portal
         params[:view] ||= session[:view]
         params[:view] == 'card'
       end
+
+      def user_introduction
+        current_portal_client.introduction.update_attribute(client_introduction_parameter, true)
+      end
+
     end
   end
 end

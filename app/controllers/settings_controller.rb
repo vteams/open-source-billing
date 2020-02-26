@@ -20,8 +20,9 @@ class SettingsController < ApplicationController
     if params[:records_per_page].present?
       user.settings.records_per_page = params[:records_per_page]
     end
-    if params[:locale].present?
-      user.settings.language = params[:locale]
+    if params[:user_locale].present?
+      params[:locale] = params[:user_locale]
+      user.settings.language = params[:user_locale]
       @language_changed = true
     end
     if params[:default_currency].present?

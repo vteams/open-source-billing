@@ -3,6 +3,7 @@ module Portal
     class PaymentsController < BaseController
       include PaymentsHelper
       helper_method :sort_column, :sort_direction, :get_org_name
+      after_action :user_introduction, only: [:index], unless: -> { current_portal_client.introduction.payment? }
 
       def index
         @current_client_payments = Payment.client_id(current_client.id)

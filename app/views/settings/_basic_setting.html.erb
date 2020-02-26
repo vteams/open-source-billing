@@ -54,7 +54,7 @@
                         wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the default currency for your application',  "data-step" => "5" }, label_html: { class: 'active' }%>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :locale, collection: get_available_languages, selected: current_user.settings.language,
-                      input_html: {name: 'locale', id: 'locale', class: 'select2 select_2 fa fa-caret-down'}, label: t('views.settings.language'),
+                      input_html: {name: 'user_locale', id: 'locale', class: 'select2 select_2 fa fa-caret-down'}, label: t('views.settings.language'),
                       wrapper_html: { class: 'input-field col s12 m6 xl6 intro settings-index-false-intro', :"data-intro" => 'Here you can select the default language for your application', "data-step" => "6" }, label_html: { class: 'active' } %>
 <!--          <span class="fa fa-caret-down"></span>-->
           <%= f.input :date_format, collection: (DATE_FORMATS), selected: Settings.date_format,
