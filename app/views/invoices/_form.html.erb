@@ -176,6 +176,7 @@
       $(document).ready(function (){
           $('#discount_type').val('<%= @invoice.discount_type || '%' %>');
 
+          load_item = "<%= load_item_data_items_path %>"
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
