@@ -4,6 +4,7 @@ module Portal
       helper_method :sort_column, :sort_direction
       include DateFormats
       include EstimatesHelper
+      after_action :user_introduction, only: [:index], unless: -> { current_portal_client.introduction.estimate? }
 
       def index
         params[:status] = params[:status] || 'active'

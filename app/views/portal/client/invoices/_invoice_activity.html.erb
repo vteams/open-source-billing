@@ -8,7 +8,7 @@
     <div class="status-info active">
 
       <% current_client_active_invoices = @current_client_invoices.unarchived %>
-      <h5>
+      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your active invoices group by currencies">
         <%= link_to t('views.common.active'), portal_invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
         <span id="actives">(<%= current_client_active_invoices.count %>)</span>
       </h5>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200106091339) do
+ActiveRecord::Schema.define(version: 20200130070538) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -316,10 +316,12 @@ ActiveRecord::Schema.define(version: 20200106091339) do
     t.boolean  "item_table",               default: false
     t.boolean  "tax_table",                default: false
     t.integer  "user_id",        limit: 4
+    t.integer  "client_id",      limit: 4
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
   end
 
+  add_index "introductions", ["client_id"], name: "index_introductions_on_client_id", using: :btree
   add_index "introductions", ["user_id"], name: "index_introductions_on_user_id", using: :btree
 
   create_table "invoice_line_items", force: :cascade do |t|
@@ -781,6 +783,7 @@ ActiveRecord::Schema.define(version: 20200106091339) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "introductions", "clients"
   add_foreign_key "introductions", "users"
   add_foreign_key "mail_configs", "companies"
   add_foreign_key "permissions", "roles"

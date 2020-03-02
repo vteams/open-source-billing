@@ -29,6 +29,14 @@ module ClientsHelper
     notice.html_safe
   end
 
+  def client_introduction_parameter
+    cookies[:intro] = controller_name.singularize
+  end
+
+  def client_intro_class
+    controller_name+"-"+params[:action]+"-"+"#{current_portal_client.introduction.send(controller_name.singularize)}"+"-intro"
+  end
+
   def history_of_client
     activities_arr=[]
     @client.activities.each do |activity|

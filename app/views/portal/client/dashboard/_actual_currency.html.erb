@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col m6 total-income">
 
-    <h4><%= link_to t("views.dashboard.amount_billed"), portal_invoices_path %></h4>
+    <h4 class="intro dashboard-index-false-intro" data-intro="Here you can see the sum of the invoices total you received so far"><%= link_to t("views.dashboard.amount_billed"), portal_invoices_path %></h4>
     <div class="amount">
       <div class="first-three-invoices set-positions">
         <% ammount_paid = @current_client_invoices.group("currencies.unit").sum("invoices.invoice_total") %>
@@ -31,7 +31,7 @@
     </div>
 
 
-    <h4><%= link_to t("views.payments.payments"), portal_invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
+    <h4 class="intro dashboard-index-false-intro" data-intro="Here you can see the total amount paid against invoices received during this year"><%= link_to t("views.payments.payments"), portal_invoices_path(type: ['sent', 'draft', 'viewed']) %></h4>
     <div class="amount">
       <div class="first-three-payments set-positions">
         <% payment = @current_client_payments.group("currencies.unit").sum("payments.payment_amount") %>

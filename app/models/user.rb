@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
-  after_create :set_default_settings, :set_user_intro
+  after_create :set_default_settings
 
   mount_uploader :avatar, ImageUploader
 
@@ -65,12 +65,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def set_user_intro
-    intro = Introduction.new
-    intro.user_id = self.id
-    intro.save
-  end
-
   def assigned_companies
     if self.have_all_companies_access?
       Company.all
@@ -83,6 +77,15 @@ class User < ActiveRecord::Base
     self.settings.records_per_page = 9
     self.settings.side_nav_opened = true
     self.settings.index_page_format = 'cart'
+  end
+
+  def reset_default_settings
+    self.settings.language = 'en'
+    self.settings.records_per_page = '9'
+    self.settings.index_page_format = 'table'
+    self.settings.side_nav_opened = true
+    Settings.default_currency = 'USD'
+    Settings.invoice_number_format = "{{invoice_number}}"
   end
 
   def currency_symbol

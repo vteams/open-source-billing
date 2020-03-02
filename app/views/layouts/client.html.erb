@@ -51,5 +51,18 @@
 <div id="loading-indicator" class="hidden">
   <%= image_tag 'ring.gif' %>
 </div>
+<script>
+  $(document).ready(function () {
+      <% if controller.controller_name != 'dashboard' %>
+       $('.header-intro').removeAttr('data-intro');
+      <% end %>
+      setTimeout(function () {
+          if($('.intro').hasClass("<%= client_intro_class %>")){
+              introJs().start();
+              $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
+          }
+      },200);
+  });
+</script>
 </body>
 </html>

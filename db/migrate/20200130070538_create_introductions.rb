@@ -23,6 +23,7 @@ class CreateIntroductions < ActiveRecord::Migration
       t.boolean :item_table, default: false
       t.boolean :tax_table, default: false
       t.references :user, index: true, foreign_key: true
+      t.references :client, index: true, foreign_key: true
 
       t.timestamps null: false
     end
@@ -30,6 +31,11 @@ class CreateIntroductions < ActiveRecord::Migration
       intro = Introduction.new
         intro.user_id = u.id
         intro.save
+    end
+    Client.all.each do |c|
+      intro = Introduction.new
+      intro.client_id = c.id
+      intro.save
     end
   end
 end
