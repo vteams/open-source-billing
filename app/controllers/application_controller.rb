@@ -67,6 +67,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.is_a?(User) && OSB::CONFIG::DEMO_MODE
       resource.reset_default_settings
+      session[:view] = 'table'
       params[:locale] = 'en'
       dashboard_path(params[:locale])
     elsif resource.is_a?(User)

@@ -82,6 +82,8 @@ class User < ActiveRecord::Base
   def reset_default_settings
     self.settings.language = 'en'
     self.settings.records_per_page = '9'
+    self.settings.index_page_format = 'table'
+    self.settings.side_nav_opened = true
     Settings.default_currency = 'USD'
     Settings.invoice_number_format = "{{invoice_number}}"
   end
