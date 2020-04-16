@@ -111,7 +111,7 @@ GEM
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
     charlock_holmes (0.7.6)
-    chartkick (3.2.0)
+    chartkick (3.3.1)
     chronic (0.10.2)
     cocoon (1.2.12)
     coderay (1.1.2)
