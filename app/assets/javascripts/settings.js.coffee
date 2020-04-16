@@ -25,7 +25,11 @@
 @initUserListingEvents = () ->
   $('#user_add_btn,#user_cancel_btn').on "click", ->
     $('#user_reset_form').click()
+    $("#user_side_form").validate().resetForm();
     $('.user-side-form,#user_btn_container').toggleClass('hidden')
+    $('#s2id_side_form_role_ids').on 'focusout', (e) ->
+      $('#side_form_role_ids').valid()
+
     hidePopover($("#side_form_user_name,#side_form_user_email,#side_form_password,#side_form_password_confirmation"))
 
   $('#user_save_btn').on "click", (event)->
@@ -107,6 +111,7 @@
 @initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
+    $("#company_side_form").validate().resetForm();
     $('.company-side-form,#company_btn_container').toggleClass('hidden')
     hidePopover($("#company_name,#contact_name,#companies_email"))
 
@@ -162,6 +167,7 @@
 @initRoleListingEvents = () ->
   $('#role_add_btn,#role_cancel_btn').on "click", ->
     $('#role_reset_form').click()
+    $("#role_side_form").validate().resetForm();
     $('.role-side-form,#role_btn_container').toggleClass('hidden')
 #    hidePopover($("#company_name,#contact_name,#companies_email"))
   $('#role_save_btn').on "click", (event)->

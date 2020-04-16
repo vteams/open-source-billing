@@ -180,7 +180,7 @@
           Invoice.change_invoice_item();
           Invoice.changeTax();
           OsbPlugins.load_functions();
-
+          Validation.InvoiceForm();
 
           set_client_currency = "<%= set_client_currency_invoices_path %>"
           jQuery("#invoice_client_id").on('change', function(){

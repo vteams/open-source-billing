@@ -3207,7 +3207,7 @@ h6 {
   font-size: 11px;
 }
 .user-list .side-form .input-field, .user-list .side-form .input-field input[type=password] {
-  height: 2.5em;
+  height: 4em;
   border-color: lightgrey;
 }
 .user-list .list-buttons a:not(.disabled):hover,
@@ -6311,4 +6311,12 @@ li.collection-item a{
 }
 .client-popup-introjs-helperLayer {
   mix-blend-mode: overlay !important;
+}
+.invalid-error{
+  color: red;
+  font-size: unset !important;
+  text-transform: unset !important;
+  }
+.action-buttons{
+  margin-top: 16px;
 }

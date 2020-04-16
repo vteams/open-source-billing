@@ -20,7 +20,7 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @taxis, defaults: { wrapper_html: { class: 'input-field col s12' } } do |f| %>
+    <%= simple_form_for @taxis, html: {class: 'tax_form'}, defaults: { wrapper_html: { class: 'input-field col s12' } } do |f| %>
         <div class="modal-body">
           <div class="row">
             <%= f.input :name, label: t('views.common.name'), label_html: { id: 'step1', class: 'intro taxes-new-false-intro' } %>

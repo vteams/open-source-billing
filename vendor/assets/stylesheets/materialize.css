@@ -6062,8 +6062,8 @@ input[type=search].valid,
 input[type=search]:focus.valid,
 textarea.materialize-textarea.valid,
 textarea.materialize-textarea:focus.valid {
-  border-bottom: 1px solid #4CAF50;
-  box-shadow: 0 1px 0 0 #4CAF50;
+  /*border-bottom: 1px solid #4CAF50;*/
+  /*box-shadow: 0 1px 0 0 #4CAF50;*/
 }
 
 input:not([type]).valid + label:after,

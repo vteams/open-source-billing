@@ -123,6 +123,7 @@
         jQuery("#estimate_client_id").on('change', function(){
             $.get(set_client_currency+'?client_id=' + $(this).val())
         })
+        Validation.EstimateForm();
 
         // $('.estimate-select-client').material_select('destroy');
         // $('.estimate-select-client').select2();

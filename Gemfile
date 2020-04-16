@@ -107,8 +107,9 @@ gem "pundit"
 gem 'groupdate'
 gem 'chartkick'
 gem "hashid-rails", "~> 1.0"
-gem 'public_activity'
+gem 'public_activity', "~> 1.6.4"
 gem 'to_words'
 gem 'trackstamps'
 gem 'jquery-infinite-pages'
 gem "introjs-rails"
+gem 'jquery-validation-rails'

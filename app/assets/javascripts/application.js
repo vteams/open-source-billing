@@ -102,6 +102,9 @@
 //= require Chart.bundle
 //= require jquery.infinite-pages
 //= require introjs
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require validations
 
 
 

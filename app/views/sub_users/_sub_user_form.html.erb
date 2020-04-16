@@ -18,8 +18,10 @@
       <%= f.input :password_confirmation, label: false, input_html: {id: 'side_form_password_confirmation', name: 'password_confirmation', placeholder: t('views.staffs.password_confirmation')},
                   wrapper_html: { class: 'input-field' } %>
     </div>
-    <a href="javascript:;" id="user_save_btn"><%= t('views.common.save') %></a>
-    <a href="javascript:;" id="user_cancel_btn"><%= t('views.common.cancel') %></a>
+    <div class="action-buttons">
+      <a href="javascript:;" id="user_save_btn"><%= t('views.common.save') %></a>
+      <a href="javascript:;" id="user_cancel_btn"><%= t('views.common.cancel') %></a>
+    </div>
     <%= f.submit t('views.common.save'), class: 'submit-user-form hidden' %>
     <%= f.submit 'Clear', type: 'reset', class: 'hidden', id: 'user_reset_form' %>
   <% end %>

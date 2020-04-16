@@ -59,6 +59,7 @@ class Invoice < ActiveRecord::Base
 
   # associations
   belongs_to :client
+  validates :client, presence: true
   belongs_to :invoice
   belongs_to :payment_term
   belongs_to :company
