@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.1.1",
+    "cocoon": "^0.1.1",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "1.12.7",
+    "expose-loader": "^0.7.5",
+    "fullcalendar": "^3.10.1",
+    "hammerjs": "^2.0.8",
+    "jquery": "^3.5.0",
+    "js.cookie": "^0.0.4",
+    "moment": "^2.25.3",
+    "rails-erb-loader": "^5.5.2",
+    "turbolinks": "^5.2.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  }
+}

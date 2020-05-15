@@ -1,4 +1,4 @@
-class Estimate < ActiveRecord::Base
+class Estimate < ApplicationRecord
   include ::OSB
   include DateFormats
   include Trackstamps
@@ -82,7 +82,7 @@ class Estimate < ActiveRecord::Base
     multiple(ids).only_deleted.each { |estimate| estimate.restore; estimate.unarchive }
   end
 
-  def self.filter(params, per_page)
+  def self.filter_params(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')

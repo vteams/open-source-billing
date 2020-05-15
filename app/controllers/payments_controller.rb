@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentsController < ApplicationController
-  before_filter :authenticate_user!, :set_per_page_session , :except => [:payments_history]
+  before_action :authenticate_user!, :set_per_page_session , :except => [:payments_history]
   after_action :user_introduction, only: [:index, :enter_payment], unless: -> { current_user.introduction.payment? && current_user.introduction.new_payment? }
   layout :choose_layout
   include PaymentsHelper
@@ -27,7 +27,7 @@ class PaymentsController < ApplicationController
 
   def index
     @current_company_payments = Payment.by_company(get_company_id)
-    @payments = @current_company_payments.filter(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
+    @payments = @current_company_payments.filter_params(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
     authorize @payments
 
     respond_to do |format|
@@ -245,7 +245,7 @@ class PaymentsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'payments.created_at'
     sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
     sort_col = get_org_name if sort_col == 'clients.organization_name'
     sort_col

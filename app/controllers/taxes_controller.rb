@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class TaxesController < ApplicationController
-  before_filter :set_per_page_session
+  before_action :set_per_page_session
   after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.tax? && current_user.introduction.new_tax? }
   helper_method :sort_column, :sort_direction
   # GET /taxes

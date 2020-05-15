@@ -1,4 +1,4 @@
-class MailConfig < ActiveRecord::Base
+class MailConfig < ApplicationRecord
   belongs_to :company
 
   AUTHENTICATION_TYPES = %w(plain login cram_md5)

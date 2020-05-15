@@ -19,33 +19,35 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ApplicationController < ActionController::Base
-  before_filter :set_trackstamps_user
+  skip_before_action :verify_authenticity_token
+  before_action :set_trackstamps_user
   def set_trackstamps_user
     Thread.current[:current_user] = current_user
   end
   #Time::DATE_FORMATS.merge!(:default=> "%Y/%m/%d")
   #Time::DATE_FORMATS.merge!(:short=> "%d")
   #Time::DATE_FORMATS.merge!(:long=> "%B %d, %Y")
-  #before_filter :authenticate_user_from_token!
+  #before_action :authenticate_user_from_token!
   # This is Devise's authentication
   include Pundit
   include ApplicationHelper
   include PublicActivity::StoreController
+  include PublicActivity::ViewHelpers
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   acts_as_token_authentication_handler_for User, if: lambda { |env| env.request.format.json? && controller_name != 'authenticate' }
-  before_filter :configure_permitted_parameters, if: :devise_controller?
-  protect_from_forgery
-  before_filter :_reload_libs #reload libs on every request for dev environment only
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  # protect_from_forgery
+  before_action :_reload_libs #reload libs on every request for dev environment only
   #layout :choose_layout
   #reload libs on every request for dev environment only
-  before_filter :set_per_page
-  before_filter :set_date_format
-  before_filter :set_current_user
-  before_filter :set_listing_layout
-  before_filter :authenticate_user!
-  before_filter :set_current_company
+  before_action :set_per_page
+  before_action :set_date_format
+  before_action :set_current_user
+  before_action :set_listing_layout
+  before_action :authenticate_user!
+  before_action :set_current_company
 
   before_action :set_locale
 
@@ -229,9 +231,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:user_name, :account ,:email, :password, :password_confirmation, :remember_me) }
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :user_name, :account, :email, :password, :remember_me) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:user_name, :account, :email, :password, :password_confirmation, :current_password) }
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:user_name, :account ,:email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.permit(:sign_in) { |u| u.permit(:login, :user_name, :account, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:user_name, :account, :email, :password, :password_confirmation, :current_password) }
   end
 
   def set_locale

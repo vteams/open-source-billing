@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Payment < ActiveRecord::Base
+class Payment < ApplicationRecord
   include Trackstamps
   include DateFormats
   include PaymentSearch
@@ -179,7 +179,7 @@ class Payment < ActiveRecord::Base
     end
   end
 
-  def self.filter(params)
+  def self.filter_params(params)
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     @payments = Payment.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id')

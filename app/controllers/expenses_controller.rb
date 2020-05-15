@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  before_filter :set_per_page_session
+  before_action :set_per_page_session
   before_action :set_expense, only: [:show, :edit, :update, :destroy]
   include ExpensesHelper
 

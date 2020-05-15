@@ -1,4 +1,4 @@
-class LineItemTax < ActiveRecord::Base
+class LineItemTax < ApplicationRecord
 
   belongs_to :invoice_line_item
   acts_as_archival

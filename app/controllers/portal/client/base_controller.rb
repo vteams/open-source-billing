@@ -1,8 +1,8 @@
 module Portal
   module Client
     class BaseController < ActionController::Base
-      before_filter :authenticate_portal_client!
-      before_filter :current_client
+      before_action :authenticate_portal_client!
+      before_action :current_client
       layout 'client'
       helper_method :render_card_view?
       include ClientsHelper

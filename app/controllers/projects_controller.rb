@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
   include DateFormats
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   protect_from_forgery
 
 

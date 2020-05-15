@@ -12,7 +12,7 @@ module Portal
         params[:status] = params[:status] || 'active'
         @status = params[:status]
         @current_client_invoices = Invoice.client_id(current_client.id).skip_draft.joins(:currency)
-        @invoices = @current_client_invoices.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+        @invoices = @current_client_invoices.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
         respond_to do |format|
           format.html # index.html.erb
           #format.js
@@ -49,8 +49,8 @@ module Portal
       end
 
       def sort_column
-        params[:sort] ||= 'created_at'
-        Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+        params[:sort] ||= 'invoices.created_at'
+        Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'invoices.created_at'
       end
 
       def sort_direction

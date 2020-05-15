@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class AccountUsers < ActiveRecord::Base
+class AccountUsers < ApplicationRecord
   # associations
   belongs_to :user
   belongs_to :account

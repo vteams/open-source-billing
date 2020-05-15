@@ -1,6 +1,5 @@
 # dashboard related js code
 class @Dashboard
-
   @plot_graph = ->
     # chart options
     if gon? and gon.chart_data

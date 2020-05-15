@@ -19,7 +19,7 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientAdditionalContactsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
   # GET /client_additional_contacts
   # GET /client_additional_contacts.json
   def index

@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class InvoiceLineItem < ActiveRecord::Base
+class InvoiceLineItem < ApplicationRecord
 
   include ItemSearch
   # associations

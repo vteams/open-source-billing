@@ -1,4 +1,4 @@
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   #include Osbm
   has_one :user
   has_many :permissions, dependent: :destroy

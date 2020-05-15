@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Invoice < ActiveRecord::Base
+class Invoice < ApplicationRecord
   include Trackstamps
   include ::OSB
   include DateFormats
@@ -241,7 +241,7 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  def self.filter(params, per_page)
+  def self.filter_params(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')

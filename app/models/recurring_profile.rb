@@ -1,4 +1,4 @@
-class RecurringProfile < ActiveRecord::Base
+class RecurringProfile < ApplicationRecord
 
   include DateFormats
   include Trackstamps

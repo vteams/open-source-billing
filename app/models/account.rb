@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Account < ActiveRecord::Base
+class Account < ApplicationRecord
   # associations
   has_and_belongs_to_many :users, :join_table => 'account_users'
   has_many :company_entities, :as => :parent

@@ -26,11 +26,11 @@ module Reporting
       all_estimates = Estimate.where("estimates.company_id IN(?)", company_id)
 
       options[:status] = 'active'
-      active_estimates = all_estimates.filter(options,per_page)
+      active_estimates = all_estimates.filter_params(options,per_page)
       options[:status] = 'deleted'
-      deleted_estimates = all_estimates.filter(options,per_page)
+      deleted_estimates = all_estimates.filter_params(options,per_page)
       options[:status] = 'archived'
-      archived_estimates = all_estimates.filter(options,per_page)
+      archived_estimates = all_estimates.filter_params(options,per_page)
 
       active_estimate_progress = {}
       active_estimates.group_by{|i| i.group_date}.each do |date, estimates|

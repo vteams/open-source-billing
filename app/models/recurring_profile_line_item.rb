@@ -1,4 +1,4 @@
-class RecurringProfileLineItem < ActiveRecord::Base
+class RecurringProfileLineItem < ApplicationRecord
   # associations
   belongs_to :recurring_profile
   belongs_to :item

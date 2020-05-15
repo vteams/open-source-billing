@@ -1,5 +1,5 @@
 class AuthenticateController < ApplicationController
-  skip_before_filter :authenticate_user!, only: [:token]
+  skip_before_action :authenticate_user!, only: [:token]
 
   def token
     user = User.find_by_email params[:email]

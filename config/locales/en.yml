@@ -964,28 +964,28 @@ en:
         delimiter: ","
         precision: 2
   helpers:
-      actions: "Actions"
-      links:
-        edit: "Edit"
-        delete: "Delete"
-        recover: "Recover"
-        close: "Close"
-        add: "Add"
-        remove: "Remove"
-      messages:
-        confirm: "Are you sure?"
-        how_ofter: "How Often?"
-        how_many: "How Many?"
-        not_be_recoverable: "You may not be able to revert this action."
-        unable_to_delete: "Unable to delete this entity."
-      titles:
-        new: "New %{model}"
-        edit: "Edit %{model}"
-      page_entries_info:
-        more_pages:
-            display_entries: "Displaying %{entry_name} <strong>%{first}-%{last}</strong> of <strong>%{total}</strong>"
-        one_page:
-          display_entries: "Displaying <strong>all %{count}</strong> %{entry_name}."
+    actions: "Actions"
+    links:
+      edit: "Edit"
+      delete: "Delete"
+      recover: "Recover"
+      close: "Close"
+      add: "Add"
+      remove: "Remove"
+    messages:
+      confirm: "Are you sure?"
+      how_ofter: "How Often?"
+      how_many: "How Many?"
+      not_be_recoverable: "You may not be able to revert this action."
+      unable_to_delete: "Unable to delete this entity."
+    titles:
+      new: "New %{model}"
+      edit: "Edit %{model}"
+    page_entries_info:
+      more_pages:
+        display_entries: "Displaying %{entry_name} <strong>%{first}-%{last}</strong> of <strong>%{total}</strong>"
+      one_page:
+        display_entries: "Displaying <strong>all %{count}</strong> %{entry_name}."
 #  activerecord:
 #    errors:
 #      messages:

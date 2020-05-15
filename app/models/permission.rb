@@ -1,4 +1,4 @@
-class Permission < ActiveRecord::Base
+class Permission < ApplicationRecord
   belongs_to :role
 
   # ENTITY_TYPES = %W(Invoice Estimate Payment)

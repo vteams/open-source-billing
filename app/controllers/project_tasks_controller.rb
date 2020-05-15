@@ -1,5 +1,5 @@
 class ProjectTasksController < ApplicationController
-  before_filter :find_project_task, only: [:show, :edit, :update, :destroy ]
+  before_action :find_project_task, only: [:show, :edit, :update, :destroy ]
 
   def new
     @project = Project.find(params[:project_id])

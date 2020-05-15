@@ -1,4 +1,4 @@
-class RecurringSchedule < ActiveRecord::Base
+class RecurringSchedule < ApplicationRecord
 
   scope :active_schedule, -> {where(enable_recurring: true)}
 

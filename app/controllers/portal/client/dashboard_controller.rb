@@ -1,7 +1,7 @@
 module Portal
   module Client
     class DashboardController < Portal::Client::BaseController
-      before_filter :prepare_charts_data, only: [:index]
+      before_action :prepare_charts_data, only: [:index]
       after_action :user_introduction, only: [:index], unless: -> { current_portal_client.introduction.dashboard? }
 
 

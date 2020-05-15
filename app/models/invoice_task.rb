@@ -1,4 +1,4 @@
-class InvoiceTask < ActiveRecord::Base
+class InvoiceTask < ApplicationRecord
   belongs_to :invoice
 
 end

@@ -9,7 +9,7 @@ module Portal
       def index
         params[:status] = params[:status] || 'active'
         @status = params[:status]
-        @estimates = Estimate.client_id(current_client.id).skip_draft.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+        @estimates = Estimate.client_id(current_client.id).skip_draft.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
       end
 
       def show
@@ -21,8 +21,8 @@ module Portal
       end
 
       def sort_column
-        params[:sort] ||= 'created_at'
-        Estimate.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+        params[:sort] ||= 'estimates.created_at'
+        Estimate.column_names.include?(params[:sort]) ? params[:sort] : 'estimates.created_at'
       end
 
       def sort_direction

@@ -42,3 +42,10 @@ node_modules/*
 !/public/422.*
 !/public/500.*
 !/public/bg_img.png
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

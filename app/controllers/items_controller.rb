@@ -19,9 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ItemsController < ApplicationController
-  #before_filter :authenticate_user!
+  #before_action :authenticate_user!
   protect_from_forgery :except => [:load_item_data]
-  before_filter :set_per_page_session
+  before_action :set_per_page_session
   after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.item? && current_user.introduction.new_item? }
   helper_method :sort_column, :sort_direction
   # GET /items
@@ -152,7 +152,7 @@ class ItemsController < ApplicationController
 #  # Load invoice line items data when an item is selected from drop down list
   def load_item_data
     item = Item.find_by_id(params[:id]).present? ?  Item.find(params[:id]) : Item.unscoped.find_by_id(params[:id])
-    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_f || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.tax1_name || "", item.tax2_name || "", item.tax1_percentage || 0, item.tax2_percentage || 0 ]
+    render :plain => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_f || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.tax1_name || "", item.tax2_name || "", item.tax1_percentage || 0, item.tax2_percentage || 0 ]
   end
 
   def bulk_actions

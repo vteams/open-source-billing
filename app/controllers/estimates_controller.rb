@@ -1,9 +1,9 @@
 class EstimatesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :set_per_page_session
+  before_action :authenticate_user!
+  before_action :set_per_page_session
   after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.estimate? && current_user.introduction.new_estimate? }
   protect_from_forgery except: [:preview]
-  before_filter :authenticate_user!, except: [:preview]
+  before_action :authenticate_user!, except: [:preview]
   helper_method :sort_column, :sort_direction
   include DateFormats
 
@@ -13,7 +13,7 @@ class EstimatesController < ApplicationController
   def index
     params[:status] = params[:status] || 'active'
     @status = params[:status]
-    @estimates = Estimate.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @estimates = Estimate.with_clients.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
     @estimates = filter_by_company(@estimates)
     @estimate_activity = Reporting::EstimateActivity.get_recent_activity(get_company_id, @per_page, params.deep_dup)
     authorize @estimates
@@ -167,7 +167,7 @@ class EstimatesController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'estimates.created_at'
     Estimate.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
   end
 

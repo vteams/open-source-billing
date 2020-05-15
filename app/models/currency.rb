@@ -1,4 +1,4 @@
-class Currency < ActiveRecord::Base
+class Currency < ApplicationRecord
   validates :code,:title,:unit , presence: true
 
   scope :with_invoices, -> { joins("LEFT OUTER JOIN invoices ON invoices.currency_id = currencies.id ")}

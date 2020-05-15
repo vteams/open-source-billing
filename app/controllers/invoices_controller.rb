@@ -41,7 +41,7 @@ class InvoicesController < ApplicationController
     params[:status] = params[:status] || 'active'
     @status = params[:status]
     @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
-    @invoices = @current_company_invoices.with_clients.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @invoices = @current_company_invoices.with_clients.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
     authorize @invoices
     respond_to do |format|
       format.html # index.html.erb
@@ -403,8 +403,8 @@ class InvoicesController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
-    Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    params[:sort] ||= 'invoices.created_at'
+    Invoice.column_names.include?(params[:sort]) ? params[:sort] : 'invoices.created_at'
   end
 
   def sort_direction

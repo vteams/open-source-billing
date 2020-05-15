@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include UserSearch
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable,
@@ -84,6 +84,11 @@ class User < ActiveRecord::Base
     self.settings.records_per_page = '9'
     self.settings.index_page_format = 'table'
     self.settings.side_nav_opened = true
+    self.introduction.update(dashboard: false, invoice: false, new_invoice: false, estimate: false,
+                             new_estimate: false, payment: false, new_payment: false, client: false,
+                             new_client: false, item: false, new_item: false, tax: false, new_tax: false,
+                             report: false, setting: false, invoice_table: false, estimate_table: false,
+                             payment_table: false, client_table: false, item_table: false, tax_table: false)
     Settings.default_currency = 'USD'
     Settings.invoice_number_format = "{{invoice_number}}"
   end

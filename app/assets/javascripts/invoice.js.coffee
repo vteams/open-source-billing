@@ -34,7 +34,7 @@ class @Invoice
             clearLineTotal elem
             false
           else
-            $.ajax load_item,
+          $.ajax load_item,
               type: 'POST'
               data: 'id=' + $(this).val()
               dataType: 'html'

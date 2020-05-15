@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class PaymentTerm < ActiveRecord::Base
+class PaymentTerm < ApplicationRecord
   # associations
   has_many :invoices
   has_many :recurring_profiles
