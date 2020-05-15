@@ -343,7 +343,8 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
     public_suffix (4.0.5)
-    puma (3.11.0)
+    puma (4.3.3)
+      nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
     pygments.rb (1.2.1)
@@ -606,7 +607,7 @@ DEPENDENCIES
   pry (= 0.10.3)
   pry-nav (= 0.2.4)
   public_activity (~> 1.6.4)
-  puma (= 3.11.0)
+  puma (= 4.3.3)
   pundit
   qbo_api
   quickbooks-ruby
