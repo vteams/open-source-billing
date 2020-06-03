@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   include UserSearch
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
+         :recoverable, :rememberable, :validatable, 
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings
