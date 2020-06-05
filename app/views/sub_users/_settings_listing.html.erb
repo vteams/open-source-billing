@@ -9,7 +9,8 @@
   <div class="list-buttons">
     <%= render 'sub_users/sub_user_form' %>
     <div id="user_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove users from here">
-      <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+<!--      <a href="javascript:;" id="user_add_btn" class="sidebar-btn"><%#= t('helpers.links.add') %></a>-->
+      <%= link_to 'ADD', new_sub_user_path, remote: true %>
       <% unless OSB::CONFIG::DEMO_MODE %>
         <a href="javascript:;" id="user_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
       <% end %>

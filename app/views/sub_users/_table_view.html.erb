@@ -19,16 +19,22 @@
                 </td>
                 <td><%= user.email %></td>
                 <td><%= user.created_at.strftime(get_date_format) %></td>
-                <td><%= user.role_name  %></td>
+                <td><%= user.role.name  %></td>
                 <td class="action-btn-group">
-                  <%= link_to raw("<i class='material-icons'>create</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true,
-                              class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
-                  <% if current_user != user %>
-                      <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : sub_user_path(user), method: :delete,
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= user.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <ul id="dropdown_<%= user.id %>" class="dropdown-content z-depth-4">
+                    <li><%= link_to raw("<i class='material-icons'>create</i> Edit"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true,
+                                class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %></li>
+                    <% if current_user != user %>
+                      <li><%= link_to raw("<i class='material-icons'>delete</i> Delete"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : sub_user_path(user), method: :delete,
                                   data: {confirm: t('helpers.messages.confirm'),
                                          success: t('views.users.bulk_delete')},
-                                  class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
-                  <% end %>
+                                  class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %></li>
+                    <% end %>
+                  </ul>
+
                 </td>
               </tr>
           <% end %>

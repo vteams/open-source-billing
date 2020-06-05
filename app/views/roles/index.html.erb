@@ -5,8 +5,12 @@
       <div class="flex-item breadcrum-bar">
         <div class="card-white-panel">
           <h3 class="with-grid-icons">
-            Roles
+            <span><%= link_to 'Roles', 'javascript:;', class: 'active' %></span>
+            <%= link_to raw('<i class="material-icons">add</i>'), new_role_path, remote: true,
+                        class: 'plus-add-icon', title: t('helpers.links.add') %>
+
           </h3>
+
         </div>
       </div>
     </div>
@@ -40,9 +44,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div>
-      <%= link_to 'Add new role', new_role_path, remote: true %>
     </div>
   </div>
 </div>

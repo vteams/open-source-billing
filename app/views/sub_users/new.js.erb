@@ -3,3 +3,8 @@ SubUser.load_functions();
 elem = $("#new_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
+
+$('#new_user_role_id').material_select('destroy');
+$('#new_user_role_id').select2({
+    placeholder: 'Role'
+})

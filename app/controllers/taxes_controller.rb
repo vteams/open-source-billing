@@ -20,7 +20,7 @@
 #
 class TaxesController < ApplicationController
   before_filter :set_per_page_session
-  after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.tax? && current_user.introduction.new_tax? }
+  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? &&  (!current_user.introduction.tax? || !current_user.introduction.new_tax?) }
   helper_method :sort_column, :sort_direction
   # GET /taxes
   # GET /taxes.json
