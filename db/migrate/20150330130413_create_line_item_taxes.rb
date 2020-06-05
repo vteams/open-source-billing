@@ -1,4 +1,4 @@
-class CreateLineItemTaxes < ActiveRecord::Migration
+class CreateLineItemTaxes < ActiveRecord::Migration[6.0]
   def change
     create_table :line_item_taxes do |t|
       t.integer :invoice_line_item_id

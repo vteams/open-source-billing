@@ -1,4 +1,4 @@
-class CreateUsersCompanies < ActiveRecord::Migration
+class CreateUsersCompanies < ActiveRecord::Migration[6.0]
   def change
     create_table :companies_users, id: false do |t|
       t.belongs_to :user

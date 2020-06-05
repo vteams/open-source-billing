@@ -1,4 +1,4 @@
-class CreateInvoiceTasks < ActiveRecord::Migration
+class CreateInvoiceTasks < ActiveRecord::Migration[6.0]
   def change
     create_table :invoice_tasks do |t|
       t.string :name

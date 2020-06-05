@@ -1,4 +1,4 @@
-class AddHoursSpentTimeDatesToProjectTasks < ActiveRecord::Migration
+class AddHoursSpentTimeDatesToProjectTasks < ActiveRecord::Migration[6.0]
   def change
     add_column :project_tasks, :start_date, :datetime
     add_column :project_tasks, :due_date, :datetime

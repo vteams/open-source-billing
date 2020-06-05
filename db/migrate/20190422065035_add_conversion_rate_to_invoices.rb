@@ -1,4 +1,4 @@
-class AddConversionRateToInvoices < ActiveRecord::Migration
+class AddConversionRateToInvoices < ActiveRecord::Migration[6.0]
   def change
     add_column :invoices, :base_currency_id, :integer, default: 1
     add_column :invoices, :conversion_rate, :float, default: 1.0

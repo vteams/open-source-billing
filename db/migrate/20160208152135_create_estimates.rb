@@ -1,4 +1,4 @@
-class CreateEstimates < ActiveRecord::Migration
+class CreateEstimates < ActiveRecord::Migration[6.0]
   def change
     create_table :estimates do |t|
       t.string   "estimate_number"

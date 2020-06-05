@@ -1,4 +1,4 @@
-class CreateCompanyEntities < ActiveRecord::Migration
+class CreateCompanyEntities < ActiveRecord::Migration[6.0]
   def change
     create_table :company_entities do |t|
       t.integer  "entity_id"

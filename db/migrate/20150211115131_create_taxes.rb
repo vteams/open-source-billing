@@ -1,4 +1,4 @@
-class CreateTaxes < ActiveRecord::Migration
+class CreateTaxes < ActiveRecord::Migration[6.0]
   def change
     create_table :taxes do |t|
       t.string   "name"

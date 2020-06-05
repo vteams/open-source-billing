@@ -1,4 +1,4 @@
-class CreateIntroductions < ActiveRecord::Migration
+class CreateIntroductions < ActiveRecord::Migration[6.0]
   def change
     create_table :introductions do |t|
       t.boolean :dashboard, default: false

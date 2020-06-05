@@ -1,4 +1,4 @@
-class CreateCreditPayments < ActiveRecord::Migration
+class CreateCreditPayments < ActiveRecord::Migration[6.0]
   def change
     create_table :credit_payments do |t|
       t.integer  "payment_id"

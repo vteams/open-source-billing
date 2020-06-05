@@ -1,4 +1,4 @@
-class CreatePermissions < ActiveRecord::Migration
+class CreatePermissions < ActiveRecord::Migration[6.0]
   def change
     create_table :permissions do |t|
       t.boolean :can_create

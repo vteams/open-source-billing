@@ -21,7 +21,7 @@
 class ItemsController < ApplicationController
   #before_action :authenticate_user!
   protect_from_forgery :except => [:load_item_data]
-  before_filter :set_per_page_session
+  before_action :set_per_page_session
   after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? && (!current_user.introduction.item? || !current_user.introduction.new_item?) }
   helper_method :sort_column, :sort_direction
   # GET /items
