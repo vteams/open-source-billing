@@ -20,8 +20,8 @@
 #
 class ClientsController < ApplicationController
   helper_method :sort_column, :sort_direction
-  before_action :set_per_page_session
-  after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.client? && current_user.introduction.new_client? }
+  before_filter :set_per_page_session
+  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? &&  (!current_user.introduction.client? || !current_user.introduction.new_client?) }
   layout :resolve_layout
   before_action :authenticate_user!, except: %i[new_password create_password]
 

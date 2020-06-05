@@ -30,7 +30,7 @@ class SubUsersController < ApplicationController
     @sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
     @sub_user.role_id = params[:role_id] if params[:role_id].present?
     # skip email confirmation for login
-    @sub_user.skip_confirmation!
+    # @sub_user.skip_confirmation!
     respond_to do |format|
       if @sub_user.already_exists?(params[:email])
         redirect_to(sub_users_path, alert: t('views.users.duplicate_email'))
@@ -49,7 +49,7 @@ class SubUsersController < ApplicationController
           #format.js
           format.html {redirect_to settings_path, notice: t('views.users.saved_msg')}
         else
-          redirect_to(params[:setting_form] == '1' ? settings_path : sub_users_path, notice: t('views.users.saved_msg'))
+          format.html{redirect_to(params[:setting_form] == '1' ? settings_path : sub_users_path, notice: t('views.users.saved_msg'))}
         end
         #return
       else
@@ -77,7 +77,7 @@ class SubUsersController < ApplicationController
       options.delete(:password)
       options.delete(:password_confirmation)
     end
-    @sub_user.skip_reconfirmation!
+    # @sub_user.skip_reconfirmation!
     message = if @sub_user.update_attributes(options)
                 @successfully_updated = true
                 @sub_user.role_id = params[:role_id] if params[:role_id].present?

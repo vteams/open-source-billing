@@ -59,6 +59,7 @@
             <% if params[:controller] != 'dashboard' %>
               $('.header-intro').removeAttr('data-intro');
             <% end %>
+            <% unless params[:controller].eql?('sub_users') || params[:controller].eql?('companies') || params[:controller].eql?('roles') || !current_user.introduction.present? %>
             setTimeout(function () {
                 if($('.intro').hasClass("<%= intro_class %>")){
                     $('#users .list-item:first').attr('data-intro', 'You can click on any user name to edit a user');
@@ -68,6 +69,7 @@
                     $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
                 }
             },200)
+            <% end %>
         });
     </script>
     </body>

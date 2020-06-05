@@ -31,17 +31,18 @@
                       </a>
                   <% else %>
 
-                      <%= link_to raw("<i class='material-icons'>create</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company), remote: true,
-                                  class: ("edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}"), title: t('helpers.links.edit') %>
-                      <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : company, method: :delete,
-                                  data:{confirm: t('helpers.messages.confirm'),
-                                        success: t('views.companies.deleted_msg') },
-                                  title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
                       <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= company.id %>' data-alignment="right" data-beloworigin="true">
                         <i class="material-icons">more_vert</i>
                       </a>
                       <!-- Dropdown Structure -->
                       <ul id="dropdown_<%= company.id %>" class='dropdown-content z-depth-4'>
+                        <li><%= link_to raw("<i class='material-icons'>create</i> Edit"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company), remote: true,
+                                    class: ("edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}"), title: t('helpers.links.edit') %></li>
+                        <li><%= link_to raw("<i class='material-icons'>delete</i> Delete"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : company, method: :delete,
+                                    data:{confirm: t('helpers.messages.confirm'),
+                                          success: t('views.companies.deleted_msg') },
+                                    title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %></li>
+
                         <% if !company.archived? %>
                             <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
                         <% else %>

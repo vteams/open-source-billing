@@ -21,8 +21,8 @@
 class DashboardController < ApplicationController
   include ApplicationHelper
 
-  before_action :prepare_charts_data, only: [:index]
-  after_action :user_introduction, only: [:index], unless: -> { current_user.introduction.dashboard? }
+  before_filter :prepare_charts_data, only: [:index]
+  after_action :user_introduction, only: [:index], if: -> { current_user.introduction.present? && !current_user.introduction.dashboard? }
   def index
     @recent_activity = Reporting::Dashboard.get_recent_activity(@currency, @current_company_id).group_by { |d| d[:activity_date] }
     @current_invoices = Invoice.current_invoices(@current_company_id).limit(10)

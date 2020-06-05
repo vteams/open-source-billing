@@ -20,7 +20,7 @@
 #
 class ReportsController < ApplicationController
   helper_method :sort_column, :sort_direction
-  after_action :user_introduction, only: [:invoice_detail], unless: -> { current_user.introduction.report? }
+  after_action :user_introduction, only: [:invoice_detail], if: -> { current_user.introduction.present? &&  !current_user.introduction.report? }
   include Reporting
 
   def invoice_detail

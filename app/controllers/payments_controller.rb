@@ -19,8 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class PaymentsController < ApplicationController
-  before_action :authenticate_user!, :set_per_page_session , :except => [:payments_history]
-  after_action :user_introduction, only: [:index, :enter_payment], unless: -> { current_user.introduction.payment? && current_user.introduction.new_payment? }
+  before_filter :authenticate_user!, :set_per_page_session , :except => [:payments_history]
+  after_action :user_introduction, only: [:index, :enter_payment], if: -> { current_user.introduction.present? && (!current_user.introduction.payment? || !current_user.introduction.new_payment?) }
   layout :choose_layout
   include PaymentsHelper
   helper_method :sort_column, :sort_direction, :get_org_name

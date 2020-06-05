@@ -12,6 +12,7 @@ class RolesController < ApplicationController
 
   def new
     @role = Role.new
+    build_permissions
     # @role.permissions.build
     respond_to do |format|
       format.js
@@ -29,6 +30,10 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
     respond_to do |format|
       if @role.save
+        format.js {
+          flash[:alert]= 'Role has been created successfully'
+          render :js => "window.location.href='#{roles_path}'"
+        }
         format.html {redirect_to settings_path}
       else
         format.js
