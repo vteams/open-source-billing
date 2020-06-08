@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.7.1'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
 gem 'railties', '6.0.2.2'
-gem 'sprockets', '3.7.2'
+gem 'sprockets', '~> 4'
 gem 'sprockets-rails', '3.2.1'
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.4.4'
@@ -15,14 +15,12 @@ gem 'rails-settings-cached', '0.6.6'
 gem 'rake', '< 11.0'
 gem 'responders'
 
-group :assets do
-  gem 'sass-rails', '>= 6'
-  gem 'yajl-ruby', '~>1.3.1'
-  gem 'coffee-rails', '5.0.0'
-  gem 'therubyracer', '0.12.3', :platforms => :ruby
-  gem 'uglifier', '3.0.0'
-end
-
+gem 'sass-rails', '>= 6'
+gem 'yajl-ruby', '~>1.3.1'
+gem 'coffee-rails', '5.0.0'
+gem 'therubyracer', '0.12.3', :platforms => :ruby
+gem 'uglifier', '3.0.0'
+gem 'sassc', '2.4.0'
 gem 'active_link_to', '1.0.3'
 gem 'jquery-rails'
 gem 'nested_form', '0.3.2'
@@ -121,3 +119,4 @@ gem 'activemodel', '~> 6.0.2.2'
 gem 'activerecord', '~> 6.0.2.2'
 # gem "webpacker"
 gem 'hammerjs-rails'
+gem 'faraday', '1.0.1'

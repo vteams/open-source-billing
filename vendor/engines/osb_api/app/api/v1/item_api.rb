@@ -1,5 +1,5 @@
 module V1
-  class ItemApi < Grape::API
+  class ItemAPI < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api

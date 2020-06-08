@@ -1,5 +1,5 @@
 module V1
-  class ExpenseApi < Grape::API
+  class ExpenseAPI < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api

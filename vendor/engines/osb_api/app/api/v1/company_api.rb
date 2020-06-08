@@ -1,5 +1,5 @@
 module V1
-  class CompanyApi < Grape::API
+  class CompanyAPI < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api

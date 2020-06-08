@@ -1,4 +1,4 @@
-module OsbApi
+module OsbAPI
   class ApplicationController < ActionController::Base
   end
 end
