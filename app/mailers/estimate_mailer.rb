@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class EstimateMailer < ActionMailer::Base
-  default :from => 'support@opensourcebilling.org'
+class EstimateMailer < ApplicationMailer
   @@response_to_client = ''
   @@reason_by_client =  ''
   def new_estimate_email(client_id, estimate_id, e_id , current_user_id)

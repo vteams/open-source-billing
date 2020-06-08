@@ -64,9 +64,9 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.3.7
+    rvm install 2.7.1
 
-    rvm use 2.3.7 --default
+    rvm use 2.7.1 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
@@ -136,15 +136,15 @@ copy this (newly generated) secret key from terminal and past it to the value of
 #### 3.10 Configuring Database
 Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
 
-    rake db:create
+    rails db:create
 
 #### 3.11 Tables schema and seeding
 
-    rake db:migrate
+    rails db:migrate
 
 Loading default values in database
 
-    rake db:seed
+    rails db:seed
 
 ### Step-4. Run
 #### 4.1 Background Services

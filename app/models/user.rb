@@ -22,7 +22,7 @@ class User < ApplicationRecord
   include UserSearch
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, 
+         :recoverable, :rememberable, :validatable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_introduction
@@ -34,7 +34,7 @@ class User < ApplicationRecord
   has_many :logs, dependent: :destroy
   has_many :invoices
   has_and_belongs_to_many :companies
-  has_one :introduction
+  has_one :introduction, dependent: :destroy
 
   attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend

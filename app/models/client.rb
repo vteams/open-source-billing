@@ -25,6 +25,8 @@ class Client < ApplicationRecord
 
   attr_accessor :skip_password_validation
 
+  after_create :set_introduction
+
   include ClientSearch
   include Hashid::Rails
   include PublicActivity::Model
@@ -68,6 +70,13 @@ class Client < ApplicationRecord
   def last_estimate
     estimates.unarchived.first.id rescue nil
   end
+
+  def set_introduction
+    intro = Introduction.new
+    intro.client_id = self.id
+    intro.save
+  end
+
 
   def purchase_options
     {

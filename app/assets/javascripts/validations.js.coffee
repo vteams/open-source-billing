@@ -16,7 +16,7 @@ class @Validation
         password: required: true
         password_confirmation:
           required: true
-          equalTo: '#side_form_password'
+          equalTo: '#password'
       messages:
         user_name: required: 'Full Name is required'
         email:  required: 'Email is required'
@@ -44,7 +44,7 @@ class @Validation
 
 
   @RoleSettingForm = ->
-    $('#role_side_form').validate
+    $('#roleForm').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->

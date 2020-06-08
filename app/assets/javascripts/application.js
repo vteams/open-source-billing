@@ -475,6 +475,16 @@ function resetRangeSelectors() {
   initRangeSelector();
 }
 
+function resetDropdowns() {
+    $('#criteria_invoice_status').children("option:selected").val('');
+    $('#s2id_criteria_invoice_status > a > span.select2-chosen').html('All');
+    $('#criteria_client_id').children("option:selected").val('');
+    $('#s2id_criteria_client_id > a > span.select2-chosen').html('All');
+    $('#criteria_payment_method').children("option:selected").val('');
+    $('#s2id_criteria_payment_method > a > span.select2-chosen').html('All');
+
+}
+
 function initFilterEvents(ids) {
   $(document).ready( function (event) {
     $('#toggle_filters').on('click', function (event) {
@@ -483,6 +493,7 @@ function initFilterEvents(ids) {
     $('#filter_reset_btn').on('click', function(event) {
       $('#filters select').val('');
       $(ids).val('');
+      resetDropdowns()
       resetRangeSelectors();
       $('#filters_form').submit();
     });
