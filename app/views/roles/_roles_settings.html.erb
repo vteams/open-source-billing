@@ -23,7 +23,8 @@
     <div class="list-buttons">
       <%= render 'roles/settings_role_form' %>
       <div id="role_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove roles from here">
-        <a href="javascript:;" id="role_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+<!--        <a href="javascript:;" id="role_add_btn" class="sidebar-btn"><%#= t('helpers.links.add') %></a>-->
+        <%= link_to 'ADD', new_role_path, remote: true, class: 'sidebar-btn' %>
         <% unless OSB::CONFIG::DEMO_MODE %>
           <a href="javascript:;" id="role_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
         <% end %>

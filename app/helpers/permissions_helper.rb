@@ -6,6 +6,6 @@ module PermissionsHelper
   end
 
   def setting_or_super_admin? permission, role
-    permission.entity_type == "Settings" && role.user.id == current_user.id if role.user.present?
+    permission.entity_type == "Settings" && role.user.id == current_user.id if role.present? && role.user.present?
   end
 end

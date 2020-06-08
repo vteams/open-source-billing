@@ -9,7 +9,8 @@
   <div class="list-buttons">
     <%= render 'companies/settings_company_form' %>
     <div id="company_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove companies from here">
-      <a href="javascript:;" id="company_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+<!--      <a href="javascript:;" id="company_add_btn" class="sidebar-btn"><%#= t('helpers.links.add') %></a>-->
+      <%= link_to 'ADD', new_company_path, remote: true %>
       <% unless OSB::CONFIG::DEMO_MODE %>
         <a href="javascript:;" id="company_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
         <%= link_to '', '/companies/destroy_bulk', class: 'hide', remote: true, method: :delete, id: 'bluk_delete_companies_link' %>

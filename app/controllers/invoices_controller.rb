@@ -26,8 +26,7 @@ class InvoicesController < ApplicationController
   before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy clone]
   before_action :verify_authenticity_token, only: :show #if: ->{ action_name == 'show' and request.format.pdf? }
   before_action :set_client_id, only: :create
-  after_action :user_introduction, only: [:index, :new], unless: -> { current_user.introduction.invoice? && current_user.introduction.new_invoice? }
-
+  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? && (!current_user.introduction.invoice? || !current_user.introduction.new_invoice?) }
   protect_from_forgery :except => %i[show preview paypal_payments create]
 
   helper_method :sort_column, :sort_direction

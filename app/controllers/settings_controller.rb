@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  after_action :user_introduction, only: [:index], unless: -> { current_user.introduction.setting? }
+  after_action :user_introduction, only: [:index], if: -> { current_user.introduction.present? &&  !current_user.introduction.setting? }
 
   def create
     user = current_user

@@ -1,7 +1,7 @@
 module Portal
   module Client
     class InvoicesController < BaseController
-      after_action :user_introduction, only: [:index], unless: -> { current_portal_client.introduction.invoice? }
+      after_action :user_introduction, only: [:index], if: -> { current_portal_client.introduction.present? && !current_portal_client.introduction.invoice? }
       before_action :set_per_page_session
       helper_method :sort_column, :sort_direction
       include DateFormats

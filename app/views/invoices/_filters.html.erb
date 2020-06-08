@@ -17,7 +17,7 @@
         <div class="input-field col s12 m2 select-client">
           <%= select_tag(:client_id, multi_select_options(load_clients('new', get_company_id), '',
                                                           {selected: params[:client_id] || ''}),
-                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
+                         include_blank: false, class: 'small_list invoice-filter-select select_2 user-filter') %>
           <label><%= t('clients') %></label>
         </div>
         <div class="input-field col s12 m2 select-client">

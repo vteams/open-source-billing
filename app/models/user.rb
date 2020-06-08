@@ -22,10 +22,10 @@ class User < ActiveRecord::Base
   include UserSearch
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
+         :recoverable, :rememberable, :validatable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
-  after_create :set_default_settings
+  after_create :set_default_settings, :set_introduction
 
   mount_uploader :avatar, ImageUploader
 
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   has_many :logs, dependent: :destroy
   has_many :invoices
   has_and_belongs_to_many :companies
-  has_one :introduction
+  has_one :introduction, dependent: :destroy
 
   attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend
@@ -77,6 +77,12 @@ class User < ActiveRecord::Base
     self.settings.records_per_page = 9
     self.settings.side_nav_opened = true
     self.settings.index_page_format = 'cart'
+  end
+
+  def set_introduction
+    intro = Introduction.new
+    intro.user_id = self.id
+    intro.save
   end
 
   def reset_default_settings
