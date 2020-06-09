@@ -250,7 +250,7 @@ class ApplicationController < ActionController::Base
     if request.format.js?
       render js:  "window.location = '#{request.referrer || root_path}'"
     else
-      redirect_to(request.referrer || root_path)
+      redirect_to(request.referrer || dashboard_path)
     end
   end
 

@@ -15,11 +15,11 @@
           <% @sub_users.each do |user| %>
               <tr>
                 <td>
-                  <strong><%= link_to user.name, OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}" %></strong>
+                  <strong><%= link_to user.name.present? ? user.name : 'N/A' , OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}" %></strong>
                 </td>
-                <td><%= user.email %></td>
+                <td><%= user.email.present? ? user.email : 'N/A' %></td>
                 <td><%= user.created_at.strftime(get_date_format) %></td>
-                <td><%= user.role.name  %></td>
+                <td><%= (user.role.present? && user.role.name.present?) ? user.role.name : 'N/A' %></td>
                 <td class="action-btn-group">
                   <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= user.id %>' data-alignment="right" data-beloworigin="true">
                     <i class="material-icons">more_vert</i>
