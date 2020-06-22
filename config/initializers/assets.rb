@@ -8,6 +8,6 @@
 # Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 # Precompile additional assets.
-# application.js.erb, application.css, and all non-JS/CSS in the app/assets
+# application.js.erb.erb, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w(toastr.min.css landing_page.css landing_page.js toastr.min.js image.scss pdf.css.scss js/*)

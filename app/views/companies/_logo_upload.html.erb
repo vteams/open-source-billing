@@ -10,5 +10,5 @@
   </div>
 </div>
 <div class="input-field col s12 m6">
-  <%= image_tag @company.logo_url(:thumb) if action_name == 'edit' %>
+  <%= image_tag @company.logo_url(:thumb) if action_name == 'edit' && @company.logo_url %>
 </div>

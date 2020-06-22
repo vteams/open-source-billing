@@ -9,13 +9,15 @@
     "expose-loader": "^0.7.5",
     "fullcalendar": "^3.10.1",
     "hammerjs": "^2.0.8",
+    "i18n-js": "^3.7.0",
     "jquery": "^3.5.0",
+    "jquery-mousewheel": "^3.1.13",
     "js.cookie": "^0.0.4",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "rails-erb-loader": "^5.5.2",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   }
 }

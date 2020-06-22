@@ -10,6 +10,6 @@
     </div>
   </div>
   <div class="input-field col s6 m6">
-    <%= image_tag @sub_user.avatar_url(:thumb) if action_name == 'edit' %>
+    <%= image_tag @sub_user.avatar_url(:thumb) if action_name == 'edit' && @sub_user.avatar_url %>
   </div>
 </div>

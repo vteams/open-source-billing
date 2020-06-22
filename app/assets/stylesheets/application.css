@@ -27,7 +27,6 @@
  *= require nouislider
  *= require introjs
 */
-
 .fix-left-and-opacity {
     left: auto !important;
     opacity: 1 !important;

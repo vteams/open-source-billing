@@ -21,7 +21,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-
       <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
       <%= javascript_include_tag "application" %>
       <%= javascript_include_tag "toastr.min.js" %>
@@ -41,7 +40,7 @@
               </div>
             <!--- side vertical menu --->
             <%= render 'layouts/side_nav' unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates')) )%>
-gi            <%= render 'layouts/flash_messages'%>
+            <%= render 'layouts/flash_messages'%>
 
             <%= yield %>
 
