@@ -1,118 +1,128 @@
-// // This is a manifest file that'll be compiled into application.js.erb, which will include all the files
-// // This is a manifest file that'll be compiled into application.js.erb, which will include all the files
-// listed below.
+/* eslint no-console:0 */
+// This file is automatically compiled by Webpack, along with any other files
+// present in this directory. You're encouraged to place your actual application logic in
+// a relevant structure within app/javascript and only use these pack files to reference
+// that code so it'll be compiled.
 //
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+// To reference this file, add <%%= javascript_pack_tag 'application' %> to the appropriate
+// layout file, like app/views/layouts/application.html.erb
+
+
+// Uncomment to copy all static images under ../images to the output folder and reference
+// them with the image_pack_tag helper in views (e.g <%%= image_pack_tag 'rails.png' %>)
+// or the `imagePath` JavaScript helper below.
 //
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
-//
-//= require jquery.min
-//= require jquery_ujs
-//= require jquery-ui.js
-//= require materialize.min
-//= require jquery.mCustomScrollbar.min
-//= require range-slider
-//= require custom
-//= require highcharts
-//= require exporting
-//= require nested_fields
-//= require nav.js
-//= require chosen.jquery
-//= require jquery.css3caching.js
-//= require inline-forms
-//= require projects
-//= require estimates
-//= require estimate_calculator
-//= require expenses
-//= require formatCurrency.js
-//= require tableSorter.js
-//= require tablesorter.staticrow.js
-//= require jquery.metadata.js
-//= require moment
-//= require daterangepicker.min
-//= require fullcalendar
-//= require calendar.js
-//= require logs.js
-//= require clients
-//= require client_additional_contacts
-//= require client_contacts
-//= require accounts
-//= require dashboard
-//= require invoice_line_items
-//= require items
-//= require activities
-//= require notifications
-//= require jqamp-ui-spinner.min.js
-//= require jquery.qtip.min.js
-//= require jwerty.js
-//= require payments
-//= require payment_terms
-//= require reports
-//= require taxes
-//= require sonic.js
-//= require progress_indicator
-//= require jquery.tablehover.min.js
-//= require tax_calculator
-//= require jquery.formatCurrency-1.4.0.js
-//= require table-listing
-//= require credit-payment
-//= require cc-validation
-//= require jquery.customScrollbar.min.js
-//= require users
-//= require validate-forms
-//= require jquery.ellipsis.js
-//= require companies
-//= require tasks
-//= require staffs
-//= require email_templates
-//= require tinymce
-//= require email_template
-//= require recurring_profiles
-//= require js/bootstrap/bootstrap-switch
-//= require js/bootstrap/bootstrap-checkbox.min.js
-//= require js/bootstrap/bootstrap-checkbox.js
-//= require settings.js
-//= require date_formats
-//= require timer
-//= require invoice_card
-//= require invoice
-//= require invoice_calculator
-//= require osb_plugins
-//= require import
-//= require sub_user
-//= require filter_bar
-//= require filter_box
-//= require select2.min
-//= require search
-//= require new_search
-//= require popup
-//= require js.cookie
-//= require browser_timezone_rails/set_time_zone
-//= require i18n/translations
-//= require sweetalert.min
-//= require cocoon
-//= require nouislider
-//= require chartkick
-//= require Chart.bundle
-//= require jquery.infinite-pages
-//= require introjs
-//= require jquery.validate
-//= require jquery.validate.additional-methods
-//= require validations
-//= require toastr.min
+// const images = require.context('../images', true)
+// const imagePath = (name) => images(name, true)
+
+console.log('Hello World from Webpacker')
+require('jquery')
+///= require jquery_ujs
+///= require jquery-ui.js
+import I18n from 'i18n-js'
+window.I18n = I18n
+require('../../../vendor/assets/javascripts/materialize.min.js')
+require('../../../vendor/assets/javascripts/jquery.mCustomScrollbar.min.js')
+require('../../../vendor/assets/javascripts/range-slider.js')
+require('./custom.js')
+require('../../../vendor/assets/javascripts/highcharts.js')
+require('../../../vendor/assets/javascripts/exporting.js')
+require('./nested_fields.js')
+require('../../../vendor/assets/javascripts/nav.js')
+require('./jquery.css3caching.js')
+require('./inline-forms.js')
+require('./projects.js')
+require('./estimates.js')
+require('./estimate_calculator.js')
+require('./expenses.js')
+require('../../../vendor/assets/javascripts/formatCurrency.js')
+require('../../../vendor/assets/javascripts/tableSorter.js')
+require('../../../vendor/assets/javascripts/tablesorter.staticrow.js')
+require('../../../vendor/assets/javascripts/jquery.metadata.js')
+require('moment')
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'moment') %>"
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'fullcalendar') %>"
+require('./fullcalender.js')
+require('../../../vendor/assets/javascripts/daterangepicker.min')
+require('./calendar.js.erb')
+require('./logs.js')
+require('./clients.js')
+require('./client_additional_contacts.js')
+require('./client_contacts.js')
+require('./accounts.js')
+require('./dashboard.js')
+require('./invoice_line_items.js')
+require('./items.js')
+require('./activities.js')
+require('./notifications.js')
+//require('../../../vendor/assets/javascripts/jqamp-ui-spinner.min.js')
+require('../../../vendor/assets/javascripts/jquery.qtip.min.js')
+require('../../../vendor/assets/javascripts/jwerty.js')
+require('./payments.js')
+require('./payment_terms.js')
+require('./reports.js')
+require('./taxes.js')
+require('../../../vendor/assets/javascripts/sonic.js')
+require('./progress_indicator.js')
+require('../../../vendor/assets/javascripts/jquery.tablehover.min.js')
+require('./tax_calculator.js')
+require('../../../vendor/assets/javascripts/jquery.formatCurrency-1.4.0.js')
+require('./table-listing.js')
+require('./credit-payment.js')
+require('./cc-validation.js')
+require('../../../vendor/assets/javascripts/jquery.customScrollbar.min.js')
+require('./users.js')
+require('./validate-forms.js')
+require('../../../vendor/assets/javascripts/jquery.ellipsis.js')
+require('./companies.js')
+require('./tasks.js')
+require('./staffs.js')
+require('./email_templates.js')
+import "<%= File.join(Gem.loaded_specs['tinymce-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'tinymce') %>"
+require('./recurring_profiles.js')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-switch')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.min.js')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.js')
+require('./settings.js')
+require('./date_formats.js')
+require('./timer')
+require('./invoice_card.js')
+require('./invoice.js')
+require('./invoice_calculator.js')
+require('./osb_plugins.js')
+require('./import.js')
+require('./sub_user.js')
+require('./filter_bar.js')
+require('./filter_box.js')
+require('../../../vendor/assets/javascripts/select2.min')
+require('./search')
+require('./new_search.js')
+require('./popup.js')
+import "<%= File.join(Gem.loaded_specs['js_cookie_rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'js.cookie') %>"
+//require('./set_time_zone.js.erb')
+//require('./jquery.infinite-pages.js')
+import "<%= File.join(Gem.loaded_specs['browser-timezone-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'browser_timezone_rails/set_time_zone') %>"
+import "<%= File.join(Gem.loaded_specs['i18n-js'].full_gem_path, 'app', 'assets', 'javascripts', 'i18n/translations') %>"
+require('../../../vendor/assets/javascripts/sweetalert.min')
+//import "<%#= File.join(Gem.loaded_specs['cocoon'].full_gem_path, 'app', 'assets', 'javascripts', 'cocoon') %>"
+import "<%= File.join(Gem.loaded_specs['nouislider-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'nouislider') %>"
+import "<%= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'chartkick') %>"
+import "<%= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'Chart.bundle') %>"
+import "<%= File.join(Gem.loaded_specs['jquery-infinite-pages'].full_gem_path, 'app', 'assets', 'javascripts', 'jquery.infinite-pages') %>"
+import "<%= File.join(Gem.loaded_specs['introjs-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'introjs') %>"
+import "<%= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate') %>"
+import "<%= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.additional-methods') %>"
+//require('./jquery.validate.js')
+//require('./jquery.validate.additional-methods.js')
+require('./validations.js')
 
 
 
 jQuery(function () {
     $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
         var tval = $('textarea').val(), tlength = tval.length, max = 400,
-        remain = parseInt(max - tlength);
-       $('.text-limit').text(remain + "  characters remaining" );
+            remain = parseInt(max - tlength);
+        $('.text-limit').text(remain + "  characters remaining" );
     });
 
     jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
@@ -128,9 +138,9 @@ jQuery(function () {
         jQuery(".sub").hide();
         jQuery('#nav .dropup, #nav .dropdown').css('position', 'relative');
     }).mouseout(function () {
-            jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
-            jQuery('#nav .dropup, #nav .dropdown').css('position', 'static');
-        });
+        jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
+        jQuery('#nav .dropup, #nav .dropdown').css('position', 'static');
+    });
     // Hide other open header menu on mouseover
     jQuery('.primary_menu .dropdown').mouseover(function () {
         jQuery(this).siblings().removeClass('open');
@@ -177,8 +187,8 @@ jQuery(function () {
     })(jQuery);
 
     //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
-  initDateRangePicker(DateFormats.format().toUpperCase());
-  initRangeSelector();
+    initDateRangePicker(DateFormats.format().toUpperCase());
+    initRangeSelector();
 });
 
 window.preventDeletedNavigation = function(){
@@ -217,8 +227,8 @@ window.preventDeletedNavigation = function(){
         });
         $("a.deleted_entry").unbind('mouseleave');
         $("a.deleted_entry").mouseleave(function(e){
-              $(this).qtip('hide');
-              return false;
+            $(this).qtip('hide');
+            return false;
         });
     }
 };
@@ -415,113 +425,102 @@ function disable_f12_key_in_browser(){
 }
 
 function initDateRangePicker(format) {
-  var options = {
-    autoUpdateInput: false,
-    locale: {format: format}
-  };
-  $.each($('input[class="date-range"]'), function(index, element) {
-    $(element).daterangepicker(options, function(start, end) {
-      $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
-      $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
-    });
+    var options = {
+        autoUpdateInput: false,
+        locale: {format: format}
+    };
+    $.each($('input[class="date-range"]'), function(index, element) {
+        $(element).daterangepicker(options, function(start, end) {
+            $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
+            $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
+        });
 
-    $(element).on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
-    });
+        $(element).on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+        });
 
-    $(element).on('cancel.daterangepicker', function(ev, picker) {
-      $(this).val('');
-      picker.element.val('');
-      $('#' + $(element).attr('id') + '_start_date').val('');
-      $('#' + $(element).attr('id') + '_end_date').val('');
+        $(element).on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            picker.element.val('');
+            $('#' + $(element).attr('id') + '_start_date').val('');
+            $('#' + $(element).attr('id') + '_end_date').val('');
+        });
     });
-  });
 }
 
 function initRangeSelector() {
-  $.each($('.range_selector'), function(index, element) {
-    var min = parseInt($(element).attr('min'));
-    var max = parseInt($(element).attr('max'));
-    var hiddenInputs = [
-      $('#' + $(element).attr('id') + '_min')[0],
-      $('#' + $(element).attr('id') + '_max')[0]
-    ];
-    var labels = [
-      $('#' + $(element).attr('id') + '_min_label')[0],
-      $('#' + $(element).attr('id') + '_max_label')[0]
-    ];
-    noUiSlider.create(element, {
-      start: [$(element).data('min') || min, $(element).data('max') || max],
-      connect: true,
-      step: 1,
-      orientation: 'horizontal',
-      range: {
-        'min': min,
-        'max': max
-      }
-    });
-    element.noUiSlider.on('update', function( values, handle ) {
-      hiddenInputs[handle].value = parseInt(values[handle]);
-      labels[handle].innerHTML = parseInt(values[handle]);
-    });
+    $.each($('.range_selector'), function(index, element) {
+        var min = parseInt($(element).attr('min'));
+        var max = parseInt($(element).attr('max'));
+        var hiddenInputs = [
+            $('#' + $(element).attr('id') + '_min')[0],
+            $('#' + $(element).attr('id') + '_max')[0]
+        ];
+        var labels = [
+            $('#' + $(element).attr('id') + '_min_label')[0],
+            $('#' + $(element).attr('id') + '_max_label')[0]
+        ];
+        noUiSlider.create(element, {
+            start: [$(element).data('min') || min, $(element).data('max') || max],
+            connect: true,
+            step: 1,
+            orientation: 'horizontal',
+            range: {
+                'min': min,
+                'max': max
+            }
+        });
+        element.noUiSlider.on('update', function( values, handle ) {
+            hiddenInputs[handle].value = parseInt(values[handle]);
+            labels[handle].innerHTML = parseInt(values[handle]);
+        });
 
-  });
+    });
 }
 
 function resetRangeSelectors() {
-  $.each($('.range_selector'), function(index, element) {
-    element.noUiSlider.destroy();
-  });
-  initRangeSelector();
-}
-
-function resetDropdowns() {
-    $('#criteria_invoice_status').children("option:selected").val('');
-    $('#s2id_criteria_invoice_status > a > span.select2-chosen').html('All');
-    $('#criteria_client_id').children("option:selected").val('');
-    $('#s2id_criteria_client_id > a > span.select2-chosen').html('All');
-    $('#criteria_payment_method').children("option:selected").val('');
-    $('#s2id_criteria_payment_method > a > span.select2-chosen').html('All');
-
+    $.each($('.range_selector'), function(index, element) {
+        element.noUiSlider.destroy();
+    });
+    initRangeSelector();
 }
 
 function initFilterEvents(ids) {
-  $(document).ready( function (event) {
-    $('#toggle_filters').on('click', function (event) {
-      toggleFilters();
+    $(document).ready( function (event) {
+        $('#toggle_filters').on('click', function (event) {
+            toggleFilters();
+        });
+        $('#filter_reset_btn').on('click', function(event) {
+            $('#filters select').val('');
+            $(ids).val('');
+            resetRangeSelectors();
+            $('#filters_form').submit();
+        });
+        $('#filter_submit_btn').on('click', function (event) {
+            $('#filters_form').submit();
+        })
     });
-    $('#filter_reset_btn').on('click', function(event) {
-      $('#filters select').val('');
-      $(ids).val('');
-      resetDropdowns()
-      resetRangeSelectors();
-      $('#filters_form').submit();
-    });
-    $('#filter_submit_btn').on('click', function (event) {
-      $('#filters_form').submit();
-    })
-  });
 }
 
 function toggleFilters() {
-  if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
-    $('#filters').slideDown('slow');
-    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
-  } else {
-    $('#filters').slideUp('slow');
-    $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
-  }
+    if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+        $('#filters').slideDown('slow');
+        $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+    } else {
+        $('#filters').slideUp('slow');
+        $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
+    }
 }
 
 function initDemoLinksClick() {
-  $('.demo-mode').off('click');
-  $('.demo-mode').on('click', function (event) {
-    swal({
-      title: 'Demo',
-      text: I18n.t('views.common.demo_restriction_msg'),
-      icon: 'info'
+    $('.demo-mode').off('click');
+    $('.demo-mode').on('click', function (event) {
+        swal({
+            title: 'Demo',
+            text: I18n.t('views.common.demo_restriction_msg'),
+            icon: 'info'
+        });
     });
-  });
 }
 
 function display_flash_notice_or_alert_with_toastr(){

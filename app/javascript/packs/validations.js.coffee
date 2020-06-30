@@ -1,7 +1,7 @@
 class @Validation
 
   @UserSettingForm = ->
-    $('#sub_user_form').validate
+    $('#user_side_form').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->
@@ -16,7 +16,7 @@ class @Validation
         password: required: true
         password_confirmation:
           required: true
-          equalTo: '#password'
+          equalTo: '#side_form_password'
       messages:
         user_name: required: 'Full Name is required'
         email:  required: 'Email is required'
@@ -26,7 +26,7 @@ class @Validation
 
 
   @CompanySettingForm = ->
-    $('#companyForm').validate
+    $('#company_side_form').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->
@@ -44,7 +44,7 @@ class @Validation
 
 
   @RoleSettingForm = ->
-    $('#roleForm').validate
+    $('#role_side_form').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->

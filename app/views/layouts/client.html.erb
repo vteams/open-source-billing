@@ -23,8 +23,8 @@
   <![endif]-->
 
   <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "toastr.min.js" %>
+  <%= javascript_pack_tag "application" %>
+  <%= javascript_pack_tag "toastr.min.js" %>
   <script>
       I18n.locale = "<%= I18n.locale %>";
   </script>

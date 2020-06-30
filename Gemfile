@@ -118,6 +118,6 @@ gem 'actionpack', '6.0.2.2  '
 gem 'activesupport', '~> 6.0.2.2'
 gem 'activemodel', '~> 6.0.2.2'
 gem 'activerecord', '~> 6.0.2.2'
-# gem "webpacker"
+gem "webpacker"
 gem 'hammerjs-rails'
 gem 'faraday', '1.0.1'

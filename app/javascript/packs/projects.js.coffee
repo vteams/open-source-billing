@@ -1,4 +1,4 @@
-class @Project
+class window.Project
 
   @change_project_task  = ->
     # Load Task data when an task is selected from dropdown list
