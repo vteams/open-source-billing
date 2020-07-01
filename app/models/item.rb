@@ -28,6 +28,7 @@ class Item < ApplicationRecord
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :tax_1, -> (tax_1) { where(tax_1: tax_1) }
   scope :quantity, -> (quantity) { where(quantity: quantity) }
+  scope :item_name, -> (item_name) { where(item_name: item_name) }
   scope :unit_cost, -> (unit_cost) { where(unit_cost: unit_cost) }
 
   # associations
@@ -73,6 +74,7 @@ class Item < ApplicationRecord
     company_items = company.items
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
     company_items = company_items.send(mappings[params[:status].to_sym])
+    company_items = company_items.item_name(params[:item_name]) if params[:item_name].present?
     company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     company_items = company_items.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
@@ -87,6 +89,7 @@ class Item < ApplicationRecord
     account_items = account.items
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
     account_items = account_items.send(mappings[params[:status].to_sym])
+    account_items = account_items.item_name(params[:item_name]) if params[:item_name].present?
     account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     account_items = account_items.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)

@@ -52,12 +52,16 @@ class @Invoice
               #                OsbPlugins.empty_tax_fields(container)
               if item[3] != 0
                 container.find('select.tax1').val(item[3]).trigger('contentChanged');
+                $('#s2id_invoice_invoice_line_items_attributes_0_tax_1 > a > span.select2-chosen').html(item[6]);
                 container.find('input.tax-amount').val item[8]
                 container.find('td.tax1').html item[6]
+                $('select.tax1').material_select('destroy')
               if item[4] != 0
                 container.find('select.tax2').val(item[4]).trigger('contentChanged');
+                $('#s2id_invoice_invoice_line_items_attributes_0_tax_2 > a > span.select2-chosen').html(item[7]);
                 container.find('input.tax-amount').val item[9]
                 container.find('td.tax2').html item[7]
+                $('select.tax2').material_select('destroy')
               container.find('input.item_name').val item[5]
 
               InvoiceCalculator.updateLineTotal(elem)
@@ -145,3 +149,7 @@ $(document).ready ->
   });
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();
+  $('form').on 'cocoon:after-insert', (e, insertedItem, originalEvent) ->
+    $('.item-select').select2 'destroy'
+    $('.item-select').select2()
+    return

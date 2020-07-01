@@ -67,8 +67,8 @@
     float: right;
     margin-top: 20px;
     .filter-btn {
-      color: #09b8e2;
-      background: transparent;
+      color: white;
+      background: #09B7E2;
       border: 1px solid #09b8e2;
       font-size: 16px;
       font-family: "Dosis",sans-serif;
@@ -79,9 +79,19 @@
       border-radius: 5px;
       min-width: 120px;
       &:hover {
-        background-color: #14B6E1;
+        background-color: #07A4D8;
         color: white;
       }
+    }
+    #filter_reset_btn {
+      background-color: #dc3545;
+      border: 1px solid #dc3545;
+      &:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        color: white;
+      }
+
     }
   }
 }
