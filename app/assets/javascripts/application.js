@@ -482,6 +482,12 @@ function resetDropdowns() {
     $('#s2id_criteria_client_id > a > span.select2-chosen').html('All');
     $('#criteria_payment_method').children("option:selected").val('');
     $('#s2id_criteria_payment_method > a > span.select2-chosen').html('All');
+    $('#client_id').children("option:selected").val('');
+    $('#s2id_client_id > a > span.select2-chosen').html('All');
+    $('#s2id_type > a > span.select2-chosen').html('');
+    $('#type').children("option:selected").val('');
+    $('#s2id_status > a > span.select2-chosen').html('Active');
+    $('#type').children("option:selected").val('');
 
 }
 

@@ -5,5 +5,5 @@
   <%= button_tag :submit, name: 'save_as_draft', value: true, title: t('views.common.save'), class: 'estimate_submit_button' do %>
     <i class='material-icons intro estimates-new-false-intro' data-intro="By clicking on this icon you can save your estimate" data-step="3">done</i>
   <% end %>
-  <%= link_to raw("<i class='material-icons close intro estimates-new-false-intro' data-intro='By clicking this icon you can cancel the estimate' data-step='4' title='#{t('helpers.links.close')}'>close</i>"), invoices_path %>
+  <%= link_to raw("<i class='material-icons close intro estimates-new-false-intro' data-intro='By clicking this icon you can cancel the estimate' data-step='4' title='#{t('helpers.links.close')}'>close</i>"), estimates_path %>
 </div>

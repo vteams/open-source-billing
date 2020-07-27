@@ -21,7 +21,7 @@
 module OSB
   module Util
     def self.encrypt(value_to_encrypt)
-      secret = Digest::SHA1.hexdigest(OSB::CONFIG::ENCRYPTION_KEY)
+      secret = Digest::SHA1.hexdigest(OSB::CONFIG::ENCRYPTION_KEY).unpack('B32').first
       e = ActiveSupport::MessageEncryptor.new(secret)
       Base64.encode64(e.encrypt_and_sign(value_to_encrypt))
     end
