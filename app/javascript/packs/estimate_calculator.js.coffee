@@ -1,4 +1,4 @@
-class @EstimateCalculator
+class window.EstimateCalculator
 
   # Calculate the line total for estimate
   @updateLineTotal = (elem) ->

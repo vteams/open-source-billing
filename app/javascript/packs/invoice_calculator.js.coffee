@@ -1,4 +1,4 @@
-class @InvoiceCalculator
+class window.InvoiceCalculator
   # Calculate the line total for invoice
   @updateLineTotal = (elem) ->
     container = elem.parents("tr.fields")

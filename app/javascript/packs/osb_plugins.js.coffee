@@ -1,4 +1,4 @@
-class @OsbPlugins
+class window.OsbPlugins
 
   @applyDatePicker = ->
     format = DateFormats.format().toUpperCase()

@@ -1,4 +1,4 @@
-class @Invoice
+class window.Invoice
 
   jQuery ->
     OsbPlugins.applyDatePicker()

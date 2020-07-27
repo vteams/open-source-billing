@@ -51,7 +51,7 @@ class SettingsController < ApplicationController
     elsif params[:nav_state] == "false"
       current_user.settings.side_nav_opened = false
     end
-    render nothing: true
+    render plain: "ok"
   end
 
   def index

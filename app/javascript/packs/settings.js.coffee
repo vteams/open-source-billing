@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-@showSuccessMsg = (msg) ->
+window.showSuccessMsg = (msg) ->
   $('#flash_message').removeClass('hidden').css('display', 'block');
   $('#card-alert.red').css('display', 'none');
   $('#card-alert.green').css('display', 'block');
@@ -11,7 +11,7 @@
     $('#flash_message').addClass('hidden')
   , 5000
 
-@showErrorMsg = (msg) ->
+window.showErrorMsg = (msg) ->
   $('#flash_message').removeClass('hidden').css('display', 'block');
   $('#card-alert.green').css('display', 'none');
   $('#card-alert.red').css('display', 'block');
@@ -22,7 +22,7 @@
   , 5000
 
 @sideNavToggle = () ->
-@initUserListingEvents = () ->
+window.initUserListingEvents = () ->
   $('#user_add_btn,#user_cancel_btn').on "click", ->
     $('#user_reset_form').click()
     $("#user_side_form").validate().resetForm();
@@ -80,7 +80,7 @@
 
   $('.user-side-form').addClass('hidden')
 
-  @SubUser.init_settings_form()
+  SubUser.init_settings_form()
   $('.select_2').material_select('destroy')
   $('.role-select2').select2({
     placeholder: "Choose a Role"
@@ -99,7 +99,7 @@
         .append(date_format_str[0])
         .append($("<span class='red1 italic-text block'></span>")
         .append(date_format_str[1])));
-    selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
+    selected_format = $('.settings_date_format').val().split("(")[0]
     $('.settings_date_format .date-formats input').val(selected_format)
     $('#basic_settings_container').removeClass('hide')
   ), 1
@@ -108,7 +108,7 @@
     selected_format = $('.settings_date_format .date-formats input').val().split("(")[0]
     $('.settings_date_format .date-formats input').val(selected_format)
 
-@initCompanyListingEvents = () ->
+window.initCompanyListingEvents = () ->
   $('#company_add_btn,#company_cancel_btn').on "click", ->
     $('#company_reset_form').click()
     $("#company_side_form").validate().resetForm();
@@ -146,7 +146,7 @@
             window.location.reload()
             initCompanyListingEvents()
 
-  @Company.init_settings_form()
+  Company.init_settings_form()
 
 
   $('input[id^=company_ck_]').on "change", ->
@@ -164,7 +164,7 @@
 
   $('.company-side-form').addClass('hidden')
 
-@initRoleListingEvents = () ->
+window.initRoleListingEvents = () ->
   $('#role_add_btn,#role_cancel_btn').on "click", ->
     $('#role_reset_form').click()
     $("#role_side_form").validate().resetForm();
@@ -205,17 +205,17 @@
       $('#role_delete_btn').addClass('disabled')
 
 
-@loadUsersActivitiesSection = () ->
+window.loadUsersActivitiesSection = () ->
   $.get window.user_settings_link, (data) ->
     $('#users_listing').append(data)
     initUserListingEvents()
 
-@loadCompaniesActivitiesSection = () ->
+window.loadCompaniesActivitiesSection = () ->
   $.get window.comapnies_settings_link, (data) ->
     $('#companies_listing').append(data)
     initCompanyListingEvents()
 
-@loadRolesActivitiesSection = () ->
+window.loadRolesActivitiesSection = () ->
   $.get window.roles_settings_link, (data) ->
     $('#roles_listing').append(data)
     initRoleListingEvents()

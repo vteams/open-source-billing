@@ -1,4 +1,4 @@
-class @SubUser
+class window.SubUser
 
   applyPopover = (elem,position,corner,message) ->
     elem.qtip

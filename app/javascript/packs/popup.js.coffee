@@ -1,4 +1,4 @@
-class @Popup
+class window.Popup
 
   @initialize = (elem) ->
     $(elem).modal complete: ->
@@ -13,3 +13,5 @@ class @Popup
     $(elem).modal('open')
     $(elem).css('z-index', '1004 !important')
     $('.modal-overlay').css('z-index', '1005 !important')
+
+exports.popup = @Popup

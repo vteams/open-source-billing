@@ -1,4 +1,5 @@
 jQuery ->
+  applyAllLineItemTaxes = require('./tax_calculator.js').applyAllLineItemTaxes
   # Add date picker to start date
   jQuery("#recurring_profile_first_invoice_date").datepicker
     dateFormat: DateFormats.format()
@@ -240,7 +241,7 @@ jQuery ->
     jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").text(total_balance.toFixed(2))
     jQuery("#invoice_total_lbl").formatCurrency({symbol: window.currency_symbol})
-    TaxCalculator.applyAllLineItemTaxes()
+    applyAllLineItemTaxes()
   updateInvoiceTotal()
 
   # Date formating function

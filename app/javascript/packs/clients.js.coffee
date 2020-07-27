@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-class @Client
+class window.Client
 
   @load_functions = ->
 
@@ -87,3 +87,5 @@ jQuery ->
   jQuery('#account_association').change ->
     if jQuery(this).is ':checked'
       $('.company_checkbox').prop('checked',true)
+
+

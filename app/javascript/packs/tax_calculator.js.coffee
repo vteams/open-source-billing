@@ -1,4 +1,4 @@
-class @TaxCalculator
+class window.TaxCalculator
   #window.taxByCategory = ->
   # taxes by category
   # @example
@@ -56,5 +56,7 @@ class @TaxCalculator
 
     jQuery(".invoice-total-left .new-invoice-footer-row.taxes_total").html("<ul>#{lis_lab}</ul>")
     jQuery(".invoice-total-right .new-invoice-footer-row.taxes_total").html("<ul>#{lis_tax}</ul>")
+
+  exports.applyAllLineItemTaxes = @applyAllLineItemTaxes;
 
   applySingleLineItemTax = ->

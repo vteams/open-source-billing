@@ -9,7 +9,14 @@ environment.loaders.append('coffee', coffee)
 environment.loaders.prepend('erb', erb)
 module.exports = environment
 environment.plugins.prepend('Provide', new webpack.ProvidePlugin({
-    $: "jquery",
-    JQuery: "jquery",
-    jquery: "jquery"
+    $: 'jquery/src/jquery',
+    jQuery: 'jquery/src/jquery',
+    jquery: 'jquery',
+    'window.jQuery': 'jquery',
+    Popper: ['popper.js', 'default']
 }))
+const aliasConfig = {
+    'jquery': 'jquery/src/jquery',
+    'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+};
+environment.config.set('resolve.alias', aliasConfig);

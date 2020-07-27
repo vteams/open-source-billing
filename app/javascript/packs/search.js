@@ -1,4 +1,5 @@
+filterbox = require('./filter_box.js').filterbox
 $(document).ready(function(){
     if($(".search").length > 0)
-        filterbox= new FilterBox('.hd-filter-box');
+        window.filterbox= new filterbox('.hd-filter-box');
 });

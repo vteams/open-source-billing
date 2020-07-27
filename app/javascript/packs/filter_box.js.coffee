@@ -4,10 +4,12 @@ Array.prototype.getObjectBy = (name, value)->
   return null
 
 class @FilterBox
+  filterbar = require('./filter_bar.js').filterbar
+
   constructor: (@element) ->
     @filter_fields = $(@element).data('filter-fields')
     @setupSelect2()
-    FilterBar.initSearch($(@element).select2('val'))
+    filterbar.initSearch($(@element).select2('val'))
 
   setupSelect2: ->
     $(@element).select2(
@@ -39,3 +41,4 @@ class @FilterBox
     "<span class='label'>#{selection.label}</span> #{selection.term}"
 
 
+exports.filterbox = @FilterBox

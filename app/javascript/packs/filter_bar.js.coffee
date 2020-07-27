@@ -23,3 +23,6 @@ class @FilterBar
       success: (data)->
         $('.ajax-reload').each ->
           $(this).html($(data).find("##{$(this).attr('id')}").html())
+
+
+exports.filterbar = @FilterBar

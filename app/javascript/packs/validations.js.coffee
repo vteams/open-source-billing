@@ -1,4 +1,4 @@
-class @Validation
+class window.Validation
 
   @UserSettingForm = ->
     $('#user_side_form').validate

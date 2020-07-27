@@ -1,4 +1,4 @@
-class @Payment
+class window.Payment
 
   applyPopover = (elem,position,corner,message) ->
     console.log message

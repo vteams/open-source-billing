@@ -1,5 +1,5 @@
 # dashboard related js code
-class @Dashboard
+class window.Dashboard
   @plot_graph = ->
     # chart options
     if gon? and gon.chart_data
@@ -47,37 +47,37 @@ class @Dashboard
         ],
         exporting: { enabled: false }
 # report data
-jQuery ->
-  $('#currency').chosen
-    disable_search: true
-  $("#currency").change ->
-    window.location = '/dashboard?currency=' + $(this).val()
-  Dashboard.plot_graph();
+  jQuery ->
+    $('#currency').chosen
+      disable_search: true
+    $("#currency").change ->
+      window.location = '/dashboard?currency=' + $(this).val()
+    Dashboard.plot_graph();
 
-$(document).ready ->
-  $('#show_more').click ->
-    $("#all_invoice_amounts").show()
-    $("#show_more").hide()
-    return
-  $('#show_less').click ->
-    $("#all_invoice_amounts").hide()
-    $("#show_more").show()
-    return
+  $(document).ready ->
+    $('#show_more').click ->
+      $("#all_invoice_amounts").show()
+      $("#show_more").hide()
+      return
+    $('#show_less').click ->
+      $("#all_invoice_amounts").hide()
+      $("#show_more").show()
+      return
 
-  $('#more_payments').click ->
-    $("#all_payments").show()
-    $("#more_payments").hide()
-    return
-  $('#less_payments').click ->
-    $("#all_payments").hide()
-    $("#more_payments").show()
-    return
+    $('#more_payments').click ->
+      $("#all_payments").show()
+      $("#more_payments").hide()
+      return
+    $('#less_payments').click ->
+      $("#all_payments").hide()
+      $("#more_payments").show()
+      return
 
-  $('#more_ytds').click ->
-    $("#more-ytd").show()
-    $("#more_ytds").hide()
-    return
-  $('#less_ytds').click ->
-    $("#more-ytd").hide()
-    $("#more_ytds").show()
-    return
+    $('#more_ytds').click ->
+      $("#more-ytd").show()
+      $("#more_ytds").hide()
+      return
+    $('#less_ytds').click ->
+      $("#more-ytd").hide()
+      $("#more_ytds").show()
+      return

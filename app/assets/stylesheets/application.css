@@ -24,7 +24,6 @@
  *= require table_view
  *= require filters
  *= require daterangepicker
- *= require nouislider
  *= require introjs
 */
 .fix-left-and-opacity {

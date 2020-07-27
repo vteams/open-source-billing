@@ -1,4 +1,4 @@
-class @Company
+class window.Company
 
   @init_settings_form = ->
     $("#company_name,#contact_name,#companies_email").keypress ->

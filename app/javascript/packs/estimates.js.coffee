@@ -1,4 +1,4 @@
-class @Estimate
+class window.Estimate
 
   jQuery ->
     OsbPlugins.applyDatePicker()

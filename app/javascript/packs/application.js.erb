@@ -16,19 +16,16 @@
 // const imagePath = (name) => images(name, true)
 
 console.log('Hello World from Webpacker')
-require('jquery')
-///= require jquery_ujs
-///= require jquery-ui.js
-import I18n from 'i18n-js'
-window.I18n = I18n
+import {} from 'jquery-ujs'
 require('../../../vendor/assets/javascripts/materialize.min.js')
+require("jquery-ui")
 require('../../../vendor/assets/javascripts/jquery.mCustomScrollbar.min.js')
-require('../../../vendor/assets/javascripts/range-slider.js')
 require('./custom.js')
 require('../../../vendor/assets/javascripts/highcharts.js')
 require('../../../vendor/assets/javascripts/exporting.js')
 require('./nested_fields.js')
 require('../../../vendor/assets/javascripts/nav.js')
+require("../../../vendor/assets/javascripts/chosen.jquery.js")
 require('./jquery.css3caching.js')
 require('./inline-forms.js')
 require('./projects.js')
@@ -40,11 +37,8 @@ require('../../../vendor/assets/javascripts/tableSorter.js')
 require('../../../vendor/assets/javascripts/tablesorter.staticrow.js')
 require('../../../vendor/assets/javascripts/jquery.metadata.js')
 require('moment')
-require('./toastr.min.js')
-//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'moment') %>"
-//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'fullcalendar') %>"
-require('./fullcalender.js')
 require('../../../vendor/assets/javascripts/daterangepicker.min')
+require('./fullcalender.js')
 require('./calendar.js.erb')
 require('./logs.js')
 require('./clients.js')
@@ -56,7 +50,7 @@ require('./invoice_line_items.js')
 require('./items.js')
 require('./activities.js')
 require('./notifications.js')
-//require('../../../vendor/assets/javascripts/jqamp-ui-spinner.min.js')
+require('../../../vendor/assets/javascripts/jqamp-ui-spinner.min.js')
 require('../../../vendor/assets/javascripts/jquery.qtip.min.js')
 require('../../../vendor/assets/javascripts/jwerty.js')
 require('./payments.js')
@@ -78,12 +72,12 @@ require('../../../vendor/assets/javascripts/jquery.ellipsis.js')
 require('./companies.js')
 require('./tasks.js')
 require('./staffs.js')
-require('./email_templates.js')
 import "<%= File.join(Gem.loaded_specs['tinymce-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'tinymce') %>"
 require('./recurring_profiles.js')
 require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-switch')
 require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.min.js')
 require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.js')
+require('./email_templates.js')
 require('./settings.js')
 require('./date_formats.js')
 require('./timer')
@@ -95,24 +89,35 @@ require('./import.js')
 require('./sub_user.js')
 require('./filter_bar.js')
 require('./filter_box.js')
+import  toastr from './toastr.min'
+import I18n from 'i18n-js'
 require('../../../vendor/assets/javascripts/select2.min')
 require('./search')
 require('./new_search.js')
 require('./popup.js')
 import "<%= File.join(Gem.loaded_specs['js_cookie_rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'js.cookie') %>"
+import rails from '@rails/ujs'
+window.I18n = I18n
+//require("bootstrap/dist/js/bootstrap")
+require('nouislider')
+import noUiSlider from "nouislider";
+require('../../../vendor/assets/javascripts/range-slider.js')
+require('./toastr.min.js')
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'moment') %>"
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'fullcalendar') %>"
 //require('./set_time_zone.js.erb')
-//require('./jquery.infinite-pages.js')
-import "<%= File.join(Gem.loaded_specs['browser-timezone-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'browser_timezone_rails/set_time_zone') %>"
-import "<%= File.join(Gem.loaded_specs['i18n-js'].full_gem_path, 'app', 'assets', 'javascripts', 'i18n/translations') %>"
+require('./jquery.infinite-pages.js')
+//import "<%#= File.join(Gem.loaded_specs['browser-timezone-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'browser_timezone_rails/set_time_zone') %>"
+//import "<%#= File.join(Gem.loaded_specs['i18n-js'].full_gem_path, 'app', 'assets', 'javascripts', 'i18n/translations') %>"
 require('../../../vendor/assets/javascripts/sweetalert.min')
 //import "<%#= File.join(Gem.loaded_specs['cocoon'].full_gem_path, 'app', 'assets', 'javascripts', 'cocoon') %>"
-import "<%= File.join(Gem.loaded_specs['nouislider-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'nouislider') %>"
+//import "<%#= File.join(Gem.loaded_specs['nouislider-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'nouislider') %>"
 require("chartkick")
 require("chart.js")
 //import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'chartkick') %>"
 //import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'Chart.bundle') %>"
-import "<%= File.join(Gem.loaded_specs['jquery-infinite-pages'].full_gem_path, 'app', 'assets', 'javascripts', 'jquery.infinite-pages.js.coffee') %>"
-import "<%= File.join(Gem.loaded_specs['introjs-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'introjs') %>"
+//import "<%#= File.join(Gem.loaded_specs['jquery-infinite-pages'].full_gem_path, 'app', 'assets', 'javascripts', 'jquery.infinite-pages.js.coffee') %>"
+//import "<%#= File.join(Gem.loaded_specs['introjs-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'introjs') %>"
 //import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.js') %>"
 //import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.additional-methods') %>"
 <%# ['jquery.validate.js', 'jquery.validate.additional-methods.js'].each do |file| %>
@@ -179,7 +184,7 @@ jQuery(function () {
         initCustomConfirmPopUp();
         initLoginPageFormValidation();
         initCurrencySelect();
-        $(window).load(function () {
+        $(window).on('load', function () {
             $(".scrollContainer").mCustomScrollbar({
                 scrollInertia: 150,
                 advanced: {
@@ -224,7 +229,7 @@ window.preventDeletedNavigation = function(){
         return elem.focus();
     };
 
-    bind_deleted_entry = function(){
+    window.bind_deleted_entry = function(){
         $("a.deleted_entry").unbind('click');
         $("a.deleted_entry").click(function(e){
             applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
@@ -352,7 +357,7 @@ function initCurrencySelect() {
         if(e.which === 40){
             if(liSelected){
                 liSelected.removeClass('selected');
-                next = liSelected.nextAll('li').not('.hide').first();
+                var next = liSelected.nextAll('li').not('.hide').first();
                 if(next.length > 0){
                     liSelected = next.addClass('selected');
                 }else{
@@ -491,7 +496,7 @@ function resetRangeSelectors() {
     initRangeSelector();
 }
 
-function initFilterEvents(ids) {
+window.initFilterEvents = function(ids){
     $(document).ready( function (event) {
         $('#toggle_filters').on('click', function (event) {
             toggleFilters();

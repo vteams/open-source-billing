@@ -9,7 +9,7 @@ $(document).ready ->
     $("#company_association").prop('checked', true)
   # Validate client
 
-class @Item
+class window.Item
 
   applyPopover = (elem,message) ->
     elem.qtip
