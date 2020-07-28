@@ -155,7 +155,8 @@ $(document).ready(function(){
   mobileSideMenu();
 
   $(".filter-status").on('change', function(){
-        $(this).parents("form").submit();
+      filterForm = $(this).parents("form")[0];
+      filterForm.dispatchEvent(new Event('submit', {bubbles: true}));
     })
 });
 
@@ -182,7 +183,7 @@ $('.list-buttons .addbtn').on('click',function(){
     $(this).parents('.user-list').find('.addContent').slideToggle();
 });
 
-function initBulkActionCheckboxes() {
+window.initBulkActionCheckboxes = function() {
   $(".btn-search").click(function(){
     $(".header-right").addClass("search-show");
     $('.checkboxinfo').hide();
@@ -268,7 +269,7 @@ function initBulkActionCheckboxes() {
       $('.checkboxinfo .action-btn-group .send').show();
       $( ".chk-text" ).text(n + ' ' + I18n.t('views.common.selected'));
     } else {
-      $('.checkbox-item > input[type="checkbox"]').removeProp('checked');
+      $('.checkbox-item > input[type="checkbox"]').prop('checked', false);
       $('#header').addClass("chkbox-content");
       $('.header.action-btn-group').hide();
       $('.checkboxinfo .action-btn-group').show();
