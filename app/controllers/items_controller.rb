@@ -34,7 +34,8 @@ class ItemsController < ApplicationController
     params[:status] = params[:status] || 'active'
     params[:user]=current_user
     @status = params[:status]
-    @items = Item.get_items(params.merge(get_args))
+    @items = Item.get_items(params.merge(get_args))#.sort_by!{ |e| e.item_name.downcase }
+    @items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
     authorize Item
 

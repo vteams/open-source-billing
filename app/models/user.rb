@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
 
   def assigned_companies
     if self.have_all_companies_access?
-      Company.all
+      Company.all.order('company_name asc')
     else
       self.companies
     end
