@@ -8,6 +8,7 @@ class window.Client
     jQuery('#account_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
+        $('#unselect_select_all_company').prop('checked', false)
 
     $('.modal').modal complete: ->
       $('.qtip').remove()

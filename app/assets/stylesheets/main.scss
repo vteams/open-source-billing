@@ -360,7 +360,7 @@ h6 {
 #header .header-right.search-show .header-right .checkboxinfo .right a, #header .header-right.chekbox-show .header-right .checkboxinfo .right a {
   padding-right: 10px; }
 #header .header-center {
-  max-width: 325px;
+  max-width: 430px;
   margin: 0 auto; }
 .header-center .login-info-hdr{
   width: 100%;
@@ -6323,6 +6323,18 @@ li.collection-item a{
 .action-btn-group{
   position: relative !important;
 }
-.search_result_container{
+.search_result_container {
   position: relative !important;
+}
+  .select-deselect{
+  text-align: right;
+}
+.company_name{
+  float: left;
+  padding: 0px;
+  font-size: 22px;
+  color: #09b8e2
+}
+.company_select > input{
+  text-align: left !important;
 }

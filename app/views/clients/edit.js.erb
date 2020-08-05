@@ -11,3 +11,20 @@ Popup.open(elem);
 
 $('.client_select_2').select2({});
 Validation.ClientForm();
+$('#select_all_company').on('click', function (){
+    if ($('#select_all_company').is(':checked')){
+        if ($('#unselect_select_all_company').is(':checked')){
+            $('#unselect_select_all_company').prop('checked', false)
+        }
+//        $('#unselect_select_all_company').prop('checked', false)
+        $('.company_checkbox').prop('checked', true)
+    }
+})
+$('#unselect_select_all_company').on('click', function (){
+    if ($('#unselect_select_all_company').is(':checked')){
+        if ($('#select_all_company').is(':checked')){
+            $('#select_all_company').prop('checked', false)
+        }
+        $('.company_checkbox').prop('checked', false)
+    }
+})
