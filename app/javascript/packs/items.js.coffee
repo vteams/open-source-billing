@@ -37,6 +37,10 @@ class window.Item
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
 
+    jQuery('#company_association').change ->
+      if jQuery(this).is ':checked'
+        $('.company_checkbox').prop('checked',false)
+
     $('.modal').modal complete: ->
       $('.qtip').remove()
 
