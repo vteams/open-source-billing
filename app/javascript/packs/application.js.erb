@@ -1,0 +1,621 @@
+/* eslint no-console:0 */
+// This file is automatically compiled by Webpack, along with any other files
+// present in this directory. You're encouraged to place your actual application logic in
+// a relevant structure within app/javascript and only use these pack files to reference
+// that code so it'll be compiled.
+//
+// To reference this file, add <%%= javascript_pack_tag 'application' %> to the appropriate
+// layout file, like app/views/layouts/application.html.erb
+
+
+// Uncomment to copy all static images under ../images to the output folder and reference
+// them with the image_pack_tag helper in views (e.g <%%= image_pack_tag 'rails.png' %>)
+// or the `imagePath` JavaScript helper below.
+//
+// const images = require.context('../images', true)
+// const imagePath = (name) => images(name, true)
+
+console.log('Hello World from Webpacker')
+import Rails from "@rails/ujs";
+window.Rails = Rails;
+require("@rails/ujs").start();
+require('../../../vendor/assets/javascripts/materialize.min.js')
+require("jquery-ui")
+require('../../../vendor/assets/javascripts/jquery.mCustomScrollbar.min.js')
+require('./custom.js')
+require('../../../vendor/assets/javascripts/highcharts.js')
+require('../../../vendor/assets/javascripts/exporting.js')
+require('./nested_fields.js')
+require('../../../vendor/assets/javascripts/nav.js')
+require("../../../vendor/assets/javascripts/chosen.jquery.js")
+require('./jquery.css3caching.js')
+require('./inline-forms.js')
+require('./projects.js')
+require('./estimates.js')
+require('./estimate_calculator.js')
+require('./expenses.js')
+require('../../../vendor/assets/javascripts/formatCurrency.js')
+require('../../../vendor/assets/javascripts/tableSorter.js')
+require('../../../vendor/assets/javascripts/tablesorter.staticrow.js')
+require('../../../vendor/assets/javascripts/jquery.metadata.js')
+require('moment')
+require('../../../vendor/assets/javascripts/daterangepicker.min')
+require('./fullcalender.js')
+require('./calendar.js.erb')
+require('./logs.js')
+require('./clients.js')
+require('./client_additional_contacts.js')
+require('./client_contacts.js')
+require('./accounts.js')
+require('./dashboard.js')
+require('./invoice_line_items.js')
+require('./items.js')
+require('./activities.js')
+require('./notifications.js')
+require('../../../vendor/assets/javascripts/jqamp-ui-spinner.min.js')
+require('../../../vendor/assets/javascripts/jquery.qtip.min.js')
+require('../../../vendor/assets/javascripts/jwerty.js')
+require('./payments.js')
+require('./payment_terms.js')
+require('./reports.js')
+require('./taxes.js')
+require('../../../vendor/assets/javascripts/sonic.js')
+require('./progress_indicator.js')
+require('../../../vendor/assets/javascripts/jquery.tablehover.min.js')
+require('./tax_calculator.js')
+require('../../../vendor/assets/javascripts/jquery.formatCurrency-1.4.0.js')
+require('./table-listing.js')
+require('./credit-payment.js')
+require('./cc-validation.js')
+require('../../../vendor/assets/javascripts/jquery.customScrollbar.min.js')
+require('./users.js')
+require('./validate-forms.js')
+require('../../../vendor/assets/javascripts/jquery.ellipsis.js')
+require('./companies.js')
+require('./tasks.js')
+require('./staffs.js')
+import "<%= File.join(Gem.loaded_specs['tinymce-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'tinymce') %>"
+require('./recurring_profiles.js')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-switch')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.min.js')
+require('../../../vendor/assets/javascripts/js/bootstrap/bootstrap-checkbox.js')
+require('./email_templates.js')
+require('./settings.js')
+require('./date_formats.js')
+require('./timer')
+require('./invoice_card.js')
+require('./invoice.js')
+require('./invoice_calculator.js')
+require('./osb_plugins.js')
+require('./import.js')
+require('./sub_user.js')
+require('./filter_bar.js')
+require('./filter_box.js')
+import toastr from './toastr.min'
+import I18n from 'i18n-js'
+require('../../../vendor/assets/javascripts/select2.min')
+require('./search')
+require('./new_search.js')
+require('./popup.js')
+import "<%= File.join(Gem.loaded_specs['js_cookie_rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'js.cookie') %>"
+import rails from '@rails/ujs'
+window.I18n = I18n
+require('nouislider')
+import noUiSlider from "nouislider";
+require('../../../vendor/assets/javascripts/range-slider.js')
+require('./toastr.min.js')
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'moment') %>"
+//import "<%#= File.join(Gem.loaded_specs['fullcalendar-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'fullcalendar') %>"
+//require('./set_time_zone.js.erb')
+require('./jquery.infinite-pages.js')
+//import "<%#= File.join(Gem.loaded_specs['browser-timezone-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'browser_timezone_rails/set_time_zone') %>"
+//import "<%#= File.join(Gem.loaded_specs['i18n-js'].full_gem_path, 'app', 'assets', 'javascripts', 'i18n/translations') %>"
+require('../../../vendor/assets/javascripts/sweetalert.min')
+//import "<%#= File.join(Gem.loaded_specs['cocoon'].full_gem_path, 'app', 'assets', 'javascripts', 'cocoon') %>"
+//import "<%#= File.join(Gem.loaded_specs['nouislider-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'nouislider') %>"
+require("chartkick")
+require("chart.js")
+//import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'chartkick') %>"
+//import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'Chart.bundle') %>"
+//import "<%#= File.join(Gem.loaded_specs['jquery-infinite-pages'].full_gem_path, 'app', 'assets', 'javascripts', 'jquery.infinite-pages.js.coffee') %>"
+//import "<%#= File.join(Gem.loaded_specs['introjs-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'introjs') %>"
+//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.js') %>"
+//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.additional-methods') %>"
+<%# ['jquery.validate.js', 'jquery.validate.additional-methods.js'].each do |file| %>
+//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', file) %>";
+<%# end %>
+require('./jquery.validate.js')
+require('./jquery.validate.additional-methods.js')
+require('./validations.js')
+
+
+
+jQuery(function () {
+    $('#estimate_notes, #expense_note, #invoice_notes, #recurring_profile_notes, #log_notes').keypress(function(e) {
+        var tval = $('textarea').val(), tlength = tval.length, max = 400,
+            remain = parseInt(max - tlength);
+        $('.text-limit').text(remain + "  characters remaining" );
+    });
+
+    jQuery("#nav .select .sub li").find("a.active").parents("ul.sub").prev("a").addClass("active");
+
+//    jQuery("#nav ul.select > li").mouseenter(function () {
+//        jQuery(".sub").hide();
+//        jQuery(".sub", jQuery(this)).show();
+//    });
+
+    // Show sub menu on mouseover
+    jQuery('#nav .select li.dropdown .dropdown-toggle,#nav .dropdown-menu').mouseover(function () {
+        jQuery(this).parents('li.dropdown').find('.dropdown-menu').show();
+        jQuery(".sub").hide();
+        jQuery('#nav .dropup, #nav .dropdown').css('position', 'relative');
+    }).mouseout(function () {
+        jQuery(this).parents('li.dropdown').find('.dropdown-menu').hide();
+        jQuery('#nav .dropup, #nav .dropdown').css('position', 'static');
+    });
+    // Hide other open header menu on mouseover
+    jQuery('.primary_menu .dropdown').mouseover(function () {
+        jQuery(this).siblings().removeClass('open');
+    });
+
+    jQuery("#nav").on("mouseleave", function (event) {
+        if (event.pageY - $(window).scrollTop() <= 1) {
+            jQuery(".sub").hide();
+            jQuery("li a.active", jQuery(this)).next(".sub").show();
+        }
+        try {
+            var e = event.toElement || event.relatedTarget;
+            if (e.parentNode == jQuery(this).find('ul.select') || e == this)
+                return;
+            else {
+                jQuery(".sub").hide();
+                jQuery("li a.active", jQuery(this)).next(".sub").show();
+            }
+        }
+        catch (e) {
+        }
+    });
+
+    // toggle page effect by clicking on alpha tag
+    jQuery(".logo_tag").click(function () {
+        jQuery("#main-container").toggleClass("page-effect");
+    }).qtip();
+
+    (function ($) {
+        initCustomConfirmPopUp();
+        initLoginPageFormValidation();
+        initCurrencySelect();
+        $(window).on('load', function () {
+            $(".scrollContainer").mCustomScrollbar({
+                scrollInertia: 150,
+                advanced: {
+                    updateOnContentResize:true,
+                    autoScrollOnFocus: false
+                }
+            });
+        });
+        $('.sent,.partial,.draft,.draft-partial,.paid,.disputed,.viewed').qtip();
+        initPaginationSpanClick();
+    })(jQuery);
+
+    //jQuery(".revenue_by_client .grid_table table, .payments_collected .grid_table table").tableHover({colClass: 'col_hover', footCols: true, footRows: true, rowClass: 'row_hover'})
+    initDateRangePicker(DateFormats.format().toUpperCase());
+    initRangeSelector();
+});
+
+window.preventDeletedNavigation = function(){
+    var applyPopover;
+
+    applyPopover = function(elem, position, corner, message) {
+        elem.qtip({
+            content: {
+                text: message
+            },
+            show: {
+                event: false
+            },
+            hide: {
+                event: false
+            },
+            position: {
+                at: position
+            },
+            style: {
+                tip: {
+                    corner: corner
+                }
+            }
+        });
+        elem.qtip().show();
+        return elem.focus();
+    };
+
+    window.bind_deleted_entry = function(){
+        $("a.deleted_entry").unbind('click');
+        $("a.deleted_entry").click(function(e){
+            applyPopover(jQuery(this),"bottomMiddle","topLeft","Please Recover to View Details");
+            e.preventDefault();
+            return false;
+        });
+        $("a.deleted_entry").unbind('mouseleave');
+        $("a.deleted_entry").mouseleave(function(e){
+            $(this).qtip('hide');
+            return false;
+        });
+    }
+};
+window.preventDeletedNavigation();
+$(document).ready(function(){
+    display_flash_notice_or_alert_with_toastr();
+    bind_deleted_entry();
+
+    $('.date-picker').pickadate({
+        format: DateFormats.format()
+    });
+
+    $( ".btn-menu" ).click(function() {
+        if($('#overly-container').hasClass('overlay') == false) {
+            $('#overly-container').addClass('overlay');
+            $('body').addClass('disable-scroll');
+        }else if($('#overly-container').hasClass('overlay') == true) {
+            $('#overly-container').removeClass('overlay');
+            $('body').removeClass('disable-scroll');
+        }
+    });
+
+    initSelectActionLink();
+    initDemoLinksClick();
+    disable_right_click_for_browser();
+    disable_f12_key_in_browser();
+});
+
+function initCustomConfirmPopUp() {
+    // Removing rails default confirm popup
+    $.rails.confirm = function () { }
+
+    $("[data-confirm]").off("click");
+    $("[data-confirm]").on("click", function(e) {
+        e.preventDefault();
+        var link = this;
+
+        // Showing Custom Popup
+        swal({
+            title: $(link).data('confirm'),
+            text: $(link).data('text') ? $(link).data('text') : I18n.t('helpers.messages.not_be_recoverable'),
+            icon: 'warning',
+            buttons: [true, true],
+        }).then(function(confirmed) {
+
+            // If user confirm the action perform the action
+            if(confirmed) {
+                if($(link).data("method") === 'delete') {
+                    $.ajax({
+                        url: $(link).attr("href"),
+                        dataType: "JSON",
+                        method: "DELETE",
+                        success: function () {
+                            console.log('success')
+                            swal(I18n.t('helpers.links.delete'), $(link).data('success'), 'success').then(
+                                function (confirmed) {
+                                    if($(link).data('redirect')) {
+                                        window.location.href = $(link).data('redirect');
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                });
+                        },
+                        error: function (obj) {
+                            swal(I18n.t('helpers.links.delete'), obj.responseJSON.errors || I18n.t('helpers.messages.unable_to_delete'), 'error');
+                        }
+                    });
+                } else {
+                    window.location.href = $(link).attr("href");
+                }
+            }
+        });
+    });
+}
+
+function initLoginPageFormValidation() {
+    $('#user_login').submit(function () {
+        var flag = true;
+        var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        if($('#email').val() === '') {
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        } else if(!pattern.test($("#email").val())) {
+            hidePopover($('#email'));
+            applyPopover($("#email"), "bottomMiddle", "topLeft", I18n.t('views.companies.email_invalid'));
+            flag = false;
+        } else if ($('#password').val() === '') {
+            hidePopover($('#email'));
+            applyPopover($("#password"), "bottomMiddle", "topLeft", I18n.t("views.companies.field_requied"));
+            flag = false;
+        }
+        return flag;
+    });
+}
+
+function initCurrencySelect() {
+    $('.search_currency').keyup(function(){
+        var searchText = $(this).val().toLowerCase();
+        $('#dropdown_currency > li:not(.search-bar)').each(function(){
+            var currentLiText = $(this).text().toLowerCase(),
+                showCurrentLi = currentLiText.indexOf(searchText) === -1;
+            $(this).toggleClass('hide', showCurrentLi);
+        });
+    });
+    $('#dLabel').click(function(e){
+        $('#search_currency_bar').val('').keyup();
+        $('#search_currency_bar').focus();
+        $('#dropdown_currency').scrollTop(0);
+    });
+
+    var li = $('#dropdown_currency > li');
+    var liSelected;
+    $('.search_currency').on('keydown', function(e){
+        var selected;
+        if(e.which === 40){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                var next = liSelected.nextAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.eq(1).addClass('selected');
+                }
+            }else{
+                liSelected = li.eq(1).addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 38){
+            if(liSelected){
+                liSelected.removeClass('selected');
+                next = liSelected.prevAll('li').not('.hide').first();
+                if(next.length > 0){
+                    liSelected = next.addClass('selected');
+                }else{
+                    liSelected = li.last().addClass('selected');
+                }
+            }else{
+                liSelected = li.last().addClass('selected');
+            }
+            $('#dropdown_currency').scrollTop($(liSelected).position().top - $('#dropdown_currency li:first').position().top);
+        }else if(e.which === 13){
+            if(liSelected){
+                liSelected.click();
+            }
+        }
+    });
+}
+
+function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) {
+    swal({
+        title: title,
+        text: message,
+        icon: 'warning',
+        buttons: [true, true],
+    }).then(function(confirmed) {
+
+        // If user confirm the action perform the action
+        if(confirmed) {
+            confirmCallback();
+        } else {
+            if (cancelCallback) {
+                cancelCallback();
+            }
+        }
+    });
+
+}
+
+function initSelectActionLink(){
+    $("select").off();
+    $("select").on("change", function() {
+        var controller_name;
+        if (parseInt($(this).find(':selected').val()) == -1) {
+            $(this).val('');
+            controller_name = $(this).data('action-path');
+            var position = $(this).attr('id');
+            return $('#open_new_popup_link').attr('href', controller_name + "?type=add-new-popup&position="+position).click();
+        }
+    });
+}
+
+function disable_right_click_for_browser() {
+    $("body").on("contextmenu", function () {
+        return false;
+    });
+}
+
+function disable_f12_key_in_browser(){
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) {
+            return false;
+        }
+    }
+}
+
+function initDateRangePicker(format) {
+    var options = {
+        autoUpdateInput: false,
+        locale: {format: format}
+    };
+    $.each($('input[class="date-range"]'), function(index, element) {
+        $(element).daterangepicker(options, function(start, end) {
+            $('#' + $(element).attr('id') + '_start_date').val(start.format(format));
+            $('#' + $(element).attr('id') + '_end_date').val(end.format(format));
+        });
+
+        $(element).on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+        });
+
+        $(element).on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            picker.element.val('');
+            $('#' + $(element).attr('id') + '_start_date').val('');
+            $('#' + $(element).attr('id') + '_end_date').val('');
+        });
+    });
+}
+
+function initRangeSelector() {
+    $.each($('.range_selector'), function(index, element) {
+        var min = parseInt($(element).attr('min'));
+        var max = parseInt($(element).attr('max'));
+        var hiddenInputs = [
+            $('#' + $(element).attr('id') + '_min')[0],
+            $('#' + $(element).attr('id') + '_max')[0]
+        ];
+        var labels = [
+            $('#' + $(element).attr('id') + '_min_label')[0],
+            $('#' + $(element).attr('id') + '_max_label')[0]
+        ];
+        noUiSlider.create(element, {
+            start: [$(element).data('min') || min, $(element).data('max') || max],
+            connect: true,
+            step: 1,
+            orientation: 'horizontal',
+            range: {
+                'min': min,
+                'max': max
+            }
+        });
+        element.noUiSlider.on('update', function( values, handle ) {
+            hiddenInputs[handle].value = parseInt(values[handle]);
+            labels[handle].innerHTML = parseInt(values[handle]);
+        });
+
+    });
+}
+
+function resetRangeSelectors() {
+  $.each($('.range_selector'), function(index, element) {
+    element.noUiSlider.destroy();
+  });
+  initRangeSelector();
+}
+
+function resetDropdowns() {
+    $('#criteria_invoice_status').children("option:selected").val('');
+    $('#s2id_criteria_invoice_status > a > span.select2-chosen').html('All');
+    $('#criteria_client_id').children("option:selected").val('');
+    $('#s2id_criteria_client_id > a > span.select2-chosen').html('All');
+    $('#criteria_payment_method').children("option:selected").val('');
+    $('#s2id_criteria_payment_method > a > span.select2-chosen').html('All');
+    $('#client_id').children("option:selected").val('');
+    $('#s2id_client_id > a > span.select2-chosen').html('All');
+    $('#s2id_type > a > span.select2-chosen').html('');
+    $('#type').children("option:selected").val('');
+    $('#s2id_status > a > span.select2-chosen').html('Active');
+    $('#type').children("option:selected").val('');
+
+}
+
+window.initFilterEvents = function(ids){
+    $(document).ready( function (event) {
+        $('#toggle_filters').on('click', function (event) {
+            toggleFilters();
+        });
+        $('#filter_reset_btn').on('click', function(event) {
+            $('#filters select').val('');
+            $(ids).val('');
+            resetRangeSelectors();
+            Rails.fire(document.getElementById('filters_form'), 'submit');
+        });
+        $('#filter_submit_btn').on('click', function (event) {
+            Rails.fire(document.getElementById('filters_form'), 'submit');
+        })
+    });
+}
+
+function toggleFilters() {
+    if($('#toggle_filters').attr('title') == I18n.t('views.common.show_filters')){
+        $('#filters').slideDown('slow');
+        $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+    } else {
+        $('#filters').slideUp('slow');
+        $('#toggle_filters').attr('title', I18n.t('views.common.show_filters'));
+    }
+}
+
+function initDemoLinksClick() {
+    $('.demo-mode').off('click');
+    $('.demo-mode').on('click', function (event) {
+        swal({
+            title: 'Demo',
+            text: I18n.t('views.common.demo_restriction_msg'),
+            icon: 'info'
+        });
+    });
+}
+
+function display_flash_notice_or_alert_with_toastr(){
+
+    var success_flash, flash_alert;
+    var success_msg = $('#custom_flash_success').text().trim();
+    var error_msg = $('#custom_flash_alert').text().trim();
+
+    if(success_msg != ''){
+        success_flash = $('#custom_flash_success').text();
+    }
+    else if(success_msg == '' && error_msg == ''){
+        success_flash = $('#custom_flash_success').next('p').text();
+    }
+    else if(error_msg != ''){
+        flash_alert = $('#custom_flash_alert').text();
+    }
+    else{
+        flash_alert = $('#custom_flash_alert').next('p').text();
+    }
+
+    toastr.options = {
+        'containerId': 'toast-container',
+        'closeButton': true,
+        'debug': false,
+        'newestOnTop': false,
+        'progressBar': false,
+        'positionClass': "toast-top-center",
+        'preventDuplicates': false,
+        'onclick': null,
+        'showDuration': "300",
+        'hideDuration': "1000",
+        "timeOut": "5000",
+        'extendedTimeOut': "1000",
+        'showEasing': "swing",
+        'hideEasing': "linear",
+        'showMethod': "fadeIn",
+        'hideMethod': "fadeOut"
+    };
+    if (success_flash) {
+        toastr.success('', success_flash);
+    } else if(flash_alert) {
+        toastr.error('', flash_alert);
+    }
+}
+
+function initPaginationSpanClick() {
+    $('nav.pagination span').click(function (event) {
+        if( $(this).find('a').length > 0 ) {
+            window.location.href = $(this).find('a').attr('href');
+        }
+    });
+}
+function initDropDown() {
+    $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            hover: false, // Activate on hover
+            belowOrigin: true, // Displays dropdown below the button
+            alignment: 'right' // Displays dropdown with edge aligned to the left of button
+        }
+    );
+
+}
+$(document).ajaxStop(function(){
+    initDropDown();
+});
+(function($) {
+    initDropDown();
+})(jQuery); // End of jQuery name space

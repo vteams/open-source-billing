@@ -56,7 +56,7 @@
         <% if unread_notifications > 0 %>
           <span class="badge notification-badge"><%= unread_notifications %></span>
         <% end %>
-        <a class="dropdown-button" href="#!" data-activates="dropdown" id="notification-btn" data-beloworigin="true" style="padding-right: 0px; margin-right: 28px"><i class="material-icons intro dashboard-index-false-intro header-intro" data-intro='You can see all of your notifications here'>notifications_none</i></a>
+        <a class="dropdown-button" href="javascript:void(0)" data-activates="dropdown" id="notification-btn" data-beloworigin="true" style="padding-right: 0px; margin-right: 28px"><i class="material-icons intro dashboard-index-false-intro header-intro" data-intro='You can see all of your notifications here'>notifications_none</i></a>
         <%= link_to raw('<i class="material-icons">help_outline</i>'), help_index_path, class: 'help-search',
                     title: t('views.help.help'), remote: true %>
       </div>

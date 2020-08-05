@@ -50,12 +50,12 @@
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                 <% else %>
                   <%= edit_invoice_link(invoice) %>
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
+                  <a id="dLabel" class='dropdown-button' href='javascript:void(0)' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
                     <i class="material-icons">more_vert</i>
                   </a>
 
                   <!-- Dropdown Structure -->
-                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4'>
+                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4' style="width: 16px; position: absolute; top: 174px; left: 938.984px; opacity: 1; display: none;">
                     <% if !invoice.archived? %>
                       <li>
                         <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
@@ -123,4 +123,3 @@
     <%= link_to ' + New Invoice ', new_invoice_path %>
   </div>
 <% end %>
-

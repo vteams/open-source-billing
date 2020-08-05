@@ -120,7 +120,7 @@
         Estimate.changeTax();
         OsbPlugins.estimate_load_functions();
 
-        jQuery("#estimate_client_id").on('change', function(){
+        $("#estimate_client_id").on('change', function(){
             $.get(set_client_currency+'?client_id=' + $(this).val())
         })
         Validation.EstimateForm();

@@ -21,10 +21,12 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
 
   <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "toastr.min.js" %>
+  <%= javascript_pack_tag "application" %>
+  <%= javascript_include_tag "i18n" %>
+  <%= javascript_include_tag "translations", skip_pipeline: true %>
   <script>
       I18n.locale = "<%= I18n.locale %>";
   </script>

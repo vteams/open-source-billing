@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    jQuery(function () {
-        jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+    $(function () {
+        $(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
     });
 </script>
 <%= form_tag payments_enter_payment_path, id: "invoice_selection" do %>

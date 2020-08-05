@@ -4864,7 +4864,7 @@ html {
   padding: 20px; }
 
 .invoice-report .new-invoice-holder {
-  overflow: hidden; }
+  overflow: visible; }
 .invoice-report .new-invoice-holder .new-invoice-header {
   border-bottom: 1px solid #dfdede;
   padding: 11px 35px; }
@@ -6319,4 +6319,10 @@ li.collection-item a{
   }
 .action-buttons{
   margin-top: 16px;
+}
+.action-btn-group{
+  position: relative !important;
+}
+.search_result_container{
+  position: relative !important;
 }

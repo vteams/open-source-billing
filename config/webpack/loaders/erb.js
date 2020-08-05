@@ -5,11 +5,7 @@ module.exports = {
   use: [{
     loader: 'rails-erb-loader',
     options: {
-      runner: (/^win/.test(process.platform) ? 'ruby ' : '') + 'bin/rails runner',
-      env: {
-        ...process.env,
-        DISABLE_SPRING: 1
-      }
+      runner: (/^win/.test(process.platform) ? 'ruby ' : '') + 'bin/rails runner'
     }
   }]
 }
