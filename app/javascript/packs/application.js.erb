@@ -613,7 +613,7 @@ function initDropDown() {
     );
 
 }
-$(document).ajaxStop(function(){
+$(document).bind('ajax:complete', function(evt){
     initDropDown();
 });
 (function($) {
