@@ -155,8 +155,8 @@ $(document).ready(function(){
   mobileSideMenu();
 
   $(".filter-status").on('change', function(){
-      filterForm = $(this).parents("form")[0];
-      filterForm.dispatchEvent(new Event('submit', {bubbles: true}));
+      // form = document.querySelector('#filter-form');
+      Rails.fire(document.getElementById('filter-form'), 'submit');
     })
 });
 
@@ -170,6 +170,14 @@ function mobileSideMenu(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $(document)
+        .bind('ajax:before', function(evt){
+        $("#loading-indicator").removeClass('hidden'); // show on any Ajax event.
+
+        } )
+        .bind('ajax:complete', function(evt){
+        $("#loading-indicator").addClass('hidden'); // show on any Ajax event.
+
+        } )
         .ajaxStart(function() {
             $("#loading-indicator").removeClass('hidden'); // show on any Ajax event.
         })

@@ -91,7 +91,7 @@ require('./import.js')
 require('./sub_user.js')
 require('./filter_bar.js')
 require('./filter_box.js')
-import  toastr from './toastr.min'
+import toastr from './toastr.min'
 import I18n from 'i18n-js'
 require('../../../vendor/assets/javascripts/select2.min')
 require('./search')
@@ -100,7 +100,6 @@ require('./popup.js')
 import "<%= File.join(Gem.loaded_specs['js_cookie_rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'js.cookie') %>"
 import rails from '@rails/ujs'
 window.I18n = I18n
-//require("bootstrap/dist/js/bootstrap")
 require('nouislider')
 import noUiSlider from "nouislider";
 require('../../../vendor/assets/javascripts/range-slider.js')
@@ -507,10 +506,10 @@ window.initFilterEvents = function(ids){
             $('#filters select').val('');
             $(ids).val('');
             resetRangeSelectors();
-            $('#filters_form').submit();
+            Rails.fire(document.getElementById('filters_form'), 'submit');
         });
         $('#filter_submit_btn').on('click', function (event) {
-            $('#filters_form').submit();
+            Rails.fire(document.getElementById('filters_form'), 'submit');
         })
     });
 }

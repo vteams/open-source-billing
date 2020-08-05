@@ -154,7 +154,7 @@ class CompaniesController < ApplicationController
     session['current_company'] = params[:id]
     current_user.update_attributes(current_company: params[:id])
     company =  Company.find(params[:id])
-    render :text => company.company_name
+    render plain:  company.company_name
   end
 
   def settings_listing

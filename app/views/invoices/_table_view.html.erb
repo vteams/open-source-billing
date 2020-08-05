@@ -50,7 +50,7 @@
                   <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>"><i class="material-icons">unarchive</i></a>
                 <% else %>
                   <%= edit_invoice_link(invoice) %>
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= invoice.id %>' data-alignment="left" data-beloworigin="true">
+                  <a id="dLabel" class='dropdown-button' href='javascript:void(0)' data-activates='dropdown_<%= invoice.id %>' data-alignment="right" data-beloworigin="true">
                     <i class="material-icons">more_vert</i>
                   </a>
 

@@ -51,8 +51,8 @@
 
           <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
           <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
-          <label for="recurring intro invoices-new-false-intro" data-intro = 'Here you can set the recurring procedure for your invoice' data-step= '9'><h6><%= t('views.common.recurring') %></h6></label>
-          <div class="show-me" id="recurring_schedule_container">
+          <label for="recurring" class="intro invoices-new-false-intro" data-intro = 'Here you can set the recurring procedure for your invoice' data-step= '9'><h6><%= t('views.common.recurring') %></h6></label>
+          <div class="show-me hide_visibility" id="recurring_schedule_container">
             <%=  f.simple_fields_for :recurring_schedule do |rs| %>
               <div class="">
                 <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
@@ -183,7 +183,7 @@
           Validation.InvoiceForm();
 
           set_client_currency = "<%= set_client_currency_invoices_path %>"
-          jQuery("#invoice_client_id").on('change', function(){
+          $("#invoice_client_id").on('change', function(){
               $.get(set_client_currency+'?client_id=' + $(this).val())
           })
       });

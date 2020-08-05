@@ -67,6 +67,6 @@ class SettingsController < ApplicationController
     currency = Currency.find(params[:currency_id]) rescue Currency.default_currency
     Settings.default_currency = currency.unit
     flash[:notice] = t('views.settings.currency_updated_msg_html', unit: currency.unit)
-    render text: true if request.xhr?
+    render plain: 'OK' if request.xhr?
   end
 end

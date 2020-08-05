@@ -14,5 +14,3 @@ $(document).ready ->
 #        $(this).text('Loading next page...')
 #      error: ->
 #        $(this).button('There was an error, please try again')
-#user_name: sales@presstigers.com
-#password: Jph(T%yUG@$176FF
