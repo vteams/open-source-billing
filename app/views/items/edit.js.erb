@@ -5,3 +5,14 @@ elem = $("#item_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
 Validation.ItemForm();
+$('.select_deselect').on('click', function (){
+    if ($(this).html() == 'select all') {
+        $(this).html('deselect all')
+        $('.company_checkbox').prop('checked', true)
+    }
+    else if ($(this).html() == 'deselect all'){
+        $(this).html('select all')
+        $('.company_checkbox').prop('checked', false)
+
+    }
+})

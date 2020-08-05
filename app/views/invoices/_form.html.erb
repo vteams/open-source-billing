@@ -69,7 +69,7 @@
                 <div class="invoice-input-holder">
                   <%= rs.input :frequency, collection: Invoice_FREQUENCY.map{|key, val| [t('views.invoices.' + key.downcase), val]},
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
-                               input_html: { class: 'input-select' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
+                               input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                   <%= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
                                wrapper_html: { class: 'input-field' },
                                input_html: { class: 'recurring_occurrences', min: 0,
