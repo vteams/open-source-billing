@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
     params[:user]=current_user
     @status = params[:status]
     @items = Item.get_items(params.merge(get_args))#.sort_by!{ |e| e.item_name.downcase }
-    @items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
+    # @items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
     authorize Item
 
@@ -191,12 +191,12 @@ class ItemsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'item_name'
     #Item.column_names.include?(params[:sort]) ? params[:sort] : 'item_name'
   end
 
   def sort_direction
-    params[:direction] ||= 'desc'
+    params[:direction] ||= 'asc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 

@@ -100,7 +100,7 @@ class Item < ApplicationRecord
     # get the unique items associated with companies and accounts
 
     items = (account_items + company_items).uniq
-
+    items = items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
     # sort items in ascending or descending order
     items = items.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
@@ -119,7 +119,8 @@ class Item < ApplicationRecord
         a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
       end
     end if params[:sort_column] && params[:sort_direction]
-
+    items = items.sort_by!{ |item| item.item_name.downcase }
+    items = items.reverse if params[:direction].eql?('desc')
     Kaminari.paginate_array(items).page(params[:page]).per(params[:per])
 
   end
