@@ -525,7 +525,7 @@ function display_flash_notice_or_alert_with_toastr(){
     else if(success_msg == '' && error_msg == ''){
         success_flash = $('#custom_flash_success').next('p').text();
     }
-    else if(error_msg != ''){
+    else if(error_msg != '' && error_msg != 'You are already signed in.'){
         flash_alert = $('#custom_flash_alert').text();
     }
     else{
