@@ -230,12 +230,12 @@ class ClientsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'organization_name'
     sort_col = params[:sort]
   end
 
   def sort_direction
-    params[:direction] ||= 'desc'
+    params[:direction] ||= 'asc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 

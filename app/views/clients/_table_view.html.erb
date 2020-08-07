@@ -12,7 +12,7 @@
               </div>
             </div>
           </th>
-          <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('created_at', t('views.clients.organization')) %></th>
+          <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('organization_name', t('views.clients.organization')) %></th>
           <th class="align_center sorting header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', "#{t('views.clients.contact')}") %></th>
           <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email', t('views.common.email')) %></th>
           <th class="align_center header"><%= t('views.clients.invoiced') %></th>
