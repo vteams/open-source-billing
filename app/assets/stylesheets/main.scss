@@ -426,7 +426,7 @@ h6 {
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown li.disabled span {
   color: #909090; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown li span {
-  padding: 5px 10px;
+  padding: 10px 10px;
   color: #000;
   font-size: 14px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; }
@@ -6325,13 +6325,14 @@ li.collection-item a{
 }
 .company_name{
   float: left;
-  padding: 0px;
-  font-size: 22px;
-  color: #09b8e2
 }
 .company_select > input{
   text-align: left !important;
 }
 .invoice_recurring_schedule_frequency > .select2-container{
   width: 100% !important;
+}
+.company_name img{
+  height: 30px;
+  width: 40px;
 }

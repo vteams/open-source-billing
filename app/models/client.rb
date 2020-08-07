@@ -236,6 +236,8 @@ class Client < ActiveRecord::Base
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
+    clients = clients.sort_by!{ |client| client.organization_name.downcase }
+    clients = clients.reverse if params[:direction].eql?('desc')
 
     Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 

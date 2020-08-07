@@ -224,6 +224,9 @@ window.preventDeletedNavigation = function(){
 };
 window.preventDeletedNavigation();
 $(document).ready(function(){
+    $('.company_name').on('click', function (){
+        $('.company_select .select-dropdown:first').show().focus().click();
+    })
     display_flash_notice_or_alert_with_toastr();
     bind_deleted_entry();
 
