@@ -1,3 +1,4 @@
+
 OpenSourceBilling
 ===================
 
@@ -88,7 +89,12 @@ To clone project code from GitHub, give your GitHub account credential for authe
 #### 3.3 Installing Gems
 
     bundle install
-#### 3.4 Configuration PayPal (Optional, for paypal payments integration)
+
+#### 3.4 Installing Yarn
+
+    yarn install
+
+#### 3.5 Configuration PayPal (Optional, for paypal payments integration)
 Copy config/config.yml.copy to config/config.yml to set your configurations.
 
 Edit config/config.yml with your own paypal settings:
@@ -97,13 +103,13 @@ Edit config/config.yml with your own paypal settings:
       signature: YOUR_PAYPAL_SIGNATURE
       business: YOUR_PAYPAL_BUSINESS
 
-#### 3.5 Configuration Application host and protocol
+#### 3.6 Configuration Application host and protocol
 Edit config/config.yml with your own application settings:
 
     app_host: APP_HOST_HERE # e.g. osb.mydomain.com
     app_protocol: http
 
-#### 3.6 PDF configuration
+#### 3.7 PDF configuration
 Using following command in terminal to get path of wkhtmltopdf library path that is already installed on system.
 
     which wkhtmltopdf
@@ -111,11 +117,11 @@ Edit config/config.yml with your own application wkhtmltopdf path.
 
     wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
 
-#### 3.7 SMTP configuration
+#### 3.8 SMTP configuration
 To make smtp_settings, go to settings, open a company edit form by clicking on a company and provide your smtp details in Mail Config section.
 
 
-#### 3.8 QuickBooks configuration
+#### 3.9 QuickBooks configuration
 Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
 
      quickbooks:
@@ -123,7 +129,7 @@ Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oaut
        consumer_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
        consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET
 
-#### 3.9 Secret key configuration
+#### 3.10 Secret key configuration
 
 Run following command on terminal to generate secret key
 
@@ -133,12 +139,12 @@ copy this (newly generated) secret key from terminal and past it to the value of
 
      encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
-#### 3.10 Configuring Database
+#### 3.11 Configuring Database
 Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
 
     rails db:create
 
-#### 3.11 Tables schema and seeding
+#### 3.12 Tables schema and seeding
 
     rails db:migrate
 
@@ -162,6 +168,16 @@ and use your application in browser by typing in url: localhost:3000
 #### 4.2 Production Environment
 
 You can also configure Apache, Nginx or any other web/application server of your choice to execute OSB in production mode.
+
+Login credentials
+------------
+
+Once you successfully configured OSB, you can use the below credentials to login.
+
+    Email: admin@opensourcebilling.org
+    password: opensourcebilling
+   
+You can immediately change the credentials once you successfully logged in.    
 
 Customer Portal
 ------------
