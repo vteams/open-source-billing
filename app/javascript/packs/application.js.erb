@@ -111,19 +111,10 @@ require('./jquery.infinite-pages.js')
 //import "<%#= File.join(Gem.loaded_specs['browser-timezone-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'browser_timezone_rails/set_time_zone') %>"
 //import "<%#= File.join(Gem.loaded_specs['i18n-js'].full_gem_path, 'app', 'assets', 'javascripts', 'i18n/translations') %>"
 require('../../../vendor/assets/javascripts/sweetalert.min')
-//import "<%#= File.join(Gem.loaded_specs['cocoon'].full_gem_path, 'app', 'assets', 'javascripts', 'cocoon') %>"
+require('./cocoon.js')
 //import "<%#= File.join(Gem.loaded_specs['nouislider-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'nouislider') %>"
 require("chartkick")
 require("chart.js")
-//import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'chartkick') %>"
-//import "<%#= File.join(Gem.loaded_specs['chartkick'].full_gem_path, 'vendor', 'assets', 'javascripts', 'Chart.bundle') %>"
-//import "<%#= File.join(Gem.loaded_specs['jquery-infinite-pages'].full_gem_path, 'app', 'assets', 'javascripts', 'jquery.infinite-pages.js.coffee') %>"
-//import "<%#= File.join(Gem.loaded_specs['introjs-rails'].full_gem_path, 'app', 'assets', 'javascripts', 'introjs') %>"
-//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.js') %>"
-//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', 'jquery.validate.additional-methods') %>"
-<%# ['jquery.validate.js', 'jquery.validate.additional-methods.js'].each do |file| %>
-//import "<%#= File.join(Gem.loaded_specs['jquery-validation-rails'].full_gem_path, 'vendor', 'assets', 'javascripts', file) %>";
-<%# end %>
 require('./jquery.validate.js')
 require('./jquery.validate.additional-methods.js')
 require('./validations.js')
@@ -412,7 +403,7 @@ function showWarningSweetAlert(title, message, confirmCallback, cancelCallback) 
 
 }
 
-function initSelectActionLink(){
+window.initSelectActionLink = function(){
     $("select").off();
     $("select").on("change", function() {
         var controller_name;

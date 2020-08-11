@@ -34,42 +34,42 @@ class window.Invoice
             clearLineTotal elem
             false
           else
-          $.ajax load_item,
-            type: 'POST'
-            data: 'id=' + $(this).val()
-            dataType: 'html'
-            error: (jqXHR, textStatus, errorThrown) ->
-              alert 'Error: ' + textStatus
-            success: (data, textStatus, jqXHR) ->
-              item = JSON.parse(data)
-              container = elem.parents('tr.fields')
-              container.find('input.description').val item[0]
-              container.find('td.description').html item[0]
-              container.find('input.cost').val item[1].toFixed(2)
-              container.find('td.cost').html item[1].toFixed(2)
-              container.find('input.qty').val item[2]
-              container.find('td.qty').html item[2]
-              #                OsbPlugins.empty_tax_fields(container)
-              if item[3] != 0
-                container.find('select.tax1').val(item[3]).trigger('contentChanged');
-                $('#s2id_invoice_invoice_line_items_attributes_0_tax_1 > a > span.select2-chosen').html(item[6]);
-                container.find('input.tax-amount').val item[8]
-                container.find('td.tax1').html item[6]
-                $('select.tax1').material_select('destroy')
-              if item[4] != 0
-                container.find('select.tax2').val(item[4]).trigger('contentChanged');
-                $('#s2id_invoice_invoice_line_items_attributes_0_tax_2 > a > span.select2-chosen').html(item[7]);
-                container.find('input.tax-amount').val item[9]
-                container.find('td.tax2').html item[7]
-                $('select.tax2').material_select('destroy')
-              container.find('input.item_name').val item[5]
+            $.ajax load_item,
+              type: 'POST'
+              data: 'id=' + $(this).val()
+              dataType: 'html'
+              error: (jqXHR, textStatus, errorThrown) ->
+                alert 'Error: ' + textStatus
+              success: (data, textStatus, jqXHR) ->
+                item = JSON.parse(data)
+                container = elem.parents('tr.fields')
+                container.find('input.description').val item[0]
+                container.find('td.description').html item[0]
+                container.find('input.cost').val item[1].toFixed(2)
+                container.find('td.cost').html item[1].toFixed(2)
+                container.find('input.qty').val item[2]
+                container.find('td.qty').html item[2]
+                #                OsbPlugins.empty_tax_fields(container)
+                if item[3] != 0
+                  container.find('select.tax1').val(item[3]).trigger('contentChanged');
+                  $('#s2id_invoice_invoice_line_items_attributes_0_tax_1 > a > span.select2-chosen').html(item[6]);
+                  container.find('input.tax-amount').val item[8]
+                  container.find('td.tax1').html item[6]
+                  $('select.tax1').material_select('destroy')
+                if item[4] != 0
+                  container.find('select.tax2').val(item[4]).trigger('contentChanged');
+                  $('#s2id_invoice_invoice_line_items_attributes_0_tax_2 > a > span.select2-chosen').html(item[7]);
+                  container.find('input.tax-amount').val item[9]
+                  container.find('td.tax2').html item[7]
+                  $('select.tax2').material_select('destroy')
+                container.find('input.item_name').val item[5]
 
-              InvoiceCalculator.updateLineTotal(elem)
-              InvoiceCalculator.updateInvoiceTotal()
+                InvoiceCalculator.updateLineTotal(elem)
+                InvoiceCalculator.updateInvoiceTotal()
 
-              $("#add_line_item").click ->
-#              $('.invoice-client-select').material_select('destroy');
-#                $('.select_2').select2();
+                $("#add_line_item").click ->
+  #              $('.invoice-client-select').material_select('destroy');
+  #                $('.select_2').select2();
 
 
 

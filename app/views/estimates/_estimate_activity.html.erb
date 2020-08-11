@@ -69,7 +69,7 @@
     </div>
     <% if action_name.eql?('index') %>
       <div class="status-info actionState">
-        <%= form_tag '', method: :get, remote: true do %>
+        <%= form_tag '', method: :get, remote: true, id: 'filter-form' do %>
           <div class="ui list">
             <% Estimate::STATUS_DESCRIPTION.each do |status, description|%>
               <div class="item">
