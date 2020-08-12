@@ -183,6 +183,7 @@
           Validation.InvoiceForm();
 
           set_client_currency = "<%= set_client_currency_invoices_path %>"
+          new_client_form = "<%= new_client_path %>"
           $("#invoice_client_id").on('change', function(){
               $.get(set_client_currency+'?client_id=' + $(this).val())
           })

@@ -39,7 +39,7 @@ class window.OsbPlugins
 
   @updateMaterializeSelect = ->
     $('select').on 'contentChanged', ->
-      $(this).material_select()
+#      $(this).material_select()
 
   @removeQtipOnModalClose = ->
     $('.modal').modal complete: ->
