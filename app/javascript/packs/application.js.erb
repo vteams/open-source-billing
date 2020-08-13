@@ -515,6 +515,7 @@ window.initFilterEvents = function(ids){
         $('#filter_reset_btn').on('click', function(event) {
             $('#filters select').val('');
             $(ids).val('');
+            resetDropdowns();
             resetRangeSelectors();
             Rails.fire(document.getElementById('filters_form'), 'submit');
         });
@@ -588,6 +589,27 @@ function display_flash_notice_or_alert_with_toastr(){
         toastr.error('', flash_alert);
     }
 }
+
+window.resetDropdowns = function () {
+    $('#criteria_invoice_status').children("option:selected").val('');
+    $('#s2id_criteria_invoice_status > a > span.select2-chosen').html('All');
+    $('#criteria_client_id').children("option:selected").val('');
+    $('#s2id_criteria_client_id > a > span.select2-chosen').html('All');
+    $('#criteria_payment_method').children("option:selected").val('');
+    $('#s2id_criteria_payment_method > a > span.select2-chosen').html('All');
+    $('#tax_1').children("option:selected").val('');
+    $('#s2id_tax_1 > a > span.select2-chosen').html('');
+    $('#item_name').children("option:selected").val('');
+    $('#s2id_item_name > a > span.select2-chosen').html('');
+    $('#client_id').children("option:selected").val('');
+    $('#s2id_client_id > a > span.select2-chosen').html('');
+    $('#type').children("option:selected").val('');
+    $('#s2id_type > a > span.select2-chosen').html('');
+    $('#status').children("option:selected").val('');
+    $('#s2id_status > a > span.select2-chosen').html('');
+
+}
+
 
 function initPaginationSpanClick() {
     $('nav.pagination span').click(function (event) {

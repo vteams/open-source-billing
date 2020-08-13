@@ -5,7 +5,9 @@
   <%= client.full_name %>
 </div>
 <div>
-  <%= [client.address_street1, client.address_street2, client.city, "#{client.state} #{client.zipcode}", client.country].reject(&:blank?).join(', ') %><br>
-  Tel: <%= [client.mobile_number, client.business_phone].reject(&:blank?).join(', ') %><br>
-  <%= client.vat_number %>
+  <% if client.present? %>
+    <%= [client.address_street1, client.address_street2, client.city, "#{client.state} #{client.zipcode}", client.country].reject(&:blank?).join(', ') %><br>
+    Tel: <%= [client.mobile_number, client.business_phone].reject(&:blank?).join(', ') %><br>
+    <%= client.vat_number %>
+  <% end %>
 </div>
