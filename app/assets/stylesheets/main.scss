@@ -361,7 +361,9 @@ h6 {
   padding-right: 10px; }
 #header .header-center {
   max-width: 430px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  text-align: center;
+}
 .header-center .login-info-hdr{
   width: 100%;
   padding: 10px 0 0 0 !important;
@@ -384,8 +386,11 @@ h6 {
   padding: 3px 0 0 0;
   display: inline-block; }
 #header .header-center .hdr-select-holder .select-wrapper {
-  float: left;
-  margin-right: 10px; }
+  float: none;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
 #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
   position: relative;
   margin-bottom: 0;
@@ -397,7 +402,7 @@ h6 {
   line-height: 36px;
   font-weight: 400; }
 .select-wrapper input.select-dropdown{
-  width: 95%;
+  width: 100px;
 }
 #date_range_picker{
   height: 3rem;
@@ -420,7 +425,8 @@ h6 {
   -moz-box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
   min-width: 161px;
   top: 47px !important;
-  overflow: visible; }
+  //overflow: visible;
+}
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown li.disabled {
   padding-top: 10px; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown li.disabled span {
@@ -451,17 +457,19 @@ h6 {
 #header .header-center .hdr-select-holder .select-wrapper span.caret {
   display: none; }
 #header .header-center .hdr-select-holder .select-wrapper.currency {
-  float: left;
+  float: none;
   padding: 0;
-  left: -18px;
-  width: 66px;
+  // left: 0;
+  width: auto;
   height: auto;
   line-height: 1;
   border: 1px solid #dfdede;
   border-radius: 20px;
   color: #909090;
   margin: 8px 0 0;
-  left: -16px; }
+/// right: 0; /
+  display: inline-block;
+}
 #header .header-center .hdr-select-holder .select-wrapper.currency input.select-dropdown {
   text-align: center;
   display: inline-block;
@@ -6324,7 +6332,9 @@ li.collection-item a{
   text-align: right;
 }
 .company_name{
-  float: left;
+  float: none;
+  margin-right: 10px;
+  display: inline-block;
 }
 .company_select > input{
   text-align: left !important;
