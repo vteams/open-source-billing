@@ -35,6 +35,7 @@ class Client < ActiveRecord::Base
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :created_at, -> (created_at) { where(created_at: created_at) }
+  scope :client_id, -> (client_id) { where(id: client_id) }
 
   # associations
   has_many :estimates
@@ -214,6 +215,7 @@ class Client < ActiveRecord::Base
     company_clients = company_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
+    company_clients = company_clients.client_id(params[:client_id]) if params[:client_id].present?
 
     # get the account
     account = params[:user].current_account
@@ -226,6 +228,7 @@ class Client < ActiveRecord::Base
     account_clients = account_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
+    account_clients = account_clients.client_id(params[:client_id]) if params[:client_id].present?
 
     # get the unique clients associated with companies and accounts
     clients = ( account_clients + company_clients).uniq

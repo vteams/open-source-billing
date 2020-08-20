@@ -27,6 +27,7 @@ class Tax < ActiveRecord::Base
   scope :delete_multiple, lambda {|ids| multiple(ids).map(&:destroy)}
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :percentage, -> (percentage) { where(percentage: percentage) }
+  scope :tax_name, -> (tax_id) { where(id: tax_id) }
 
   # associations
   has_many :invoice_line_items
@@ -62,6 +63,7 @@ class Tax < ActiveRecord::Base
     ) if params[:create_at_start_date].present?
     taxes = taxes.percentage((params[:min_percentage].to_i .. params[:max_percentage].to_i)) if params[:min_percentage].present?
     taxes = taxes.send(mappings[params[:status].to_sym]) if params[:status].present?
+    taxes = taxes.tax_name(params[:tax_id]) if params[:tax_id].present?
 
     taxes.page(params[:page]).per(per_page)
   end
