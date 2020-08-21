@@ -424,9 +424,10 @@ h6 {
   box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
   -webkit-box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
   -moz-box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
-  min-width: 200px;
+  min-width: 220px;
   max-width: 350px;
   top: 47px !important;
+  left: 0px !important;
   //overflow: visible;
 }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown li.disabled {
@@ -6362,6 +6363,9 @@ li.collection-item a{
   height: 30px;
   width: 40px;
 }
+#header .hdr-select-holder .company_select .select-dropdown li img {
+  margin: 0 15px 5px;
+}
 .select-wrapper .dropdown-button input.select-dropdown {
   width: 55px;
 }
@@ -6385,7 +6389,11 @@ li.collection-item a{
 .item-container.clientsModal{
   width: 98%;
 }
-.item-container .info-section{
+.item-container .info-section {
   padding: 20px 30px;
   border-bottom: 1px solid #dfdede;
+}
+  #header .hdr-select-holder .currency-flag {
+  position: relative;
+  top: -8px;
 }
