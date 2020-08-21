@@ -387,7 +387,7 @@ h6 {
   display: inline-block; }
 #header .header-center .hdr-select-holder .select-wrapper {
   float: none;
-  margin-right: 10px;
+  margin-right: 40px !important;
   display: inline-block;
   vertical-align: top;
 }
@@ -464,7 +464,7 @@ h6 {
   width: auto;
   height: auto;
   line-height: 1;
-  border: 1px solid #dfdede;
+  //border: 1px solid #dfdede;
   border-radius: 20px;
   color: #909090;
   margin: 8px 0 0;
@@ -474,8 +474,8 @@ h6 {
 #header .header-center .hdr-select-holder .select-wrapper.currency input.select-dropdown {
   text-align: center;
   display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 19px !important;
+  //font-weight: 500;
   height: 22px;
   line-height: 21px;
   padding-top: 0; }
