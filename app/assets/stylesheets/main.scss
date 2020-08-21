@@ -423,7 +423,8 @@ h6 {
   box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
   -webkit-box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
   -moz-box-shadow: 0 4px 25px rgba(8, 8, 8, 0.2);
-  min-width: 161px;
+  min-width: 200px;
+  max-width: 350px;
   top: 47px !important;
   //overflow: visible;
 }
@@ -521,8 +522,10 @@ h6 {
   #header .btn-menu {
     margin-left: 10px; }
   #header .header-center .hdr-select-holder .select-wrapper input.select-dropdown {
-    margin-left: 15px;
-    text-align: left; }
+    min-width: 60px;
+    text-align: center;
+    width: auto;
+  }
   #header .header-center .hdr-select-holder .currency input.select-dropdown {
     margin-left: 0; } }
 @media only screen and (max-width: 480px) {
@@ -6345,4 +6348,7 @@ li.collection-item a{
 .company_name img{
   height: 30px;
   width: 40px;
+}
+.select-wrapper .dropdown-button input.select-dropdown {
+  width: 55px;
 }
