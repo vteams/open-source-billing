@@ -6366,3 +6366,27 @@ li.collection-item a{
   position: relative;
   top: -8px;
 }
+.item-row .field-block span{
+  display: block;
+  line-height: 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #dadada;
+  padding-bottom: 8px;
+}
+.item-container{
+  margin: 11px;
+}
+.item-modal-header{
+  //margin: 20px;
+  border-bottom: 1px solid #dfdede;
+}
+.item-modal-header h5{
+  margin: 10px;
+}
+.item-container.clientsModal{
+  width: 98%;
+}
+.item-container .info-section{
+  padding: 20px 30px;
+  border-bottom: 1px solid #dfdede;
+}

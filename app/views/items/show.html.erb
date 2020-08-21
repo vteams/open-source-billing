@@ -1,45 +1,32 @@
-<p id="notice"><%= notice %></p>
+<%= render partial: 'item_activity' %>
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel intro items-index-false-intro" data-intro='All of your active items will be listed here' data-step="1">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.items.items'), items_path %></span>
+          <a class="active"><%= "/ #{t('views.common.' + status_text)}" %></a>
+        </h3>
+      </div>
+    </div>
+  </div>
 
-<p>
-  <b><%= t('views.items.item_name') %>:</b>
-  <%= @item.item_name %>
-</p>
+<div class="show_invoice">
 
-<p>
-  <b><%= t('views.items.description') %>:</b>
-  <%= @item.item_description %>
-</p>
+  <%# render('control_links') if request.format.html? %>
 
-<p>
-  <b><%= t('views.invoice_line_item.unit_cost') %>:</b>
-  <%= @item.unit_cost %>
-</p>
+  <div class="content_middle">
 
-<p>
-  <b><%= t('views.items.quantity') %>:</b>
-  <%= @item.quantity %>
-</p>
+    <%= render :partial => "show_item" %>
+  </div>
+  <div style="margin-top: 10px" class="right">
+    <%= link_to ' + New Invoice ', new_invoice_path %> |
+    <%= link_to ' + New Item ', new_item_path, remote: true %> |
+    <%= link_to ' Edit Item ', edit_item_path(@item), remote: true %>
+  </div>
 
-<p>
-  <b><%= t('views.items.tax') %> 1:</b>
-  <%= @item.tax_1 %>
-</p>
+  <!--content_middle-->
 
-<p>
-  <b><%= t('views.items.tax') %> 2:</b>
-  <%= @item.tax_2 %>
-</p>
-
-<!--<p>-->
-<!--<b>Track invetory:</b>-->
-<!--<%#= @item.track_invetory %>-->
-<!--</p>-->
-
-<!--<p>-->
-<!--<b>Inventory:</b>-->
-<!--<%#= @item.inventory %>-->
-<!--</p>-->
-
-
-<%= link_to t('helpers.links.edit'), edit_item_path(@item) %> |
-<%= link_to t('views.common.back'), items_path %>
+</div><!--show_invoice-->
+</div>
