@@ -52,9 +52,12 @@ class ClientsController < ApplicationController
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
+    params[:status] = params[:status] || 'active'
+    @status = params[:status]
     authorize @client
     @invoices = @client.invoices.last(5)
     @payments = Payment.payments_history(@client).last(5)
+    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -111,7 +114,7 @@ class ClientsController < ApplicationController
       if @client.save
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
-        format.html { redirect_to(clients_path, :notice => new_client(@client.id)) }
+        format.html { redirect_to(client_path(@client), :notice => new_client(@client.id)) }
       else
         format.html { redirect_to clients_path, alert: @client.errors.full_messages.join('<br>')  }
         format.json { render :json => @client.errors, :status => :unprocessable_entity }
@@ -137,7 +140,7 @@ class ClientsController < ApplicationController
       if @client.update_attributes(client_params)
         format.html { redirect_to @client, :notice => t('views.clients.updated_msg') }
         format.json { head :no_content }
-        redirect_to(clients_path, :notice => t('views.clients.updated_msg'))
+        redirect_to(client_path(@client), :notice => t('views.clients.updated_msg'))
         return
       else
         format.html { render :action => "edit" }

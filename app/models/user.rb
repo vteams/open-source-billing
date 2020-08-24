@@ -95,7 +95,7 @@ class User < ApplicationRecord
                              new_client: false, item: false, new_item: false, tax: false, new_tax: false,
                              report: false, setting: false, invoice_table: false, estimate_table: false,
                              payment_table: false, client_table: false, item_table: false, tax_table: false)
-    Settings.default_currency = 'USD'
+    Settings.default_currency = 'PKR'
     Settings.invoice_number_format = "{{invoice_number}}"
   end
 

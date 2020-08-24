@@ -57,6 +57,9 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
+    params[:status] = params[:status] || 'active'
+    @status = params[:status]
+    @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
     authorize @item
 
     respond_to do |format|
@@ -107,7 +110,7 @@ class ItemsController < ApplicationController
       if @item.save
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
-        format.html { redirect_to items_path,  notice: new_item(@item.id) }
+        format.html { redirect_to item_path(@item),  notice: new_item(@item.id) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
@@ -128,7 +131,7 @@ class ItemsController < ApplicationController
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
-        format.html { redirect_to(items_path, :notice => t('views.items.item_updated')) }
+        format.html { redirect_to(item_path(@item), :notice => t('views.items.item_updated')) }
         format.json { head :no_content }
       else
         format.html { render :action => "edit" }

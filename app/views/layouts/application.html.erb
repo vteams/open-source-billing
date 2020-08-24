@@ -43,7 +43,7 @@
             <div id='overly-container'>
               </div>
             <!--- side vertical menu --->
-            <%= render 'layouts/side_nav' unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates')) )%>
+            <%= render 'layouts/side_nav' unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates') ) )%>
             <%= render 'layouts/flash_messages'%>
 
             <%= yield %>

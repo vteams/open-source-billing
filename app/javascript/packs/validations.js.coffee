@@ -1,7 +1,7 @@
 class window.Validation
 
   @UserSettingForm = ->
-    $('#user_side_form').validate
+    $('#sub_user_form').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->
@@ -26,7 +26,7 @@ class window.Validation
 
 
   @CompanySettingForm = ->
-    $('#company_side_form').validate
+    $('#companyForm').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->

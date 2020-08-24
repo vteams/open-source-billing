@@ -20,6 +20,7 @@
           </select>
           <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and Settings.currency.present? and Settings.currency.eql?("On") %>
+            <div class="currency-flag currency-flag-<%= Settings.default_currency.downcase %>"></div>
             <div class="select-wrapper currency currency_select initialized">
               <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"
                  title="<%= t('views.settings.default_currency') %>">
