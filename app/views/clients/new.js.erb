@@ -49,14 +49,4 @@ $('.client_select_2').select2({});
 $(".select").trigger('contentChanged');
 $('#client_organization_name').attr('value', '')
 Validation.ClientForm();
-$('.select_deselect').on('click', function (){
-    if ($(this).html() == 'select all') {
-        $(this).html('deselect all')
-        $('.company_checkbox').prop('checked', true)
-    }
-    else if ($(this).html() == 'deselect all'){
-    $(this).html('select all')
-    $('.company_checkbox').prop('checked', false)
-
-    }
-})
+Item.check_uncheck_all_companies();

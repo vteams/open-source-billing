@@ -1767,7 +1767,7 @@ h6 {
 #users .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
   left: 0px!important;
 }
-#companies .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
+#companies .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before, .select-deselect [type="checkbox"].filled-in:checked + label:before{
   left: 0px!important;
 }
 

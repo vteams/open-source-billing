@@ -636,7 +636,7 @@ en:
       must_be_numeric: "Must be numeric"
       must_be_greater_than_zero: "Must be greater than zero"
       same_tax_applied: "Same tax not applied on one item"
-      select_atleast_one_company: "Select at least one company for the task"
+      select_atleast_one_company: "Select at least one company for the item"
       must_be_greater_or_equal_to_zero: "Quantity should not be negative value"
       quantity_required: "Item quantity is required"
       all_taxes: "All Taxes"

@@ -135,13 +135,16 @@ module ApplicationHelper
                     <label for='account_association'>#{t('views.common.all_companies')}</label>
                 </div>
 
-                <div class="col s12 m3" style="margin-bottom: 20px;">
+                <div class="col s12 m4" style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                     <label for='company_association'>#{t('views.common.selected_companies_only')}</label>
                 </div>
+                 
 
-                <div class="col s12 m6 select-deselect" style="margin-bottom: 20px;">
-                  #{link_to 'select all', 'javascript:void(0)', class: 'select_deselect'}
+                <div class="col s12 m5 select-deselect checkbox-item invoice_checkbox" style="margin-bottom: 20px;">
+                  #{check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'select_all_companies'}
+                   <label for="select_all_companies">Select all</label> 
+
                 </div>
               </div>
               #{list}
