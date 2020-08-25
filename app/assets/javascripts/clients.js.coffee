@@ -9,11 +9,13 @@ class @Client
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
         $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', true)
 
     jQuery('#company_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',false)
         $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', false)
 
     $('.modal').modal complete: ->
       $('.qtip').remove()

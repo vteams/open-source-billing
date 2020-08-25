@@ -486,6 +486,7 @@ h6 {
   max-height: 300px;
   min-width: 250px;
   max-width: 300px;
+  padding-top: 41px !important;
   top: 41px !important;
   overflow-y: auto;
   left: -94px !important;
@@ -6363,8 +6364,8 @@ li.collection-item a{
   position: initial !important;
 }
 #header .hdr-select-holder .currency-flag {
-  position: relative;
-  top: -4px;
+  //position: relative;
+  //top: -4px;
 }
 .item-row .field-block span{
   display: block;
@@ -6389,4 +6390,7 @@ li.collection-item a{
 .item-container .info-section{
   padding: 20px 30px;
   border-bottom: 1px solid #dfdede;
+}
+[type="checkbox"].filled-in:disabled:not(:checked) + label:after{
+  border-color: #b1b1b1;
 }
