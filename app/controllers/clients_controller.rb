@@ -125,6 +125,7 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
+    binding.pry
     @client = Client.find(params[:id])
     authorize @client
     associate_entity(params, @client)

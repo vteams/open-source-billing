@@ -30,3 +30,7 @@ end
 every :day, at: '1:15am' do
   rake "rucurring_invoice:generate"
 end
+
+every :day, at: '12:00am' do
+  rake "refresh_demo:refresh_demo_db"
+end
