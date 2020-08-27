@@ -5758,6 +5758,9 @@ table.table_listing, table.report-data-table {
 .permission-list li{
   display: inline-block;
 }
+.permission-list li:first-child{
+  width: 5%;
+}
 .permission-list .permission-list-checkboxes {
   width: 75%;
   float: right;
@@ -6398,5 +6401,35 @@ li.collection-item a{
   left: 0px !important;
 }
 [type="checkbox"].apply_credit:checked + label:before{
+  left: 0px !important;
+}
+.Settings_permissions li .role_permissions_can_create{
+  display: none;
+}
+.Settings_permissions li .role_permissions_can_update{
+  display: none;
+}
+.Settings_permissions li .role_permissions_can_delete{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_create{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_update{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_delete{
+  display: none;
+}
+.role-checkbox{
+  display: block;
+  text-align: right;
+  position: relative;
+  top: -21px;
+}
+.role-checkbox [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.permission-list li [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;
 }
