@@ -15,9 +15,13 @@
     delete_user = "<%= destroy_bulk_sub_users_path  %>"
     delete_company = "<%= destroy_bulk_companies_path  %>"
     delete_role = "<%= destroy_bulk_roles_path  %>"
+    delete_payment_term = "<%= destroy_bulk_payment_terms_path  %>"
+    delete_recurring_frequency = "<%= destroy_bulk_recurring_frequencies_path  %>"
     initUserListingEvents();
     initCompanyListingEvents();
     initRoleListingEvents();
+    initTermsListingEvents();
+    initRecurringFrequencyListingEvents();
     Validation.UserSettingForm();
     Validation.CompanySettingForm();
     Validation.RoleSettingForm();

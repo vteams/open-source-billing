@@ -731,11 +731,17 @@ en:
 
 
     payment_terms:
+      payment_terms: "Payment Terms"
       number_of_days: "Number of days"
       editing: "Editing payment terms"
       new: "New payment term"
       add_new_payment_term: 'Add New Payment Term'
       description: 'Description'
+      deleted_msg: "payment Term has been deleted successfully."
+
+    recurring_frequencies:
+      recurring_frequencies: "Recurring Frequencies"
+      deleted_msg: "Recurring Frequency has been deleted successfully."
 
     reports:
       reports: "Reports"

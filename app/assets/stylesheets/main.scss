@@ -6394,3 +6394,9 @@ li.collection-item a{
 [type="checkbox"].filled-in:disabled:not(:checked) + label:after{
   border-color: #b1b1b1;
 }
+.payment_send_payment_notification [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+[type="checkbox"].apply_credit:checked + label:before{
+  left: 0px !important;
+}
