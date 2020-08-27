@@ -16,13 +16,13 @@ class @Validation
         password: required: true
         password_confirmation:
           required: true
-          equalTo: '#side_form_password'
+
       messages:
         user_name: required: 'Full Name is required'
         email:  required: 'Email is required'
         role_id: required: 'Role is required'
         password: required: 'Password is required'
-        password_confirmation: required: 'Password confirmation is required', equalTo: 'must be equal to above password'
+        password_confirmation: required: 'Password confirmation is required'
 
 
   @CompanySettingForm = ->

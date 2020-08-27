@@ -27,6 +27,14 @@
                         wrapper_html: { class: 'input-field col s12 editMode user-role' } %>
             <%= f.input :notify_user, label: t('views.users.notify_user'), wrapper_html: { class: 'input-field col s6 checkbox'}, input_html: {class: 'filled-in', name: 'notify_user'}, as: :boolean, boolean_style: :inline %>
           </div>
+          <div class="row company-row">
+            <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
+          </div>
+          <%= f.collection_radio_buttons :have_all_companies_access, [[true, 'All Companies'] ,[false, 'Only Selected Companies']], :first, :last %>
+          <div class="company-selection">
+            <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list' %>
+          </div>
+
         </div>
       <% end %>
     </div>
