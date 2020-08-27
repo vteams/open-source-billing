@@ -1,5 +1,5 @@
 <ul class="permission-list <%= permission.object.entity_type %>_list">
-  <li><%= check_box_tag 'select_al', '', false, class: 'filled-in', title: 'Select All', id: permission.object.entity_type+'_check' %><label for="<%= permission.object.entity_type %>_check"></label></li>
+  <li><%= check_box_tag 'select_al', '', false, class: 'filled-in all-check', title: 'Select All', id: permission.object.entity_type+'_check' %><label for="<%= permission.object.entity_type %>_check"></label></li>
   <li><%= permission.object.entity_type %></li>
   <div class="permission-list-checkboxes <%= permission.object.entity_type %>_permissions">
     <li class="hidden"><%= permission.input :entity_type, class: 'hidden'  %></li>

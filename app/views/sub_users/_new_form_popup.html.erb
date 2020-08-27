@@ -34,6 +34,7 @@
           <div class="company-selection">
             <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list' %>
           </div>
+          <%= render 'avatar_upload' unless params[:remote].to_i == 1 %>
 
         </div>
       <% end %>
