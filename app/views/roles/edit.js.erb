@@ -5,9 +5,11 @@ Popup.open(elem);
 $('#select_all_roles').change(function (){
     if ($(this).is(':checked')){
         $('.role-access').prop('checked', true)
+        $('.all-check').prop('checked', true)
     }
     else {
         $('.role-access').prop('checked', false)
+        $('.all-check').prop('checked', false)
     }
 
 })
