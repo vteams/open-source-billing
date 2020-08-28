@@ -46,6 +46,7 @@ class @EstimateCalculator
     $('#estimate_estimate_total').val total_balance.toFixed(2)
     $('#estimate_total_lbl').text total_balance.toFixed(2)
     $('.estimate_total_strong').html total_balance.toFixed(2)
+    $('.estimate_total_strong').formatCurrency({symbol: window.currency_symbol})
     $("#estimate_sub_total_lbl, #estimate_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol});
     TaxCalculator.applyAllLineItemTaxes()
 

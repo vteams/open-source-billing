@@ -23,6 +23,9 @@ Osb::Application.routes.draw do
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
   scope "(:locale)" do
+    authenticate :user do
+      get '/', to: 'dashboard#index'
+    end
     get '/', to: redirect{Rails.application.routes.url_helpers.new_user_session_path}
 
     resources :tasks do

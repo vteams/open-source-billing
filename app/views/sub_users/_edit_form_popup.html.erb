@@ -31,14 +31,16 @@
                       wrapper_html: { class: 'input-field col s12 m6 editMode' } %>
           <%= f.input :role_id, collection: load_user_roles, label: false, as: :select,
                       input_html: {id: 'side_form_role_ids', class: 'edit-user-select2 select_2', name: 'role_id'},
-                      wrapper_html: { class: 'input-field col s12 editMode user-role' } %>
+                      wrapper_html: { class: 'input-field col s6 editMode user-role' } %>
           <span class="fa fa-caret-down"></span>
           <div class="row company-row">
             <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
           </div>
           <%= f.collection_radio_buttons :have_all_companies_access, [[true, 'All Companies'] ,[false, 'Only Selected Companies']], :first, :last %>
+          <%= check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'assign_all_companies' %>
+          <label for="assign_all_companies">Select all</label>
           <div class="company-selection">
-            <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list' %>
+            <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list', collection_wrapper_tag: 'ul', item_wrapper_tag: 'li' %>
           </div>
 
           <%= hidden_field_tag 'user_id',@sub_user.id %>

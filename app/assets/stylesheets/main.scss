@@ -6433,3 +6433,43 @@ li.collection-item a{
 .permission-list li [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;
 }
+.select2-container.edit-user-select2{
+  width: 100% !important;
+}
+.user_notify_user [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+[type="checkbox"]#assign_all_companies:checked + label:before{
+  left: 0px !important;
+}
+.company-selection ul li.companies-list{
+  display: inline-block;
+  width: 50%;
+}
+.select2-container.items_list a .select2-chosen, .select2-container.tax_select a .select2-chosen{
+  margin-right: 0px !important;
+  color: #000;
+  font-size: 12px;
+}
+.invoice_tax_id.new-invoice-footer-row{
+  padding: 0 0 12px !important;
+}
+.invoice_discount_type{
+  padding: 0 0 8px !important;
+}
+.new-invoice-footer-row.taxes_total{
+  padding: 0 0 3px !important;
+}
+.modal-body.users span label .collection_radio_buttons{
+  padding-left: 25px !important;
+}
+.assign_all_companies_label{
+  float: right;
+  padding-left: 25px !important;
+}
+.pay_invoice .payment_left{
+  min-height: 270px !important;
+}
+.client_login_link{
+  float: right;
+}
