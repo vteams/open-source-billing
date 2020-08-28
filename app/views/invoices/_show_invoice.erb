@@ -124,7 +124,8 @@
         <!--        <br>-->
         <div>
           <div style="float:left; width: 50%;">
-            <p class="invoice-note"><%= @invoice.notes %></p>
+            <strong  class="invoice-note">Notes</strong>
+            <p class="invoice-note"><%= simple_format(@invoice.notes, class: 'invoice-note') %></p>
           </div>
 
           <br/>

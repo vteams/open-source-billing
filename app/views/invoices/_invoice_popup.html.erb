@@ -111,7 +111,7 @@
         </div>
       </div>
       <div class="left-section left notes-section clearfix">
-        <strong><%= t('views.common.notes') %>: </strong> <%= @invoice.notes %>
+        <strong><%= t('views.common.notes') %>: </strong> <%=  @invoice.notes.gsub(/\n/, '<br/>').html_safe %>
       </div>
     </div>
     <%= render 'invoice_history' unless (request.format.pdf? || current_portal_client.present? || session[:masquerade_client_id].present? ) %>

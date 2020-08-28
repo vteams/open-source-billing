@@ -1,0 +1,2 @@
+module RecurringFrequenciesHelper
+end

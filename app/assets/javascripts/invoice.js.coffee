@@ -1,6 +1,15 @@
 class @Invoice
 
   jQuery ->
+#    setTimeout (->
+#      $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
+#      next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
+#      $('#next_issue_date').val(next_issue_date)
+#      $('#invoice_recurring_schedule_attributes_frequency').change ->
+#        $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
+#        next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
+#        $('#next_issue_date').val(next_issue_date)
+#    ), 200
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()

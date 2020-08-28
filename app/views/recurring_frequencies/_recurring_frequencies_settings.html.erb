@@ -1,0 +1,35 @@
+<div class="setting-roles-list">
+  <h5 class="intro settings-index-false-intro" data-intro="All of your roles will be listed here">
+    <%= link_to t('views.recurring_frequencies.recurring_frequencies'), 'javascript:void(0)' %>
+    <span>(<%= @recurring_frequencies.count rescue 0 %>)</span>
+  </h5>
+  <ul class="roles-list">
+    <% @recurring_frequencies.each do |frequency| %>
+      <li id="roles">
+        <div class="role-item checkbox-item">
+          <%= check_box_tag 'recurring_frequency_ids[]', frequency.id, false, :id => "frequency_#{frequency.id}",
+                            class: "filled-in" %>
+          <label for="<%= "frequency_#{frequency.id}" %>"></label>
+
+          <div class="invoice-name circle-img <%= random_card_color %>"><%= frequency.number_of_days %></div>
+        </div>
+        <div class="role-name">
+          <%= link_to frequency.title, edit_recurring_frequency_path(frequency), remote: true   %><br>
+          <span class="role-date"><%= frequency.created_at.strftime('%d %b, %Y') %></span>
+        </div>
+      </li>
+    <% end %>
+
+    <div class="list-buttons">
+      <%#= render 'roles/settings_role_form' %>
+      <div id="role_btn_container" class="intro settings-index-false-intro" data-intro="You can add or remove roles from here">
+        <!--        <a href="javascript:;" id="role_add_btn" class="sidebar-btn"><%#= t('helpers.links.add') %></a>-->
+        <%= link_to 'ADD', new_recurring_frequency_path, remote: true, class: 'sidebar-btn' %>
+        <% unless OSB::CONFIG::DEMO_MODE %>
+          <a href="javascript:;" id="frequency_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+        <% end %>
+      </div>
+    </div>
+
+  </ul>
+</div>
