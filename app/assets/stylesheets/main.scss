@@ -6397,15 +6397,12 @@ li.collection-item a{
 [type="checkbox"].filled-in:disabled:not(:checked) + label:after{
   border-color: #b1b1b1;
 }
-<<<<<<< HEAD
-=======
 .payment_send_payment_notification [type="checkbox"].filled-in:checked + label:before{
   left: 0px !important;
 }
 [type="checkbox"].apply_credit:checked + label:before{
   left: 0px !important;
 }
->>>>>>> flexible_payment_terms
 .Settings_permissions li .role_permissions_can_create{
   display: none;
 }
