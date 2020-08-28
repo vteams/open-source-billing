@@ -5073,6 +5073,8 @@ i.material-icons.close:hover {
 }
 
 #recurring_schedule_container{
+  padding-right: 12px;
+  padding-left: 10px;
   ul.dropdown-content{
     min-width: 120px;
     width: 120px;
@@ -6472,4 +6474,7 @@ li.collection-item a{
 }
 .client_login_link{
   float: right;
+}
+.invoice_recurring_schedule_occurrences{
+  margin-top: 8px;
 }
