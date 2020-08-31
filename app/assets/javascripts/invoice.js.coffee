@@ -10,6 +10,8 @@ class @Invoice
 #        next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
 #        $('#next_issue_date').val(next_issue_date)
 #    ), 200
+    $('.line_total').before('<span class="line_total_currency"></span>')
+    $('.line_total_currency').html(window.currency_symbol)
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()

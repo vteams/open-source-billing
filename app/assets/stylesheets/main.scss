@@ -6473,3 +6473,19 @@ li.collection-item a{
 .client_login_link{
   float: right;
 }
+#invoice_line_items_tbl .line-items-fields td div.item-select a.select2-choice, #estimate_line_items_tbl .line-items-fields td div.item-select a.select2-choice{
+  height: unset !important;
+  overflow: unset !important;
+  white-space: unset !important;
+  line-height: 18px;
+}
+#invoice_line_items_tbl .line-items-fields td div.item-select a.select2-choice span.select2-chosen, #estimate_line_items_tbl .line-items-fields td div.item-select a.select2-choice span.select2-chosen{
+  word-break: break-word;
+  display: block;
+  overflow: unset !important;
+  white-space: unset !important;
+}
+.line_total_currency{
+  font-size: 0.8rem;
+  color: #9e9e9e;
+}
