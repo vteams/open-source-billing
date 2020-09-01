@@ -59,7 +59,13 @@ module V1
         @invoices = filter_by_company(@invoices)
       end
 
-      desc 'previews the selected invoice'
+      desc 'previews the selected invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :invoice_id
       end
@@ -68,7 +74,13 @@ module V1
         @invoice = Services::InvoiceService.get_invoice_for_preview(params[:invoice_id])
       end
 
-      desc 'Return unpaid-invoices'
+      desc 'Return unpaid-invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
 
       params do
         optional 'client_id'
@@ -217,7 +229,7 @@ module V1
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
           optional :company_id, type: Integer
-          optional :invoice_line_items_attributes, type: Array do
+          optional :invoice_line_items_attributes, type: Hash do
             requires :invoice_id, type: Integer
             requires :item_id, type: Integer
             requires :item_name, type: String

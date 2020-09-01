@@ -22,7 +22,13 @@ module V1
         {client: Client.find(params[:id]), client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id])}
       end
 
-      desc 'Return clients'
+      desc 'Return clients',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       get do
         criteria = {
             status: params[:status] || 'unarchived',

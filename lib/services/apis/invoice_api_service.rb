@@ -3,6 +3,7 @@ module Services
     class InvoiceApiService
 
       def self.create(params)
+        binding.pry
         invoice = ::Invoice.new(invoice_params_api(params))
         if invoice.save
           {message: 'Successfully created'}
