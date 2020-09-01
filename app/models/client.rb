@@ -45,6 +45,7 @@ class Client < ActiveRecord::Base
   has_many :projects
   accepts_nested_attributes_for :client_contacts, :allow_destroy => true
   belongs_to :company
+  belongs_to :role
   belongs_to :currency, touch: false
   has_many :company_entities, :as => :entity
   has_many :expenses

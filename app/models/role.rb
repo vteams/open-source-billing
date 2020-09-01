@@ -1,6 +1,7 @@
 class Role < ActiveRecord::Base
   #include Osbm
   has_one :user
+  has_one :client
   has_many :permissions, dependent: :destroy
 
   belongs_to :resource,
