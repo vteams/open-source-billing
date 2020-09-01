@@ -14,7 +14,13 @@ module V1
     resource :clients do
       before {current_user}
 
-      desc 'Fetch  single client'
+      desc 'Fetch  single client',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: String
       end
@@ -43,7 +49,13 @@ module V1
         @clients = Client.get_clients(criteria)
       end
 
-      desc 'Create Client'
+      desc 'Create Client',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :client, type: Hash do
           optional :organization_name, type: String
@@ -75,7 +87,13 @@ module V1
         Services::Apis::ClientApiService.create(params)
       end
 
-      desc 'Update Client'
+      desc 'Update Client',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :client, type: Hash do
           optional :organization_name, type: String
@@ -107,7 +125,13 @@ module V1
         Services::Apis::ClientApiService.update(params)
       end
 
-      desc 'Delete client'
+      desc 'Delete client',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: Integer, desc: 'Delete Client'
       end

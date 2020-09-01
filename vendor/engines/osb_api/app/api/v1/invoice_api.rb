@@ -207,12 +207,12 @@ module V1
            }
       params do
         requires :invoice, type: Hash do
-          requires :invoice_number, type: String
+          # requires :invoice_number, type: String
           requires :invoice_date, type: String
           optional :po_number, type: String
           optional :discount_percentage, type: String
           requires :client_id, type: Integer
-          requires :terms, type: String
+          optional :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
@@ -229,14 +229,14 @@ module V1
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
           optional :company_id, type: Integer
-          optional :invoice_line_items_attributes, type: Hash do
-            requires :invoice_id, type: Integer
+          optional :invoice_line_items_attributes, type: Array do
+            # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
-            requires :item_name, type: String
-            requires :item_description, type: String
-            requires :item_unit_cost, type: Integer
-            requires :item_quantity, type: Integer
-            requires :actual_price, type: String
+            # requires :item_name, type: String
+            # requires :item_description, type: String
+            # requires :item_unit_cost, type: Integer
+            # requires :item_quantity, type: Integer
+            # requires :actual_price, type: String
           end
         end
       end

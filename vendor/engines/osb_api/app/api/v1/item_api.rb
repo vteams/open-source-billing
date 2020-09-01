@@ -18,12 +18,24 @@ module V1
       before {current_user}
 
 
-      desc 'Return all Items'
+      desc 'Return all Items',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       get do
         get_items
       end
 
-      desc 'Fetch a single Item'
+      desc 'Fetch a single Item',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: String
       end
@@ -32,7 +44,13 @@ module V1
         {item: Item.find(params[:id]), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
       end
 
-      desc 'Create Item'
+      desc 'Create Item',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :item, type: Hash do
           requires :item_name, type: String
@@ -54,7 +72,13 @@ module V1
         Services::Apis::ItemApiService.create(params)
       end
 
-      desc 'Update Item'
+      desc 'Update Item',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :item, type: Hash do
           optional :item_name, type: String
@@ -77,7 +101,13 @@ module V1
       end
 
 
-      desc 'Delete an item'
+      desc 'Delete an item',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :id, type: Integer, desc: "Delete an item"
       end
