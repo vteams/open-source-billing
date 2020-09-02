@@ -23,7 +23,7 @@
             <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
           </div>
           <div class="paymentInfo">
-            <strong><strong class="invoice_total_strong"></strong>
+            <strong><strong class="invoice_total_strong" currency="<%= Currency.find(invoice_selected_currency(f.object)).code %>"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
                           include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
@@ -33,7 +33,8 @@
 
                 <strong class="invoice_total_base_currency"></strong>
                 <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
+
+                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
                             include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
               </div>
@@ -81,7 +82,7 @@
                 <%= rs.input :delivery_option, as: :radio_buttons, label: false,
                              collection: [['send_invoice', t('views.invoices.send_invoice_automatically')],
                                           ['draft_invoice', t('views.invoices.create_draft_and_send_manully')]],
-                             checked: 'send_invoice',
+                             checked: '',
                              label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' },
                              boolean_style: :inline %>
                 <%= rs.input :_destroy, as: :hidden %>

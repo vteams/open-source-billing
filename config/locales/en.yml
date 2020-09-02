@@ -822,6 +822,7 @@ en:
 
     Roles:
       roles: "Roles"
+      client_roles: "Client Roles"
       name: "Role Name"
       deleted_msg: "Role has been deleted successfully."
 

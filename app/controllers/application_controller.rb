@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
   acts_as_token_authentication_handler_for User, if: lambda { |env| env.request.format.json? && controller_name != 'authenticate' }
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  protect_from_forgery
+  # protect_from_forgery unless: -> { request.format.json? }
   before_filter :_reload_libs #reload libs on every request for dev environment only
   #layout :choose_layout
   #reload libs on every request for dev environment only

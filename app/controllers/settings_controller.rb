@@ -57,7 +57,8 @@ class SettingsController < ApplicationController
   def index
     @email_templates = EmailTemplate.all
     authorize @email_templates
-    @roles = Role.all
+    @roles = Role.all.where(for_client: false)
+    @client_roles = Role.all.where(for_client: true)
     @companies = Company.all
     @users = User.all
     @payment_terms = PaymentTerm.where.not(number_of_days: -1)

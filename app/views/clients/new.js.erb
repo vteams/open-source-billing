@@ -54,3 +54,8 @@ if ($('#account_association').prop('checked', true)){
     $('#select_all_companies').prop('checked', false)
     $('#select_all_companies').attr('disabled', true)
 }
+$('#new_client_role_id').material_select('destroy')
+$('#new_client_role_id').material_select('destroy');
+$('#new_client_role_id').select2({
+    placeholder: 'Role'
+})

@@ -29,6 +29,10 @@ module ClientsHelper
     notice.html_safe
   end
 
+  def load_client_roles
+    Role.all.where(for_client: true).map{|r| [r.name.humanize, r.id]}
+  end
+
   def client_introduction_parameter
     cookies[:intro] = controller_name.singularize
   end

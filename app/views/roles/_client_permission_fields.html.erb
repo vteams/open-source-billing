@@ -1,0 +1,9 @@
+<ul class="permission-list client-permissions-list">
+<!--  <div class="permission-list-checkboxes <%#= permission.object.entity_type %>_permissions">-->
+    <li class="hidden"><%= permission.input :entity_type, class: 'hidden'  %></li>
+    <li><%= permission.input :can_read, label: permission.object.entity_type, input_html: { class: 'filled-in role-access', disabled: setting_or_super_admin?(permission.object, permission.object.role)}, as: :boolean,
+                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
+<!--      <span><%#= permission.object.entity_type %></span>-->
+    </li>
+<!--  </div>-->
+</ul>

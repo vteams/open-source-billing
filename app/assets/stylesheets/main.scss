@@ -1135,7 +1135,7 @@ h6 {
   z-index: 998; }
 
 #main-content {
-  padding-left: 107px;
+  //padding-left: 107px;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -6480,4 +6480,16 @@ li.collection-item a{
 }
 label[for="user_have_all_companies_access_false"]{
   margin-left: 10px;
+}
+ul.permission-list.client-permissions-list{
+  display: inline-block;
+}
+.recurring-tag{
+  float: right;
+  background-color: #09b8e2;
+  font-weight: bold;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  font-size: 0.9em;
+  color: white;
 }
