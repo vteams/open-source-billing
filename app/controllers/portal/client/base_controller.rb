@@ -11,6 +11,9 @@ module Portal
       helper_method :render_card_view?
       include ClientsHelper
 
+      def pundit_user
+        current_portal_client
+      end
 
 
       def current_client

@@ -7,9 +7,6 @@ module Portal
       include DateFormats
       include InvoicesHelper
 
-      def pundit_user
-        current_portal_client
-      end
 
       def index
         params[:status] = params[:status] || 'active'
