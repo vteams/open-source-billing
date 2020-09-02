@@ -6,14 +6,16 @@
     <li><%= permission.input :can_read, label: "Read", input_html: { class: 'filled-in role-access', disabled: setting_or_super_admin?(permission.object, permission.object.role)}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
     </li>
-    <li><%= permission.input :can_create, label: "Create", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
-                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
-    </li>
-    <li><%= permission.input :can_update, label: "Update", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
-                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
-    </li>
-    <li><%= permission.input :can_delete, label: "Delete", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
-                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6', disabled: setting_or_report?(permission.object) }, boolean_style: :inline %>
-    </li>
+    <% unless params[:for_client].present?%>
+      <li><%= permission.input :can_create, label: "Create", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
+                               wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
+      </li>
+      <li><%= permission.input :can_update, label: "Update", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
+                               wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
+      </li>
+      <li><%= permission.input :can_delete, label: "Delete", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
+                               wrapper_html: { class: 'checkbox-field inline-checkbox col s6', disabled: setting_or_report?(permission.object) }, boolean_style: :inline %>
+      </li>
+    <% end %>
   </div>
 </ul>

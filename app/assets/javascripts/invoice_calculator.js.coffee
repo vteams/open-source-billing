@@ -52,7 +52,7 @@ class @InvoiceCalculator
     invoice_base_currency_equivalent_total = (total_balance / conversion_rate).toFixed(2)
     $('.invoice_total_base_currency').html invoice_base_currency_equivalent_total
     $('#invoice_base_currency_equivalent_total').val(invoice_base_currency_equivalent_total)
-    $('.invoice_total_base_currency').formatCurrency({symbol: $('#invoice_base_currency_id').children('option:selected').html()})
+    $('.invoice_total_base_currency').formatCurrency({symbol: $('#invoice_base_currency_id').children('option:selected').attr('symbol')})
 
     TaxCalculator.applyAllLineItemTaxes()
 

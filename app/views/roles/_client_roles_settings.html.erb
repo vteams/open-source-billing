@@ -14,7 +14,7 @@
           <div class="invoice-name circle-img <%= random_card_color %>"><%= role.role_name %></div>
         </div>
         <div class="role-name">
-          <%= link_to role.name, edit_role_path(role), remote: true   %><br>
+          <%= link_to role.name, edit_role_path(role, for_client: true), remote: true   %><br>
           <span class="role-date"><%= role.created_at.strftime('%d %b, %Y') %></span>
         </div>
       </li>

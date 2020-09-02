@@ -7,12 +7,16 @@ module Portal
       include DateFormats
       include InvoicesHelper
 
+      def pundit_user
+        current_portal_client
+      end
 
       def index
         params[:status] = params[:status] || 'active'
         @status = params[:status]
         @current_client_invoices = Invoice.client_id(current_client.id).skip_draft.joins(:currency)
         @invoices = @current_client_invoices.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+        authorize @invoices
         respond_to do |format|
           format.html # index.html.erb
           #format.js

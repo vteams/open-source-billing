@@ -6,10 +6,15 @@ module Portal
       include EstimatesHelper
       after_action :user_introduction, only: [:index], if: -> { current_portal_client.introduction.present? && !current_portal_client.introduction.estimate? }
 
+      def pundit_user
+        current_portal_client
+      end
+
       def index
         params[:status] = params[:status] || 'active'
         @status = params[:status]
         @estimates = Estimate.client_id(current_client.id).skip_draft.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+        authorize @estimates
       end
 
       def show

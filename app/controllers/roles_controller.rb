@@ -78,7 +78,8 @@ class RolesController < ApplicationController
   end
 
   def build_permissions
-    ENTITY_TYPES.each do |e|
+    entity_types = params[:for_client].present? ? CLIENT_ENTITY_TYPES : ENTITY_TYPES
+    entity_types.each do |e|
       @role.permissions.build(entity_type: e)
     end
   end
