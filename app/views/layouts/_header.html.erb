@@ -17,10 +17,9 @@
 
               <div class="s-dropdown--styled">
 
-<!--                <span class="fa fa-chevron-down store-default">Where did you see the lower price*</span>-->
 
+                <span class="fa fa-chevron-down store-default" disabled selected><%= get_company_name%></span>
                 <ul class="s-dropdown u-hide">
-                  <li value="" disabled selected><%= get_company_name%></li>
                   <% filter_select_by_companies.each do |company| %>
                   <li class="j-store" data-value=<%= company.id %> data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>" ><%= company.company_name %></li>
                     <% end %>
@@ -41,7 +40,7 @@
               <div class="storeSelecWrap j-store-select selWrap">
 
                 <div class="s-dropdown--styled">
-
+                  <span class="fa fa-chevron-down store-default" disabled selected><input class="select-dropdown" value="<%= Settings.default_currency %>" readonly="readonly"></span>
                   <ul id="dropdown_currency" class='s-dropdown u-hide'>
                     <li class="j-store">
                       <input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />
