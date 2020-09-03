@@ -6507,9 +6507,9 @@ li.collection-item a{
 .new-invoice-section > div {
   position: relative;
 }
-.new-invoice-section > div .invalid-error {
+.new-invoice-section > div span.error {
   position: absolute;
   width: 100%;
   left: 0;
-  bottom: 0;
+  bottom: -15px;
 }
