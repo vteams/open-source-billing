@@ -12,33 +12,71 @@
         <div class="hdr-select-holder intro dashboard-index-false-intro header-intro" data-intro='You can select any company from here'>
           <% company = Company.find(current_user.current_company) %>
           <div class="company_name"><%= link_to (company.present? && company.logo.present?) ? image_tag(company.logo, class: 'logo-link')  : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link'  %> &nbsp;</div>
-          <select class="company_select fix-cursor-pointer">
-            <option value="" disabled selected><%= get_company_name%></option>
-            <% filter_select_by_companies.each do |company| %>
-              <option value="<%= company.id %>" data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>" data-icon="<%= company.logo.present? ? company.logo : asset_url('company_icon.png') %>"><%= company.company_name %></option>
-            <% end %>
-          </select>
+          <div class="drop-wrap">
+            <div class="storeSelecWrap j-store-select selWrap">
+
+              <div class="s-dropdown--styled">
+
+<!--                <span class="fa fa-chevron-down store-default">Where did you see the lower price*</span>-->
+
+                <ul class="s-dropdown u-hide">
+                  <li value="" disabled selected><%= get_company_name%></li>
+                  <% filter_select_by_companies.each do |company| %>
+                  <li class="j-store" data-value=<%= company.id %> data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>" ><%= company.company_name %></li>
+                    <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+<!--          <select class="company_select fix-cursor-pointer">-->
+<!--            <option value="" disabled selected><%#= get_company_name%></option>-->
+            <%# filter_select_by_companies.each do |company| %>
+<!--              <option value="<%#= company.id %>" data-company-id="<%#= company.id %>" data-controller="<%#= params[:controller]%>" data-action="<%#= params[:action]%>" data-icon="<%#= company.logo.present? ? company.logo : asset_url('company_icon.png') %>"><%#= company.company_name %></option>-->
+            <%# end %>
+<!--          </select>-->
           <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and Settings.currency.present? and Settings.currency.eql?("On") %>
-            <div class="select-wrapper currency currency_select initialized">
-              <div class="currency-flag currency-flag-<%= Settings.default_currency.downcase %>"></div>
-              <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"
-                 title="<%= t('views.settings.default_currency') %>">
-                <input class="select-dropdown" value="<%= Settings.default_currency %>" readonly="readonly">
-              </a>
-              <ul id="dropdown_currency" class='dropdown-content select-dropdown'>
-                <li class="search-bar">
-                  <input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />
-                </li>
-                <% Currency.unscoped.each do |currency| %>
-                  <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>">
-                    <div class="currency-flag currency-flag-<%= currency.unit.downcase %>"></div>
-                    <span class="country-name truncate"><%= currency.title %></span>
-                    <span class="currency-code"><%= currency.code %></span>
-                  </li>
-                <% end %>
-              </ul>
+            <div class="drop-wrap">
+              <div class="storeSelecWrap j-store-select selWrap">
+
+                <div class="s-dropdown--styled">
+
+                  <ul id="dropdown_currency" class='s-dropdown u-hide'>
+                    <li class="j-store">
+                      <input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />
+                    </li>
+                    <% Currency.unscoped.each do |currency| %>
+                      <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>"></li>
+                      <li class="currency-flag currency-flag-<%= currency.unit.downcase %>"></li>
+                      <li class="country-name truncate"><%= currency.title %></li>
+                      <li class="currency-code"><%= currency.code %></li>
+
+                    <% end %>
+                  </ul>
+
+                </div>
+              </div>
             </div>
+<!--            <div class="select-wrapper currency currency_select initialized">-->
+<!--              <div class="currency-flag currency-flag-<%#= Settings.default_currency.downcase %>"></div>-->
+<!--              <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"-->
+<!--                 title="<%#= t('views.settings.default_currency') %>">-->
+<!--                <input class="select-dropdown" value="<%#= Settings.default_currency %>" readonly="readonly">-->
+<!--              </a>-->
+<!--              <ul id="dropdown_currency" class='dropdown-content select-dropdown'>-->
+<!--                <li class="search-bar">-->
+<!--                  <input type="text" class="search_currency" placeholder="<%#= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />-->
+<!--                </li>-->
+                <%# Currency.unscoped.each do |currency| %>
+<!--                  <li class="country-item" data-id="<%#= currency.id %>" data-user-id="<%#= current_user.id %>" title="<%#= currency.unit %>">-->
+<!--                    <div class="currency-flag currency-flag-<%#= currency.unit.downcase %>"></div>-->
+<!--                    <span class="country-name truncate"><%#= currency.title %></span>-->
+<!--                    <span class="currency-code"><%#= currency.code %></span>-->
+<!--                  </li>-->
+                <%# end %>
+<!--              </ul>-->
+<!--            </div>-->
           <% end %>
         </div>
       </div>
