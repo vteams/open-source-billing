@@ -37,25 +37,46 @@
 <!--          </select>-->
           <%= link_to '', new_company_path(select_new: 1), remote: true, class: 'hidden', id: 'new_company_remote_link' %>
           <% if current_user and Settings.currency.present? and Settings.currency.eql?("On") %>
-            <div class="select-wrapper currency currency_select initialized">
-              <div class="currency-flag currency-flag-<%= Settings.default_currency.downcase %>"></div>
-              <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"
-                 title="<%= t('views.settings.default_currency') %>">
-                <input class="select-dropdown" value="<%= Settings.default_currency %>" readonly="readonly">
-              </a>
-              <ul id="dropdown_currency" class='dropdown-content select-dropdown'>
-                <li class="search-bar">
-                  <input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />
-                </li>
-                <% Currency.unscoped.each do |currency| %>
-                  <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>">
-                    <div class="currency-flag currency-flag-<%= currency.unit.downcase %>"></div>
-                    <span class="country-name truncate"><%= currency.title %></span>
-                    <span class="currency-code"><%= currency.code %></span>
-                  </li>
-                <% end %>
-              </ul>
+            <div class="drop-wrap">
+              <div class="storeSelecWrap j-store-select selWrap">
+
+                <div class="s-dropdown--styled">
+
+                  <ul id="dropdown_currency" class='s-dropdown u-hide'>
+                    <li class="j-store">
+                      <input type="text" class="search_currency" placeholder="<%= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />
+                    </li>
+                    <% Currency.unscoped.each do |currency| %>
+                      <li class="country-item" data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>"></li>
+                      <li class="currency-flag currency-flag-<%= currency.unit.downcase %>"></li>
+                      <li class="country-name truncate"><%= currency.title %></li>
+                      <li class="currency-code"><%= currency.code %></li>
+
+                    <% end %>
+                  </ul>
+
+                </div>
+              </div>
             </div>
+<!--            <div class="select-wrapper currency currency_select initialized">-->
+<!--              <div class="currency-flag currency-flag-<%#= Settings.default_currency.downcase %>"></div>-->
+<!--              <a id="dLabel" data-activates='dropdown_currency' data-beloworigin="true" class="fix-cursor-pointer dropdown-button"-->
+<!--                 title="<%#= t('views.settings.default_currency') %>">-->
+<!--                <input class="select-dropdown" value="<%#= Settings.default_currency %>" readonly="readonly">-->
+<!--              </a>-->
+<!--              <ul id="dropdown_currency" class='dropdown-content select-dropdown'>-->
+<!--                <li class="search-bar">-->
+<!--                  <input type="text" class="search_currency" placeholder="<%#= t('header.links.search') %>" id="search_currency_bar" autocomplete="off" />-->
+<!--                </li>-->
+                <%# Currency.unscoped.each do |currency| %>
+<!--                  <li class="country-item" data-id="<%#= currency.id %>" data-user-id="<%#= current_user.id %>" title="<%#= currency.unit %>">-->
+<!--                    <div class="currency-flag currency-flag-<%#= currency.unit.downcase %>"></div>-->
+<!--                    <span class="country-name truncate"><%#= currency.title %></span>-->
+<!--                    <span class="currency-code"><%#= currency.code %></span>-->
+<!--                  </li>-->
+                <%# end %>
+<!--              </ul>-->
+<!--            </div>-->
           <% end %>
         </div>
       </div>

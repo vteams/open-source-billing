@@ -6560,3 +6560,14 @@ ul.permission-list.client-permissions-list{
 .drop-wrap .s-dropdown--styled:hover {
   background-color: snow;
 }
+.user-list .list-item .checkbox-item {
+  width: 50px;
+}
+.user-list .list-item .invoice-details {
+  width: calc(100% - 55px);
+}
+@media (max-width: 1472px) {
+  #activity-sidebar.show-activity {
+    margin-right: -10px;
+  }
+}
