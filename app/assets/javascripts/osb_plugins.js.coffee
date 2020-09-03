@@ -182,7 +182,7 @@ class @OsbPlugins
       else if $('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) < 0
         OsbPlugins.applyPopover($("#how_many_rec"),"bottomMiddle","topLeft", I18n.t("views.common.enter_positive_value"))
         flag = false
-      else if $('#invoice_recurring_schedule_attributes_delivery_option_send_invoice').is(':not(:checked)') && $('#invoice_recurring_schedule_attributes_delivery_option_draft_invoice').is(':not(:checked)')
+      else if $('#recurring').is(':checked') && $('#invoice_recurring_schedule_attributes_delivery_option_send_invoice').is(':not(:checked)') && $('#invoice_recurring_schedule_attributes_delivery_option_draft_invoice').is(':not(:checked)')
         OsbPlugins.applyPopover($(".invoice_recurring_schedule_delivery_option"),"bottomMiddle","topLeft", 'Please select at least one option')
         flag = false
       # Check if payment term is selected
