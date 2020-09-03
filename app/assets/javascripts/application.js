@@ -227,17 +227,7 @@ $(document).on('click', '.j-store-select', function() {
     $(this).find('ul').slideToggle();
 });
 
-$(document).on('click', '.j-store', function() {
 
-    var store = $(this).html();
-
-    $(this).toggleClass('selected');
-    $('.j-store').not($(this)).removeClass('selected');
-    $('.store-default').html(store).css('color', 'black');
-
-    $('#competitor').val($(this).attr('data-value'));
-
-});
 $(document).ready(function(){
     $('.company_name').on('click', function (){
         $('.company_select .select-dropdown:first').show().focus().click();
@@ -593,6 +583,35 @@ function initDropDown() {
     );
 
 }
+$(document).on('click', '.j-store-select01', function () {
+    $(this).find('ul').slideToggle();
+});
+
+$(document).on('click', '.j-store01', function () {
+
+    var store = $(this).html();
+
+    $(this).toggleClass('selected');
+    $('.j-store01').not($(this)).removeClass('selected');
+    $('.store-default01').html(store).css('color', 'black');
+
+    $('#competitor01').val($(this).attr('data-value'));
+
+});
+$(document).on('click', '.j-store-select02', function () {
+    $(this).find('ul').slideToggle();
+});
+
+$(document).on('click', '.j-store02', function () {
+
+    var store = $(this).html();
+
+    $(this).toggleClass('selected');
+    $('.j-store02').not($(this)).removeClass('selected');
+    $('.store-default02').html(store).css('color', 'black');
+    $('#competitor02').val($(this).attr('data-value'));
+
+});
 $(document).ajaxStop(function(){
     initDropDown();
 });
