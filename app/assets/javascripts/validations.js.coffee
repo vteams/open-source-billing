@@ -89,6 +89,12 @@ class @Validation
         'invoice[client_id]': required: 'Client is required'
         'invoice[invoice_line_items_attributes][0][item_id]': required: 'Atleast one line item is required'
 
+      errorPlacement: ($error, $element) ->
+        if ($element.attr('name') == 'invoice[client_id]')
+          $('#s2id_invoice_client_id').append $error
+        else
+          $error.insertAfter($element);
+
 
 
   @EstimateForm = ->
