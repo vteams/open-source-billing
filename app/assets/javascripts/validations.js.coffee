@@ -87,7 +87,7 @@ class @Validation
         'invoice[invoice_line_items_attributes][0][item_id]': required: true
       messages:
         'invoice[client_id]': required: 'Client is required'
-        'invoice[invoice_line_items_attributes][0][item_id]': required: 'Atleast one line item is required'
+        'invoice[invoice_line_items_attributes][0][item_id]': required: 'Line item is required'
 
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'invoice[client_id]')

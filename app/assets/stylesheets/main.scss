@@ -6504,3 +6504,12 @@ li.collection-item a{
 #invoice_client_id-error{
   position: absolute;
 }
+.new-invoice-section > div {
+  position: relative;
+}
+.new-invoice-section > div .invalid-error {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
