@@ -55,7 +55,7 @@ module V1
                }
            }
       get do
-        @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
+        @invoices = Invoice.joins(:client).select("invoices.*,clients.*, invoices.id")
         @invoices = filter_by_company(@invoices)
       end
 
