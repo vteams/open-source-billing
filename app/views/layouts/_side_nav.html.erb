@@ -17,6 +17,25 @@
   <div>
     <ul class="side-menu scrollContainer">
       <li>
+          <div class="company-wrapper">
+            <div class="drop-wrap">
+              <div class="storeSelecWrap j-store-select01 selWrap">
+                <div class="s-dropdown--styled">
+                  <span class="fa fa-chevron-down store-default01"><%= get_company_name %></span>
+                  <ul class="s-dropdown u-hide">
+                    <% filter_select_by_companies.each do |company| %>
+                      <li class="j-store01" data-value=<%= company.id %> data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>" >
+                        <%= link_to (company.present? && company.logo.present?) ? image_tag(company.logo, class: 'logo-link')  : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link'  %>
+                        <%= company.company_name %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+      </li>
+      <li>
         <%= active_link_to dashboard_path , title: t('header.links.dashboard') do %>
           <%= image_tag('ico-dashboard.svg', alt: t('header.links.dashboard'))%>
           <span><%= t('header.links.dashboard') %></span>
