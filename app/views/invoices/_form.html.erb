@@ -64,13 +64,16 @@
             <%=  f.simple_fields_for :recurring_schedule do |rs| %>
               <div class="">
                 <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
-                <div class="date-wrapper hidden">
-                  <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
+                <div class="date-wrapper">
+<!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
                   <span>
                       <small>
-                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
+            <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
+                        input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
+
+                        <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
                                      wrapper_tag: :small, as: :string %>
-                        <span><i class="material-icons calendar-icon">date_range</i></span>
+<!--                        <span><i class="material-icons calendar-icon">date_range</i></span>-->
                       </small>
                     </span>
                 </div>
@@ -78,7 +81,20 @@
                   <%= rs.input :frequency, collection: RecurringFrequency.all.map{ |f| [f.title, f.id, {'number_of_days' => f.number_of_days}]},
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
                                input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
-                  <%= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
+                </div>
+                <div class="custom-often hidden">
+                  <span>Every</span>
+                  <%= rs.input :often_number,  collection: 1..12, label: false %>
+                  <%= rs.input :often_time,  collection: OFTEN_LIST, label: false %>
+                </div>
+                <div class="invoice-input-holder">
+                  <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
+                               collection: [['infinite', 'Infinte'],
+                                            ['sss', '<input class="numeric optional remaining_occurrences center-align" value="0" type="number" step="any" name="" id=""> remaining'.html_safe]],
+                               checked: '',
+                               label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' },
+                               boolean_style: :inline %>
+                  <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
                                wrapper_html: { class: 'input-field' },
                                input_html: { class: 'recurring_occurrences', min: 0,
                                              onkeydown: 'javascript: return event.keyCode == 69 ? false : true',

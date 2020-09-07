@@ -135,6 +135,13 @@ class @Invoice
         text: u
 
 $(document).ready ->
+  setTimeout (->
+    $('#invoice_recurring_schedule_attributes_frequency').on 'change', ->
+      if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val() == '-2'
+        $('.custom-often').removeClass('hidden')
+      else
+        $('.custom-often').addClass('hidden')
+  ),200
   $('#more_deleted_invoices').click ->
     $('.all-deleted-invoices').show()
     $('#more_deleted_invoices').hide()
@@ -155,5 +162,8 @@ $(document).ready ->
     minimumResultsForSearch: -1,
     dropdownCssClass: "tax-dropdown"
   });
+  $('#invoice_recurring_schedule_attributes_frequency').append $('<option value=\'-2\'>Custom</option>')
+  $('#invoice_recurring_schedule_attributes_often_number').select2()
+  $('#invoice_recurring_schedule_attributes_often_time').select2()
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();

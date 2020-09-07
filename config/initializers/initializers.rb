@@ -431,6 +431,8 @@ ENTITIES = ['Account','Category', 'Client', 'Company', 'CompanyEmailTemplate', '
 
 ENTITY_TYPES = %w(Invoice Estimate Payment Client Item Taxes Report Settings)
 
+OFTEN_LIST = %W(Weekly Monthly Yearly)
+OFTEN_FREQUENCY = %W(Weekly Monthly Yearly Custom)
 
 FREEPLAN = ['5 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
 SILVER = ['10 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']

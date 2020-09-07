@@ -6513,3 +6513,36 @@ li.collection-item a{
   left: 0;
   bottom: -15px;
 }
+.custom-often{
+  display: flex;
+  margin-top: 18px;
+}
+.custom-often span{
+  padding-top: 7px;
+}
+.invoice_recurring_schedule_often_number{
+  width: 30%;
+}
+.invoice_recurring_schedule_often_number .select2-container{
+  width: 100% !important;
+  left: 7px;
+}
+.invoice_recurring_schedule_often_time{
+  width: 70%;
+}
+.invoice_recurring_schedule_often_time .select2-container{
+  width: 88% !important;
+  float: right;
+}
+.invoice_recurring_schedule_occurrences span{
+  width: 100%;
+  display: inline-block;
+}
+.remaining_occurrences{
+  height: 19px !important;
+  width: 30% !important;
+}
+.invoice_recurring_schedule_occurrences{
+  margin-top: 21px;
+  margin-bottom: 21px;
+}
