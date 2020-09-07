@@ -3,7 +3,7 @@ module Services
     class InvoiceApiService
 
       def self.create(params)
-        invoice = ::Invoice.new(invoice_params_api(params)[:invoice])
+        invoice = ::Invoice.new(invoice_params_api(params))
         if invoice.save
           {message: 'Successfully created'}
         else

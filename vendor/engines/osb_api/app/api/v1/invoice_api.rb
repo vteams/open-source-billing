@@ -232,11 +232,11 @@ module V1
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
-            # requires :item_name, type: String
-            # requires :item_description, type: String
-            # requires :item_unit_cost, type: Integer
-            # requires :item_quantity, type: Integer
-            # requires :actual_price, type: String
+            requires :item_name, type: String
+            requires :item_description, type: String
+            requires :item_unit_cost, type: Integer
+            requires :item_quantity, type: Integer
+            # requires :actual_price, type: String binding.pry
           end
         end
       end
