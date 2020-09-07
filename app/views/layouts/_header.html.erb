@@ -12,23 +12,23 @@
         <div class="hdr-select-holder intro dashboard-index-false-intro header-intro" data-intro='You can select any company from here'>
           <% company = Company.find(current_user.current_company) %>
           <div class="company-currency-wrapper">
-            <div class="company-wrapper">
-              <div class="drop-wrap">
-                <div class="storeSelecWrap j-store-select01 selWrap">
-                  <div class="s-dropdown--styled">
-                    <span class="fa fa-chevron-down store-default01"><%= get_company_name %></span>
-                    <ul class="s-dropdown u-hide">
-                      <% filter_select_by_companies.each do |company| %>
-                        <li class="j-store01" data-value=<%= company.id %> data-company-id="<%= company.id %>" data-controller="<%= params[:controller]%>" data-action="<%= params[:action]%>" >
-                          <%= link_to (company.present? && company.logo.present?) ? image_tag(company.logo, class: 'logo-link')  : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link'  %>
-                          <%= company.company_name %>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!--            <div class="company-wrapper">-->
+<!--              <div class="drop-wrap">-->
+<!--                <div class="storeSelecWrap j-store-select01 selWrap">-->
+<!--                  <div class="s-dropdown--styled">-->
+<!--                    <span class="fa fa-chevron-down store-default01"><%#= get_company_name %></span>-->
+<!--                    <ul class="s-dropdown u-hide">-->
+                      <%# filter_select_by_companies.each do |company| %>
+<!--                        <li class="j-store01" data-value=<%#= company.id %> data-company-id="<%#= company.id %>" data-controller="<%#= params[:controller]%>" data-action="<%#= params[:action]%>" >-->
+                          <%#= link_to (company.present? && company.logo.present?) ? image_tag(company.logo, class: 'logo-link')  : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link'  %>
+                          <%#= company.company_name %>
+<!--                        </li>-->
+                      <%# end %>
+<!--                    </ul>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
             <% if current_user and Settings.currency.present? and Settings.currency.eql?("On") %>
             <div class="currency-wrapper">
               <div class="storeSelecWrap j-store-select02 selWrap">
@@ -40,7 +40,7 @@
                     <% Currency.unscoped.each do |currency| %>
                     <li class="j-store02"data-id="<%= currency.id %>" data-user-id="<%= current_user.id %>" title="<%= currency.unit %>">
                       <span  class="currency-flag currency-flag-<%= currency.unit.downcase %>"></span>
-                      <span class="country-name truncate"><%= currency.title %></span>
+                      <span class="country-name truncate"><%= currency.unit %></span>
                       <span class="currency-code"><%= currency.code %></span>
                     </li>
                       <% end %>
