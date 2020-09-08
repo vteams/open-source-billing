@@ -11,8 +11,9 @@
                                                     data: {action_path: new_item_path, position: (count rescue 0)} } %>
   </td>
   <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name', value: f.object.item_name }, label: false, wrapper: false %>
-  <td class="description_row">
-    <%= f.input :item_description, as: :text, label: false, wrapper: false, input_html: { class: 'description center-align', rows: 3 } %>
+  <td class="description_row" id="wrap" title="">
+    <div class="area dummy"></div>
+    <%= f.input :item_description, as: :text, label: false, wrapper: false, input_html: { class: 'description area center-align', rows: 3 } %>
   </td>
   <td>
     <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align' } %>

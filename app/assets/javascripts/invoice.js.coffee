@@ -58,6 +58,7 @@ class @Invoice
                 container.find('td.cost').html item[1].toFixed(2)
                 container.find('input.qty').val item[2]
                 container.find('td.qty').html item[2]
+                container.find('td.description_row').attr('title', item[0])
 #                OsbPlugins.empty_tax_fields(container)
                 if item[3] != 0
                   container.find('select.tax1').val(item[3]).trigger('contentChanged');
@@ -154,3 +155,30 @@ $(document).ready ->
   });
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();
+
+  formatDummyText = (text) ->
+    if !text
+      return '&nbsp;'
+    text.replace(/\n$/, '<br>&nbsp;').replace /\n/g, '<br>'
+
+  $ ->
+    $wrap = $('#wrap')
+    $textarea = $('textarea')
+    $dummy = $('.dummy')
+
+    positionTextarea = ->
+      h = $wrap.height()
+      top = Math.max(0, (h - $dummy.height()) * 0.5)
+      $textarea.css
+        paddingTop: top
+        height: h - top
+      return
+
+    $textarea.on('change', (event) ->
+      html = formatDummyText($textarea.val())
+      $dummy.html html
+      positionTextarea()
+      return
+    ).trigger 'change'
+    # should debounce this
+    $(window).on 'resize', positionTextarea
