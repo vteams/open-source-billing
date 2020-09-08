@@ -171,6 +171,11 @@
     else
       $('.role-dlt-btn').addClass('disabled')
 
+    if $('input[name^=role_].disabled:checked').length > 0
+      $('.role-dlt-btn').addClass('disabled')
+    else
+      $('.role-dlt-btn').removeClass('disabled')
+
   $('#role_add_btn,#role_cancel_btn').on "click", ->
       $('#role_reset_form').click()
       $("#role_side_form").validate().resetForm();

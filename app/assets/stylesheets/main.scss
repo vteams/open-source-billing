@@ -6504,3 +6504,12 @@ ul.permission-list.client-permissions-list{
     margin-right: -10px;
   }
 }
+textarea.description{
+  min-height: 36px;
+  border: none;
+  resize: none;
+  height: 50px !important;
+}
+.description_row{
+  padding: 0 0 0 0 !important;
+}

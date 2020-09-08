@@ -5,10 +5,10 @@
   </h5>
   <ul class="roles-list">
     <% @client_roles.each do |role| %>
-      <li id="roles">
+      <li id="roles" title="<%= 'This role cannot be deleted.' if role.name == "Clients" %>">
         <div class="role-item checkbox-item">
           <%= check_box_tag 'role_ids[]', role.id, false, :id => "role_ck_#{role.id}",
-                            class: "filled-in#{' disabled' if role.id == current_user.role.id}" %>
+                            class: "filled-in#{' disabled' if role.name == "Clients"}" %>
           <label for="<%= "role_ck_#{role.id}" %>"></label>
 
           <div class="invoice-name circle-img <%= random_card_color %>"><%= role.role_name %></div>
