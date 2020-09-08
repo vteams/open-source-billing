@@ -176,7 +176,7 @@ $(document).ready ->
 
     $textarea.on('change', (event) ->
       html = formatDummyText($textarea.val())
-      $dummy.html html
+      $(this).prev().html html
       positionTextarea()
       return
     ).trigger 'change'
