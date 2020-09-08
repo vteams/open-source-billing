@@ -6493,3 +6493,14 @@ ul.permission-list.client-permissions-list{
   font-size: 0.9em;
   color: white;
 }
+.user-list .list-item .checkbox-item {
+  width: 50px;
+}
+.user-list .list-item .invoice-details {
+  width: calc(100% - 55px);
+}
+@media (max-width: 1472px) {
+  #activity-sidebar.show-activity {
+    margin-right: -10px;
+  }
+}
