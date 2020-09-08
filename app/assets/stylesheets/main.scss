@@ -6504,12 +6504,36 @@ ul.permission-list.client-permissions-list{
     margin-right: -10px;
   }
 }
-textarea.description{
-  min-height: 36px;
+textarea.description {
+  min-height: 45px;
   border: none;
   resize: none;
-  height: 50px !important;
 }
 .description_row{
   padding: 0 0 0 0 !important;
+}
+#wrap {
+  width: 50%;
+  position: relative;
+  height: 70%;
+}
+
+#wrap .area {
+  resize: none;
+  outline: none;
+  display: block;
+  width: 100%;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  text-align: center;
+}
+
+#wrap textarea.area {
+  left: 0;
+  height: 100%;
+}
+
+#wrap .dummy {
+  left: 100%;
 }
