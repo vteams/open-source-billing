@@ -176,7 +176,7 @@ class @OsbPlugins
       else if invoice_date_value > due_date_value
         OsbPlugins.applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft",I18n.t("views.invoices.due_date_should_equal_or_greater"))
         flag = false
-      else if $('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) <= 0
+      else if $('#recurring').is(':checked') and $('#invoice_recurring_schedule_attributes_occurrences_0').is(':not(:checked)') and parseInt($('#how_many_rec').val()) <= 0
         OsbPlugins.applyPopover($("#how_many_rec"),"bottomMiddle","topLeft", I18n.t("views.common.enter_positive_value"))
         flag = false
       # Check if payment term is selected

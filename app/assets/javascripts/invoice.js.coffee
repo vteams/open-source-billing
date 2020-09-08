@@ -13,6 +13,12 @@ class @Invoice
     $('#recurring').prop('checked', true)
     $('.line_total').before('<span class="line_total_currency"></span>')
     $('.line_total_currency').html(window.currency_symbol)
+    $('.occurrences_radio_button').on "change", ->
+      if $('#invoice_recurring_schedule_attributes_occurrences_0').is(':checked')
+        $('#how_many_rec').prop('disabled', true)
+        $('#how_many_rec').val(0)
+      else
+        $('#invoice_recurring_schedule_attributes_occurrences_1').prop('disabled', false)
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
