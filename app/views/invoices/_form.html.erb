@@ -28,16 +28,18 @@
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
                           include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
-              <div class="base-currency-conversion">
-                <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
+              <% if Settings.currency.eql?('On') %>
+                <div class="base-currency-conversion">
+                  <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
-                <strong class="invoice_total_base_currency"></strong>
-                <%= f.input :base_currency_equivalent_total, as: :hidden %>
+                  <strong class="invoice_total_base_currency"></strong>
+                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
 
-                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
-                            include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
+                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
-              </div>
+                </div>
+              <% end %>
 
             </strong>
           </div>
