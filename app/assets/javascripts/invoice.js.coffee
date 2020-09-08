@@ -13,12 +13,12 @@ class @Invoice
     $('#recurring').prop('checked', true)
     $('.line_total').before('<span class="line_total_currency"></span>')
     $('.line_total_currency').html(window.currency_symbol)
-    $('.occurrences_radio_button').on "change", ->
-      if $('#invoice_recurring_schedule_attributes_occurrences_0').is(':checked')
-        $('#how_many_rec').prop('disabled', true)
-        $('#how_many_rec').val(0)
-      else
-        $('#invoice_recurring_schedule_attributes_occurrences_1').prop('disabled', false)
+#    $('.occurrences_radio_button').on "change", ->
+#      if $('#invoice_recurring_schedule_attributes_occurrences_0').is(':checked')
+#        $('#how_many_rec').prop('disabled', true)
+#        $('#how_many_rec').val(0)
+#      else
+#        $('#invoice_recurring_schedule_attributes_occurrences_1').prop('disabled', false)
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
@@ -141,6 +141,8 @@ class @Invoice
         text: u
 
 $(document).ready ->
+  if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val() == '-2'
+    $('.custom-often').removeClass('hidden')
   setTimeout (->
     $('#invoice_recurring_schedule_attributes_frequency').on 'change', ->
       if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val() == '-2'
@@ -168,7 +170,7 @@ $(document).ready ->
     minimumResultsForSearch: -1,
     dropdownCssClass: "tax-dropdown"
   });
-  $('#invoice_recurring_schedule_attributes_frequency').append $('<option value=\'-2\'>Custom</option>')
+#  $('#invoice_recurring_schedule_attributes_frequency').append $('<option value=\'-2\'>Custom</option>')
   $('#invoice_recurring_schedule_attributes_often_number').select2()
   $('#invoice_recurring_schedule_attributes_often_time').select2()
   $('.currency-select').material_select();

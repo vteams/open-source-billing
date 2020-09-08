@@ -42,10 +42,10 @@
               <div class="base-currency-conversion">
                 <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
-                <strong class="invoice_total_base_currency"></strong>
-                <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
-                            include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                  <strong class="invoice_total_base_currency"></strong>
+                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
+                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
+                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
               </div>
 
@@ -78,7 +78,10 @@
                     </span>
                 </div>
                 <div class="invoice-input-holder">
-                  <%= rs.input :frequency, collection: RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]},
+                  <%= rs.input :frequency, collection:
+
+                      (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
+                          [['Custom', -2, {'number_of_days' => -2 }]]),
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
                                input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                 </div>
