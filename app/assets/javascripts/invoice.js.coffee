@@ -52,7 +52,7 @@ class @Invoice
               success: (data, textStatus, jqXHR) ->
                 item = JSON.parse(data)
                 container = elem.parents('tr.fields')
-                container.find('textarea.description').val item[0]
+                container.find('input.description').val item[0]
                 container.find('td.description').html item[0]
                 container.find('input.cost').val item[1].toFixed(2)
                 container.find('td.cost').html item[1].toFixed(2)
@@ -155,30 +155,3 @@ $(document).ready ->
   });
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();
-
-  formatDummyText = (text) ->
-    if !text
-      return '&nbsp;'
-    text.replace(/\n$/, '<br>&nbsp;').replace /\n/g, '<br>'
-
-  $ ->
-    $wrap = $('#wrap')
-    $textarea = $('textarea')
-    $dummy = $('.dummy')
-
-    positionTextarea = ->
-      h = $wrap.height()
-      top = Math.max(0, (h - $dummy.height()) * 0.5)
-      $textarea.css
-        paddingTop: top
-        height: h - top
-      return
-
-    $textarea.on('change', (event) ->
-      html = formatDummyText($textarea.val())
-      $(this).prev().html html
-      positionTextarea()
-      return
-    ).trigger 'change'
-    # should debounce this
-    $(window).on 'resize', positionTextarea
