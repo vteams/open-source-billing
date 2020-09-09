@@ -93,8 +93,8 @@
                 <div class="invoice-input-holder">
                   <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
                                collection: [['0', 'Infinte'],
-                                            [rs.object.occurrences, '<input class="numeric optional remaining_occurrences center-align occurrences_radio_button" value='"#{rs.object.occurrences}"' type="number" step="any" name="invoice[recurring_schedule_attributes][occurrences]" id="how_many_rec"> remaining'.html_safe]],
-                               checked: rs.object.occurrences==0 ? '0' : rs.object.occurrences,
+                                            ['', '<input class="numeric optional remaining_occurrences center-align occurrences_radio_button" type="number" step="any" name="" id="how_many_rec"> remaining'.html_safe]],
+                               checked: rs.object.occurrences,
                                label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button'},
                                boolean_style: :inline %>
                   <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
@@ -108,7 +108,7 @@
                 <%= rs.input :delivery_option, as: :radio_buttons, label: false,
                              collection: [['send_invoice', t('views.invoices.send_invoice_automatically')],
                                           ['draft_invoice', t('views.invoices.create_draft_and_send_manully')]],
-                             checked: 'send_invoice',
+                             checked: rs.object.delivery_option,
                              label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' },
                              boolean_style: :inline %>
                 <%= rs.input :_destroy, as: :hidden %>
