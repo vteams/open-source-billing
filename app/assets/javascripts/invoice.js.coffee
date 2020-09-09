@@ -141,6 +141,8 @@ class @Invoice
         text: u
 
 $(document).ready ->
+  if $('.occurrences_radio_button').eq(1).is(':checked')
+    $('.remaining_occurrences').val($('.occurrences_radio_button').eq(1).attr('occurrence'))
   if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
     $('.custom-often').removeClass('hidden')
   setTimeout (->
@@ -148,14 +150,23 @@ $(document).ready ->
       if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
         $('.custom-often').removeClass('hidden')
         $('.custom_frequency').on 'change', ->
-          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').attr('number_of_days', DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_often_number').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_often_time').children('option:selected').val()))
-          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val(DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_often_number').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_often_time').children('option:selected').val()))
+          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').attr('number_of_days', DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
+          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val(DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
       else
         $('#invoice_recurring_schedule_attributes_frequency').children('option:contains("Custom")').removeAttr('number_of_days')
         $('#invoice_recurring_schedule_attributes_frequency').children('option:contains("Custom")').removeAttr('value')
         $('.custom-often').addClass('hidden')
 
   ),200
+
+  $('.occurrence_input').on 'change', ->
+    if $(document.getElementsByClassName('occurrence_input')[1]).is(':checked')
+      $('.remaining_occurrences').prop('disabled', false)
+      $('.occurrences_radio_button').eq(1).val($('.remaining_occurrences').val());
+    else if $(document.getElementsByClassName('occurrence_input')[0]).is(':checked')
+      $('.remaining_occurrences').val('')
+      $('.remaining_occurrences').prop('disabled', true)
+
   $('#more_deleted_invoices').click ->
     $('.all-deleted-invoices').show()
     $('#more_deleted_invoices').hide()
@@ -177,7 +188,7 @@ $(document).ready ->
     dropdownCssClass: "tax-dropdown"
   });
 #  $('#invoice_recurring_schedule_attributes_frequency').append $('<option value=\'-2\'>Custom</option>')
-  $('#invoice_recurring_schedule_attributes_often_number').select2()
-  $('#invoice_recurring_schedule_attributes_often_time').select2()
+  $('#invoice_recurring_schedule_attributes_frequency_repetition').select2()
+  $('#invoice_recurring_schedule_attributes_frequency_type').select2()
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();

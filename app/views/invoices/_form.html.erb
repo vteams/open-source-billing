@@ -87,15 +87,15 @@
                 </div>
                 <div class="custom-often hidden">
                   <span>Every</span>
-                  <%= rs.input :often_number,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
-                  <%= rs.input :often_time,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
+                  <%= rs.input :frequency_repetition,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
+                  <%= rs.input :frequency_type,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
                 </div>
                 <div class="invoice-input-holder">
                   <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
-                               collection: [['0', 'Infinte'],
-                                            ['', '<input class="numeric optional remaining_occurrences center-align occurrences_radio_button" type="number" step="any" name="" id="how_many_rec"> remaining'.html_safe]],
-                               checked: rs.object.occurrences,
-                               label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button'},
+                               collection: [['-1', 'Infinte'],
+                                            ['0', '<input class="numeric optional remaining_occurrences center-align occurrence_input" type="number" step="any" name="" value="" id="how_many_rec"> remaining'.html_safe, {'occurrence' => rs.object.occurrences}]],
+                               checked: rs.object.occurrences == -1 ? '-1' : '0',
+                               label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button occurrence_input'},
                                boolean_style: :inline %>
                   <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
                                wrapper_html: { class: 'input-field' },

@@ -6517,20 +6517,20 @@ li.collection-item a{
   display: flex;
   margin-top: 18px;
 }
-.custom-often span{
-  padding-top: 7px;
-}
-.invoice_recurring_schedule_often_number{
+//.custom-often span{
+//  padding-top: 7px;
+//}
+.invoice_recurring_schedule_frequency_repetition{
   width: 30%;
 }
-.invoice_recurring_schedule_often_number .select2-container{
+.invoice_recurring_schedule_frequency_repetition .select2-container{
   width: 100% !important;
   left: 7px;
 }
-.invoice_recurring_schedule_often_time{
+.invoice_recurring_schedule_frequency_type{
   width: 70%;
 }
-.invoice_recurring_schedule_often_time .select2-container{
+.invoice_recurring_schedule_frequency_type .select2-container{
   width: 88% !important;
   float: right;
 }

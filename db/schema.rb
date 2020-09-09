@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200827062117) do
+ActiveRecord::Schema.define(version: 20200909112820) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -134,10 +134,12 @@ ActiveRecord::Schema.define(version: 20200827062117) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
+    t.integer  "role_id",                limit: 4
   end
 
   add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
   add_index "clients", ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
+  add_index "clients", ["role_id"], name: "index_clients_on_role_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "account_id",        limit: 4
@@ -629,14 +631,16 @@ ActiveRecord::Schema.define(version: 20200827062117) do
 
   create_table "recurring_schedules", force: :cascade do |t|
     t.datetime "next_invoice_date"
-    t.string   "frequency",         limit: 255
-    t.integer  "occurrences",       limit: 4,   default: 0
-    t.string   "delivery_option",   limit: 255
-    t.integer  "invoice_id",        limit: 4
-    t.integer  "generated_count",   limit: 4,   default: 0
+    t.string   "frequency",            limit: 255
+    t.integer  "occurrences",          limit: 4,   default: 0
+    t.string   "delivery_option",      limit: 255
+    t.integer  "invoice_id",           limit: 4
+    t.integer  "generated_count",      limit: 4,   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enable_recurring",              default: true
+    t.boolean  "enable_recurring",                 default: true
+    t.integer  "frequency_repetition", limit: 4
+    t.string   "frequency_type",       limit: 255
   end
 
   create_table "roles", force: :cascade do |t|
@@ -645,6 +649,7 @@ ActiveRecord::Schema.define(version: 20200827062117) do
     t.string   "resource_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "for_client",                default: false
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
@@ -785,6 +790,7 @@ ActiveRecord::Schema.define(version: 20200827062117) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "clients", "roles"
   add_foreign_key "introductions", "clients"
   add_foreign_key "introductions", "users"
   add_foreign_key "mail_configs", "companies"
