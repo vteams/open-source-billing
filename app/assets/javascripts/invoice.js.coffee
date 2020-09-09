@@ -141,6 +141,9 @@ class @Invoice
         text: u
 
 $(document).ready ->
+  $('#recurring').on 'change', ->
+    if $(this).is(':not(:checked)')
+      OsbPlugins.hidePopover($(".invoice_recurring_schedule_delivery_option"))
   if $('.occurrences_radio_button').eq(1).is(':checked')
     $('.remaining_occurrences').val($('.occurrences_radio_button').eq(1).attr('occurrence'))
   if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
