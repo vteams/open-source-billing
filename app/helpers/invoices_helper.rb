@@ -385,4 +385,8 @@ module InvoicesHelper
 
     statuses
   end
+
+  def custom_recurring_value(form)
+    RecurringFrequency.pluck(:number_of_days).include?(form.object.frequency.to_i) ? -2 : form.object.frequency.to_i
+  end
 end

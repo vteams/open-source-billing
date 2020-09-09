@@ -81,14 +81,14 @@
                   <%= rs.input :frequency, collection:
 
                       (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
-                          [['Custom', -2, {'number_of_days' => -2 }]]),
+                          [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
                                input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                 </div>
                 <div class="custom-often hidden">
                   <span>Every</span>
-                  <%= rs.input :often_number,  collection: 1..12, label: false %>
-                  <%= rs.input :often_time,  collection: OFTEN_LIST, label: false %>
+                  <%= rs.input :often_number,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
+                  <%= rs.input :often_time,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
                 </div>
                 <div class="invoice-input-holder">
                   <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
