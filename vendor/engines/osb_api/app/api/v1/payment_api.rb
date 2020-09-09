@@ -13,7 +13,7 @@ module V1
       get do
         @payments = Payment.unarchived
         @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id')
-        @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ')
+        @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ').select('payments.*, clients.first_name, clients.last_name')
       end
 
       desc 'Fetch a single Payment'
