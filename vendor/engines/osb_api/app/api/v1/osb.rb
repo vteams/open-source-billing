@@ -11,7 +11,7 @@ module V1
         Doorkeeper::AccessToken.authenticate request.headers["Access-Token"]
       end
       def current_user
-        @current_user ||= ::User.find(current_token.resource_owner_id) if current_token
+        @current_user ||= ::User.find_by(authentication_token: request.headers["Access-Token"]) if request.headers["Access-Token"]
         unless @current_user
           error!('Unauthorized. Invalid or expired token.', 401)
         end

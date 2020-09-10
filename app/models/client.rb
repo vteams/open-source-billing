@@ -200,7 +200,7 @@ class Client < ActiveRecord::Base
   end
 
   def self. get_clients(params)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', unarchived: 'unarchived'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
@@ -210,7 +210,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with companies
     company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
-    company_clients = company_clients.send(mappings[params[:status].to_sym])
+    company_clients = company_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_clients = company_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
     company_clients = company_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)

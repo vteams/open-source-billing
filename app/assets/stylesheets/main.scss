@@ -5073,6 +5073,8 @@ i.material-icons.close:hover {
 }
 
 #recurring_schedule_container{
+  padding-right: 12px;
+  padding-left: 10px;
   ul.dropdown-content{
     min-width: 120px;
     width: 120px;
@@ -6542,7 +6544,10 @@ li.collection-item a{
   height: 19px !important;
   width: 30% !important;
 }
-.invoice_recurring_schedule_occurrences{
+.invoice_recurring_schedule_occurrences {
   margin-top: 21px;
   margin-bottom: 21px;
+}
+label[for="user_have_all_companies_access_false"]{
+  margin-left: 10px;
 }

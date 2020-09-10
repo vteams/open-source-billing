@@ -17,7 +17,7 @@
     <%= simple_form_for(@sub_user, url: sub_user_path, method: :put, remote: params[:remote].to_i == 1,
                         html: { id: 'sub_user_form', multipart: true }) do |f| %>
       <%= hidden_field_tag :setting_form, params[:setting_form] %>
-      <div class="modal-body">
+      <div class="modal-body users">
         <div class="row edit-user-row">
           <%= f.submit class: 'btn_large submit hidden' %>
           <%= f.input :user_name, label: t('views.users.full_name'), input_html: {id: 'user_name', name: 'user_name'},
@@ -38,7 +38,7 @@
           </div>
           <%= f.collection_radio_buttons :have_all_companies_access, [[true, 'All Companies'] ,[false, 'Only Selected Companies']], :first, :last %>
           <%= check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'assign_all_companies' %>
-          <label for="assign_all_companies">Select all</label>
+          <label for="assign_all_companies" class="assign_all_companies_label">Select all</label>
           <div class="company-selection">
             <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list', collection_wrapper_tag: 'ul', item_wrapper_tag: 'li' %>
           </div>

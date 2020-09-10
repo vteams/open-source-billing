@@ -55,11 +55,17 @@ module V1
                }
            }
       get do
-        @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
+        @invoices = Invoice.joins(:client).select("invoices.*,clients.*, invoices.id")
         @invoices = filter_by_company(@invoices)
       end
 
-      desc 'previews the selected invoice'
+      desc 'previews the selected invoice',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
       params do
         requires :invoice_id
       end
@@ -68,7 +74,13 @@ module V1
         @invoice = Services::InvoiceService.get_invoice_for_preview(params[:invoice_id])
       end
 
-      desc 'Return unpaid-invoices'
+      desc 'Return unpaid-invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
 
       params do
         optional 'client_id'
@@ -195,12 +207,12 @@ module V1
            }
       params do
         requires :invoice, type: Hash do
-          requires :invoice_number, type: String
+          # requires :invoice_number, type: String
           requires :invoice_date, type: String
           optional :po_number, type: String
           optional :discount_percentage, type: String
           requires :client_id, type: Integer
-          requires :terms, type: String
+          optional :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
@@ -218,14 +230,22 @@ module V1
           optional :discount_type, type: String
           optional :company_id, type: Integer
           optional :invoice_line_items_attributes, type: Array do
-            requires :invoice_id, type: Integer
+            # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
             requires :item_name, type: String
             requires :item_description, type: String
             requires :item_unit_cost, type: Integer
             requires :item_quantity, type: Integer
-            requires :actual_price, type: String
+            # requires :actual_price, type: String binding.pry
           end
+          optional :recurring_schedule_attributes, type: Hash do
+            requires :next_invoice_date, type: String
+            requires :frequency, type: String
+            requires :occurrences, type: Integer
+            requires :delivery_option, type: String
+            requires :enable_recurring, type: Boolean
+          end
+
         end
       end
       post do

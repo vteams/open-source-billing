@@ -4,6 +4,7 @@ module Services
 
       def self.create(params)
         client = ::Client.new(client_params_api(params))
+        client.skip_password_validation = true
         if client.save
           {message: 'Successfully created'}
         else

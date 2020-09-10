@@ -26,7 +26,7 @@
         <div class="btn-content">
           <%= f.button t('views.sessions.submit'), type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
           <% if resource_class.name.eql?('User') %>
-            <%= link_to 'Sign In as a Client', new_portal_client_session_path(locale: :en), target: "_blank", class: 'client_login_link' %>
+            <%= link_to 'Sign In as a Client', new_portal_client_session_path(locale: :en), class: 'client_login_link' %>
           <% end %>
         </div>
       <%end%>
