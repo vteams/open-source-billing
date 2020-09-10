@@ -64,7 +64,15 @@ module Services
                  :id, :invoice_id, :item_description, :item_id, :item_name,
                  :item_quantity, :actual_price, :item_unit_cost, :tax_1, :tax_2, :_destroy
              ]
+         },
+         {
+             recurring_schedule_attributes:
+                 [
+                     :id, :invoice_id, :next_invoice_date, :frequency, :occurrences,
+                     :delivery_option, :_destroy, :enable_recurring
+                 ]
          }
+
 
         )
       end

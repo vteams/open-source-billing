@@ -238,6 +238,14 @@ module V1
             requires :item_quantity, type: Integer
             # requires :actual_price, type: String binding.pry
           end
+          optional :recurring_schedule_attributes, type: Hash do
+            requires :next_invoice_date, type: String
+            requires :frequency, type: String
+            requires :occurrences, type: Integer
+            requires :delivery_option, type: String
+            requires :enable_recurring, type: Boolean
+          end
+
         end
       end
       post do
