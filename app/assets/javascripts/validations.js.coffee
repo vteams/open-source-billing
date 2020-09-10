@@ -82,16 +82,20 @@ class @Validation
       ignore: 'input[type=hidden]'
       rules:
         'invoice[client_id]': required: true
+        'invoice[recurring_schedule_attributes][delivery_option]': required: true
         'invoice[invoice_date]': lessThan: true
         'invoice[due_date]': greaterThan: true
         'invoice[invoice_line_items_attributes][0][item_id]': required: true
       messages:
         'invoice[client_id]': required: 'Client is required'
+        'invoice[recurring_schedule_attributes][delivery_option]': required: 'Select at least one delivery option'
         'invoice[invoice_line_items_attributes][0][item_id]': required: 'Line item is required'
 
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'invoice[client_id]')
           $('#s2id_invoice_client_id').append $error
+        else if ($element.attr('name') == 'invoice[recurring_schedule_attributes][delivery_option]')
+          $('.invoice_recurring_schedule_delivery_option').append $error
         else
           $error.insertAfter($element);
 
@@ -117,7 +121,7 @@ class @Validation
         'estimate[estimate_line_items_attributes][0][item_id]': required: true
       messages:
         'estimate[client_id]': required: 'Client is required'
-        'estimate[estimate_line_items_attributes][0][item_id]': required: 'Atleast one line item is required'
+        'estimate[estimate_line_items_attributes][0][item_id]': required: 'Line item is required'
 
 
 
