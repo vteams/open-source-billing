@@ -38,6 +38,7 @@
             <div class="clearfix"></div>
             <%= f.input :default_note, label: "Default Note", as: :text, input_html: {  maxlength: 400},
                         wrapper_html: { class: 'input-field col s4'} %>
+            <%= f.input :due_date_period, label: "Default Due Date Period", wrapper_html: { class: 'input-field col s2' }, input_html: {value: 7} %>
               <%#= f.input :base_currency_id, label: t('views.common.base_currency'), collection: Currency.all.collect{|c| [c.unit, c.id] }, prompt: t('views.common.currency'), selected: @company.base_currency_id, input_html: {class: 'edit-company-select2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
           </div>
 

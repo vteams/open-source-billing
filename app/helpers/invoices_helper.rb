@@ -389,4 +389,8 @@ module InvoicesHelper
   def default_company_note(company, invoice)
     (Company.find(company).default_note.present? && params[:action].eql?('new')) ? Company.find(company).default_note : invoice.notes
   end
+
+  def default_due_date(company, invoice)
+    params[:action].eql?('new') && Company.find(company).due_date_period.present? ? Date.today + Company.find(company).due_date_period : invoice.due_date
+  end
 end

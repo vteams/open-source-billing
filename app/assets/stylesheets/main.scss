@@ -6523,7 +6523,7 @@ ul.permission-list.client-permissions-list{
 .company_show_default_note [type="checkbox"].filled-in:checked + label:before{
   left: 0 !important;
 }
-.select.input-field label{
+.select.input-field label, .company_due_date_period label{
   transform: translateY(-140%);
 }
 //transform translateY(-140%) .input-field label:not(.label-icon).active
