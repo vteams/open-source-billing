@@ -385,4 +385,8 @@ module InvoicesHelper
 
     statuses
   end
+
+  def default_company_note(company, invoice)
+    (Company.find(company).default_note.present? && params[:action].eql?('new')) ? Company.find(company).default_note : invoice.notes
+  end
 end

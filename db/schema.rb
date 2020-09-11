@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200831092943) do
+ActiveRecord::Schema.define(version: 20200911121843) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20200831092943) do
     t.datetime "deleted_at"
     t.integer  "base_currency_id",  limit: 4,   default: 1
     t.string   "abbreviation",      limit: 255
+    t.string   "default_note",      limit: 255
   end
 
   create_table "companies_users", id: false, force: :cascade do |t|
@@ -631,14 +632,16 @@ ActiveRecord::Schema.define(version: 20200831092943) do
 
   create_table "recurring_schedules", force: :cascade do |t|
     t.datetime "next_invoice_date"
-    t.string   "frequency",         limit: 255
-    t.integer  "occurrences",       limit: 4,   default: 0
-    t.string   "delivery_option",   limit: 255
-    t.integer  "invoice_id",        limit: 4
-    t.integer  "generated_count",   limit: 4,   default: 0
+    t.string   "frequency",            limit: 255
+    t.integer  "occurrences",          limit: 4,   default: 0
+    t.string   "delivery_option",      limit: 255
+    t.integer  "invoice_id",           limit: 4
+    t.integer  "generated_count",      limit: 4,   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enable_recurring",              default: true
+    t.boolean  "enable_recurring",                 default: true
+    t.integer  "frequency_repetition", limit: 4
+    t.string   "frequency_type",       limit: 255
   end
 
   create_table "roles", force: :cascade do |t|

@@ -159,7 +159,7 @@
     </div>
     <div class="invoice-add-notes">
       <a href="#"><i class="material-icons">chat</i> </a>
-      <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
+      <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400, value: "#{default_company_note(current_company, f.object)}"},
                   wrapper_html: { class: 'invoice-add-notes-textare'} %>
     </div>
     <% if f.object.persisted? %>

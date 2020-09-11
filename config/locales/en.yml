@@ -798,6 +798,7 @@ en:
       companies: "Companies"
       name: "Company name"
       new: "New Company"
+      default_note: "Default Note"
       no_record_msg: "You haven't created any company yet. Please click on New Company button to create new client."
       no_archived_msg: "You haven't any archived company."
       no_deleted_msg: "You haven't any deleted company."

@@ -6513,3 +6513,17 @@ ul.permission-list.client-permissions-list{
 .description_row{
   padding-right: 0px !important;
 }
+#company_default_note{
+  height: 100px;
+  width: 100%;
+  border: 0;
+  resize: none;
+  outline: none;
+}
+.company_show_default_note [type="checkbox"].filled-in:checked + label:before{
+  left: 0 !important;
+}
+.select.input-field label{
+  transform: translateY(-140%);
+}
+//transform translateY(-140%) .input-field label:not(.label-icon).active
