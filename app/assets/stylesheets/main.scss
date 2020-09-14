@@ -6271,6 +6271,7 @@ li.collection-item a{
   font-size: 13px;
   color: #8f8f8f;
   left: 0px !important;
+  min-width: 287px !important;
 }
 .introjs-helperNumberLayer{
   padding: 0px !important;
@@ -6527,3 +6528,31 @@ ul.permission-list.client-permissions-list{
   transform: translateY(-140%);
 }
 //transform translateY(-140%) .input-field label:not(.label-icon).active
+.introjs-skipbutton{
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  font-weight: bold !important;
+  float: left;
+  text-shadow: none !important;
+}
+.introjs-skipbutton:hover{
+  color: #fff !important;
+  background: #c82333 !important;
+  border-color: #bd2130 !important;
+}
+.introjs-prevbutton{
+  left: -1px !important;
+}
+.introjs-prevbutton, .introjs-nextbutton{
+  background: #09b8e2 !important;
+  //border-color: #fff !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  border-color: #09b8e2 !important;
+  text-shadow: none !important;
+  border-radius: 4px !important;
+}
+.introjs-prevbutton:hover, .introjs-nextbutton:hover{
+  background: #07A4D8 !important;
+}
