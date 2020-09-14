@@ -30,7 +30,7 @@ class @Company
     jQuery("#company_contact_name,#company_email,#company_company_name").keypress ->
       hideQtip(jQuery(this))
 
-    $("#companyForm").submit ->
+    $("#companyForm1").submit ->
       flag = true
       pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
       if jQuery("#company_company_name").val() is ""
