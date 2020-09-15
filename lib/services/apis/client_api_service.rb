@@ -5,6 +5,7 @@ module Services
       def self.create(params)
         client = ::Client.new(client_params_api(params))
         client.skip_password_validation = true
+        ClientApiService.associate_entity(params, client)
         if client.save
           {message: 'Successfully created'}
         else
@@ -31,6 +32,26 @@ module Services
         else
           {message: 'Not deleted'}
         end
+      end
+
+      def self.associate_entity(params, entity)
+        ids, controller = params[:client][:company_ids], params[:controller]
+
+        ActiveRecord::Base.transaction do
+          # delete existing associations
+          if params[:action] == 'update'
+            entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id, entity_type: entity.class.to_s)
+            entities.map(&:destroy) if entities.present?
+          end
+
+          # associate item with whole account or selected companies
+          if params[:association] == 'account'
+            current_user.accounts.first.send(controller) << entity
+          else
+            ::Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
+          end
+        end
+
       end
 
       private

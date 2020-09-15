@@ -84,7 +84,7 @@ module V1
       end
 
       post do
-        Services::Apis::ClientApiService.create(params)
+        Services::Apis::ClientApiService.create(params.merge(controller: 'clients'))
       end
 
       desc 'Update Client',
