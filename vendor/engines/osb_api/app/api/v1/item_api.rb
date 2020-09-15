@@ -69,7 +69,7 @@ module V1
       end
 
       post do
-        Services::Apis::ItemApiService.create(params)
+        Services::Apis::ItemApiService.create(params.merge(controller: 'items'))
       end
 
       desc 'Update Item',
