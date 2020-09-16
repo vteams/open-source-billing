@@ -48,6 +48,7 @@ module V1
     mount V1::OSB::TaskApi
     mount V1::OSB::StaffApi
     mount V1::OSB::RecurringFrequencyApi
+    mount V1::OSB::SettingsApi
     add_swagger_documentation(
         base_path: "/api",
         hide_documentation_path: true
