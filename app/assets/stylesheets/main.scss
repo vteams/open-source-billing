@@ -6456,3 +6456,32 @@ li.collection-item a{
 .introjs-prevbutton:hover, .introjs-nextbutton:hover{
   background: #07A4D8 !important;
 }
+@media only screen and (max-width: 600px){
+  #header .logo{
+    font-size: 15px !important;
+  }
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
+@media only screen and (max-width: 615px) {
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
+@media only screen and (max-width: 933px) {
+  .company_name{
+    float: left;
+  }
+  #header .header-center .hdr-select-holder .select-wrapper{
+    margin-right: 0px !important;
+    display: flex !important;
+  }
+}@media only screen and (max-width: 813px) {
+  #header .header-center .hdr-select-holder .select-wrapper{
+    margin-right: 0px !important;
+  }
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
