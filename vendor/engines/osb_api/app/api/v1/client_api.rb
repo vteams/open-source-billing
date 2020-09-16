@@ -14,6 +14,16 @@ module V1
     resource :clients do
       before {current_user}
 
+      desc 'Fetch all industries'
+      get :industries do
+        INDUSTRY_LIST
+      end
+
+      desc 'Fetch all currencies'
+      get :currencies do
+        Currency.all
+      end
+
       desc 'Fetch  single client',
            headers: {
                "Access-Token" => {
