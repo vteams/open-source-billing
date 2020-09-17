@@ -64,7 +64,7 @@ module InvoicesHelper
     a.map do |word|
       if word == "and"
         word.downcase
-        else
+      else
         word.capitalize
       end
     end
@@ -392,5 +392,8 @@ module InvoicesHelper
 
   def default_due_date(company, invoice)
     params[:action].eql?('new') && Company.find(company).due_date_period.present? ? Date.today + Company.find(company).due_date_period : invoice.due_date
+  end
+  def custom_recurring_value(form)
+    RecurringFrequency.pluck(:number_of_days).include?(form.object.frequency.to_i) ? -2 : form.object.frequency.to_i
   end
 end

@@ -82,12 +82,22 @@ class @Validation
       ignore: 'input[type=hidden]'
       rules:
         'invoice[client_id]': required: true
+        'invoice[recurring_schedule_attributes][delivery_option]': required: true
         'invoice[invoice_date]': lessThan: true
         'invoice[due_date]': greaterThan: true
         'invoice[invoice_line_items_attributes][0][item_id]': required: true
       messages:
         'invoice[client_id]': required: 'Client cannot be blank'
         'invoice[invoice_line_items_attributes][0][item_id]': required: 'Item cannot be blank'
+        'invoice[recurring_schedule_attributes][delivery_option]': required: 'Select at least one delivery option'
+
+      errorPlacement: ($error, $element) ->
+        if ($element.attr('name') == 'invoice[client_id]')
+          $('#s2id_invoice_client_id').append $error
+        else if ($element.attr('name') == 'invoice[recurring_schedule_attributes][delivery_option]')
+          $('.invoice_recurring_schedule_delivery_option').append $error
+        else
+          $error.insertAfter($element);
 
 
 

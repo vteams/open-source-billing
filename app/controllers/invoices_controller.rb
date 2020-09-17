@@ -425,7 +425,7 @@ class InvoicesController < ApplicationController
                                         ],
                                     recurring_schedule_attributes:
                                         [
-                                          :id, :invoice_id, :next_invoice_date, :frequency, :occurrences,
+                                          :id, :invoice_id, :next_invoice_date, :frequency, :occurrences, :frequency_repetition, :frequency_type,
                                           :delivery_option, :_destroy
                                         ],
                                     client_attributes:

@@ -6476,8 +6476,78 @@ li.collection-item a{
 .client_login_link{
   float: right;
 }
-.invoice_recurring_schedule_occurrences{
-  margin-top: 8px;
+#invoice_line_items_tbl .line-items-fields td div.item-select a.select2-choice, #estimate_line_items_tbl .line-items-fields td div.item-select a.select2-choice{
+  height: unset !important;
+  overflow: unset !important;
+  white-space: unset !important;
+  line-height: 18px;
+}
+#invoice_line_items_tbl .line-items-fields td div.item-select a.select2-choice span.select2-chosen, #estimate_line_items_tbl .line-items-fields td div.item-select a.select2-choice span.select2-chosen{
+  word-break: break-word;
+  display: block;
+  overflow: unset !important;
+  white-space: unset !important;
+}
+.line_total_currency{
+  font-size: 0.8rem;
+  color: #9e9e9e;
+}
+.invoice-date-div{
+  width: 48%;
+  float: left;
+}
+.due-date-div{
+  width: 46%;
+  margin-right: 24px;
+  float: right;
+}
+#s2id_invoice_client_id{
+  margin-bottom: 32px;
+}
+#invoice_client_id-error{
+  position: absolute;
+}
+.new-invoice-section > div {
+  position: relative;
+}
+.new-invoice-section > div span.error {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -15px;
+}
+.custom-often{
+  display: flex;
+  margin-top: 18px;
+}
+//.custom-often span{
+//  padding-top: 7px;
+//}
+.invoice_recurring_schedule_frequency_repetition{
+  width: 30%;
+}
+.invoice_recurring_schedule_frequency_repetition .select2-container{
+  width: 100% !important;
+  left: 7px;
+}
+.invoice_recurring_schedule_frequency_type{
+  width: 70%;
+}
+.invoice_recurring_schedule_frequency_type .select2-container{
+  width: 88% !important;
+  float: right;
+}
+.invoice_recurring_schedule_occurrences span{
+  width: 100%;
+  display: inline-block;
+}
+.remaining_occurrences{
+  height: 19px !important;
+  width: 30% !important;
+}
+.invoice_recurring_schedule_occurrences {
+  margin-top: 21px;
+  margin-bottom: 21px;
 }
 label[for="user_have_all_companies_access_false"]{
   margin-left: 10px;

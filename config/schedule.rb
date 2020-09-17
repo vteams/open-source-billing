@@ -28,7 +28,7 @@ every :day, at: '12:45am' do
 end
 
 every :day, at: '1:15am' do
-  rake "rucurring_invoice:generate"
+  rake "recurring_invoice:generate"
 end
 
 every :day, at: '12:00am' do
