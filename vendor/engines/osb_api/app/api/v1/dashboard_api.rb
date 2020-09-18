@@ -26,13 +26,21 @@ module V1
       desc 'Returns current activities'
 
       get :current_invoices  do
-        @current_invoices = Invoice.current_invoices
+        @current_invoices = Invoice.by_company(@current_user.current_company)
+                                .where('IFNULL(due_date, invoice_date) >= ?', Date.today).joins(:client)
+                                .joins(:currency).order('due_date DESC').select('invoices.invoice_number, invoices.due_date, invoices.invoice_date,
+                                   invoices.invoice_total, clients.organization_name, currencies.unit')
+                                .limit(10)
+
       end
 
       desc 'Returns past invoices'
 
       get :past_invoices  do
-        @past_invoices = Invoice.past_invoices
+        @past_invoices = Invoice.by_company(@current_user.current_company)
+                             .where('IFNULL(due_date, invoice_date) < ?', Date.today)
+                                     .order('due_date DESC').joins(:client).joins(:currency).limit(10).select('invoices.invoice_number, invoices.due_date, invoices.invoice_date,
+                                   invoices.invoice_total, clients.organization_name, currencies.unit')
       end
 
       desc 'Returns amount billed'
@@ -69,6 +77,17 @@ module V1
         @ytd_income = Payment.by_company(@current_user.current_company).in_year(Date.today.year).joins(:currency).group('currencies.unit').sum('payments.payment_amount')
       end
 
+      get :invoices_graph do
+        Invoice.by_company(@current_user.current_company).where('invoices.created_at > ?', 6.months.ago)
+            .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)')
+            .sum('invoices.invoice_total')
+      end
+
+      get :payments_graph do
+        Payment.by_company(@current_user.current_company).where('payments.payment_date > ?', 6.months.ago)
+            .joins(:currency).group('currencies.unit').group('MONTHNAME(payments.payment_date)')
+            .sum('payments.payment_amount')
+      end
     end
 
   end
