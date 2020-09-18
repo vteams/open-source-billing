@@ -242,6 +242,8 @@ module V1
             requires :next_invoice_date, type: String
             requires :frequency, type: String
             requires :occurrences, type: Integer
+            optional :frequency_repetition, type: Integer
+            optional :frequency_type, type: String
             requires :delivery_option, type: String
             requires :enable_recurring, type: Boolean
           end
