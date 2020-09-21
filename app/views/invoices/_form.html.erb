@@ -29,7 +29,7 @@
           </div>
           <div class="due-date-div">
             <%= f.input :due_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the due date for your invoice', :'data-step' => '8' },
-                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
+                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: default_due_date(current_company, f.object) }, as: :string %>
           </div>
           <div class="clearfix"></div>
 
