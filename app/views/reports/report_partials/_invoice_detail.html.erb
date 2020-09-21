@@ -31,7 +31,7 @@
           <tbody class="table-view-body first-row">
           <% invoices.each do |invoice| %>
             <div class="page_break"></div>
-            <tr class="<%= request.format.pdf? ? 'avoid_page_break report-border-bottom' : 'invoice-card invoice-table-row bottom-bordered' %>" >
+            <tr class="<%= request.format.pdf? ? 'avoid_page_break report-border-bottom' : 'invoice-card invoice-table-row bottom-bordered' %>"  data-invoice-url="<%= url_for(invoice) %>">
               <td width="30%" class="report-invoice-number">
                 <%= request.format.pdf? ? invoice.formatted_invoice_number : link_to(invoice.formatted_invoice_number, invoice_path(invoice), remote: true, class: "invoices_link invoice_show_link") %>
               </td>
