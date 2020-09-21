@@ -88,6 +88,19 @@ module V1
             .joins(:currency).group('currencies.unit').group('MONTHNAME(payments.payment_date)')
             .sum('payments.payment_amount')
       end
+
+      get :recent_activity do
+        invoices = Invoice.select('client_id, invoices.currency_id, invoice_total, invoices.created_at')
+                       .by_company(@current_user.current_company).joins(:client).order('created_at desc').limit(10)
+
+        payments = Payment.select('payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id')
+                       .joins(:invoice => :client).where(company_id: @current_user.current_company).order('created_at desc').limit(10)
+        recent_activities = []
+        invoices.each {|inv| recent_activities << {:activity_type => "invoice", :activity_action => "sent to", :client => (inv.unscoped_client.organization_name rescue ''), :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "USD"), :code => (inv.currency.present? ? inv.currency.code : "$"), :activity_date => inv.created_at.strftime("%d/%m/%Y")}}
+        payments.each { |pay| recent_activities << {:activity_type => "payment", :activity_action => "received from", :client => (pay.invoice.unscoped_client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "USD"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "$"), :activity_date => pay.created_at.strftime("%d/%m/%Y")} }
+        recent_activities.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
+        recent_activities.group_by{|a| a[:activity_date]}
+      end
     end
 
   end
