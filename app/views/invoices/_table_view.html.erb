@@ -22,7 +22,7 @@
         </thead>
         <tbody class="table-view-body">
         <% @invoices.each do |invoice| %>
-          <tr class="invoice-card invoice-table-row">
+          <tr class="invoice-card invoice-table-row" data-invoice-url="<%= url_for(invoice) %>">
             <td class="td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-invoice_id= <%=invoice.id %>>
                 <div class="checkbox-item invoice_checkbox">

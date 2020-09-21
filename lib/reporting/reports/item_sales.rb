@@ -70,8 +70,8 @@ module Reporting
           total["invoice_number"] = ''
           total["client_name"] = ''
           total["item_quantity"] += row.map{|x| x["item_quantity"]}.sum
-          total["total_amount"] += row.map{|x| x["total_amount"]}.sum
-          total["net_total"] += row.map{|x| x["net_total"].to_f}.sum
+          total["total_amount"] += row.map{|x| x["total_amount"] || 0}.sum
+          total["net_total"] += row.map{|x| x["net_total"].to_f || 0}.sum
           total["discount_amount"] += row.map{|x| x["discount_amount"] || 0 }.sum
           total["currency_code"] = row.first["currency_code"]
           @report_total << total
