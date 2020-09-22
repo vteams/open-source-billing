@@ -53,8 +53,10 @@ class @OsbPlugins
     OsbPlugins.updateMaterializeSelect()
 
     if $('#recurring').is(":checked")
+      $("#recurring_schedule_container").removeClass('hide_visibility')
       $("#invoice_recurring_schedule_attributes__destroy").val false
     else
+      $("#recurring_schedule_container").addClass('hide_visibility')
       $("#invoice_recurring_schedule_attributes__destroy").val true
 
     $('#recurring').on 'click', ->
