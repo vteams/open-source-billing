@@ -84,7 +84,7 @@ class @OsbPlugins
       setTimeout (->
         InvoiceCalculator.updateInvoiceTotal()
       ), 100
-    Invoice.setInvoiceDueDate($("#invoice_date_picker").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
+#    Invoice.setInvoiceDueDate($("#invoice_date_picker").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
     # Subtract discount percentage from subtotal
     $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
