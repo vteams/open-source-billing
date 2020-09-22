@@ -1,24 +1,8 @@
 class @Invoice
 
   jQuery ->
-#    setTimeout (->
-#      $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
-#      next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
-#      $('#next_issue_date').val(next_issue_date)
-#      $('#invoice_recurring_schedule_attributes_frequency').change ->
-#        $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
-#        next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
-#        $('#next_issue_date').val(next_issue_date)
-#    ), 200
-    $('#recurring').prop('checked', true)
     $('.line_total').before('<span class="line_total_currency"></span>')
     $('.line_total_currency').html(window.currency_symbol)
-#    $('.occurrences_radio_button').on "change", ->
-#      if $('#invoice_recurring_schedule_attributes_occurrences_0').is(':checked')
-#        $('#how_many_rec').prop('disabled', true)
-#        $('#how_many_rec').val(0)
-#      else
-#        $('#invoice_recurring_schedule_attributes_occurrences_1').prop('disabled', false)
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
