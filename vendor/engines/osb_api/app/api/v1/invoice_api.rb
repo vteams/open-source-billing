@@ -228,10 +228,10 @@ module V1
           optional :created_at, type: String
           optional :updated_at, type: String
           optional :payment_terms_id, type: String
-          optional :due_date, type: String
+          requires :due_date, type: String
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
-          optional :company_id, type: Integer
+          requires :company_id, type: Integer
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
