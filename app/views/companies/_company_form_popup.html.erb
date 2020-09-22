@@ -44,7 +44,7 @@
 
           <div class="row">
             <h5 class="text-blue title-heading"><%= t('views.common.address') %></h5>
-            <%= f.input :country, label: t('Country'), collection: COUNTRY_LIST, selected: @company.country, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
+            <%= f.input :country, label: t('Country'), collection: COUNTRY_LIST, selected: @company.country, prompt: t('views.common.select_a_country'), input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :street_address_1, label: "#{t('views.common.street')}#1", wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :street_address_2, label: "#{t('views.common.street')}#2", wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :city, label: t('views.common.city'), wrapper_html: { class: 'input-field col s6 m4' } %>
