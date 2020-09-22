@@ -126,13 +126,13 @@ module V1
         requires :id
       end
       get '/send_invoice/:id' do
-          invoice = Invoice.find(params[:id])
-          if invoice.status == 'sent'
-            {error: 'Invoice already sent'}
-          else
-            invoice.send_invoice(@current_user, params[:invoice_id])
-            {message: 'Invoice sent'}
-          end
+        invoice = Invoice.find(params[:id])
+        if invoice.status == 'sent'
+          {error: 'Invoice already sent'}
+        else
+          invoice.send_invoice(@current_user, params[:invoice_id])
+          {message: 'Invoice sent'}
+        end
       end
 
       desc 'Create Payment for Invoice',
@@ -195,7 +195,10 @@ module V1
       end
 
       get ':id' do
-        Invoice.find params[:id]
+        invoice = Invoice.find params[:id]
+        invoice_hash = []
+        invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule}
+        invoice_hash
       end
 
       desc 'Create Single Invoice. You can also create multiple invoice line items for invoice from Rest Clients e.g Postman',
@@ -251,7 +254,7 @@ module V1
         end
       end
       post do
-         #params[:log][:company_id] = get_company_id
+        #params[:log][:company_id] = get_company_id
         Services::Apis::InvoiceApiService.create(params)
       end
 
@@ -286,6 +289,16 @@ module V1
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
           requires :company_id, type: Integer
+          optional :recurring_schedule_attributes, type: Hash do
+            requires :next_invoice_date, type: String
+            requires :frequency, type: String
+            requires :occurrences, type: Integer
+            optional :frequency_repetition, type: Integer
+            optional :frequency_type, type: String
+            requires :delivery_option, type: String
+            requires :enable_recurring, type: Boolean
+          end
+
         end
       end
 
