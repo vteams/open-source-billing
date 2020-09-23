@@ -60,16 +60,16 @@
           </div>
           <%= f.simple_fields_for :mail_config do |mail| %>
             <div class="row company-mail-config">
-              <h5 class="text-blue title-heading"><%= t('Mail Configuration') %></h5>
-              <%= mail.input :address, wrapper_html: { class: 'input-field col s6 m4' } %>
+              <h5 class="text-blue title-heading"><%= t('E-Mail Configuration') %></h5>
+              <%= mail.input :address, label: 'Server Address' ,wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :port, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :authentication, collection: MailConfig::AUTHENTICATION_TYPES, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
               <%= mail.input :from, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :user_name, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :password, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :enable_starttls_auto, input_html: { class: 'filled-in'}, as: :boolean,
+              <%= mail.input :enable_starttls_auto, label: 'Auto STARTTLS', input_html: { class: 'filled-in'}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
-              <%= mail.input :tls, input_html: { class: 'filled-in'}, as: :boolean,
+              <%= mail.input :tls, label: 'TLS', input_html: { class: 'filled-in'}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
               <%= mail.input :openssl_verify_mode, collection: MailConfig::OPEN_SSL_VERIFICATIONS_MODES, input_html: {class: 'edit-company-select3 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
 

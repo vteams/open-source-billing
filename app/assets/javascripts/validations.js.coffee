@@ -26,10 +26,17 @@ class @Validation
 
 
   @CompanySettingForm = ->
+    $('#companyForm').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('#companyForm').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -44,7 +51,7 @@ class @Validation
 
 
   @RoleSettingForm = ->
-    $('#role_side_form').validate
+    $('#new_role').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->
@@ -126,10 +133,17 @@ class @Validation
 
 
   @ItemForm = ->
+    $('.item_form').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -148,10 +162,17 @@ class @Validation
 
 
   @TaxForm = ->
+    $('.tax_form').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('.tax_form').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -165,10 +186,17 @@ class @Validation
 
 
   @ClientForm = ->
+    $('#newClient').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('#newClient').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
