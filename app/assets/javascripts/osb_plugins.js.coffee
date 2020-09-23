@@ -136,6 +136,9 @@ class @OsbPlugins
       Invoice.setInvoiceDueDate $('#invoice_date_picker').val(), number_of_days
 
     $("#invoice_client_id").change ->
+      setTimeout (->
+        $(".line_total_currency").html(window.currency_symbol)
+      ), 100
       OsbPlugins.hidePopover($("#invoice_client_id").parents('.select-wrapper'));
     $("#invoice_due_date_picker").change ->
       OsbPlugins.hidePopover($("#invoice_due_date_picker"));
