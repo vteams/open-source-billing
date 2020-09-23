@@ -272,7 +272,6 @@ module V1
           optional :po_number, type: String
           optional :discount_percentage, type: String
           requires :client_id, type: Integer
-          requires :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
