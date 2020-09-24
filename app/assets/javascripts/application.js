@@ -279,6 +279,7 @@ $(document).ready(function(){
     initDemoLinksClick();
     disable_right_click_for_browser();
     disable_f12_key_in_browser();
+    disable_esc();
 });
 
 function initCustomConfirmPopUp() {
@@ -439,7 +440,21 @@ function disable_right_click_for_browser() {
         return false;
     });
 }
-
+function disable_esc(){
+    document.onkeydown = function(e) {
+        // evt = evt || window.event;
+        if (event.keyCode == 27) {
+            if ($('.modal').hasClass('open')){
+                res = confirm('Are you sure you want to close?')
+            }
+            if (res) {
+                $('.modal').modal('close')
+            } else {
+                return false;
+            }
+        }
+    }
+}
 function disable_f12_key_in_browser(){
     document.onkeydown = function(e) {
         if(event.keyCode == 123) {
