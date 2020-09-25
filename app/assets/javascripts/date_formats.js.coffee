@@ -114,11 +114,11 @@ class DateFormats
 
   @get_next_issue_date:(repetition, time) ->
     range = undefined
-    if time=="Weekly"
+    if time=="Week(s)"
       range = 7
-    else if time == "Monthly"
+    else if time == "Month(s)"
       range = 30
-    else if time == "Yearly"
+    else if time == "Year(s)"
       range = 365
 
     frequency = repetition * range
