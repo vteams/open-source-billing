@@ -306,3 +306,8 @@ u.have_all_companies_access = true
 u.current_company = Company.first.id
 u.accounts << Account.first
 u.save
+
+RecurringFrequency.delete_all
+RecurringFrequency.create!(title: 'Weekly', number_of_days: 7)
+RecurringFrequency.create!(title: 'Monthly', number_of_days: 30)
+RecurringFrequency.create!(title: 'Yearly', number_of_days: 365)
