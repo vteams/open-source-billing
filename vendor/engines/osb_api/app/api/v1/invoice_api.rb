@@ -55,7 +55,31 @@ module V1
                }
            }
       get do
-        @invoices = Invoice.joins(:client).select("invoices.*,clients.*, invoices.id")
+        @invoices = Invoice.unarchived.joins(:client).select("invoices.*,clients.*, invoices.id")
+        @invoices = filter_by_company(@invoices)
+      end
+
+      desc 'All Archived invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get :archived_invoices do
+        @invoices = Invoice.archived.joins(:client).select("invoices.*,clients.*, invoices.id")
+        @invoices = filter_by_company(@invoices)
+      end
+
+      desc 'All Deleted invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get :deleted_invoices do
+        @invoices = Invoice.deleted.joins(:client).select("invoices.*,clients.*, invoices.id")
         @invoices = filter_by_company(@invoices)
       end
 
