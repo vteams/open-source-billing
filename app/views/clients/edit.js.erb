@@ -33,3 +33,7 @@ if ($('#account_association').prop('checked', true)){
     $('#select_all_companies').prop('checked', false)
     $('#select_all_companies').attr('disabled', true)
 }
+Client.ClientCountryState();
+$('#client_country').on('change', function(){
+    Client.ClientCountryState();
+})
