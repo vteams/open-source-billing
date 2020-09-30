@@ -8,26 +8,26 @@ setTimeout(function () {
     if($('.intro').hasClass("<%= intro_class %>")){
         intro = introJs();
         intro.setOptions({
-          scrollToElement: true,
-          scrollTo: 'tooltip',
-           steps: [
-               {
-                   element: document.getElementById("step1"),
-                   intro: "Here you can provide client's organization information"
-               },
-               {
-                   element: document.getElementById("step2"),
-                   intro: "Here you can provide client's personal information"
-               },
-               {
-                   element: document.getElementById("step3"),
-                   intro: "Here you can provide client's additional information"
-               },
-               {
-                   element: document.getElementById("step4"),
-                   intro: "Here you can assign companies to client"
-               },
-           ]
+            scrollToElement: true,
+            scrollTo: 'tooltip',
+            steps: [
+                {
+                    element: document.getElementById("step1"),
+                    intro: "Here you can provide client's organization information"
+                },
+                {
+                    element: document.getElementById("step2"),
+                    intro: "Here you can provide client's personal information"
+                },
+                {
+                    element: document.getElementById("step3"),
+                    intro: "Here you can provide client's additional information"
+                },
+                {
+                    element: document.getElementById("step4"),
+                    intro: "Here you can assign companies to client"
+                },
+            ]
         });
         intro.start();
         $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
@@ -58,4 +58,9 @@ $('#new_client_role_id').material_select('destroy')
 $('#new_client_role_id').material_select('destroy');
 $('#new_client_role_id').select2({
     placeholder: 'Role'
+})
+$('.us_state_dropdown').hide();
+$('.canada_state_dropdown').hide();
+$('#client_country').on('change', function(){
+    Client.ClientCountryState();
 })

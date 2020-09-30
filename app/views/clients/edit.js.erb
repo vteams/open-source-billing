@@ -38,3 +38,7 @@ $('#new_client_role_id').material_select('destroy');
 $('#new_client_role_id').select2({
     placeholder: 'Role'
 })
+Client.ClientCountryState();
+$('#client_country').on('change', function(){
+    Client.ClientCountryState();
+})

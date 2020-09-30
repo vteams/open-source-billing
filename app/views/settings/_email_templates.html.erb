@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         <% @email_templates.each do |email_template| %>
-            <tr>
+            <tr class="email_templates">
               <td><%= email_template.template_type %></td>
               <td><%= email_template.subject %></td>
               <td><%= email_template.status %></td>
