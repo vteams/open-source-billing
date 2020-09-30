@@ -220,8 +220,9 @@ module V1
 
       get ':id' do
         invoice = Invoice.find params[:id]
+        payment_details = {amount_due: invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), amount_paid: invoice.payments.sum(:payment_amount)}
         invoice_hash = []
-        invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule}
+        invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule, payment_details: payment_details}
         invoice_hash
       end
 
