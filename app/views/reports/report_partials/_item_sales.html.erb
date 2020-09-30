@@ -7,6 +7,7 @@
       <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
       <span class="text-uppercase"><%= raw @report.period %></span>
     </div>
+    <p><%= t('views.reports.item_detail_dtl') %></p>
 
     <%= render 'reports/report_partials/format_links'%>
   </div>
