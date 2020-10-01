@@ -47,6 +47,9 @@ module V1
 
       get :amount_billed  do
         @amount_billed = Invoice.by_company(@current_user.current_company).joins(:currency).group('currencies.unit').sum('invoices.invoice_total')
+        amount_array=[]
+        @amount_billed.each { |k,v| amount_array << {currency: k, amount: v} }
+        amount_array
       end
 
       desc 'Return amount billed in base currency'
@@ -75,18 +78,26 @@ module V1
 
       get :ytd_income  do
         @ytd_income = Payment.by_company(@current_user.current_company).in_year(Date.today.year).joins(:currency).group('currencies.unit').sum('payments.payment_amount')
+        amount_array=[]
+        @ytd_income.each { |k,v| amount_array << {currency: k, amount: v} }
+        amount_array
       end
 
       get :invoices_graph do
-        Invoice.by_company(@current_user.current_company).where('invoices.created_at > ?', 6.months.ago)
-            .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)')
-            .sum('invoices.invoice_total')
+        @invoices_graph = Invoice.by_company(@current_user.current_company).where('invoices.created_at > ?', 6.months.ago)
+            .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
+        invoices_graph = []
+        @invoices_graph.each { |k,v| invoices_graph << {currency: k[0], month: k[1], amount: v} }
+        invoices_graph
       end
 
       get :payments_graph do
-        Payment.by_company(@current_user.current_company).where('payments.payment_date > ?', 6.months.ago)
+        @payments_graph = Payment.by_company(@current_user.current_company).where('payments.payment_date > ?', 6.months.ago)
             .joins(:currency).group('currencies.unit').group('MONTHNAME(payments.payment_date)')
             .sum('payments.payment_amount')
+        payments_graph = []
+        @payments_graph.each { |k,v| payments_graph << {currency: k[0], month: k[1], amount: v} }
+        payments_graph
       end
 
       get :recent_activity do

@@ -2,6 +2,7 @@ module V1
   class InvoiceApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
+    formatter :json, Grape::Formatter::Rabl
     #prefix :api
 
     helpers do
