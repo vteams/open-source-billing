@@ -23,6 +23,10 @@ class ReportsController < ApplicationController
   after_action :user_introduction, only: [:invoice_detail], if: -> { current_user.introduction.present? &&  !current_user.introduction.report? }
   include Reporting
 
+  def index
+
+  end
+
   def invoice_detail
     @report = Reporting::Reporter.get_report({:report_name => 'invoice_detail', :report_criteria => get_criteria(params)})
     authorize @report
