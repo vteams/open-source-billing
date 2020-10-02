@@ -15,6 +15,7 @@ module Services
       def self.update(params)
         item = ::Item.find(params[:id])
         if item.present?
+          ItemApiService.associate_entity(params, item)
           if item.update_attributes(item_params_api(params))
             {message: 'Successfully updated'}
           else

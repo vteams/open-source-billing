@@ -16,6 +16,7 @@ module Services
       def self.update(params)
         client = ::Client.find(params[:id])
         if client.present?
+          ClientApiService.associate_entity(params, client)
           if client.update_attributes(client_params_api(params))
             {message: 'Successfully updated'}
           else
