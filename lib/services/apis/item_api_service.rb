@@ -36,11 +36,11 @@ module Services
 
 
       def self.associate_entity(params, entity)
-        ids, controller = params[:item][:company_ids], params[:controller]
+        ids, controller = params[:item][:company_ids], 'items'
 
         ActiveRecord::Base.transaction do
           # delete existing associations
-          if params[:action] == 'update'
+          if params[:id].present?
             entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id, entity_type: entity.class.to_s)
             entities.map(&:destroy) if entities.present?
           end
