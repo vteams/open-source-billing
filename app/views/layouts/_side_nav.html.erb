@@ -89,7 +89,7 @@
 
       <% if policy(Reporting::Reports::InvoiceDetail).invoice_detail? %>
         <li>
-          <%= active_link_to invoice_detail_reports_path, title: t('header.links.reports.reports') do %>
+          <%= active_link_to reports_path, title: t('header.links.reports.reports') do %>
             <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
             <span><%= t('header.links.reports.reports') %></span>
           <% end %>

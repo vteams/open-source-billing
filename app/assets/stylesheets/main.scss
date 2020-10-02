@@ -6271,6 +6271,7 @@ li.collection-item a{
   font-size: 13px;
   color: #8f8f8f;
   left: 0px !important;
+  min-width: 287px !important;
 }
 .introjs-helperNumberLayer{
   padding: 0px !important;
@@ -6548,6 +6549,167 @@ li.collection-item a{
   margin-top: 21px;
   margin-bottom: 21px;
 }
-label[for="user_have_all_companies_access_false"]{
+label[for="user_have_all_companies_access_false"] {
   margin-left: 10px;
+}
+.introjs-skipbutton{
+  color: #fff !important;
+  background: #dc3545 !important;
+  border-color: #dc3545 !important;
+  font-weight: bold !important;
+  float: left;
+  text-shadow: none !important;
+}
+.introjs-skipbutton:hover{
+  color: #fff !important;
+  background: #c82333 !important;
+  border-color: #bd2130 !important;
+}
+.introjs-prevbutton{
+  left: -1px !important;
+}
+.introjs-prevbutton, .introjs-nextbutton{
+  background: #09b8e2 !important;
+  //border-color: #fff !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  border-color: #09b8e2 !important;
+  text-shadow: none !important;
+  border-radius: 4px !important;
+}
+.introjs-prevbutton:hover, .introjs-nextbutton:hover{
+  background: #07A4D8 !important;
+}
+@media only screen and (max-width: 600px){
+  #header .logo{
+    font-size: 15px !important;
+  }
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
+@media only screen and (max-width: 615px) {
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
+@media only screen and (max-width: 933px) {
+  .company_name{
+    float: left;
+  }
+  #header .header-center .hdr-select-holder .select-wrapper{
+    margin-right: 0px !important;
+    display: flex !important;
+  }
+}@media only screen and (max-width: 813px) {
+  #header .header-center .hdr-select-holder .select-wrapper{
+    margin-right: 0px !important;
+  }
+  #notification-btn{
+    margin-right: 0px !important;
+  }
+}
+.primary_new_link{
+  position: relative;
+  bottom: 40px;
+}
+.secondary_new_link{
+  position: relative;
+  bottom: 22px;
+}
+.currency-select span.caret{
+  left: 30px;
+}
+.company_resize_logo img{
+  height: 100px;
+}
+#client_province_state{
+  min-height: 56px;
+}
+.country_state_text_field{
+  margin-top: 18px;
+}
+tr.email_templates td{
+  font-size: 14px !important;
+  color: #454545 !important;
+}
+.no-record-message{
+  color: #000000;
+}
+.report_heading{
+  height: 65px;
+  border-bottom: 1px solid #cdd4d9;
+}
+.report_heading h1{
+  font-size: 36px;
+  font-weight: 300;
+}
+.invoice_expense_reports{
+  position: relative;
+  margin-top: 3.3333333333rem;
+}
+.invoice_expense_reports h2{
+  color: #062942;
+  font-size: 24px;
+  font-weight: 300;
+}
+.marginBottom--1{
+  margin-bottom: 1.3333333333rem;
+}
+.marginTop--half{
+  margin-top: .6666666667rem!important;
+}
+.reportTile-container{
+  padding-bottom: 12px;
+  padding-right: 20px;
+  display: inline-block;
+  width: 50%;
+  block-size: 111px;
+  box-sizing: border-box;
+}
+.reportTile-content:hover{
+  border-color: #9ba9b3;
+}
+.reportTile-content{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #cdd4d9;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 rgba(6,41,66,.1);
+  display: block;
+  position: relative;
+  background: #fff;
+}
+.reportTile-skewer{
+  display: flex;
+  align-items: center;
+  min-height: 73px;
+}
+.paddingY--quarter{
+  padding-bottom: .333333rem !important;
+  padding-top: .3333333333rem!important;
+}
+.reportTile-description{
+  font-size: 12px;
+  line-height: 18px;
+  color: #8394a1;
+}
+.paddingRight--1{
+  padding-right: 1.1111111111rem!important;
+}
+.textAlign--center{
+  text-align: center;
+}
+.report_img img{
+  height: 30px;
+}
+.js-report-tile-name{
+  font-size: 18px;
+  font-weight: 400;
+  color: #062942;
+}
+.tiles-container{
+  display: inline-table;
 }

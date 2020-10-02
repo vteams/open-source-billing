@@ -1,4 +1,4 @@
-<% client = Client.find_by_id(activity.trackable_id) %>
+<% client = Client.unscoped.find_by_id(activity.trackable_id) %>
 <li class="collection-item">
   <a href="<%= client_path(client) if client.present? %>" data-remote="true">
   <span>

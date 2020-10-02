@@ -33,7 +33,7 @@
           <tbody class="table-view-body" >
 
           <% payments.each_with_index do |payment, index| %>
-            <tr class="invoice-card invoice-table-row invoice-item-row avoid_page_break <%= request.format.pdf? ? ' report-border-bottom' : 'bottom-bordered' %>">
+            <tr class="invoice-card invoice-table-row invoice-item-row avoid_page_break <%= request.format.pdf? ? ' report-border-bottom' : 'bottom-bordered' %>" data-invoice-url="<%= url_for(payment.client) %>">
               <td width="30%" class="align_left text-overflow-class item-name" data-overflow-rows="2">
                 <%= payment[:client_name] %>
               </td>

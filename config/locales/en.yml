@@ -752,6 +752,7 @@ en:
       aged_accounts_receivable: "AG Receivable"
       aged_accounts_receivable_dtl: "This report shows summary of outstanding amount against unpaid and/or partially paid invoices for each client."
       invoice_detail_dtl: "This report shows detail invoices for each client."
+      item_detail_dtl: "This report shows items sold to each client."
       item_sales: "Item Sales"
       item_sales_dtl: "This report shows item sales for each client"
       invoice_detail: "Invoice Report"

@@ -7,6 +7,7 @@
       <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
       <span class="text-uppercase"><%= raw @report.period %></span>
     </div>
+    <p><%= t('views.reports.item_detail_dtl') %></p>
 
     <%= render 'reports/report_partials/format_links'%>
   </div>
@@ -31,7 +32,7 @@
           <% end %>
           <tbody class="table-view-body">
           <% items.each_with_index do |item, index| %>
-            <tr class=" invoice-card invoice-table-row invoice-item-row avoid_page_break <%= request.format.pdf? ? ' report-border-bottom' : 'bottom-bordered' %>">
+            <tr class=" invoice-card invoice-table-row invoice-item-row avoid_page_break <%= request.format.pdf? ? ' report-border-bottom' : 'bottom-bordered' %>" data-invoice-url="<%= url_for(item.invoice.client) %>">
               <td width="17%" class="item-name">
                 <%= item.item_name %>
               </td>

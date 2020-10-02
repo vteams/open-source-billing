@@ -67,7 +67,7 @@
     <% end %>
 <% else %>
     <tr>
-      <td colspan="6" class="report_no_data"><%= t('views.reports.report_no_data') %></td>
+      <td colspan="6" class="report_no_data no-record-message"><%= t('views.reports.report_no_data') %></td>
     </tr>
 <% end %>
 <% unless @report.report_data.blank? %>

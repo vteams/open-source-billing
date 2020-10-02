@@ -37,7 +37,7 @@ class @SubUser
     jQuery("#user_name,#email,#password,#password_confirmation").keypress ->
       hidePopover(jQuery(this))
 
-    $("form#sub_user_form").submit ->
+    $("form#sub_user_form1").submit ->
       flag = true
       email =  $("#email").val()
       pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i

@@ -18,18 +18,25 @@ class @Validation
           required: true
 
       messages:
-        user_name: required: 'Full Name is required'
-        email:  required: 'Email is required'
-        role_id: required: 'Role is required'
-        password: required: 'Password is required'
-        password_confirmation: required: 'Password confirmation is required'
+        user_name: required: 'Name cannot be blank'
+        email:  required: 'Email cannot be blank'
+        role_id: required: 'Role cannot be blank'
+        password: required: 'Password cannot be blank'
+        password_confirmation: required: 'Password confirmation cannot be blank'
 
 
   @CompanySettingForm = ->
+    $('#companyForm').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('#companyForm').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -38,13 +45,13 @@ class @Validation
         'company[contact_name]': required: true
         'company[email]': required: true
       messages:
-        'company[company_name]': required: 'Company Name is required'
-        'company[contact_name]': required: 'Contact Name is required'
-        'company[email]': required: 'Email is required'
+        'company[company_name]': required: 'Company name cannot be blank'
+        'company[contact_name]': required: 'Contact mame cannot be blank'
+        'company[email]': required: 'Email cannot be blank'
 
 
   @RoleSettingForm = ->
-    $('#role_side_form').validate
+    $('#new_role').validate
       onfocusout: (element) ->
         $(element).valid()
       onkeyup: (element) ->
@@ -54,7 +61,7 @@ class @Validation
       rules:
         'role[name]': required: true
       messages:
-        'role[name]': required: 'Name is required'
+        'role[name]': required: 'Name cannot be blank'
 
 
   @InvoiceForm = ->
@@ -66,11 +73,11 @@ class @Validation
 
     jQuery.validator.addMethod 'lessThan', ((value, element) ->
           return value <= $('#invoice_due_date_picker').val()
-      ), 'Must be less or equal to invoice due date.'
+      ), 'Invoice date cannot be greater than due date'
 
     jQuery.validator.addMethod 'greaterThan', ((value, element) ->
           return value >= $('#invoice_date_picker').val()
-      ), 'Must be greater or equal to invoice date.'
+      ), 'Due date cannot be less than invoice date'
 
     $('.invoice-form').validate
       onfocusout: (element) ->
@@ -87,9 +94,9 @@ class @Validation
         'invoice[due_date]': greaterThan: true
         'invoice[invoice_line_items_attributes][0][item_id]': required: true
       messages:
-        'invoice[client_id]': required: 'Client is required'
+        'invoice[client_id]': required: 'Client cannot be blank'
+        'invoice[invoice_line_items_attributes][0][item_id]': required: 'Item cannot be blank'
         'invoice[recurring_schedule_attributes][delivery_option]': required: 'Select at least one delivery option'
-        'invoice[invoice_line_items_attributes][0][item_id]': required: 'Line item is required'
 
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'invoice[client_id]')
@@ -120,16 +127,23 @@ class @Validation
         'estimate[client_id]': required: true
         'estimate[estimate_line_items_attributes][0][item_id]': required: true
       messages:
-        'estimate[client_id]': required: 'Client is required'
-        'estimate[estimate_line_items_attributes][0][item_id]': required: 'Line item is required'
+        'estimate[client_id]': required: 'Client cannot be blank'
+        'estimate[estimate_line_items_attributes][0][item_id]': required: 'Item cannot be blank'
 
 
 
   @ItemForm = ->
+    $('.item_form').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -140,18 +154,25 @@ class @Validation
         'item[quantity]': required: true, number: true
 
       messages:
-        'item[item_name]': required: 'Name is required'
-        'item[item_description]': required: 'Description is required'
-        'item[unit_cost]': required: 'Unit Cost is required', number: 'Unit cost should be in numbers'
-        'item[quantity]': required: 'Quantity is required', number: 'Quantity should be in numbers'
+        'item[item_name]': required: 'Name cannot be blank'
+        'item[item_description]': required: 'Description cannot be blank'
+        'item[unit_cost]': required: 'Unit cost cannot be blank', number: 'Unit cost must be in numeric'
+        'item[quantity]': required: 'Quantity cannot be blank', number: 'Quantity must be in numeric'
 
 
 
   @TaxForm = ->
+    $('.tax_form').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('.tax_form').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -159,16 +180,23 @@ class @Validation
         'tax[name]': required: true
         'tax[percentage]': required: true, number: true
       messages:
-        'tax[name]': required: 'Name is required'
-        'tax[percentage]': required: 'Percentage is required', number: 'Percentage should be in numbers'
+        'tax[name]': required: 'Name cannot be blank'
+        'tax[percentage]': required: 'Percentage cannot be blank', number: 'Percentage must be in numeric'
 
 
 
   @ClientForm = ->
+    $('#newClient').submit ->
+      $('.invalid-error').removeClass('hidden')
+    $('.invalid-error').removeClass('hidden')
     $('#newClient').validate
       onfocusout: (element) ->
-        $(element).valid()
+        if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
+          $(element).valid()
+        else
+          $('#'+element.id+'-error').addClass('hidden')
       onkeyup: (element) ->
+        $('#'+element.id+'-error').removeClass('hidden')
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
@@ -178,10 +206,10 @@ class @Validation
         'client[last_name]': required: true
         'client[email]': required: true
       messages:
-        'client[organization_name]': required: 'Organization Name is required'
-        'client[first_name]': required: 'First Name is required'
-        'client[last_name]': required: 'Last Name is required'
-        'client[email]': required: 'Email is required'
+        'client[organization_name]': required: 'Organization name cannot be blank'
+        'client[first_name]': required: 'First name cannot be blank'
+        'client[last_name]': required: 'Last name cannot be blank'
+        'client[email]': required: 'Email cannot be blank'
 
 
 
@@ -196,7 +224,7 @@ class @Validation
       rules:
         'payments[][payment_amount]': required: true, number: true
       messages:
-        'payments[][payment_amount]': required: 'Amount is required', number: 'Please enter a valid amount'
+        'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount'
 
 
 
