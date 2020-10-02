@@ -2,6 +2,8 @@ module V1
   class ItemApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
+    formatter :json, Grape::Formatter::Rabl
+
     #prefix :api
 
     helpers do
@@ -25,8 +27,8 @@ module V1
                    required: true
                }
            }
-      get do
-        get_items
+      get :rabl => 'items/items.rabl' do
+        @items = get_items
       end
 
       desc 'Fetch a single Item',

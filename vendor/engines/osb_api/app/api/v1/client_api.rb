@@ -2,6 +2,7 @@ module V1
   class ClientApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
+    formatter :json, Grape::Formatter::Rabl
     #prefix :api
 
     helpers do
@@ -45,7 +46,7 @@ module V1
                    required: true
                }
            }
-      get do
+      get :rabl => 'clients/clients.rabl' do
         criteria = {
             status: params[:status] || 'unarchived',
             user: @current_user,
