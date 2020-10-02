@@ -6648,6 +6648,9 @@ tr.email_templates td{
   position: relative;
   margin-top: 3.3333333333rem;
 }
+.settings-tiles-section{
+  margin-top: 1.3333333333rem !important;
+}
 .invoice_expense_reports h2{
   color: #062942;
   font-size: 24px;
@@ -6666,6 +6669,9 @@ tr.email_templates td{
   width: 50%;
   block-size: 111px;
   box-sizing: border-box;
+  -webkit-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
 }
 .reportTile-content:hover{
   border-color: #9ba9b3;
@@ -6711,5 +6717,6 @@ tr.email_templates td{
   color: #062942;
 }
 .tiles-container{
-  display: inline-table;
+  display: flex;
+  flex-wrap: wrap;
 }

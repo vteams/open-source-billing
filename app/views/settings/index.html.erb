@@ -1,4 +1,4 @@
-<%= render 'setting_activity' %>
+<%#= render 'setting_activity' %>
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%> mCustomScrollbar' >
   <!--- main content --->
   <!--- breadcrum Bar --->
@@ -6,10 +6,89 @@
     <h3 class="intro settings-index-false-intro" data-intro="Here you can do settings for your application" data-step="1"> <%= t('views.settings.settings') %> </h3>
   </div>
   <%= render 'basic_setting'%>
+  <section class="invoice_expense_reports settings-tiles-section">
+    <div class="marginTop--half marginBottom--1 tiles-container settings-tile-container">
+      <div class="reportTile-container">
+        <%= link_to(sub_users_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <%= image_tag 'invoice_detail_icon.svg' %>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Users</span>
+                <div class="reportTile-description js-report-tile-description">Create and manage all the users of your site and control their access to application</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
+        <%= link_to(companies_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <%= image_tag 'item-sales-icon.svg' %>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Companies</span>
+                <div class="reportTile-description js-report-tile-description">Create and manage all the companies of your site</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
+        <%= link_to(roles_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <%= image_tag 'revenue_by_client_icon.svg' %>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Roles</span>
+                <div class="reportTile-description js-report-tile-description">Create roles and manage their permissions for your users </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
+        <%= link_to(recurring_frequencies_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <%= image_tag 'revenue_by_client_icon.svg' %>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Recurring Frequencies</span>
+                <div class="reportTile-description js-report-tile-description">Create recurring frequencies to manage your recurring invoices</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
+        <%= link_to(email_templates_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <%= image_tag 'revenue_by_client_icon.svg' %>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Email Templates</span>
+                <div class="reportTile-description js-report-tile-description">Manage your email templates for sending invoices, estimates etc</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
 
-  <div class="page-box">
-    <%= render 'email_templates'%>
-  </div>
+<!--  <div class="page-box">-->
+    <%#= render 'email_templates'%>
+<!--  </div>-->
 </div>
 <script>
     delete_user = "<%= destroy_bulk_sub_users_path  %>"
