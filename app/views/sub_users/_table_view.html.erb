@@ -4,6 +4,12 @@
         <table class="bordered grid-view">
           <thead>
           <tr>
+            <th class="align_center td-checkbox checkbox-item">
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="select_all_items"></label>
+              </div>
+            </th>
             <th><%= t('views.common.name') %></th>
             <th width="35%"><%= t('views.common.email') %></th>
             <th><%= t('views.common.date') %></th>
@@ -13,7 +19,16 @@
           </thead>
           <tbody class="table-view-body">
           <% @sub_users.each do |user| %>
-              <tr>
+              <tr class="invoice-card invoice-table-row" data-user-url="">
+                <td class="td-checkbox checkbox-item invoice-row">
+                  <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-user_id= <%=user.id %>>
+                    <div class="checkbox-item invoice_checkbox">
+                      <%= check_box_tag "company_ids[]", user.id, false, :id => "user_#{user.id}", class: "filled-in checked-invoice f-l" %>
+                      <label for="<%= "user_#{user.id}" %>"></label>
+                      <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= user.card_name rescue 'n/a' %></div>
+                    </div>
+                  </div>
+                </td>
                 <td>
                   <strong><%= link_to user.name.present? ? user.name : 'N/A' , OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}" %></strong>
                 </td>
@@ -21,19 +36,14 @@
                 <td><%= user.created_at.strftime(get_date_format) %></td>
                 <td><%= (user.role.present? && user.role.name.present?) ? user.role.name : 'N/A' %></td>
                 <td class="action-btn-group">
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= user.id %>' data-alignment="right" data-beloworigin="true">
-                    <i class="material-icons">more_vert</i>
-                  </a>
-                  <ul id="dropdown_<%= user.id %>" class="dropdown-content z-depth-4">
-                    <li><%= link_to raw("<i class='material-icons'>create</i> Edit"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true,
-                                    class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %></li>
+                    <%= link_to raw("<i class='material-icons'>create</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_sub_user_path(user), remote: true,
+                                    class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
                     <% if current_user != user %>
-                      <li><%= link_to raw("<i class='material-icons'>delete</i> Delete"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : sub_user_path(user), method: :delete,
+                      <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : sub_user_path(user), method: :delete,
                                       data: {confirm: t('helpers.messages.confirm'),
                                              success: t('views.users.bulk_delete')},
-                                      class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %></li>
+                                      class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
                     <% end %>
-                  </ul>
                 </td>
               </tr>
           <% end %>

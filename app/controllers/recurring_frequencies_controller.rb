@@ -1,5 +1,9 @@
 class RecurringFrequenciesController < ApplicationController
 
+  def index
+    @recurring_frequencies = RecurringFrequency.all.page(params[:page]).per(@per_page)
+  end
+
   def new
     @recurring_frequency = RecurringFrequency.new
     respond_to do |format|

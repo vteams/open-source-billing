@@ -23,7 +23,7 @@
     <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render 'taxes_container' %></div>
       <div style="margin-top: 10px" class="right">
-        <%= link_to ' + New Tax ', new_tax_path, remote: true, class: "#{(@taxes.count > 0 && @taxes.count < 9) || @taxes.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
+        <%= link_to ' + New Tax ', new_tax_path, remote: true, class: "#{(@taxes.count > 0 && @taxes.count <= 9) || @taxes.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
       </div>
 
       <%= render partial: 'bulk_actions'%>

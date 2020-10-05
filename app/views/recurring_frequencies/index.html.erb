@@ -1,0 +1,57 @@
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="container roles-container">
+    <div class="flex-wrapper">
+      <!--- breadcrum Bar --->
+      <div class="flex-item breadcrum-bar">
+        <div class="card-white-panel">
+          <h3 class="with-grid-icons">
+            <span><%= link_to 'Recurring Frequencies', 'javascript:;', class: 'active' %></span>
+          </h3>
+
+        </div>
+      </div>
+    </div>
+    <% if @recurring_frequencies.count > 0 %>
+      <div class="new-invoice-holder">
+        <div class="new-invoice-table-holder main-invoice page-box role-box">
+          <table class="bordered grid-view">
+            <thead>
+            <tr>
+              <th style="width: 30%">Name</th>
+              <th>Number Of Days</th>
+              <th class="center-align">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="table-view-body">
+            <% @recurring_frequencies.each do |frequency| %>
+              <tr>
+                <td>
+                  <p><%= frequency.title %></p>
+                </td>
+                <td><%= frequency.number_of_days %></td>
+                <td>
+                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= frequency.id %>' data-alignment="right" data-beloworigin="true">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <ul id="dropdown_<%= frequency.id %>" class="dropdown-content z-depth-4">
+                    <li><%= link_to raw("<i class='material-icons'>delete</i>Delete"), frequency, method: :delete,
+                                    data:{confirm: t('helpers.messages.confirm'),
+                                          success: t('views.invoices.invoice_deleted')} %></li>
+                    <li><%= link_to raw("<i class='material-icons'>create</i>Edit"), edit_recurring_frequency_path(frequency), remote: true %></li>
+                  </ul>
+
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+    <%= render partial: 'shared/pagination', locals: {model_object: @recurring_frequencies} %>
+    <div style="" class="right">
+      <%= link_to ' + New Recurring Frequency ', new_recurring_frequency_path, remote: true, class: "#{(@recurring_frequencies.count > 0 && @recurring_frequencies.count <= 9) || @recurring_frequencies.count == 0 ? "secondary_new_link" : 'primary_new_link'}"  %>
+    </div>
+
+  </div>
+</div>

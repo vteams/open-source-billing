@@ -98,7 +98,7 @@
 
       <% if policy(Settings).index? %>
         <li>
-          <%= active_link_to settings_path, active: [['settings', 'companies', 'sub_users', 'roles'], ['index', 'index', 'index', 'index']] do %>
+          <%= active_link_to settings_path, active: [['settings', 'companies', 'sub_users', 'roles', 'recurring_frequencies', 'email_templates'], ['index']] do %>
             <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
             <span><%= t('views.settings.settings') %></span>
           <% end %>

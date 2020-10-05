@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
     def filter(params, per_page)
       date_format = current.nil? ? '%Y-%m-%d' : (current.settings.date_format || '%Y-%m-%d')
       users = params[:search].present? ? self.search(params[:search]).records : self
-      users = users.role_ids(params[:role_ids]) if params[:role_ids].present?
+      users = users.role_id(params[:role_id]) if params[:role_id].present?
       users = users.created_at(
           (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
       ) if params[:create_at_start_date].present?
