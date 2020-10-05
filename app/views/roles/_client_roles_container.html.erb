@@ -18,7 +18,7 @@
                 <% if role.id != default_client_role.try(:id) %>
                   <%= link_to raw("<i class='material-icons'>delete</i>"), role, method: :delete,
                               data:{confirm: t('helpers.messages.confirm'),
-                                    success: t('views.invoices.invoice_deleted')} %>
+                                    success: 'Role has been deleted.'} %>
                 <% end %>
                 <%= link_to raw("<i class='material-icons'>create</i>"), edit_role_url(role), remote: true %>
               </div>

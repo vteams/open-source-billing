@@ -30,15 +30,10 @@
                 </td>
                 <td><%= frequency.number_of_days %></td>
                 <td>
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= frequency.id %>' data-alignment="right" data-beloworigin="true">
-                    <i class="material-icons">more_vert</i>
-                  </a>
-                  <ul id="dropdown_<%= frequency.id %>" class="dropdown-content z-depth-4">
-                    <li><%= link_to raw("<i class='material-icons'>delete</i>Delete"), frequency, method: :delete,
+                    <%= link_to raw("<i class='material-icons'>delete</i>"), frequency, method: :delete,
                                     data:{confirm: t('helpers.messages.confirm'),
-                                          success: t('views.invoices.invoice_deleted')} %></li>
-                    <li><%= link_to raw("<i class='material-icons'>create</i>Edit"), edit_recurring_frequency_path(frequency), remote: true %></li>
-                  </ul>
+                                          success: 'Recurring Frequency has been deleted.'} %>
+                    <%= link_to raw("<i class='material-icons'>create</i>"), edit_recurring_frequency_path(frequency), remote: true %>
 
                 </td>
               </tr>

@@ -17,7 +17,7 @@ class RecurringFrequenciesController < ApplicationController
       if @recurring_frequency.save
         format.js {
           flash[:notice] = 'Recurring Frequency has been created successfully'
-          render :js => "window.location.href='#{settings_path}'"
+          render :js => "window.location.href='#{recurring_frequencies_path}'"
         }
       end
     end
@@ -44,6 +44,12 @@ class RecurringFrequenciesController < ApplicationController
       end
     end
 
+  end
+
+  def destroy
+    @recurring_frequency = RecurringFrequency.find(params[:id])
+    @recurring_frequency.destroy
+    render json: {location: recurring_frequencies_path}
   end
 
   def destroy_bulk

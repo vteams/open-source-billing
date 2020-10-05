@@ -1,11 +1,6 @@
 require 'sidekiq/web'
 Osb::Application.routes.draw do
 
-  resources :recurring_frequencies do
-    collection do
-      delete :destroy_bulk
-    end
-  end
 
 
   resources :notifications, only: :index
@@ -27,6 +22,12 @@ Osb::Application.routes.draw do
       get '/', to: 'dashboard#index'
     end
     get '/', to: redirect{Rails.application.routes.url_helpers.new_user_session_path}
+
+    resources :recurring_frequencies do
+      collection do
+        delete :destroy_bulk
+      end
+    end
 
     resources :tasks do
       collection do
