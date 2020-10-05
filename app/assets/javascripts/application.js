@@ -236,7 +236,7 @@ $(document).ready(function(){
     $('.select-dropdown').on('input', function() {
         var inputWidth = $(this).textWidth();
         $(this).css({
-            width: inputWidth
+            width: inputWidth + 90
         });
     }).trigger('input');
 
