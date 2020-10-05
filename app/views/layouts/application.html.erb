@@ -59,7 +59,7 @@
             <% if params[:controller] != 'dashboard' %>
               $('.header-intro').removeAttr('data-intro');
             <% end %>
-            <% unless params[:controller].eql?('sub_users') || params[:controller].eql?('companies') || params[:controller].eql?('roles') || params[:controller].eql?('recurring_frequencies') || params[:controller].eql?('email_templates') || params[:controller].eql?('payment_terms') || !current_user.introduction.present? %>
+            <% unless params[:controller].eql?('sub_users') || params[:controller].eql?('companies') || params[:controller].eql?('roles') || params[:controller].eql?('recurring_frequencies') || params[:controller].eql?('email_templates') || params[:controller].eql?('payment_terms') || (current_user.present? && !current_user.introduction.present?) %>
             setTimeout(function () {
                 if($('.intro').hasClass("<%= intro_class %>")){
                     $('#users .list-item:first').attr('data-intro', 'You can click on any user name to edit a user');
