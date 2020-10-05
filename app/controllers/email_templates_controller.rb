@@ -1,6 +1,8 @@
 class EmailTemplatesController < ApplicationController
 
-
+  def index
+    @email_templates = EmailTemplate.all
+  end
   # GET /email_templates/1/edit
   def edit
     @email_template = EmailTemplate.find(params[:id])

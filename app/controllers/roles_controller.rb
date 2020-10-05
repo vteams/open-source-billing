@@ -3,7 +3,8 @@ class RolesController < ApplicationController
   before_action :set_role, only: %i[show edit update destroy]
 
   def index
-    @roles = Role.all
+    @roles = Role.all.where(for_client: false)
+    @client_roles = Role.all.where(for_client: true)
   end
 
   def show

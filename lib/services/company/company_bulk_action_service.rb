@@ -32,6 +32,7 @@ module Services
     end
 
     def perform
+      binding.pry
       method(@action_to_perform).call.merge({company_ids: @company_ids, action_to_perform: @action_to_perform})
     end
 

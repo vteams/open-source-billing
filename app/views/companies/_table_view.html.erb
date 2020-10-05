@@ -5,7 +5,10 @@
           <thead>
           <tr>
             <th class="align_center td-checkbox checkbox-item">
-              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+              <div class="checkbox-item invoice_checkbox">
+                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
+                <label for="select_all_items"></label>
+              </div>
             </th>
             <th><%= t('company') %></th>
             <th><%= t('views.clients.contact_name') %></th>
@@ -16,9 +19,15 @@
           </thead>
           <tbody class="table-view-body">
           <% @companies.each do |company| %>
-              <tr>
-                <td class="align_center td-checkbox checkbox-item">
-                  <%= check_box_tag 'company_ids[]', company.id, false, id: "company_#{company.id}", class: 'fix-left-and-opacity' %>
+              <tr class="invoice-card invoice-table-row" data-company-url="<%= url_for(company) %>">
+                <td class="td-checkbox checkbox-item invoice-row">
+                  <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-company_id= <%=company.id %>>
+                    <div class="checkbox-item invoice_checkbox">
+                      <%= check_box_tag "company_ids[]", company.id, false, :id => "company_#{company.id}", class: "filled-in checked-invoice f-l" %>
+                      <label for="<%= "company_#{company.id}" %>"></label>
+                      <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= company.image_name rescue 'n/a' %></div>
+                    </div>
+                  </div>
                 </td>
                 <td><strong><%= link_to_if !company.deleted?, company.company_name, OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company), remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}" %></strong></td>
                 <td><%= company.contact_name %></td>
@@ -30,25 +39,18 @@
                         <i class="material-icons">unarchive</i>
                       </a>
                   <% else %>
-
-                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= company.id %>' data-alignment="right" data-beloworigin="true">
-                        <i class="material-icons">more_vert</i>
-                      </a>
-                      <!-- Dropdown Structure -->
-                      <ul id="dropdown_<%= company.id %>" class='dropdown-content z-depth-4'>
-                        <li><%= link_to raw("<i class='material-icons'>create</i> Edit"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company), remote: true,
-                                        class: ("edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}"), title: t('helpers.links.edit') %></li>
-                        <li><%= link_to raw("<i class='material-icons'>delete</i> Delete"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : company, method: :delete,
+                        <%= link_to raw("<i class='material-icons'>create</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : edit_company_path(company), remote: true,
+                                        class: ("edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}"), title: t('helpers.links.edit') %>
+                        <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0);' : company, method: :delete,
                                         data:{confirm: t('helpers.messages.confirm'),
                                               success: t('views.companies.deleted_msg') },
-                                        title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %></li>
+                                        title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
 
                         <% if !company.archived? %>
-                            <li><a href="javascript:;" class="single_archive"><i class="material-icons">archive</i><%= t('views.common.send_to_archive') %></a></li>
+                            <a href="javascript:;" class="single_archive"><i class="material-icons">archive</i></a>
                         <% else %>
-                            <li><a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i><%= t('helpers.links.recover') %></a></li>
+                            <a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i></a>
                         <% end %>
-                      </ul>
                   <% end %>
                 </td>
               </tr>
