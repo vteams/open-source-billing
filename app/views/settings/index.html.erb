@@ -9,26 +9,11 @@
   <section class="invoice_expense_reports settings-tiles-section">
     <div class="marginTop--half marginBottom--1 tiles-container settings-tile-container">
       <div class="reportTile-container">
-        <%= link_to(sub_users_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
-          <div class="ember-view">
-            <div class="reportTile-skewer paddingY--quarter">
-              <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'invoice_detail_icon.svg' %>
-              </div>
-              <div>
-                <span class="js-report-tile-name">Users</span>
-                <div class="reportTile-description js-report-tile-description">Create and manage all the users of your site and control their access to application</div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <div class="reportTile-container">
         <%= link_to(companies_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'item-sales-icon.svg' %>
+                <i class="material-icons">business_center</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Companies</span>
@@ -39,11 +24,26 @@
         <% end %>
       </div>
       <div class="reportTile-container">
+        <%= link_to(sub_users_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <i class="material-icons">wc</i>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Users</span>
+                <div class="reportTile-description js-report-tile-description">Create and manage all the users of your site and control their access to application</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
         <%= link_to(roles_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'revenue_by_client_icon.svg' %>
+                <i class="material-icons">add_task</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Roles</span>
@@ -58,7 +58,7 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'revenue_by_client_icon.svg' %>
+                <i class="material-icons">autorenew</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Recurring Frequencies</span>
@@ -73,7 +73,7 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'revenue_by_client_icon.svg' %>
+                <i class="material-icons">email</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Email Templates</span>
