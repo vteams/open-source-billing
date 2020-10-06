@@ -957,6 +957,7 @@ en:
 
     sessions:
       sign_in: "Sign In"
+      client_sign_in: "Client Sign In"
       keep_me_signed_in: "Keep me signed in"
       forgot_password: "Forgot Password?"
       submit: "Submit"

@@ -176,7 +176,7 @@ Osb::Application.routes.draw do
           get :invoice_receipt
         end
       end
-      resources :estimates
+      # resources :estimates
       resources :payments
       resources :settings
       #get "client/dashboard" => "dashboard#index"

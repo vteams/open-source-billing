@@ -32,14 +32,6 @@
         </li>
       <% end %>
 
-      <% if policy(Estimate).show? %>
-        <li>
-          <%= active_link_to portal_estimates_path, title: t('header.links.estimates.estimates') do %>
-            <%= image_tag('ico-estimates.svg', alt: t('header.links.estimates.estimates'))%>
-            <span><%= t('header.links.estimates.estimates') %></span>
-          <% end %>
-        </li>
-      <% end %>
 
       <% if policy(Payment).show? %>
         <li>

@@ -4,7 +4,7 @@
       <span class="side-nav"></span>
       <a class="logo" href="#">Open<span>Source</span>Billing</a>
 
-      <h2><%= t('views.sessions.sign_in') %></h2>
+      <h2><%= resource_class.name.eql?('User') ? t('views.sessions.sign_in') : t('views.sessions.client_sign_in') %></h2>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login' , class: 'col s12'}) do |f| %>
         <div class='input-field'>
           <%= f.email_field :email, :id => "email", :class => 'validate', value: ('demo@opensourcebilling.org' if OSB::CONFIG::DEMO_MODE) %>
