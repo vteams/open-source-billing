@@ -233,7 +233,7 @@ $(document).ready(function(){
         return $.fn.textWidth.fakeEl.width();
     };
 
-    $('.select-dropdown').on('input', function() {
+    $('.company_select > .select-dropdown').on('input', function() {
         var inputWidth = $(this).textWidth();
         $(this).css({
             width: inputWidth + 90
