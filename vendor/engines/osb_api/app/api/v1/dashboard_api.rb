@@ -85,7 +85,7 @@ module V1
 
       get :invoices_graph do
         @invoices_graph = Invoice.by_company(@current_user.current_company).where('invoices.created_at > ?', 6.months.ago)
-            .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
+            .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').order('invoices.created_at asc').sum('invoices.invoice_total')
         invoices_graph = []
         @invoices_graph.each { |k,v| invoices_graph << {currency: k[0], month: k[1], amount: v} }
         invoices_graph
@@ -93,7 +93,7 @@ module V1
 
       get :payments_graph do
         @payments_graph = Payment.by_company(@current_user.current_company).where('payments.payment_date > ?', 6.months.ago)
-            .joins(:currency).group('currencies.unit').group('MONTHNAME(payments.payment_date)')
+            .joins(:currency).group('currencies.unit').group('MONTHNAME(payments.payment_date)').order('payments.created_at asc')
             .sum('payments.payment_amount')
         payments_graph = []
         @payments_graph.each { |k,v| payments_graph << {currency: k[0], month: k[1], amount: v} }
