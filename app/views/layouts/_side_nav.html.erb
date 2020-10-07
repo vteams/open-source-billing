@@ -2,13 +2,19 @@
   <!--- profile information --->
   <div class="profile-info">
     <div class="profile-image">
-      <%= image_tag(current_user.profile_picture, alt: t('views.users.avatar'))%>
+      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_1' data-alignment="right" data-beloworigin="true">
+        <%= image_tag(current_user.profile_picture, alt: t('views.users.avatar'))%>
+      </a>
     </div>
     <div class="profile-details">
       <div class="dropdown">
         <!-- Dropdown Trigger -->
         <a class='dropdown-button '><span><%= current_user.user_name || current_user.email %></span></a>
         <a  class="email-link"><%= current_user.email %> </a>
+        <ul id="dropdown_1" class='dropdown-content z-depth-4'>
+          <li><%= link_to raw("<i class='material-icons'>lock</i>Change Password"), edit_user_registration_path %></li>
+          <li><%= link_to raw("<i class='material-icons'>logout</i>Logout"), destroy_user_session_path, method: :delete %></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -104,12 +110,6 @@
           <% end %>
         </li>
       <% end %>
-      <li>
-        <%= active_link_to destroy_user_session_path, method: :delete, class: 'logout text-align' do %>
-          <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
-          <span><%= t('header.links.logout') %></span>
-        <% end %>
-      </li>
     </ul>
   </div>
 </nav>

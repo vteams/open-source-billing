@@ -6766,3 +6766,15 @@ tr.email_templates td{
   display: flex;
   flex-wrap: wrap;
 }
+.profile-image .dropdown-content.z-depth-4 li a i{
+  font-size: 16px;
+  vertical-align: bottom;
+  display: inline-block;
+}
+.profile-image .dropdown-content.z-depth-4 li a{
+  font-size: 15px;
+}
+.profile-image .dropdown-content.z-depth-4{
+  top: 49px !important;
+  left: 20px !important;
+}
