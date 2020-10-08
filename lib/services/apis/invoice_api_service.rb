@@ -54,6 +54,7 @@ module Services
          :created_at,
          :updated_at,
          :payment_terms_id,
+        :currency_id,
          :due_date,
          :last_invoice_status,
          :discount_type,

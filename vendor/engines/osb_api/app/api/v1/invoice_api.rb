@@ -57,8 +57,7 @@ module V1
            }
       get do
         @invoices = Invoice.unarchived.joins(:client).select("invoices.*,clients.*, invoices.id")
-        @invoices = filter_by_company(@invoices).page(params[:page]).per(@current_user.settings.records_per_page)
-        @invoices={total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
+        @invoices = filter_by_company(@invoices)
       end
 
       desc 'All Archived invoices',
@@ -254,6 +253,7 @@ module V1
           optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
+          optional :currency_id, type: Integer
           optional :payment_terms_id, type: String
           requires :due_date, type: String
           optional :last_invoice_status, type: String

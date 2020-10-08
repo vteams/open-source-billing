@@ -25,6 +25,11 @@ module V1
         Currency.all
       end
 
+      desc 'Fetch all countries'
+      get :countries do
+        COUNTRY_LIST
+      end
+
       desc 'Fetch  single client',
            headers: {
                "Access-Token" => {
