@@ -253,6 +253,7 @@ module V1
           optional :deleted_at, type: String
           optional :created_at, type: String
           optional :updated_at, type: String
+          optional :currency_id, type: Integer
           optional :payment_terms_id, type: String
           requires :due_date, type: String
           optional :last_invoice_status, type: String
