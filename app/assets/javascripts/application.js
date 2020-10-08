@@ -280,8 +280,24 @@ $(document).ready(function(){
     disable_right_click_for_browser();
     disable_f12_key_in_browser();
     disable_esc();
+    side_nav_toggle();
 });
 
+function side_nav_toggle() {
+    $('.user-dropdown').on('click', function (){
+        if ($('.user-dropdown > i').html() == 'more_vert'){
+            $('.user-dropdown > i').html('close');
+            $('.user_menu').removeClass('hidden');
+            $('.main_menu').addClass('hidden');
+        }
+        else {
+            $('.user-dropdown > i').html('more_vert');
+            $('.user_menu').addClass('hidden');
+            $('.main_menu').removeClass('hidden');
+        }
+    })
+
+}
 function initCustomConfirmPopUp() {
     // Removing rails default confirm popup
     $.rails.confirm = function () { }

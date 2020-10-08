@@ -6778,3 +6778,16 @@ tr.email_templates td{
   top: 49px !important;
   left: 20px !important;
 }
+.user_menu ul li:first-child i{
+  line-height: 1;
+  display: inline-block;
+  margin: 0 26px 0 11px;
+  height: unset;
+}
+.user-dropdown{
+  right: -140px;
+  top: -60px;
+}
+.user-dropdown i{
+  font-size: 18px !important;
+}
