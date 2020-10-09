@@ -130,6 +130,15 @@ class InvoicesController < ApplicationController
     authorize @invoice
     @invoice.company_id = get_company_id()
     @notify = params[:save_as_draft].present? ? false : true
+    unless params[:save_as_draft].present?
+      @invoice.status = if @invoice.status.eql?('paid')
+                          'paid'
+                        elsif @invoice.status.eql?('draft')
+                          'sent'
+                        else
+                          @invoice.status
+                        end
+    end
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
     respond_to do |format|
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
