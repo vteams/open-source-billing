@@ -103,9 +103,9 @@ module V1
       get :monthly_invoices_payments do
         @monthly_invoices = Invoice.by_company(@current_user.current_company).where('created_at > ?', 6.months.ago).group('MONTHNAME(invoices.created_at)').order('created_at asc').count
         @monthly_payments = Payment.by_company(@current_user.current_company).where('created_at > ?', 6.months.ago).group('MONTHNAME(payments.created_at)').order('created_at asc').count
-        @monthly_invoices_payments = {}
+        @monthly_invoices_payments = []
         keys = @monthly_invoices.keys
-        keys.each { |k| @monthly_invoices_payments[k] = {invoices: @monthly_invoices[k], payments: @monthly_payments[k]} }
+        keys.each { |k| @monthly_invoices_payments << {month: k ,invoices: @monthly_invoices[k], payments: @monthly_payments[k]} }
         @monthly_invoices_payments
       end
 
