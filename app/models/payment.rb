@@ -208,7 +208,9 @@ class Payment < ActiveRecord::Base
   end
 
   def notify_client current_user
-    PaymentMailer.delay.payment_notification_email(current_user, self) if self.send_payment_notification
+    # PaymentMailer.delay.payment_notification_email(current_user, self) if self.send_payment_notification
+    current_company = Company.find(current_user.current_company)
+    NotificationWorker.perform_async('PaymentMailer','payment_notification_email',[current_user.id, self.id], current_company.smtp_settings)
   end
 
   def self.payments_history(client)
