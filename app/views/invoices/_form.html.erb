@@ -194,7 +194,7 @@
   </div>
 
   <script>
-      window.currency_symbol = "<%= if params[:action].eql?('new')
+      window.currency_symbol = "<%= if params[:action].eql?('new') && !params['invoice_for_client'].present?
                                     Currency.default_currency.code
                                  else
                                    (@client.present? ? @client.currency.code : invoice.currency.code)
