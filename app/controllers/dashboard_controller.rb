@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
     @past_invoices = Invoice.past_invoices(@current_company_id).limit(10)
 
 
-    @ytd_invoices = Invoice.by_company(current_company).in_year(Date.today.year).joins(payments: :currency)
+    @ytd_invoices = Invoice.by_company(current_company).in_year(Date.today.year).joins(payments: :currency).where('payments.payment_date <= ?', Date.today)
 
     @unit_size='medium-unit'
 
