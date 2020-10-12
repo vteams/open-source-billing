@@ -61,18 +61,18 @@
     <h4><%= link_to t("views.dashboard.ytd_income"), invoices_path(type: ['paid']) %></h4>
     <div class="amount">
       <div class="first-three-ytd set-positions">
-        <% @ytd_invoices.group("currencies.unit").sum("payments.payment_amount") %>
-          <% if @ytd_invoices.count > 3 %>
-            <% ytd = @ytd_invoices.limit(3).group("currencies.unit").sum("payments.payment_amount") %>
-              <% ytd.each do |currency_unit, amount|  %>
-                <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
-              <% end %>
-              <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_ytds' %>
-          <% else %>
-            <% @ytd_invoices.group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
-              <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
-            <% end %>
+        <% ytd_invoices = @ytd_invoices.group("currencies.unit").sum("payments.payment_amount") %>
+        <% if ytd_invoices.count > 3 %>
+          <% ytd = @ytd_invoices.limit(3).group("currencies.unit").sum("payments.payment_amount") %>
+          <% ytd.each do |currency_unit, amount|  %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
           <% end %>
+          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_ytds' %>
+        <% else %>
+          <% @ytd_invoices.group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>
+            <div><%= number_to_currency_dashboard(amount, unit: currency_unit, unit_size: @unit_size, dom: 'span') %></div>
+          <% end %>
+        <% end %>
       </div>
       <div class="hide-class set-positions" id="more-ytd">
         <% @ytd_invoices.offset(3).group("currencies.unit").sum("payments.payment_amount").each do |currency_unit, amount| %>

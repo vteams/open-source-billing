@@ -21,7 +21,7 @@
     <%= form_tag "invoices/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render partial: 'invoices_container' %></div>
       <div style="" class="right">
-        <%= link_to ' + New Invoice ', new_invoice_path, class: "#{(@invoices.count > 0 && @invoices.count <= 9) || @invoices.count == 0 ? "secondary_new_link" : 'primary_new_link'}"  %>
+        <%= link_to ' + New Invoice ', new_invoice_path, class: "#{(@invoices.count > 0 && @invoices.total_count < 9) || @invoices.count == 0 ? "secondary_new_link" : 'primary_new_link'}"  %>
       </div>
 
       <%= render partial: 'bulk_actions'%>
