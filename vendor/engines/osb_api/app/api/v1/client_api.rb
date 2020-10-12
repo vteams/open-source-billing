@@ -40,8 +40,9 @@ module V1
       params do
         requires :id, type: String
       end
-      get ':id' do
-        {client: Client.find(params[:id]), client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id])}
+      get ':id', :rabl => 'clients/client.rabl' do
+        @client = Client.find(params[:id])
+        @client_invoices = Invoice.joins(:client).where("client_id = ?", params[:id])
       end
 
       desc 'Return clients',
