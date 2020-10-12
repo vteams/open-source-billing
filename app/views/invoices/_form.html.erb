@@ -42,10 +42,10 @@
               <div class="base-currency-conversion">
                 <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
-                  <strong class="invoice_total_base_currency"></strong>
-                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
-                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                <strong class="invoice_total_base_currency"></strong>
+                <%= f.input :base_currency_equivalent_total, as: :hidden %>
+                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
+                            include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
               </div>
 
@@ -65,15 +65,15 @@
               <div class="">
                 <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
                 <div class="date-wrapper">
-<!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
+                  <!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
                   <span>
                       <small>
             <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
-                        input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
+                         input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
 
                         <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
                                      wrapper_tag: :small, as: :string %>
-<!--                        <span><i class="material-icons calendar-icon">date_range</i></span>-->
+                        <!--                        <span><i class="material-icons calendar-icon">date_range</i></span>-->
                       </small>
                     </span>
                 </div>
@@ -195,11 +195,16 @@
 
   <script>
       window.currency_symbol = "<%= if params[:action].eql?('new') && !params['invoice_for_client'].present?
-                                    Currency.default_currency.code
+                                    currency = Currency.default_currency.code
                                  else
-                                   (@client.present? ? @client.currency.code : invoice.currency.code)
+                                   currency = (@client.present? ? @client.currency.code : invoice.currency.code)
                                  end
                                %>";
+      <% if params[:invoice_for_client].present? %>
+      $('#invoice_currency_id').val("<%= Currency.find_by(code: currency).id %>")
+      $("#invoice_currency_id").trigger('contentChanged');
+
+      <% end %>
       $(document).ready(function (){
           $('#discount_type').val('<%= @invoice.discount_type || '%' %>');
 
@@ -214,7 +219,7 @@
               $.get(set_client_currency+'?client_id=' + $(this).val())
           })
           <% if params[:action].eql?('new') %>
-            // $('#recurring').prop('checked', true)
+          // $('#recurring').prop('checked', true)
           <% end %>
       });
   </script>
