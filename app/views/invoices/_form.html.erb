@@ -44,10 +44,10 @@
                 <div class="base-currency-conversion">
                   <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
-                  <strong class="invoice_total_base_currency"></strong>
-                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
-                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                <strong class="invoice_total_base_currency"></strong>
+                <%= f.input :base_currency_equivalent_total, as: :hidden %>
+                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
+                            include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
                 </div>
               <% end %>
@@ -197,11 +197,16 @@
 
   <script>
       window.currency_symbol = "<%= if params[:action].eql?('new') && !params['invoice_for_client'].present?
-                                    Currency.default_currency.code
+                                    currency = Currency.default_currency.code
                                  else
-                                   (@client.present? ? @client.currency.code : invoice.currency.code)
+                                   currency = (@client.present? ? @client.currency.code : invoice.currency.code)
                                  end
                                %>";
+      <% if params[:invoice_for_client].present? %>
+      $('#invoice_currency_id').val("<%= Currency.find_by(code: currency).id %>")
+      $("#invoice_currency_id").trigger('contentChanged');
+
+      <% end %>
       $(document).ready(function (){
           $('#discount_type').val('<%= @invoice.discount_type || '%' %>');
 
@@ -216,7 +221,7 @@
               $.get(set_client_currency+'?client_id=' + $(this).val())
           })
           <% if params[:action].eql?('new') %>
-            // $('#recurring').prop('checked', true)
+          // $('#recurring').prop('checked', true)
           <% end %>
       });
   </script>
