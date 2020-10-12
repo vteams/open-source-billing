@@ -138,6 +138,7 @@ class @OsbPlugins
     $("#invoice_client_id").change ->
       setTimeout (->
         $(".line_total_currency").html(window.currency_symbol)
+        $('.invoice_total_strong').formatCurrency({symbol: window.currency_symbol})
       ), 100
       OsbPlugins.hidePopover($("#invoice_client_id").parents('.select-wrapper'));
     $("#invoice_due_date_picker").change ->
