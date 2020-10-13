@@ -53,7 +53,7 @@ module V1
                    required: true
                }
            }
-      get :rabl => 'clients/clients.rabl' do
+      get do
         criteria = {
             status: params[:status] || 'unarchived',
             user: @current_user,
