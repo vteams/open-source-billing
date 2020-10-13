@@ -32,7 +32,13 @@ class InvoiceLineItem < ActiveRecord::Base
   acts_as_archival
   acts_as_paranoid
 
+  #  after_destroy :recalculate_invoice_total
+
   attr_accessor :tax_one, :tax_two
+
+  # def recalculate_invoice_total
+  #   self.invoice.save
+  # end
 
   def unscoped_item
     Item.unscoped.find_by_id self.item_id
