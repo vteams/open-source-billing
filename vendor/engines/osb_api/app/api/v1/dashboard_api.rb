@@ -62,7 +62,10 @@ module V1
 
       get :base_currency_amount_billed_graph do
         invoices = Invoice.by_company(@current_user.current_company).joins(:currency).where('invoices.invoice_date > ?', 6.months.ago).group('MONTHNAME(invoices.invoice_date)').order('invoice_date asc').sum('base_currency_equivalent_total')
-        invoices.map{|k, v|[[Company.find(@current_user.current_company).base_currency.unit, k],v.round(2)]}.to_h
+        invoices = invoices.map{|k, v|[[Company.find(@current_user.current_company).base_currency.unit, k],v.round(2)]}.to_h
+        base_currency_invoices = []
+        invoices.each{|k, v| base_currency_invoices << {currency: k[0], month: k[1], amount: v}}
+        base_currency_invoices
       end
 
       desc 'Return ytd income in base currency'
