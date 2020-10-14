@@ -35,6 +35,13 @@ class InvoiceLineItem < ActiveRecord::Base
 
   attr_accessor :tax_one, :tax_two
 
+  after_destroy :recalculate_invoice_total
+
+  attr_accessor :tax_one, :tax_two
+
+  def recalculate_invoice_total
+    self.invoice.save
+  end
 
   def unscoped_item
     Item.unscoped.find_by_id self.item_id
@@ -53,7 +60,7 @@ class InvoiceLineItem < ActiveRecord::Base
   end
 
   def item_total_amount
-      item_tax_amount + item_total
+    item_tax_amount + item_total
   end
 
 

@@ -43,7 +43,8 @@ module V1
       get ':id' do
         client = Client.find(params[:id])
         {client: client, amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
-         outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id])}
+         outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
+         client_payments: Payment.joins(:client).where('payments.client_id = ?', params[:id])}
       end
 
       desc 'Return clients',
