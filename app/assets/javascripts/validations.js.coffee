@@ -226,6 +226,8 @@ class @Validation
       messages:
         'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount'
 
+      $('#payments_0_paid_full').on 'change', ->
+        $('#payments_0_payment_amount').valid()
 
 
 
