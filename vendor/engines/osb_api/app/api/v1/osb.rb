@@ -12,7 +12,9 @@ module V1
       end
       def current_user
         @current_user ||= ::User.find_by(authentication_token: request.headers["Access-Token"]) if request.headers["Access-Token"]
-        unless @current_user
+        if @current_user
+          User.current = @current_user
+        else
           error!('Unauthorized. Invalid or expired token.', 401)
         end
       end

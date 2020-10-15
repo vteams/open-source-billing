@@ -23,7 +23,7 @@ class Payment < ActiveRecord::Base
   include DateFormats
   include PaymentSearch
   include PublicActivity::Model
-  tracked only: [:create], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+  tracked only: [:create], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
   attr_accessor :invoice_number
   # associations

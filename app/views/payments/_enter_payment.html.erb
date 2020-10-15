@@ -17,22 +17,23 @@
       <% grand_total, due_amount, payments_entered = 0, 0, 0 %>
 
       <% @payments.each_with_index do |payment, index| %>
-          <% #grand_total = grand_total + payment.invoice.invoice_total    %>
-          <% due_amount += Payment.invoice_remaining_amount(payment.invoice.id)
-             payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
-          %>
-          <%= fields_for "payments[]", payment do |f| %>
-              <%= render "fields", :f => f, :payment => payment, :index => index %>
-          <% end
-             end %>
+        <% #grand_total = grand_total + payment.invoice.invoice_total    %>
+        <% due_amount += Payment.invoice_remaining_amount(payment.invoice.id)
+           payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
+        %>
+        <%= fields_for "payments[]", payment do |f| %>
+          <%= f.hidden_field :client_id, value: payment.invoice.client_id %>
+          <%= render "fields", :f => f, :payment => payment, :index => index %>
+        <% end
+           end %>
 
       <% if @payments.size > 1  %>
-          <div class="grand_total" style="display: none">
-            <div class="grand_total_box">
-              <p><%= t("views.payments.total_amount_due_against_selected_invoices") %>: <span><%= number_to_currency(due_amount,unit: "") %> </span></p>
-              <p><%= t('views.payments.payments_entered_against_selected_invoices') %>: <span><%= number_to_currency(payments_entered, unit: "") %> <%#= current_user.currency_symbol %><%#=  grand_total %></span></p>
-            </div>
+        <div class="grand_total" style="display: none">
+          <div class="grand_total_box">
+            <p><%= t("views.payments.total_amount_due_against_selected_invoices") %>: <span><%= number_to_currency(due_amount,unit: "") %> </span></p>
+            <p><%= t('views.payments.payments_entered_against_selected_invoices') %>: <span><%= number_to_currency(payments_entered, unit: "") %> <%#= current_user.currency_symbol %><%#=  grand_total %></span></p>
           </div>
+        </div>
       <% end %>
 
     </div>
