@@ -5,9 +5,9 @@ module V1
     formatter :json, Grape::Formatter::Rabl
     #prefix :api
     resource :users do
-      before {current_user}
+      before {current_user unless route.settings[:description][:description].eql?('Forgot Password')}
 
-      desc 'All Users',
+      desc 'Change user Password',
            headers: {
                "Access-Token" => {
                    description: "Validates your identity",
@@ -27,6 +27,19 @@ module V1
           {error: user.errors.full_messages}
         end
       end
+
+      desc 'Forgot Password'
+      params do
+        requires :email, type: String
+      end
+
+      post 'forgot_password' do
+        u=User.find_by(email: params[:email])
+        if User.send_reset_password_instructions(u)
+          {message: "Email sent to reset password"}
+        end
+      end
+
     end
   end
 end
