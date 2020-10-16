@@ -98,7 +98,7 @@ module V1
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
-          optional :available_credit, type: Integer
+          optional :available_credit, type: BigDecimal
         end
       end
 
@@ -136,7 +136,7 @@ module V1
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
-          optional :available_credit, type: Integer
+          optional :available_credit, type: BigDecimal
         end
       end
 

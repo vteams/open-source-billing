@@ -7,6 +7,28 @@ module V1
     resource :users do
       before {current_user unless route.settings[:description][:description].eql?('Forgot Password')}
 
+      desc 'Fetch All Users',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get do
+        User.all
+      end
+
+      desc 'Fetch Single User',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get ':id' do
+        User.find(params[:id])
+      end
+
       desc 'Change user Password',
            headers: {
                "Access-Token" => {
