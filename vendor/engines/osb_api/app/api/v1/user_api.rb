@@ -18,6 +18,17 @@ module V1
         User.all
       end
 
+      desc 'Fetch Current User',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get 'current_user' do
+        @current_user
+      end
+
       desc 'Fetch Single User',
            headers: {
                "Access-Token" => {
