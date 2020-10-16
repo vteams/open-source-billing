@@ -138,7 +138,7 @@ class Client < ActiveRecord::Base
     credit.flatten
   end
 
-  def available_credit
+  def old_available_credit
     client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
 
