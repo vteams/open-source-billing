@@ -20,6 +20,25 @@ class @Company
         flag = false
       flag
 
+  @CompanyCountryState = ->
+    if $('#company_country').children('option:selected').val() == 'United States'
+      $('.country_state_text_field').hide()
+      $('.canada_state_dropdown').hide()
+      $('.us_state_dropdown').show()
+    else if $('#company_country').children('option:selected').val() == 'Canada'
+      $('.country_state_text_field').hide()
+      $('.canada_state_dropdown').show()
+      $('.us_state_dropdown').hide()
+    else
+      $('.country_state_text_field').show()
+      $('.us_state_dropdown').hide()
+      $('.canada_state_dropdown').hide()
+    $('#companyForm').submit ->
+      if $('#company_country').children('option:selected').val() == 'United States'
+        $('.country_state_text_field > input').val($('.us_state_dropdown > #company_province_or_state').children('option:selected').val());
+      else if $('#company_country').children('option:selected').val() == 'Canada'
+        $('.country_state_text_field > input').val($('.canada_state_dropdown > #company_province_or_state').children('option:selected').val());
+
   @load_functions = ->
 
     $('.modal').modal complete: ->

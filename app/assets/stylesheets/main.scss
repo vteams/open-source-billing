@@ -6794,3 +6794,9 @@ tr.email_templates td{
 #payments_0_payment_amount-error{
   display: -webkit-box;
 }
+.company_country > label{
+  transform: translateY(-140%);
+}
+#s2id_company_province_or_state{
+  width: 100% !important;
+}
