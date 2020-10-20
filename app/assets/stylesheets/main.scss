@@ -1815,7 +1815,8 @@ h6 {
   opacity: 0.5 !important;
   top: 7px;
 }
-.invoice-table-row .card-white-panel .checkbox-item input + label {
+.invoice-table-row .card-white-panel .checkbox-item input + label,
+.flex-wrapper .card-white-panel.invoice-card .checkbox-item input + label{
   position: absolute;
   top: 25px;
   //left: 37px;
@@ -1853,9 +1854,18 @@ h6 {
 .card-white-panel .checkbox-item input.filled-in:checked + label:after {
   background: #6a6a6a;
 }
-.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ label {
-  opacity: 1 !important; }
-.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ .invoice-name {
+.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ label,
+.invoice-card.card-white-panel:hover .checkbox-item input ~ label{
+  opacity: 1 !important;
+}
+.invoice-card.card-white-panel .checkbox-item input ~ label{
+  left: 25px;
+}
+.flex-item .invoice-card.card-white-panel .checkbox-item input ~ label:before{
+  left: 0px !important;
+}
+.invoice-table-row:hover .invoice-row .card-white-panel .checkbox-item input ~ .invoice-name,
+.invoice-card.card-white-panel:hover .invoice-name {
   opacity: 0 !important;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -6597,4 +6607,10 @@ tr.email_templates td{
 }
 #s2id_company_province_or_state{
   width: 100% !important;
+}
+.new-invoice-holder .new-invoice-table-holder .table-view-body .invoice-card .invoice-row .card-white-panel .checkbox-item input + label {
+  top: 10px;
+  left: 50%;
+  right: 50%;
+  margin: auto;
 }
