@@ -5,6 +5,7 @@ module Services
       def self.create(params)
         payment = ::Payment.new(payment_params_api(params))
         if payment.save
+          Payment.update_invoice_status_credit(payment.invoice.id, payment.payment_amount, payment)
           {message: 'Successfully created'}
         else
           {error: payment.errors.full_messages}

@@ -29,7 +29,7 @@ module V1
       params do
         requires :payment, type: Hash do
           requires :invoice_id, type: Integer
-          requires :payment_amount, type: Integer
+          requires :payment_amount, type: BigDecimal
           optional :payment_type, type: String
           optional :payment_method, type: String
           optional :payment_date, type: Date
