@@ -7,7 +7,7 @@ module V1
     #prefix :api
 
     helpers do
-      def get_items
+      def get_current_items
       account = @current_user.accounts.first
       company_id = @current_user.current_company || @current_user.current_account.companies.first.id
       company_items = Company.find(company_id).items
@@ -28,7 +28,15 @@ module V1
                }
            }
       get :rabl => 'items/items.rabl' do
-        @items = get_items
+        criteria = {
+            sort_column: params[:sort_column].present? ? params[:sort_column] : 'item_name',
+            sort_direction: params[:sort_direction].present? ? params[:sort_direction] : 'asc',
+        }
+        params.merge!(criteria)
+        @items = get_current_items
+        @items = @items.sort_by!{|item| params[:sort_column].eql?('item_name') ? item.item_name.downcase : item.created_at}
+        @items = @items.reverse if params[:sort_direction].eql?('desc')
+        @items
       end
 
       desc 'Fetch a single Item',
