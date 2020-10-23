@@ -62,10 +62,11 @@ module V1
             company_id: get_company_id,
             sort_direction: 'desc',
             sort_column: 'contact_name',
-            per: params[:per]
+            sort: params[:sort].present? ? params[:sort] : 'organization_name',
+            per: params[:per],
+            direction: params[:direction]
         }
-
-        @clients = Client.get_clients(criteria)
+        @clients = Client.get_clients(params.merge!(criteria))
       end
 
       desc 'Create Client',

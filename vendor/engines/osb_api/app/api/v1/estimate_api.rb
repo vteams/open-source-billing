@@ -32,7 +32,7 @@ module V1
            }
       get do
         params[:status] = params[:status] || 'active'
-        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
+        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").order("estimates.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
         @estimates = filter_by_company(@estimates)
       end
 

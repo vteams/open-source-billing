@@ -199,7 +199,7 @@ class Client < ActiveRecord::Base
     self.currency.present? ? self.currency.unit : 'USD'
   end
 
-  def self. get_clients(params)
+  def self.get_clients(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', unarchived: 'unarchived'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
@@ -239,10 +239,10 @@ class Client < ActiveRecord::Base
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
-    clients = clients.sort_by!{ |client| client.organization_name.downcase }
+    clients = clients.sort_by!{ |client| params[:sort].eql?('organization_name') ? client.organization_name.downcase : client.created_at}
     clients = clients.reverse if params[:direction].eql?('desc')
-
-    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
+    clients
+    # Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 
   end
 
