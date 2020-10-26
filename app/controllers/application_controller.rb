@@ -115,11 +115,11 @@ class ApplicationController < ActionController::Base
       end
 
       # associate item with whole account or selected companies
-      if params[:association] == 'account'
-        current_user.accounts.first.send(controller) << entity
-      else
+      # if params[:association] == 'account'
+      #   current_user.accounts.first.send(controller) << entity
+      # else
         Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
-      end
+      # end
     end
   end
 
