@@ -29,7 +29,7 @@ module InvoicesHelper
     elsif invoice.due_date.present? && invoice.due_date.to_time < Date.today && invoice.status != "paid"
       "<span class = 'idd invoice-over-due' title='Due Date: #{invoice.due_date}'>#{distance_of_time_in_words(Time.now - invoice.due_date.to_time)} overdue</span>".html_safe
     elsif invoice.due_date.present? && invoice.status == "paid"
-      "<span class = 'idd invoice-paid'> paid on #{invoice.payments.received.last.created_at.strftime("%Y-%m-%d")}</span>".html_safe rescue ''
+      "<span class = 'idd invoice-paid'> paid on #{invoice.payments.received.last.payment_date}</span>".html_safe rescue ''
     end
   end
 
