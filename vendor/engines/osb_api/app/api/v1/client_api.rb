@@ -47,6 +47,23 @@ module V1
          client_payments: client.payments}
       end
 
+      desc 'Fetch  single client with companies',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      params do
+        requires :id, type: String
+      end
+      get ':id/with_companies' do
+        client = Client.find(params[:id])
+        {client: client, company_ids: CompanyEntity.company_ids(client.id, 'Client'), amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
+         outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
+         client_payments: client.payments}
+      end
+
       desc 'Return clients',
            headers: {
                "Access-Token" => {

@@ -54,6 +54,21 @@ module V1
         {item: Item.find(params[:id]), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
       end
 
+      desc 'Fetch a single Item with companies',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      params do
+        requires :id, type: String
+      end
+
+      get ':id/with_companies' do
+        {item: Item.find(params[:id]), company_ids: CompanyEntity.company_ids(params[:id], 'Item'), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
+      end
+
       desc 'Create Item',
            headers: {
                "Access-Token" => {
