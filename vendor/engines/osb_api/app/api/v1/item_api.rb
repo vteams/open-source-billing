@@ -51,7 +51,12 @@ module V1
       end
 
       get ':id' do
-        {item: Item.find(params[:id]), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
+        item = Item.find_by(id: params[:id])
+        if item.present?
+          {item: item, tax_1: item.tax1, tax_2: item.tax2}
+        else
+          {error: 'Item not found'}
+        end
       end
 
       desc 'Fetch a single Item with companies',
@@ -66,7 +71,12 @@ module V1
       end
 
       get ':id/with_companies' do
-        {item: Item.find(params[:id]), company_ids: CompanyEntity.company_ids(params[:id], 'Item'), tax_1: Item.find(params[:id]).tax1, tax_2: Item.find(params[:id]).tax2}
+        item = Item.find_by(id: params[:id])
+        if item.present?
+          {item: item, company_ids: CompanyEntity.company_ids(item.id, 'Item'), tax_1: item.tax1, tax_2: item.tax2}
+        else
+          {error: 'Item not found'}
+        end
       end
 
       desc 'Create Item',
@@ -78,7 +88,7 @@ module V1
            }
       params do
         requires :item, type: Hash do
-          requires :item_name, type: String
+          requires :item_name, type: String, message: :required
           optional :item_description, type: String
           optional :unit_cost, type: Integer
           optional :quantity, type: Integer
@@ -122,7 +132,13 @@ module V1
       end
 
       patch ':id' do
-        Services::Apis::ItemApiService.update(params)
+        item = Item.find_by(id: params[:id])
+        if item.present?
+          Services::Apis::ItemApiService.update(params)
+        else
+          {error: 'Item not found'}
+        end
+
       end
 
 
@@ -137,7 +153,12 @@ module V1
         requires :id, type: Integer, desc: "Delete an item"
       end
       delete ':id' do
-        Services::Apis::ItemApiService.destroy(params[:id])
+        item = Item.find_by(id: params[:id])
+        if item.present?
+          Services::Apis::ItemApiService.destroy(item)
+        else
+          {error: 'item not found'}
+        end
       end
     end
   end

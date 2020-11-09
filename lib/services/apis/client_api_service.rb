@@ -3,29 +3,37 @@ module Services
     class ClientApiService
 
       def self.create(params)
-        client = ::Client.new(client_params_api(params))
-        client.skip_password_validation = true
-        ClientApiService.associate_entity(params, client)
-        if client.save
-          {message: 'Successfully created'}
+        if Client.exists?(email: params[:client][:email])
+          {error: 'Client with same email already exists'}
         else
-          {error: client.errors.full_messages}
+          client = ::Client.new(client_params_api(params))
+          client.skip_password_validation = true
+          ClientApiService.associate_entity(params, client)
+          if client.save
+            {message: 'Successfully created'}
+          else
+            {error: client.errors.full_messages}
+          end
         end
       end
 
       def self.update(params)
-        client = ::Client.find(params[:id])
-        if client.present?
-          if params[:client][:company_ids].present?
-            ClientApiService.associate_entity(params, client)
-          end
-          if client.update_attributes(client_params_api(params))
-            {message: 'Successfully updated'}
-          else
-            {error: client.errors.full_messages}
-          end
+        if Client.exists?(email: params[:client][:email])
+          {error: 'Client with same email already exists'}
         else
-          {error: 'Client not found'}
+          client = ::Client.find(params[:id])
+          if client.present?
+            if params[:client][:company_ids].present?
+              ClientApiService.associate_entity(params, client)
+            end
+            if client.update_attributes(client_params_api(params))
+              {message: 'Successfully updated'}
+            else
+              {error: client.errors.full_messages}
+            end
+          else
+            {error: 'Client not found'}
+          end
         end
       end
 
@@ -51,7 +59,7 @@ module Services
           # if params[:association] == 'account'
           #   current_user.accounts.first.send(controller) << entity
           # else
-            ::Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
+          ::Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
           # end
         end
 

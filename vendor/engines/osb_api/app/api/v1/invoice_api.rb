@@ -153,8 +153,10 @@ module V1
         requires :id
       end
       get '/send_invoice/:id' do
-        invoice = Invoice.find(params[:id])
-        if invoice.status == 'sent'
+        invoice = Invoice.find_by(id: params[:id])
+        if !invoice.present?
+          {error: "Invoice not found"}
+        elsif invoice.status == 'sent'
           {error: 'Invoice already sent'}
         else
           invoice.send_invoice(@current_user, params[:invoice_id])
@@ -201,8 +203,12 @@ module V1
       end
       get :invoice_line_items do
         @invoice = Invoice.find_by_id(params[:invoice_id])
-        {tax: taxes_list(@invoice.tax_details),
-         invoices: Invoice.find_by_id(params[:invoice_id]).invoice_line_items.joins(:item).select("invoice_line_items.* , items.item_name")}
+        if @invoice.present?
+          {tax: taxes_list(@invoice.tax_details),
+           invoices: @invoice.invoice_line_items}
+        else
+          {error: "Invoice not found"}
+        end
       end
 
       desc 'Return all invoices'
@@ -222,11 +228,15 @@ module V1
       end
 
       get ':id' do
-        invoice = Invoice.find params[:id]
-        payment_details = {amount_due: invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), amount_paid: invoice.payments.sum(:payment_amount)}
-        invoice_hash = []
-        invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule, payment_details: payment_details}
-        invoice_hash
+        invoice = Invoice.find_by(id: params[:id])
+        if !invoice.present?
+          {error: "Invoice not found"}
+        else
+          payment_details = {amount_due: invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), amount_paid: invoice.payments.sum(:payment_amount)}
+          invoice_hash = []
+          invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule, payment_details: payment_details}
+          invoice_hash
+        end
       end
 
       desc 'Create Single Invoice. You can also create multiple invoice line items for invoice from Rest Clients e.g Postman',
@@ -239,10 +249,10 @@ module V1
       params do
         requires :invoice, type: Hash do
           # requires :invoice_number, type: String
-          requires :invoice_date, type: String
+          requires :invoice_date, type: String, message: :required
           optional :po_number, type: String
           optional :discount_percentage, type: String
-          requires :client_id, type: Integer
+          requires :client_id, type: Integer, message: :required
           optional :terms, type: String
           optional :notes, type: String
           optional :status, type: String
@@ -257,27 +267,27 @@ module V1
           optional :updated_at, type: String
           optional :currency_id, type: Integer
           optional :payment_terms_id, type: String
-          requires :due_date, type: String
+          requires :due_date, type: String, message: :required
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
-          requires :company_id, type: Integer
+          requires :company_id, type: Integer, message: :required
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
-            requires :item_name, type: String
-            requires :item_description, type: String
-            requires :item_unit_cost, type: Integer
-            requires :item_quantity, type: Integer
+            requires :item_name, type: String, message: :required
+            requires :item_description, type: String, message: :required
+            requires :item_unit_cost, type: Integer, message: :required
+            requires :item_quantity, type: Integer, message: :required
             # requires :actual_price, type: String binding.pry
           end
           optional :recurring_schedule_attributes, type: Hash do
-            requires :next_invoice_date, type: String
-            requires :frequency, type: String
-            requires :occurrences, type: Integer
+            requires :next_invoice_date, type: String, message: :required
+            requires :frequency, type: String, message: :required
+            requires :occurrences, type: Integer, message: :required
             optional :frequency_repetition, type: Integer
             optional :frequency_type, type: String
-            requires :delivery_option, type: String
-            requires :enable_recurring, type: Boolean
+            requires :delivery_option, type: String, message: :required
+            requires :enable_recurring, type: Boolean, message: :required
           end
 
         end
@@ -296,11 +306,11 @@ module V1
            }
       params do
         requires :invoice, type: Hash do
-          requires :invoice_number, type: String
-          requires :invoice_date, type: String
+          requires :invoice_number, type: String, message: :required
+          requires :invoice_date, type: String, message: :required
           optional :po_number, type: String
           optional :discount_percentage, type: String
-          requires :client_id, type: Integer
+          requires :client_id, type: Integer, message: :required
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
@@ -316,31 +326,36 @@ module V1
           optional :due_date, type: String
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
-          requires :company_id, type: Integer
+          requires :company_id, type: Integer, message: :required
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
-            requires :item_name, type: String
-            requires :item_description, type: String
-            requires :item_unit_cost, type: Integer
-            requires :item_quantity, type: Integer
+            requires :item_name, type: String, message: :required
+            requires :item_description, type: String, message: :required
+            requires :item_unit_cost, type: Integer, message: :required
+            requires :item_quantity, type: Integer, message: :required
             # requires :actual_price, type: String binding.pry
           end
           optional :recurring_schedule_attributes, type: Hash do
-            requires :next_invoice_date, type: String
-            requires :frequency, type: String
-            requires :occurrences, type: Integer
+            requires :next_invoice_date, type: String, message: :required
+            requires :frequency, type: String, message: :required
+            requires :occurrences, type: Integer, message: :required
             optional :frequency_repetition, type: Integer
             optional :frequency_type, type: String
-            requires :delivery_option, type: String
-            requires :enable_recurring, type: Boolean
+            requires :delivery_option, type: String, message: :required
+            requires :enable_recurring, type: Boolean, message: :required
           end
 
         end
       end
 
       patch ':id' do
-        Services::Apis::InvoiceApiService.update(params)
+        invoice = Invoice.find_by(id: params[:id])
+        if invoice.present?
+          Services::Apis::InvoiceApiService.update(params)
+        else
+          {error: "Invoice not found"}
+        end
       end
 
 
@@ -355,7 +370,12 @@ module V1
         requires :id, type: Integer, desc: "Delete an invoice"
       end
       delete ':id' do
-        Services::Apis::InvoiceApiService.destroy(params[:id])
+        invoice = Invoice.find_by(id: params[:id])
+        if invoice.present?
+          Services::Apis::InvoiceApiService.destroy(invoice)
+        else
+          {error: "Invoice not found"}
+        end
       end
 
       desc 'Get current user invoices',
@@ -384,20 +404,25 @@ module V1
       end
       get '/void_invoice/:id' do
         @invoice = Invoice.find(params[:id])
-        @invoice.status = "void"
-        @invoice.base_currency_equivalent_total = 0
-        @invoice.invoice_total = 0
-        @invoice.sub_total = 0
-        @invoice.invoice_line_items.each do |item|
-          item.item_unit_cost = 0
-          item.tax_1 = 0
-          item.tax_2 = 0
-          item.save
-        end
-        if @invoice.save
-          {message: 'Successfully Void'}
+        if @invoice.status == "void"
+          {message: 'Already Voided'}
         else
-          {error: @invoice.errors.full_messages}
+          @invoice.status = "void"
+          @invoice.base_currency_equivalent_total = 0
+          @invoice.invoice_total = 0
+          @invoice.sub_total = 0
+          @invoice.invoice_line_items.each do |item|
+            item.item_unit_cost = 0
+            item.tax_1 = 0
+            item.tax_2 = 0
+            item.save
+          end
+          if @invoice.save
+            {message: 'Successfully Void'}
+          else
+            {error: @invoice.errors.full_messages}
+          end
+
         end
 
       end
