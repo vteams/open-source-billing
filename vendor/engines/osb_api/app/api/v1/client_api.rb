@@ -41,10 +41,15 @@ module V1
         requires :id, type: String
       end
       get ':id' do
+        client = Client.find_by(id: params[:id])
+        if !client.present?
+          {message: 'No client found'}
+        else
         client = Client.find(params[:id])
         {client: client, amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
          outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
          client_payments: client.payments}
+        end
       end
 
       desc 'Fetch  single client with companies',
@@ -58,10 +63,14 @@ module V1
         requires :id, type: String
       end
       get ':id/with_companies' do
-        client = Client.find(params[:id])
-        {client: client, company_ids: CompanyEntity.company_ids(client.id, 'Client'), amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
-         outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
-         client_payments: client.payments}
+        client = Client.find_by(id: params[:id])
+        if !client.present?
+          {message: 'No client found'}
+        else
+          {client: client, company_ids: CompanyEntity.company_ids(client.id, 'Client'), amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
+           outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
+           client_payments: client.payments}
+        end
       end
 
       desc 'Return clients',
@@ -95,10 +104,10 @@ module V1
            }
       params do
         requires :client, type: Hash do
-          optional :organization_name, type: String
-          requires :email, type: String
-          requires :first_name, type: String
-          requires :last_name, type: String
+          requires :organization_name, type: String, message: :required
+          requires :email, type: String, message: :required
+          requires :first_name, type: String, message: :required
+          requires :last_name, type: String, message: :required
           optional :home_phone, type: String
           optional :mobile_number, type: String
           optional :send_invoice_by, type: String
@@ -159,7 +168,12 @@ module V1
       end
 
       patch ':id' do
-        Services::Apis::ClientApiService.update(params)
+        client = Client.find_by(id: params[:id])
+        if client.present?
+          Services::Apis::ClientApiService.update(params)
+        else
+          {error: 'Client not found'}
+        end
       end
 
       desc 'Delete client',
@@ -173,7 +187,12 @@ module V1
         requires :id, type: Integer, desc: 'Delete Client'
       end
       delete ':id' do
-        Services::Apis::ClientApiService.destroy(params[:id])
+        client = Client.find_by(id: params[:id])
+        if client.present?
+          Services::Apis::ClientApiService.destroy(client)
+        else
+          {error: 'Client not found'}
+        end
       end
 
     end
