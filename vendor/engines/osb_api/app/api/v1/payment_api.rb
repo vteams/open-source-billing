@@ -23,14 +23,15 @@ module V1
       end
 
       get ':id' do
-        Payment.find params[:id]
+        payment = Payment.find_by(id: params[:id])
+        payment.present? ? payment : "Payment not found"
       end
 
       desc 'Create Payment'
       params do
         requires :payment, type: Hash do
-          requires :invoice_id, type: Integer
-          requires :payment_amount, type: BigDecimal
+          requires :invoice_id, type: Integer, message: :required
+          requires :payment_amount, type: BigDecimal, message: :required
           optional :payment_type, type: String
           optional :payment_method, type: String
           optional :payment_date, type: Date
@@ -71,7 +72,12 @@ module V1
       end
 
       patch ':id' do
-        Services::Apis::PaymentApiService.update(params)
+        payment = Payment.find_by(id: params[:id])
+        if payment.present?
+          Services::Apis::PaymentApiService.update(params)
+        else
+          {error: "Payment not found"}
+        end
       end
 
 
@@ -80,7 +86,12 @@ module V1
         requires :id, type: Integer, desc: "Delete payment"
       end
       delete ':id' do
-        Services::Apis::PaymentApiService.destroy(params[:id])
+        payment = Payment.find_by(id: params[:id])
+        if payment.present?
+          Services::Apis::PaymentApiService.destroy(payment)
+        else
+          {error: "Payment not found"}
+        end
       end
     end
   end

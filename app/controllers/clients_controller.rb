@@ -126,13 +126,14 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
-    if Client.is_exists?(params[:client][:email], get_association_obj)
+    @client = Client.find(params[:id])
+    authorize @client
+    if Client.is_exists?(params[:client][:email], get_association_obj) && @client.email != params[:client][:email]
       @client_exists = true
       redirect_to(request.referrer, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
       return
     end
-    @client = Client.find(params[:id])
-    authorize @client
+
     associate_entity(params, @client)
 
     #add/update available credit

@@ -18,14 +18,15 @@ module V1
       end
 
       get ':id' do
-        Tax.find params[:id]
+        tax = Tax.find_by(id: params[:id])
+        tax.present? ? tax : 'Tax not found'
       end
 
       desc 'Create Tax'
       params do
         requires :tax, type: Hash do
-          requires :name, type: String
-          requires :percentage, type: Integer
+          requires :name, type: String, message: :required
+          requires :percentage, type: Integer, message: :required
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
@@ -38,8 +39,8 @@ module V1
       desc 'Update Tax'
       params do
         requires :tax, type: Hash do
-          requires :name, type: String
-          requires :percentage, type: Integer
+          optional :name, type: String
+          optional :percentage, type: Integer
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
@@ -47,7 +48,8 @@ module V1
       end
 
       patch ':id' do
-        Services::Apis::TaxApiService.update(params)
+        tax = Tax.find_by(id: params[:id])
+        tax.present? ? Services::Apis::TaxApiService.update(params) : 'Tax not found'
       end
 
 
@@ -56,7 +58,8 @@ module V1
         requires :id, type: Integer, desc: "Delete tax"
       end
       delete ':id' do
-        Services::Apis::TaxApiService.destroy(params[:id])
+        tax = Tax.find_by(id: params[:id])
+        tax.present? ? Services::Apis::TaxApiService.destroy(tax) : 'Tax not found'
       end
     end
   end

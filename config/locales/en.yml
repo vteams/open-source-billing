@@ -54,6 +54,18 @@ en:
         item[item_description]: 'Item description'
         item[unit_cost]: 'Unit cost'
         item[quantity]: 'Quantity'
+        payment[invoice_id]: 'Invoice'
+        payment[payment_amount]: 'Payment amount'
+        company[account_id]: 'Account'
+        company[company_name]: 'Company name'
+        company[contact_name]: 'Contact name'
+        company[contact_title]: 'Contact title'
+        company[email]: 'Company email'
+        tax[name]: 'Tax name'
+        tax[percentage]: 'Tax percentage'
+        current_password: 'Current password'
+        password: 'Password'
+        password_confirmation: 'password confirmation'
   date:
     formats:
       default: "%Y-%m-%d"
