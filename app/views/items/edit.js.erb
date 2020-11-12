@@ -7,6 +7,7 @@ Popup.open(elem);
 Validation.ItemForm();
 Item.check_uncheck_all_companies();
 if ($('#account_association').prop('checked', true)){
+    $('.company_checkbox').prop('checked', true)
     $('#select_all_companies').prop('checked', false)
     $('#select_all_companies').attr('disabled', true)
 }
