@@ -22,6 +22,12 @@ module V1
         @current_user.current_account.companies
       end
 
+      desc 'Fetch current company'
+
+      get 'current_company' do
+        Company.find_by(id: @current_user.current_company)
+      end
+
       desc 'Fetch a single company'
       params do
         requires :id, type: String
