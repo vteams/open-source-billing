@@ -152,7 +152,7 @@
                       input_html: { class: 'discount_select inline-select small-select invoice-client-select', id: 'discount_type' },
                       wrapper_html: { class: 'new-invoice-footer-row' } %>
           <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
-                      label: t('views.common.tax'), prompt: t('views.common.select'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
+                      label: t('views.common.tax'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
                       input_html: { class: 'discount_select inline-select small-select currency-select'} %>
           <div class="new-invoice-footer-row taxes_total"></div>
           <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>

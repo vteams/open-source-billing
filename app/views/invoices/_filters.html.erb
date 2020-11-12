@@ -37,14 +37,14 @@
             <p class="range-field">
               <label><%= t('views.invoices.invoice_number_range') %></label>
               <input type="hidden" name="min_invoice_number" id="invoice_number_min" value="1">
-              <input type="hidden" name="max_invoice_number" id="invoice_number_max" value="<%= Invoice.last.id %>">
+              <input type="hidden" name="max_invoice_number" id="invoice_number_max" value="<%= Invoice.by_company(current_company).last.try(:id) || 0 %>">
             <div class="label-range">
               <span class="label_left"><%= t('views.invoices.min') %>: <span id="invoice_number_min_label"></span></span>
               <span class="label_right"><%= t('views.invoices.max') %>: <span id="invoice_number_max_label"></span></span>
             </div>
             <div id="invoice_number"
                  min="1"
-                 max="<%= Invoice.last.id %>"
+                 max="<%= Invoice.by_company(current_company).last.try(:id) || 0 %>"
                  class="range_selector"
                  data-min="<%= params[:min_invoice_number] %>"
                  data-max="<%= params[:max_invoice_number] %>"></div>
