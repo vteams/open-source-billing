@@ -6614,3 +6614,10 @@ tr.email_templates td{
   right: 50%;
   margin: auto;
 }
+.new-invoice-footer-row .currency-select .caret{
+  left: unset;
+}
+.item_form .modal-body .row .input-field label:not(.label-icon).active,
+#newClient .modal-body .row .input-field label:not(.label-icon).active{
+  transform: translateY(-88%);
+}
