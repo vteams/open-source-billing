@@ -6621,3 +6621,9 @@ tr.email_templates td{
 #newClient .modal-body .row .input-field label:not(.label-icon).active{
   transform: translateY(-88%);
 }
+.payment_right .field_row  .floating-left span{
+  position: absolute;
+}
+.payment_right .field_row  .floating-left input{
+  margin-bottom: 5px !important;
+}

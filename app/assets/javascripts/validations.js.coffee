@@ -212,11 +212,28 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'payments[][payment_amount]': required: true, number: true
+        'payments[][payment_amount]': required: true, number: true, min: 1
       messages:
-        'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount'
+        'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount',
+        min: 'Amount should be greater than 0'
 
       $('#payments_0_paid_full').on 'change', ->
         $('#payments_0_payment_amount').valid()
+
+    $('#new_payment').validate
+      onfocusout: (element) ->
+        $(element).valid()
+      onkeyup: (element) ->
+        $(element).valid()
+      errorClass: 'error invalid-error'
+      errorElement: 'span'
+      rules:
+        'payment[payment_amount]': required: true, number: true, min: 1
+      messages:
+        'payment[payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount',
+        min: 'Amount should be greater than 0'
+
+      $('#payment_paid_full').on 'change', ->
+        $('#payment_payment_amount').valid()
 
 
