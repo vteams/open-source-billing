@@ -43,7 +43,7 @@ module V1
       get ':id' do
         client = Client.find_by(id: params[:id])
         if !client.present?
-          {message: 'No client found'}
+          {error: 'No client found', message: nil }
         else
         client = Client.find(params[:id])
         {client: client, amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
@@ -65,7 +65,7 @@ module V1
       get ':id/with_companies' do
         client = Client.find_by(id: params[:id])
         if !client.present?
-          {message: 'No client found'}
+          {error: 'No client found', message: nil }
         else
           {client: client, company_ids: CompanyEntity.company_ids(client.id, 'Client'), amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
            outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
@@ -172,7 +172,7 @@ module V1
         if client.present?
           Services::Apis::ClientApiService.update(params)
         else
-          {error: 'Client not found'}
+          {error: 'Client not found', message: nil }
         end
       end
 
@@ -191,7 +191,7 @@ module V1
         if client.present?
           Services::Apis::ClientApiService.destroy(client)
         else
-          {error: 'Client not found'}
+          {error: 'Client not found', message: nil }
         end
       end
 

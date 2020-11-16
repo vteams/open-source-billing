@@ -49,7 +49,7 @@ module V1
 
       get ':id' do
         estimate = Estimate.find_by(id: params[:id])
-        estimate.present? ? estimate : 'Estimate not found'
+        estimate.present? ? estimate : {error: 'Estimate not found', message: nil }
       end
 
       desc 'Create Estimate',

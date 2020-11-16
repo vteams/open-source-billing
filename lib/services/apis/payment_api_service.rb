@@ -8,7 +8,7 @@ module Services
           Payment.update_invoice_status_credit(payment.invoice.id, payment.payment_amount, payment)
           {message: 'Successfully created'}
         else
-          {error: payment.errors.full_messages}
+          {error: payment.errors.full_messages, message: nil }
         end
       end
 
@@ -18,10 +18,10 @@ module Services
           if payment.update_attributes(payment_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: payment.errors.full_messages}
+            {error: payment.errors.full_messages, message: nil }
           end
         else
-          {error: 'payment not found'}
+          {error: 'payment not found', message: nil }
         end
       end
 
@@ -29,7 +29,7 @@ module Services
         if ::Payment.destroy(params)
           {message: 'Successfully deleted'}
         else
-          {message: 'Not deleted'}
+          {message: 'Not deleted', message: nil }
         end
       end
 
