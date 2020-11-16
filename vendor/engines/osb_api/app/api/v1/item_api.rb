@@ -55,7 +55,7 @@ module V1
         if item.present?
           {item: item, tax_1: item.tax1, tax_2: item.tax2}
         else
-          {error: 'Item not found'}
+          {error: 'Item not found', message: nil }
         end
       end
 
@@ -75,7 +75,7 @@ module V1
         if item.present?
           {item: item, company_ids: CompanyEntity.company_ids(item.id, 'Item'), tax_1: item.tax1, tax_2: item.tax2}
         else
-          {error: 'Item not found'}
+          {error: 'Item not found', message: nil }
         end
       end
 
@@ -136,7 +136,7 @@ module V1
         if item.present?
           Services::Apis::ItemApiService.update(params)
         else
-          {error: 'Item not found'}
+          {error: 'Item not found', message: nil }
         end
 
       end
@@ -157,7 +157,7 @@ module V1
         if item.present?
           Services::Apis::ItemApiService.destroy(item)
         else
-          {error: 'item not found'}
+          {error: 'item not found', message: nil }
         end
       end
     end

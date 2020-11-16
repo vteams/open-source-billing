@@ -8,7 +8,7 @@ module Services
         if item.save
           {message: 'Successfully created'}
         else
-          {error: item.errors.full_messages}
+          {error: item.errors.full_messages, message: nil }
         end
       end
 
@@ -19,10 +19,10 @@ module Services
           if item.update_attributes(item_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: item.errors.full_messages}
+            {error: item.errors.full_messages, message: nil }
           end
         else
-          {error: 'Item not found'}
+          {error: 'Item not found', message: nil }
         end
       end
 

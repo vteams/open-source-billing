@@ -7,7 +7,7 @@ module Services
         if invoice.save
           {message: 'Successfully created'}
         else
-          {error: invoice.errors.full_messages}
+          {error: invoice.errors.full_messages, message: nil }
         end
       end
 
@@ -17,10 +17,10 @@ module Services
           if invoice.update_attributes(invoice_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: invoice.errors.full_messages}
+            {error: invoice.errors.full_messages, message: nil }
           end
         else
-          {error: 'Account not found'}
+          {error: 'Account not found', message: nil }
         end
       end
 

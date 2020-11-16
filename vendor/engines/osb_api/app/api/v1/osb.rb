@@ -5,6 +5,9 @@ module V1
 
     version 'v1', using: :path, vendor: 'osb'
     format :json
+    rescue_from Grape::Exceptions::ValidationErrors do |e|
+      error!({ errors: e.full_messages.map { |msg| msg }, message: nil}, 400)
+    end
 
     helpers do
       def current_token

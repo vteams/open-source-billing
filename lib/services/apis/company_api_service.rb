@@ -7,7 +7,7 @@ module Services
         if company.save
           {message: 'Successfully created'}
         else
-          {error: company.errors.full_messages}
+          {error: company.errors.full_messages, message: nil }
         end
       end
 
@@ -17,7 +17,7 @@ module Services
           if company.update_attributes(company_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: company.errors.full_messages}
+            {error: company.errors.full_messages, message: nil }
           end
         else
           {error: 'Account not found'}

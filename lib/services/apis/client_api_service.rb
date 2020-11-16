@@ -4,7 +4,7 @@ module Services
 
       def self.create(params)
         if Client.exists?(email: params[:client][:email])
-          {error: 'Client with same email already exists'}
+          {error: 'Client with same email already exists', message: nil }
         else
           client = ::Client.new(client_params_api(params))
           client.skip_password_validation = true
@@ -12,16 +12,16 @@ module Services
           if client.save
             {message: 'Successfully created'}
           else
-            {error: client.errors.full_messages}
+            {error: client.errors.full_messages, message: nil }
           end
         end
       end
 
       def self.update(params)
-        if Client.exists?(email: params[:client][:email])
+        client = ::Client.find(params[:id])
+        if Client.exists?(email: params[:client][:email]) && client.email != params[:client][:email]
           {error: 'Client with same email already exists'}
         else
-          client = ::Client.find(params[:id])
           if client.present?
             if params[:client][:company_ids].present?
               ClientApiService.associate_entity(params, client)

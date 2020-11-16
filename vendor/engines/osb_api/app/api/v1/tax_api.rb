@@ -19,7 +19,7 @@ module V1
 
       get ':id' do
         tax = Tax.find_by(id: params[:id])
-        tax.present? ? tax : 'Tax not found'
+        tax.present? ? tax : {error: 'Tax not found', message: nil}
       end
 
       desc 'Create Tax'
@@ -49,7 +49,7 @@ module V1
 
       patch ':id' do
         tax = Tax.find_by(id: params[:id])
-        tax.present? ? Services::Apis::TaxApiService.update(params) : 'Tax not found'
+        tax.present? ? Services::Apis::TaxApiService.update(params) : {error: 'Tax not found', message: nil}
       end
 
 
@@ -59,7 +59,7 @@ module V1
       end
       delete ':id' do
         tax = Tax.find_by(id: params[:id])
-        tax.present? ? Services::Apis::TaxApiService.destroy(tax) : 'Tax not found'
+        tax.present? ? Services::Apis::TaxApiService.destroy(tax) : {error: 'Tax not found', message: nil}
       end
     end
   end

@@ -155,9 +155,9 @@ module V1
       get '/send_invoice/:id' do
         invoice = Invoice.find_by(id: params[:id])
         if !invoice.present?
-          {error: "Invoice not found"}
+          {error: "Invoice not found", message: nil }
         elsif invoice.status == 'sent'
-          {error: 'Invoice already sent'}
+          {error: 'Invoice already sent', message: nil }
         else
           invoice.send_invoice(@current_user, params[:invoice_id])
           {message: 'Invoice sent'}
@@ -207,7 +207,7 @@ module V1
           {tax: taxes_list(@invoice.tax_details),
            invoices: @invoice.invoice_line_items}
         else
-          {error: "Invoice not found"}
+          {error: "Invoice not found", message: nil }
         end
       end
 
@@ -230,7 +230,7 @@ module V1
       get ':id' do
         invoice = Invoice.find_by(id: params[:id])
         if !invoice.present?
-          {error: "Invoice not found"}
+          {error: "Invoice not found", message: nil }
         else
           payment_details = {amount_due: invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), amount_paid: invoice.payments.sum(:payment_amount)}
           invoice_hash = []
@@ -354,7 +354,7 @@ module V1
         if invoice.present?
           Services::Apis::InvoiceApiService.update(params)
         else
-          {error: "Invoice not found"}
+          {error: "Invoice not found", message: nil }
         end
       end
 
@@ -374,7 +374,7 @@ module V1
         if invoice.present?
           Services::Apis::InvoiceApiService.destroy(invoice)
         else
-          {error: "Invoice not found"}
+          {error: "Invoice not found", message: nil }
         end
       end
 
@@ -405,7 +405,7 @@ module V1
       get '/void_invoice/:id' do
         @invoice = Invoice.find(params[:id])
         if @invoice.status == "void"
-          {message: 'Already Voided'}
+          {message: 'Already Voided', message: nil }
         else
           @invoice.status = "void"
           @invoice.base_currency_equivalent_total = 0

@@ -24,7 +24,7 @@ module V1
 
       get ':id' do
         payment = Payment.find_by(id: params[:id])
-        payment.present? ? payment : "Payment not found"
+        payment.present? ? payment : {error: "Payment not found", message: nil }
       end
 
       desc 'Create Payment'
@@ -76,7 +76,7 @@ module V1
         if payment.present?
           Services::Apis::PaymentApiService.update(params)
         else
-          {error: "Payment not found"}
+          {error: "Payment not found", message: nil }
         end
       end
 
@@ -90,7 +90,7 @@ module V1
         if payment.present?
           Services::Apis::PaymentApiService.destroy(payment)
         else
-          {error: "Payment not found"}
+          {error: "Payment not found", message: nil }
         end
       end
     end

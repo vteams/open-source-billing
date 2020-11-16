@@ -7,7 +7,7 @@ module Services
         if tax.save
           {message: 'Successfully created'}
         else
-          {error: tax.errors.full_messages}
+          {error: tax.errors.full_messages, message: nil }
         end
       end
 
@@ -17,10 +17,10 @@ module Services
           if tax.update_attributes(tax_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: tax.errors.full_messages}
+            {error: tax.errors.full_messages, message: nil }
           end
         else
-          {error: 'tax not found'}
+          {error: 'tax not found', message: nil }
         end
       end
 

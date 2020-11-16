@@ -35,7 +35,7 @@ module V1
 
       get ':id' do
         company = Company.find_by(id: params[:id])
-        company.present? ? company : "Company not found"
+        company.present? ? company : {error: "Company not found", message: nil}
       end
 
       desc 'Create Company'
@@ -95,7 +95,7 @@ module V1
 
       patch ':id' do
         payment = Payment.find_by(id: params[:id])
-        payment.present? ? Services::Apis::CompanyApiService.update(params) : 'Payment not found'
+        payment.present? ? Services::Apis::CompanyApiService.update(params) : {error: 'Payment not found', message: nil}
       end
 
 
@@ -106,7 +106,7 @@ module V1
       delete ':id' do
         Services::Apis::CompanyApiService.destroy(params[:id])
         payment = Payment.find_by(id: params[:id])
-        payment.present? ? Services::Apis::CompanyApiService.destroy(payment) : 'Payment not found'
+        payment.present? ? Services::Apis::CompanyApiService.destroy(payment) : {error: 'Payment not found', message: nil}
       end
 
       desc 'Change current company',
@@ -120,7 +120,7 @@ module V1
       get ':id/current_company' do
         company = Company.find_by(id: params[:id])
         if !company.present?
-          {error: "Company not found"}
+          {error: "Company not found", message: nil }
         else
           @current_user.update_attributes(current_company: company.id)
           {message: "Current company updated successfully"}
