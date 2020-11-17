@@ -270,7 +270,7 @@ module V1
           requires :due_date, type: String, message: :required
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
-          requires :company_id, type: Integer, message: :required
+          optional :company_id, type: Integer
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
@@ -326,7 +326,7 @@ module V1
           optional :due_date, type: String
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
-          requires :company_id, type: Integer, message: :required
+          optional :company_id, type: Integer
           optional :invoice_line_items_attributes, type: Array do
             # requires :invoice_id, type: Integer
             requires :item_id, type: Integer
