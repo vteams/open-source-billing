@@ -5,6 +5,7 @@ module Services
       def self.create(params)
         invoice = ::Invoice.new(invoice_params_api(params))
         if invoice.save
+          invoice.send_invoice(User.current, invoice.id) unless params[:invoice][:save_as_draft].present?
           {message: 'Successfully created'}
         else
           {error: invoice.errors.full_messages, message: nil }
@@ -15,6 +16,7 @@ module Services
         invoice = ::Invoice.find(params[:id])
         if invoice.present?
           if invoice.update_attributes(invoice_params_api(params))
+            invoice.send_invoice(User.current, invoice.id) unless params[:invoice][:save_as_draft].present?
             {message: 'Successfully updated'}
           else
             {error: invoice.errors.full_messages, message: nil }

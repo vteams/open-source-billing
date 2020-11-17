@@ -115,7 +115,7 @@ class InvoicesController < ApplicationController
     authorize @invoice
     respond_to do |format|
       if @invoice.save
-        @invoice.delay.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) unless params[:save_as_draft].present?
+        @invoice.send_invoice(current_user, params[:id]) unless params[:save_as_draft].present?
         @new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft]).gsub(/<\/?[^>]*>/, "").chop
         format.js
         format.json {render :json=> @invoice, :status=> :ok}
