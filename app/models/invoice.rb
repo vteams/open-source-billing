@@ -276,7 +276,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
-    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_string  = ApplicationController.new.render_to_string('invoices/show.html.erb', layout: 'pdf_mode', locals: {invoice: self})
     invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
     notify(current_user, self.id, invoice_pdf_file)
   end
