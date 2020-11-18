@@ -6,12 +6,13 @@ module Services
         item = ::Item.new(item_params_api(params))
         if Item.exists?(item_name: params[:item][:item_name])
           {error: 'Item already exists with same name', message: nil }
-        end
-        ItemApiService.associate_entity(params, item)
-        if item.save
-          {message: 'Successfully created'}
         else
-          {error: item.errors.full_messages, message: nil }
+          ItemApiService.associate_entity(params, item)
+          if item.save
+            {message: 'Successfully created'}
+          else
+            {error: item.errors.full_messages, message: nil }
+          end
         end
       end
 
@@ -19,16 +20,17 @@ module Services
         item = ::Item.find(params[:id])
         if Item.exists?(item_name: item.item_name) && params[:item][:item_name] != item.item_name
           {error: 'Item already exists with same name', message: nil}
-        end
-        if item.present?
-          ItemApiService.associate_entity(params, item)
-          if item.update_attributes(item_params_api(params))
-            {message: 'Successfully updated'}
-          else
-            {error: item.errors.full_messages, message: nil }
-          end
         else
-          {error: 'Item not found', message: nil }
+          if item.present?
+            ItemApiService.associate_entity(params, item)
+            if item.update_attributes(item_params_api(params))
+              {message: 'Successfully updated'}
+            else
+              {error: item.errors.full_messages, message: nil }
+            end
+          else
+            {error: 'Item not found', message: nil }
+          end
         end
       end
 
