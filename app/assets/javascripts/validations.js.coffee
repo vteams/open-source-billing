@@ -214,6 +214,10 @@ class @Validation
 
 
   @PaymentForm = ->
+    jQuery.validator.addMethod 'lessThanOrEqualToDueAmount', ((value, element) ->
+      return value <= parseFloat($('.due_amount').html())
+    ), 'Amount should not be greater than remaining amount'
+
     $('#payments_form').validate
       onfocusout: (element) ->
         $(element).valid()
@@ -222,13 +226,15 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'payments[][payment_amount]': required: true, number: true, min: 1
+        'payments[][payment_amount]': required: true, number: true, min: 1, lessThanOrEqualToDueAmount: '.paid_full:checked'
       messages:
         'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount',
         min: 'Amount should be greater than 0'
 
-      $('#payments_0_paid_full').on 'change', ->
-        $('#payments_0_payment_amount').valid()
+      $('.payment_right').each ->
+        parent = $(this)
+        $(this).find('.paid_full').on 'change', ->
+          parent.find('.payment_amount').valid()
 
     $('#new_payment').validate
       onfocusout: (element) ->
