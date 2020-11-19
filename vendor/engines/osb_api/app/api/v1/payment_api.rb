@@ -12,7 +12,7 @@ module V1
       desc 'Return all Payments'
       get do
         @payments = Payment.unarchived
-        @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id')
+        @payments = @payments.by_company(@current_user.current_company)
         @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ').order("payments.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
                         .select('payments.*, clients.organization_name')
       end
