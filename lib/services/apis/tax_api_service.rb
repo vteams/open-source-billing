@@ -4,23 +4,31 @@ module Services
 
       def self.create(params)
         tax = ::Tax.new(tax_params_api(params))
-        if tax.save
-          {message: 'Successfully created'}
+        if Tax.exists?(name: params[:tax][:name])
+          {error: 'Tax already exists with same name', message: nil }
         else
-          {error: tax.errors.full_messages, message: nil }
+          if tax.save
+            {message: 'Successfully created'}
+          else
+            {error: tax.errors.full_messages, message: nil }
+          end
         end
       end
 
       def self.update(params)
         tax = ::Tax.find(params[:id])
-        if tax.present?
-          if tax.update_attributes(tax_params_api(params))
-            {message: 'Successfully updated'}
-          else
-            {error: tax.errors.full_messages, message: nil }
-          end
+        if Tax.exists?(name: params[:tax][:name]) && params[:tax][:name] != tax.name
+          {error: 'Tax already exists with same name', message: nil}
         else
-          {error: 'tax not found', message: nil }
+          if tax.present?
+            if tax.update_attributes(tax_params_api(params))
+              {message: 'Successfully updated'}
+            else
+              {error: tax.errors.full_messages, message: nil }
+            end
+          else
+            {error: 'tax not found', message: nil }
+          end
         end
       end
 
