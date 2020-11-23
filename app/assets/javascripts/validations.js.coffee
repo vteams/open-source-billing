@@ -189,6 +189,11 @@ class @Validation
     $('#newClient').submit ->
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
+
+    jQuery.validator.addMethod 'emailRegex', ((value, element) ->
+      return this.optional( element ) || /^.+@.+\..+$/.test( value );
+    ), 'Please enter a valid email address'
+
     $('#newClient').validate
       onfocusout: (element) ->
         if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
@@ -204,7 +209,7 @@ class @Validation
         'client[organization_name]': required: true
         'client[first_name]': required: true
         'client[last_name]': required: true
-        'client[email]': required: true
+        'client[email]': required: true, emailRegex: true 
       messages:
         'client[organization_name]': required: 'Organization name cannot be blank'
         'client[first_name]': required: 'First name cannot be blank'
