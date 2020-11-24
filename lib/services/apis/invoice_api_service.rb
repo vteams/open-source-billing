@@ -51,6 +51,7 @@ module Services
          :sub_total,
          :discount_amount,
          :tax_amount,
+        :tax_id,
          :invoice_total,
          :archive_number,
          :archived_at,

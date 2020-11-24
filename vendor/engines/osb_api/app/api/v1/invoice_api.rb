@@ -257,6 +257,7 @@ module V1
           optional :sub_total, type: String
           optional :discount_amount, type: String
           optional :tax_amount, type: String
+          optional :tax_id, type: Integer
           optional :invoice_total, type: String
           optional :archive_number, type: String
           optional :archived_at, type: Boolean
@@ -276,6 +277,8 @@ module V1
             requires :item_description, type: String, message: :required
             requires :item_unit_cost, type: Integer, message: :required
             requires :item_quantity, type: Integer, message: :required
+            optional :tax_1, type: Integer
+            optional :tax_2, type: Integer
             # requires :actual_price, type: String binding.pry
           end
           optional :recurring_schedule_attributes, type: Hash do
@@ -314,6 +317,7 @@ module V1
           optional :sub_total, type: String
           optional :discount_amount, type: String
           optional :tax_amount, type: String
+          optional :tax_id, type: Integer
           optional :invoice_total, type: String
           optional :archive_number, type: String
           optional :archived_at, type: Boolean
@@ -332,6 +336,8 @@ module V1
             requires :item_description, type: String, message: :required
             requires :item_unit_cost, type: Integer, message: :required
             requires :item_quantity, type: Integer, message: :required
+            optional :tax_1, type: Integer
+            optional :tax_2, type: Integer
             # requires :actual_price, type: String binding.pry
           end
           optional :recurring_schedule_attributes, type: Hash do
