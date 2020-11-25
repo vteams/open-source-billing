@@ -199,12 +199,19 @@ class @Validation
         'client[organization_name]': required: true
         'client[first_name]': required: true
         'client[last_name]': required: true
-        'client[email]': required: true, emailRegex: true 
+        'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
+          'email': ->
+            $('#client_email').val()
+          'newClient': ->
+            if ($('#newClient').hasClass('edit_client'))
+              'edit_client'
+        }
+        }
       messages:
         'client[organization_name]': required: 'Organization name cannot be blank'
         'client[first_name]': required: 'First name cannot be blank'
         'client[last_name]': required: 'Last name cannot be blank'
-        'client[email]': required: 'Email cannot be blank'
+        'client[email]': required: 'Email cannot be blank', remote: "Email already exists"
 
 
 

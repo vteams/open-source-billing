@@ -190,6 +190,16 @@ class ClientsController < ApplicationController
     end
   end
 
+  def verify_email
+    client_emails = !params[:newClient].eql?('edit_client') ? Client.pluck(:email) :
+                        Client.where.not(email: params[:email]).pluck(:email)
+    if client_emails.include?(params[:email])
+      render json: false
+    else
+      render json: true
+    end
+  end
+
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
