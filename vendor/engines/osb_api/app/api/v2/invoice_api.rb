@@ -59,9 +59,36 @@ module V2
         @invoices = Invoice.unarchived.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id, invoices.currency_id")
         @invoices = filter_by_company(@invoices).page(params[:page]).per(@current_user.settings.records_per_page)
         # @invoices = filter_by_company(@invoices).filter(params,@current_user.settings.records_per_page)
-        @invoices={total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
+        @invoices = {total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
       end
 
+      desc 'All Archived invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get :archived_invoices do
+        @invoices = Invoice.archived.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id")
+                        .page(params[:page]).per(@current_user.settings.records_per_page)
+        @invoices = filter_by_company(@invoices)
+        @invoices = {total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
+      end
+
+      desc 'All Deleted invoices',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get :deleted_invoices do
+        @invoices = Invoice.deleted.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id")
+                        .page(params[:page]).per(@current_user.settings.records_per_page)
+        @invoices = filter_by_company(@invoices)
+        @invoices = {total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
+      end
 
 
     end

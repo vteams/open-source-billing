@@ -56,6 +56,9 @@ module V1
     mount V1::OSB::SettingsApi
     mount V1::OSB::UserApi
     mount V2::InvoiceApi
+    mount V2::PaymentApi
+    mount V2::EstimateApi
+    mount V2::ClientApi
     add_swagger_documentation(
         base_path: "/api",
         hide_documentation_path: true
