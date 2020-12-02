@@ -40,7 +40,7 @@ class InvoiceLineItem < ActiveRecord::Base
   attr_accessor :tax_one, :tax_two
 
   def recalculate_invoice_total
-    self.invoice.save
+    self.invoice.save if self.invoice.present?
   end
 
   def unscoped_item
