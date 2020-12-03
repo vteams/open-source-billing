@@ -73,7 +73,7 @@ class Item < ApplicationRecord
     # get the items associated with companies
     company_items = company.items
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
-    company_items = company_items.send(mappings[params[:status].to_sym])
+    company_items = company_items.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_items = company_items.item_name(params[:item_name]) if params[:item_name].present?
     company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     company_items = company_items.created_at(
@@ -88,7 +88,7 @@ class Item < ApplicationRecord
     # get the items associated with account
     account_items = account.items
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
-    account_items = account_items.send(mappings[params[:status].to_sym])
+    account_items = account_items.send(mappings[params[:status].to_sym]) if params[:status].present?
     account_items = account_items.item_name(params[:item_name]) if params[:item_name].present?
     account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     account_items = account_items.created_at(

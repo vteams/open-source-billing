@@ -13,6 +13,10 @@
             <div class="row">
               <%= f.input :name, wrapper_html: { class: 'input-field col s12' }  %>
               <h3>Permissions</h3>
+              <div class="role-checkbox">
+                <%= check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'select_all_roles' %>
+                <label for="select_all_roles">Select all</label>
+              </div>
               <div id="edit_permission_table">
                 <%= f.simple_fields_for :permissions do |permission| %>
                   <%= render partial: 'permission_fields', locals: {permission: permission} %>

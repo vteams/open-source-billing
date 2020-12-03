@@ -3,24 +3,37 @@ module Services
     class ClientApiService
 
       def self.create(params)
-        client = ::Client.new(client_params_api(params))
-        if client.save
-          {message: 'Successfully created'}
+        if Client.exists?(email: params[:client][:email])
+          {error: 'Client with same email already exists', message: nil }
         else
-          {error: client.errors.full_messages}
+          client = ::Client.new(client_params_api(params))
+          client.skip_password_validation = true
+          ClientApiService.associate_entity(params, client)
+          if client.save
+            {message: 'Successfully created'}
+          else
+            {error: client.errors.full_messages, message: nil }
+          end
         end
       end
 
       def self.update(params)
         client = ::Client.find(params[:id])
-        if client.present?
-          if client.update_attributes(client_params_api(params))
-            {message: 'Successfully updated'}
-          else
-            {error: client.errors.full_messages}
-          end
+        if Client.exists?(email: params[:client][:email]) && client.email != params[:client][:email]
+          {error: 'Client with same email already exists'}
         else
-          {error: 'Client not found'}
+          if client.present?
+            if params[:client][:company_ids].present?
+              ClientApiService.associate_entity(params, client)
+            end
+            if client.update_attributes(client_params_api(params))
+              {message: 'Successfully updated'}
+            else
+              {error: client.errors.full_messages}
+            end
+          else
+            {error: 'Client not found'}
+          end
         end
       end
 
@@ -30,6 +43,26 @@ module Services
         else
           {message: 'Not deleted'}
         end
+      end
+
+      def self.associate_entity(params, entity)
+        ids, controller = params[:client][:company_ids], 'clients'
+
+        ActiveRecord::Base.transaction do
+          # delete existing associations
+          if params[:id].present?
+            entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id, entity_type: entity.class.to_s)
+            entities.map(&:destroy) if entities.present?
+          end
+
+          # associate item with whole account or selected companies
+          # if params[:association] == 'account'
+          #   current_user.accounts.first.send(controller) << entity
+          # else
+          ::Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
+          # end
+        end
+
       end
 
       private
@@ -51,6 +84,8 @@ module Services
             :industry,
             :company_size,
             :business_phone,
+            :mobile_number,
+            :currency_id,
             :fax,
             :archive_number,
             :archived_at,

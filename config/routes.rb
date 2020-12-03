@@ -1,6 +1,13 @@
 require 'sidekiq/web'
 Osb::Application.routes.draw do
 
+  resources :recurring_frequencies do
+    collection do
+      delete :destroy_bulk
+    end
+  end
+
+
   resources :notifications, only: :index
 
   get 'activities/index'
@@ -15,6 +22,9 @@ Osb::Application.routes.draw do
   #end
   #get '/auth/:provider/callback', to: 'sessions#create'
   scope "(:locale)" do
+    authenticate :user do
+      get '/', to: 'dashboard#index'
+    end
     get '/', to: redirect{Rails.application.routes.url_helpers.new_user_session_path}
 
     resources :tasks do
@@ -82,7 +92,11 @@ Osb::Application.routes.draw do
 
     resources :email_templates
 
-    resources :payment_terms
+    resources :payment_terms do
+      collection do
+        delete :destroy_bulk
+      end
+    end
 
     resources :accounts
     resources :help

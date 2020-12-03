@@ -1,0 +1,19 @@
+<% if @recurring_frequency.errors.present? %>
+swal({
+    icon: "error",
+    title: "oops..!",
+    buttons: false,
+    timer: 3000,
+    text: "<%= @recurring_frequency.errors.full_messages.join('.') %>"
+});
+<% else %>
+swal({
+    icon: "success",
+    title: "Success",
+    buttons: false,
+    timer: 3000,
+    text: "Recurring Frequency has been updated successfully"}).then(function(){
+    window.location = '<%= settings_path %>'
+
+});
+<% end %>

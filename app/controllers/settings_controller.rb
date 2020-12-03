@@ -60,6 +60,8 @@ class SettingsController < ApplicationController
     @roles = Role.all
     @companies = Company.all
     @users = User.all
+    @payment_terms = PaymentTerm.where.not(number_of_days: -1)
+    @recurring_frequencies = RecurringFrequency.all
     @authentication_token = current_user.authentication_token
   end
 

@@ -10,62 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_070538) do
+ActiveRecord::Schema.define(version: 20200827062117) do
 
-  create_table "account_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "account_id"
+  create_table "account_users", force: :cascade do |t|
+    t.integer "user_id",    limit: 4
+    t.integer "account_id", limit: 4
   end
 
-  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "org_name"
-    t.string "country"
-    t.string "street_address_1"
-    t.string "street_address_2"
-    t.string "city"
-    t.string "province_or_state"
-    t.string "postal_or_zip_code"
-    t.string "profession"
-    t.string "phone_business"
-    t.string "phone_mobile"
-    t.string "fax"
-    t.string "email"
-    t.string "time_zone"
-    t.boolean "auto_dst_adjustment"
-    t.string "currency_code"
-    t.string "currency_symbol"
-    t.string "admin_first_name"
-    t.string "admin_last_name"
-    t.string "admin_email"
-    t.decimal "admin_billing_rate_per_hour", precision: 10
-    t.string "admin_user_name"
-    t.string "admin_password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "accounts", force: :cascade do |t|
+    t.string   "org_name",                    limit: 255
+    t.string   "country",                     limit: 255
+    t.string   "street_address_1",            limit: 255
+    t.string   "street_address_2",            limit: 255
+    t.string   "city",                        limit: 255
+    t.string   "province_or_state",           limit: 255
+    t.string   "postal_or_zip_code",          limit: 255
+    t.string   "profession",                  limit: 255
+    t.string   "phone_business",              limit: 255
+    t.string   "phone_mobile",                limit: 255
+    t.string   "fax",                         limit: 255
+    t.string   "email",                       limit: 255
+    t.string   "time_zone",                   limit: 255
+    t.boolean  "auto_dst_adjustment"
+    t.string   "currency_code",               limit: 255
+    t.string   "currency_symbol",             limit: 255
+    t.string   "admin_first_name",            limit: 255
+    t.string   "admin_last_name",             limit: 255
+    t.string   "admin_email",                 limit: 255
+    t.decimal  "admin_billing_rate_per_hour",             precision: 10
+    t.string   "admin_user_name",             limit: 255
+    t.string   "admin_password",              limit: 255
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
-  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "trackable_type"
-    t.bigint "trackable_id"
-    t.string "owner_type"
-    t.bigint "owner_id"
-    t.string "key"
-    t.text "parameters"
-    t.string "recipient_type"
-    t.bigint "recipient_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "is_read", default: false
-    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
-    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
-    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
-    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
-    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
-    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  create_table "activities", force: :cascade do |t|
+    t.integer  "trackable_id",   limit: 4
+    t.string   "trackable_type", limit: 255
+    t.integer  "owner_id",       limit: 4
+    t.string   "owner_type",     limit: 255
+    t.string   "key",            limit: 255
+    t.text     "parameters",     limit: 65535
+    t.integer  "recipient_id",   limit: 4
+    t.string   "recipient_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_read",                      default: false
   end
 
-  create_table "api_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "access_token"
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+
+  create_table "api_keys", force: :cascade do |t|
+    t.string   "access_token", limit: 255
     t.datetime "expires_at"
     t.integer "user_id"
     t.boolean "active"
@@ -160,8 +158,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_070538) do
     t.string "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.integer "base_currency_id", default: 1
-    t.string "abbreviation"
+    t.integer  "base_currency_id",  limit: 4,   default: 1
+    t.string   "abbreviation",      limit: 255
   end
 
   create_table "companies_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -353,51 +351,51 @@ ActiveRecord::Schema.define(version: 2020_01_30_070538) do
   create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "invoice_number"
     t.datetime "invoice_date"
-    t.string "po_number"
-    t.decimal "discount_percentage", precision: 10, scale: 2
-    t.integer "client_id"
-    t.text "terms"
-    t.text "notes"
-    t.string "status"
-    t.decimal "sub_total", precision: 10, scale: 2
-    t.decimal "discount_amount", precision: 10, scale: 2
-    t.decimal "tax_amount", precision: 10, scale: 2
-    t.decimal "invoice_total", precision: 10, scale: 2
-    t.string "archive_number"
+    t.string   "po_number",                      limit: 255
+    t.decimal  "discount_percentage",                          precision: 10, scale: 2
+    t.integer  "client_id",                      limit: 4
+    t.text     "terms",                          limit: 65535
+    t.text     "notes",                          limit: 65535
+    t.string   "status",                         limit: 255
+    t.decimal  "sub_total",                                    precision: 10, scale: 2
+    t.decimal  "discount_amount",                              precision: 10, scale: 2
+    t.decimal  "tax_amount",                                   precision: 10, scale: 2
+    t.decimal  "invoice_total",                                precision: 10, scale: 2
+    t.string   "archive_number",                 limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "payment_terms_id"
-    t.date "due_date"
-    t.string "last_invoice_status"
-    t.string "discount_type"
-    t.integer "company_id"
-    t.integer "project_id"
-    t.string "invoice_type"
-    t.integer "currency_id"
-    t.integer "created_by"
-    t.integer "updated_by"
-    t.string "provider"
-    t.string "provider_id"
-    t.integer "tax_id"
-    t.decimal "invoice_tax_amount", precision: 10, scale: 2
-    t.integer "parent_id"
-    t.integer "base_currency_id", default: 1
-    t.float "conversion_rate", default: 1.0
-    t.float "base_currency_equivalent_total"
+    t.datetime "created_at",                                                                          null: false
+    t.datetime "updated_at",                                                                          null: false
+    t.integer  "payment_terms_id",               limit: 4
+    t.date     "due_date"
+    t.string   "last_invoice_status",            limit: 255
+    t.string   "discount_type",                  limit: 255
+    t.integer  "company_id",                     limit: 4
+    t.integer  "project_id",                     limit: 4
+    t.string   "invoice_type",                   limit: 255
+    t.integer  "currency_id",                    limit: 4
+    t.integer  "created_by",                     limit: 4
+    t.integer  "updated_by",                     limit: 4
+    t.string   "provider",                       limit: 255
+    t.string   "provider_id",                    limit: 255
+    t.integer  "tax_id",                         limit: 4
+    t.decimal  "invoice_tax_amount",                           precision: 10, scale: 2
+    t.integer  "parent_id",                      limit: 4
+    t.integer  "base_currency_id",               limit: 4,                              default: 1
+    t.float    "conversion_rate",                limit: 24,                             default: 1.0
+    t.float    "base_currency_equivalent_total", limit: 24
   end
 
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "item_name"
-    t.string "item_description"
-    t.decimal "unit_cost", precision: 10, scale: 2
-    t.decimal "quantity", precision: 10, scale: 2
-    t.integer "tax_1"
-    t.integer "tax_2"
-    t.boolean "track_inventory"
-    t.integer "inventory"
-    t.string "archive_number"
+  create_table "items", force: :cascade do |t|
+    t.string   "item_name",        limit: 255
+    t.string   "item_description", limit: 255
+    t.decimal  "unit_cost",                    precision: 10, scale: 2
+    t.decimal  "quantity",                     precision: 10, scale: 2
+    t.integer  "tax_1",            limit: 4
+    t.integer  "tax_2",            limit: 4
+    t.boolean  "track_inventory"
+    t.integer  "inventory",        limit: 4
+    t.string   "archive_number",   limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -559,24 +557,31 @@ ActiveRecord::Schema.define(version: 2020_01_30_070538) do
     t.string "archive_number"
     t.datetime "archived_at"
     t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "provider"
-    t.string "provider_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "provider",       limit: 255
+    t.string   "provider_id",    limit: 255
   end
 
-  create_table "recurring_profile_line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "recurring_profile_id"
-    t.integer "item_id"
-    t.string "item_name"
-    t.string "item_description"
-    t.decimal "item_unit_cost", precision: 10, scale: 2
-    t.decimal "item_quantity", precision: 10, scale: 2
-    t.integer "tax_1"
-    t.integer "tax_2"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "archive_number"
+  create_table "recurring_frequencies", force: :cascade do |t|
+    t.integer  "number_of_days", limit: 4
+    t.string   "title",          limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "recurring_profile_line_items", force: :cascade do |t|
+    t.integer  "recurring_profile_id", limit: 4
+    t.integer  "item_id",              limit: 4
+    t.string   "item_name",            limit: 255
+    t.string   "item_description",     limit: 255
+    t.decimal  "item_unit_cost",                   precision: 10, scale: 2
+    t.decimal  "item_quantity",                    precision: 10, scale: 2
+    t.integer  "tax_1",                limit: 4
+    t.integer  "tax_2",                limit: 4
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "archive_number",       limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
   end

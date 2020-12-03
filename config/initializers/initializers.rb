@@ -429,7 +429,7 @@ ROLE = 'Super Admin'
 
 ENTITIES = ['Account','Category', 'Client', 'Company', 'CompanyEmailTemplate', 'CompanyEntity', 'Currency', 'EmailTemplate', 'Estimate', 'ExpenseCategory', 'Expense', 'InvoiceLineItem', 'InvoiceTask', 'Invoice', 'Item', 'LineItemTax', 'Log', 'PaymentTerm', 'Payment', 'ProjectTask', 'Project', 'RecurringProfileLineItem', 'RecurringProfile', 'Role', 'SentEmail', 'Staff', 'Task', 'TeamMember']
 
-ENTITY_TYPES = %w(Invoice Estimate Time\ Tracking Payment Client Item Taxes Report Settings)
+ENTITY_TYPES = %w(Invoice Estimate Payment Client Item Taxes Report Settings)
 
 
 FREEPLAN = ['5 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']

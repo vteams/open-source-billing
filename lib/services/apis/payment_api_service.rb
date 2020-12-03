@@ -4,10 +4,16 @@ module Services
 
       def self.create(params)
         payment = ::Payment.new(payment_params_api(params))
-        if payment.save
-          {message: 'Successfully created'}
+        if params[:payment][:payment_amount] > payment.invoice.unpaid_amount
+          {error: "Amount cannot be greater than remaining amount", message: nil }
         else
-          {error: payment.errors.full_messages}
+          if payment.save
+            Payment.update_invoice_status_credit(payment.invoice.id, payment.payment_amount, payment)
+            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification]
+            {message: 'Successfully created'}
+          else
+            {error: payment.errors.full_messages, message: nil }
+          end
         end
       end
 
@@ -15,12 +21,13 @@ module Services
         payment = ::Payment.find(params[:id])
         if payment.present?
           if payment.update_attributes(payment_params_api(params))
+            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification]
             {message: 'Successfully updated'}
           else
-            {error: payment.errors.full_messages}
+            {error: payment.errors.full_messages, message: nil }
           end
         else
-          {error: 'payment not found'}
+          {error: 'payment not found', message: nil }
         end
       end
 
@@ -28,7 +35,7 @@ module Services
         if ::Payment.destroy(params)
           {message: 'Successfully deleted'}
         else
-          {message: 'Not deleted'}
+          {message: 'Not deleted', message: nil }
         end
       end
 
@@ -50,7 +57,7 @@ module Services
             :credit_applied,
             :client_id,
             :company_id,
-        )
+            )
       end
 
     end

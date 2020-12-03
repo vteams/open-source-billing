@@ -8,13 +8,33 @@ class window.Client
     jQuery('#account_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
+        $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', true)
 
     jQuery('#company_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',false)
+        $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', false)
 
     $('.modal').modal complete: ->
       $('.qtip').remove()
+
+    jQuery("form#newClient").submit ->
+      flag = true
+      association_name = $('input[name=association]:checked').attr("id")
+      no_of_selected_companies = $('.company_checkbox:checked').length
+
+      if association_name == undefined
+        applyPopover($("label[for='company_association]"), "topright", "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
+      else if (association_name == "company_association" and no_of_selected_companies == 0)
+        applyPopover($(".modal-header > h5"),"topright","leftcenter",I18n.t("views.clients.atleast_one_company_required"))
+        flag = false
+      else
+        flag = true
+        hidePopover($("input[name=association]"))
+      flag
+
 
     jQuery('#calculated_credit').change ->
       client_credit = jQuery(this)

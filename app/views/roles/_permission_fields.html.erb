@@ -1,17 +1,18 @@
-<ul class="permission-list">
-  <li><%= permission.object.entity_type %></li>
-  <div class="permission-list-checkboxes">
+<ul class="permission-list <%= permission.object.entity_type %>_list">
+  <li><%= check_box_tag 'select_al', '', false, class: 'filled-in all-check', title: 'Select All', id: permission.object.entity_type+'_check' %><label for="<%= permission.object.entity_type %>_check"><span><%= permission.object.entity_type %></span></label></li>
+<!--  <li></li>-->
+  <div class="permission-list-checkboxes <%= permission.object.entity_type %>_permissions">
     <li class="hidden"><%= permission.input :entity_type, class: 'hidden'  %></li>
-    <li><%= permission.input :can_read, label: "Read", input_html: { class: 'filled-in', disabled: setting_or_super_admin?(permission.object, permission.object.role)}, as: :boolean,
+    <li><%= permission.input :can_read, label: "Read", input_html: { class: 'filled-in role-access', disabled: setting_or_super_admin?(permission.object, permission.object.role)}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
     </li>
-    <li><%= permission.input :can_create, label: "Create", input_html: { class: 'filled-in', disabled: setting_or_report?(permission.object)}, as: :boolean,
+    <li><%= permission.input :can_create, label: "Create", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
     </li>
-    <li><%= permission.input :can_update, label: "Update", input_html: { class: 'filled-in', disabled: setting_or_report?(permission.object)}, as: :boolean,
+    <li><%= permission.input :can_update, label: "Update", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6' }, boolean_style: :inline %>
     </li>
-    <li><%= permission.input :can_delete, label: "Delete", input_html: { class: 'filled-in', disabled: setting_or_report?(permission.object)}, as: :boolean,
+    <li><%= permission.input :can_delete, label: "Delete", input_html: { class: 'filled-in role-access', disabled: setting_or_report?(permission.object)}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6', disabled: setting_or_report?(permission.object) }, boolean_style: :inline %>
     </li>
   </div>

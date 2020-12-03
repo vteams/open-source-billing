@@ -53,7 +53,7 @@ module InvoicesHelper
 
   def selected_payment_term invoice
     if invoice.new_record?
-      PaymentTerm.last.id
+      PaymentTerm.find_by(description: 'custom').id
     else
       invoice.payment_terms_id
     end

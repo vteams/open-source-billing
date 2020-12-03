@@ -36,10 +36,15 @@ class window.Item
     jQuery('#account_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',true)
+        $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', true)
+
 
     jQuery('#company_association').change ->
       if jQuery(this).is ':checked'
         $('.company_checkbox').prop('checked',false)
+        $('#select_all_companies').prop('checked', false)
+        $('#select_all_companies').attr('disabled', false)
 
     $('.modal').modal complete: ->
       $('.qtip').remove()
@@ -84,9 +89,17 @@ class window.Item
       else if association_name == undefined
         applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.items.select_atleast_one_company'))
       else if (association_name == "company_association" and no_of_selected_companies == 0)
-        applyPopover($("input[name=association]"),"topright","leftcenter", I18n.t('views.items.select_atleast_one_company'))
+        applyPopover($("#step5"), I18n.t('views.items.select_atleast_one_company'))
         flag = false
       else
         flag = true
         hidePopover($("input[name=association]"))
       flag
+
+  @check_uncheck_all_companies = ->
+    $('#select_all_companies').on 'change', ->
+      if $(this).is(':checked')
+        $('.company_checkbox').prop 'checked', true
+      else
+        $('.company_checkbox').prop 'checked', false
+      return

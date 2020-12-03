@@ -165,18 +165,24 @@ window.initCompanyListingEvents = () ->
   $('.company-side-form').addClass('hidden')
 
 window.initRoleListingEvents = () ->
+  $('input[id^=role_ck_]').on "change", ->
+    if $('input[id^=role_]:checked').length > 0
+      $('.role-dlt-btn').removeClass('disabled')
+    else
+      $('.role-dlt-btn').addClass('disabled')
+
   $('#role_add_btn,#role_cancel_btn').on "click", ->
-    $('#role_reset_form').click()
-    $("#role_side_form").validate().resetForm();
-    $('.role-side-form,#role_btn_container').toggleClass('hidden')
-#    hidePopover($("#company_name,#contact_name,#companies_email"))
-  $('#role_save_btn').on "click", (event)->
-    event.preventDefault()
-    event.stopPropagation()
-    $('.submit-role-form').click()
+      $('#role_reset_form').click()
+      $("#role_side_form").validate().resetForm();
+      $('.role-side-form,#role_btn_container').toggleClass('hidden')
+  #    hidePopover($("#company_name,#contact_name,#companies_email"))
+    $('#role_save_btn').on "click", (event)->
+      event.preventDefault()
+      event.stopPropagation()
+      $('.submit-role-form').click()
 
 
-  $('#role_delete_btn').on "click", (event)->
+  $('.role-dlt-btn').on "click", (event)->
     event.preventDefault()
     event.stopPropagation()
     roleIds = []
@@ -198,7 +204,7 @@ window.initRoleListingEvents = () ->
             $('#roles_listing').html(data.html)
             initRoleListingEvents()
 
-  $('input[id^=role_]').on "change", ->
+  $('input[id^=role_ck_]').on "change", ->
     if $('input[id^=role_]:checked').length > 0
       $('#role_delete_btn').removeClass('disabled')
     else
@@ -206,6 +212,62 @@ window.initRoleListingEvents = () ->
 
 
 window.loadUsersActivitiesSection = () ->
+  $('input[id^=term_]').on "change", ->
+    if $('input[id^=term_]:checked').length > 0
+      $('#term_delete_btn').removeClass('disabled')
+    else
+      $('#term_delete_btn').addClass('disabled')
+
+  $('#term_delete_btn').on "click", (event)->
+    event.preventDefault()
+    event.stopPropagation()
+    termIds = []
+
+    $('input[name^=payment_term_ids]:not(.disabled):checked').each (index, element) =>
+      termIds.push($(element).val())
+
+    if termIds.length > 0
+      showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
+        $.ajax delete_payment_term,
+          type: 'delete'
+          data: {term_ids: termIds}
+          datatype: 'json'
+          success: (data, textStatus, jqXHR) ->
+            window.location.reload()
+            swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            $('#terms_listing').html(data.html)
+
+
+
+@initRecurringFrequencyListingEvents = () ->
+  $('input[id^=frequency_]').on "change", ->
+    if $('input[id^=frequency_]:checked').length > 0
+      $('#frequency_delete_btn').removeClass('disabled')
+    else
+      $('#frequency_delete_btn').addClass('disabled')
+
+  $('#frequency_delete_btn').on "click", (event)->
+    event.preventDefault()
+    event.stopPropagation()
+    frequencyIds = []
+
+    $('input[name^=recurring_frequency_ids]:not(.disabled):checked').each (index, element) =>
+      frequencyIds.push($(element).val())
+
+    if frequencyIds.length > 0
+      showWarningSweetAlert I18n.t('helpers.messages.confirm'), I18n.t('helpers.messages.not_be_recoverable'), ->
+        $.ajax delete_recurring_frequency,
+          type: 'delete'
+          data: {frequency_ids: frequencyIds}
+          datatype: 'json'
+          success: (data, textStatus, jqXHR) ->
+            window.location.reload()
+            swal(I18n.t('helpers.links.delete'), data.notice, 'success')
+            $('#recurring_listing').html(data.html)
+
+
+
+@loadUsersActivitiesSection = () ->
   $.get window.user_settings_link, (data) ->
     $('#users_listing').append(data)
     initUserListingEvents()

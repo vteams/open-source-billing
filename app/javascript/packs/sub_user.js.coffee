@@ -64,6 +64,10 @@ class window.SubUser
       else if !editMode and $("#password").val() != $("#password_confirmation").val()
         applyPopover($("#password_confirmation"), 'bottomMiddle', "topLeft", I18n.t("views.users.pass_and_confirm_pass_should_same"))
         flag = false
+      else if $('.company-selection .companies-list input[type=checkbox]:checked').length == 0
+        applyPopover($(".modal-header > h5"), 'topright', "leftcenter", I18n.t("views.clients.atleast_one_company_required"))
+        flag = false
+
       else
         flag = true
       flag

@@ -385,6 +385,7 @@ h6 {
     min-width: 260px; } }
 #header .header-center .hdr-select-holder {
   padding: 3px 0 0 0;
+  position: relative;
   display: inline-block; }
 #header .header-center .hdr-select-holder .select-wrapper {
   float: none;
@@ -438,6 +439,7 @@ h6 {
   padding: 10px 10px;
   color: #000;
   font-size: 14px;
+  line-height: 18px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; }
 #header .header-center .hdr-select-holder .select-wrapper .dropdown-content.select-dropdown:before {
   content: "";
@@ -485,6 +487,7 @@ h6 {
   max-height: 300px;
   min-width: 250px;
   max-width: 300px;
+  padding-top: 41px !important;
   top: 41px !important;
   overflow-y: auto;
   left: -94px !important;
@@ -1766,7 +1769,7 @@ h6 {
 #users .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
   left: 0px!important;
 }
-#companies .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before{
+#companies .list-item .checkbox-item [type="checkbox"].filled-in:checked + label:before, .select-deselect [type="checkbox"].filled-in:checked + label:before{
   left: 0px!important;
 }
 
@@ -5071,6 +5074,8 @@ i.material-icons.close:hover {
 }
 
 #recurring_schedule_container{
+  padding-right: 12px;
+  padding-left: 10px;
   ul.dropdown-content{
     min-width: 120px;
     width: 120px;
@@ -5756,6 +5761,9 @@ table.table_listing, table.report-data-table {
 .permission-list li{
   display: inline-block;
 }
+.permission-list li:first-child{
+  width: 5%;
+}
 .permission-list .permission-list-checkboxes {
   width: 75%;
   float: right;
@@ -6350,7 +6358,7 @@ li.collection-item a{
 }
 .company_name{
   float: none;
-  margin-right: 10px;
+  margin-right: 0px;
   display: inline-block;
 }
 .company_select > input{
@@ -6362,12 +6370,23 @@ li.collection-item a{
 .company_name img{
   height: 30px;
   width: 40px;
+  margin: 0 15px 5px;
+}
+#header .hdr-select-holder .company_select .select-dropdown li img {
+  margin: 0 15px 5px;
 }
 #header .hdr-select-holder .company_select .select-dropdown li img {
   margin: 0 15px 5px;
 }
 .select-wrapper .dropdown-button input.select-dropdown {
   width: 55px;
+}
+#header .hdr-select-holder .select-wrapper.company_select {
+  position: initial !important;
+}
+#header .hdr-select-holder .currency-flag {
+  //position: relative;
+  //top: -4px;
 }
 .item-row .field-block span{
   display: block;
@@ -6393,7 +6412,92 @@ li.collection-item a{
   padding: 20px 30px;
   border-bottom: 1px solid #dfdede;
 }
-  #header .hdr-select-holder .currency-flag {
+#header .hdr-select-holder .currency-flag {
   position: relative;
   top: -8px;
+}
+[type="checkbox"].filled-in:disabled:not(:checked) + label:after{
+  border-color: #b1b1b1;
+}
+.payment_send_payment_notification [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+[type="checkbox"].apply_credit:checked + label:before{
+  left: 0px !important;
+}
+.Settings_permissions li .role_permissions_can_create{
+  display: none;
+}
+.Settings_permissions li .role_permissions_can_update{
+  display: none;
+}
+.Settings_permissions li .role_permissions_can_delete{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_create{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_update{
+  display: none;
+}
+.Report_permissions li .role_permissions_can_delete{
+  display: none;
+}
+.role-checkbox{
+  display: block;
+  text-align: right;
+  position: relative;
+  top: -21px;
+}
+.role-checkbox [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.permission-list li [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+.select2-container.edit-user-select2{
+  width: 100% !important;
+}
+.user_notify_user [type="checkbox"].filled-in:checked + label:before{
+  left: 0px !important;
+}
+[type="checkbox"]#assign_all_companies:checked + label:before{
+  left: 0px !important;
+}
+.company-selection ul li.companies-list{
+  display: inline-block;
+  width: 50%;
+}
+.select2-container.items_list a .select2-chosen, .select2-container.tax_select a .select2-chosen{
+  margin-right: 0px !important;
+  color: #000;
+  font-size: 12px;
+}
+.invoice_tax_id.new-invoice-footer-row{
+  padding: 0 0 12px !important;
+}
+.invoice_discount_type{
+  padding: 0 0 8px !important;
+}
+.new-invoice-footer-row.taxes_total{
+  padding: 0 0 3px !important;
+}
+.modal-body.users span label .collection_radio_buttons{
+  padding-left: 25px !important;
+}
+.assign_all_companies_label{
+  float: right;
+  padding-left: 25px !important;
+}
+.pay_invoice .payment_left{
+  min-height: 270px !important;
+}
+.client_login_link{
+  float: right;
+}
+.invoice_recurring_schedule_occurrences{
+  margin-top: 8px;
+}
+label[for="user_have_all_companies_access_false"]{
+  margin-left: 10px;
 }

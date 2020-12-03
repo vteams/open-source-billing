@@ -28,7 +28,44 @@ en:
   tax: "Tax"
   staff: "Staff"
   role: "Role"
-
+  grape:
+    errors:
+      format: ! '%{attributes} %{message}'
+      messages:
+        coerce: 'is invalid'
+        required: 'is required'
+      attributes:
+        invoice[invoice_date]: 'Invoice date'
+        invoice[client_id]: 'Client'
+        invoice[due_date]: 'Due date'
+        invoice[company_id]: 'Company'
+        invoice[invoice_line_items_attributes][item_name]: 'Item name'
+        invoice[invoice_line_items_attributes][item_description]: 'Item description'
+        invoice[invoice_line_items_attributes][item_unit_cost]: 'Item unit cost'
+        invoice[invoice_line_items_attributes][item_quantity]: 'Item quantity'
+        invoice[recurring_schedule_attributes][frequency]: 'Recurring frequency'
+        invoice[recurring_schedule_attributes][occurrences]: 'Recurring occurrences'
+        invoice[recurring_schedule_attributes][delivery_option]: 'Enable recurring'
+        client[email]: 'Email'
+        client[organization_name]: 'Organization name'
+        client[first_name]: 'First name'
+        client[last_name]: 'Last name'
+        item[item_name]: 'Item name'
+        item[item_description]: 'Item description'
+        item[unit_cost]: 'Unit cost'
+        item[quantity]: 'Quantity'
+        payment[invoice_id]: 'Invoice'
+        payment[payment_amount]: 'Payment amount'
+        company[account_id]: 'Account'
+        company[company_name]: 'Company name'
+        company[contact_name]: 'Contact name'
+        company[contact_title]: 'Contact title'
+        company[email]: 'Company email'
+        tax[name]: 'Tax name'
+        tax[percentage]: 'Tax percentage'
+        current_password: 'Current password'
+        password: 'Password'
+        password_confirmation: 'password confirmation'
   date:
     formats:
       default: "%Y-%m-%d"
@@ -636,7 +673,7 @@ en:
       must_be_numeric: "Must be numeric"
       must_be_greater_than_zero: "Must be greater than zero"
       same_tax_applied: "Same tax not applied on one item"
-      select_atleast_one_company: "Select at least one company for the task"
+      select_atleast_one_company: "Select at least one company for the item"
       must_be_greater_or_equal_to_zero: "Quantity should not be negative value"
       quantity_required: "Item quantity is required"
       all_taxes: "All Taxes"
@@ -731,11 +768,17 @@ en:
 
 
     payment_terms:
+      payment_terms: "Payment Terms"
       number_of_days: "Number of days"
       editing: "Editing payment terms"
       new: "New payment term"
       add_new_payment_term: 'Add New Payment Term'
       description: 'Description'
+      deleted_msg: "payment Term has been deleted successfully."
+
+    recurring_frequencies:
+      recurring_frequencies: "Recurring Frequencies"
+      deleted_msg: "Recurring Frequency has been deleted successfully."
 
     reports:
       reports: "Reports"

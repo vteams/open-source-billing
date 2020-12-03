@@ -25,7 +25,7 @@ class Invoice < ApplicationRecord
   include InvoiceSearch
   include Hashid::Rails
   include PublicActivity::Model
-  tracked only: [:create, :update], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+  tracked only: [:create, :update], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('due_date DESC')}
@@ -86,7 +86,7 @@ class Invoice < ApplicationRecord
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
-  after_save :update_invoice_total
+  before_save :update_invoice_total
 
   # archive and delete
   acts_as_archival
@@ -276,7 +276,7 @@ class Invoice < ApplicationRecord
   end
 
   def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
-    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_string  = ApplicationController.new.render_to_string('invoices/show.html.erb', layout: 'pdf_mode', locals: {invoice: self})
     invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
     notify(current_user, self.id, invoice_pdf_file)
   end

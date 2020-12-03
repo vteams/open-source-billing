@@ -32,7 +32,13 @@ class InvoiceLineItem < ApplicationRecord
   acts_as_archival
   acts_as_paranoid
 
+   after_destroy :recalculate_invoice_total
+
   attr_accessor :tax_one, :tax_two
+
+  def recalculate_invoice_total
+    self.invoice.save if self.invoice.present?
+  end
 
   def unscoped_item
     Item.unscoped.find_by_id self.item_id
@@ -51,7 +57,7 @@ class InvoiceLineItem < ApplicationRecord
   end
 
   def item_total_amount
-      item_tax_amount + item_total
+    item_tax_amount + item_total
   end
 
 

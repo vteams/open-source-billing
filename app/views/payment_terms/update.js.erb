@@ -1,0 +1,19 @@
+<% if @payment_term.errors.present? %>
+swal({
+    icon: "error",
+    title: "oops..!",
+    buttons: false,
+    timer: 3000,
+    text: "<%= @payment_term.errors.full_messages.join('.') %>"
+});
+<% else %>
+swal({
+    icon: "success",
+    title: "Success",
+    buttons: false,
+    timer: 3000,
+    text: "Payment Term has been updated successfully"}).then(function(){
+    window.location = '<%= settings_path %>'
+
+});
+<% end %>

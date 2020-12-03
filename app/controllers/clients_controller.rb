@@ -34,6 +34,7 @@ class ClientsController < ApplicationController
     params[:status] = params[:status] || 'active'
     @status = params[:status]
     @clients = Client.get_clients(params.merge(get_args))
+    @clients = Kaminari.paginate_array(@clients).page(params[:page]).per(@per_page)
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
     authorize Client
 
@@ -127,6 +128,12 @@ class ClientsController < ApplicationController
   def update
     @client = Client.find(params[:id])
     authorize @client
+    if Client.is_exists?(params[:client][:email], get_association_obj) && @client.email != params[:client][:email]
+      @client_exists = true
+      redirect_to(request.referrer, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
+      return
+    end
+
     associate_entity(params, @client)
 
     #add/update available credit
@@ -243,7 +250,7 @@ class ClientsController < ApplicationController
   end
 
   def get_args
-    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: params[:sort_direction].present? ? params[:sort_direction] : sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   private
 

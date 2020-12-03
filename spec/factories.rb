@@ -1,6 +1,10 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :introduction do
+FactoryGirl.define do  factory :recurring_frequency do
+    number_of_days 1
+title "MyString"
+  end
+  factory :introduction do
     user nil
   end
   factory :mail_config do

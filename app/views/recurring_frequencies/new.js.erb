@@ -1,0 +1,4 @@
+$('body').append("<%= escape_javascript render partial: 'recurring_frequency_form_popup', locals: {recurring_frequency: @recurring_frequency} %>")
+elem = $("#recurring_frequency_form_popup");
+Popup.initialize(elem);
+Popup.open(elem);

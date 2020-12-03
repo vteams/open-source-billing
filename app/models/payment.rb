@@ -23,7 +23,7 @@ class Payment < ApplicationRecord
   include DateFormats
   include PaymentSearch
   include PublicActivity::Model
-  tracked only: [:create], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+  tracked only: [:create], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
   attr_accessor :invoice_number
   # associations
@@ -53,6 +53,7 @@ class Payment < ApplicationRecord
 
   scope :received, -> { where("payment_amount >= ?", 0) }
   scope :refunds, -> { where("payment_amount < ?", 0) }
+  scope :in_year, ->(year) { where('extract(year from payments.created_at) = ?', year) }
 
   paginates_per 10
 

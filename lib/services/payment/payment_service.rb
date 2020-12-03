@@ -58,6 +58,8 @@ module Services
          if ::Payment.check_client_credit(pay[:invoice_id]) && pay[:payment_method] == "Credit" #Ignore payment if credit is not enough
            unpaid_invoice_ids << pay[:invoice_number]
          else
+
+
            pay[:payment_amount] = pay[:payment_method] == "Credit" ? ::Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (::Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
            pay[:payment_date] ||= Date.today
            pay[:credit_applied] ||= 0.00

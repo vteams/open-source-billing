@@ -32,11 +32,11 @@ module V1
            }
       get do
         params[:status] = params[:status] || 'active'
-        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
+        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").order("estimates.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
         @estimates = filter_by_company(@estimates)
       end
 
-      desc 'Fetch single estimates',
+      desc 'Fetch single estimate',
            headers: {
                "Access-Token" => {
                    description: "Validates your identity",
@@ -48,7 +48,8 @@ module V1
       end
 
       get ':id' do
-        Estimate.find params[:id]
+        estimate = Estimate.find_by(id: params[:id])
+        estimate.present? ? estimate : {error: 'Estimate not found', message: nil }
       end
 
       desc 'Create Estimate',
@@ -61,11 +62,11 @@ module V1
       params do
         requires :estimate, type: Hash do
           optional :estimate_number, type: String
-          requires :estimate_date, type: String
+          requires :estimate_date, type: String, message: :required
           optional :po_number, type: String
           optional :discount_percentage, type: String
-          requires :client_id, type: Integer
-          requires :terms, type: String
+          requires :client_id, type: Integer, message: :required
+          optional :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String

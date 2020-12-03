@@ -28,14 +28,8 @@ $('#unselect_select_all_company').on('click', function (){
         $('.company_checkbox').prop('checked', false)
     }
 })
-$('.select_deselect').on('click', function (){
-    if ($(this).html() == 'select all') {
-        $(this).html('deselect all')
-        $('.company_checkbox').prop('checked', true)
-    }
-    else if ($(this).html() == 'deselect all'){
-        $(this).html('select all')
-        $('.company_checkbox').prop('checked', false)
-
-    }
-})
+Item.check_uncheck_all_companies();
+if ($('#account_association').prop('checked', true)){
+    $('#select_all_companies').prop('checked', false)
+    $('#select_all_companies').attr('disabled', true)
+}

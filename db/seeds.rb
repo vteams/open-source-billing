@@ -295,7 +295,7 @@ Account.create(org_name: 'OpenSourceBilling')
 Company.delete_all
 Company.create(company_name: Account.first.org_name, account_id: Account.first.id)
 
-User.delete_all
+User.destroy_all
 u=User.new
 u.email = "admin@opensourcebilling.org"
 u.password = "opensourcebilling"

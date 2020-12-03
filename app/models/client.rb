@@ -30,7 +30,7 @@ class Client < ApplicationRecord
   include ClientSearch
   include Hashid::Rails
   include PublicActivity::Model
-  tracked only: [:create, :update], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
+  tracked only: [:create, :update], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
@@ -138,7 +138,7 @@ class Client < ApplicationRecord
     credit.flatten
   end
 
-  def available_credit
+  def old_available_credit
     client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
 
@@ -199,8 +199,8 @@ class Client < ApplicationRecord
     self.currency.present? ? self.currency.unit : 'USD'
   end
 
-  def self. get_clients(params)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+  def self.get_clients(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', unarchived: 'unarchived'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
@@ -210,7 +210,7 @@ class Client < ApplicationRecord
     # get the clients associated with companies
     company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
-    company_clients = company_clients.send(mappings[params[:status].to_sym])
+    company_clients = company_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_clients = company_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
     company_clients = company_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
@@ -239,10 +239,10 @@ class Client < ApplicationRecord
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
-    clients = clients.sort_by!{ |client| client.organization_name.downcase }
+    clients = clients.sort_by!{ |client| params[:sort].eql?('organization_name') ? client.organization_name.downcase : client.created_at}
     clients = clients.reverse if params[:direction].eql?('desc')
-
-    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
+    clients
+    # Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 
   end
 

@@ -24,9 +24,20 @@
             <%= f.input :password_confirmation, label: t('views.staffs.password_confirmation'), input_html: {id: 'password_confirmation', name: 'password_confirmation'}, wrapper_html: { class: 'input-field col s12 m6' } %>
             <%= f.input :role_id, collection: load_user_roles, label: false, as: :select,
                         input_html: {id: 'new_user_role_id', class: 'edit-user-select2 select_2', name: 'role_id'},
-                        wrapper_html: { class: 'input-field col s12 editMode user-role' } %>
+                        wrapper_html: { class: 'input-field col s6 editMode user-role' } %>
             <%= f.input :notify_user, label: t('views.users.notify_user'), wrapper_html: { class: 'input-field col s6 checkbox'}, input_html: {class: 'filled-in', name: 'notify_user'}, as: :boolean, boolean_style: :inline %>
           </div>
+          <div class="row company-row">
+            <h5 class="text-blue title-heading"><%= t('views.clients.make_available_to') %></h5>
+          </div>
+          <%= f.collection_radio_buttons :have_all_companies_access, [[true, 'All Companies'] ,[false, 'Only Selected Companies']], :first, :last %>
+          <%= check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'assign_all_companies' %>
+          <label for="assign_all_companies" class="assign_all_companies_label">Select all</label>
+          <div class="company-selection">
+            <%= f.collection_check_boxes :company_ids, Company.all, :id, :company_name, item_wrapper_class: 'companies-list', collection_wrapper_tag: 'ul', item_wrapper_tag: 'li' %>
+          </div>
+          <%= render 'avatar_upload' unless params[:remote].to_i == 1 %>
+
         </div>
       <% end %>
     </div>

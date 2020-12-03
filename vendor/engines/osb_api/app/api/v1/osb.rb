@@ -5,14 +5,19 @@ module V1
 
     version 'v1', using: :path, vendor: 'osb'
     format :json
+    rescue_from Grape::Exceptions::ValidationErrors do |e|
+      error!({ errors: e.full_messages.map { |msg| msg }, message: nil}, 400)
+    end
 
     helpers do
       def current_token
         Doorkeeper::AccessToken.authenticate request.headers["Access-Token"]
       end
       def current_user
-        @current_user ||= ::User.find(current_token.resource_owner_id) if current_token
-        unless @current_user
+        @current_user ||= ::User.find_by(authentication_token: request.headers["Access-Token"]) if request.headers["Access-Token"]
+        if @current_user
+          User.current = @current_user
+        else
           error!('Unauthorized. Invalid or expired token.', 401)
         end
       end
@@ -47,6 +52,16 @@ module V1
     mount V1::LogAPI
     mount V1::TaskAPI
     mount V1::StaffAPI
+    mount V1::RecurringFrequencyAPI
+    mount V1::SettingsAPI
+    mount V1::UserAPI
+    mount V2::InvoiceAPI
+    mount V2::PaymentAPI
+    mount V2::EstimateAPI
+    mount V2::ClientAPI
+    mount V2::ItemAPI
+    mount V2::TaxAPI
+
     add_swagger_documentation(
         base_path: "/api",
         hide_documentation_path: true,
