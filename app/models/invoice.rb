@@ -35,7 +35,7 @@ class Invoice < ActiveRecord::Base
   scope :status, -> (status) { where(status: status) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
   scope :skip_draft, -> { where.not('status = ?', 'draft') }
-  # scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
+  scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
   scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
   scope :due_date, -> (due_date) { where(due_date: due_date) }
   scope :by_company, -> (company_id) { where("invoices.company_id IN(?)", company_id) }
