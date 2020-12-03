@@ -59,6 +59,8 @@ module V1
     mount V2::PaymentApi
     mount V2::EstimateApi
     mount V2::ClientApi
+    mount V2::ItemApi
+    mount V2::TaxApi
     add_swagger_documentation(
         base_path: "/api",
         hide_documentation_path: true
