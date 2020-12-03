@@ -31,7 +31,7 @@ module V1
       params do
         requires :to_date
         requires :from_date
-        requires :payment_method
+        optional :payment_method
         optional :client_id
         optional :type
       end
@@ -41,7 +41,8 @@ module V1
             to_date: params[:to_date],
             report_name: 'payments_collected',
             payment_method: params['payment_method'],
-            type: params['type']
+            type: params['type'],
+            current_company: @current_user.current_company
         }
         @report = get_report_api({criteria:criteria})
       end
@@ -75,7 +76,8 @@ module V1
             report_name: 'item_sales',
             invoice_status: params[:invoice_status],
             client_id: params['client_id'],
-            item_id: params['item_id']
+            item_id: params['item_id'],
+            current_company: @current_user.current_company
         }
         @report = get_report_api({criteria:criteria})
       end

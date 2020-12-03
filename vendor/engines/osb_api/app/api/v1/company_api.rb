@@ -84,6 +84,7 @@ module V1
           optional :fax_number, type: String
           optional :email, type: String
           optional :logo, type: String
+          # optional :logo, type: Rack::Multipart::UploadedFile
           optional :fax, type: String
           optional :company_tag_line, type: String
           optional :memo, type: String
@@ -94,8 +95,8 @@ module V1
       end
 
       patch ':id' do
-        payment = Payment.find_by(id: params[:id])
-        payment.present? ? Services::Apis::CompanyApiService.update(params) : {error: 'Payment not found', message: nil}
+        company = Company.find_by(id: params[:id])
+        company.present? ? Services::Apis::CompanyApiService.update(params) : {error: 'Company not found', message: nil}
       end
 
 
