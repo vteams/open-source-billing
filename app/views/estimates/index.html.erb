@@ -19,7 +19,7 @@
     <%= form_tag "estimates/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render partial: 'estimates_container' %></div>
       <div style="margin-top: 10px" class="right">
-        <%= link_to ' + New Estimate ', new_estimate_path, class: "#{(@estimates.count > 0 && @estimates.total_count < 9) || @estimates.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
+        <%= link_to ' + New Estimate ', new_estimate_path, class: "#{(@estimates.count > 0 && @estimates.count <= 9) || @estimates.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
       </div>
       <%= render partial: 'bulk_actions'%>
     <% end %>

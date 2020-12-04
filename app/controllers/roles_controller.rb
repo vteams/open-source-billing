@@ -3,7 +3,8 @@ class RolesController < ApplicationController
   before_action :set_role, only: %i[show edit update destroy]
 
   def index
-    @roles = Role.all
+    @roles = Role.all.where(for_client: false)
+    @client_roles = Role.all.where(for_client: true)
   end
 
   def show
@@ -32,9 +33,9 @@ class RolesController < ApplicationController
       if @role.save
         format.js {
           flash[:notice]= 'Role has been created successfully'
-          render :js => "window.location.href='#{settings_path}'"
+          render :js => "window.location.href='#{roles_path}'"
         }
-        format.html {redirect_to settings_path}
+        format.html {redirect_to roles_path}
       else
         format.js
       end
@@ -52,7 +53,7 @@ class RolesController < ApplicationController
   def destroy
     @role.destroy
     if @role.destroy
-      redirect_to settings_path
+      render json: {location: roles_path}
     end
   end
 

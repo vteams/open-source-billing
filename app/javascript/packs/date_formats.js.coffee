@@ -112,5 +112,17 @@ class DateFormats
       returnState = false
     returnState
 
+  @get_next_issue_date:(repetition, time) ->
+    range = undefined
+    if time=="Week(s)"
+      range = 7
+    else if time == "Month(s)"
+      range = 30
+    else if time == "Year(s)"
+      range = 365
+
+    frequency = repetition * range
+    frequency
+
 
 window.DateFormats = DateFormats

@@ -9,8 +9,8 @@
           <label class="input_field_label"><%= t('views.projects.created_date_range') %></label>
         </div>
         <div class="input-field col s12 m3  select-client">
-          <%= select_tag(:role_ids, multi_select_options(load_user_roles, t('views.users.all_roles'), {selected: params[:role_id]}),
-                         include_blank: false, multiple: true, class: 'small_list select_2') %>
+          <%= select_tag(:role_id, multi_select_options(load_user_roles, t('views.users.all_roles'), {selected: params[:role_id]}),
+                         include_blank: false, class: 'small_list select_2') %>
           <label><%= t('views.users.roles') %></label>
         </div>
       </div>

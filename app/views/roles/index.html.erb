@@ -5,45 +5,15 @@
       <div class="flex-item breadcrum-bar">
         <div class="card-white-panel">
           <h3 class="with-grid-icons">
-            <span><%= link_to 'Roles', 'javascript:;', class: 'active' %></span>
-            <%= link_to raw('<i class="material-icons">add</i>'), new_role_path, remote: true,
-                        class: 'plus-add-icon', title: t('helpers.links.add') %>
-
+            <span><%= link_to 'Settings', settings_path %></span>
+            <%= link_to " / Roles", 'javascript:;', class: 'active' %>
           </h3>
 
         </div>
       </div>
     </div>
-    <div class="new-invoice-holder">
-      <div class="new-invoice-table-holder main-invoice page-box role-box">
-        <table class="bordered grid-view">
-          <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-          </thead>
-          <tbody class="table-view-body">
-          <% @roles.each do |role| %>
-            <tr>
-              <td>
-                <p><%= role.name %></p>
-                <div class="role-actions">
-                  <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= role.id %>' data-alignment="right" data-beloworigin="true">
-                    <i class="material-icons">more_vert</i>
-                  </a>
-                  <ul id="dropdown_<%= role.id %>" class="dropdown-content z-depth-4">
-                    <li><%= link_to raw("<i class='material-icons'>delete</i>Delete"), role, method: :delete,
-                                    data:{confirm: t('helpers.messages.confirm'),
-                                          success: t('views.invoices.invoice_deleted')} %></li>
-                    <li><%= link_to raw("<i class='material-icons'>create</i>Edit"), edit_role_url(role), remote: true %></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <%= render partial: 'user_roles_container' %>
+    <div class="clearfix"></div>
+    <%= render partial: 'client_roles_container' %>
   </div>
 </div>

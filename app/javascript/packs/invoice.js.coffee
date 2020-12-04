@@ -1,15 +1,8 @@
 class window.Invoice
 
   jQuery ->
-#    setTimeout (->
-#      $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
-#      next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
-#      $('#next_issue_date').val(next_issue_date)
-#      $('#invoice_recurring_schedule_attributes_frequency').change ->
-#        $('#how_many_rec').val($('#invoice_recurring_schedule_attributes_frequency').children("option:selected").attr('number_of_days'));
-#        next_issue_date = DateFormats.add_days_in_formated_date($('#next_issue_date').attr('next_date'), parseInt($('#how_many_rec').val()))
-#        $('#next_issue_date').val(next_issue_date)
-#    ), 200
+    $('.line_total').before('<span class="line_total_currency"></span>')
+    $('.line_total_currency').html(window.currency_symbol)
     OsbPlugins.applyDatePicker()
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
@@ -136,6 +129,35 @@ class window.Invoice
         text: u
 
 $(document).ready ->
+  $('#recurring').on 'change', ->
+    if $(this).is(':not(:checked)')
+      OsbPlugins.hidePopover($(".invoice_recurring_schedule_delivery_option"))
+  if $('.occurrences_radio_button').eq(1).is(':checked')
+    $('.remaining_occurrences').val($('.occurrences_radio_button').eq(1).attr('occurrence'))
+  if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
+    $('.custom-often').removeClass('hidden')
+  setTimeout (->
+    $('#invoice_recurring_schedule_attributes_frequency').on 'change', ->
+      if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
+        $('.custom-often').removeClass('hidden')
+        $('.custom_frequency').on 'change', ->
+          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').attr('number_of_days', DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
+          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val(DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
+      else
+        $('#invoice_recurring_schedule_attributes_frequency').children('option:contains("Custom")').removeAttr('number_of_days')
+        $('#invoice_recurring_schedule_attributes_frequency').children('option:contains("Custom")').removeAttr('value')
+        $('.custom-often').addClass('hidden')
+
+  ),200
+
+  $('.occurrence_input').on 'change', ->
+    if $(document.getElementsByClassName('occurrence_input')[1]).is(':checked')
+      $('.remaining_occurrences').prop('disabled', false)
+      $('.occurrences_radio_button').eq(1).val($('.remaining_occurrences').val());
+    else if $(document.getElementsByClassName('occurrence_input')[0]).is(':checked')
+      $('.remaining_occurrences').val('')
+      $('.remaining_occurrences').prop('disabled', true)
+
   $('#more_deleted_invoices').click ->
     $('.all-deleted-invoices').show()
     $('#more_deleted_invoices').hide()
@@ -156,6 +178,9 @@ $(document).ready ->
     minimumResultsForSearch: -1,
     dropdownCssClass: "tax-dropdown"
   });
+#  $('#invoice_recurring_schedule_attributes_frequency').append $('<option value=\'-2\'>Custom</option>')
+  $('#invoice_recurring_schedule_attributes_frequency_repetition').select2()
+  $('#invoice_recurring_schedule_attributes_frequency_type').select2()
   $('.currency-select').material_select();
   $('.dropdown-trigger').dropdown();
   $('form').on 'cocoon:after-insert', (e, insertedItem, originalEvent) ->

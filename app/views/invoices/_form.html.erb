@@ -18,11 +18,22 @@
                                                        selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
                        {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select select_2' %>
 
-          <div class="terms ">
+          <div class="terms hidden">
             <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the payment terms' data-step= '6'><%= t('views.invoices.terms') %>: </span>
             <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
           </div>
-          <div class="paymentInfo">
+          <div class="invoice-date-div">
+            <%= f.input :invoice_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
+                        input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date, id: 'invoice_date_picker' }, as: :string %>
+          </div>
+          <div class="due-date-div">
+            <%= f.input :due_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the due date for your invoice', :'data-step' => '8' },
+                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
+          </div>
+          <div class="clearfix"></div>
+
+
+          <div class="paymentInfo ">
             <strong><strong class="invoice_total_strong"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
@@ -42,35 +53,51 @@
           </div>
         </div>
         <div class="info-right-section recurring_checkbox" >
-          <%= f.input :invoice_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
-                      input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date, id: 'invoice_date_picker' }, as: :string %>
-          <%= f.input :due_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the due date for your invoice', :'data-step' => '8' },
-                      input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
 
 
 
-          <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
+
+          <% has_recurring = invoice.new_record? ? true : !invoice.recurring_schedule.new_record? %>
           <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
-          <label for="recurring" class="intro invoices-new-false-intro" data-intro = 'Here you can set the recurring procedure for your invoice' data-step= '9'><h6><%= t('views.common.recurring') %></h6></label>
-          <div class="show-me hide_visibility" id="recurring_schedule_container">
+          <label for="recurring" class=" intro invoices-new-false-intro" data-intro = 'Here you can set the recurring procedure for your invoice' data-step= '9'><h6><%= t('views.common.recurring') %></h6></label>
+          <div class="" id="recurring_schedule_container">
             <%=  f.simple_fields_for :recurring_schedule do |rs| %>
               <div class="">
                 <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
                 <div class="date-wrapper">
-                  <span class="next-invoice-date"><%= t('views.invoices.next_issue_date') %>:</span>
+                  <!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
                   <span>
                       <small>
-                        <%= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
+            <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
+                         input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
+
+                        <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
                                      wrapper_tag: :small, as: :string %>
-                        <span><i class="material-icons calendar-icon">date_range</i></span>
+                        <!--                        <span><i class="material-icons calendar-icon">date_range</i></span>-->
                       </small>
                     </span>
                 </div>
                 <div class="invoice-input-holder">
-                  <%= rs.input :frequency, collection: RecurringFrequency.all.map{ |f| [f.title, f.id, {'number_of_days' => f.number_of_days}]},
+                  <%= rs.input :frequency, collection:
+
+                      (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
+                          [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
                                input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
-                  <%= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
+                </div>
+                <div class="custom-often hidden">
+                  <span>Every</span>
+                  <%= rs.input :frequency_repetition,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
+                  <%= rs.input :frequency_type,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
+                </div>
+                <div class="invoice-input-holder">
+                  <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
+                               collection: [['-1', 'Infinte'],
+                                            ['0', '<input class="numeric optional remaining_occurrences center-align occurrence_input" type="number" step="any" name="" value="" id="how_many_rec"> remaining'.html_safe, {'occurrence' => rs.object.occurrences}]],
+                               checked: rs.object.occurrences == -1 ? '-1' : '0',
+                               label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button occurrence_input'},
+                               boolean_style: :inline %>
+                  <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
                                wrapper_html: { class: 'input-field' },
                                input_html: { class: 'recurring_occurrences', min: 0,
                                              onkeydown: 'javascript: return event.keyCode == 69 ? false : true',
@@ -81,7 +108,7 @@
                 <%= rs.input :delivery_option, as: :radio_buttons, label: false,
                              collection: [['send_invoice', t('views.invoices.send_invoice_automatically')],
                                           ['draft_invoice', t('views.invoices.create_draft_and_send_manully')]],
-                             checked: 'send_invoice',
+                             checked: rs.object.delivery_option,
                              label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' },
                              boolean_style: :inline %>
                 <%= rs.input :_destroy, as: :hidden %>
@@ -167,12 +194,17 @@
   </div>
 
   <script>
-      window.currency_symbol = "<%= if params[:action].eql?('new')
-                                    Currency.default_currency.code
+      window.currency_symbol = "<%= if params[:action].eql?('new') && !params['invoice_for_client'].present?
+                                    currency = Currency.default_currency.code
                                  else
-                                   (@client.present? ? @client.currency.code : invoice.currency.code)
+                                   currency = (@client.present? ? @client.currency.code : invoice.currency.code)
                                  end
                                %>";
+      <% if params[:invoice_for_client].present? %>
+      $('#invoice_currency_id').val("<%= Currency.find_by(code: currency).id %>")
+      $("#invoice_currency_id").trigger('contentChanged');
+
+      <% end %>
       $(document).ready(function (){
           $('#discount_type').val('<%= @invoice.discount_type || '%' %>');
 
@@ -187,5 +219,8 @@
           $("#invoice_client_id").on('change', function(){
               $.get(set_client_currency+'?client_id=' + $(this).val())
           })
+          <% if params[:action].eql?('new') %>
+          // $('#recurring').prop('checked', true)
+          <% end %>
       });
   </script>

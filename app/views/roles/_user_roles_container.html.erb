@@ -1,0 +1,33 @@
+<% if @roles.count > 0 %>
+  <div class="new-invoice-holder">
+    <div class="new-invoice-table-holder main-invoice page-box role-box">
+      <table class="bordered grid-view">
+        <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+        </thead>
+        <tbody class="table-view-body">
+        <% @roles.each do |role| %>
+          <tr>
+            <td>
+              <p><%= role.name %></p>
+              <div class="role-actions">
+                <% if current_user.role.id != role.id %>
+                  <%= link_to raw("<i class='material-icons'>delete</i>"), role, method: :delete,
+                              data:{confirm: t('helpers.messages.confirm'),
+                                    success: 'Role has been deleted.'} %>
+                <% end %>
+                <%= link_to raw("<i class='material-icons'>create</i>"), edit_role_url(role), remote: true %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+<div style="" class="right">
+  <%= link_to ' + New Role ', new_role_path, remote: true, class: "#{(@roles.count > 0 && @roles.count <= 9) || @roles.count == 0 ? "secondary_new_link" : 'primary_new_link'}"  %>
+</div>

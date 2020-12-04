@@ -53,8 +53,10 @@ class window.OsbPlugins
     OsbPlugins.updateMaterializeSelect()
 
     if $('#recurring').is(":checked")
+      $("#recurring_schedule_container").removeClass('hide_visibility')
       $("#invoice_recurring_schedule_attributes__destroy").val false
     else
+      $("#recurring_schedule_container").addClass('hide_visibility')
       $("#invoice_recurring_schedule_attributes__destroy").val true
 
     $('#recurring').on 'click', ->
@@ -82,7 +84,7 @@ class window.OsbPlugins
       setTimeout (->
         InvoiceCalculator.updateInvoiceTotal()
       ), 100
-    Invoice.setInvoiceDueDate($("#invoice_date_picker").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
+#    Invoice.setInvoiceDueDate($("#invoice_date_picker").val(),$("#invoice_payment_terms_id option:selected").attr('number_of_days'))
 
     # Subtract discount percentage from subtotal
     $("#invoice_discount_percentage, #recurring_profile_discount_percentage").on "blur keyup", ->
@@ -136,6 +138,7 @@ class window.OsbPlugins
     $("#invoice_client_id").change ->
       setTimeout (->
         $(".line_total_currency").html(window.currency_symbol)
+        $('.invoice_total_strong').formatCurrency({symbol: window.currency_symbol})
       ), 100
       OsbPlugins.hidePopover($("#invoice_client_id").parents('.select-wrapper'));
     $("#invoice_due_date_picker").change ->
@@ -179,7 +182,7 @@ class window.OsbPlugins
       else if invoice_date_value > due_date_value
         OsbPlugins.applyPopover($("#invoice_due_date_picker"),"bottomMiddle","topLeft",I18n.t("views.invoices.due_date_should_equal_or_greater"))
         flag = false
-      else if $('#recurring').is(':checked') and parseInt($('#how_many_rec').val()) <= 0
+      else if $('#recurring').is(':checked') and $('#invoice_recurring_schedule_attributes_occurrences_0').is(':not(:checked)') and parseInt($('#how_many_rec').val()) <= 0
         OsbPlugins.applyPopover($("#how_many_rec"),"bottomMiddle","topLeft", I18n.t("views.common.enter_positive_value"))
         flag = false
       # Check if payment term is selected
@@ -330,9 +333,9 @@ class window.OsbPlugins
         OsbPlugins.applyPopover($("#estimate_company_id_chzn"),"bottomMiddle","topLeft", I18n.t('views.invoices.select_a_company'))
         flag = false
       # Check if client is selected
-      else if $("#estimate_client_id").val() is ""
-        OsbPlugins.applyPopover($("#estimate_client_id").parents('.info-left-section').find('.select2-container'),"bottomMiddle","topLeft",I18n.t('views.invoices.select_a_client'))
-        flag = false
+#      else if $("#estimate_client_id").val() is ""
+#        OsbPlugins.applyPopover($("#estimate_client_id").parents('.info-left-section').find('.select2-container'),"bottomMiddle","topLeft",I18n.t('views.invoices.select_a_client'))
+#        flag = false
       # if currency is not selected
       else if $("#estimate_currency_id").val() is "" and $("#estimate_currency_id").is( ":hidden" ) == false
         OsbPlugins.applyPopover($("#estimate_currency_id_chzn"),"bottomMiddle","topLeft",I18n.t('views.invoices.select_currency'))
@@ -350,10 +353,10 @@ class window.OsbPlugins
         OsbPlugins.applyPopover($("#add_line_item"),"bottomMiddle","topLeft",I18n.t('views.invoices.add_line_item'))
         flag = false
       # Check if item is selected
-      else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
-        first_item = $("table#estimate_grid_fields tr.fields:visible:first td:nth-child(2)")
-        OsbPlugins.applyPopover(first_item,"bottomMiddle","topLeft",I18n.t('views.invoice_line_item.select_an_item'))
-        flag = false
+#      else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
+#        first_item = $("table#estimate_grid_fields tr.fields:visible:first td:nth-child(2)")
+#        OsbPlugins.applyPopover(first_item,"bottomMiddle","topLeft",I18n.t('views.invoice_line_item.select_an_item'))
+#        flag = false
       else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
         OsbPlugins.applyPopover($("#estimate_discount_percentage"),"bottomMiddle","topLeft",I18n.t('views.invoices.percentage_must_be_hundred_or_less'))
         flag = false

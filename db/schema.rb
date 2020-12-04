@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200827062117) do
+ActiveRecord::Schema.define(version: 20200909112820) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -130,32 +130,35 @@ ActiveRecord::Schema.define(version: 20200827062117) do
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.index ["email"], name: "index_clients_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.integer  "role_id",                limit: 4
   end
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "company_name"
-    t.string "contact_name"
-    t.string "contact_title"
-    t.string "country"
-    t.string "city"
-    t.string "street_address_1"
-    t.string "street_address_2"
-    t.string "province_or_state"
-    t.string "postal_or_zipcode"
-    t.string "phone_number"
-    t.string "fax_number"
-    t.string "email"
-    t.string "logo"
-    t.string "company_tag_line"
-    t.string "memo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "archive_number"
+  add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
+  add_index "clients", ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true, using: :btree
+  add_index "clients", ["role_id"], name: "index_clients_on_role_id", using: :btree
+
+  create_table "companies", force: :cascade do |t|
+    t.integer  "account_id",        limit: 4
+    t.string   "company_name",      limit: 255
+    t.string   "contact_name",      limit: 255
+    t.string   "contact_title",     limit: 255
+    t.string   "country",           limit: 255
+    t.string   "city",              limit: 255
+    t.string   "street_address_1",  limit: 255
+    t.string   "street_address_2",  limit: 255
+    t.string   "province_or_state", limit: 255
+    t.string   "postal_or_zipcode", limit: 255
+    t.string   "phone_number",      limit: 255
+    t.string   "fax_number",        limit: 255
+    t.string   "email",             limit: 255
+    t.string   "logo",              limit: 255
+    t.string   "company_tag_line",  limit: 255
+    t.string   "memo",              limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "archive_number",    limit: 255
     t.datetime "archived_at"
     t.datetime "deleted_at"
     t.integer  "base_currency_id",  limit: 4,   default: 1
@@ -621,67 +624,72 @@ ActiveRecord::Schema.define(version: 20200827062117) do
 
   create_table "recurring_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "next_invoice_date"
-    t.string "frequency"
-    t.integer "occurrences", default: 0
-    t.string "delivery_option"
-    t.integer "invoice_id"
-    t.integer "generated_count", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "enable_recurring", default: true
+    t.string   "frequency",            limit: 255
+    t.integer  "occurrences",          limit: 4,   default: 0
+    t.string   "delivery_option",      limit: 255
+    t.integer  "invoice_id",           limit: 4
+    t.integer  "generated_count",      limit: 4,   default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "enable_recurring",                 default: true
+    t.integer  "frequency_repetition", limit: 4
+    t.string   "frequency_type",       limit: 255
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-    t.index ["name"], name: "index_roles_on_name"
-    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.integer  "resource_id",   limit: 4
+    t.string   "resource_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "for_client",                default: false
   end
 
-  create_table "sent_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.date "date"
-    t.string "sender"
-    t.string "recipient"
-    t.string "type"
-    t.string "subject"
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "notification_id"
-    t.string "notification_type"
-    t.integer "company_id"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "sent_emails", force: :cascade do |t|
+    t.date     "date"
+    t.string   "sender",            limit: 255
+    t.string   "recipient",         limit: 255
+    t.string   "type",              limit: 255
+    t.string   "subject",           limit: 255
+    t.text     "content",           limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "notification_id",   limit: 4
+    t.string   "notification_type", limit: 255
+    t.integer  "company_id",        limit: 4
   end
 
-  create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "session_id", null: false
-    t.text "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
-    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", limit: 255,   null: false
+    t.text     "data",       limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "var", null: false
-    t.text "value"
-    t.integer "thing_id"
-    t.string "thing_type", limit: 30
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "var",        limit: 255,   null: false
+    t.text     "value",      limit: 65535
+    t.integer  "thing_id",   limit: 4
+    t.string   "thing_type", limit: 30
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.float "rate"
-    t.integer "created_by"
-    t.integer "updated_by"
-    t.string "archive_number"
+  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+
+  create_table "staffs", force: :cascade do |t|
+    t.string   "email",          limit: 255
+    t.string   "name",           limit: 255
+    t.float    "rate",           limit: 24
+    t.integer  "created_by",     limit: 4
+    t.integer  "updated_by",     limit: 4
+    t.string   "archive_number", limit: 255
     t.datetime "archived_at"
     t.time "deleted_at"
     t.datetime "created_at", precision: 6, null: false
@@ -773,6 +781,9 @@ ActiveRecord::Schema.define(version: 20200827062117) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+
+  add_foreign_key "clients", "roles"
   add_foreign_key "introductions", "clients"
   add_foreign_key "introductions", "users"
   add_foreign_key "mail_configs", "companies"

@@ -1,7 +1,15 @@
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
-  <div class="report_heading">
-    <h1>Reports</h1>
+  <div class="flex-wrapper">
+    <!--- breadcrum Bar --->
+    <div class="flex-item breadcrum-bar">
+      <div class="card-white-panel intro invoices-index-false-intro" data-intro='All of your invoices will be listed here' data-step="1">
+        <h3 class="with-grid-icons">
+          <span><%= link_to t('header.links.reports.reports'), reports_path %> </span>
+        </h3>
+      </div>
+
+    </div>
   </div>
   <section class="invoice_expense_reports">
     <h2>Invoice and Sales Reports</h2>
@@ -11,7 +19,7 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'invoice_detail_icon.svg' %>
+                <i class="material-icons">receipt</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Invoice Details</span>
@@ -26,11 +34,11 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'item-sales-icon.svg' %>
+                <i class="material-icons">list</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Item Sales</span>
-                <div class="reportTile-description js-report-tile-description">See how much money you're making from each item you sell</div>
+                <div class="reportTile-description js-report-tile-description">See how much money you are making from each item you sell to your clients</div>
               </div>
             </div>
           </div>
@@ -41,7 +49,7 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'revenue_by_client_icon.svg' %>
+                <i class="material-icons">calculate</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Revenue By Client</span>
@@ -53,14 +61,14 @@
       </div>
     </div>
 
-    <h2>payments Reports</h2>
+    <h2>Payments Reports</h2>
     <div class="marginTop--half marginBottom--1 tiles-container">
       <div class="reportTile-container">
         <%= link_to(payments_collected_reports_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'payments_collected_icon.svg' %>
+                <i class="material-icons">payment</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Payments Collected</span>
@@ -75,7 +83,7 @@
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">
               <div class="paddingRight--1 textAlign--center report_img">
-                <%= image_tag 'aged_accounts_icon.svg' %>
+                <i class="material-icons">account_balance_wallet</i>
               </div>
               <div>
                 <span class="js-report-tile-name">Aged Accounts Receivable</span>

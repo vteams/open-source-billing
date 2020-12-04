@@ -1,0 +1,45 @@
+<div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
+  <div class="container roles-container">
+    <div class="flex-wrapper">
+      <!--- breadcrum Bar --->
+      <div class="flex-item breadcrum-bar">
+        <div class="card-white-panel">
+          <h3 class="with-grid-icons">
+            <span><%= link_to 'Settings', settings_path %></span>
+            <%= link_to " / Email Templates", 'javascript:;', class: 'active' %>
+          </h3>
+
+        </div>
+      </div>
+    </div>
+    <% if @email_templates.count > 0 %>
+      <div class="new-invoice-holder">
+        <div class="new-invoice-table-holder main-invoice page-box role-box">
+          <table class="bordered grid-view">
+            <thead>
+            <tr>
+              <th style="width: 20%"><%= t('views.email_templates.template_type') %></th>
+              <th><%= t('views.email_templates.subject') %></th>
+              <th><%= t('views.email_templates.status') %></th>
+              <th class="center-align"><%= t('helpers.actions') %></th>
+            </tr>
+            </thead>
+            <tbody class="table-view-body">
+            <% @email_templates.each do |email_template| %>
+              <tr>
+                <td><%= email_template.template_type %></td>
+                <td><%= email_template.subject %></td>
+                <td><%= email_template.status %></td>
+                <td class="center-align">
+                  <%= link_to raw('<i class="material-icons">create</i>'), edit_email_template_path(email_template), remote: true %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

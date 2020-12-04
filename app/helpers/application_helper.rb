@@ -355,7 +355,7 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments clients items taxes companies projects tasks staffs)
+    %w(invoices estimates expenses payments clients items taxes companies projects tasks staffs sub_users)
   end
 
   def get_project_count

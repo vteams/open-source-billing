@@ -47,9 +47,9 @@ class SubUsersController < ApplicationController
         if params[:setting_form] == '1'
           @users = User.unscoped
           #format.js
-          format.html {redirect_to settings_path, notice: t('views.users.saved_msg')}
+          format.html {redirect_to sub_users_path, notice: t('views.users.saved_msg')}
         else
-          format.html{redirect_to(params[:setting_form] == '1' ? settings_path : settings_path, notice: t('views.users.saved_msg'))}
+          format.html{redirect_to(params[:setting_form] == '1' ? sub_users_path : sub_users_path, notice: t('views.users.saved_msg'))}
         end
         #return
       else

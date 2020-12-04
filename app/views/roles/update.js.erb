@@ -9,11 +9,11 @@ swal({
 <% else %>
 swal({
     icon: "success",
-    title: "Success",
+    title: "Role has been updated successfully.",
     buttons: false,
     timer: 3000,
     text: "<%= @new_invoice_message %>"}).then(function(){
-    window.location = '<%= settings_path %>'
+    window.location = '<%= roles_path %>'
 
 });
 <% end %>
