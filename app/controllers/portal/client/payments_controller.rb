@@ -5,9 +5,14 @@ module Portal
       helper_method :sort_column, :sort_direction, :get_org_name
       after_action :user_introduction, only: [:index], if: -> { current_portal_client.introduction.present? && !current_portal_client.introduction.payment? }
 
+      def pundit_user
+        current_portal_client
+      end
+
       def index
         @current_client_payments = Payment.client_id(current_client.id)
         @payments = @current_client_payments.filter_params(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
+        authorize @payments
       end
 
       def show

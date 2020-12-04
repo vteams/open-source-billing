@@ -5,14 +5,14 @@
     </div>
   </td>
   <td class="intro invoices-new-false-intro" data-intro="Here you can select the invoice item" data-step="10">
-    <%= f.input :item_id, collection: (load_line_items(action_name, @invoice.company_id, f.object) << ["#{t('views.common.add_new')}", "-1"]),
+    <%= f.input :item_id, collection: (load_line_items(action_name, @invoice.company_id, f.object)).unshift(["#{t('views.common.add_new')}", "-1"]),
                 selected: f.object.item_id, prompt: t('views.common.select_item'), label: false, wrapper: false,
                 include_blank: false, input_html: { class: 'items_list inline-select title-select invoice-select-align add_link_select invoice-client-select item-select select_2',
                                                     data: {action_path: new_item_path, position: (count rescue 0)} } %>
   </td>
   <%= f.input :item_name, as: :hidden, input_html: { class: 'item_name', value: f.object.item_name }, label: false, wrapper: false %>
-  <td>
-    <%= f.input :item_description, label: false, wrapper: false, input_html: { class: 'description center-align' } %>
+  <td class="description_row" title="<%=  f.object.item_description if f.object.item_description.present? %>">
+    <%= f.input :item_description, as: :text, label: false, wrapper: false, input_html: { class: 'description area center-align', rows: 3 } %>
   </td>
   <td>
     <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align' } %>

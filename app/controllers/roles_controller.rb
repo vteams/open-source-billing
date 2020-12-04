@@ -71,7 +71,7 @@ class RolesController < ApplicationController
   private
 
   def role_params
-    params.require(:role).permit(:name, permissions_attributes: [:id, :role_id, :can_create, :can_update, :can_delete, :can_read, :entity_type])
+    params.require(:role).permit(:name, :for_client, permissions_attributes: [:id, :role_id, :can_create, :can_update, :can_delete, :can_read, :entity_type])
   end
 
   def set_role
@@ -79,7 +79,8 @@ class RolesController < ApplicationController
   end
 
   def build_permissions
-    ENTITY_TYPES.each do |e|
+    entity_types = params[:for_client].present? ? CLIENT_ENTITY_TYPES : ENTITY_TYPES
+    entity_types.each do |e|
       @role.permissions.build(entity_type: e)
     end
   end

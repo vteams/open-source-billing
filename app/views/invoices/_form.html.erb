@@ -14,46 +14,48 @@
 
           <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'><%= t('views.clients.client') %> </span>
           <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-          <%= f.select :client_id, (options_for_select((load_clients(action_name, invoice.company_id)),
-                                                       selected: selected_client)+"<option value='-1'>#{t('views.common.add_new')}</option>".html_safe),
+          <%= f.select :client_id, ("<option value='-1'>#{t('views.common.add_new')}</option>".html_safe+options_for_select((load_clients(action_name, invoice.company_id)),
+                                                                                                                            selected: selected_client)),
                        {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select select_2' %>
 
           <div class="terms hidden">
             <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the payment terms' data-step= '6'><%= t('views.invoices.terms') %>: </span>
             <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
           </div>
+
           <div class="invoice-date-div">
             <%= f.input :invoice_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
                         input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date, id: 'invoice_date_picker' }, as: :string %>
           </div>
           <div class="due-date-div">
             <%= f.input :due_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the due date for your invoice', :'data-step' => '8' },
-                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: f.object.due_date }, as: :string %>
+                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: default_due_date(current_company, f.object) }, as: :string %>
           </div>
           <div class="clearfix"></div>
 
 
-          <div class="paymentInfo ">
-            <strong><strong class="invoice_total_strong"></strong>
+          <div class="paymentInfo">
+            <strong><strong class="invoice_total_strong" currency="<%= Currency.find(invoice_selected_currency(f.object)).code %>"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
                           include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
-              <div class="base-currency-conversion">
-                <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
+              <% if Settings.currency.eql?('On') %>
+                <div class="base-currency-conversion">
+                  <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
 
-                <strong class="invoice_total_base_currency"></strong>
-                <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id] }, selected: current_company_obj.base_currency_id,
-                            include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
+                  <strong class="invoice_total_base_currency"></strong>
+                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
+                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
+                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
-              </div>
+                </div>
+              <% end %>
 
             </strong>
           </div>
         </div>
         <div class="info-right-section recurring_checkbox" >
-
 
 
 
@@ -183,7 +185,7 @@
     </div>
     <div class="invoice-add-notes">
       <a href="#"><i class="material-icons">chat</i> </a>
-      <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400},
+      <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400, value: "#{default_company_note(current_company, f.object)}"},
                   wrapper_html: { class: 'invoice-add-notes-textare'} %>
     </div>
     <% if f.object.persisted? %>

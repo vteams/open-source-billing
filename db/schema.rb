@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200909112820) do
+ActiveRecord::Schema.define(version: 20200911131456) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -163,6 +163,8 @@ ActiveRecord::Schema.define(version: 20200909112820) do
     t.datetime "deleted_at"
     t.integer  "base_currency_id",  limit: 4,   default: 1
     t.string   "abbreviation",      limit: 255
+    t.string   "default_note",      limit: 255
+    t.integer  "due_date_period",   limit: 4
   end
 
   create_table "companies_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

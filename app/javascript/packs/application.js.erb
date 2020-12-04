@@ -236,6 +236,11 @@ window.preventDeletedNavigation = function(){
     }
 };
 window.preventDeletedNavigation();
+$(document).on('click', '.j-store-select', function() {
+    $(this).find('ul').slideToggle();
+});
+
+
 $(document).ready(function(){
     $.fn.textWidth = function(text, font) {
 
@@ -263,7 +268,6 @@ $(document).ready(function(){
 
     inputWidth(targetElem);
 
-
     $('.company_name').on('click', function (){
         $('.company_select .select-dropdown:first').show().focus().click();
     })
@@ -289,8 +293,24 @@ $(document).ready(function(){
     disable_right_click_for_browser();
     disable_f12_key_in_browser();
     disable_esc();
+    side_nav_toggle();
 });
 
+function side_nav_toggle() {
+    $('.user-dropdown').on('click', function (){
+        if ($('.user-dropdown > i').html() == 'more_vert'){
+            $('.user-dropdown > i').html('close');
+            $('.user_menu').removeClass('hidden');
+            $('.main_menu').addClass('hidden');
+        }
+        else {
+            $('.user-dropdown > i').html('more_vert');
+            $('.user_menu').addClass('hidden');
+            $('.main_menu').removeClass('hidden');
+        }
+    })
+
+}
 function initCustomConfirmPopUp() {
     // Removing rails default confirm popup
     $.rails.confirm = function () { }
@@ -671,7 +691,40 @@ function initDropDown() {
     );
 
 }
-$(document).bind('ajax:complete', function(evt){
+$(document).on('click', '.j-store-select01', function () {
+    $(this).find('ul').slideToggle();
+});
+
+$(document).on('click', '.j-store01', function () {
+
+    var store = $(this).html();
+
+    $(this).toggleClass('selected');
+    $('.j-store01').not($(this)).removeClass('selected');
+    $('.store-default01').html(store).css('color', 'black');
+
+    $('#competitor01').val($(this).attr('data-value'));
+
+});
+$(document).on('click', '.j-store-select02', function () {
+    $(this).find('ul').slideToggle();
+});
+
+$(document).on('click', '.j-store02', function () {
+
+    var store = $(this).html();
+
+    $(this).toggleClass('selected');
+    $('.j-store02').not($(this)).removeClass('selected');
+    $('.store-default02').html(store).css('color', 'black');
+    $('#competitor02').val($(this).attr('data-value'));
+
+});
+$(document).bind('ajax:complete', function(evt) {
+    initDropDown();
+});
+
+$(document).ajaxStop(function(){
     initDropDown();
 });
 (function($) {

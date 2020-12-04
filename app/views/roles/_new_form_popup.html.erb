@@ -1,11 +1,14 @@
 <div id="new_form_popup" class="modal editableModal importModal">
-  <%= simple_form_for @role, remote: true, html: { class: 'role-form form-invoice form-horizontal nested-forms', id: 'roleForm' } do |f| %>
+  <%= simple_form_for @role, remote: true, html: { class: 'role-form form-invoice form-horizontal nested-forms' } do |f| %>
+    <% if params[:for_client].present? %>
+      <%= f.input :for_client, as: :hidden, input_html: {value: 1} %>
+    <% end %>
     <div class="modal-content">
       <div class="modal-header clearfix text-content">
         <div class="modal-action-btn right">
           <%= render partial: 'form_action_links' %>
         </div>
-          <%= render partial: 'form_heading', locals:{form: f, role: @role} %>
+        <%= render partial: 'form_heading', locals:{form: f, role: @role} %>
       </div>
       <div class="modal-body role-modal-body">
         <div class="scroll-area">
@@ -19,7 +22,7 @@
               </div>
               <div id="edit_permission_table">
                 <%= f.simple_fields_for :permissions do |permission| %>
-                  <%= render partial: 'permission_fields', locals: {permission: permission} %>
+                  <%= render partial: params[:for_client].present? ? 'client_permission_fields' : 'permission_fields', locals: {permission: permission} %>
                 <% end %>
               </div>
             </div>

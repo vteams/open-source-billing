@@ -9,12 +9,30 @@
         <!-- Dropdown Trigger -->
         <a class='dropdown-button '><span><%= current_portal_client.full_name || current_portal_client.email %></span></a>
         <a  class="email-link"><%= current_portal_client.email %> </a>
+        <a id="dLabel" class='dropdown-button user-dropdown' href='#' data-activates='dropdown_1' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
       </div>
     </div>
   </div>
   <!--- side main menu --->
-
-  <div>
+  <div class=" user_menu hidden">
+    <ul class="side-menu scrollContainer">
+      <li>
+        <%= active_link_to edit_portal_client_registration_path(locale: params[:locale]), title: "Change Password" do %>
+          <i class="material-icons">lock</i>
+          <span>Change Password</span>
+        <% end %>
+      </li>
+      <li>
+        <%= active_link_to destroy_portal_client_session_path(locale: params[:locale]), method: :delete, class: 'logout text-align' do %>
+          <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
+          <span><%= t('header.links.logout') %></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="main_menu">
     <ul class="side-menu scrollContainer">
       <li>
         <%= active_link_to portal_dashboard_index_path , title: t('header.links.dashboard') do %>
@@ -23,35 +41,34 @@
         <% end %>
       </li>
 
+      <% if policy(Invoice).show? %>
         <li>
           <%= active_link_to portal_invoices_path, title: t('header.links.invoices.invoices') do %>
             <%= image_tag('ico-invoices.svg', alt: t('header.links.invoices.invoices')) %>
             <span><%= t('header.links.invoices.invoices') %></span>
           <% end %>
         </li>
+      <% end %>
 
 
-
+      <% if policy(Payment).show? %>
         <li>
           <%= active_link_to portal_payments_path, title: t('header.links.payments.payments') do %>
             <%= image_tag('ico-payments.svg', alt: t('header.links.payments.payments'))%>
             <span><%= t('header.links.payments.payments') %></span>
           <% end %>
         </li>
+      <% end %>
 
+      <% if policy(Settings).show? %>
         <li>
           <%= active_link_to portal_settings_path do %>
             <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
             <span><%= t('views.settings.settings') %></span>
           <% end %>
         </li>
+      <% end %>
 
-      <li>
-        <%= active_link_to session[:masquerade_client_id].present? ? masquerade_path(current_portal_client) : destroy_portal_client_session_path(locale:'en', authenticity_token: form_authenticity_token), method: :delete, class: 'logout text-align' do %>
-          <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
-          <span><%= t('header.links.logout') %></span>
-        <% end %>
-      </li>
     </ul>
   </div>
 </nav>

@@ -265,7 +265,7 @@ class ClientsController < ApplicationController
   private
 
   def client_params
-    params.require(:client).permit(:address_street1, :address_street2, :business_phone, :city,
+    params.require(:client).permit( :role_id, :address_street1, :address_street2, :business_phone, :city,
                                    :company_size, :country, :fax, :industry, :internal_notes,
                                    :organization_name, :postal_zip_code, :province_state,
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,

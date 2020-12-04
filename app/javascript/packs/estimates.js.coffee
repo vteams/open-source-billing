@@ -43,7 +43,8 @@ class window.Estimate
               container.find('td.cost').html item[1].toFixed(2)
               container.find('input.qty').val item[2]
               container.find('td.qty').html item[2]
-#              OsbPlugins.empty_tax_fields(container)
+              container.find('td.description_row').attr('title', item[0])
+              #              OsbPlugins.empty_tax_fields(container)
               if item[3] != 0
                 container.find('select.tax1').val(item[3]).trigger('contentChanged');
                 container.find('input.tax-amount').val item[8]

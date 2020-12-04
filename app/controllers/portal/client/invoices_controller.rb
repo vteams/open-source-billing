@@ -13,6 +13,7 @@ module Portal
         @status = params[:status]
         @current_client_invoices = Invoice.client_id(current_client.id).skip_draft.joins(:currency)
         @invoices = @current_client_invoices.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
+        authorize @invoices
         respond_to do |format|
           format.html # index.html.erb
           #format.js

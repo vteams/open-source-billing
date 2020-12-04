@@ -150,6 +150,9 @@ class window.OsbPlugins
       OsbPlugins.hidePopover($("#invoice_currency_id_chzn")) if currency_id is ""
       if not currency_id? or currency_id isnt ""
         $.get('/invoices/selected_currency?currency_id='+ currency_id)
+        setTimeout ( ->
+          $('.invoice_total_strong').formatCurrency({symbol: window.currency_symbol})
+        ), 200
     $('#add_line_item').click ->
       OsbPlugins.hidePopover($('#add_line_item'))
     # Validate client, cost and quantity on invoice save
@@ -184,6 +187,9 @@ class window.OsbPlugins
         flag = false
       else if $('#recurring').is(':checked') and $('#invoice_recurring_schedule_attributes_occurrences_0').is(':not(:checked)') and parseInt($('#how_many_rec').val()) <= 0
         OsbPlugins.applyPopover($("#how_many_rec"),"bottomMiddle","topLeft", I18n.t("views.common.enter_positive_value"))
+        flag = false
+      else if $('#recurring').is(':checked') && $('#invoice_recurring_schedule_attributes_delivery_option_send_invoice').is(':not(:checked)') && $('#invoice_recurring_schedule_attributes_delivery_option_draft_invoice').is(':not(:checked)')
+        OsbPlugins.applyPopover($(".invoice_recurring_schedule_delivery_option"),"bottomMiddle","topLeft", 'Please select at least one option')
         flag = false
       # Check if payment term is selected
       else if $("#invoice_payment_terms_id").val() is ""

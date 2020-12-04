@@ -46,7 +46,7 @@ setTimeout(function () {
 $('.client_select_2').select2({});
 
 
-$(".select").trigger('contentChanged');
+//$(".select").trigger('contentChanged');
 $('#client_organization_name').attr('value', '')
 Validation.ClientForm();
 Item.check_uncheck_all_companies();
@@ -54,6 +54,11 @@ if ($('#account_association').prop('checked', true)){
     $('#select_all_companies').prop('checked', false)
     $('#select_all_companies').attr('disabled', true)
 }
+$('#new_client_role_id').material_select('destroy')
+$('#new_client_role_id').material_select('destroy');
+$('#new_client_role_id').select2({
+    placeholder: 'Role'
+})
 $('.us_state_dropdown').hide();
 $('.canada_state_dropdown').hide();
 $('#client_country').on('change', function(){

@@ -19,7 +19,7 @@
               </div>
               <div id="edit_permission_table">
                 <%= f.simple_fields_for :permissions do |permission| %>
-                  <%= render partial: 'permission_fields', locals: {permission: permission} %>
+                  <%= render partial: params[:for_client].present? ? 'client_permission_fields' : 'permission_fields', locals: {permission: permission} %>
                 <% end %>
               </div>
             </div>

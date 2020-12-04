@@ -3,10 +3,17 @@ module Portal
     class BaseController < ActionController::Base
       before_action :authenticate_portal_client!
       before_action :current_client
+      include Pundit
+
+      rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
       layout 'client'
       helper_method :render_card_view?
       include ClientsHelper
 
+      def pundit_user
+        current_portal_client
+      end
 
 
       def current_client
@@ -42,6 +49,17 @@ module Portal
       def user_introduction
         current_portal_client.introduction.update_attribute(client_introduction_parameter, true)
       end
+
+      private
+      def user_not_authorized
+        flash[:alert] = "You are not authorized to perform this action."
+        if request.format.js?
+          render js:  "window.location = '#{request.referrer || root_path}'"
+        else
+          redirect_to(request.referrer || portal_dashboard_index_path)
+        end
+      end
+
 
     end
   end

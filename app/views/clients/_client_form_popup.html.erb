@@ -36,6 +36,10 @@
               <%= hidden_field_tag :type, params[:type] if params[:type] %>
               <%= f.input :billing_email, label: t('views.clients.business_email'), wrapper_html: {class: 'input-field col s6 m4'} %>
               <%= f.input :vat_number, label: t('views.clients.vat_number'), wrapper_html: {class: 'input-field col s6 m4'} %>
+              <%= f.input :role_id, collection: load_client_roles, label: false, as: :select,
+                          input_html: {id: 'new_client_role_id', class: 'edit-user-select2 select_2', name: 'client[role_id]'},
+                          wrapper_html: { class: 'input-field col s6 m4 editMode user-role' } %>
+
               <div id="client_credit"></div>
               <div class="input-field col s12 m4">
                 <% @readonly = is_client_credit_payments @client %>
