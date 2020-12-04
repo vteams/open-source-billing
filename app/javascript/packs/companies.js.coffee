@@ -20,6 +20,25 @@ class window.Company
         flag = false
       flag
 
+  @CompanyCountryState = ->
+    if $('#company_country').children('option:selected').val() == 'United States'
+      $('.country_state_text_field').hide()
+      $('.canada_state_dropdown').hide()
+      $('.us_state_dropdown').show()
+    else if $('#company_country').children('option:selected').val() == 'Canada'
+      $('.country_state_text_field').hide()
+      $('.canada_state_dropdown').show()
+      $('.us_state_dropdown').hide()
+    else
+      $('.country_state_text_field').show()
+      $('.us_state_dropdown').hide()
+      $('.canada_state_dropdown').hide()
+    $('#companyForm').submit ->
+      if $('#company_country').children('option:selected').val() == 'United States'
+        $('.country_state_text_field > input').val($('.us_state_dropdown > #company_province_or_state').children('option:selected').val());
+      else if $('#company_country').children('option:selected').val() == 'Canada'
+        $('.country_state_text_field > input').val($('.canada_state_dropdown > #company_province_or_state').children('option:selected').val());
+
   @load_functions = ->
 
     $('.modal').modal complete: ->
@@ -30,7 +49,7 @@ class window.Company
     jQuery("#company_contact_name,#company_email,#company_company_name").keypress ->
       hideQtip(jQuery(this))
 
-    $("#companyForm").submit ->
+    $("#companyForm1").submit ->
       flag = true
       pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
       if jQuery("#company_company_name").val() is ""

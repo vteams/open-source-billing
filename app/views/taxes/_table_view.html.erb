@@ -18,7 +18,7 @@
         </thead>
         <tbody class="table-view-body">
         <% @taxes.each do |tax| %>
-          <tr class="invoice-card client-card invoice-table-row taxes-table-row">
+          <tr class="invoice-card client-card invoice-table-row taxes-table-row" data-invoice-url="<%= url_for(tax) %>">
             <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-tax_id= <%=tax.id %>>
                 <div class="checkbox-item invoice_checkbox">
@@ -72,9 +72,6 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div style="margin-top: 10px" class="right">
-    <%= link_to ' + New Tax ', new_tax_path, remote: true %>
   </div>
 
 <% end %>

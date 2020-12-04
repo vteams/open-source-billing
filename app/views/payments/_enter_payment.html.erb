@@ -21,8 +21,8 @@
         <% due_amount += Payment.invoice_remaining_amount(payment.invoice.id)
            payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
         %>
+        <span class="due_amount hidden"><%= due_amount %></span>
         <%= fields_for "payments[]", payment do |f| %>
-          <%= f.hidden_field :client_id, value: payment.invoice.client_id %>
           <%= render "fields", :f => f, :payment => payment, :index => index %>
         <% end
            end %>

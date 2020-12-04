@@ -20,7 +20,7 @@
         </thead>
         <tbody class="table-view-body">
         <% @estimates.each do |estimate| %>
-          <tr class="invoice-card client-card invoice-table-row estimate-table-row">
+          <tr class="invoice-card client-card invoice-table-row estimate-table-row" data-invoice-url="<%= url_for(estimate) %>">
             <td class="align_center header align_center center-align not-sortable td-checkbox invoice-row checkbox-item">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-estimate_id= <%= estimate.id %>>
                 <div class="checkbox-item invoice_checkbox">
@@ -95,9 +95,6 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div style="margin-top: 10px" class="right">
-    <%= link_to ' + New Estimate ', new_estimate_path %>
   </div>
 
 <% end %>

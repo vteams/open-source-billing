@@ -1,5 +1,5 @@
 <%= render partial: 'tax_activity' %>
-    <!--- content --->
+<!--- content --->
 <div id="main-content" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <!--- main content --->
   <div class="flex-wrapper">
@@ -20,16 +20,20 @@
   </div>
   <%= render 'filters' %>
   <div class="invoice-box tax-box">
-      <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
-          <div class="search_result_container"><%= render 'taxes_container' %></div>
-          <%= render partial: 'bulk_actions'%>
-      <% end %>
+    <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+      <div class="search_result_container"><%= render 'taxes_container' %></div>
+      <div style="margin-top: 10px" class="right">
+        <%= link_to ' + New Tax ', new_tax_path, remote: true, class: "#{(@taxes.count > 0 && @taxes.total_count < 9) || @taxes.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
+      </div>
+
+      <%= render partial: 'bulk_actions'%>
+    <% end %>
   </div>
 </div>
 <script>
-  initFilterEvents('#create_at_start_date,#create_at_end_date,#percentage_min,#percentage_max');
-  <% if is_filter_applied?(%w(create_at_start_date create_at_end_date percentage_min percentage_max)) %>
-  $('#filters').slideDown('slow');
-  $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
-  <% end %>
+    initFilterEvents('#create_at_start_date,#create_at_end_date,#percentage_min,#percentage_max');
+    <% if is_filter_applied?(%w(create_at_start_date create_at_end_date percentage_min percentage_max)) %>
+    $('#filters').slideDown('slow');
+    $('#toggle_filters').attr('title', I18n.t('views.common.hide_filters'));
+    <% end %>
 </script>

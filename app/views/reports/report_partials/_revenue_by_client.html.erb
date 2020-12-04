@@ -3,7 +3,7 @@
     <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
     <span class="text-uppercase"><%= raw @report.period %></span>
   </div>
-
+  <p><%= t('views.reports.revenue_by_client_dtl') %></p>
 
   <%= render 'reports/report_partials/format_links'%>
 </div>
@@ -69,7 +69,7 @@
     </tfoot>
   <% else %>
     <tr>
-      <td colspan="<%= 2+(@report.report_criteria.from_month..@report.report_criteria.to_month).size %>">
+      <td class="no-record-message" colspan="<%= 2+(@report.report_criteria.from_month..@report.report_criteria.to_month).size %>">
         <%= t('views.reports.report_no_data') %>
       </td>
     </tr>

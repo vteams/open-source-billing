@@ -18,23 +18,6 @@
                          include_blank: false, class: 'small_list invoice-filter-select select_2') %>
           <label><%= t('views.common.type') %></label>
         </div>
-        <div class="col s12 m12">
-          <p class="range-field">
-            <label><%= t('views.taxes.percentage_range') %></label>
-            <input type="hidden" name="min_percentage" id="percentage_min" value="0">
-            <input type="hidden" name="max_percentage" id="percentage_max" value="100">
-          <div class="label-range">
-            <span class="label_left"><%= t('views.invoices.min') %>: <span id="percentage_min_label"></span></span>
-            <span class="label_right"><%= t('views.invoices.max') %>: <span id="percentage_max_label"></span></span>
-          </div>
-          <div id="percentage"
-               min="0"
-               max="100"
-               class="range_selector"
-               data-min="<%= params[:min_rate] %>"
-               data-max="<%= params[:max_rate] %>"></div>
-          </p>
-        </div>
       </div>
       <div class="row">
         <div class="filter-footer">

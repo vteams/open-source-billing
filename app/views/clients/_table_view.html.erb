@@ -21,7 +21,7 @@
         </thead>
         <tbody class="table-view-body">
         <% @clients.each do |client| %>
-          <tr class="client-card invoice-card invoice-table-row clients-table-row">
+          <tr class="client-card invoice-card invoice-table-row clients-table-row" data-invoice-url="<%= url_for(client) %>">
             <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-client_id= <%=client.id %>>
                 <div class="checkbox-item invoice_checkbox">
@@ -113,9 +113,6 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div style="margin-top: 10px" class="right">
-    <%= link_to ' + New Client ', new_client_path, remote: true %>
   </div>
 
 <% end %>

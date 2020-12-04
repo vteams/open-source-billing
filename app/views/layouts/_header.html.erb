@@ -2,12 +2,12 @@
 <header id="header">
   <div class="row">
     <!--- header logo--->
-    <div class="col s12 m5 l4">
+    <div class="col s4 m5 l4">
       <a class="btn-menu" href="javascript:;"><i class="material-icons intro dashboard-index-false-intro header-intro" data-intro='By clicking on this button you can toggle the side nav'>menu</i></a>
       <%= link_to raw('Open<span>Source</span>Billing'), dashboard_path, class: 'logo'%>
     </div>
     <!--- header company name--->
-    <div class="col s9 m5 l4">
+    <div class="col s4 m4 l4">
       <div class="header-center">
         <div class="hdr-select-holder intro dashboard-index-false-intro header-intro" data-intro='You can select any company from here'>
           <% company = Company.find(current_user.current_company) %>
@@ -45,7 +45,7 @@
 
     </div>
     <!--- header search--->
-    <div class="col s3 m2 l4  header-right">
+    <div class="col s4 m3 l4  header-right">
       <div class="right notification-container">
         <!-- Dropdown Structure -->
         <ul id="dropdown" class="notification-dropdown collection infinit-scroll">

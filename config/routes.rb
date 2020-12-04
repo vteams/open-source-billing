@@ -153,6 +153,7 @@ Osb::Application.routes.draw do
         post 'get_last_invoice'
         post 'get_last_estimate'
         get 'undo_actions'
+        get 'verify_email'
       end
       member do
         post :create_password

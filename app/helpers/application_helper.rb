@@ -117,7 +117,7 @@ module ApplicationHelper
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
       list += "<div class='col s12 m6 l4 company-checkbox'>
-                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' checked='true' class='company_checkbox filled-in' style='margin-bottom: 15px;'/>
+                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}'  class='company_checkbox filled-in' style='margin-bottom: 15px;'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
       checked = ''

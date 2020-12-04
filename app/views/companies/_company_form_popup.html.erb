@@ -39,11 +39,17 @@
 
           <div class="row">
             <h5 class="text-blue title-heading"><%= t('views.common.address') %></h5>
-            <%= f.input :country, label: t('Country'), collection: COUNTRY_LIST, selected: @company.country, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
+            <%= f.input :country, label: t('Country'), collection: COUNTRY_LIST, selected: @company.country, prompt: t('views.common.select_a_country'), input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
+            <%= f.input :province_or_state, label: 'Province', wrapper_html: { class: 'input-field col s6 m4 country_state_text_field' } %>
+            <%= f.input :province_or_state, label: 'State', collection: US_STATES_LIST,prompt: t('views.common.select_a_country'),
+                        input_html: { class: 'input-select client_select_2', name: 'client[province_state_us]' }, wrapper_html: {class: 'col m4 s6 us_state_dropdown'} %>
+            <%= f.input :province_or_state, label: 'State', collection: CANADA_STATES,prompt: t('views.common.select_a_country'),
+                        input_html: { class: 'input-select client_select_2', name: 'client[province_state_ca]' }, wrapper_html: {class: 'col m4 s6 canada_state_dropdown'} %>
+            <%= f.input :city, label: t('views.common.city'), wrapper_html: { class: 'input-field col s6 m4' } %>
+            <div class="clearfix"></div>
             <%= f.input :street_address_1, label: "#{t('views.common.street')}#1", wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :street_address_2, label: "#{t('views.common.street')}#2", wrapper_html: { class: 'input-field col s6 m4' } %>
-            <%= f.input :city, label: t('views.common.city'), wrapper_html: { class: 'input-field col s6 m4' } %>
-            <%= f.input :province_or_state, label: t('views.common.province'), wrapper_html: { class: 'input-field col s6 m4' } %>
+
             <%= f.input :postal_or_zipcode, label: t('views.common.zip_code'), wrapper_html: { class: 'input-field col s6 m4' } %>
           </div>
           <div class="row">
@@ -55,16 +61,16 @@
           </div>
           <%= f.simple_fields_for :mail_config do |mail| %>
             <div class="row company-mail-config">
-              <h5 class="text-blue title-heading"><%= t('Mail Configuration') %></h5>
-              <%= mail.input :address, wrapper_html: { class: 'input-field col s6 m4' } %>
+              <h5 class="text-blue title-heading"><%= t('E-Mail Configuration') %></h5>
+              <%= mail.input :address, label: 'Server Address' ,wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :port, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :authentication, collection: MailConfig::AUTHENTICATION_TYPES, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
               <%= mail.input :from, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :user_name, wrapper_html: { class: 'input-field col s6 m4' } %>
               <%= mail.input :password, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :enable_starttls_auto, input_html: { class: 'filled-in'}, as: :boolean,
+              <%= mail.input :enable_starttls_auto, label: 'Auto STARTTLS', input_html: { class: 'filled-in'}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
-              <%= mail.input :tls, input_html: { class: 'filled-in'}, as: :boolean,
+              <%= mail.input :tls, label: 'TLS', input_html: { class: 'filled-in'}, as: :boolean,
                              wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
               <%= mail.input :openssl_verify_mode, collection: MailConfig::OPEN_SSL_VERIFICATIONS_MODES, input_html: {class: 'edit-company-select3 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
 

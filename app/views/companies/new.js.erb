@@ -5,3 +5,10 @@ elem = $("#company_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
 Validation.CompanySettingForm();
+$('.client_select_2').select2({});
+$('#company_country').select2()
+$('.us_state_dropdown').hide();
+$('.canada_state_dropdown').hide();
+$('#company_country').on('change', function(){
+    Company.CompanyCountryState();
+})

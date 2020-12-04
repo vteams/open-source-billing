@@ -11,3 +11,11 @@ Popup.open(elem);
 $('.edit-company-select2').select2();
 $('.edit-company-select3').select2();
 Validation.CompanySettingForm();
+$('.client_select_2').select2({});
+$('#company_country').select2()
+$('.us_state_dropdown').hide();
+$('.canada_state_dropdown').hide();
+Company.CompanyCountryState();
+$('#company_country').on('change', function(){
+    Company.CompanyCountryState();
+})
