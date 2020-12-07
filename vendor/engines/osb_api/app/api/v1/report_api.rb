@@ -16,6 +16,24 @@ module V1
 
 
       params do
+        requires :from_date
+        requires :to_date
+        optional :invoice_status
+        optional :client_id
+      end
+      get   'invoice_detail' do
+        criteria = {
+          from_date: params[:from_date],
+          to_date: params[:to_date],
+          report_name: 'invoice_detail',
+          invoice_status: params[:invoice_status],
+          client_id: params['client_id'],
+          current_company: @current_user.current_company
+        }
+        @report = get_report_api({criteria:criteria})
+      end
+
+      params do
        requires :to_date
        optional :client_id
       end
@@ -23,7 +41,8 @@ module V1
         criteria = {
             to_date: params[:to_date],
             report_name: 'aged_accounts_receivable',
-            client_id: params[:client_id]
+            client_id: params[:client_id],
+            current_company: @current_user.current_company
         }
         @report = get_report_api({criteria:criteria})
       end
@@ -57,7 +76,8 @@ module V1
             quarter: params[:quarter],
             year: params[:year],
             report_name: 'revenue_by_client',
-            client_id: params['client_id']
+            client_id: params['client_id'],
+            current_company: @current_user.current_company
         }
         @report = get_report_api({criteria:criteria})
       end
