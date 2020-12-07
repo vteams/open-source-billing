@@ -13,6 +13,7 @@ module Services
 
       def self.update(params)
         company = ::Company.find(params[:id])
+        # company.logo = params[:company][:logo] if params[:company][:logo].present?
         if company.present?
           if company.update_attributes(company_params_api(params))
             {message: 'Successfully updated'}

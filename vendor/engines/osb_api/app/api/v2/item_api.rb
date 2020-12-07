@@ -31,13 +31,11 @@ module V2
         criteria = {
           sort_column: params[:sort_column].present? ? params[:sort_column] : 'item_name',
           sort_direction: params[:sort_direction].present? ? params[:sort_direction] : 'asc',
+          current_company: @current_user.current_company,
+          user: @current_user,
+          per: @current_user.settings.records_per_page
         }
-        params.merge!(criteria)
-        @items = get_current_items
-        @items = @items.sort_by!{|item| params[:sort_column].eql?('item_name') ? item.item_name.downcase : item.created_at}
-        @items = Kaminari.paginate_array(@items).page(params[:page]).per(@current_user.settings.records_per_page)
-        @items = @items.reverse if params[:sort_direction].eql?('desc')
-        @items
+        @items = Item.get_items(params.merge(criteria))
       end
 
     end
