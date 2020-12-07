@@ -1136,7 +1136,7 @@ h6 {
   z-index: 998; }
 
 #main-content {
-  padding-left: 281px;
+  padding-left: 107px;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -6425,7 +6425,7 @@ li.collection-item a{
 }
 #header .hdr-select-holder .currency-flag {
   position: relative;
-  top: -8px;
+  //top: -8px;
 }
 [type="checkbox"].filled-in:disabled:not(:checked) + label:after{
   border-color: #b1b1b1;

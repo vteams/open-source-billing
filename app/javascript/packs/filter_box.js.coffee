@@ -3,13 +3,13 @@ Array.prototype.getObjectBy = (name, value)->
     return object if object[name] == value
   return null
 
-class @FilterBox
-  filterbar = require('./filter_bar.js').filterbar
+class window.FilterBox
+#  filterbar = require('./filter_bar.js').filterbar
 
   constructor: (@element) ->
     @filter_fields = $(@element).data('filter-fields')
     @setupSelect2()
-    filterbar.initSearch($(@element).select2('val'))
+    FilterBar.initSearch($(@element).select2('val'))
 
   setupSelect2: ->
     $(@element).select2(

@@ -244,7 +244,7 @@ window.loadUsersActivitiesSection = () ->
 
 
 
-@initRecurringFrequencyListingEvents = () ->
+window.initRecurringFrequencyListingEvents = () ->
   $('input[id^=frequency_]').on "change", ->
     if $('input[id^=frequency_]:checked').length > 0
       $('#frequency_delete_btn').removeClass('disabled')

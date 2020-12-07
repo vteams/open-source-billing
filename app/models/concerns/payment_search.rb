@@ -71,17 +71,17 @@ module PaymentSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('payment_type') or key.eql?('payment_method') or key.eql?('notes')
-          query << "payments.#{key} like '#{val}%'"
+          query << "payments.#{key} like '%#{val}%'"
         end
         if key.eql?('clients')
-          query << "(clients.first_name like '#{val}%' or clients.last_name like '#{val}%' or clients.email like '#{keyword[:client]}%' or clients.organization_name like '#{val}%')"
+          query << "(clients.first_name like '%#{val}%' or clients.last_name like '%#{val}%' or clients.email like '%#{keyword[:client]}%' or clients.organization_name like '%#{val}%')"
         end
         if key.eql?('invoice')
-          query << "(invoices.invoice_number like '#{val}%')"
+          query << "(invoices.invoice_number like '%#{val}%')"
         end
       end
       query = query.join(" AND ")
-      return joins(invoice: :client).where(query).uniq
+      return joins(invoice: :client).where(query).distinct
     end
 
   end

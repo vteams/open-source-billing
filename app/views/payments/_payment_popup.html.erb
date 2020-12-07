@@ -41,7 +41,7 @@
     <div class="modal-footer">
       <div class="row">
         <div class="text-info col l6">
-          <p><strong>Note</strong><%= raw payment.notes.gsub("\n", "<br>") %></p>
+          <p><strong>Note</strong><%= raw payment.notes.gsub("\n", "<br>") if payment.notes.present? %></p>
         </div>
       </div>
 

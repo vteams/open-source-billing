@@ -1,4 +1,4 @@
-class @FilterBar
+class window.FilterBar
   @initSearch: (filters)->
     @search_params = {}
     for f in filters
@@ -16,8 +16,9 @@ class @FilterBar
     params = {
       search: @search_params
     }
-    $.rails.ajax
+    $.ajax
       url: window.location.href
+      type: 'get'
       dataType: 'script'
       data: params
       success: (data)->
@@ -25,4 +26,3 @@ class @FilterBar
           $(this).html($(data).find("##{$(this).attr('id')}").html())
 
 
-exports.filterbar = @FilterBar

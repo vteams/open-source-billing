@@ -35,7 +35,7 @@ module Portal
 
       def current_portal_client
         if current_user.present? && session[:masquerade_client_id].present?
-          @masequerade_current_client = ActiveRecord::Base::Client.find session[:masquerade_client_id]
+          @masequerade_current_client = ::Client.find session[:masquerade_client_id]
         else
           @devise_current_client ||= warden.authenticate(scope: :portal_client)
         end

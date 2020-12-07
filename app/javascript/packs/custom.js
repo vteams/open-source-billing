@@ -212,7 +212,7 @@ window.initBulkActionCheckboxes = function() {
     $(".header-right").removeClass("search-show");
     $('.checkboxinfo').show();
     $('.search-holder form').hide();
-    if($('.select2-search-choice-close').size() == 1){
+    if($('.select2-search-choice-close').length == 1){
       $('a.select2-search-choice-close').click();
     }
   });
