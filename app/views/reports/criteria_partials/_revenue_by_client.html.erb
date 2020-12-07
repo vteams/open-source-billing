@@ -1,6 +1,6 @@
 <div class="filter-container" id="filters">
   <div class="nav-wrapper subnav-filters">
-    <%= form_tag "/reports/data/#{@report.report_name}", method: :get, remote: true, id: 'filters_form' do %>
+    <%= form_tag "/reports/#{@report.report_name}", method: :get, remote: true, id: 'filters_form' do %>
       <div class="row">
         <div class="input-field col s12 m6 xl3 select-client reports-filter">
           <%= select_tag "criteria[quarter]", options_for_select(QUARTER_MONTHS), {class: 'invoice-filter-select select_2'}%>

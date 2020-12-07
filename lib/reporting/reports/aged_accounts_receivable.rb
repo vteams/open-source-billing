@@ -56,7 +56,7 @@ module Reporting
             SUM(CASE WHEN aged.age BETWEEN 31 AND 60 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS thirty_one_to_sixty,
             SUM(CASE WHEN aged.age BETWEEN 61 AND 90 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS sixty_one_to_ninety,
             SUM(CASE WHEN aged.age > 90 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS ninety_one_and_above,
-            0 AS client_total
+            SUM(CASE WHEN aged.age BETWEEN 0 AND 90 THEN aged.invoice_total - aged.payment_received ELSE 0 END) AS client_total
           FROM (
             SELECT
               case when clients.organization_name = '' then CONCAT(clients.first_name,' ',clients.last_name) else clients.organization_name  end AS client_name,
