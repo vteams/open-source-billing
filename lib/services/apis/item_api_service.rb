@@ -18,7 +18,7 @@ module Services
 
       def self.update(params)
         item = ::Item.find(params[:id])
-        if Item.exists?(item_name: params[:item][:item_name]) && params[:item][:item_name] != item.item_name
+        if ::Item.where('item_name LIKE Binary ?', params[:item][:item_name]).present? && params[:item][:item_name] != item.item_name
           {error: 'Item already exists with same name', message: nil}
         else
           if item.present?
