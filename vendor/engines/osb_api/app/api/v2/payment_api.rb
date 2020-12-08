@@ -10,7 +10,7 @@ module V2
 
       desc 'Return all Payments'
       get do
-        @payments = Payment.unarchived.by_company(@current_user.current_company)
+        @payments = Payment.by_company(@current_user.current_company)
                            .order("payments.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
                            .filter(params).select('payments.*, clients.organization_name')
         @payments = @payments.page(params[:page]).per(@current_user.settings.records_per_page)
