@@ -183,10 +183,10 @@ class Payment < ActiveRecord::Base
   def self.filter(params)
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-    @payments = Payment.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id')
+    @payments = Payment.joins('LEFT JOIN invoices as payments_invoices ON payments_invoices.id = payments.invoice_id')
                     .joins('LEFT JOIN companies ON companies.id = payments.company_id')
                     .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
-                    .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients ON clients.id = invs.client_id')
+                    .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients as payment_clients ON payment_clients.id = invs.client_id')
 
     payments = params[:search].present? ? @payments.search(params[:search]).records : @payments
 
