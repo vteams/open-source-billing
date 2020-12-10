@@ -14,7 +14,7 @@ module V2
                            .order("payments.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
                            .filter(params).select('payments.*, clients.organization_name')
         @payments = @payments.page(params[:page]).per(@current_user.settings.records_per_page)
-        @payments = {total_records: @payments.total_count, total_pages: @payments.total_pages, current_page: @payments.current_page, per_page: @payments.limit_value, payments: @payments}
+        @payments = {total_invoices: Invoice.all.unscoped.count, total_records: @payments.total_count, total_pages: @payments.total_pages, current_page: @payments.current_page, per_page: @payments.limit_value, payments: @payments}
       end
 
     end

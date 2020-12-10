@@ -223,7 +223,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with accounts
     account_clients = account.clients
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
-    account_clients = account_clients.send(mappings[params[:status].to_sym])
+    account_clients = account_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
     account_clients = account_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
     account_clients = account_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
