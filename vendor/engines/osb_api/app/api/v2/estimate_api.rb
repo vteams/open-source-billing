@@ -37,7 +37,7 @@ module V2
                              .order("estimates.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
 
         @estimates = filter_by_company(@estimates)
-        @estimates = {total_records: @estimates.total_count, total_pages: @estimates.total_pages,
+        @estimates = {total_estimates: Estimate.all.unscoped.count, total_records: @estimates.total_count, total_pages: @estimates.total_pages,
                      current_page: @estimates.current_page, per_page: @estimates.limit_value, payments: @estimates}
       end
 
