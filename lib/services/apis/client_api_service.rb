@@ -3,7 +3,7 @@ module Services
     class ClientApiService
 
       def self.create(params)
-        if Client.exists?(email: params[:client][:email])
+        if Client.where(email: params[:client][:email])
           {error: 'Client with same email already exists', message: nil }
         else
           client = ::Client.new(client_params_api(params))

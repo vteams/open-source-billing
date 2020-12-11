@@ -57,7 +57,7 @@ module V2
            }
       get do
         params[:status] = params[:status] || 'active'
-        @invoices = Invoice.with_clients.order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id, invoices.currency_id")
+        @invoices = Invoice.with_clients.order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id, invoices.currency_id, invoices.deleted_at")
         @invoices = filter_by_company(@invoices).filter(params,@current_user.settings.records_per_page)
         @invoices = {total_invoices: Invoice.all.unscoped.count, total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
       end
