@@ -4,7 +4,7 @@ module Services
 
       def self.create(params)
         item = ::Item.new(item_params_api(params))
-        if Item.exists?(item_name: params[:item][:item_name])
+        if Item.where('item_name LIKE Binary ?', params[:item][:item_name]).present?
           {error: 'Item already exists with same name', message: nil }
         else
           ItemApiService.associate_entity(params, item)
