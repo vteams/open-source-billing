@@ -5,6 +5,8 @@ module Services
       def self.create(params)
         if Client.where(email: params[:client][:email])
           {error: 'Client with same email already exists', message: nil }
+        elsif !params[:client][:company_ids].present?
+          {error: 'Client should be assigned to at least one company', message: nil }
         else
           client = ::Client.new(client_params_api(params))
           client.skip_password_validation = true
@@ -21,6 +23,8 @@ module Services
         client = ::Client.find(params[:id])
         if Client.exists?(email: params[:client][:email]) && client.email != params[:client][:email]
           {error: 'Client with same email already exists'}
+        elsif !params[:client][:company_ids].present?
+          {error: 'Client should be assigned to at least one company', message: nil }
         else
           if client.present?
             if params[:client][:company_ids].present?

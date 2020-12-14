@@ -246,6 +246,9 @@ class Invoice < ApplicationRecord
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     invoices = params[:search].present? ? self.search(params[:search]).records : self
+    invoices = invoices.joins(:invoice_line_items).where('invoices.status LIKE :single_search OR invoices.invoice_number LIKE
+ :single_search OR invoices.notes LIKE :single_search OR clients.organization_name LIKE :single_search OR invoice_line_items.item_name LIKE :single_search',
+                                                         single_search: "%#{params[:single_search]}%") if params[:single_search].present?
     invoices = invoices.status(params[:type]) if params[:type].present?
     invoices = invoices.client_id(params[:client_id]) if params[:client_id].present?
     invoices = invoices.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?

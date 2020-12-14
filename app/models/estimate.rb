@@ -88,6 +88,9 @@ class Estimate < ApplicationRecord
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
     estimates = params[:search].present? ? self.search(params[:search]).records : self
+    estimates = estimates.joins(:estimate_line_items).where('estimates.status LIKE :single_search OR estimates.estimate_number LIKE
+ :single_search OR estimates.notes LIKE :single_search OR clients.organization_name LIKE :single_search OR invoice_line_items.item_name LIKE :single_search',
+                                                         single_search: "%#{params[:single_search]}%") if params[:single_search].present?
     estimates = estimates.status(params[:type]) if params[:type].present?
     estimates = estimates.client_id(params[:client_id]) if params[:client_id].present?
     estimates = estimates.estimate_number((params[:min_estimate_number].to_i .. params[:max_estimate_number].to_i)) if params[:min_estimate_number].present?
