@@ -189,7 +189,9 @@ class Payment < ActiveRecord::Base
                     .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients as payment_clients ON payment_clients.id = invs.client_id')
 
     payments = params[:search].present? ? @payments.search(params[:search]).records : @payments
-
+    payments = payments.where('payments.payment_method LIKE :single_search OR payments.notes LIKE :single_search OR
+               payments_clients.organization_name  LIKE :single_search OR invs.invoice_number LIKE :single_search',
+                              single_search: "%#{params[:single_search]}%") if params[:single_search].present?
     payments = payments.payment_method(params[:type]) if params[:type].present?
     payments = payments.client_id(params[:client_id]) if params[:client_id].present?
     payments = payments.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
