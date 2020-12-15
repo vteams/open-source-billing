@@ -21,6 +21,7 @@
         <tbody class="table-view-body">
         <% @payments.each do |payment| %>
           <tr class="invoice-card client-card invoice-table-row payments-table-row" data-invoice-url="<%= url_for(payment) %>">
+            <% client = Client.with_deleted.find_by(id: payment.client_id) %>
             <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-payment_id= <%=payment.id %>>
                 <div class="checkbox-item invoice_checkbox">

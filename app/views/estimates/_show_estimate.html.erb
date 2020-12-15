@@ -31,7 +31,7 @@
         <div class="info-left-section">
           <%= render partial: 'invoices/company_contact_info', locals: {company: @estimate.company} %>
           <br>
-          <%= render partial: 'invoices/client_contact_info', locals: {client: @estimate.client} %>
+          <%= render partial: 'invoices/client_contact_info', locals: {client: @client } %>
         </div>
         <div class="info-right-section">
           <%= render 'estimate_summary' %>

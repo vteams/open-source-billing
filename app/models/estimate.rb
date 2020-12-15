@@ -246,8 +246,8 @@ class Estimate < ApplicationRecord
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
-  def estimate_name
-    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue ""
+  def estimate_name client
+    "#{client.first_name.first.camelize}#{client.last_name.first.camelize }" rescue ""
   end
 
   def group_date

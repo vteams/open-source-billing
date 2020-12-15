@@ -30,6 +30,8 @@ class Item < ApplicationRecord
   scope :quantity, -> (quantity) { where(quantity: quantity) }
   scope :item_name, -> (item_name) { where(item_name: item_name) }
   scope :unit_cost, -> (unit_cost) { where(unit_cost: unit_cost) }
+  scope :single_search, -> (single_search) { where('item_name LIKE :single_search OR item_description LIKE
+                           :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :invoice_line_items
@@ -73,6 +75,7 @@ class Item < ApplicationRecord
     # get the items associated with companies
     company_items = company.items
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
+    company_items = company_items.single_search(params[:single_search]) if params[:single_search].present?
     company_items = company_items.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_items = company_items.item_name(params[:item_name]) if params[:item_name].present?
     company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
@@ -88,6 +91,7 @@ class Item < ApplicationRecord
     # get the items associated with account
     account_items = account.items
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
+    account_items = account_items.single_search(params[:single_search]) if params[:single_search].present?
     account_items = account_items.send(mappings[params[:status].to_sym]) if params[:status].present?
     account_items = account_items.item_name(params[:item_name]) if params[:item_name].present?
     account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?

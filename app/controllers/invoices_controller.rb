@@ -142,6 +142,9 @@ class InvoicesController < ApplicationController
     end
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
     respond_to do |format|
+      if @invoice.client.nil?
+        @invoice.client = Client.with_deleted.find_by(id: @invoice.client_id)
+      end
       # check if invoice amount is less then paid amount for (paid, partial, draft partial) invoices.
       if %w(paid partial draft-partial).include?(@invoice.status)
         if Services::InvoiceService.paid_amount_on_update(@invoice, params)

@@ -23,22 +23,23 @@
         <tbody class="table-view-body">
         <% @invoices.each do |invoice| %>
           <tr class="invoice-card invoice-table-row" data-invoice-url="<%= url_for(invoice) %>">
+          <% client = Client.with_deleted.find_by(id: invoice.client_id) %>
             <td class="td-checkbox checkbox-item invoice-row">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align invoice-id-holder" data-invoice_id= <%=invoice.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "invoice_ids[]", invoice.id, false, :id => "invoice_#{invoice.id}", class: "filled-in checked-invoice f-l" %>
                   <label for="<%= "invoice_#{invoice.id}" %>"></label>
-                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= invoice.unscoped_client.client_name rescue 'n/a' %></div>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= client.client_name rescue 'n/a' %></div>
                 </div>
               </div>
             </td>
             <td>
-              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %>
+              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %>
               <% if invoice.is_recurring_invoice? %>
                 <div class="recurring-tag">RECURRING</div>
               <% end %>
               <br>
-              <%= invoice.unscoped_client.full_name rescue 'n/a' %>
+              <%= client.full_name rescue 'n/a' %>
             </td>
             <td><em title="Invoice Date"><%= invoice.invoice_date.present? ? invoice.invoice_date : invoice.created_at.strftime("%Y-%m-%d") %></em><br>
               <%= invoices_due_dates(invoice) %>

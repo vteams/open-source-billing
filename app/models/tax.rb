@@ -28,6 +28,7 @@ class Tax < ApplicationRecord
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :percentage, -> (percentage) { where(percentage: percentage) }
   scope :tax_name, -> (tax_id) { where(id: tax_id) }
+  scope :single_search, -> (single_search) { where('name LIKE :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :invoice_line_items
@@ -58,6 +59,7 @@ class Tax < ApplicationRecord
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
     taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
+    taxes = taxes.single_search(params[:single_search]) if params[:single_search].present?
     taxes = taxes.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
