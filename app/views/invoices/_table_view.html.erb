@@ -35,7 +35,7 @@
               </div>
             </td>
             <td>
-              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((invoice.unscoped_client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %>
+              <em class="inv-number" title="Invoice Number"><%= invoice.formatted_invoice_number %></em>: <%= link_to((client.organization_name rescue 'n/a'),  invoice, remote: true, class: 'invoice_show_link invoice-client') %>
               <% if invoice.is_recurring_invoice? %>
                 <div class="recurring-tag">RECURRING</div>
               <% end %>
