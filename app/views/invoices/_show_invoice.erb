@@ -29,7 +29,7 @@
         <div class="info-left-section">
           <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
           <br>
-          <%= render partial: 'client_contact_info', locals: {client: @invoice.client} %>
+          <%= render partial: 'client_contact_info', locals: {client: @client} %>
         </div>
         <div class="info-right-section">
           <%= render 'invoice_summary' %>

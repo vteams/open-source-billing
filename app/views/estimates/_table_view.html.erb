@@ -21,16 +21,17 @@
         <tbody class="table-view-body">
         <% @estimates.each do |estimate| %>
           <tr class="invoice-card client-card invoice-table-row estimate-table-row" data-invoice-url="<%= url_for(estimate) %>">
+            <% client = Client.with_deleted.find_by(id: estimate.client_id) %>
             <td class="align_center header align_center center-align not-sortable td-checkbox invoice-row checkbox-item">
               <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-estimate_id= <%= estimate.id %>>
                 <div class="checkbox-item invoice_checkbox">
                   <%= check_box_tag "estimate_ids[]", estimate.id, false, :id => "estimate_#{estimate.id}", class: "filled-in checked-invoice" %>
                   <label for="<%= "estimate_#{estimate.id}" %>"></label>
-                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= estimate.estimate_name %></div>
+                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= estimate.estimate_name(client) %></div>
                 </div>
               </div>
             </td>
-            <td><%= estimate.unscoped_client.organization_name rescue '' %><br>
+            <td><%= client.organization_name rescue '' %><br>
               <em class="inv-number" title="Estimate Number"><%= link_to_if !estimate.deleted?, estimate.estimate_number, estimate , remote: true, class: 'invoice_show_link estimate-number'%></em></td>
             <td><%= estimate.estimate_date rescue '' %></td>
             <td>

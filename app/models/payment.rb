@@ -245,7 +245,7 @@ class Payment < ActiveRecord::Base
   end
 
   def unscoped_client
-    Client.unscoped.find self.client_id rescue unscoped_invoice.client
+    ::Client.with_deleted.unscoped.find self.invoice.client_id rescue unscoped_invoice.client
   end
 
   def unscoped_invoice
@@ -262,7 +262,7 @@ class Payment < ActiveRecord::Base
   end
 
   def payment_name
-    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
+    "#{::Client.with_deleted.find_by(id: self.invoice.client_id).first_name.first.camelize}#{::Client.with_deleted.find_by(id: self.invoice.client_id).last_name.first.camelize }" rescue 'NA'
   end
 
   def group_date

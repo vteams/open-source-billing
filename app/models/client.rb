@@ -36,6 +36,8 @@ class Client < ActiveRecord::Base
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :client_id, -> (client_id) { where(id: client_id) }
+  scope :single_search, -> (single_search) { where('first_name LIKE :single_search OR last_name LIKE :single_search OR
+             organization_name LIKE :single_search OR email LIKE :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :estimates
@@ -211,6 +213,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with companies
     company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
+    company_clients = company_clients.single_search(params[:single_search]) if params[:single_search].present?
     company_clients = company_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
     company_clients = company_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
     company_clients = company_clients.created_at(
@@ -224,6 +227,7 @@ class Client < ActiveRecord::Base
     # get the clients associated with accounts
     account_clients = account.clients
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
+    account_clients = account_clients.single_search(params[:single_search]) if params[:single_search].present?
     account_clients = account_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
     account_clients = account_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
     account_clients = account_clients.created_at(
