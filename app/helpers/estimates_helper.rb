@@ -98,7 +98,7 @@ module EstimatesHelper
     notice.html_safe
   end
 
-  def load_clients(action,company_id)
+  def load_estimate_clients(action,company_id)
     account_level = current_user.current_account.clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'account_level'}]}
     clients = action == 'new' && company_id.blank? ? account_level  : Company.find_by_id(company_id).clients.unarchived.map{|c| [c.organization_name, c.id, {type: 'company_level'}]}
     if @recurring_profile.present? && action == 'edit'
@@ -109,13 +109,13 @@ module EstimatesHelper
       clients
     end
     if @estimate.present? && action == 'edit'
-      estimate_client = @estimate.unscoped_client
+      estimate_client = Client.with_deleted.find_by(id: @estimate.client_id)
       clients << [estimate_client.organization_name, estimate_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? estimate_client.id
       clients
     else
       clients
     end
-    clients.first(current_user.client_limit)
+    clients
   end
 
   def load_items(action,company_id, line_item = nil)

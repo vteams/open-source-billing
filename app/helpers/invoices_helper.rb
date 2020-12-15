@@ -217,7 +217,7 @@ module InvoicesHelper
       clients
     end
     if @invoice.present? && action == 'edit'
-      invoice_client = @invoice.unscoped_client
+      invoice_client = Client.with_deleted.find_by(id: @invoice.client_id)
       clients << [invoice_client.organization_name, invoice_client.id, {type: 'company_level'}] unless clients.map{|c| c[1]}.include? invoice_client.id
       clients
     else
