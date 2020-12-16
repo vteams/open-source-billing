@@ -142,6 +142,7 @@ Osb::Application.routes.draw do
         get 'filter_taxes'
         get 'bulk_actions'
         get 'undo_actions'
+        get 'verify_tax_name'
       end
     end
 
@@ -155,6 +156,7 @@ Osb::Application.routes.draw do
         post 'get_last_invoice'
         post 'get_last_estimate'
         get 'undo_actions'
+        get 'verify_email'
       end
       member do
         post :create_password
@@ -201,6 +203,8 @@ Osb::Application.routes.draw do
         post 'load_item_data'
         get 'duplicate_item'
         get 'undo_actions'
+        get 'verify_item_name'
+
       end
     end
 

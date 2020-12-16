@@ -137,6 +137,8 @@ class @Validation
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
+      onfocusin: (element) ->
+        $(element).valid()
       onfocusout: (element) ->
         if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
           $(element).valid()
@@ -148,13 +150,22 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'item[item_name]': required: true
         'item[item_description]': required: true
         'item[unit_cost]': required: true, number: true
         'item[quantity]': required: true, number: true
+        'item[item_name]': required: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
+          'item_id': ->
+            $('.item_id').html()
+          'item_name': ->
+            $('#item_item_name').val()
+          'newItem': ->
+            if ($('.item_form').hasClass('edit_item'))
+              'edit_item'
+        }
+        }
 
       messages:
-        'item[item_name]': required: 'Name cannot be blank'
+        'item[item_name]': required: 'Name cannot be blank', remote: 'Item with same name already exists'
         'item[item_description]': required: 'Description cannot be blank'
         'item[unit_cost]': required: 'Unit cost cannot be blank', number: 'Unit cost must be in numeric'
         'item[quantity]': required: 'Quantity cannot be blank', number: 'Quantity must be in numeric'
@@ -177,11 +188,20 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'tax[name]': required: true
         'tax[percentage]': required: true, number: true
+        'tax[name]': required: true, remote: {url: "/taxes/verify_tax_name", type: "get", dataType: 'json', data: {
+          'tax_id': ->
+            $('.tax_id').html()
+          'tax_name': ->
+            $('#tax_name').val()
+          'newTax': ->
+            if ($('.tax_form').hasClass('edit_tax'))
+              'edit_tax'
+        }
+        }
       messages:
-        'tax[name]': required: 'Name cannot be blank'
         'tax[percentage]': required: 'Percentage cannot be blank', number: 'Percentage must be in numeric'
+        'tax[name]': required: 'Name cannot be blank', remote: 'Tax with same name already exists'
 
 
 
@@ -195,6 +215,8 @@ class @Validation
     ), 'Please enter a valid email address'
 
     $('#newClient').validate
+      onfocusin: (element) ->
+        $(element).valid()
       onfocusout: (element) ->
         if !($("label[for='" + $(element).attr('id') + "']").hasClass('active'))
           $(element).valid()
@@ -209,12 +231,21 @@ class @Validation
         'client[organization_name]': required: true
         'client[first_name]': required: true
         'client[last_name]': required: true
-        'client[email]': required: true, emailRegex: true 
+        'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
+          'client_id': ->
+            $('.client_id').html()
+          'email': ->
+            $('#client_email').val()
+          'newClient': ->
+            if ($('#newClient').hasClass('edit_client'))
+              'edit_client'
+        }
+        }
       messages:
         'client[organization_name]': required: 'Organization name cannot be blank'
         'client[first_name]': required: 'First name cannot be blank'
         'client[last_name]': required: 'Last name cannot be blank'
-        'client[email]': required: 'Email cannot be blank'
+        'client[email]': required: 'Email cannot be blank', remote: "Email already exists"
 
 
 
@@ -249,7 +280,7 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'payment[payment_amount]': required: true, number: true, min: 1
+        'payment[payment_amount]': required: true, number: true, min: 1, lessThanOrEqualToDueAmount: '.paid_full:checked'
       messages:
         'payment[payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount',
         min: 'Amount should be greater than 0'
