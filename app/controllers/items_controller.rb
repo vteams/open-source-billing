@@ -181,6 +181,16 @@ class ItemsController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def verify_item_name
+    items = !params[:newItem].eql?('edit_item') ? Item.pluck(:item_name) :
+              Item.where.not(item_name: Item.find(params[:item_id]).item_name).pluck(:item_name)
+    if items.include?(params[:item_name])
+      render json: false
+    else
+      render json: true
+    end
+  end
+
   private
 
   def get_intimation_message(action_key, item_ids)

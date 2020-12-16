@@ -6627,3 +6627,16 @@ tr.email_templates td{
 .payment_right .field_row  .floating-left input{
   margin-bottom: 5px !important;
 }
+.invoice_tax_id .select-wrapper, .estimate_tax_id .select-wrapper{
+  width: 80% !important;
+}
+.invoice_tax_id .select-wrapper input, .estimate_tax_id .select-wrapper input{
+  width: 100% !important;
+  height: 22px !important;
+}
+#invoice_invoice_tax_amount, #invoice_invoice_tax_amount{
+  width: 80%;
+}
+.new-invoice-holder.invoice-form-container{
+  overflow: visible;
+}
