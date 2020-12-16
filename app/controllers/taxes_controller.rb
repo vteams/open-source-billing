@@ -148,6 +148,16 @@ class TaxesController < ApplicationController
     respond_to { |format| format.js }
   end
 
+  def verify_tax_name
+    taxes = !params[:newTax].eql?('edit_tax') ? Tax.pluck(:name) :
+              Tax.where.not(name: Tax.find(params[:tax_id]).name).pluck(:name)
+    if taxes.include?(params[:tax_name])
+      render json: false
+    else
+      render json: true
+    end
+  end
+
   private
 
   def get_intimation_message(action_key, tax_ids)
