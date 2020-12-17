@@ -1,5 +1,5 @@
 $('body').append("<%= escape_javascript render partial: 'form',  locals: {taxis: @taxis} %>")
-Tax.load_functions()
+//Tax.load_functions()
 elem = $("#tax_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
