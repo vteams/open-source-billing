@@ -188,7 +188,7 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'tax[percentage]': required: true, number: true
+        'tax[percentage]': required: true, number: true, max: 100
         'tax[name]': required: true, remote: {url: "/taxes/verify_tax_name", type: "get", dataType: 'json', data: {
           'tax_id': ->
             $('.tax_id').html()
@@ -200,7 +200,7 @@ class @Validation
         }
         }
       messages:
-        'tax[percentage]': required: 'Percentage cannot be blank', number: 'Percentage must be in numeric'
+        'tax[percentage]': required: 'Percentage cannot be blank', number: 'Percentage must be in numeric', max: 'Tax percentage cannot exceeds to 100%'
         'tax[name]': required: 'Name cannot be blank', remote: 'Tax with same name already exists'
 
 
