@@ -2334,7 +2334,8 @@ h6 {
   line-height: 24px;
   margin-bottom: 12px;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  border-bottom-color: #dadada; }
+  border-bottom-color: #dadada;
+}
 .modal.editableModal .input-field input + label {
   color: #aeaeae; }
 .modal.editableModal .input-field input:focus {
@@ -6845,4 +6846,7 @@ tr.email_templates td{
 .toast-title{
   white-space: normal;
   word-break: break-word;
+}
+label[for="available_credit"]{
+  padding-bottom: 6px;
 }
