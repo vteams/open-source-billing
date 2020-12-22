@@ -288,5 +288,20 @@ class @Validation
       $('#payment_paid_full').on 'change', ->
         $('#payment_payment_amount').valid()
 
+  @recurringFrequencyForm = ->
+    $('.recurring_frequency_form').validate
+      onfocusout: (element) ->
+        $(element).valid()
+      onkeyup: (element) ->
+        $(element).valid()
+      errorClass: 'error invalid-error'
+      errorElement: 'span'
+      rules:
+        'recurring_frequency[title]': required: true
+        'recurring_frequency[number_of_days]': required: true, number: true, min: 0
+      messages:
+        'recurring_frequency[title]': required: 'Title is required'
+        'recurring_frequency[number_of_days]': required: 'Number of days are required', number: 'Please enter only numbers', min: 'Number of days cannot be negative'
+
 
 
