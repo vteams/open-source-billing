@@ -44,10 +44,15 @@ class @Validation
         'company[company_name]': required: true
         'company[contact_name]': required: true
         'company[email]': required: true
+        'company[logo]': accept: 'jpg,jpeg,png'
       messages:
         'company[company_name]': required: 'Company name cannot be blank'
-        'company[contact_name]': required: 'Contact mame cannot be blank'
+        'company[contact_name]': required: 'Contact name cannot be blank'
         'company[email]': required: 'Email cannot be blank'
+        'company[logo]': accept: 'Please upload image in these format only (jpg, jpeg, png).'
+
+      $('.file-path').on 'change', ->
+        $('#company_logo').valid()
 
 
   @RoleSettingForm = ->
@@ -95,6 +100,13 @@ class @Validation
       messages:
         'invoice[client_id]': required: 'Client cannot be blank'
         'invoice[invoice_line_items_attributes][0][item_id]': required: 'Item cannot be blank'
+
+      jQuery.validator.addClassRules
+        cost: min: 0
+      jQuery.validator.addClassRules
+        qtyy: min: 0
+
+      jQuery.validator.messages.min = "Value should not be less than 0"
 
 
 
