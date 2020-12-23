@@ -15,10 +15,10 @@
     <%= f.input :item_description, as: :text, label: false, wrapper: false, input_html: { class: 'description area center-align', rows: 3 } %>
   </td>
   <td>
-    <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align' } %>
+    <%= f.input :item_unit_cost, label: false, wrapper: false, input_html: { class: 'cost center-align cossst' } %>
   </td>
   <td>
-    <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align', value: f.object.item_quantity.to_f } %>
+    <%= f.input :item_quantity, label: false, wrapper: false, input_html: { class: 'qty center-align qtyy', value: f.object.item_quantity.to_f } %>
   </td>
   <td class="center-align tax-class intro invoices-new-false-intro" data-intro="From here you can apply any tax on a line item" data-step="12">
     <%= f.select(:tax_1, options_for_select(load_line_item_taxes1(f.object), selected: f.object.tax_1), {prompt: t('views.taxes.select_tax_1'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax1 inline-select table-select invoice-client-select tax_select'}) %>
