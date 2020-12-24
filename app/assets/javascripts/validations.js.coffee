@@ -40,6 +40,11 @@ class @Validation
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
+      
+      errorPlacement: ($error, $element) ->
+        if ($element.attr('name') == 'company[logo]')
+          $('.file-field').append $error
+
       rules:
         'company[company_name]': required: true
         'company[contact_name]': required: true
