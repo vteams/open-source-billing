@@ -160,116 +160,112 @@ class PaymentsController < ApplicationController
                template: "payments/payment_receipt.html.erb",
                show_as_html: false,
                footer: {
-                   html: {
-                       template: 'payments/_payment_tagline',
-                       layout: "pdf_mode.html.erb"
-                   }
+                 html: {
+                   template: 'payments/_payment_tagline',
+                   layout: "pdf_mode.html.erb"
+                 }
                }
       end
     end
   end
 
   def update_individual_payment
-    paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
-    where_to_redirect = params[:from_invoices] ? invoices_path : payments_path
-    notice = ""
-    alert = ""
-    if paid_invoice_ids.present?
-      notice =  t('views.payments.bulk_payment_recorded_msg', paid_ids: paid_invoice_ids.join(','))
+    @paid_invoice_ids, @unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
+    @where_to_redirect = params[:from_invoices] ? invoices_path : payments_path
+    if @paid_invoice_ids.present?
+      respond_to do |format|
+        format.js
+      end
     end
-    if unpaid_invoice_ids.present?
-      alert = t('views.payments.bulk_payment_failed_msg', unpaid_ids: unpaid_invoice_ids.join(','))
-    end
-    redirect_to(where_to_redirect, :notice => notice , :alert => alert)
   end
 
-  def bulk_actions
-    per = params[:per].present? ? params[:per] : @per_page
-    ids = params[:payment_ids]
-    redirect_to payments_path, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
-    if Payment.is_credit_entry? ids
-      @action = "credit entry"
-      @payments_with_credit = Payment.payments_with_credit ids
-      @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
-    else
-      Payment.delete_multiple(ids)
+    def bulk_actions
+      per = params[:per].present? ? params[:per] : @per_page
+      ids = params[:payment_ids]
+      redirect_to payments_path, notice: t('views.common.demo_restriction_msg') and return if OSB::CONFIG::DEMO_MODE
+      if Payment.is_credit_entry? ids
+        @action = "credit entry"
+        @payments_with_credit = Payment.payments_with_credit ids
+        @non_credit_payments = ids - @payments_with_credit.collect{ |p| p.id.to_s }
+      else
+        Payment.delete_multiple(ids)
+        @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
+        @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
+        @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
+        @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
+
+        #filter invoices by company
+        @payments = filter_by_company(@payments)
+        @action = "deleted"
+        @message = payments_deleted(ids) unless ids.blank?
+      end
+      respond_to do |format|
+        format.html { redirect_to payments_path, notice: t('views.payments.bulk_action_msg', action: @action) }
+        format.js
+        format.json
+      end
+    end
+
+    def payments_history
+      #client = Invoice.find_by_id(params[:id]).unscoped_client
+      #@payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
+      invoice = Invoice.find_by_id params[:id]
+      @payments = invoice.payments
+    end
+
+    def invoice_payments_history
+      client = Invoice.find_by_id(params[:id]).unscoped_client
+      invoice = Invoice.find(params[:id])
+      @payments = Payment.payments_history_for_invoice(invoice).page(params[:page])
+      @payments = @payments.per(@per_page)
+      @invoice = Invoice.find(params[:id])
+    end
+
+    def delete_non_credit_payments
+      Payment.delete_multiple(params[:non_credit_payments])
+      #@payments = Payment.unarchived.page(params[:page]).per(@per_page)
       @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
       @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
       @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
       @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
-
       #filter invoices by company
       @payments = filter_by_company(@payments)
-      @action = "deleted"
-      @message = payments_deleted(ids) unless ids.blank?
+      flash[:notice] = t('views.payments.bulk_deleted_msg')
+      respond_to { |format| format.js }
     end
-    respond_to do |format|
-      format.html { redirect_to payments_path, notice: t('views.payments.bulk_action_msg', action: @action) }
-      format.js
-      format.json
+
+    private
+
+    def set_per_page_session
+      session["#{controller_name}-per_page"] = params[:per] || @per_page || 10
     end
-  end
 
-  def payments_history
-    #client = Invoice.find_by_id(params[:id]).unscoped_client
-    #@payments = Payment.payments_history(client).page(params[:page]).per(@per_page)
-    invoice = Invoice.find_by_id params[:id]
-    @payments = invoice.payments
-  end
+    def sort_column
+      params[:sort] ||= 'created_at'
+      sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
+      sort_col = get_org_name if sort_col == 'clients.organization_name'
+      sort_col
+    end
 
-  def invoice_payments_history
-    client = Invoice.find_by_id(params[:id]).unscoped_client
-    invoice = Invoice.find(params[:id])
-    @payments = Payment.payments_history_for_invoice(invoice).page(params[:page])
-    @payments = @payments.per(@per_page)
-    @invoice = Invoice.find(params[:id])
-  end
+    def sort_direction
+      params[:direction] ||= 'desc'
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    end
 
-  def delete_non_credit_payments
-    Payment.delete_multiple(params[:non_credit_payments])
-    #@payments = Payment.unarchived.page(params[:page]).per(@per_page)
-    @payments = Payment.unarchived.page(params[:page]).per(@per_page).order(sort_column + " " + sort_direction)
-    @payments = @payments.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id') if sort_column == "invoices.invoice_number"
-    @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id') if sort_column == "companies.company_name"
-    @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ') if sort_column == get_org_name
-    #filter invoices by company
-    @payments = filter_by_company(@payments)
-    flash[:notice] = t('views.payments.bulk_deleted_msg')
-    respond_to { |format| format.js }
-  end
-
-  private
-
-  def set_per_page_session
-    session["#{controller_name}-per_page"] = params[:per] || @per_page || 10
-  end
-
-  def sort_column
-    params[:sort] ||= 'created_at'
-    sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
-    sort_col = get_org_name if sort_col == 'clients.organization_name'
-    sort_col
-  end
-
-  def sort_direction
-    params[:direction] ||= 'desc'
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-  def get_org_name
-    org_name = <<-SQL
+    def get_org_name
+      org_name = <<-SQL
       case when payments.invoice_id is null then
         case when ifnull(payments_clients.organization_name, '') = '' then concat(payments_clients.first_name, '', payments_clients.last_name) else payments_clients.organization_name end
       else
         case when ifnull(clients.organization_name, '') = '' then concat(clients.first_name, '', clients.last_name) else clients.organization_name end
       end
-    SQL
-    org_name
-  end
+      SQL
+      org_name
+    end
 
-  private
+    private
 
-  def payment_params
-    params.require(:payment).permit(:client_id, :user,  :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id, :user)
+    def payment_params
+      params.require(:payment).permit(:client_id, :user,  :invoice_id, :notes, :paid_full, :payment_type, :payment_amount, :payment_date, :payment_method, :send_payment_notification, :archive_number, :archived_at, :deleted_at, :credit_applied, :company_id, :user)
+    end
   end
-end

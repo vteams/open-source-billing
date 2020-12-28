@@ -21,7 +21,7 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @client, remote: (true if params[:type].present?), html: { id: 'newClient' } do |f| %>
+    <%= simple_form_for @client, remote: true, html: { id: 'newClient' } do |f| %>
       <div class="modal-body modal-body-balance">
         <div class="info-right-section">
           <div class="row">
