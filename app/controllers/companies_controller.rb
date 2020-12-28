@@ -79,7 +79,8 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(company_params)
-
+        @company_updated = true
+        format.js
         format.html { redirect_to params[:setting_form] == '1' ? settings_path : companies_path,
                                   notice: t('views.companies.updated_msg') }
         format.json { head :no_content }

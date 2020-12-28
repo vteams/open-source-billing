@@ -1,11 +1,11 @@
-<% if @company.present? %>
+<% if @item_updated.eql?(true) %>
   swal({
       icon: "success",
       title: 'Success',
       buttons: false,
       timer: 3000,
-      text: "<%= t('views.companies.create_msg') %>"}).then(function(){
-      window.location = '<%= companies_path %>'
+      text: "<%= t('views.items.item_updated') %>"}).then(function(){
+      window.location = '<%= item_path(@item) %>'
   });
 <% else %>
   swal({
@@ -13,6 +13,6 @@
       title: 'Oops..!',
       buttons: false,
       timer: 3000,
-      text: "<%= @company.errors.full_messages.join('.') %>"
+      text: "<%= @item.errors.full_messages.join('.') %>"
   });
 <% end %>

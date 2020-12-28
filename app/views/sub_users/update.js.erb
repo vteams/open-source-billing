@@ -1,16 +1,19 @@
 <% if @sub_user.errors.present? %>
-  showErrorMsg("<%= @sub_user.errors.full_messages.join('.') %>.");
+  swal({
+      icon: "error",
+      title: "oops..!",
+      buttons: false,
+      timer: 3000,
+      text: "<%= @sub_user.errors.full_messages.join('.') %>",
+      html: true
+});
 <% else %>
-  $('#users').html('<%= escape_javascript render(partial: 'user', collection: @users) %>');
-  initUserListingEvents();
-  $('#user_edit_btn').addClass('disabled').attr('href', 'javascript:;').removeAttr('data-remote');
-  $('#edit_form_popup').modal('close');
-
-  <% if password_has_changed?(params[:user_id], params[:password]) %>
-    <% flash[:notice] = t('views.users.updated_password_msg')%>
-    $(window.location.replace("/users/sign_in"));
-  <% else %>
-    showSuccessMsg("User has been updated successfully.");
-  <% end %>
-
+  swal({
+      icon: "success",
+      title: "Success",
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.users.updated_msg') %>"}).then(function(){
+      window.location = '<%= sub_users_path %>'
+});
 <% end %>

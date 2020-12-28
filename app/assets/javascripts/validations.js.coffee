@@ -268,11 +268,14 @@ class @Validation
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
-      rules:
-        'payments[][payment_amount]': required: true, number: true, min: 1, lessThanOrEqualToDueAmount: '.paid_full:checked'
-      messages:
-        'payments[][payment_amount]': required: 'Amount cannot be blank', number: 'Please enter a valid amount',
-        min: 'Amount should be greater than 0'
+
+      jQuery.validator.addClassRules
+        payment_amount: required: true, number: true, min: 1, lessThanOrEqualToDueAmount: '.paid_full:checked'
+
+      jQuery.validator.messages.required = "Amount cannot be blank"
+      jQuery.validator.messages.number = "Please enter a valid amount"
+      jQuery.validator.messages.min = "Amount should be greater than 0"
+
 
       $('.payment_right').each ->
         parent = $(this)

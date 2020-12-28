@@ -131,9 +131,12 @@ class ItemsController < ApplicationController
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
+        @item_updated = true
+        format.js
         format.html { redirect_to(item_path(@item), :notice => t('views.items.item_updated')) }
         format.json { head :no_content }
       else
+        format.js
         format.html { render :action => "edit" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
       end

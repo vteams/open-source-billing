@@ -138,13 +138,10 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes(client_params)
-        format.html { redirect_to @client, :notice => t('views.clients.updated_msg') }
-        format.json { head :no_content }
-        redirect_to(client_path(@client), :notice => t('views.clients.updated_msg'))
-        return
+        @client_updated = true
+        format.js
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @client.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end

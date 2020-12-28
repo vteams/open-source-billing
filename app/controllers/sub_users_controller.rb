@@ -44,13 +44,7 @@ class SubUsersController < ApplicationController
         rescue => e
           puts  e
         end
-        if params[:setting_form] == '1'
-          @users = User.unscoped
-          #format.js
-          format.html {redirect_to settings_path, notice: t('views.users.saved_msg')}
-        else
-          format.html{redirect_to(params[:setting_form] == '1' ? settings_path : settings_path, notice: t('views.users.saved_msg'))}
-        end
+        format.js
         #return
       else
         format.js {}
@@ -86,6 +80,7 @@ class SubUsersController < ApplicationController
                 {alert: t('views.users.unable_to_save')}
               end
     respond_to do |format|
+      format.js
       format.html {
         if password_has_changed?(params[:user_id], params[:password]) && @successfully_updated.eql?(true)
           redirect_to(new_user_session_path, message)

@@ -20,7 +20,7 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @company, html: { id: 'companyForm', class: 'item_form', multipart: true } do |f| %>
+    <%= simple_form_for @company, html: { id: 'companyForm', class: 'item_form', multipart: true }, remote: true do |f| %>
         <%= hidden_field_tag :select_new, params[:select_new] %>
         <%= hidden_field_tag :setting_form, params[:setting_form] %>
         <div class="modal-body">

@@ -1,0 +1,10 @@
+<% if @tax_updated.eql?(true) %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.taxes.updated_msg') %>"}).then(function(){
+      window.location = '<%= taxes_path %>'
+});
+<%end%>
