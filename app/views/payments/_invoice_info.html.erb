@@ -4,9 +4,9 @@
     <span><%= t('invoice') %>: <small> <%= invoice.invoice_date %> </small></span>
     <span class="text-blue"> <%= t('views.invoices.due') %>: <small> <%= invoice.due_date %></small></span>
   </div>
-  <div class="terms">
-    <span><%= t('views.common.terms') %>:</span> <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
-  </div>
+<!--  <div class="terms">-->
+<!--    <span><%#= t('views.common.terms') %>:</span> <small><%#= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>-->
+<!--  </div>-->
   <div class="paymentInfo">
     <div>
       <span><%= t('views.invoices.invoice_amount') %><em>:</em></span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.unit) %> </strong>
