@@ -14,7 +14,7 @@
                                         :default => "New  #{User.model_name.human}") %>
         </h5>
       </div>
-      <%= simple_form_for(@sub_user, url: '/sub_users', html: { id: 'sub_user_form' }) do |f| %>
+      <%= simple_form_for(@sub_user, url: '/sub_users', html: { id: 'sub_user_form' }, remote: true) do |f| %>
         <div class="modal-body users">
           <div class="row">
             <%= f.submit class: 'btn_large submit_user hidden' %>

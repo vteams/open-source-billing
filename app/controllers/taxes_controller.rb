@@ -88,9 +88,10 @@ class TaxesController < ApplicationController
         format.html { redirect_to @taxis, notice: t('views.taxes.created_msg') }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
-        redirect_to(taxes_path, :notice => new_tax_message) unless params[:quick_create]
-        return
+        # redirect_to(taxes_path, :notice => new_tax_message) unless params[:quick_create]
+        # return
       else
+        format.js
         format.html { render action: "new" }
         format.json { render json: @taxis.errors, status: :unprocessable_entity }
       end
@@ -105,9 +106,12 @@ class TaxesController < ApplicationController
 
     respond_to do |format|
       if @taxis.update_attributes(taxes_params)
+        @tax_updated = true
+        format.js
         format.html { redirect_to taxes_path, notice: t('views.taxes.updated_msg') }
         format.json { head :no_content }
       else
+        format.js
         format.html { render action: "edit" }
         format.json { render json: @taxis.errors, status: :unprocessable_entity }
       end

@@ -1,3 +1,4 @@
+initUserListingEvents();
 <% if @sub_user.errors.present? %>
 swal({
     icon: "error",
@@ -14,11 +15,8 @@ swal({
     buttons: false,
     timer: 3000,
     text: "User created successfully"}).then(function(){
-//    window.location = '<%#= settings_path %>'
+    window.location = '<%= sub_users_path %>'
 
 });
-$('#users_listing').html('<%= escape_javascript render(template: 'sub_users/settings_listing',
-   layout: false, format: :html) %>');
-initUserListingEvents();
-showSuccessMsg('<%= t('views.users.saved_msg') %>')
 <% end %>
+initUserListingEvents();

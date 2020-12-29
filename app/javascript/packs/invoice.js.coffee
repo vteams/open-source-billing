@@ -7,6 +7,7 @@ class window.Invoice
     OsbPlugins.selectUnselectAllCheckboxes()
     updateCurrencyUnitsAndDiscountSelect()
     OsbPlugins.updateMaterializeSelect()
+    setDefaultDiscountValue()
     showClipboard()
 
 
@@ -120,6 +121,15 @@ class window.Invoice
     if elem.parents('tr.fields').next('tr.fields:visible').length == 1
       $('.invoice_grid_fields .add_nested_fields').click()
 
+  setDefaultDiscountValue = ->
+    setTimeout (->
+      $('#discount_type').on 'change', ->
+        $('#invoice_discount_percentage').val ''
+        InvoiceCalculator.updateInvoiceTotal()
+        $('#estimate_discount_percentage').val ''
+        EstimateCalculator.updateEstimateTotal()
+    ),1000
+
   showClipboard = ->
     $('.get_clipboard_url').click ->
       u = $(this).data('url')
@@ -173,7 +183,7 @@ $(document).ready ->
     $('.all-archived-invoices').hide()
     $('#more_archived_invoices').show()
 
-#  $('.select_2').material_select('destroy');
+  #  $('.select_2').material_select('destroy');
   $('.select_2').select2();
   $('.tax_select').select2({
     minimumResultsForSearch: -1,

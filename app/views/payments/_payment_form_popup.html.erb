@@ -2,6 +2,7 @@
   <div class="modal-content">
     <%- model_class = Payment -%>
     <% invoice = payment.invoice %>
+    <% client = Client.with_deleted.find_by(id: invoice.client_id) %>
     <div class="modal-header clearfix text-content">
       <div class="modal-action-btn right">
         <a href="#" onclick="$('.send_submit').click();" title="<%= t('views.common.save') %>" class="modal-action waves-effect"><i class="material-icons">done</i></a>
@@ -9,14 +10,14 @@
           <i class="material-icons close">close</i>
         </a>
       </div>
-      <h5 class="left text-blue"><%= action_name.eql?("enter_payment") ? t('views.dashboard.enter_payment') : 'Refund payment' %>: <span><%= invoice.client.organization_name %></span> </h5>
+      <h5 class="left text-blue"><%= action_name.eql?("enter_payment") ? t('views.dashboard.enter_payment') : 'Refund payment' %>: <span><%= client.organization_name %></span> </h5>
     </div>
     <%= simple_form_for payment, html: { class: 'payment_form form-horizontal' }, remote: true do |f| %>
       <% refund = invoice.payments.refunds.sum('payment_amount') %>
       <% due_refund = invoice.payments.received.sum('payment_amount') + invoice.payments.refunds.sum('payment_amount') %>
       <% received_amount = Payment.invoice_paid_amount(invoice.id) %>
       <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
-      <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
+      <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : client.client_credit %>
       <% client_credit = client_credit.present? ? client_credit : 0 %>
 
       <%= f.input :invoice_id, as: :hidden, input_html: { value: invoice.id } %>

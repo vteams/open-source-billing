@@ -126,6 +126,7 @@ class window.Payment
 jQuery ->
 
   window.creditPayment()
+  $('.payment-select2').select2();
 
   flag = true
   jQuery("#close_popup").on "click", ->

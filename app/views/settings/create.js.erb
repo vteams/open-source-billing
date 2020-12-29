@@ -5,9 +5,14 @@ swal({
 
 })
 <% else %>
-
-<% flash[:notice] = t('views.settings.updated_msg') %>
+  swal({
+      icon: "success",
+      title: 'Success',
+      buttons: false,
+      timer: 3000,
+      text: "<%= t('views.settings.updated_msg') %>"}).then(function(){
+      window.location = '<%= settings_path(params[:locale]) %>'
+  });
 <%# if @language_changed.present? and @language_changed == true  %>
-window.location.href = "<%= settings_path(params[:locale]) %>";
 
 <% end %>

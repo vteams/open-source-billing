@@ -160,27 +160,23 @@ class PaymentsController < ApplicationController
                template: "payments/payment_receipt.html.erb",
                show_as_html: false,
                footer: {
-                   html: {
-                       template: 'payments/_payment_tagline',
-                       layout: "pdf_mode.html.erb"
-                   }
+                 html: {
+                   template: 'payments/_payment_tagline',
+                   layout: "pdf_mode.html.erb"
+                 }
                }
       end
     end
   end
 
   def update_individual_payment
-    paid_invoice_ids, unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
-    where_to_redirect = params[:from_invoices] ? invoices_path : payments_path
-    notice = ""
-    alert = ""
-    if paid_invoice_ids.present?
-      notice =  t('views.payments.bulk_payment_recorded_msg', paid_ids: paid_invoice_ids.join(','))
+    @paid_invoice_ids, @unpaid_invoice_ids= Services::PaymentService.update_payments(params.merge(user: current_user))
+    @where_to_redirect = params[:from_invoices] ? invoices_path : payments_path
+    if @paid_invoice_ids.present?
+      respond_to do |format|
+        format.js
+      end
     end
-    if unpaid_invoice_ids.present?
-      alert = t('views.payments.bulk_payment_failed_msg', unpaid_ids: unpaid_invoice_ids.join(','))
-    end
-    redirect_to(where_to_redirect, :notice => notice , :alert => alert)
   end
 
   def bulk_actions
@@ -245,7 +241,7 @@ class PaymentsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'payments.created_at'
+    params[:sort] ||= 'created_at'
     sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
     sort_col = get_org_name if sort_col == 'clients.organization_name'
     sort_col
