@@ -47,9 +47,9 @@
                                         title: t('helpers.links.delete'), class: ('demo-mode' if OSB::CONFIG::DEMO_MODE) %>
 
                         <% if !company.archived? %>
-                            <a href="javascript:;" class="single_archive"><i class="material-icons">archive</i></a>
+                            <a href="javascript:;" class="single_archive" title="Archive"><i class="material-icons">archive</i></a>
                         <% else %>
-                            <a href="javascript:;" class="single_recover"><i class="material-icons">unarchive</i></a>
+                            <a href="javascript:;" class="single_recover" title="Recover"><i class="material-icons">unarchive</i></a>
                         <% end %>
                   <% end %>
                 </td>
