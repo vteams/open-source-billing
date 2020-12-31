@@ -5981,6 +5981,7 @@ a.select2-search-choice-close::before {
   border-color: #9E9D9E !important;
 }
 .field_row.payment-method{
+  margin-top: 20px;
   margin-bottom: 10px !important;
 }
 #invoice_number_formatModal .modal-content .modal-header .modal-action-btn a{
@@ -6802,7 +6803,7 @@ tr.email_templates td{
 .user-dropdown i{
   font-size: 18px !important;
 }
-#payments_0_payment_amount-error{
+.payment_right .field_row .small_field span{
   display: -webkit-box;
 }
 .company_country > label{
