@@ -474,7 +474,7 @@ function disable_esc(){
         // evt = evt || window.event;
         if (event.keyCode == 27) {
             if ($('.modal').hasClass('open')){
-                res = confirm('Are you sure you want to close?')
+                var res = confirm('Are you sure you want to close?')
             }
             if (res) {
                 $('.modal').modal('close')
