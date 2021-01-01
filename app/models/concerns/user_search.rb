@@ -57,15 +57,15 @@ module UserSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('user_name') or key.eql?('email')
-          query << "users.#{key} like '#{val}%'"
+          query << "users.#{key} like '%#{val}%'"
         end
         if key.eql?('role')
-          query << "(roles.name like '#{val}%')"
+          query << "(roles.name like '%#{val}%')"
         end
 
       end
       query = query.join(" AND ")
-      return joins(:roles).where(query).uniq
+      return joins(:role).where(query).uniq
     end
   end
 
