@@ -550,6 +550,7 @@ function initFilterEvents(ids) {
       $(ids).val('');
       resetRangeSelectors();
       $('#filters_form').submit();
+      $('#reports_form').submit();
     });
     $('#filter_submit_btn').on('click', function (event) {
       $('#filters_form').submit();
