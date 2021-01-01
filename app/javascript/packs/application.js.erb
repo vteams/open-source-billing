@@ -580,6 +580,7 @@ window.initFilterEvents = function(ids){
             resetDropdowns();
             resetRangeSelectors();
             Rails.fire(document.getElementById('filters_form'), 'submit');
+            Rails.fire(document.getElementById('reports_form'), 'submit');
         });
         $('#filter_submit_btn').on('click', function (event) {
             Rails.fire(document.getElementById('filters_form'), 'submit');
