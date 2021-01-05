@@ -21,6 +21,7 @@
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :set_trackstamps_user
+  before_action :set_cache_headers
   def set_trackstamps_user
     Thread.current[:current_user] = current_user
   end
@@ -254,6 +255,12 @@ class ApplicationController < ActionController::Base
     else
       redirect_to(request.referrer || dashboard_path)
     end
+  end
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Mon, 01 Jan 1990 00:00:00 GMT"
   end
 
 end

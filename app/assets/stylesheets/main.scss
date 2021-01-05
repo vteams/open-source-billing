@@ -6886,6 +6886,12 @@ label[for="available_credit"]{
 #invoice_number_formatModal.modal .modal-header .modal-action-btn a{
   margin-top: -6px;
 }
-.invoice-table-row .invoice-card{
+.invoice-table-row .invoice-card {
   overflow: visible;
+}
+.change_password_btn:hover{
+  background: #00ace5;
+}
+.change_password_btn{
+  text-transform: capitalize;
 }
