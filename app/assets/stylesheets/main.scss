@@ -6791,3 +6791,9 @@ tr.email_templates td{
 .user-dropdown i{
   font-size: 18px !important;
 }
+.change_password_btn:hover{
+  background: #00ace5;
+}
+.change_password_btn{
+  text-transform: capitalize;
+}
