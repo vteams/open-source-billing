@@ -4011,10 +4011,13 @@ h6 {
   color: #fff; }
 #login-section .login-container .checkboxsection {
   padding: 12px 0 26px; }
+#login-section .login-container .checkboxsection label.right{
+  line-height: 26px;
+}
 #login-section .login-container .checkboxsection [type="checkbox"] + label {
-  padding-left: 36px; }
+  padding-left: 24px; }
 #login-section .login-container .checkboxsection [type="checkbox"] + label, #login-section .login-container .checkboxsection .forgetpass {
-  line-height: 32px;
+  //line-height: 32px;
   height: 32px;
   font-size: 12px;
   font-weight: 400;
@@ -4024,20 +4027,20 @@ h6 {
   background-color: #fff;
   border-radius: 4px;
   border-width: 1px;
-  height: 29px;
-  width: 28px; }
+  height: 20px;
+  width: 18px; }
 #login-section .login-container .checkboxsection [type="checkbox"].filled-in:checked + label:after {
   border-width: 1px;
-  height: 29px;
-  width: 28px;
+  height: 20px;
+  width: 18px;
   background-color: #cccccc;
   border-color: #cccccc;
   border-radius: 4px; }
 #login-section .login-container .checkboxsection [type="checkbox"].filled-in:checked + label:before {
   top: 0;
-  left: 3px !important;
-  width: 9px;
-  height: 18px; }
+  left: 0px !important;
+  width: 7px;
+  height: 15px; }
 @media only screen and (max-width: 480px) {
   #login-section .login-container .checkboxsection label.right {
     display: block;
@@ -4086,13 +4089,13 @@ h6 {
 #login-section .login-container .btn-login-add {
   background-color: #09b8e2;
   position: fixed;
-  right: -60px;
-  top: 80px;
-  width: 120px;
-  height: 120px; }
+  right: -30px;
+  top: 145px;
+  width: 60px;
+  height: 60px; }
 #login-section .login-container .btn-login-add i.material-icons {
-  line-height: 120px;
-  font-size: 35px; }
+  line-height: 63px;
+  font-size: 25px; }
 @media only screen and (max-width: 767px) {
   #login-section .login-container .btn-login-add {
     width: 50px;
@@ -4146,7 +4149,11 @@ h6 {
   border-color: #5b5b5b;
   box-shadow: none;
   min-height: 50px;
-  border-radius: 4px; }
+  border-radius: 4px;
+  width: 45%;
+  font-size: 14px;
+  padding: 0px !important;
+}
 #login-section.sign-up .login-container .btn-content button:hover, #login-section.sign-up .login-container .btn-content button:focus {
   background: #09b8e2;
   color: #fff;
