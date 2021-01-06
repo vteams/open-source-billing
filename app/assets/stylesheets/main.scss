@@ -6666,3 +6666,38 @@ label[for="available_credit"]{
 .invoice-table-row .invoice-card{
   overflow: visible;
 }
+ul.select2-results li{
+  border-bottom: 1px solid #ebe4e4;
+  margin: 2px;
+}
+.form_select_2 ul.select2-results li{
+  font-size: 12px;
+  color: #333;
+}
+.form_select_2 ul.select2-results li:hover:not(:first-child){
+  background: #09b7e2;
+  color: white;
+}
+ul.select2-results li:hover{
+  background: #09b7e2;
+  color: white;
+}
+.form_select_2 .select2-results .select2-highlighted:not(:first-child){
+  background: #09b7e2 !important;
+}
+.select2-results .select2-highlighted{
+  background: #09b7e2 !important;
+  color: white;
+}
+.form_select_2 .select2-results .select2-highlighted:first-child{
+  background: white !important;
+}
+.form_select_2 ul.select2-results li:first-child{
+  text-align: center;
+  color: #a5a4a4;
+  font-size: 15px;
+}
+.form_select_2 ul.select2-results li:first-child:hover{
+  background: white !important;
+  color: #a5a4a4;
+}
