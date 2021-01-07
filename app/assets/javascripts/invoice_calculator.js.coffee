@@ -46,8 +46,11 @@ class @InvoiceCalculator
     $('#invoice_invoice_total').val total_balance.toFixed(2)
     $('#invoice_total_lbl').text total_balance.toFixed(2)
     $('.invoice_total_strong').html total_balance.toFixed(2)
-    $("#invoice_sub_total_lbl, #invoice_total_lbl, .tax_amount").formatCurrency({symbol: window.currency_symbol})
+    $('#invoice_total_tax').val (tax_amount + invoice_tax_amount).toFixed(2)
+    $('#invoice_total_tax').html (tax_amount + invoice_tax_amount).toFixed(2)
+    $("#invoice_sub_total_lbl, #invoice_total_lbl, .tax_amount, #invoice_total_tax").formatCurrency({symbol: window.currency_symbol})
     $('.invoice_total_strong').formatCurrency({symbol: window.currency_symbol})
+
     conversion_rate = $('#invoice_conversion_rate').val()
     invoice_base_currency_equivalent_total = (total_balance / conversion_rate).toFixed(2)
     $('.invoice_total_base_currency').html invoice_base_currency_equivalent_total

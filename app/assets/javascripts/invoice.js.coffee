@@ -181,6 +181,9 @@ $(document).ready ->
 
   #  $('.select_2').material_select('destroy');
   $('.select_2').select2();
+  $('.form_select_2').select2({
+    dropdownCssClass: "form_select_2"
+  });
   $('.tax_select').select2({
     minimumResultsForSearch: -1,
     dropdownCssClass: "tax-dropdown"

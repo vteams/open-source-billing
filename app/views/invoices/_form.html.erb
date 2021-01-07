@@ -16,7 +16,7 @@
           <% selected_client = @client.present? ? @client.id : f.object.client_id %>
           <%= f.select :client_id, ("<option value='-1'>#{t('views.common.add_new')}</option>".html_safe+options_for_select((load_clients(action_name, invoice.company_id)),
                                                                                                                             selected: selected_client)),
-                       {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select select_2' %>
+                       {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select form_select_2' %>
 
           <div class="terms hidden">
             <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the payment terms' data-step= '6'><%= t('views.invoices.terms') %>: </span>
@@ -155,6 +155,10 @@
                       label: t('views.common.tax'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
                       input_html: { class: 'discount_select inline-select small-select currency-select'} %>
           <div class="new-invoice-footer-row taxes_total"></div>
+          <strong class="invoice-total-title bottom"><%= t('views.common.invoice_tax') %></strong>
+          <% if invoice.persisted? %>
+            <strong class="invoice-total-title bottom"><%= t('views.common.total_amount_paid') %></strong>
+          <% end %>
           <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
         </div>
         <div class="invoice-total-right">
@@ -175,6 +179,17 @@
           <%= f.input :tax_amount, as: :hidden, label: false, wrapper: false %>
           <%= f.input :invoice_total, as: :hidden, label: false, wrapper: false %>
           <div class="new-invoice-footer-row taxes_total values"></div>
+          <strong class="invoice-total-title bottom">
+            <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
+            <span><%= label_tag '', '0', :id => 'invoice_total_tax', :class => 'net_total_value' %></span>
+          </strong>
+
+          <% if invoice.persisted? %>
+            <strong class="invoice-total-title bottom">
+              <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
+              <span><%= label_tag '', number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  invoice.currency.code ), :id => '', :class => 'net_total_value' %></span>
+            </strong>
+          <% end %>
           <strong class="invoice-total-title bottom">
             <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
             <span><%= label_tag '', '0', :id => 'invoice_total_lbl', :class => 'net_total_value' %></span>
