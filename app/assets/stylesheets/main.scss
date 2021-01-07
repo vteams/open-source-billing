@@ -218,6 +218,9 @@ h6 {
   display: inline-block;
   padding-top: 10px;
   padding-right: 28px; }
+#header .header-right .right a.help-search{
+  top: 5px;
+}
 #header .header-right .right a i {
   display: block; }
 @media only screen and (max-width: 767px) {
@@ -6892,6 +6895,46 @@ label[for="available_credit"]{
 .change_password_btn:hover{
   background: #00ace5;
 }
-.change_password_btn{
+.change_password_btn {
   text-transform: capitalize;
+}
+ul.select2-results li{
+  border-bottom: 1px solid #ebe4e4;
+  margin: 2px;
+}
+.form_select_2 ul.select2-results li{
+  font-size: 12px;
+  color: #333;
+}
+.form_select_2 ul.select2-results li:hover:not(:first-child){
+  background: #09b7e2;
+  color: white;
+}
+ul.select2-results li:hover{
+  background: #09b7e2;
+  color: white;
+}
+.form_select_2 .select2-results .select2-highlighted:not(:first-child){
+  background: #09b7e2 !important;
+}
+.select2-results .select2-highlighted{
+  background: #09b7e2 !important;
+  color: white;
+}
+.form_select_2 .select2-results .select2-highlighted:first-child{
+  background: white !important;
+}
+.form_select_2 ul.select2-results li:first-child{
+  text-align: center;
+  color: #a5a4a4;
+  font-size: 15px;
+}
+.form_select_2 ul.select2-results li:first-child:hover{
+  background: white !important;
+  color: #a5a4a4;
+}
+@media only screen and (max-width: 1472px){
+  #main-content .invoice-box #bulk_action_form div.invoice_link_right{
+    width: 19%;
+  }
 }
