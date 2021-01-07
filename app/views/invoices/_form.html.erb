@@ -126,6 +126,7 @@
                       label: t('views.common.tax'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
                       input_html: { class: 'discount_select inline-select small-select currency-select'} %>
           <div class="new-invoice-footer-row taxes_total"></div>
+          <strong class="invoice-total-title bottom"><%= t('views.common.invoice_tax') %></strong>
           <% if invoice.persisted? %>
             <strong class="invoice-total-title bottom"><%= t('views.common.total_amount_paid') %></strong>
           <% end %>
@@ -149,6 +150,11 @@
           <%= f.input :tax_amount, as: :hidden, label: false, wrapper: false %>
           <%= f.input :invoice_total, as: :hidden, label: false, wrapper: false %>
           <div class="new-invoice-footer-row taxes_total values"></div>
+          <strong class="invoice-total-title bottom">
+            <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
+            <span><%= label_tag '', '0', :id => 'invoice_total_tax', :class => 'net_total_value' %></span>
+          </strong>
+
           <% if invoice.persisted? %>
             <strong class="invoice-total-title bottom">
               <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>

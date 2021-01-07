@@ -218,6 +218,9 @@ h6 {
   display: inline-block;
   padding-top: 10px;
   padding-right: 28px; }
+#header .header-right .right a.help-search{
+  top: 5px;
+}
 #header .header-right .right a i {
   display: block; }
 @media only screen and (max-width: 767px) {
@@ -6700,4 +6703,9 @@ ul.select2-results li:hover{
 .form_select_2 ul.select2-results li:first-child:hover{
   background: white !important;
   color: #a5a4a4;
+}
+@media only screen and (max-width: 1472px){
+  #main-content .invoice-box #bulk_action_form div.invoice_link_right{
+    width: 19%;
+  }
 }

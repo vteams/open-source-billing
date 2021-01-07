@@ -113,6 +113,7 @@ en:
       payment_date: "Payment Date"
       total: "Total"
       total_amount_paid: "Paid"
+      invoice_tax: "Invoice Tax"
       status: "Status"
       invoice_type: "Invoice Type"
       archive: "Archive"
