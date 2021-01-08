@@ -96,7 +96,7 @@
           </div>
           <div class="table-row">
             <span class="text-blue"><strong><%= t('views.invoices.amount_paid') %></strong></span>
-            <span class="text-blue"><strong>-<%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
+            <span class="text-blue"><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
           </div>
           <div class="table-row">
             <span class="text-red"><strong><%= t('views.invoices.amount_refund') %></strong></span>
