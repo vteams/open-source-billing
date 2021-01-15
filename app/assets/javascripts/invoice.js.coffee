@@ -33,6 +33,7 @@ class @Invoice
         elem = $(this)
         if elem.val() == ''
           clearLineTotal elem
+          InvoiceCalculator.updateInvoiceTotal()
           false
         else
           $.ajax load_item,
