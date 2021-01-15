@@ -247,7 +247,7 @@ class PaymentsController < ApplicationController
     sort_col
   end
   def sort_column
-    params[:sort] ||= 'created_at'
+    params[:sort] ||= 'payments.created_at'
     sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
     sort_col = get_org_name if sort_col == 'clients.organization_name'
     sort_col
