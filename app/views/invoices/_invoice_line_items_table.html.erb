@@ -26,10 +26,10 @@
         <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
         <td class="center-align"><%= item.item_quantity.to_f %></td>
         <% if invoice.has_tax_one? %>
-          <td class="center-align"><%= "#{item.tax1.percentage}%" if item.tax1.present? %></td>
+          <td class="center-align"><%= "#{Tax.with_deleted.find(item.tax_1).percentage}%" if item.tax_1.present? %></td>
         <% end %>
         <% if invoice.has_tax_two? %>
-          <td class="center-align"><%= "#{item.tax2.percentage}%" if item.tax2.present?  %></td>
+          <td class="center-align"><%= "#{Tax.with_deleted.find(item.tax_2).percentage}%" if item.tax_2.present?  %></td>
         <% end %>
         <td class="align_right"><%= number_to_currency(item.item_total_amount, unit: invoice.currency.code) %></td>
       </tr>
