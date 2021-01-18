@@ -551,6 +551,13 @@ h6 {
   transition: all 0.5s;
   box-shadow: none;
   height: calc(100vh - 120px); }
+
+@media only screen and (max-height: 645px) {
+  #side-nav{
+    height: calc(110vh - 120px) !important;
+  }
+}
+
 #side-nav:after {
   position: absolute;
   left: 0;
