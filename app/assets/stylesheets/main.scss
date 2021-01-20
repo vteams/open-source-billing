@@ -6884,6 +6884,7 @@ label[for="available_credit"]{
 }
 .change_password_btn:hover{
   background: #00ace5;
+  color: #fff;
 }
 .change_password_btn {
   text-transform: capitalize;
@@ -6928,6 +6929,17 @@ ul.select2-results li:hover{
     width: 19%;
   }
 }
-#payment_modal .modal-content .modal-footer .row .text-info{
+#payment_modal .modal-content .modal-footer .row .text-info {
   padding-left: 0px;
+}
+.change_password_btn{
+  background: none;
+  text-transform: capitalize;
+  color: #b0b0b0;
+  border: 1px solid #5b5b5b;
+  box-shadow: none;
+  border-radius: 4px;
+  width: 45%;
+  font-size: 14px;
+  padding: 0px !important;
 }
