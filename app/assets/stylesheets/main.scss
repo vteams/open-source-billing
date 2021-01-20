@@ -4025,7 +4025,7 @@ h6 {
   line-height: 26px;
 }
 #login-section .login-container .checkboxsection [type="checkbox"] + label {
-  padding-left: 24px; }
+  padding-left: 20px; }
 #login-section .login-container .checkboxsection [type="checkbox"] + label, #login-section .login-container .checkboxsection .forgetpass {
   //line-height: 32px;
   height: 32px;
@@ -4037,20 +4037,24 @@ h6 {
   background-color: #fff;
   border-radius: 4px;
   border-width: 1px;
-  height: 20px;
-  width: 18px; }
+  height: 14px;
+  width: 14px;
+  top: 5px;
+}
 #login-section .login-container .checkboxsection [type="checkbox"].filled-in:checked + label:after {
   border-width: 1px;
-  height: 20px;
-  width: 18px;
+  height: 14px;
+  width: 14px;
   background-color: #cccccc;
   border-color: #cccccc;
-  border-radius: 4px; }
+  border-radius: 4px;
+  top: 5px;
+}
 #login-section .login-container .checkboxsection [type="checkbox"].filled-in:checked + label:before {
-  top: 0;
+  top: 5px;
   left: 0px !important;
-  width: 7px;
-  height: 15px; }
+  width: 5px;
+  height: 10px; }
 @media only screen and (max-width: 480px) {
   #login-section .login-container .checkboxsection label.right {
     display: block;
@@ -6923,4 +6927,7 @@ ul.select2-results li:hover{
   #main-content .invoice-box #bulk_action_form div.invoice_link_right{
     width: 19%;
   }
+}
+#payment_modal .modal-content .modal-footer .row .text-info{
+  padding-left: 0px;
 }
