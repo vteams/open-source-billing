@@ -12,15 +12,15 @@
           <%#= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
           <div class='input-field'>
             <%= f.password_field :current_password, required: '' %>
-            <label for='current_password'>Current password</label>
+            <label for='user_current_password'>Current password</label>
           </div>
           <div class='input-field'>
             <%= f.password_field :password %>
-            <label for='password'>New Password</label>
+            <label for='user_password'>New Password</label>
           </div>
           <div class='input-field'>
-            <%= f.password_field :password_confirmation %>applica
-            <label for='password_confirmation'>Confirmation</label>
+            <%= f.password_field :password_confirmation %>
+            <label for='user_password_confirmation'>Confirmation</label>
           </div>
           <div class="btn-content">
             <%= f.submit "Change password", :class => "btn_large submit col s4 btn waves-effect change_password_btn" %>
