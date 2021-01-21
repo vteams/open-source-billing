@@ -74,11 +74,6 @@ class TaxesController < ApplicationController
   # POST /taxes
   # POST /taxes.json
   def create
-    if Tax.is_exits?(params[:tax][:name])
-      @tax_exists = true
-      redirect_to(taxes_path, :alert => t('views.taxes.duplicate_name')) unless params[:quick_create]
-      return
-    end
     @taxis = Tax.new(taxes_params)
     authorize @taxis
 

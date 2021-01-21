@@ -96,12 +96,6 @@ class ClientsController < ApplicationController
   # POST /clients
   # POST /clients.json
   def create
-    if Client.is_exists?(params[:client][:email], get_association_obj)
-      @client_exists = true
-      redirect_to(clients_path, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
-      return
-    end
-
     @client = Client.new(client_params)
     @client.skip_password_validation = true
     authorize @client
@@ -197,7 +191,7 @@ class ClientsController < ApplicationController
   def verify_email
     client_emails = !params[:newClient].eql?('edit_client') ? Client.pluck(:email) :
                         Client.where.not(email: Client.find(params[:client_id]).email).pluck(:email)
-    if client_emails.include?(params[:email])
+    if client_emails.map(&:downcase).include?(params[:email].downcase)
       render json: false
     else
       render json: true
