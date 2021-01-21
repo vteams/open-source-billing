@@ -180,6 +180,10 @@ class @Validation
 
 
   @TaxForm = ->
+    jQuery.validator.addMethod 'dollarsscents', ((value, element) ->
+      @optional(element) or /^\d{0,4}(\.\d{0,2})?$/i.test(value)
+    ), 'Only two decimal places are allowed'
+
     $('.tax_form').submit ->
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
@@ -195,7 +199,7 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'tax[percentage]': required: true, number: true, max: 100
+        'tax[percentage]': required: true, number: true, max: 100, dollarsscents: true
         'tax[name]': required: true, remote: {url: "/taxes/verify_tax_name", type: "get", dataType: 'json', data: {
           'tax_id': ->
             $('.tax_id').html()
