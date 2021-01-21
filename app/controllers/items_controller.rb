@@ -97,11 +97,6 @@ class ItemsController < ApplicationController
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
-    if Item.is_exists?(params[:item][:item_name], get_association_obj)
-      @item_exists = true
-      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:position].present?
-      return
-    end
     @item = Item.new(item_params)
     authorize @item
     options = params[:position].present? ? params.merge(company_ids: company_id) : params
