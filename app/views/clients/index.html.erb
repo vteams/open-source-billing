@@ -21,7 +21,7 @@
         <div class="search_result_container">
           <%= render 'clients_container' %>
         </div>
-      <div style="margin-top: 10px" class="right">
+      <div style="margin-top: 10px" class="right <%= @clients.count > 7 ? 'invoice_link_right' : '' %>">
         <%= link_to ' + New Client ', new_client_path, remote: true, class: "#{(@clients.count > 0 && @clients.total_count < 9) || @clients.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
       </div>
 
