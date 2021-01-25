@@ -6817,7 +6817,37 @@ tr.email_templates td{
   color: #062942;
 }
 .tiles-container{
+<<<<<<< HEAD
   display: inline-table;
+=======
+  display: flex;
+  flex-wrap: wrap;
+}
+.profile-image .dropdown-content.z-depth-4 li a i{
+  font-size: 16px;
+  vertical-align: bottom;
+  display: inline-block;
+}
+.profile-image .dropdown-content.z-depth-4 li a{
+  font-size: 15px;
+}
+.profile-image .dropdown-content.z-depth-4{
+  top: 49px !important;
+  left: 20px !important;
+}
+.user_menu ul li:first-child i{
+  line-height: 1;
+  display: inline-block;
+  margin: 0 26px 0 11px;
+  height: unset;
+}
+.user-dropdown{
+  right: -140px;
+  top: -60px;
+}
+.user-dropdown i{
+  font-size: 18px !important;
+>>>>>>> permenant_deletion
 }
 .payment_right .field_row .small_field span{
   display: -webkit-box;
@@ -6953,7 +6983,7 @@ ul.select2-results li:hover{
 #payment_modal .modal-content .modal-footer .row .text-info {
   padding-left: 0px;
 }
-.change_password_btn {
+.change_password_btn{
   background: none;
   text-transform: capitalize;
   color: #b0b0b0;
@@ -6964,7 +6994,7 @@ ul.select2-results li:hover{
   font-size: 14px;
   padding: 0px !important;
 }
- .select-2-asterik{
+.select-2-asterik{
   position: absolute;
   color: red;
 }

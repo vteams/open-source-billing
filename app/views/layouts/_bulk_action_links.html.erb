@@ -9,6 +9,9 @@
                 <a href="javascript:;" class="recover_deleted" title="<%= t('views.common.recover_deleted') %>">
                   <i class="material-icons">unarchive</i>
                 </a>
+                <a href="javascript:;" class="permanent_deleted" title="<%= t('views.common.delete_permanently') %>">
+                  <i class="material-icons">delete</i>
+                </a>
             <% elsif @status.eql?('archived') %>
                 <a href="javascript:;" class="recover_archived" title="<%= t('views.common.recover_archived') %>">
                   <i class="material-icons">unarchive</i>

@@ -82,8 +82,8 @@
                 <div class="invoice-input-holder">
                   <%= rs.input :frequency, collection:
 
-                      (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
-                          [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
+                    (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
+                      [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
                                input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                 </div>

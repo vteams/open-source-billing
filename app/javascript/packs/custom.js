@@ -318,6 +318,9 @@ window.initBulkActionCheckboxes = function() {
   $(".header.action-btn-group a.recover_deleted").on('click', function(){
     $("input.top_links.recover_deleted").click();
   });
+  $(".header.action-btn-group a.permanent_deleted").on('click', function(){
+    $("input.top_links.permanent_deleted").click();
+  });
   $(".header.action-btn-group a.recover_archived").on('click', function(){
     $("input.top_links.recover_archived").click();
   });

@@ -227,6 +227,7 @@ en:
       pdf: "PDF"
       select_estimate_currency: "Select currency..."
       selected: "Selected"
+      delete_permanently: "Delete permanently"
       recover_deleted: "Recover deleted"
       recover_archived: "Recover archived"
       delete_archived: "Delete archived"

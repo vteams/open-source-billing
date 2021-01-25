@@ -32,7 +32,10 @@ class InvoiceLineItem < ApplicationRecord
   acts_as_archival
   acts_as_paranoid
 
-   after_destroy :recalculate_invoice_total
+
+  attr_accessor :tax_one, :tax_two
+
+  after_destroy :recalculate_invoice_total
 
   attr_accessor :tax_one, :tax_two
 

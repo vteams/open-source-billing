@@ -319,7 +319,6 @@ class window.Validation
       $('#payment_paid_full').on 'change', ->
         $('#payment_payment_amount').valid()
 
-
   @recurringFrequencyForm = ->
     $('.recurring_frequency_form').validate
       onfocusout: (element) ->
