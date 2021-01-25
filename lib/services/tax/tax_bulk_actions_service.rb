@@ -23,16 +23,21 @@ module Services
     attr_reader :taxes, :tax_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted destroy_archived)
+      actions_list = %w(archive destroy recover_archived recover_deleted destroy_archived permanent_deleted)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @tax_ids = @options[:tax_ids]
-      @taxes = ::Tax.multiple(@tax_ids)
+      @taxes = ::Tax.with_deleted.multiple(@tax_ids)
       @current_user = @options[:current_user]
     end
 
     def perform
       method(@action_to_perform).call.merge({tax_ids: @tax_ids, action_to_perform: @action_to_perform})
+    end
+
+    def permanent_deleted
+      @taxes.map(&:really_destroy!)
+      {action: 'deleted permanently', taxes: get_taxes('only_deleted')}
     end
 
     def destroy_archived
