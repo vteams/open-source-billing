@@ -49,26 +49,6 @@ class window.Payment
     $("#payment_payment_amount").on "blur keyup", ->
       hidePopover($('#payment_payment_amount'))
 
-    jQuery('.payment_form.form-horizontal').submit ->
-      pay_amount = parseFloat(jQuery("#payment_payment_amount").val())
-      pay_method = jQuery("#payment_payment_method").val()
-      rem_amount = parseFloat(jQuery(".rem_payment_amount").attr("value"))
-      rem_credit = parseFloat(jQuery("#rem_credit").attr("value"))
-      if jQuery("#payment_payment_amount").val() is ""
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.value_greater_than_zero_msg"))
-        flag = false
-      else if pay_amount <= 0
-        applyPopover(jQuery("#payments_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.negative_value_not_allowed_msg"))
-        flag = false
-      else if pay_amount > rem_amount
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.exceeded_payment_amount_msg"))
-        flag = false
-      else if pay_amount > rem_credit and rem_credit
-        applyPopover(jQuery("#payment_payment_amount"), "rightbottom", "leftMiddle", I18n.t("views.payments.credit_exceeded_msg"))
-        flag = false
-      else
-        flag = true
-      flag
 
 
 

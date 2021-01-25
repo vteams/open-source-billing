@@ -6953,7 +6953,7 @@ ul.select2-results li:hover{
 #payment_modal .modal-content .modal-footer .row .text-info {
   padding-left: 0px;
 }
-.change_password_btn{
+.change_password_btn {
   background: none;
   text-transform: capitalize;
   color: #b0b0b0;
@@ -6963,4 +6963,8 @@ ul.select2-results li:hover{
   width: 45%;
   font-size: 14px;
   padding: 0px !important;
+}
+ .select-2-asterik{
+  position: absolute;
+  color: red;
 }

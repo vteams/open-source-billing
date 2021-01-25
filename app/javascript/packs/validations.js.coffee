@@ -40,10 +40,6 @@ class window.Validation
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
-      
-      errorPlacement: ($error, $element) ->
-        if ($element.attr('name') == 'company[logo]')
-          $('.file-field').append $error
 
       rules:
         'company[company_name]': required: true
@@ -56,8 +52,13 @@ class window.Validation
         'company[email]': required: 'Email cannot be blank'
         'company[logo]': accept: 'Please upload image in these format only (jpg, jpeg, png).'
 
+      errorPlacement: ($error, $element) ->
+        if ($element.attr('name') == 'company[logo]')
+          $('.file-field').append $error
+
       $('.file-path').on 'change', ->
         $('#company_logo').valid()
+
 
 
   @RoleSettingForm = ->
