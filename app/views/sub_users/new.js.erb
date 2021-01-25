@@ -8,6 +8,9 @@ $('#new_user_role_id').material_select('destroy');
 $('#new_user_role_id').select2({
     placeholder: 'Role'
 })
+
+$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
+
 $('.companies-list > label > input').addClass( "filled-in select_company_checkbox" );
 $('.companies-list > label > input').attr('name', 'company_ids[]');
 $('#user_have_all_companies_access_true').attr('name', 'have_all_companies_access');

@@ -52,12 +52,13 @@ class @Validation
         'company[email]': required: 'Email cannot be blank'
         'company[logo]': accept: 'Please upload image in these format only (jpg, jpeg, png).'
 
-      $('.file-path').on 'change', ->
-        $('#company_logo').valid()
-
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'company[logo]')
           $('.file-field').append $error
+
+      $('.file-path').on 'change', ->
+        $('#company_logo').valid()
+
 
 
   @RoleSettingForm = ->

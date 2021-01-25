@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
+  validates :user_name, :email, :encrypted_password, :role_id, presence: true
   after_create :set_default_settings, :set_introduction
 
   mount_uploader :avatar, ImageUploader
