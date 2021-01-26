@@ -319,7 +319,17 @@ window.initBulkActionCheckboxes = function() {
     $("input.top_links.recover_deleted").click();
   });
   $(".header.action-btn-group a.permanent_deleted").on('click', function(){
-    $("input.top_links.permanent_deleted").click();
+      swal({
+          title: "Are you sure?",
+          text: "This will also remove the Invoice record from reports",
+          icon: 'warning',
+          buttons: [true, true],
+
+      }).then(function (confirmed){
+          if (confirmed){
+              $("input.top_links.permanent_deleted").click();
+          }
+      })
   });
   $(".header.action-btn-group a.recover_archived").on('click', function(){
     $("input.top_links.recover_archived").click();

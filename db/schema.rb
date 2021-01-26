@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200911131456) do
+ActiveRecord::Schema.define(version: 20210126104534) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -645,6 +645,7 @@ ActiveRecord::Schema.define(version: 20200911131456) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "for_client",                default: false
+    t.boolean  "deletable",                 default: true
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree

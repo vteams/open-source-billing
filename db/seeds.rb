@@ -263,7 +263,9 @@ end
 
 Role.delete_all
 role = ROLE
-Role.create name: role
+Role.create name: role, deletable: false
+client_role = CLIENT_ROLE
+Role.create name: client_role, for_client: true, deletable: false
 
 Permission.delete_all
 Permission.create(role_id: Role.first.id, entity_type: "Invoice", can_read: true, can_update: true, can_delete: true, can_create: true)
