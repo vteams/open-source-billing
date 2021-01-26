@@ -1,6 +1,5 @@
 <% if @status == 'deleted' %>
     <%= submit_tag t('views.common.recover'), name: "recover_deleted", class: "top_links recover_deleted hidden" %>
-    <%= submit_tag t('views.common.recover'), name: "permanent_deleted", class: "top_links permanent_deleted hidden" %>
 <% elsif @status == 'archived' %>
     <%= submit_tag t('views.common.recover'), name: "recover_archived", class: "top_links recover_archived hidden" %>
     <%= submit_tag t('views.common.delete'), name: "destroy_archived", class: "top_links destroy_archived hidden" %>
