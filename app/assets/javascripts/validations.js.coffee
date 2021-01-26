@@ -10,7 +10,7 @@ class @Validation
       errorElement: 'span'
       ignore: 'input[type=hidden]'
       rules:
-        user_name: required: true
+        user_name: required: true, alphanumeric: true
         email: required: true
         role_id: required: true
         password: required: true
@@ -42,8 +42,8 @@ class @Validation
       errorElement: 'span'
 
       rules:
-        'company[company_name]': required: true
-        'company[contact_name]': required: true
+        'company[company_name]': required: true, alphanumeric: true
+        'company[contact_name]': required: true, alphanumeric: true
         'company[email]': required: true
         'company[logo]': accept: 'jpg,jpeg,png'
       messages:
@@ -70,7 +70,7 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'role[name]': required: true
+        'role[name]': required: true, alphanumeric: true
       messages:
         'role[name]': required: 'Name cannot be blank'
 
@@ -168,10 +168,10 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'item[item_description]': required: true
+        'item[item_description]': required: true, alphanumeric: true
         'item[unit_cost]': required: true, number: true
         'item[quantity]': required: true, number: true
-        'item[item_name]': required: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
+        'item[item_name]': required: true, alphanumeric: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
           'item_id': ->
             $('.item_id').html()
           'item_name': ->
@@ -211,7 +211,7 @@ class @Validation
       errorElement: 'span'
       rules:
         'tax[percentage]': required: true, number: true, max: 100, dollarsscents: true
-        'tax[name]': required: true, remote: {url: "/taxes/verify_tax_name", type: "get", dataType: 'json', data: {
+        'tax[name]': required: true, alphanumeric: true, remote: {url: "/taxes/verify_tax_name", type: "get", dataType: 'json', data: {
           'tax_id': ->
             $('.tax_id').html()
           'tax_name': ->
@@ -250,9 +250,9 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'client[organization_name]': required: true
-        'client[first_name]': required: true
-        'client[last_name]': required: true
+        'client[organization_name]': required: true, alphanumeric: true
+        'client[first_name]': required: true, alphanumeric: true
+        'client[last_name]': required: true, alphanumeric: true
         'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
           'client_id': ->
             $('.client_id').html()
