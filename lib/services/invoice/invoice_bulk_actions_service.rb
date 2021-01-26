@@ -23,16 +23,21 @@ module Services
     attr_reader :invoices, :invoice_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted send payment destroy_archived)
+      actions_list = %w(archive destroy recover_archived recover_deleted send payment destroy_archived permanent_deleted)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @invoice_ids = @options[:invoice_ids]
-      @invoices = ::Invoice.multiple(@invoice_ids)
+      @invoices = ::Invoice.with_deleted.multiple(@invoice_ids)
       @current_user = @options[:current_user]
     end
 
     def perform
       method(@action_to_perform == 'send' ? 'send_invoices' : @action_to_perform).call.merge({invoice_ids: @invoice_ids, action_to_perform: @action_to_perform})
+    end
+
+    def permanent_deleted
+      @invoices.map(&:really_destroy!)
+      {action: 'deleted permanently', invoices: get_invoices('only_deleted')}
     end
 
     def archive
