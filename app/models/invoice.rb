@@ -69,7 +69,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :tax
 
   has_many :invoice_line_items, :dependent => :destroy
-  has_many :payments
+  has_many :payments, :dependent => :destroy
   has_many :sent_emails, :as => :notification
   has_many :credit_payments, :dependent => :destroy
   has_many :invoice_tasks, :dependent => :destroy
