@@ -35,17 +35,8 @@
           <a href="javascript:;" class="<%= OSB::CONFIG::DEMO_MODE && controller_name.eql?('companies') ? 'demo-mode' : 'delete' %>" title="<%= t('helpers.links.delete') %>">
             <i class="material-icons">delete</i>
           </a>
-          <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown13' data-alignment="right" data-beloworigin="true">
-            <i class="material-icons">more_vert</i>
-          </a>
           <!-- Dropdown Structure -->
-          <ul id='dropdown13' class='dropdown-content z-depth-4'>
-            <li>
-              <a href="javascript:;" class="archive"><i class="material-icons">archive</i>
-                <%= t('views.common.send_to_archive') %>
-              </a>
-            </li>
-          </ul>
+          <a href="javascript:;" class="archive" title="<%= t('views.common.archive') %>"><i class="material-icons">archive</i></a>
         <% end %>
       <% end %>
     </div>
