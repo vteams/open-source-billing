@@ -16,6 +16,7 @@ class @Validation
         password: required: true
         password_confirmation:
           required: true
+        avatar: accept: 'jpg,jpeg,png'
 
       messages:
         user_name: required: 'Name cannot be blank'
@@ -23,6 +24,14 @@ class @Validation
         role_id: required: 'Role cannot be blank'
         password: required: 'Password cannot be blank'
         password_confirmation: required: 'Password confirmation cannot be blank'
+        avatar: accept: 'Please upload image in these format only (jpg, jpeg, png).'
+
+      errorPlacement: ($error, $element) ->
+        if ($element.attr('name') == 'avatar')
+          $('.file-field').append $error
+
+      $('.file-path').on 'change', ->
+        $('#user_avatar').valid()
 
 
   @CompanySettingForm = ->
