@@ -36,6 +36,8 @@ module Services
     end
 
     def permanent_deleted
+      @invoices.map{|invoice| invoice.invoice_line_items.each{|li| li.really_destroy!}}
+      @invoices.map{|invoice| invoice.payments.each{|payment| payment.really_destroy!}}
       @invoices.map(&:really_destroy!)
       {action: 'deleted permanently', invoices: get_invoices('only_deleted')}
     end
