@@ -1,4 +1,5 @@
 <% if @company.present? %>
+  $('.modal').modal('close')
   swal({
       icon: "success",
       title: 'Success',

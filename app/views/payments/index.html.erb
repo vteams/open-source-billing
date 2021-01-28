@@ -18,7 +18,7 @@
     <%= form_tag "payments/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'payments_container' %></div>
       <div style="margin-top: 10px" class="right <%= @payments.count > 7 ? 'invoice_link_right' : '' %>">
-        <%= link_to ' + New Payment ', invoices_unpaid_invoices_path, remote: true, class: "#{(@payments.count > 0 && @payments.count <= 9) || @payments.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
+        <%= link_to ' + New Payment ', invoices_unpaid_invoices_path, remote: true, class: "#{(@payments.count > 0 && @payments.total_count <= 9) || @payments.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
       </div>
         <%= render partial: 'bulk_actions'%>
     <% end %>

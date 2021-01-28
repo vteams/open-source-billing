@@ -61,7 +61,7 @@
                   </a>
 
                   <!-- Dropdown Structure -->
-                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4' style="width: 16px; position: absolute; top: 174px; left: 938.984px; opacity: 1; display: none;">
+                  <ul id="dropdown_<%= invoice.id %>" class='dropdown-content z-depth-4 <%= @invoices.count >= 8 ? 'dropdown_margin' : '' %>'>
                     <% if !invoice.archived? %>
                       <li>
                         <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">

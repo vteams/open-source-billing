@@ -6715,7 +6715,7 @@ ul.permission-list.client-permissions-list{
 }
 .secondary_new_link{
   position: relative;
-  bottom: 22px;
+  bottom: 0px;
 }
 .currency-select span.caret{
   left: 30px;
@@ -6969,7 +6969,7 @@ ul.select2-results li:hover{
 .form_select_2 ul.select2-results li:first-child{
   text-align: center;
   color: #a5a4a4;
-  font-size: 15px;
+  font-size: 12px;
 }
 .form_select_2 ul.select2-results li:first-child:hover{
   background: white !important;
@@ -6997,4 +6997,7 @@ ul.select2-results li:hover{
 .select-2-asterik{
   position: absolute;
   color: red;
+}
+.modal .role-form .modal-header .modal-action-btn a{
+  line-height: 15px;
 }
