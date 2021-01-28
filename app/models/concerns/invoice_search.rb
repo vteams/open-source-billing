@@ -74,13 +74,13 @@ module InvoiceSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('invoice_number') or key.eql?('notes') or key.eql?('status')
-          query << "invoices.#{key} like '#{val}%'"
+          query << "invoices.#{key} like '%#{val}%'"
         end
         if key.eql?('client')
-          query << "(cc.first_name like '#{val}%' or cc.last_name like '#{val}%' or cc.email like '#{keyword[:client]}%' or cc.organization_name like '#{val}%')"
+          query << "(cc.first_name like '%#{val}%' or cc.last_name like '%#{val}%' or cc.email like '%#{keyword[:client]}%' or cc.organization_name like '%#{val}%')"
         end
         if key.eql?('invoice_line_items')
-          query << "(invoice_line_items.item_name like '#{val}%' or invoice_line_items.item_description like '#{val}%')"
+          query << "(invoice_line_items.item_name like '%#{val}%' or invoice_line_items.item_description like '%#{val}%')"
         end
       end
       query = query.join(" AND ")
