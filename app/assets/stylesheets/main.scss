@@ -6677,7 +6677,7 @@ label[for="available_credit"]{
 #invoice_number_formatModal.modal .modal-header .modal-action-btn a{
   margin-top: -6px;
 }
-.invoice-table-row .invoice-card{
+.invoice-table-row .invoice-card, .client-table-row .invoice-card{
   overflow: visible;
 }
 ul.select2-results li{

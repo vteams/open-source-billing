@@ -117,11 +117,11 @@ jQuery ->
     rem_value = parseFloat(jQuery(this).next('.rem_payment_amount').attr('value'))
     rem_value_id = jQuery(this).next('.rem_payment_amount').attr('id')
     if jQuery(this).is ":checked"
-      jQuery('#payments_' + rem_value_id + '_payment_amount').val(rem_value)
-      jQuery('#payments_' + rem_value_id + '_payment_amount').attr('readonly', 'readonly')
+      jQuery('#payments_payment_amount_' + rem_value_id).val(rem_value)
+      jQuery('#payments_payment_amount_' + rem_value_id).attr('readonly', 'readonly')
     else
-      jQuery('#payments_' + rem_value_id + '_payment_amount').removeAttr('readonly')
-      jQuery('#payments_' + rem_value_id + '_payment_amount').val('')
+      jQuery('#payments_payment_amount_' + rem_value_id).removeAttr('readonly')
+      jQuery('#payments_payment_amount_' + rem_value_id).val('')
 
 
   # validate payments fields on enter payment form submit

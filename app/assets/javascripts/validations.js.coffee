@@ -275,7 +275,7 @@ class @Validation
 
   @PaymentForm = ->
     jQuery.validator.addMethod 'lessThanOrEqualToDueAmount', ((value, element) ->
-      return value <= parseFloat($('.due_amount').html())
+      return value <= parseFloat($(element).closest('.small_field').find('span').html())
     ), 'Amount should not be greater than remaining amount'
 
     $('#payments_form').validate
