@@ -6529,6 +6529,7 @@ li.collection-item a{
 }
 .client_login_link{
   float: right;
+  margin-top: 27px;
 }
 #invoice_line_items_tbl .line-items-fields td div.item-select a.select2-choice, #estimate_line_items_tbl .line-items-fields td div.item-select a.select2-choice{
   height: unset !important;
@@ -6998,7 +6999,10 @@ ul.select2-results li:hover{
 .modal .role-form .modal-header .modal-action-btn a{
   line-height: 15px;
 }
-#new_client_role_id-error{
+#new_client_role_id-error {
   top: 18px;
   position: relative;
+}
+#s2id_new_client_role_id{
+  top: 14px;
 }
