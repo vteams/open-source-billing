@@ -4,7 +4,6 @@ elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
 <% get_introduction_parameter %>
-$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
 setTimeout(function () {
     if($('.intro').hasClass("<%= intro_class %>")){
         intro = introJs();
@@ -66,3 +65,4 @@ $('.canada_state_dropdown').hide();
 $('#client_country').on('change', function(){
     Client.ClientCountryState();
 })
+$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
