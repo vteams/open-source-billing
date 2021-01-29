@@ -258,10 +258,12 @@ class @Validation
         $(element).valid()
       errorClass: 'error invalid-error'
       errorElement: 'span'
+      ignore: 'input[type=hidden]'
       rules:
         'client[organization_name]': required: true, alphanumeric: true
         'client[first_name]': required: true, alphanumeric: true
         'client[last_name]': required: true, alphanumeric: true
+        'client[role_id]': required: true
         'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
           'client_id': ->
             $('.client_id').html()
@@ -276,6 +278,7 @@ class @Validation
         'client[organization_name]': required: 'Organization name cannot be blank'
         'client[first_name]': required: 'First name cannot be blank'
         'client[last_name]': required: 'Last name cannot be blank'
+        'client[role_id]': required: 'Role cannot be blank'
         'client[email]': required: 'Email cannot be blank', remote: "Email already exists"
 
 
