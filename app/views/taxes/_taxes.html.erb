@@ -1,6 +1,6 @@
 <div class="flex-item">
   <%= link_to '', taxis , remote: true, class: 'invoice_show_link', style: 'display: none' unless taxis.deleted? %>
-  <div class="card-white-panel invoice-card" data-taxis_id= <%=taxis.id %>>
+  <div class="card-white-panel invoice-card card-white-panel-bg-color" data-taxis_id= <%=taxis.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "tax_ids[]", taxis.id, false, :id => "tax_#{taxis.id}", class: "filled-in" %>
       <label for="<%= "tax_#{taxis.id}" %>"></label>

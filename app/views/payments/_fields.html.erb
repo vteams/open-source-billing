@@ -81,6 +81,7 @@
                         <%= f.hidden_field :invoice_id %>
                         <div class="label_field left single payment_amount_label"><%= t('payment') %> (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
                         <div class="small_field floating-left intro payments-enter_payment-false-intro" data-intro="You can enter the payment amount here" data-step="2">
+                          <span class="due_amount hidden"><%= due_amount %></span>
                           <%= f.text_field :payment_amount, :id => "payments_payment_amount_#{index}", :value => '', :required => "", :class => "payment_amount text-field-height" %>
                           <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
                         </div>
