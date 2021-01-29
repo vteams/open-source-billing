@@ -17,15 +17,14 @@
       <% grand_total, due_amount, payments_entered = 0, 0, 0 %>
 
       <% @payments.each_with_index do |payment, index| %>
-        <% #grand_total = grand_total + payment.invoice.invoice_total    %>
-        <% due_amount += Payment.invoice_remaining_amount(payment.invoice.id)
-           payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
-        %>
-        <span class="due_amount hidden"><%= due_amount %></span>
-        <%= fields_for "payments[]", payment do |f| %>
-          <%= render "fields", :f => f, :payment => payment, :index => index %>
-        <% end
-           end %>
+          <% #grand_total = grand_total + payment.invoice.invoice_total    %>
+          <% due_amount = Payment.invoice_remaining_amount(payment.invoice.id)
+             payments_entered += Payment.invoice_paid_amount(payment.invoice.id)
+          %>
+          <%= fields_for "payments[]", payment do |f| %>
+              <%= render "fields", :f => f, :payment => payment, :index => index, :due_amount => due_amount %>
+          <% end
+             end %>
 
       <% if @payments.size > 1  %>
         <div class="grand_total" style="display: none">

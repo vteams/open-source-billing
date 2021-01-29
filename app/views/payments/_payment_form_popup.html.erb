@@ -30,7 +30,6 @@
       <div style="display:none" class="received_payment_amount" value="<%= received_amount %>"></div>
       <div style="display:none" class="due_refunds" value="<%= due_refund %>"></div>
       <div style="display:none" class="refunds" value="<%= refund %>"></div>
-      <span class="due_amount hidden"><%= due_amount %></span>
 
       <div class="info-section enter-payment clearfix">
         <div class="row">
@@ -46,7 +45,8 @@
                 <label class="active"><%= t('views.common.date') %></label>
               </div>
             </div>
-            <div class="row">
+            <div class="row small_field">
+              <span class="due_amount hidden"><%= due_amount %></span>
               <%= f.input :payment_amount, label: "#{action_name.eql?("enter_payment") ? t('payment') : 'Refund'} (#{invoice.currency.unit})",
                           label_html: { class: 'active' }, wrapper_html: { class: 'input-field col s6' },
                           input_html: { class: 'payment_amount', placeholder: 0, min: 0 } %>

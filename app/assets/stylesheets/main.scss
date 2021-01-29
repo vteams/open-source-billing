@@ -6817,9 +6817,7 @@ tr.email_templates td{
   color: #062942;
 }
 .tiles-container{
-<<<<<<< HEAD
   display: inline-table;
-=======
   display: flex;
   flex-wrap: wrap;
 }
@@ -6847,7 +6845,6 @@ tr.email_templates td{
 }
 .user-dropdown i{
   font-size: 18px !important;
->>>>>>> permenant_deletion
 }
 .payment_right .field_row .small_field span{
   display: -webkit-box;
@@ -6930,7 +6927,7 @@ label[for="available_credit"]{
 #invoice_number_formatModal.modal .modal-header .modal-action-btn a{
   margin-top: -6px;
 }
-.invoice-table-row .invoice-card {
+.invoice-table-row .invoice-card, .client-table-row .invoice-card{
   overflow: visible;
 }
 .change_password_btn:hover{
@@ -7000,4 +6997,8 @@ ul.select2-results li:hover{
 }
 .modal .role-form .modal-header .modal-action-btn a{
   line-height: 15px;
+}
+#new_client_role_id-error{
+  top: 18px;
+  position: relative;
 }
