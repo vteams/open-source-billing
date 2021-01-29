@@ -9,7 +9,6 @@ elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
 $('.client_select_2').select2({});
-$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
 Validation.ClientForm();
 $('#select_all_company').on('click', function (){
     if ($('#select_all_company').is(':checked')){
@@ -37,3 +36,4 @@ Client.ClientCountryState();
 $('#client_country').on('change', function(){
     Client.ClientCountryState();
 })
+$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
