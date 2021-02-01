@@ -29,12 +29,18 @@ class @Validation
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'avatar')
           $('.file-field').append $error
+        else
+          $element.parent().closest('.input-field').append($error)
 
       $('.file-path').on 'change', ->
         $('#user_avatar').valid()
 
 
   @CompanySettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#companyForm').submit ->
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
@@ -64,6 +70,8 @@ class @Validation
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'company[logo]')
           $('.file-field').append $error
+        else
+          $element.parent().closest('.input-field').append($error)
 
       $('.file-path').on 'change', ->
         $('#company_logo').valid()
@@ -193,6 +201,10 @@ class @Validation
     jQuery.validator.addMethod 'dollarsscents', ((value, element) ->
       @optional(element) or /^\d{0,4}(\.\d{0,2})?$/i.test(value)
     ), 'Only two decimal places are allowed'
+
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+      ), 'Only Letters, Numbers and Underscores are allowed'
 
     $('.tax_form').submit ->
       $('.invalid-error').removeClass('hidden')

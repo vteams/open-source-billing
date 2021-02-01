@@ -1896,6 +1896,9 @@ h6 {
   transition: all 0.5s;
   z-index: 5;
   opacity: 1; }
+.card-white-panel.invoice-card:hover .invoice-details h5{
+  width: 70% !important;
+}
 .report-invoice-number{
   padding-left: 10px !important;
 }
