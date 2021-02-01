@@ -17,7 +17,7 @@ $('#user_have_all_companies_access_true').change(function (){
     if($(this).is(':checked')) {
         $('#assign_all_companies').attr('disabled', true)
         $('#assign_all_companies').prop('checked', false)
-        $('.company-selection').hide();
+        $('.company-selection .companies-list input[type=checkbox]').prop('checked', true)
     }
 })
 $('#user_have_all_companies_access_false').change(function () {
