@@ -22,25 +22,15 @@
                     data: {confirm: t('helpers.messages.confirm'),
                            success: t('views.taxes.bulk_action_msg', action: 'deleted')},
                     title: t('helpers.links.delete') %>
-        <a id="dLabel" class='dropdown-button' href='javascript:void(0);' data-activates='dropdown_<%= taxis.id %>' data-alignment="right" data-beloworigin="true">
-          <i class="material-icons">more_vert</i>
-        </a>
-        <!-- Dropdown Structure -->
-        <ul id="dropdown_<%= taxis.id %>" class='dropdown-content z-depth-4'>
-          <% if !taxis.archived? %>
-            <li>
-              <a href="javascript:;" class="single_archive">
-                <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
-              </a>
-            </li>
-          <% else %>
-            <li>
-              <a href="javascript:;" class="single_recover">
-                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
+        <% if !taxis.archived? %>
+          <a href="javascript:;" class="single_archive">
+            <i class="material-icons">archive</i>
+          </a>
+        <% else %>
+          <a href="javascript:;" class="single_recover">
+            <i class="material-icons">unarchive</i>
+          </a>
+        <% end %>
       <% end %>
     </div>
   </div>
