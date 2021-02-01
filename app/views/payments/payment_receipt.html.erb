@@ -1,13 +1,13 @@
 <div class="payment-receipt">
   <div class="receipt-logo" style="text-align: center; width: 92%">
-    <%= image_tag @payment.invoice.company.logo %>
+    <%= image_tag @payment.company.logo if @payment.company.logo.present? %>
   </div>
 </div>
 <div class="info-section clearfix container company-info-section receipt-company-info-section">
   <div class="info-left-section">
-    <%= render partial: 'invoices/company_contact_info', locals: {company: @payment.invoice.company} %>
+    <%= render partial: 'invoices/company_contact_info', locals: {company: @payment.company} %>
     <br>
-    <%= render partial: 'invoices/client_contact_info', locals: {client: @payment.invoice.client} %>
+    <%= render partial: 'invoices/client_contact_info', locals: {client: @client} %>
   </div>
   <div class="info-right-section">
     <h2 class="">Payment Receipt</h2>
@@ -16,7 +16,7 @@
   <div style="clear: both"></div>
   <div class="received">
     <div class="received-from">Received from</div>
-    <div class="client-name border-bottom text-align-center"><%= @payment.invoice.client.full_name %></div>
+    <div class="client-name border-bottom text-align-center"><%= @client.full_name %></div>
     <div class="text-align-center currency_code"><%= @payment.currency.code %></div>
     <div class="border-bottom received_payment">&nbsp;&nbsp;<%= @payment.payment_amount %></div>
   </div>
@@ -26,7 +26,7 @@
   </div>
   <div class="payment_for">
     <div style="">for invoice#</div>
-    <div class="border-bottom">&nbsp;&nbsp;<%= @payment.invoice.formatted_invoice_number %></div>
+    <div class="border-bottom">&nbsp;&nbsp;<%= @invoice.formatted_invoice_number %></div>
   </div>
   <div class="received_by">
     <div>Received by</div>

@@ -183,6 +183,7 @@ class InvoicesController < ApplicationController
 
   def invoice_receipt
     @invoice = Invoice.find(params[:id])
+    @client = Client.with_deleted.find_by(id: @invoice.client_id)
     respond_to do |format|
       format.pdf do
         render pdf: 'invoice_receipt',

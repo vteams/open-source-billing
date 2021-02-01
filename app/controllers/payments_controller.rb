@@ -152,6 +152,8 @@ class PaymentsController < ApplicationController
 
   def payment_receipt
     @payment = Payment.find(params[:id])
+    @invoice = Invoice.with_deleted.find_by(id: @payment.invoice_id)
+    @client = Client.with_deleted.find_by(id: @invoice.client_id)
     respond_to do |format|
       format.pdf do
         render pdf: "payment_receipt",
