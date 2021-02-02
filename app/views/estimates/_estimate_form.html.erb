@@ -62,7 +62,7 @@
                         wrapper_html: { class: 'new-invoice-footer-row' } %>
             <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
                         label: t('views.common.tax'), prompt: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
-                        input_html: { class: 'discount_select inline-select small-select currency-select' } %>
+                        input_html: { class: 'discount_select inline-select small-select form_select_2 invoice_tax_select' } %>
             <div class="new-invoice-footer-row taxes_total"></div>
             <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
           </div>
