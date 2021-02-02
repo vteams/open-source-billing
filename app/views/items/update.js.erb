@@ -1,4 +1,5 @@
 <% if @item_updated.eql?(true) %>
+  $('.modal').modal('close');
   swal({
       icon: "success",
       title: 'Success',

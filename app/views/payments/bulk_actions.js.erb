@@ -1,31 +1,8 @@
-jQuery(".alert").hide();
-
-<% unless params[:flag]%>
-    <% if @action == "deleted" %>
-        jQuery(".alert.alert-success").show().find('span').html("<%= t('views.payments.bulk_action_msg', action: @action) %>");
-
-    <% elsif @action == "credit entry" %>
-        jQuery("#credit_payments .modal-body").html("<%= escape_javascript(render "payments_with_credit", :locals => {:per => params[:per]}) %>");
-        jQuery('#credit_payments').modal('show');
-
-        <%if @non_credit_payments.blank? %>
-            jQuery(".btn_large.submit,p.continue_delete_msg","#credit_payments.modal").hide();
-        <%else%>
-            jQuery(".btn_large.submit,p.continue_delete_msg","#credit_payments.modal").show();
-            jQuery("input#non_credit_payments","#credit_payments.modal").val("<%=@non_credit_payments.join(',')%>");
-        <%end%>
-
-    <% end %>
-<% end %>
-
-<% unless params[:payment_ids].blank? or @action == "credit entry" %>
-    jQuery('tbody#payment_body').html('<%= escape_javascript render("payment") %>');
-<%end%>
-
-jQuery('#select_all').attr('checked', false);
-
-<% if @action == "deleted" %>
-    jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
-    jQuery("table.table_listing").trigger('update');
-<% end %>
-bind_edit_payment_links()
+swal({
+    icon: "success",
+    title: 'Success',
+    buttons: false,
+    timer: 3000,
+    text: "<%= t('views.payments.bulk_action_msg', action: @action) %>"}).then(function(){
+    window.location = '<%= payments_path %>'
+});

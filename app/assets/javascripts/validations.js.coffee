@@ -168,7 +168,15 @@ class @Validation
 
 
   @ItemForm = ->
-    $('.item_form').submit ->
+    jQuery.validator.addMethod 'dollarsscents', ((value, element) ->
+      @optional(element) or /^\d{0,4}(\.\d{0,2})?$/i.test(value)
+    ), 'Only two decimal places are allowed'
+
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
+  $('.item_form').submit ->
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
@@ -186,8 +194,8 @@ class @Validation
       errorElement: 'span'
       rules:
         'item[item_description]': required: true, alphanumeric: true
-        'item[unit_cost]': required: true, number: true
-        'item[quantity]': required: true, number: true
+        'item[unit_cost]': required: true, number: true, dollarsscents: true
+        'item[quantity]': required: true, number: true, dollarsscents: true
         'item[item_name]': required: true, alphanumeric: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
           'item_id': ->
             $('.item_id').html()
