@@ -46,7 +46,6 @@ setTimeout(function () {
         });
     }
 },1000);
-Validation.ItemForm();
 $('.select_2').material_select('destroy');
 //$('.select_2').select2();
 Item.check_uncheck_all_companies();
@@ -55,3 +54,4 @@ if ($('#account_association').prop('checked', true)){
     $('#select_all_companies').prop('checked', false)
     $('#select_all_companies').attr('disabled', true)
 }
+Validation.ItemForm();

@@ -166,9 +166,9 @@ class @Validation
       @optional(element) || /^[\w ]+$/i.test(value);
     ), 'Only Letters, Numbers and Underscores are allowed'
 
-  $('.item_form').submit ->
+    $('.item_form').submit ->
+        $('.invalid-error').removeClass('hidden')
       $('.invalid-error').removeClass('hidden')
-    $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
       onfocusin: (element) ->
         $(element).valid()
