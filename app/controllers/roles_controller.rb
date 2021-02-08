@@ -31,11 +31,8 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
     respond_to do |format|
       if @role.save
-        format.js {
-          flash[:notice]= 'Role has been created successfully'
-          render :js => "window.location.href='#{roles_path}'"
-        }
-        format.html {redirect_to roles_path}
+        format.js
+        format.html {redirect_to settings_path}
       else
         format.js
       end

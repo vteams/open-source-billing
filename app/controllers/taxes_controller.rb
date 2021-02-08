@@ -148,9 +148,9 @@ class TaxesController < ApplicationController
   end
 
   def verify_tax_name
-    taxes = !params[:newTax].eql?('edit_tax') ? Tax.with_deleted.pluck(:name) :
-              Tax.with_deleted.where.not(name: Tax.find(params[:tax_id]).name).pluck(:name)
-    if taxes.include?(params[:tax_name])
+    taxes = !params[:newTax].eql?('edit_tax') ? Tax.with_deleted.pluck(:name).map(&:downcase) :
+              Tax.with_deleted.where.not(name: Tax.find(params[:tax_id]).name).pluck(:name).map(&:downcase)
+    if taxes.include?(params[:tax_name].downcase)
       render json: false
     else
       render json: true

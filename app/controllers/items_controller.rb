@@ -180,9 +180,9 @@ class ItemsController < ApplicationController
   end
 
   def verify_item_name
-    items = !params[:newItem].eql?('edit_item') ? Item.pluck(:item_name) :
-              Item.where.not(item_name: Item.find(params[:item_id]).item_name).pluck(:item_name)
-    if items.include?(params[:item_name])
+    items = !params[:newItem].eql?('edit_item') ? Item.pluck(:item_name).map(&:downcase) :
+              Item.where.not(item_name: Item.find(params[:item_id]).item_name).pluck(:item_name).map(&:downcase)
+    if items.include?(params[:item_name].downcase)
       render json: false
     else
       render json: true

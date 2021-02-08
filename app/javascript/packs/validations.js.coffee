@@ -29,12 +29,18 @@ class window.Validation
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'avatar')
           $('.file-field').append $error
+        else
+          $element.parent().closest('.input-field').append($error)
 
       $('.file-path').on 'change', ->
         $('#user_avatar').valid()
 
 
   @CompanySettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#companyForm').submit ->
       $('.invalid-error').removeClass('hidden')
     $('.invalid-error').removeClass('hidden')
@@ -64,6 +70,8 @@ class window.Validation
       errorPlacement: ($error, $element) ->
         if ($element.attr('name') == 'company[logo]')
           $('.file-field').append $error
+        else
+          $element.parent().closest('.input-field').append($error)
 
       $('.file-path').on 'change', ->
         $('#company_logo').valid()
@@ -160,9 +168,17 @@ class window.Validation
 
 
   @ItemForm = ->
+    jQuery.validator.addMethod 'dollarsscents', ((value, element) ->
+      @optional(element) or /^\d{0,4}(\.\d{0,2})?$/i.test(value)
+    ), 'Only two decimal places are allowed'
+
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('.item_form').submit ->
+        $('.invalid-error').removeClass('hidden')
       $('.invalid-error').removeClass('hidden')
-    $('.invalid-error').removeClass('hidden')
     $('.item_form').validate
       onfocusin: (element) ->
         $(element).valid()
@@ -178,8 +194,8 @@ class window.Validation
       errorElement: 'span'
       rules:
         'item[item_description]': required: true, alphanumeric: true
-        'item[unit_cost]': required: true, number: true
-        'item[quantity]': required: true, number: true
+        'item[unit_cost]': required: true, number: true, dollarsscents: true
+        'item[quantity]': required: true, number: true, dollarsscents: true
         'item[item_name]': required: true, alphanumeric: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
           'item_id': ->
             $('.item_id').html()
@@ -203,6 +219,10 @@ class window.Validation
     jQuery.validator.addMethod 'dollarsscents', ((value, element) ->
       @optional(element) or /^\d{0,4}(\.\d{0,2})?$/i.test(value)
     ), 'Only two decimal places are allowed'
+
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+      ), 'Only Letters, Numbers and Underscores are allowed'
 
     $('.tax_form').submit ->
       $('.invalid-error').removeClass('hidden')

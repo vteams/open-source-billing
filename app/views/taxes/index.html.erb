@@ -20,7 +20,7 @@
   </div>
   <%= render 'filters' %>
   <div class="invoice-box tax-box">
-    <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
+    <%= form_tag "taxes/bulk_actions", {method: :get, id: "bulk_action_form", remote: true} do -%>
       <div class="search_result_container"><%= render 'taxes_container' %></div>
       <div style="margin-top: 10px" class="right <%= @taxes.count > 7 ? 'invoice_link_right' : '' %>">
         <%= link_to ' + New Tax ', new_tax_path, remote: true, class: "#{(@taxes.count > 0 && @taxes.total_count <= 9) || @taxes.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
