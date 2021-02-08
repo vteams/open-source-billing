@@ -26,7 +26,7 @@
       <h5 class="left">
         <% unless invoice.status.eql?("paid") %>
           <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
-          <button id="enterPayment" class="btn btn-default truncate" onclick="$('.invoice_payment_link').click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
+          <button id="enterPayment" class="btn btn-default truncate" onclick="$('.invoice_payment_link')[0].click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
         <% end %>
         <span><%= @client.organization_name %></span>
       </h5>
