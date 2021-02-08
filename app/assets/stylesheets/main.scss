@@ -6964,3 +6964,29 @@ ul.select2-results li:hover{
   width: 133px !important;
   margin-bottom: -2px;
 }
+.drp-buttons button{
+  background: #fff;
+  color: #09b8e2;
+  border: 1px solid #09b8e2;
+}
+.drp-buttons button:hover{
+  background: #09b8e2;
+  color: #fff;
+}
+#enterPayment:hover{
+  background: #09b8e2;
+  color: #fff;
+  border-color: #fff;
+}
+.swal-button-container button{
+  background: #fff;
+  color: #09b8e2;
+}
+.swal-button-container button:hover{
+  background: #09b8e2;
+  color: #fff;
+  border-color: #fff;
+}
+.file-field.input-field .btn:hover{
+  background: #09b8e2;
+}

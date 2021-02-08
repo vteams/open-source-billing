@@ -17,7 +17,7 @@
       <% due_refund = invoice.payments.received.sum('payment_amount') + invoice.payments.refunds.sum('payment_amount') %>
       <% received_amount = Payment.invoice_paid_amount(invoice.id) %>
       <% due_amount = Payment.invoice_remaining_amount(invoice.id) %>
-      <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : client.client_credit %>
+      <% client_credit =payment.invoice.client.present? ? payment.invoice.client.read_attribute(:client_credit) : client.client_credit %>
       <% client_credit = client_credit.present? ? client_credit : 0 %>
 
       <%= f.input :invoice_id, as: :hidden, input_html: { value: invoice.id } %>
@@ -62,9 +62,9 @@
                     <%= t('views.common.available') %>
                   </label>
                 </div>
+                <%= f.input :send_payment_notification, label: t('views.payments.send_payment_notification'),
+                            input_html: { class: 'filled-in'}, as: :boolean, boolean_style: :inline, wrapper_html: { class: 'col s12' } %>
               <% end %>
-              <%= f.input :send_payment_notification, label: t('views.payments.send_payment_notification'),
-                          input_html: { class: 'filled-in'}, as: :boolean, boolean_style: :inline, wrapper_html: { class: 'col s12' } %>
             </div>
           </div>
         </div>
