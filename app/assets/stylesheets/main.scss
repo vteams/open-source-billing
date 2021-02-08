@@ -1501,7 +1501,7 @@ h6 {
   line-height: 11px; }
 @media(min-width:769px) {
   .card-white-panel .action-btn-group {
-    position: absolute;
+    position: absolute !important;
     top: 10px;
     right: 9px;
     margin-right: -76px;
