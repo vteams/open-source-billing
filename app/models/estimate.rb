@@ -152,7 +152,13 @@ class Estimate < ActiveRecord::Base
                            invoice_type:          "EstimateInvoice"
                           )
 
-    self.estimate_line_items.each { |item| item.update_attributes(invoice_id: invoice.id) } if invoice.save
+    if invoice.save
+      self.estimate_line_items.each do |item|
+        item.update_attributes(invoice_id: invoice.id)
+        invoice.invoice_line_items << item
+        invoice.save
+      end
+    end
   end
 
   def dispute_history
