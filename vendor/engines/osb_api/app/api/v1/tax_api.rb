@@ -9,6 +9,11 @@ module V1
 
       desc 'Return all taxes'
       get do
+        @taxes = Tax.all.order("#{params[:sort].present? ? params[:sort] : 'name'} #{params[:direction].present? ? params[:direction] : 'asc'}")
+      end
+
+      desc 'Return all Unscoped taxes taxes'
+      get '/unscoped_taxes' do
         @taxes = Tax.with_deleted.order("#{params[:sort].present? ? params[:sort] : 'name'} #{params[:direction].present? ? params[:direction] : 'asc'}")
       end
 
