@@ -17,6 +17,9 @@ module Services
         invoice = ::Invoice.find(params[:id])
         if invoice.present?
           invoice.company_id = User.current.current_company
+          if invoice.client.nil?
+            invoice.client = Client.with_deleted.find_by(id: invoice.client_id)
+          end
           if invoice.update_attributes(invoice_params_api(params))
             invoice.send_invoice(User.current, invoice.id) unless params[:invoice][:save_as_draft].present?
             {message: 'Successfully updated'}

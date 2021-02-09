@@ -4,7 +4,7 @@ module Services
 
       def self.create(params)
         tax = ::Tax.new(tax_params_api(params))
-        if Tax.where("name LIKE Binary", params[:tax][:name]).present?
+        if Tax.where("name LIKE Binary ?", params[:tax][:name]).present?
           {error: 'Tax already exists with same name', message: nil }
         else
           if tax.save
@@ -17,7 +17,7 @@ module Services
 
       def self.update(params)
         tax = ::Tax.find(params[:id])
-        if Tax.where("name LIKE Binary", params[:tax][:name]).present? && params[:tax][:name] != tax.name
+        if Tax.where("name LIKE Binary ?", params[:tax][:name]).present? && params[:tax][:name] != tax.name
           {error: 'Tax already exists with same name', message: nil}
         else
           if tax.present?
