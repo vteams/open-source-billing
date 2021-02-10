@@ -19,7 +19,7 @@ class @Validation
         avatar: accept: 'jpg,jpeg,png'
 
       messages:
-        user_name: required: 'Name cannot be blank'
+        user_name: required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
         email:  required: 'Email cannot be blank'
         role_id: required: 'Role cannot be blank'
         password: required: 'Password cannot be blank'
@@ -89,7 +89,7 @@ class @Validation
       rules:
         'role[name]': required: true, alphanumeric: true
       messages:
-        'role[name]': required: 'Name cannot be blank'
+        'role[name]': required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
 
 
   @InvoiceForm = ->
@@ -285,9 +285,9 @@ class @Validation
         }
         }
       messages:
-        'client[organization_name]': required: 'Organization name cannot be blank'
-        'client[first_name]': required: 'First name cannot be blank'
-        'client[last_name]': required: 'Last name cannot be blank'
+        'client[organization_name]': required: 'Organization name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        'client[first_name]': required: 'First name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        'client[last_name]': required: 'Last name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
         'client[role_id]': required: 'Role cannot be blank'
         'client[email]': required: 'Email cannot be blank', remote: "Email already exists"
 
