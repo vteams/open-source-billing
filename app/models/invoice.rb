@@ -514,7 +514,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def unscoped_client
-    client
+    ::Client.with_deleted.find(self.client_id)
   end
 
   def inv_type
