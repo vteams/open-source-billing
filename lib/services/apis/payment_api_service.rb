@@ -27,7 +27,7 @@ module Services
             {error: payment.errors.full_messages, message: nil }
           end
         else
-          {error: 'payment not found', message: nil }
+          {error: 'Payment not found', message: nil }
         end
       end
 

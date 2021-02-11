@@ -157,7 +157,7 @@ module V1
         if item.present?
           Services::Apis::ItemApiService.destroy(item)
         else
-          {error: 'item not found', message: nil }
+          {error: 'Item not found', message: nil }
         end
       end
     end
