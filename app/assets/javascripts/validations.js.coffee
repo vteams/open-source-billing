@@ -193,10 +193,10 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'item[item_description]': required: true, alphanumeric: true
-        'item[unit_cost]': required: true, number: true, dollarsscents: true
-        'item[quantity]': required: true, number: true, dollarsscents: true
-        'item[item_name]': required: true, alphanumeric: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
+        'item[item_description]': required: true, alphanumeric: true, maxlength: 50, minlength: 2
+        'item[unit_cost]': required: true, number: true, maxlength: 8
+        'item[quantity]': required: true, number: true, maxlength: 8
+        'item[item_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
           'item_id': ->
             $('.item_id').html()
           'item_name': ->
@@ -280,10 +280,12 @@ class @Validation
       errorElement: 'span'
       ignore: 'input[type=hidden]'
       rules:
-        'client[organization_name]': required: true, alphanumeric: true
-        'client[first_name]': required: true, alphanumeric: true
-        'client[last_name]': required: true, alphanumeric: true
+        'client[organization_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
+        'client[first_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
+        'client[last_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
         'client[role_id]': required: true
+        'client[mobile_number]': digits: true, minlength: 10, maxlength: 17
+        'client[business_phone]': digits: true, minlength: 10, maxlength: 17
         'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
           'client_id': ->
             $('.client_id').html()
