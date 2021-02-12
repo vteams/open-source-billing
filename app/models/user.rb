@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
   after_create :set_default_settings, :set_introduction
+  before_save :reset_authentication_token, if: Proc.new { |record| record.persisted? && record.password_salt_changed? }
 
   mount_uploader :avatar, ImageUploader
 
@@ -63,6 +64,10 @@ class User < ActiveRecord::Base
 
       users.page(params[:page]).per(per_page)
     end
+  end
+
+  def reset_authentication_token
+    self.authentication_token = SecureRandom.hex(10)
   end
 
   def assigned_companies
