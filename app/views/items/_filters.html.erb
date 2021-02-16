@@ -30,7 +30,7 @@
            qnty_max_val = company.items.with_deleted.maximum(:quantity)
            unit_cost_max_val = company.items.with_deleted.maximum(:unit_cost) %>
       <div class="row">
-        <% if qnty_max_val.to_i > 1 %>
+        <% if qnty_max_val.to_i >= 1 %>
             <div class="input-filed col s12 m6">
               <p class="range-field">
                 <label><%= t('views.items.quantity_range') %></label>
