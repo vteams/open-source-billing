@@ -327,8 +327,8 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'recurring_frequency[title]': required: true
-        'recurring_frequency[number_of_days]': required: true, number: true, min: 0
+        'recurring_frequency[title]': required: true, maxlength: 30
+        'recurring_frequency[number_of_days]': required: true, number: true, min: 0, maxlength: 10
       messages:
         'recurring_frequency[title]': required: 'Title is required'
         'recurring_frequency[number_of_days]': required: 'Number of days are required', number: 'Please enter only numbers', min: 'Number of days cannot be negative'
