@@ -56,7 +56,7 @@ module V2
                }
            }
       get do
-        params[:status] = params[:status] || 'active'
+        params[:status] = params[:status].present? ? params[:status] : 'active'
         @invoices = Invoice.with_clients.order("invoices.created_at #{params[:direction].present? ? params[:direction]
                                                                         : 'desc'}")
                            .select("invoices.*,clients.*, invoices.id, invoices.currency_id, invoices.deleted_at")
