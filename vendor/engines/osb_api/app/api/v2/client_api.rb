@@ -24,7 +24,6 @@ module V2
            }
       get :rabl => 'clients/clients.rabl' do
         criteria = {
-            status: params[:status] || 'unarchived',
             user: @current_user,
             current_company: get_company_id,
             company_id: get_company_id,
