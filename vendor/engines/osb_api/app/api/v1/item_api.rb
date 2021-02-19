@@ -39,6 +39,25 @@ module V1
         @items
       end
 
+      desc 'Return all unscoped Items',
+           headers: {
+               "Access-Token" => {
+                   description: "Validates your identity",
+                   required: true
+               }
+           }
+      get 'unscoped_items' do
+        criteria = {
+            sort_column: params[:sort_column].present? ? params[:sort_column] : 'item_name',
+            sort_direction: params[:sort_direction].present? ? params[:sort_direction] : 'asc',
+        }
+        params.merge!(criteria)
+        @items = Company.find(@current_user.current_company).items.with_deleted.to_a
+        @items = @items.sort_by!{|item| params[:sort_column].eql?('item_name') ? item.item_name.downcase : item.created_at}
+        @items = @items.reverse if params[:sort_direction].eql?('desc')
+        @items
+      end
+
       desc 'Fetch a single Item',
            headers: {
                "Access-Token" => {
