@@ -64,7 +64,7 @@ module V2
         @invoices = {total_invoices: Invoice.all.unscoped.count, total_records: @invoices.total_count,
                      total_pages: @invoices.total_pages, current_page: @invoices.current_page,
                      per_page: @invoices.limit_value, min_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.minimum('id').to_i : 0,
-                     max_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).with_deleted.invoices.maximum('id').to_i : 0, invoices: @invoices}
+                     max_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.maximum('id').to_i : 0, invoices: @invoices}
       end
 
       desc 'All Archived invoices',
