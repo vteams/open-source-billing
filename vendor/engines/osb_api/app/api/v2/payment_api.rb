@@ -16,8 +16,8 @@ module V2
         @payments = @payments.page(params[:page]).per(@current_user.settings.records_per_page)
         @payments = {total_invoices: Invoice.all.unscoped.count, total_records: @payments.total_count,
                      total_pages: @payments.total_pages, current_page: @payments.current_page,
-                     per_page: @payments.limit_value, min_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.minimum('id').to_f : 0,
-                     max_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.maximum('id').to_f : 0, payments: @payments}
+                     per_page: @payments.limit_value, min_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.minimum('id').to_i : 0,
+                     max_invoice_number: Invoice.count > 0 ? Company.find(@current_user.current_company).invoices.with_deleted.maximum('id').to_i : 0, payments: @payments}
       end
 
     end
