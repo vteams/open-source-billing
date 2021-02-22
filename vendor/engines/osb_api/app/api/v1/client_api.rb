@@ -30,6 +30,20 @@ module V1
         COUNTRY_LIST
       end
 
+      desc 'Return all unscoped Clients',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      get 'unscoped_clients' do
+        @clients = Company.find(@current_user.current_company).clients.with_deleted.to_a
+        @clients = @clients.sort_by!{|client| client.organization_name.downcase}
+        @clients = @clients.reverse if params[:sort_direction].eql?('desc')
+        @clients
+      end
+
       desc 'Fetch  single client',
            headers: {
                "Access-Token" => {
