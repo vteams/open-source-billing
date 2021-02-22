@@ -47,7 +47,7 @@ class @Invoice
             success: (data, textStatus, jqXHR) ->
               item = JSON.parse(data)
               container = elem.parents('tr.fields')
-              container.find('input.description').val item[0]
+              container.find('textarea.description').val item[0]
               container.find('td.description').html item[0]
               container.find('input.cost').val item[1].toFixed(2)
               container.find('td.cost').html item[1].toFixed(2)
