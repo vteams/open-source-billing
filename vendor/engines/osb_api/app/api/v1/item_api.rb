@@ -46,7 +46,7 @@ module V1
                    required: true
                }
            }
-      get 'unscoped_items' do
+      get 'unscoped_items', :rabl => 'items/unscoped_items.rabl' do
         criteria = {
             sort_column: params[:sort_column].present? ? params[:sort_column] : 'item_name',
             sort_direction: params[:sort_direction].present? ? params[:sort_direction] : 'asc',
