@@ -37,7 +37,7 @@ module V1
                required: true
              }
            }
-      get 'unscoped_clients' do
+      get 'unscoped_clients', :rabl => 'clients/unscoped_clients.rabl' do
         @clients = Company.find(@current_user.current_company).clients.with_deleted.to_a
         @clients = @clients.sort_by!{|client| client.organization_name.downcase}
         @clients = @clients.reverse if params[:sort_direction].eql?('desc')
