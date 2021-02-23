@@ -1,6 +1,10 @@
 class @Validation
 
   @UserSettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#sub_user_form').validate
       onfocusout: (element) ->
         $(element).valid()
@@ -10,7 +14,7 @@ class @Validation
       errorElement: 'span'
       ignore: 'input[type=hidden]'
       rules:
-        user_name: required: true, alphanumeric: true
+        user_name: required: true, alphanumeric: true, maxlength: 30
         email: required: true
         role_id: required: true
         password: required: true
@@ -19,7 +23,7 @@ class @Validation
         avatar: accept: 'jpg,jpeg,png'
 
       messages:
-        user_name: required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        user_name: required: 'Name cannot be blank'
         email:  required: 'Email cannot be blank'
         role_id: required: 'Role cannot be blank'
         password: required: 'Password cannot be blank'
@@ -57,14 +61,38 @@ class @Validation
       errorElement: 'span'
 
       rules:
-        'company[company_name]': required: true, alphanumeric: true
+        'company[company_name]': required: true, alphanumeric: true, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
+          'company_id': ->
+            $('.company_id').html()
+          'company_name': ->
+            $('#company_company_name').val()
+          'newCompany': ->
+            if ($('#companyForm').hasClass('edit_company'))
+              'edit_company'
+            else
+              'new_company'
+
+        }
+        }
         'company[contact_name]': required: true, alphanumeric: true
-        'company[email]': required: true
+        'company[email]': required: true, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
+          'company_id': ->
+            $('.company_id').html()
+          'company_email': ->
+            $('#company_email').val()
+          'newCompany': ->
+            if ($('#companyForm').hasClass('edit_company'))
+              'edit_company'
+            else
+              'new_company'
+
+        }
+        }
         'company[logo]': accept: 'jpg,jpeg,png'
       messages:
-        'company[company_name]': required: 'Company name cannot be blank'
+        'company[company_name]': required: 'Company name cannot be blank', remote: 'Company name already exists'
         'company[contact_name]': required: 'Contact name cannot be blank'
-        'company[email]': required: 'Email cannot be blank'
+        'company[email]': required: 'Email cannot be blank', remote: 'Email already exists'
         'company[logo]': accept: 'Please upload image in these format only (jpg, jpeg, png).'
 
       errorPlacement: ($error, $element) ->
@@ -79,6 +107,10 @@ class @Validation
 
 
   @RoleSettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#new_role').validate
       onfocusout: (element) ->
         $(element).valid()
@@ -87,9 +119,9 @@ class @Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'role[name]': required: true, alphanumeric: true
+        'role[name]': required: true, alphanumeric: true, maxlength: 30
       messages:
-        'role[name]': required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        'role[name]': required: 'Name cannot be blank'
 
 
   @InvoiceForm = ->

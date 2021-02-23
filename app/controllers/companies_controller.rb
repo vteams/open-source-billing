@@ -170,6 +170,20 @@ class CompaniesController < ApplicationController
     render json: {notice: t('views.companies.deleted_msg')}, status: :ok
   end
 
+  def verify_name_email_uniqueness
+    company_emails = params[:newCompany].eql?('new_company') ? Company.pluck(:email) :
+                       Company.where.not(email: Company.find(params[:company_id]).email).pluck(:email)
+    company_names = params[:newCompany].present? ? Company.pluck(:company_name) :
+                      Company.where.not(company_name: Company.find(params[:company_id])).pluck(:company_name)
+
+    if (params[:company_email].present? && company_emails.reject{|c| c.nil?}.map(&:downcase).include?(params[:company_email].downcase)) ||
+      (params[:company_name].present? && company_names.map(&:downcase).include?(params[:company_name].downcase))
+      render json: false
+    else
+      render json: true
+    end
+  end
+
   private
 
   def get_intimation_message(action_key, company_ids)
