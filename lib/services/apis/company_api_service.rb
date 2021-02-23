@@ -3,25 +3,37 @@ module Services
     class CompanyApiService
 
       def self.create(params)
-        company = ::Company.new(company_params_api(params))
-        if company.save
-          {message: 'Successfully created'}
+        if ::Company.where(email: params[:company][:email]).present?
+          {error: 'Company with same email already exists', message: nil }
+        elsif Company.where(company_name: params[:company][:company_name]).present?
+          {error: 'Company with same name already exists', message: nil }
         else
-          {error: company.errors.full_messages, message: nil }
+          company = ::Company.new(company_params_api(params))
+          if company.save
+            {message: 'Successfully created'}
+          else
+            {error: company.errors.full_messages, message: nil }
+          end
         end
       end
 
       def self.update(params)
         company = ::Company.find(params[:id])
-        # company.logo = params[:company][:logo] if params[:company][:logo].present?
-        if company.present?
-          if company.update_attributes(company_params_api(params))
-            {message: 'Successfully updated'}
-          else
-            {error: company.errors.full_messages, message: nil }
-          end
+        if Company.exists?(email: params[:company][:email]) && company.email != params[:company][:email]
+          {error: 'Company with same email already exists', message: nil }
+        elsif Company.exists?(company_name: params[:company][:company_name]) && company.company_name != params[:company][:company_name]
+          {error: 'Company with same name already exists', message: nil }
         else
-          {error: 'Account not found'}
+          # company.logo = params[:company][:logo] if params[:company][:logo].present?
+          if company.present?
+            if company.update_attributes(company_params_api(params))
+              {message: 'Successfully updated'}
+            else
+              {error: company.errors.full_messages, message: nil }
+            end
+          else
+            {error: 'Account not found'}
+          end
         end
       end
 
