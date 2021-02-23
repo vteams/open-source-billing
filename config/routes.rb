@@ -55,6 +55,7 @@ Osb::Application.routes.draw do
         get 'undo_actions'
         get :settings_listing
         delete :destroy_bulk
+        get :verify_name_email_uniqueness
       end
       member do
         get 'select'
