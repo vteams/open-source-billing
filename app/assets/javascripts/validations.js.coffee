@@ -61,7 +61,7 @@ class @Validation
       errorElement: 'span'
 
       rules:
-        'company[company_name]': required: true, alphanumeric: true, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
+        'company[company_name]': required: true, alphanumeric: true, maxlength: 30, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
           'company_id': ->
             $('.company_id').html()
           'company_name': ->
@@ -74,7 +74,7 @@ class @Validation
 
         }
         }
-        'company[contact_name]': required: true, alphanumeric: true
+        'company[contact_name]': required: true, alphanumeric: true, maxlength: 30
         'company[email]': required: true, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
           'company_id': ->
             $('.company_id').html()
@@ -89,6 +89,9 @@ class @Validation
         }
         }
         'company[logo]': accept: 'jpg,jpeg,png'
+        'company[phone_number]': digits: true
+        'company[province_or_state]': maxlength: 30, alphanumeric: true
+        'company[city]': maxlength: 30, alphanumeric: true
       messages:
         'company[company_name]': required: 'Company name cannot be blank', remote: 'Company name already exists'
         'company[contact_name]': required: 'Contact name cannot be blank'
