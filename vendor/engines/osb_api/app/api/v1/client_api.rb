@@ -209,6 +209,24 @@ module V1
         end
       end
 
+      desc 'Recover Clients',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @clients = Client.with_deleted.where(id: JSON.parse(params[:client_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @clients.present?
+          @clients.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Client(s) recovered successfully"}
+        else
+          {error: "No Client found"}
+        end
+      end
+
     end
   end
 end
