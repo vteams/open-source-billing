@@ -160,7 +160,7 @@ module V1
         end
       end
 
-      desc 'Delete invoices permanently',
+      desc 'Recover invoices',
            headers: {
              "Access-Token" => {
                description: "Validates your identity",
