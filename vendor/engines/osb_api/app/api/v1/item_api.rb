@@ -179,6 +179,25 @@ module V1
           {error: 'Item not found', message: nil }
         end
       end
+
+      desc 'Recover items',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @items = Item.with_deleted.where(id: JSON.parse(params[:item_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @items.present?
+          @items.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Item(s) recovered successfully"}
+        else
+          {error: "No Item found"}
+        end
+      end
+
     end
   end
 end
