@@ -193,6 +193,8 @@ module V1
         invoice = Invoice.find_by(id: params[:id])
         if !invoice.present?
           {error: "Invoice not found", message: nil }
+        elsif !Company.find(@current_user.current_company).mail_config.present?
+          {error: "Mail settings are not configured for this company", message: nil }
         else
           invoice.send_invoice(@current_user, params[:invoice_id])
           {message: 'Invoice sent'}
