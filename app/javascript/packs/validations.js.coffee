@@ -1,6 +1,10 @@
 class window.Validation
 
   @UserSettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#sub_user_form').validate
       onfocusout: (element) ->
         $(element).valid()
@@ -10,7 +14,7 @@ class window.Validation
       errorElement: 'span'
       ignore: 'input[type=hidden]'
       rules:
-        user_name: required: true, alphanumeric: true
+        user_name: required: true, alphanumeric: true, maxlength: 30
         email: required: true
         role_id: required: true
         password: required: true
@@ -19,7 +23,7 @@ class window.Validation
         avatar: accept: 'jpg,jpeg,png'
 
       messages:
-        user_name: required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        user_name: required: 'Name cannot be blank'
         email:  required: 'Email cannot be blank'
         role_id: required: 'Role cannot be blank'
         password: required: 'Password cannot be blank'
@@ -57,14 +61,41 @@ class window.Validation
       errorElement: 'span'
 
       rules:
-        'company[company_name]': required: true, alphanumeric: true
-        'company[contact_name]': required: true, alphanumeric: true
-        'company[email]': required: true
+        'company[company_name]': required: true, alphanumeric: true, maxlength: 30, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
+          'company_id': ->
+            $('.company_id').html()
+          'company_name': ->
+            $('#company_company_name').val()
+          'newCompany': ->
+            if ($('#companyForm').hasClass('edit_company'))
+              'edit_company'
+            else
+              'new_company'
+
+        }
+        }
+        'company[contact_name]': required: true, alphanumeric: true, maxlength: 30
+        'company[email]': required: true, remote: {url: "/companies/verify_name_email_uniqueness", type: "get", dataType: 'json', data: {
+          'company_id': ->
+            $('.company_id').html()
+          'company_email': ->
+            $('#company_email').val()
+          'newCompany': ->
+            if ($('#companyForm').hasClass('edit_company'))
+              'edit_company'
+            else
+              'new_company'
+
+        }
+        }
         'company[logo]': accept: 'jpg,jpeg,png'
+        'company[phone_number]': digits: true
+        'company[province_or_state]': maxlength: 30, alphanumeric: true
+        'company[city]': maxlength: 30, alphanumeric: true
       messages:
-        'company[company_name]': required: 'Company name cannot be blank'
+        'company[company_name]': required: 'Company name cannot be blank', remote: 'Company name already exists'
         'company[contact_name]': required: 'Contact name cannot be blank'
-        'company[email]': required: 'Email cannot be blank'
+        'company[email]': required: 'Email cannot be blank', remote: 'Email already exists'
         'company[logo]': accept: 'Please upload image in these format only (jpg, jpeg, png).'
 
       errorPlacement: ($error, $element) ->
@@ -79,6 +110,10 @@ class window.Validation
 
 
   @RoleSettingForm = ->
+    jQuery.validator.addMethod 'alphanumeric', ((value, element) ->
+      @optional(element) || /^[\w ]+$/i.test(value);
+    ), 'Only Letters, Numbers and Underscores are allowed'
+
     $('#new_role').validate
       onfocusout: (element) ->
         $(element).valid()
@@ -87,9 +122,9 @@ class window.Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'role[name]': required: true, alphanumeric: true
+        'role[name]': required: true, alphanumeric: true, maxlength: 30
       messages:
-        'role[name]': required: 'Name cannot be blank', alphanumeric: "Only letters, numbers, and underscores are allowed"
+        'role[name]': required: 'Name cannot be blank'
 
 
   @InvoiceForm = ->
@@ -193,10 +228,10 @@ class window.Validation
       errorClass: 'error invalid-error'
       errorElement: 'span'
       rules:
-        'item[item_description]': required: true, alphanumeric: true
-        'item[unit_cost]': required: true, number: true, dollarsscents: true
-        'item[quantity]': required: true, number: true, dollarsscents: true
-        'item[item_name]': required: true, alphanumeric: true, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
+        'item[item_description]': required: true, alphanumeric: true, maxlength: 50, minlength: 2
+        'item[unit_cost]': required: true, number: true, maxlength: 8
+        'item[quantity]': required: true, number: true, maxlength: 8
+        'item[item_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2, remote: {url: "/items/verify_item_name", type: "get", dataType: 'json', data: {
           'item_id': ->
             $('.item_id').html()
           'item_name': ->
@@ -280,10 +315,12 @@ class window.Validation
       errorElement: 'span'
       ignore: 'input[type=hidden]'
       rules:
-        'client[organization_name]': required: true, alphanumeric: true
-        'client[first_name]': required: true, alphanumeric: true
-        'client[last_name]': required: true, alphanumeric: true
+        'client[organization_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
+        'client[first_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
+        'client[last_name]': required: true, alphanumeric: true, maxlength: 30, minlength: 2
         'client[role_id]': required: true
+        'client[mobile_number]': digits: true, minlength: 10, maxlength: 17
+        'client[business_phone]': digits: true, minlength: 10, maxlength: 17
         'client[email]': required: true, emailRegex: true, remote: {url: "/clients/verify_email", type: "get", dataType: 'json', data: {
           'client_id': ->
             $('.client_id').html()
