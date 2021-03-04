@@ -27,7 +27,7 @@ module Services
               {error: tax.errors.full_messages, message: nil }
             end
           else
-            {error: 'tax not found', message: nil }
+            {error: 'Tax not found', message: nil }
           end
         end
       end

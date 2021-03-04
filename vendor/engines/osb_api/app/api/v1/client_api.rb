@@ -30,6 +30,20 @@ module V1
         COUNTRY_LIST
       end
 
+      desc 'Return all unscoped Clients',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      get 'unscoped_clients', :rabl => 'clients/unscoped_clients.rabl' do
+        @clients = Company.find(@current_user.current_company).clients.with_deleted.to_a
+        @clients = @clients.sort_by!{|client| client.organization_name.downcase}
+        @clients = @clients.reverse if params[:sort_direction].eql?('desc')
+        @clients
+      end
+
       desc 'Fetch  single client',
            headers: {
                "Access-Token" => {
@@ -192,6 +206,24 @@ module V1
           Services::Apis::ClientApiService.destroy(client)
         else
           {error: 'Client not found', message: nil }
+        end
+      end
+
+      desc 'Recover Clients',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @clients = Client.with_deleted.where(id: JSON.parse(params[:client_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @clients.present?
+          @clients.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Client(s) recovered successfully"}
+        else
+          {error: "No Client found"}
         end
       end
 

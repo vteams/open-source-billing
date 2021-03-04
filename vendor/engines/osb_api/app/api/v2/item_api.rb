@@ -35,6 +35,7 @@ module V2
           user: @current_user,
           per: @current_user.settings.records_per_page
         }
+        params[:status] = params[:status].present? ? params[:status] : "active"
         @items = Item.get_items(params.merge(criteria))
       end
 

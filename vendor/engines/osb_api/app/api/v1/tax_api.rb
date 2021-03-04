@@ -66,6 +66,25 @@ module V1
         tax = Tax.find_by(id: params[:id])
         tax.present? ? Services::Apis::TaxApiService.destroy(tax) : {error: 'Tax not found', message: nil}
       end
+
+      desc 'Recover taxes',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @taxes = Tax.with_deleted.where(id: JSON.parse(params[:tax_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @taxes.present?
+          @taxes.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Tax(s) recovered successfully"}
+        else
+          {error: "No Tax found"}
+        end
+      end
+
     end
   end
 end

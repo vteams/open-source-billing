@@ -167,6 +167,25 @@ module V1
         @estimate = Estimate.find(params[:id])
         @estimate.send_estimate(@current_user, params[:estimate_id])
       end
+
+      desc 'Recover estimates',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @estimates = Estimate.with_deleted.where(id: JSON.parse(params[:estimate_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @estimates.present?
+          @estimates.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Estimate(s) recovered successfully"}
+        else
+          {error: "No Estimate found"}
+        end
+      end
+
     end
   end
 end

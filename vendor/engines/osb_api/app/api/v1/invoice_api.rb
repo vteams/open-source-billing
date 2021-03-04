@@ -142,6 +142,43 @@ module V1
 
       end
 
+      desc 'Delete invoices permanently',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'delete_permanently' do
+        @invoices = Invoice.with_deleted.where(id: JSON.parse(params[:invoice_ids]))
+        if @invoices.present? && @invoices.any? {|i| i.deleted_at.nil?}
+          {error: "Active or Archived invoices cannot be deleted permanently"}
+        elsif @invoices.present? && @invoices.map(&:really_destroy!)
+          {message: "Invoice(s) deleted permanently"}
+        else
+          {error: "No Invoice found"}
+        end
+      end
+
+      desc 'Recover invoices',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      post 'bulk_actions' do
+        @invoices = Invoice.with_deleted.where(id: JSON.parse(params[:invoice_ids]))
+        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
+        if @invoices.present?
+          @invoices.map(&actions[params[:action].to_sym].to_sym)
+          {error: "Invoice(s) recovered successfully"}
+        else
+          {error: "No Invoice found"}
+        end
+      end
+
+
       desc "Send invoice to client",
            headers: {
                "Access-Token" => {
@@ -156,6 +193,8 @@ module V1
         invoice = Invoice.find_by(id: params[:id])
         if !invoice.present?
           {error: "Invoice not found", message: nil }
+        elsif !Company.find(@current_user.current_company).mail_config.present?
+          {error: "Mail settings are not configured for this company", message: nil }
         else
           invoice.send_invoice(@current_user, params[:invoice_id])
           {message: 'Invoice sent'}

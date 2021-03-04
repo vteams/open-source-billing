@@ -26,8 +26,9 @@
           <label><%= t('header.links.items.taxes') %></label>
         </div>
       </div>
-        <% qnty_max_val = Item.all.unscoped.maximum(:quantity)
-           unit_cost_max_val = Item.all.unscoped.maximum(:unit_cost) %>
+        <% company = Company.find(current_company)
+           qnty_max_val = company.items.with_deleted.maximum(:quantity)
+           unit_cost_max_val = company.items.with_deleted.maximum(:unit_cost) %>
       <div class="row">
         <div class="filter-footer">
           <input type="reset" value="<%= t('views.common.reset') %>" id="filter_reset_btn" class="filter-btn"/>

@@ -9,7 +9,7 @@ module Services
         else
           if payment.save
             Payment.update_invoice_status_credit(payment.invoice.id, payment.payment_amount, payment)
-            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification]
+            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification] && Company.find(User.current.current_company).mail_config.present?
             {message: 'Successfully created'}
           else
             {error: payment.errors.full_messages, message: nil }
@@ -21,13 +21,13 @@ module Services
         payment = ::Payment.find(params[:id])
         if payment.present?
           if payment.update_attributes(payment_params_api(params))
-            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification]
+            payment.notify_client(User.current) if params[:payment] && params[:payment][:send_payment_notification] && Company.find(User.current.current_company).mail_config.present?
             {message: 'Successfully updated'}
           else
             {error: payment.errors.full_messages, message: nil }
           end
         else
-          {error: 'payment not found', message: nil }
+          {error: 'Payment not found', message: nil }
         end
       end
 

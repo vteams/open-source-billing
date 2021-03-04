@@ -24,7 +24,6 @@ module V2
            }
       get :rabl => 'clients/clients.rabl' do
         criteria = {
-            status: params[:status] || 'unarchived',
             user: @current_user,
             current_company: get_company_id,
             company_id: get_company_id,
@@ -34,6 +33,7 @@ module V2
             per: params[:per],
             direction: params[:direction]
         }
+        params[:status] = params[:status].present? ? params[:status] : 'active'
         @clients = Client.get_clients(params.merge!(criteria))
         @clients = Kaminari.paginate_array(@clients).page(params[:page]).per(@current_user.settings.records_per_page)
       end

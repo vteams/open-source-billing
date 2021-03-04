@@ -7,7 +7,7 @@ module Services
         if Item.where('item_name LIKE Binary ?', params[:item][:item_name]).present?
           {error: 'Item already exists with same name', message: nil }
         elsif !params[:item][:company_ids].present?
-          {error: 'item should be assigned to at least one company', message: nil }
+          {error: 'Item should be assigned to at least one company', message: nil }
         else
           ItemApiService.associate_entity(params, item)
           if item.save
@@ -23,7 +23,7 @@ module Services
         if ::Item.where('item_name LIKE Binary ?', params[:item][:item_name]).present? && params[:item][:item_name] != item.item_name
           {error: 'Item already exists with same name', message: nil}
         elsif !params[:item][:company_ids].present?
-          {error: 'item should be assigned to at least one company', message: nil }
+          {error: 'Item should be assigned to at least one company', message: nil }
         else
           if item.present?
             ItemApiService.associate_entity(params, item)
