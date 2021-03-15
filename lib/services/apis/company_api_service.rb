@@ -19,7 +19,7 @@ module Services
 
       def self.update(params)
         company = ::Company.find(params[:id])
-        if Company.exists?(email: params[:company][:email]) && company.email != params[:company][:email]
+        if params[:company][:email].present? && Company.exists?(email: params[:company][:email]) && company.email != params[:company][:email]
           {error: 'Company with same email already exists', message: nil }
         elsif Company.exists?(company_name: params[:company][:company_name]) && company.company_name != params[:company][:company_name]
           {error: 'Company with same name already exists', message: nil }
@@ -53,10 +53,16 @@ module Services
             :company_name,
             :contact_name,
             :contact_title,
+            :abbreviation,
+            :default_note,
+            :due_date_period,
+            :base_currency_id,
             :country,
             :city,
             :street_address_1,
             :street_address_2,
+            :province_or_state,
+            :company_tag_line,
             :postal_or_zipcode,
             :phone_number,
             :fax_number,
