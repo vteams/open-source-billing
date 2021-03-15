@@ -45,6 +45,10 @@ module V1
           requires :company_name, type: String, message: :required
           requires :contact_name, type: String, message: :required
           requires :contact_title, type: String, message: :required
+          optional :abbreviation, type: String
+          optional :default_note, type: String
+          optional :due_date_period, type: Integer
+          optional :base_currency_id, type: Integer
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
@@ -74,6 +78,10 @@ module V1
           optional :company_name, type: String
           optional :contact_name, type: String
           optional :contact_title, type: String
+          optional :abbreviation, type: String
+          optional :default_note, type: String
+          optional :due_date_period, type: Integer
+          optional :base_currency_id, type: Integer
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
