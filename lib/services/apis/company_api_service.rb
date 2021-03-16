@@ -9,6 +9,7 @@ module Services
           {error: 'Company with same name already exists', message: nil }
         else
           company = ::Company.new(company_params_api(params))
+          company.logo = params[:company][:logo] if params[:company][:logo].present?
           if company.save
             {message: 'Successfully created'}
           else
@@ -24,8 +25,8 @@ module Services
         elsif Company.exists?(company_name: params[:company][:company_name]) && company.company_name != params[:company][:company_name]
           {error: 'Company with same name already exists', message: nil }
         else
-          # company.logo = params[:company][:logo] if params[:company][:logo].present?
           if company.present?
+            company.logo = params[:company][:logo] if params[:company][:logo].present?
             if company.update_attributes(company_params_api(params))
               {message: 'Successfully updated'}
             else
