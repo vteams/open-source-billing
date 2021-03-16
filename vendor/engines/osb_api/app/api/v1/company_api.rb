@@ -91,7 +91,7 @@ module V1
           optional :phone_number, type: String
           optional :fax_number, type: String
           optional :email, type: String
-          optional :logo, type: String
+          optional :logo
           # optional :logo, type: Rack::Multipart::UploadedFile
           optional :fax, type: String
           optional :company_tag_line, type: String
