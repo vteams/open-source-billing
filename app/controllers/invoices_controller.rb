@@ -430,7 +430,7 @@ class InvoicesController < ApplicationController
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :invoice_line_items_attributes, :archive_number,
                                     :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                    :last_invoice_status, :company_id,:currency_id, :tax_id,:invoice_tax_amount,
+                                    :last_invoice_status, :company_id,:currency_id, :tax_id,:invoice_tax_amount, :billing_month,
                                     invoice_line_items_attributes:
                                         [
                                           :id, :invoice_id, :item_description, :item_id, :item_name,

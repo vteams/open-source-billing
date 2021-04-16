@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210126104534) do
+ActiveRecord::Schema.define(version: 20210326104143) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer "user_id",    limit: 4
@@ -391,6 +391,7 @@ ActiveRecord::Schema.define(version: 20210126104534) do
     t.integer  "base_currency_id",               limit: 4,                              default: 1
     t.float    "conversion_rate",                limit: 24,                             default: 1.0
     t.float    "base_currency_equivalent_total", limit: 24
+    t.string   "billing_month",                  limit: 255
   end
 
   create_table "items", force: :cascade do |t|

@@ -443,3 +443,4 @@ FREEPLAN = ['5 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Rep
 SILVER = ['10 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
 GOLD = ['25 Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
 PLATINUM = ['Unlimited Clients', 'Unlimited Invoices', 'Unlimited sub users' , 'Free Reporting']
+MONTHS = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
