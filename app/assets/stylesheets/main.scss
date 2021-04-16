@@ -6724,7 +6724,9 @@ ul.permission-list.client-permissions-list{
   left: 30px;
 }
 .company_resize_logo img, .receipt-logo img{
-  height: 100px;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 25px;
 }
 #client_province_state{
   min-height: 56px;
