@@ -45,6 +45,10 @@ module V1
           requires :company_name, type: String, message: :required
           requires :contact_name, type: String, message: :required
           requires :contact_title, type: String, message: :required
+          optional :abbreviation, type: String
+          optional :default_note, type: String
+          optional :due_date_period, type: Integer
+          optional :base_currency_id, type: Integer
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
@@ -54,7 +58,7 @@ module V1
           optional :phone_number, type: String
           optional :fax_number, type: String
           requires :email, type: String, message: :required
-          optional :logo, type: String
+          optional :logo
           optional :fax, type: String
           optional :company_tag_line, type: String
           optional :memo, type: String
@@ -74,6 +78,10 @@ module V1
           optional :company_name, type: String
           optional :contact_name, type: String
           optional :contact_title, type: String
+          optional :abbreviation, type: String
+          optional :default_note, type: String
+          optional :due_date_period, type: Integer
+          optional :base_currency_id, type: Integer
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
@@ -83,7 +91,7 @@ module V1
           optional :phone_number, type: String
           optional :fax_number, type: String
           optional :email, type: String
-          optional :logo, type: String
+          optional :logo
           # optional :logo, type: Rack::Multipart::UploadedFile
           optional :fax, type: String
           optional :company_tag_line, type: String

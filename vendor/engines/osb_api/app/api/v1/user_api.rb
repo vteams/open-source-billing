@@ -66,6 +66,33 @@ module V1
         end
       end
 
+      desc 'Update User',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+      params do
+        requires :user, type: Hash do
+          optional :email, type: String
+          optional :user_name, type: String
+          optional :password, type: String
+          optional :password_confirmation, type: String
+          optional :role_id, type: Integer
+          optional :avatar
+        end
+      end
+
+      patch ':id' do
+        user = User.find_by(id: params[:id])
+        if user.present?
+          Services::Apis::UserApiService.update(params)
+        else
+          {error: 'User not found', message: nil }
+        end
+      end
+
       desc 'Forgot Password'
       params do
         requires :email, type: String, message: :required

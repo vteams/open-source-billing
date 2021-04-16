@@ -6983,7 +6983,7 @@ ul.select2-results li:hover{
 #payment_modal .modal-content .modal-footer .row .text-info {
   padding-left: 0px;
 }
-.change_password_btn{
+.change_password_btn {
   background: none;
   text-transform: capitalize;
   color: #b0b0b0;
@@ -6998,10 +6998,13 @@ ul.select2-results li:hover{
   position: absolute;
   color: red;
 }
-.modal .role-form .modal-header .modal-action-btn a{
+.modal .role-form .modal-header .modal-action-btn a {
   line-height: 15px;
 }
-#new_client_role_id-error {
+#s2id_new_client_role_id {
+  top: 14px;
+}
+#new_client_role_id-error{
   top: 18px;
   position: relative;
 }
@@ -7037,4 +7040,18 @@ ul.select2-results li:hover{
 }
 .file-field.input-field .btn:hover{
   background: #09b8e2;
+}
+.empty_notifications{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: gray;
+}
+.select-invoice-client{
+  width: 50%;
+  float: left;
+}
+.billing-month-div{
+  width: 47%;
+  float: left;
 }

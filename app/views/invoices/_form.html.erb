@@ -11,17 +11,23 @@
       <div class="info-section clearfix">
         <div class="info-left-section new-invoice-section">
 
-
-          <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'><%= t('views.clients.client') %> </span>
-          <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-          <%= f.select :client_id, ("<option value='-1'>#{t('views.common.add_new')}</option>".html_safe+options_for_select((load_clients(action_name, invoice.company_id)),
-                                                                                                                            selected: selected_client)),
-                       {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select form_select_2' %>
+          <div class="select-invoice-client">
+            <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'><%= t('views.clients.client') %> </span>
+            <% selected_client = @client.present? ? @client.id : f.object.client_id %>
+            <%= f.select :client_id, ("<option value='-1'>#{t('views.common.add_new')}</option>".html_safe+options_for_select((load_clients(action_name, invoice.company_id)),
+                                                                                                                              selected: selected_client)),
+                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select form_select_2' %>
+          </div>
+          <div class="billing-month-div">
+            <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'>Billing Month </span>
+            <%= f.select :billing_month, MONTHS.map { |month| [month, month]  }, {:include_blank => "Select Month"}, {class: 'select_2'} %>
+          </div>
 
           <div class="terms hidden">
             <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the payment terms' data-step= '6'><%= t('views.invoices.terms') %>: </span>
             <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
           </div>
+          <div class="clearfix"></div>
 
           <div class="invoice-date-div">
             <%= f.input :invoice_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
