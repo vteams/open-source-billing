@@ -169,10 +169,6 @@ class window.Validation
         else
           $error.insertAfter($element);
 
-      jQuery.validator.addClassRules
-        qtyy: min: 0
-
-      jQuery.validator.messages.min = "Value should not be less than 0"
 
 
 
