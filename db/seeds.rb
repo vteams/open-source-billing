@@ -290,6 +290,7 @@ Settings.currency = "On"
 Settings.default_currency = "USD"
 Settings.date_format = "%Y-%m-%d"
 Settings.invoice_number_format = "{{invoice_number}}"
+Settings.invoice_item_format = "{{item_description}}"
 
 Account.delete_all
 Account.create(org_name: 'OpenSourceBilling')
