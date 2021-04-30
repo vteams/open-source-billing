@@ -5843,12 +5843,21 @@ a.invoice-number-format-btn i{
   font-size: 16px;
   margin-left: -14px;
 }
+a.invoice-item-format-btn i{
+  color: #b5b5b5;
+  font-size: 16px;
+  margin-left: -14px;
+}
 .settings-panel{
   position: relative;
 }
 a.invoice-number-format-btn{
   position: absolute;
   margin-top: 124px;
+}
+a.invoice-item-format-btn{
+  position: absolute;
+  margin-top: 195px;
 }
 .settings_invoice_number_format label{
   top: 0;

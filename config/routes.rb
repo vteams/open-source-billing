@@ -82,6 +82,7 @@ Osb::Application.routes.draw do
         post :nav_format
         resources :roles
         get :invoice_number_format
+        get :invoice_item_format
       end
     end
 

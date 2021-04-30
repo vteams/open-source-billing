@@ -38,10 +38,17 @@ class SettingsController < ApplicationController
     if params[:invoice_number_format].present? && params[:invoice_number_format].include?('{{invoice_number}}')
       Settings.invoice_number_format = params[:invoice_number_format]
     end
+    if params[:invoice_item_format].present?
+      Settings.invoice_item_format = params[:invoice_item_format]
+    end
     respond_to { |format| format.js }
   end
 
   def invoice_number_format
+
+  end
+
+  def invoice_item_format
 
   end
 

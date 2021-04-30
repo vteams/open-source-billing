@@ -22,7 +22,7 @@
     <%  items.each do |item| %>
       <tr class="invoice-pdf-row">
         <td class="align_left"><%= @num+=1 %></td>
-        <td class="description"><%= "#{item.item_name}: #{item.item_description}" %></td>
+        <td class="description"><%= "#{item.formatted_invoice_item}" %></td>
         <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: invoice.currency.code) %></td>
         <td class="center-align"><%= item.item_quantity.to_f %></td>
         <% if invoice.has_tax_one? %>

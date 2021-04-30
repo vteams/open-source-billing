@@ -63,5 +63,12 @@ class InvoiceLineItem < ApplicationRecord
     item_tax_amount + item_total
   end
 
+  def formatted_invoice_item
+    param_values = {
+      'item_name' => (self.item_name),
+      'item_description' => (self.item_description)
+    }
+    Settings.invoice_item_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
+  end
 
 end

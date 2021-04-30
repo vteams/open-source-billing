@@ -426,6 +426,11 @@ CUSTOM_FIELDS = {
             {label: 'Invoice Month', token: '{{invoice_month}}'},
             {label: 'Invoice Day', token: '{{invoice_day}}'},
             {label: 'Company Abbreviation', token: '{{company_abbreviation}}'}
+        ],
+    'Invoice Line Item Format' =>
+        [
+            {label: 'Item Name', token: '{{item_name}}'},
+            {label: 'Item Description', token: '{{item_description}}'}
         ]
 }
 
