@@ -78,7 +78,6 @@ class ClientsController < ApplicationController
       format.js
       format.json { render :json => @client }
     end
-
   end
 
   # GET /clients/1/edit

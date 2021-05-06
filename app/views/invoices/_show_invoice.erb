@@ -2,7 +2,7 @@
   <div class="invoice_template">
     <div class="new-invoice-holder invoice-position">
       <% if @invoice.status == 'paid' %>
-        <%= image_tag("paid-image.png", size: '150x100', class: 'paid-logo') %>
+        <%= image_tag("paid.png", size: '150x100', class: 'paid-logo') %>
       <% end %>
       <% if request.format.html? %>
         <div class="new-invoice-header clearfix">

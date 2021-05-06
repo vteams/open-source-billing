@@ -455,7 +455,7 @@ class InvoicesController < ApplicationController
 
   def client_params
     params[:invoice].require(:client_attributes).permit(:address_street1, :address_street2, :business_phone,
-                                                       :city,:country, :fax, :organization_name, :postal_zip_code,
+                                                       :city, :country, :fax, :organization_name, :postal_zip_code,
                                                         :province_state, :email, :home_phone, :first_name,
                                                         :last_name, :mobile_number, :billing_email, :vat_number
     )

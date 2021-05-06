@@ -6088,12 +6088,12 @@ margin-bottom: 20px;
   position: absolute;
   right: 0;
   left: 0;
-  bottom: 0;
-  top: 0;
-  margin: auto;
+  bottom: 10%;
+  margin-left: auto;
   opacity: 0.2;
-  width: 50%;
+  width: 75%;
   height: auto;
+  z-index: 1;
 }
 .invoice-position{
   position: relative;
