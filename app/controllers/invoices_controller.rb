@@ -222,6 +222,7 @@ class InvoicesController < ApplicationController
   def clone
     @invoice = @invoice.clone
     render action: 'edit'
+    binding.pry
   end
 
   def filter_invoices

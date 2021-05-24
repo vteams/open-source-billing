@@ -6414,20 +6414,27 @@ li.collection-item a{
 }
 .company_name img{
   height: 30px;
-  width: 40px;
+  width: auto;
   //margin: 0 15px 5px;
 }
 #header .hdr-select-holder .company_select .select-dropdown li img {
-  margin: 0 15px 5px;
+  max-width: 75px;
+  max-height: 30px;
+  width: auto;
+  align-content: center;
 }
 #header .hdr-select-holder .company_select .select-dropdown li img {
-  margin: 0 15px 5px;
+  max-width: 75px;
+  max-height: 30px;
+  width: auto;
+  align-content: center;
 }
 .select-wrapper .dropdown-button input.select-dropdown {
   width: 55px;
 }
 #header .hdr-select-holder .select-wrapper.company_select {
   position: initial !important;
+  max-width: 100px !important;
 }
 #header .hdr-select-holder .currency-flag {
   //position: relative;

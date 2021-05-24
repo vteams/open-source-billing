@@ -7,6 +7,7 @@ class Company < ApplicationRecord
   skip_callback :commit, :after, :remove_logo!
 
   has_many :company_entities, :as => :parent
+  has_one_attached :avatar
   has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'
   has_many :tasks, :through => :company_entities, :source => :entity, :source_type => 'Task'
   has_many :staffs, :through => :company_entities, :source => :entity, :source_type => 'Staff'

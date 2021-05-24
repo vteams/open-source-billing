@@ -79,7 +79,6 @@ class ItemsController < ApplicationController
       format.js
       format.json { render :json => @item }
     end
-
   end
 
   # GET /items/1/edit
@@ -88,7 +87,6 @@ class ItemsController < ApplicationController
     authorize @item
     respond_to do |format|
       format.js
-
     end
   end
 

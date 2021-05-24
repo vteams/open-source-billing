@@ -11,7 +11,7 @@
       <div class="header-center">
         <div class="hdr-select-holder intro dashboard-index-false-intro header-intro" data-intro='You can select any company from here'>
           <% company = Company.find(current_user.current_company) %>
-          <div class="company_name"><%= link_to (company.present? && company.logo.present?) ? image_tag(company.logo_url, class: 'logo-link')  : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link'  %> &nbsp;</div>
+          <div class="company_name"><%= link_to (company.present? && company.logo.present?) ? image_tag(company.logo_url, class: 'logo-link') : image_tag(asset_url('company_icon.png')), 'javascript:void(0)', class: 'logo-link' %> &nbsp;</div>
           <select class="company_select fix-cursor-pointer">
             <option value="" disabled selected><%= get_company_name%></option>
             <% filter_select_by_companies.each do |company| %>
