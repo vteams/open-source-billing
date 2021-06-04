@@ -23,8 +23,13 @@
         </div>
       <% end %>
       <div class="info-section clearfix container company-info-section">
-        <div style="text-align: center; width: 92%" class="company_resize_logo">
-          <%= image_tag @invoice.company.logo.url if @invoice.company.logo.url.present? %>
+        <div class="row" style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start;">
+          <div class="col-lg-6 company_resize_logo">
+            <%= image_tag @invoice.company.logo.url if @invoice.company.logo.url.present? %>
+          </div>
+          <div class="col-lg-3" style="margin-left: 10%;">
+            <%= Settings.invoice_header_text if Settings.invoice_header_text.present? %>
+          </div>
         </div>
         <div class="info-left-section">
           <%= render partial: 'company_contact_info', locals: {company: @invoice.company} %>
@@ -131,7 +136,8 @@
           <br/>
         </div>
         <div class="clearfix"></div>
-        <p class="report-copyrights"><%= t('views.invoices.this_invoice_was_sent_using') %> <%= link_to image_tag("m-bottom-logo.jpg", class: 'responsive-img'), 'http://opensourcebilling.org/' %></p>
+        <p class="report-copyrights"><%= Settings.invoice_footer_text if Settings.invoice_footer_text.present? %></p>
+<!--        <p class="report-copyrights"><%#= t('views.invoices.this_invoice_was_sent_using') %> <%#= link_to image_tag("m-bottom-logo.jpg", class: 'responsive-img'), 'http://opensourcebilling.org/' %></p>-->
         <br/>
       </div>
     </div>

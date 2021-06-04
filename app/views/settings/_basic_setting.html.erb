@@ -69,10 +69,21 @@
                                                            value: Settings.invoice_number_format, readonly: true}, label: t('Invoice Number Format'),
                       wrapper_html: { class: 'input-field col s12 intro settings-index-false-intro', :"data-intro" => 'Here you can set the invoice number format for your application', "data-step" => "9" }, label_html: { class: 'active' }%>
           <%= link_to raw('<i class="material-icons">create</i>'), invoice_number_format_settings_path, class: 'invoice-number-format-btn', remote: true %>
+
           <%= f.input :invoice_item_format, input_html: {name: 'invoice_number_format', id: 'invoice_number_format',
                                                            value: Settings.invoice_item_format, readonly: true}, label: t('Invoice Item Format'),
                       wrapper_html: { class: 'input-field col s12 intro settings-index-false-intro settings_invoice_number_format', :"data-intro" => 'Here you can set the invoice number format for your application', "data-step" => "9" }, label_html: { class: 'active' }%>
           <%= link_to raw('<i class="material-icons">create</i>'), invoice_item_format_settings_path, class: 'invoice-item-format-btn', remote: true %>
+
+          <%= f.input :invoice_header_text, input_html: {name: 'invoice_header_text', id: 'invoice_header_text',
+                                                         value: Settings.invoice_header_text.present? ? Settings.invoice_header_text : '{{invoice_header_text}}', readonly: true}, label: "Invoice Header Text",
+                      wrapper_html: { class: 'input-field col s12 intro settings-index-false-intro setting_invoice_header_text', :"data-intro" => 'Here you can set the invoice header text for your application', "data-step" => "9" }, label_html: { class: 'active' }%>
+          <%= link_to raw('<i class="material-icons">create</i>'), invoice_header_text_settings_path, class: 'invoice-header-text-btn', remote: true %>
+
+          <%= f.input :invoice_footer_text, input_html: {name: 'invoice_footer_text', id: 'invoice_footer_text',
+                                                         value: Settings.invoice_footer_text.present? ? Settings.invoice_footer_text : '{{invoice_footer_text}}', readonly: true}, label: "Invoice Footer Text",
+                      wrapper_html: { class: 'input-field col s12 intro settings-index-false-intro setting_invoice_footer_text', :"data-intro" => 'Here you can set the invoice header text for your application', "data-step" => "9" }, label_html: { class: 'active' }%>
+          <%= link_to raw('<i class="material-icons">create</i>'), invoice_footer_text_settings_path, class: 'invoice-footer-text-btn', remote: true %>
 
         </div>
       <% end %>

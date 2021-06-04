@@ -41,6 +41,13 @@ class SettingsController < ApplicationController
     if params[:invoice_item_format].present?
       Settings.invoice_item_format = params[:invoice_item_format]
     end
+    if params[:invoice_header_text].present?
+      Settings.invoice_header_text = params[:invoice_header_text]
+    end
+    if params[:invoice_footer_text].present?
+      Settings.invoice_footer_text = params[:invoice_footer_text]
+    end
+    # binding.pry
     respond_to { |format| format.js }
   end
 

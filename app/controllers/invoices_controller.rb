@@ -42,6 +42,8 @@ class InvoicesController < ApplicationController
     @status = params[:status]
     @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
     @invoices = @current_company_invoices.with_clients.filter_params(params,@per_page).order("#{sort_column} #{sort_direction}")
+    @header_text = Settings.invoice_header_text
+    @footer_text = Settings.invoice_footer_text
     authorize @invoices
     respond_to do |format|
       format.html # index.html.erb

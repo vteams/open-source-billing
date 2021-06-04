@@ -5848,6 +5848,19 @@ a.invoice-item-format-btn i{
   font-size: 16px;
   margin-left: -14px;
 }
+
+a.invoice-header-text-btn i{
+  color: #b5b5b5;
+  font-size: 16px;
+  margin-left: -14px;
+}
+
+a.invoice-footer-text-btn i{
+  color: #b5b5b5;
+  font-size: 16px;
+  margin-left: -14px;
+}
+
 .settings-panel{
   position: relative;
 }
@@ -5858,6 +5871,26 @@ a.invoice-number-format-btn{
 a.invoice-item-format-btn{
   position: absolute;
   margin-top: 195px;
+}
+a.invoice-header-text-btn{
+  position: absolute;
+  margin-top: 268px;
+}
+a.invoice-footer-text-btn{
+  position: absolute;
+  margin-top: 341px;
+}
+.setting_invoice_header_text label{
+  top: 0;
+}
+.settings_invoice_header_text{
+  margin-top: 35px;
+}
+.setting_invoice_footer_text label{
+  top: 0;
+}
+.settings_invoice_footer_text{
+  margin-top: 35px;
 }
 .settings_invoice_number_format label{
   top: 0;
@@ -6740,9 +6773,10 @@ ul.permission-list.client-permissions-list{
   left: 30px;
 }
 .company_resize_logo img, .receipt-logo img{
-  max-width: 400px;
+  //max-width: 400px;
+  max-height: 200px;
   height: auto;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
 }
 #client_province_state{
   min-height: 56px;

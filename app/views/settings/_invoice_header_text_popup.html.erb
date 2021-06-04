@@ -1,0 +1,43 @@
+<div id="invoice_header_textModal" class="modal editableModal templateModal">
+  <div class="modal-content">
+    <div class="modal-header clearfix text-content">
+      <div class="modal-action-btn right">
+        <a href="#" onclick="$('.submit_invoice_format').click();" class="icon-done" title="<%= t('views.common.save') %>">
+          <i class="material-icons">done</i>
+        </a>
+        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+          <i class="material-icons close">close</i>
+        </a>
+      </div>
+      <h5 class="left">
+        Invoice Header Text
+      </h5>
+    </div>
+    <%= simple_form_for :settings, url: settings_path, remote: true do |f| %>
+      <div class="modal-body">
+        <div class="row">
+          <%= f.input :invoice_header_text, input_html: {name: 'invoice_header_text', id: 'invoice_header_text', value: Settings.invoice_header_text.present? ? Settings.invoice_header_text : '{{invoice_header_text}}' }, label: t('Invoice Header Text'),
+                      wrapper_html: { class: 'input-field col s12' }, label_html: { class: 'active' }%>
+
+          <%= f.submit '', class:  'btn_large submit_invoice_format hidden' %>
+        </div>
+<!--        <div class="row invoice-number-format-row">-->
+<!--          <div class="col s12">-->
+<!--            <nav class="templatsidebar">-->
+<!--              <h5><%#= t('views.email_templates.custom_fields') %>:</h5>-->
+<!--              <ul class="invoice-format-custom-fields">-->
+                <%# CUSTOM_FIELDS['Invoice Number Format'].each do |cf|%>
+<!--                  <li>-->
+<!--                    <strong><%#= cf[:label] %> </strong>-->
+<!--                    <span><%#= cf[:token] %> </span>-->
+<!--                  </li>-->
+                <%# end %>
+<!--              </ul>-->
+<!--            </nav>-->
+<!--          </div>-->
+
+<!--        </div>-->
+      </div>
+    <% end %>
+  </div>
+</div>

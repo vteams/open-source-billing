@@ -83,6 +83,8 @@ Osb::Application.routes.draw do
         resources :roles
         get :invoice_number_format
         get :invoice_item_format
+        get :invoice_header_text
+        get :invoice_footer_text
       end
     end
 
