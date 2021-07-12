@@ -23,11 +23,11 @@
         </div>
       <% end %>
       <div class="info-section clearfix container company-info-section">
-        <div class="row" style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start;">
-          <div class="col-lg-6 company_resize_logo">
+        <div class="row">
+          <div class="info-left-section company_resize_logo">
             <%= image_tag @invoice.company.logo.url if @invoice.company.logo.url.present? %>
           </div>
-          <div class="col-lg-3" style="margin-left: 10%;">
+          <div class="info-right-section">
             <%= Settings.invoice_header_text if Settings.invoice_header_text.present? %>
           </div>
         </div>

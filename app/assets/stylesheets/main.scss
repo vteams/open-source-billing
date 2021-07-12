@@ -6120,11 +6120,10 @@ margin-bottom: 20px;
 .paid-logo{
   position: absolute;
   right: 0;
-  left: 0;
-  bottom: 10%;
-  margin-left: auto;
+  left: 30%;
+  bottom: 32%;
   opacity: 0.2;
-  width: 75%;
+  width: 40%;
   height: auto;
   z-index: 1;
 }
@@ -6774,9 +6773,8 @@ ul.permission-list.client-permissions-list{
 }
 .company_resize_logo img, .receipt-logo img{
   //max-width: 400px;
-  max-height: 200px;
-  height: auto;
-  margin-bottom: 40px;
+  height: 30px;
+  margin-bottom: 25px;
 }
 #client_province_state{
   min-height: 56px;

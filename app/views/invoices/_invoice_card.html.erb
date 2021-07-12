@@ -76,6 +76,11 @@
               <%= link_to raw("<i class='material-icons'>cancel</i> Void"), invoice.status.eql?('void') ? 'javascript:void(0);' : {controller: 'invoices', action: 'void_invoice', id: invoice.id},
                           title: 'Void',data: { confirm: 'Are you sure?', text: "This invoice will be cancelled"}, remote: true %>
             </li>
+            <li class="<%= 'disable_payment' if invoice.status.eql?('unpaid') %>">
+              <%= link_to raw("<i class='material-icons'>history</i>Payment History"),
+                          invoice_payment_history_payments_path(invoice_id: invoice.id),
+                          remote: true, title: 'Payment History' %>
+            </li>
           </ul>
       <% end %>
     </div>

@@ -223,6 +223,16 @@ class PaymentsController < ApplicationController
     @invoice = Invoice.find(params[:id])
   end
 
+  def invoice_payment_history
+    @payment = Payment.where("invoice_id = ?", params[:invoice_id])
+    # binding.pry
+    respond_to do |format|
+      format.js { render 'invoice_payment_history' }
+    end
+    # @payments = @payments.per(@per_page)
+    # @invoice = Invoice.find(params[:id])
+  end
+
   def delete_non_credit_payments
     Payment.delete_multiple(params[:non_credit_payments])
     #@payments = Payment.unarchived.page(params[:page]).per(@per_page)
