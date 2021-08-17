@@ -43,6 +43,7 @@ class InvoiceMailer < ApplicationMailer
   end
 
   def send_note_email(response_to_client, invoice, client, current_user)
+    binding.pry
     @@response_to_client = response_to_client
    # @response_to_client, @invoice, @clients, @current_user  = response_to_client, invoice , clients, current_user
     template = replace_template_body(current_user, invoice, 'Dispute Reply') #(logged in user,invoice,email type)
@@ -57,7 +58,6 @@ class InvoiceMailer < ApplicationMailer
                                    :date => Date.today
                                })
     mail(to: client.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
-
   end
 
   def soft_payment_reminder_email(invoice_id)

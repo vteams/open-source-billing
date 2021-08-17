@@ -543,7 +543,7 @@ h6 {
 #side-nav {
   background: #09b8e2;
   width: 80px;
-  position: fixed;
+  position: absolute;
   margin-right: 30px;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -554,7 +554,7 @@ h6 {
 
 @media only screen and (max-height: 645px) {
   #side-nav{
-    height: calc(110vh - 120px) !important;
+    height: calc(172vh) !important;
   }
 }
 
@@ -717,11 +717,13 @@ h6 {
   margin: 0 26px 0 11px; }
 #side-nav .side-menu li a span {
   display: inline-block;
-  vertical-align: top; }
+  vertical-align: top;
+  visibility: hidden;}
 #side-nav .side-menu li a:empty {
   display: none; }
 #side-nav .side-menu li a span {
-  padding-top: 3px; }
+  padding-top: 3px;
+  visibility: hidden;}
 #side-nav .side-menu li:hover a, #side-nav .side-menu li.active a {
   background: #05a4d8;
   text-decoration: none;
@@ -735,7 +737,7 @@ h6 {
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s;
-  z-index: 9; }
+  z-index: 9;}
 #side-nav.side-show .dropdown .caret {
   color: #fff; }
 #side-nav.side-show .side-menu li a {
@@ -743,7 +745,8 @@ h6 {
 #side-nav.side-show .side-menu li a span {
   display: inline-block;
   vertical-align: top;
-  padding-top: 3px; }
+  padding-top: 3px;
+  visibility: visible;}
 #side-nav.side-show .side-menu .mCSB_inside > .mCSB_container {
   margin-right: 0; }
 #side-nav.side-show .profile-info {

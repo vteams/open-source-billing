@@ -347,6 +347,8 @@ Osb::Application.routes.draw do
       collection do
         post 'import_freshbooks_data', as: 'import_freshbooks_data'
         post 'import_quickbooks_data', as: 'import_quickbooks_data'
+        post 'import_invoiceninja_data', as: 'import_invoiceninja_data'
+        get 'invoice_ninja' => 'import_data#invoice_ninja'
         get 'select_qb_data', as: 'select_qb_data'
         get :authenticate
         get :oauth_callback

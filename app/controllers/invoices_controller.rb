@@ -364,7 +364,10 @@ class InvoicesController < ApplicationController
 
   def send_invoice
     @invoice.send_invoice(current_user, params[:id])
-    respond_to {|format| format.js}
+    respond_to do |format|
+      format.js
+    end
+    # binding.pry
   end
 
   def stop_recurring

@@ -42,7 +42,7 @@
                       <%= link_to raw("<i class='material-icons'>delete</i>"), OSB::CONFIG::DEMO_MODE ? 'javascript:void(0):' : sub_user_path(user), method: :delete,
                                       data: {confirm: t('helpers.messages.confirm'),
                                              success: t('views.users.bulk_delete')},
-                                      class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.edit') %>
+                                      class: "edit_invoice_icon #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", title: t('helpers.links.delete') %>
                     <% end %>
                 </td>
               </tr>

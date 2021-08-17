@@ -43,6 +43,8 @@
           <div class="paymentInfo">
             <strong><strong class="invoice_total_strong" currency="<%= Currency.find(invoice_selected_currency(f.object)).code %>"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
+              <%# binding.pry %>
+
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
                           include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
 
@@ -79,7 +81,7 @@
 
                         <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
                                      wrapper_tag: :small, as: :string %>
-                        <!--                        <span><i class="material-icons calendar-icon">date_range</i></span>-->
+                        <!--                        <span><i class="material-icons calendar-icon">date_range</i></spa n>-->
                       </small>
                     </span>
                 </div>
@@ -135,10 +137,11 @@
           <th class="item_quantity_width center-align"><%= t('views.items.quantity') %></th>
           <th class="item_tax_width center-align"><%= t('views.common.tax') %> 1</th>
           <th class="item_tax_width center-align"><%= t('views.common.tax') %> 2</th>
-          <th class="item_total_width align_right"><%= t('views.common.total') %></th>
+          <th class="item_total_width center-align"><%= t('views.common.total') %></th>
         </tr>
         </thead>
         <tbody id="invoice_line_items_tbl" class="invoice-line-items-table">
+        <%#binding.pry%>
         <%= f.simple_fields_for :invoice_line_items do |invoice_line_item| %>
           <%= render 'invoice_line_item_fields', f: invoice_line_item, count: invoice_line_item.index %>
         <% end %>
@@ -185,13 +188,13 @@
           <div class="new-invoice-footer-row taxes_total values"></div>
           <strong class="invoice-total-title bottom">
             <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
-            <span><%= label_tag '', '0', :id => 'invoice_total_tax', :class => 'net_total_value' %></span>
+            <span><%= label_tag '', '0', :id => 'invoice_paid_lbl', :class => 'net_total_value' %></span>
           </strong>
 
           <% if invoice.persisted? %>
             <strong class="invoice-total-title bottom">
               <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
-              <span><%= label_tag '', number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  invoice.currency.code ), :id => '', :class => 'net_total_value' %></span>
+              <span><%= label_tag '', number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.code), :id => 'invoice_paid_lbl', :class => 'net_total_value' %></span>
             </strong>
           <% end %>
           <strong class="invoice-total-title bottom">

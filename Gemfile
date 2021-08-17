@@ -121,3 +121,4 @@ gem 'activerecord', '~> 6.0.2.2'
 gem "webpacker"
 gem 'hammerjs-rails'
 gem 'faraday', '1.0.1'
+gem 'rack-cors', '~> 1.1', '>= 1.1.1'

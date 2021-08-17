@@ -375,6 +375,11 @@ module InvoicesHelper
     end
   end
 
+  def selected_currency_symbol(id)
+    currency = Currency.find(id)
+    return currency.code
+  end
+
   def filters_status_select_options
     statuses = [
         [t('views.common.active'), 'active'],

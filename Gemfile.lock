@@ -132,7 +132,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     copyright-header (1.0.15)
       github-linguist (~> 2.6)
@@ -284,7 +284,7 @@ GEM
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.9.1)
+    loofah (2.11.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -297,7 +297,7 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.1.0)
-    mini_portile2 (2.5.1)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     momentjs-rails (2.11.1)
       railties (>= 3.1)
@@ -320,8 +320,8 @@ GEM
     net-ssh (6.1.0)
     netrc (0.11.0)
     nio4r (2.5.7)
-    nokogiri (1.11.3)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.1)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth (0.4.7)
     oauth2 (1.4.3)
@@ -622,6 +622,7 @@ DEPENDENCIES
   pundit
   qbo_api
   quickbooks-ruby
+  rack-cors (~> 1.1, >= 1.1.1)
   rails (~> 6.0.2, >= 6.0.2.2)
   rails-settings-cached (= 0.6.6)
   railties (= 6.0.2.2)

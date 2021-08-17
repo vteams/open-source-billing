@@ -1,4 +1,4 @@
-class @Import
+class window.Import
 
   applyPopover = (elem,position,corner,message) ->
     console.log message
@@ -49,3 +49,4 @@ class @Import
 
     $("#freshbooks_account_url, #freshbooks_api_token").on 'keypress', ->
         hidePopover($(this))
+exports.import = @Import
