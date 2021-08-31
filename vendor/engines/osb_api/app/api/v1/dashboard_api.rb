@@ -8,22 +8,47 @@ module V1
 
 
     resource :dashboard do
-      desc 'Returns recent activities'
+      desc 'Returns recent activities',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+
       get :recent_activities  do
         @recent_activity = Reporting::Dashboard.get_recent_activity
       end
 
-      desc 'Returns all payments'
+      desc 'Returns all payments',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
       get :payments do
         @current_company_payments = Payment.by_company(@current_user.current_company).joins(:currency).group('currencies.unit').sum('payments.payment_amount')
       end
 
-      desc 'Returns aged invoices'
+      desc 'Returns aged invoices',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
       get :aged_invoices  do
         @aged_invoices = Reporting::Dashboard.get_aging_data
       end
 
-      desc 'Returns current activities'
+      desc 'Returns current activities',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :current_invoices  do
         @current_invoices = Invoice.by_company(@current_user.current_company)
@@ -34,7 +59,13 @@ module V1
 
       end
 
-      desc 'Returns past invoices'
+      desc 'Returns past invoices',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :past_invoices  do
         @past_invoices = Invoice.by_company(@current_user.current_company)
@@ -43,7 +74,13 @@ module V1
                                    invoices.invoice_total, clients.organization_name, currencies.unit')
       end
 
-      desc 'Returns amount billed'
+      desc 'Returns amount billed',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :amount_billed  do
         @amount_billed = Invoice.by_company(@current_user.current_company).joins(:currency).group('currencies.unit').sum('invoices.invoice_total')
@@ -52,7 +89,13 @@ module V1
         amount_array
       end
 
-      desc 'Return amount billed in base currency'
+      desc 'Return amount billed in base currency',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :base_currency_amount_billed do
         total = Invoice.by_company(@current_user.current_company).sum('invoices.base_currency_equivalent_total').round(2).to_s
@@ -68,7 +111,13 @@ module V1
         base_currency_invoices
       end
 
-      desc 'Return ytd income in base currency'
+      desc 'Return ytd income in base currency',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :base_currency_ytd_income do
         total = Invoice.by_company(@current_user.current_company).joins(:payments).where('extract(year from payments.created_at) = ?', Date.today.year).sum('invoices.base_currency_equivalent_total').round(2).to_s
@@ -76,13 +125,25 @@ module V1
         total+' '+currency
       end
 
-      desc 'Returns outstanding invoices'
+      desc 'Returns outstanding invoices',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :outstanding_invoices  do
         @outstanding_invoices = Reporting::Dashboard.get_outstanding_invoices
       end
 
-      desc 'Returns year total income'
+      desc 'Returns year total income',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :ytd_income  do
         @ytd_income = Payment.by_company(@current_user.current_company).in_year(Date.today.year).joins(:currency).group('currencies.unit').sum('payments.payment_amount')
@@ -91,6 +152,14 @@ module V1
         amount_array
       end
 
+      desc 'Returns year total income',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+
       get :invoices_graph do
         @invoices_graph = Invoice.by_company(@current_user.current_company).where('invoices.created_at > ?', 6.months.ago)
             .joins(:currency).group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').order('invoices.created_at asc').sum('invoices.invoice_total')
@@ -98,6 +167,14 @@ module V1
         @invoices_graph.each { |k,v| invoices_graph << {currency: k[0], month: k[1], amount: v} }
         invoices_graph
       end
+
+      desc 'Returns year total income',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
 
       get :payments_graph do
         @payments_graph = Payment.by_company(@current_user.current_company).where('payments.payment_date > ?', 6.months.ago)
@@ -108,6 +185,14 @@ module V1
         payments_graph
       end
 
+      desc 'Returns year total income',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+
       get :monthly_invoices_payments do
         @monthly_invoices = Invoice.by_company(@current_user.current_company).where('created_at > ?', 6.months.ago).group('MONTHNAME(invoices.created_at)').order('created_at asc').count
         @monthly_payments = Payment.by_company(@current_user.current_company).where('created_at > ?', 6.months.ago).group('MONTHNAME(payments.created_at)').order('created_at asc').count
@@ -116,6 +201,14 @@ module V1
         keys.each { |k| @monthly_invoices_payments << {month: k ,invoices: @monthly_invoices[k], payments: @monthly_payments[k]} }
         @monthly_invoices_payments
       end
+
+      desc 'Returns recent activity',
+        headers: {
+          "Access-Token" => {
+            description: "Validates your identity",
+            required: true
+          }
+        }
 
       get :recent_activity do
         invoices = Invoice.select('client_id, invoices.currency_id, invoice_total, invoices.created_at')

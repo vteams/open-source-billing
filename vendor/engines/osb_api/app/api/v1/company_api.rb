@@ -10,6 +10,14 @@ module V1
 
       before {current_user}
 
+      desc 'Return  companies',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
+
       get :get_companies do
         @accounts = @current_user.accounts
         @accounts.each do |account|
@@ -17,12 +25,24 @@ module V1
         end
       end
 
-      desc 'Return  companies'
+      desc 'Return  companies',
+           headers: {
+             "Access-Token" => {
+               description: "Validates your identity",
+               required: true
+             }
+           }
       get do
         @current_user.current_account.companies
       end
 
-      desc 'Fetch current company'
+      desc 'Fetch current company',
+          headers: {
+          "Access-Token" => {
+            description: "Validates your identity",
+            required: true
+          }
+        }
 
       get 'current_company' do
         Company.find_by(id: @current_user.current_company)

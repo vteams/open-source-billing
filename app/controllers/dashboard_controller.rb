@@ -51,7 +51,7 @@ class DashboardController < ApplicationController
   def prepare_charts_data
     @current_company_invoices = Invoice.by_company(current_company).joins(:currency)
     @current_company_payments = Payment.by_company(current_company).joins(:currency)
-
+    # binding.pry
     @current_company_id = get_company_id
     @current_company = Company.find @current_company_id
     @currenct_company_base_currency = @current_company.base_currency
@@ -76,6 +76,7 @@ class DashboardController < ApplicationController
     currencies.each do |currency|
       5.downto(0) do |n|
         month = Date::MONTHNAMES[(Date.today - n.months).month]
+        # binding.pry
         invoices_chart_data[[currency, month]].nil? ? @invoices_chart_data.merge!({[currency, month] => 0.0}) : @invoices_chart_data.merge!({[currency, month] => invoices_chart_data[[currency, month]]})
       end
     end

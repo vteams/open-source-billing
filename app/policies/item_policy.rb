@@ -36,7 +36,6 @@ class ItemPolicy < ApplicationPolicy
     return true if permission.can_delete?
   end
 
-
   class Scope < Scope
     def resolve
       scope.all
