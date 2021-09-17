@@ -198,6 +198,6 @@ Contact Information
 Mia Mian
 +1 (858) 586 7777
 
-E-mail: <mia@presstigers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstigers.com> | <saadat@presstigers.com> | <support@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>
