@@ -110,4 +110,17 @@ module ClientsHelper
   def qb_client_email?(client_email)
     client_email.present? && client_email['Address'].present?
   end
+
+  def total_payment_recieved
+    total_payment = 0
+    # binding.pry
+    if @clients == nil
+      total_payment = total_payment
+    else
+      @clients.each do |client|
+        total_payment = total_payment + client.payments_received
+      end
+    end
+    total_payment
+  end
 end

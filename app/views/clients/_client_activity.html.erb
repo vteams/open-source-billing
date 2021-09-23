@@ -11,7 +11,8 @@
         <i class="material-icons right-bar-help-icon" title="<%= t('views.clients.active_clients_tooltip') %>">help_outline</i>
         <span id="actives">(<%= get_count(params.merge(status: 'unarchived', user: current_user, current_company: session['current_company'])) %>)</span>
       </h5>
-      <div class="amount"><%= number_to_currency(@client_activity[:active_clients_total], unit: default_currency_unit) %></div>
+      <div class="amount"><%= number_to_currency(total_payment_recieved, unit: default_currency_unit) %></div>
+
       <% @client_activity[:active_client_progress].each do |date, amount| %>
           <div class="agedWrapper">
             <div class="aged-ar">

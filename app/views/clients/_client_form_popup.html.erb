@@ -43,7 +43,7 @@
 
             <div id="client_credit"></div>
             <div class="input-field col s12 m4">
-              <% @readonly = is_client_credit_payments @client %>
+              <%# @readonly = is_client_credit_payments @client %>
 
 
               <% if @client.new_record? %>
@@ -54,6 +54,7 @@
                 <%= label_tag :calculated_credit, t('views.clients.available_credit'), class: 'active' %>
               <% end %>
             </div>
+            <%# binding.pry %>
           </div>
           <%= render 'client_contact_details', f: f %>
 

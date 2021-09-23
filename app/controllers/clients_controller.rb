@@ -36,6 +36,7 @@ class ClientsController < ApplicationController
     @clients = Client.get_clients(params.merge(get_args))
     @clients = Kaminari.paginate_array(@clients).page(params[:page]).per(@per_page)
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
+    # binding.pry
     authorize Client
 
     respond_to do |format|
@@ -102,6 +103,7 @@ class ClientsController < ApplicationController
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @client)
 
+    binding.pry
     #@client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
 
     respond_to do |format|
@@ -119,6 +121,7 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
+    binding.pry
     @client = Client.find(params[:id])
     authorize @client
     if Client.is_exists?(params[:client][:email], get_association_obj) && @client.email != params[:client][:email]
@@ -259,7 +262,7 @@ class ClientsController < ApplicationController
                                    :company_size, :country, :fax, :industry, :internal_notes,
                                    :organization_name, :postal_zip_code, :province_state,
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,
-                                   :mobile_number, :client_contacts_attributes, :archive_number,
+                                   :mobile_number, :client_contacts_attributes, :archive_number, :available_credit,
                                    :archived_at, :deleted_at,:currency_id, :billing_email, :vat_number,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )

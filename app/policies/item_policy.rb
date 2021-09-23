@@ -26,7 +26,7 @@ class ItemPolicy < ApplicationPolicy
   end
 
   def update?
-    # binding.pry
+    user=User.current if user.nil?
     permission = user.role.permissions.item
     return true if permission.can_update?
   end

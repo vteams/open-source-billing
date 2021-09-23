@@ -38,7 +38,7 @@ class window.Client
 
     jQuery('#calculated_credit').change ->
       client_credit = jQuery(this)
-      field = "<input id='available_credit' name='available_credit' type='hidden' value='#{client_credit.val()}'>"
+      field = "<input id='available_credit' name='client[available_credit]' type='hidden' value='#{client_credit.val()}'>"
       jQuery('#client_credit').html(field)
 
     jQuery("#client_organization_name, #client_mobile_number ,#client_business_phone, #client_email, #client_first_name, #client_last_name").on "blur keyup", ->

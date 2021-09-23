@@ -127,10 +127,16 @@ class PaymentsController < ApplicationController
     ids = params[:invoice_ids]
     @payments = []
     ids = ids.split(",") if ids and ids.is_a?(String)
-    ids.each do |inv_id|
-      company_id = Invoice.find(inv_id).company_id
-      @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
-      authorize Payment, :create?
+
+    if (ids == nil)
+      flash[:notice] = t('views.payments.no_invoice_selected')
+      redirect_back(fallback_location: invoices_unpaid_invoices_path)
+    else
+      ids.each do |inv_id|
+        company_id = Invoice.find(inv_id).company_id
+        @payments << Payment.new({:invoice_id => inv_id, :invoice_number =>Invoice.find(inv_id).invoice_number , :payment_date => Date.today.to_date.strftime(get_date_format), :company_id  => company_id })
+        authorize Payment, :create?
+      end
     end
 
     @payment_activity = Reporting::PaymentActivity.get_recent_activity(filter_by_company(Payment.all))

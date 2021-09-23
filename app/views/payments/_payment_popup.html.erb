@@ -15,7 +15,7 @@
         <span>Invoice : <small> <%= invoice.invoice_date rescue "" %> </small></span>
         <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
         <div class="paymentInfo">
-          <strong><%= "#{number_to_currency(payment.payment_amount, unit: invoice.currency.unit)} " rescue '' %> </strong>
+          <strong><%= "#{number_to_currency(-1 * payment.payment_amount, unit: invoice.currency.unit)} " rescue '' %> </strong>
         </div>
       </div>
       <% if invoice && invoice.company.logo_url.present? %>

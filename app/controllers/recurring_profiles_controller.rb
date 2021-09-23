@@ -84,6 +84,7 @@ class RecurringProfilesController < ApplicationController
     @recurring_profile.sent_invoices = 0
     @recurring_profile.company_id = get_company_id()
     @recurring_profile.create_line_item_taxes()
+    @recurring_profile.occurrences = params[:occurrences]
 
     respond_to do |format|
       if @recurring_profile.save
@@ -104,9 +105,9 @@ class RecurringProfilesController < ApplicationController
   # PUT /recurring_profiles/1.json
   def update
     @recurring_profile = RecurringProfile.find(params[:id])
-
     profile = Services::RecurringService.new(params.merge(user: current_user, profile: @recurring_profile))
     profile.update_invoice_schedule if profile.schedule_changed? and @recurring_profile.send_more?
+    # @recurring_profile.occurrences = params[:occurrences]
 
     respond_to do |format|
       @recurring_profile.company_id = get_company_id()

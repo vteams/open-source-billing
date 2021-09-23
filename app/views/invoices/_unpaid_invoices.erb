@@ -9,9 +9,13 @@
         <div class="modal-header clearfix text-content">
           <div class="modal-action-btn right">
             <% unless @invoices.blank? %>
-                <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
-                  <i class="material-icons" >done</i>
-                </a>
+                <% if @invoices.count == 0 %>
+
+                <% else %>
+                  <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
+                    <i class="material-icons" >done</i>
+                  </a>
+                <% end %>
             <% end %>
             <%= submit_tag'', class: 'btn_large payment_select_form hidden' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">

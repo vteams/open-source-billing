@@ -76,33 +76,36 @@
                   <!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
                   <span>
                       <small>
-            <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
+                  <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html:
+                    { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
                          input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
 
                         <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
                                      wrapper_tag: :small, as: :string %>
                         <!--                        <span><i class="material-icons calendar-icon">date_range</i></spa n>-->
                       </small>
-                    </span>
+                  </span>
                 </div>
-                <div class="invoice-input-holder">
+                <div id="how-often-tags" class="invoice-input-holder">
                   <%= rs.input :frequency, collection:
 
                     (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
                       [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
                                include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
-                               input_html: { class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
+                               input_html: { id: 'how-often', class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
                 </div>
+
                 <div class="custom-often hidden">
                   <span>Every</span>
                   <%= rs.input :frequency_repetition,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
                   <%= rs.input :frequency_type,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
                 </div>
-                <div class="invoice-input-holder">
+                <%# binding.pry %>
+                <div id="how-many" class="invoice-input-holder">
                   <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
                                collection: [['-1', 'Infinte'],
-                                            ['0', '<input class="numeric optional remaining_occurrences center-align occurrence_input" type="number" step="any" name="" value="" id="how_many_rec"> remaining'.html_safe, {'occurrence' => rs.object.occurrences}]],
-                               checked: rs.object.occurrences == -1 ? '-1' : '0',
+                                            [rs.object.occurrences, '<input class="numeric optional remaining_occurrences center-align occurrence_input" type="number" step="any" name="" value="occurrences" id="how_many_rec"> remaining'.html_safe, {'occurrence' => rs.object.occurrences}]],
+                               checked: rs.object.occurrences == -1 ? '-1' : rs.object.occurrences,
                                label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button occurrence_input'},
                                boolean_style: :inline %>
                   <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
@@ -111,8 +114,11 @@
                                              onkeydown: 'javascript: return event.keyCode == 69 ? false : true',
                                              id: 'how_many_rec' }
                   %>
+
                 </div>
                 <% draft_invoice = invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
+
+                <hr class="solid">
                 <%= rs.input :delivery_option, as: :radio_buttons, label: false,
                              collection: [['send_invoice', t('views.invoices.send_invoice_automatically')],
                                           ['draft_invoice', t('views.invoices.create_draft_and_send_manully')]],
@@ -124,7 +130,7 @@
               </div>
             <% end %>
             </div>
-      </div>
+        </div>
     </div>
     <div class="new-invoice-table-holder main-invoice ">
       <table id="invoice_grid_fields" class="invoice_grid_fields invoice-grid-table">
@@ -141,7 +147,6 @@
         </tr>
         </thead>
         <tbody id="invoice_line_items_tbl" class="invoice-line-items-table">
-        <%#binding.pry%>
         <%= f.simple_fields_for :invoice_line_items do |invoice_line_item| %>
           <%= render 'invoice_line_item_fields', f: invoice_line_item, count: invoice_line_item.index %>
         <% end %>
@@ -155,9 +160,10 @@
       <div class="right-section right">
         <div class="invoice-total-left">
           <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
-          <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('views.common.discount'),
+          <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('Discount(%)'),
                       input_html: { class: 'discount_select inline-select small-select invoice-client-select', id: 'discount_type' },
                       wrapper_html: { class: 'new-invoice-footer-row' } %>
+
           <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
                       label: t('views.common.tax'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
                       input_html: { class: 'discount_select inline-select small-select form_select_2 invoice_tax_select'} %>

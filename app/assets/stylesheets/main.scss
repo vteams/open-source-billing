@@ -4531,7 +4531,14 @@ html {
   top: 3px;
   color: #b5b5b5; }
 .new-invoice-holder .info-section .info-right-section .show-me .invoice-input-holder {
-  max-width: 300px; }
+  max-width: 300px;
+  border-top: 1px solid grey;
+}
+
+hr.solid {
+  border-top: 1px solid #bbb;
+}
+
 .new-invoice-holder .info-section .info-right-section .show-me .invoice-input-holder:after {
   display: block;
   content: " ";

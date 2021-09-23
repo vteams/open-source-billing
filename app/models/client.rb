@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 class Client < ApplicationRecord
   # Include default clients modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -223,7 +224,7 @@ class Client < ApplicationRecord
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     company_clients = company_clients.client_id(params[:client_id]) if params[:client_id].present?
-
+    # binding.pry
     # get the account
     account = params[:user].current_account
 
@@ -285,6 +286,14 @@ class Client < ApplicationRecord
       payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount).to_f
     end  unless invoices.blank?
     payments
+  end
+
+  def total_amount
+    total_payment = 0
+    self.clients.each do |client|
+      total_payment = total_payment + payments_received
+    end unless clients.blank?
+    total_payment
   end
 
   def amount_billed

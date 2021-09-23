@@ -114,6 +114,9 @@ class InvoicesController < ApplicationController
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
+    # binding.pry
+    # @recurring_schedule = RecurringSchedule.find()
+    RecurringSchedule.occurrences = params["invoice"]["recurring_schedule_attributes"]["occurrences"]
     assign_company_to_client if request.format.json?
     authorize @invoice
     respond_to do |format|
@@ -143,6 +146,7 @@ class InvoicesController < ApplicationController
                         end
     end
     @invoice.update_dispute_invoice(current_user, @invoice.id, params[:response_to_client], @notify) unless params[:response_to_client].blank?
+    # binding.pry
     respond_to do |format|
       if @invoice.client.nil?
         @invoice.client = Client.with_deleted.find_by(id: @invoice.client_id)
@@ -287,7 +291,9 @@ class InvoicesController < ApplicationController
     company_filter = company.present? ? "invoices.company_id=#{company}" : ""
     for_client = params[:for_client].present? ? "and client_id = #{params[:for_client]}" : ''
     @invoices = Invoice.joins(:client).where("(status != 'paid' or status is null) #{for_client}").where(company_filter).order('created_at desc')
-    respond_to { |format| format.js }
+    respond_to do |format|
+      format.js
+    end
   end
 
   def bulk_actions

@@ -153,7 +153,7 @@ $(document).ready ->
       if $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').html() == 'Custom'
         $('.custom-often').removeClass('hidden')
         $('.custom_frequency').on 'change', ->
-          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').attr('number_of_days', DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
+          $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').attr('number_of_days',DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
           $('#invoice_recurring_schedule_attributes_frequency').children('option:selected').val(DateFormats.get_next_issue_date($('#invoice_recurring_schedule_attributes_frequency_repetition').children('option:selected').val(),$('#invoice_recurring_schedule_attributes_frequency_type').children('option:selected').val()))
       else
         $('#invoice_recurring_schedule_attributes_frequency').children('option:contains("Custom")').removeAttr('number_of_days')
@@ -161,6 +161,22 @@ $(document).ready ->
         $('.custom-often').addClass('hidden')
 
   ),200
+
+  $('#how-often-tags').on 'change', ->
+    if $('#how-often-tags').children('option:selected')
+      jQuery ->
+      dateInput = new Date($('#next_issue_date').val());
+      dateInput.setDate(dateInput.getDate() + parseInt($('.invoice-input-holder').children('.invoice_recurring_schedule_frequency').children('#how-often').val()))
+      console.log("The month is: "+dateInput.getMonth()+1);
+      console.log("The date is: " +dateInput.getDate());
+      if (dateInput.getMonth()+1 > 9 || dateInput.getDate() > 9)
+        if (dateInput.getMonth()+1 > 9)
+          dateInput = dateInput.getFullYear()+'-'+(dateInput.getMonth()+1)+'-'+dateInput.getDate();
+        else
+          dateInput = dateInput.getFullYear()+'-0'+(dateInput.getMonth()+1)+'-'+dateInput.getDate();
+
+      $('#next_issue_date').val(dateInput);
+      console.log(dateInput);
 
   $('.occurrence_input').on 'change', ->
     if $(document.getElementsByClassName('occurrence_input')[1]).is(':checked')
