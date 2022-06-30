@@ -114,7 +114,6 @@ class InvoicesController < ApplicationController
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
-    # binding.pry
     # @recurring_schedule = RecurringSchedule.find()
     RecurringSchedule.occurrences = params["invoice"]["recurring_schedule_attributes"]["occurrences"]
     assign_company_to_client if request.format.json?

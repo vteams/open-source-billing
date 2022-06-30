@@ -103,9 +103,7 @@ class ClientsController < ApplicationController
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @client)
 
-    binding.pry
     #@client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
-
     respond_to do |format|
       if @client.save
         format.js
@@ -259,12 +257,12 @@ class ClientsController < ApplicationController
 
   def client_params
     params.require(:client).permit( :role_id, :address_street1, :address_street2, :business_phone, :city,
-                                   :company_size, :country, :fax, :industry, :internal_notes,
-                                   :organization_name, :postal_zip_code, :province_state,
-                                   :send_invoice_by, :email, :home_phone, :first_name, :last_name,
-                                   :mobile_number, :client_contacts_attributes, :archive_number, :available_credit,
-                                   :archived_at, :deleted_at,:currency_id, :billing_email, :vat_number,
-                                   client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
+                                   :company_size, :country, :fax, :industry, :internal_notes, :organization_name,
+                                   :postal_zip_code, :province_state, :province_state_us, :province_state_ca,
+                                   :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number,
+                                   :client_contacts_attributes, :archive_number, :available_credit, :archived_at,
+                                   :deleted_at,:currency_id, :billing_email, :vat_number,
+                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end
 

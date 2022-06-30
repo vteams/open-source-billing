@@ -194,7 +194,15 @@ class Invoice < ApplicationRecord
   end
 
   def self.get_next_invoice_number user_id
-    ((Invoice.with_deleted.maximum("id") || 0) + 1).to_s.rjust(5, "0")
+    current_company = Company.find invoice_current_user.current_company
+    current_company_name = current_company.company_name.downcase
+    if current_company_name.eql?("nextbridge fze")
+      invoice_count = current_company.invoices.count
+      "FZE-"+((invoice_count || 0) + 1).to_s.rjust(5, "0")
+    else
+      invoice_count = current_company.invoices.count
+      ((invoice_count || 0 ) + 1).to_s.rjust(5, "0")
+    end
   end
 
   def total
@@ -203,6 +211,10 @@ class Invoice < ApplicationRecord
 
   def duplicate_invoice
     (self.dup.invoice_line_items << self.invoice_line_items.map(&:dup)).save
+  end
+
+  def self.invoice_current_user
+    User.current
   end
 
   def generate_recurring_invoice(recurring)

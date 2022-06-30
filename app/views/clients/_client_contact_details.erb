@@ -18,10 +18,6 @@
     <%= f.input :country, collection: COUNTRY_LIST,prompt: t('views.common.select_a_country'),
                 input_html: { class: 'input-select client_select_2' }, wrapper_html: {class: 'col m3 s6 client-company'} %>
     <%= f.input :province_state, label: 'Province', wrapper_html: { class: 'input-field col s3 m3 country_state_text_field' } %>
-    <%= f.input :province_state, label: 'State', collection: US_STATES_LIST,prompt: t('views.common.select_a_country'),
-                input_html: { class: 'input-select client_select_2', name: 'client[province_state_us]' }, wrapper_html: {class: 'col m3 s6 us_state_dropdown'} %>
-    <%= f.input :province_state, label: 'State', collection: CANADA_STATES,prompt: t('views.common.select_a_country'),
-                input_html: { class: 'input-select client_select_2', name: 'client[province_state_ca]' }, wrapper_html: {class: 'col m3 s6 canada_state_dropdown'} %>
 
     <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| ["#{c.unit}",c.id] },
                 selected: (@client.currency_id.present? ? @client.currency_id : nil),
