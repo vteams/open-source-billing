@@ -197,11 +197,10 @@ class Invoice < ApplicationRecord
     current_company = Company.find invoice_current_user.current_company
     current_company_name = current_company.company_name.downcase
     if current_company_name.eql?("nextbridge fze")
-      invoice_count = current_company.invoices.count
-      "FZE-"+((invoice_count || 0) + 1).to_s.rjust(5, "0")
+      invoice_number = current_company.invoices.last.invoice_number.split('-') if current_company.invoices.present?
+      current_company.invoices.empty? ? "FZE-"+((0) + 1).to_s.rjust(5, "0") : "FZE-"+((invoice_number[1].to_i || 0 ) + 1).to_s.rjust(5, "0")
     else
-      invoice_count = current_company.invoices.count
-      ((invoice_count || 0 ) + 1).to_s.rjust(5, "0")
+      current_company.invoices.empty? ? ((0) + 1).to_s.rjust(5, "0") : ((current_company.invoices.last.invoice_number.to_i || 0 ) + 1).to_s.rjust(5, "0")
     end
   end
 
