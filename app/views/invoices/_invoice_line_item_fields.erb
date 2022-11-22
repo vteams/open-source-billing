@@ -26,7 +26,6 @@
   <td class="center-align tax-class">
     <%= f.select(:tax_2, options_for_select(load_line_item_taxes2(f.object), selected: f.object.tax_2), {prompt: t('views.taxes.select_tax_2'), include_blank: ''}, {'data-placeholder' => '', class: 'tax tax2 inline-select table-select invoice-client-select tax_select'}) %>
   </td>
-  <%# binding.pry %>
   <%# if f.object.id.present? %>
     <td id="total_items_unit" class="center-align">
       <%= label_tag 'line total', f.object.item_total_amount, :class => 'blank_input grid_medium item_total line_total' %>

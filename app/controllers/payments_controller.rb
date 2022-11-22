@@ -231,7 +231,6 @@ class PaymentsController < ApplicationController
 
   def invoice_payment_history
     @payment = Payment.where("invoice_id = ?", params[:invoice_id])
-    # binding.pry
     respond_to do |format|
       format.js { render 'invoice_payment_history' }
     end

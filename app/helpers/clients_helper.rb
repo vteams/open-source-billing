@@ -113,7 +113,6 @@ module ClientsHelper
 
   def total_payment_recieved
     total_payment = 0
-    # binding.pry
     if @clients == nil
       total_payment = total_payment
     else

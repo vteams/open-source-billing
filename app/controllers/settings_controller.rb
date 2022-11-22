@@ -47,7 +47,6 @@ class SettingsController < ApplicationController
     if params[:invoice_footer_text].present?
       Settings.invoice_footer_text = params[:invoice_footer_text]
     end
-    # binding.pry
     respond_to { |format| format.js }
   end
 
