@@ -278,6 +278,16 @@ Permission.create(role_id: Role.first.id, entity_type: "Taxes", can_read: true, 
 Permission.create(role_id: Role.first.id, entity_type: "Report", can_read: true)
 Permission.create(role_id: Role.first.id, entity_type: "Settings", can_read: true)
 
+Permission.create(role_id: Role.last.id, entity_type: "Invoice", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Estimate", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Time Tracking", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Payment", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Client", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Item", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Taxes", can_read: true, can_update: true, can_delete: true, can_create: true)
+Permission.create(role_id: Role.last.id, entity_type: "Report", can_read: true)
+Permission.create(role_id: Role.last.id, entity_type: "Settings", can_read: true)
+
 PaymentTerm.delete_all
 PaymentTerm.create(number_of_days: 10, description: "10 days")
 PaymentTerm.create(number_of_days: 7, description: "Weekly")
