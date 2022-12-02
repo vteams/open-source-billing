@@ -120,7 +120,6 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
-    # binding.pry
     authorize @item
     associate_entity(params, @item)
     respond_to do |format|

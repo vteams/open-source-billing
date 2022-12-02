@@ -43,7 +43,6 @@ class InvoiceMailer < ApplicationMailer
   end
 
   def send_note_email(response_to_client, invoice, client, current_user)
-    binding.pry
     @@response_to_client = response_to_client
    # @response_to_client, @invoice, @clients, @current_user  = response_to_client, invoice , clients, current_user
     template = replace_template_body(current_user, invoice, 'Dispute Reply') #(logged in user,invoice,email type)
