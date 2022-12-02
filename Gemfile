@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.1'
+ruby '2.7.6'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
 gem 'railties', '6.0.2.2'
 gem 'sprockets', '~> 4'
@@ -122,3 +122,5 @@ gem "webpacker"
 gem 'hammerjs-rails'
 gem 'faraday', '1.0.1'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
+gem 'delayed_job_active_record'
+gem 'rexml', '~> 3.2', '>= 3.2.4'
