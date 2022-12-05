@@ -345,6 +345,7 @@ GEM
       multi_json (~> 1.0)
       uuidtools (~> 2.1)
       xml-simple
+    pkg-config (1.5.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -429,7 +430,8 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rexml (3.2.5)
-    rmagick (2.15.4)
+    rmagick (5.1.0)
+      pkg-config (~> 1.4)
     rolify (5.1.0)
     roxml (4.1.1)
       activesupport (>= 4.0)
@@ -637,7 +639,7 @@ DEPENDENCIES
   responders
   rest-client (= 1.8.0)
   rexml (~> 3.2, >= 3.2.4)
-  rmagick (= 2.15.4)
+  rmagick
   rolify (= 5.1.0)
   roxml
   rspec-its (= 1.2.0)
