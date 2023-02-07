@@ -32,7 +32,6 @@
           <td class="center-align"><%= "#{Tax.with_deleted.find(item.tax_2).percentage}%" if item.tax_2.present?  %></td>
         <% end %>
         <td class="align_right"><%= number_to_currency(item.item_total_amount, unit: invoice.currency.code) %></td>
-        <%# binding.pry %>
       </tr>
     <% end %>
   </tbody>

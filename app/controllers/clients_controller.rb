@@ -36,7 +36,6 @@ class ClientsController < ApplicationController
     @clients = Client.get_clients(params.merge(get_args))
     @clients = Kaminari.paginate_array(@clients).page(params[:page]).per(@per_page)
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
-    # binding.pry
     authorize Client
 
     respond_to do |format|
@@ -119,7 +118,6 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
-    binding.pry
     @client = Client.find(params[:id])
     authorize @client
     if Client.is_exists?(params[:client][:email], get_association_obj) && @client.email != params[:client][:email]

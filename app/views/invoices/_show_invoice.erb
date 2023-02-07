@@ -54,7 +54,7 @@
               <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
               <% if @invoice.discount_percentage.present? %>
                 <div class="new-invoice-footer-row">
-                  <span><%= t('views.common.discount') %></span>
+                  <span><%= t('views.common.discount') %><%= @invoice.discount_type %></span>
                   <select class="inline-select small-select" disabled>
                     <option value="1"><%= @invoice.discount_percentage %><%= @invoice.discount_type %></option>
                   </select>

@@ -24,7 +24,6 @@ class ImportDataController < ApplicationController
   end
 
   def import_freshbooks_data
-    # binding.pry
     if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
       redirect_to settings_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else

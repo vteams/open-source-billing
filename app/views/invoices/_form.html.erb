@@ -43,7 +43,6 @@
           <div class="paymentInfo">
             <strong><strong class="invoice_total_strong" currency="<%= Currency.find(invoice_selected_currency(f.object)).code %>"></strong>
               <% selected_currency = invoice_selected_currency(f.object) %>
-              <%# binding.pry %>
 
               <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
                           include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
@@ -100,7 +99,6 @@
                   <%= rs.input :frequency_repetition,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
                   <%= rs.input :frequency_type,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
                 </div>
-                <%# binding.pry %>
                 <div id="how-many" class="invoice-input-holder">
                   <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
                                collection: [['-1', 'Infinte'],
