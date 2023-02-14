@@ -2,7 +2,7 @@
 OpenSourceBilling
 ===================
 
-[OpenSourceBilling](http://opensourcebilling.org/) is a simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v6.0.2.2. and Ruby v2.7.1. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
+[OpenSourceBilling](http://opensourcebilling.org/) is a simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v6.0.2.2. and Ruby v2.7.1. This document describes OSB application setup on Ubuntu 14.04 LTS machine and Windows OS 10.
 
 Features
 ---------
@@ -33,7 +33,7 @@ Caveats
 -------
 This is `2.0` release. You may contribute by having any suggestion or reporting the bugs you find.
 
-## Installation step
+## Installation step - Ubuntu
 ### Step-1. Dependencies
 #####  1.1 MySQL
 MySql is an open-source relational database management system. Run the following command to install database:
@@ -73,6 +73,38 @@ Run the following commands to install stable version:
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
 
     gem install bundler
+
+## Installation - Windows 
+
+### Step-1. Dependencies
+#####  1.1 MySQL
+Download Mysql libraries and dependencies from mysql windows installer
+**https://dev.mysql.com/downloads/windows/installer/5.7.html**
+
+#### 1.2 Git
+Git is version control system we used for OSB. Visit the following link to download git installer.
+After downloading please double click to open exe and follow the steps asked for installations.
+
+**https://git-scm.com/download/win**
+Make sure you download the correct file based on your OS bit system i.e 32 or 64. 
+### Step-2. Ruby Installation Using Ruby Installer
+
+#### 2.1 Ruby Installer
+To install ruby on windows operating system we need rubyinstaller. Since there is no ruby version control system for windows so have to
+download correct version from the link below. 
+
+Steps: 
+
+**First** -> Visit the link: https://rubyinstaller.org/downloads/
+
+**Second** -> Download ruby 2.7.1 from the options 
+
+**Third** -> After downloading installer open the package exe and follow the instructions to install ruby. 
+#### 2.2 Installing Bundler
+Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
+
+    gem install bundler
+
 
 ### Step-3. Configurations
 
@@ -198,6 +230,6 @@ Contact Information
 Mia Mian
 +1 (858) 586 7777
 
-E-mail: <mia@presstigers.com> | <saadat@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstigers.com> | <saadat@presstigers.com> | <support@presstigers.com>
 
 Homepage: <http://www.opensourcebilling.org/>
