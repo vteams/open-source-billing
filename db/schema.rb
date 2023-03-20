@@ -12,12 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2021_03_26_104143) do
 
-  create_table "account_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "account_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "account_id"
   end
 
-  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "org_name"
     t.string "country"
     t.string "street_address_1"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "trackable_type"
     t.bigint "trackable_id"
     t.string "owner_type"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
   end
 
-  create_table "api_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "api_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "access_token"
     t.datetime "expires_at"
     t.integer "user_id"
@@ -75,13 +75,13 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["user_id"], name: "index_api_keys_on_user_id"
   end
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "client_contacts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "client_contacts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "client_id"
     t.string "first_name"
     t.string "last_name"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "organization_name"
     t.string "email"
     t.string "first_name"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["role_id"], name: "index_clients_on_role_id"
   end
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "account_id"
     t.string "company_name"
     t.string "contact_name"
@@ -168,14 +168,14 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "due_date_period"
   end
 
-  create_table "companies_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "companies_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "company_id"
     t.index ["company_id"], name: "index_companies_users_on_company_id"
     t.index ["user_id"], name: "index_companies_users_on_user_id"
   end
 
-  create_table "company_email_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "company_email_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "template_id"
     t.integer "parent_id"
     t.string "parent_type"
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "company_entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "company_entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "entity_id"
     t.string "entity_type"
     t.integer "parent_id"
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "credit_payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "credit_payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "payment_id"
     t.integer "invoice_id"
     t.decimal "amount", precision: 10, scale: 2
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "credit_id"
   end
 
-  create_table "currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "title"
     t.string "code"
     t.string "unit"
@@ -209,7 +209,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "priority", default: 0
     t.integer "attempts", default: 0
     t.text "handler"
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "email_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "email_templates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "template_type"
     t.string "email_from"
     t.string "subject"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "bcc"
   end
 
-  create_table "estimates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "estimates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "estimate_number"
     t.datetime "estimate_date"
     t.string "po_number"
@@ -270,7 +270,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "tax_id"
   end
 
-  create_table "expense_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "expense_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -278,7 +278,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "expenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "expenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.float "amount"
     t.datetime "expense_date"
     t.integer "category_id"
@@ -296,7 +296,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "introductions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "introductions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "dashboard", default: false
     t.boolean "invoice", default: false
     t.boolean "new_invoice", default: false
@@ -326,7 +326,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["user_id"], name: "index_introductions_on_user_id"
   end
 
-  create_table "invoice_line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoice_line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "invoice_id"
     t.integer "item_id"
     t.string "item_name"
@@ -344,7 +344,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "estimate_id"
   end
 
-  create_table "invoice_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoice_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.integer "rate"
@@ -354,7 +354,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "invoice_number"
     t.datetime "invoice_date"
     t.string "po_number"
@@ -393,7 +393,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "billing_month"
   end
 
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "item_name"
     t.string "item_description"
     t.decimal "unit_cost", precision: 10, scale: 2
@@ -412,7 +412,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "line_item_taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "line_item_taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "invoice_line_item_id"
     t.decimal "percentage", precision: 10
     t.string "name"
@@ -424,7 +424,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "deleted_at"
   end
 
-  create_table "logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "project_id"
     t.integer "task_id"
     t.float "hours"
@@ -438,7 +438,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "user_id"
   end
 
-  create_table "mail_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "mail_configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "address"
     t.integer "port"
     t.string "authentication"
@@ -454,7 +454,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["company_id"], name: "index_mail_configs_on_company_id"
   end
 
-  create_table "oauth_access_grants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "oauth_access_grants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.integer "application_id", null: false
     t.string "token", null: false
@@ -466,7 +466,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
 
-  create_table "oauth_access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "oauth_access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "resource_owner_id"
     t.integer "application_id"
     t.string "token", null: false
@@ -480,7 +480,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
   end
 
-  create_table "oauth_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "oauth_applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "uid", null: false
     t.string "secret", null: false
@@ -491,14 +491,14 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "payment_terms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "payment_terms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number_of_days"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "invoice_id"
     t.decimal "payment_amount", precision: 15, scale: 3
     t.string "payment_type"
@@ -523,7 +523,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "updated_by"
   end
 
-  create_table "permissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "permissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.boolean "can_create"
     t.boolean "can_update"
     t.boolean "can_delete"
@@ -535,7 +535,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["role_id"], name: "index_permissions_on_role_id"
   end
 
-  create_table "project_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "project_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.float "rate"
@@ -551,7 +551,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.float "spent_time"
   end
 
-  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "project_name"
     t.integer "client_id"
     t.integer "manager_id"
@@ -570,14 +570,14 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "recurring_frequencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "recurring_frequencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number_of_days"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "recurring_profile_line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "recurring_profile_line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "recurring_profile_id"
     t.integer "item_id"
     t.string "item_name"
@@ -593,7 +593,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "deleted_at"
   end
 
-  create_table "recurring_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "recurring_profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "first_invoice_date"
     t.string "po_number"
     t.decimal "discount_percentage", precision: 10, scale: 2
@@ -626,7 +626,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "updated_by"
   end
 
-  create_table "recurring_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "recurring_schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "next_invoice_date"
     t.string "frequency"
     t.integer "occurrences", default: 0
@@ -640,7 +640,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "frequency_type"
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
     t.bigint "resource_id"
@@ -653,7 +653,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
-  create_table "sent_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sent_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date"
     t.string "sender"
     t.string "recipient"
@@ -667,7 +667,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "company_id"
   end
 
-  create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at", precision: 6, null: false
@@ -676,7 +676,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "var", null: false
     t.text "value"
     t.integer "thing_id"
@@ -686,7 +686,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
   end
 
-  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "name"
     t.float "rate"
@@ -703,7 +703,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.integer "user_id"
   end
 
-  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.boolean "billable"
@@ -720,7 +720,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.decimal "percentage", precision: 10, scale: 2
     t.datetime "created_at", null: false
@@ -732,7 +732,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.string "provider_id"
   end
 
-  create_table "team_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "team_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "name"
     t.float "rate"
@@ -744,7 +744,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -774,7 +774,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_104143) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
     t.string "event", null: false

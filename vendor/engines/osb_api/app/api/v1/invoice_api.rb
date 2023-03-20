@@ -318,6 +318,7 @@ module V1
             requires :item_quantity, type: Integer, message: :required
             optional :tax_1, type: Integer
             optional :tax_2, type: Integer
+            # requires :actual_price, type: String
           end
           optional :recurring_schedule_attributes, type: Hash do
             requires :next_invoice_date, type: String, message: :required
@@ -376,6 +377,7 @@ module V1
             requires :item_quantity, type: Integer, message: :required
             optional :tax_1, type: Integer
             optional :tax_2, type: Integer
+            # requires :actual_price, type: String
           end
           optional :recurring_schedule_attributes, type: Hash do
             requires :next_invoice_date, type: String, message: :required

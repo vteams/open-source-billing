@@ -18,18 +18,16 @@
     "jquery-mousewheel": "^3.1.13",
     "jquery-ui-dist": "^1.12.1",
     "js.cookie": "^0.0.4",
-    "loader-runner": "^4.3.0",
     "moment": "^2.26.0",
-    "node": "^16.13.1",
     "nouislider": "^14.6.0",
     "popper.js": "^1.16.1",
     "rails-erb-loader": "^5.5.2",
     "turbolinks": "^5.2.0",
+    "yarn": "^1.22.10"
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "@webpack-cli/serve": "^2.0.0",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^3.11.2"
   }
 }

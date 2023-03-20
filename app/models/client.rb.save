@@ -192,7 +192,7 @@ class Client < ApplicationRecord
 
   def add_available_credit(available_credit, company_id)
     #payments.build({payment_amount: available_credit, payment_type: "credit", payment_date: Date.today, company_id: company_id})
-  end
+ end
 
   def update_available_credit(available_credit)
     payments.first.update_attribute(:payment_amount, available_credit)
@@ -224,6 +224,7 @@ class Client < ApplicationRecord
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     company_clients = company_clients.client_id(params[:client_id]) if params[:client_id].present?
+
     # get the account
     account = params[:user].current_account
 
