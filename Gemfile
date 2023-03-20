@@ -85,7 +85,7 @@ gem 'quickbooks-ruby'
 gem 'qbo_api'
 gem 'ruby-freshbooks', '0.4.1'
 gem 'rolify', '5.1.0'
-gem 'puma', '3.11.0'
+gem 'puma', '5.2.2'
 
 
 gem 'elasticsearch-model', '5.0.0'
