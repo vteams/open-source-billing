@@ -7,8 +7,8 @@ Osb::Application.routes.draw do
 
   get 'activities/index'
 
-  mount OsbApi::Engine => "/api"
-  mount GrapeSwaggerRails::Engine => '/api/docs'
+  # mount OsbApi::Engine => "/api"
+  # mount GrapeSwaggerRails::Engine => '/api/docs'
 
   mount Sidekiq::Web => '/sidekiq'
 

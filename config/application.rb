@@ -26,13 +26,13 @@ module Osb
     config.middleware.use I18n::JS::Middleware
     config.to_prepare do
       # Only Applications list
-      Doorkeeper::ApplicationsController.layout "doorkeeper"
-
+      # Doorkeeper::ApplicationsController.layout "doorkeeper"
+# 
       # Only Authorization endpoint
-      Doorkeeper::AuthorizationsController.layout "doorkeeper"
+      # Doorkeeper::AuthorizationsController.layout "doorkeeper"
 
       # Only Authorized Applications
-      Doorkeeper::AuthorizedApplicationsController.layout "doorkeeper"
+      # Doorkeeper::AuthorizedApplicationsController.layout "doorkeeper"
     end
 
   end
