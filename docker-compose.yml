@@ -7,7 +7,7 @@ services:
     volumes:
       - ./tmp/db:/var/lib/mysql
     environment:
-     MYSQL_ROOT_PASSWORD: P123@ssword
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
   web: 
     build: .
     ports:
@@ -17,5 +17,5 @@ services:
     environment:
       DATABASE_HOST: db
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD: P123@ssword
+      DATABASE_PASSWORD: password
 
