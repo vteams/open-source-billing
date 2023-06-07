@@ -1,13 +1,12 @@
 version: '3.3'
 services:
   db:
-    image: mysql:latest
+    image:  mysql:5.7.42
     ports: 
       - 3306:3308
-    volumes:
-      - .tmp/db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: zj9nXJ+/z+Cy5ihGK9bP4UtCRgiHmCZw
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_HOST: 172.28.0.3
   web: 
     build: .
     ports:

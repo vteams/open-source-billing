@@ -20,8 +20,10 @@ COPY . .
 # Set environment variables
 ENV RAILS_ENV=development
 ENV RAILS_SERVE_STATIC_FILES=true
-# RUN RAILS_ENV=development bundle exec rake db:create
-# RUN RAILS_ENV=development bundle rake db:migrate
+
+# RUN bundle exec rake db:create
+# RUN bundle rake db:migrate
+
 # RUN RAILS_ENV=development bundle rake db:seed
 
 # Precompile assets
