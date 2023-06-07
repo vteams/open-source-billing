@@ -5,9 +5,9 @@ services:
     ports: 
       - 3306:3308
     volumes:
-      - ./tmp/db:/var/lib/mysql
+      - .tmp/db:/var/lib/mysql
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: zj9nXJ+/z+Cy5ihGK9bP4UtCRgiHmCZw
   web: 
     build: .
     ports:
