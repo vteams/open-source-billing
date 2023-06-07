@@ -1,15 +1,13 @@
 version: '3.3'
 services:
   db:
-    image: mysql:8.0.32
+    image: mysql:latest
     ports: 
       - 3306:3308
     volumes:
       - ./tmp/db:/var/lib/mysql
     environment:
-     MYSQL_USERNAME: root
-     MYSQL_PASSWORD: password
-        - '3306:3306'
+     MYSQL_ROOT_PASSWORD: P123@ssword
   web: 
     build: .
     ports:
@@ -17,6 +15,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_HOST: localhost
+      DATABASE_HOST: db
       DATABASE_USERNAME: root
-      DATABASE_PASSWORD: password
+      DATABASE_PASSWORD: P123@ssword
+

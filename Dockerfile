@@ -20,9 +20,9 @@ COPY . .
 # Set environment variables
 ENV RAILS_ENV=development
 ENV RAILS_SERVE_STATIC_FILES=true
-RUN RAILS_ENV=development bundle exec rake db:create
-RUN RAILS_ENV=development bundle rake db:migrate
-RUN RAILS_ENV=development bundle rake db:seed
+# RUN RAILS_ENV=development bundle exec rake db:create
+# RUN RAILS_ENV=development bundle rake db:migrate
+# RUN RAILS_ENV=development bundle rake db:seed
 
 # Precompile assets
 # RUN bundle exec rake assets:precompile
@@ -31,4 +31,4 @@ RUN RAILS_ENV=development bundle rake db:seed
 EXPOSE 3000
 
 # Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "127.0.0.1"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
