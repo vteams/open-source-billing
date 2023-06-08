@@ -64,12 +64,12 @@ class DashboardController < ApplicationController
   end
 
   def prepare_base_currency_charts_data
-    @invoices_chart_data_base = @current_company_invoices.where('invoices.invoice_date > ?', 6.months.ago).order('invoice_date asc').group('MONTHNAME(invoices.invoice_date)').sum('invoices.base_currency_equivalent_total')
+    @invoices_chart_data_base = @current_company_invoices.where('invoices.invoice_date > ?', 6.months.ago).order('MONTHNAME(invoices.invoice_date) asc').group('MONTHNAME(invoices.invoice_date)').sum('invoices.base_currency_equivalent_total')
     @invoices_chart_data_base = @invoices_chart_data_base.map{|k, v| [[@currenct_company_base_currency.unit, k],v] }.to_h
   end
 
   def prepare_multi_currency_charts_data
-    invoices_chart_data = @current_company_invoices.where('invoices.invoice_date > ?', 6.months.ago).order('invoice_date asc').group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
+    invoices_chart_data = @current_company_invoices.where('invoices.invoice_date > ?', 6.months.ago).order('MONTHNAME(invoices.invoice_date) asc').group('currencies.unit').group('MONTHNAME(invoices.invoice_date)').sum('invoices.invoice_total')
     currencies = invoices_chart_data.keys.collect{|a| a.first}.uniq
     @invoices_chart_data = {}
     currencies.each do |currency|
@@ -79,7 +79,7 @@ class DashboardController < ApplicationController
       end
     end
 
-    payments_chart_data = @current_company_payments.where('payments.created_at > ?', 6.months.ago).order('payments.created_at asc').group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
+    payments_chart_data = @current_company_payments.where('payments.created_at > ?', 6.months.ago).group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
     currencies = invoices_chart_data.keys.collect{|a| a.first}.uniq
     @payments_chart_data = {}
     currencies.each do |currency|
