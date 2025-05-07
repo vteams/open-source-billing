@@ -1,4 +1,4 @@
-class CreateEmailTemplates < ActiveRecord::Migration[6.0]
+class CreateEmailTemplates < ActiveRecord::Migration
   def change
     create_table :email_templates do |t|
       t.string   "template_type"

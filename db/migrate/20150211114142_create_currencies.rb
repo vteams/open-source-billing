@@ -1,4 +1,4 @@
-class CreateCurrencies < ActiveRecord::Migration[6.0]
+class CreateCurrencies < ActiveRecord::Migration
   def change
     create_table(:currencies, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8') do |t|
       t.string   "title"

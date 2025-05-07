@@ -1,4 +1,4 @@
-class CreateCompanyEmailTemplates < ActiveRecord::Migration[6.0]
+class CreateCompanyEmailTemplates < ActiveRecord::Migration
   def change
     create_table :company_email_templates do |t|
       t.integer  "template_id"

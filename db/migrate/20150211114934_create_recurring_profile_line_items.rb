@@ -1,4 +1,4 @@
-class CreateRecurringProfileLineItems < ActiveRecord::Migration[6.0]
+class CreateRecurringProfileLineItems < ActiveRecord::Migration
   def change
     create_table :recurring_profile_line_items do |t|
       t.integer  "recurring_profile_id"

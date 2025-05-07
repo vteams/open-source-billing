@@ -1,4 +1,4 @@
-class AddBillingEmailToClient < ActiveRecord::Migration[6.0]
+class AddBillingEmailToClient < ActiveRecord::Migration
   def change
     add_column :clients, :billing_email, :string
   end

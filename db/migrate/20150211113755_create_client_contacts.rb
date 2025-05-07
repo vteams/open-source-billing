@@ -1,4 +1,4 @@
-class CreateClientContacts < ActiveRecord::Migration[6.0]
+class CreateClientContacts < ActiveRecord::Migration
   def change
     create_table :client_contacts do |t|
       t.integer  "client_id"

@@ -86,7 +86,6 @@ templates = EmailTemplate.create([
             <p><a href="{{invoice_url}}">Invoice# {{invoice_number}}</a> </p>
             <p>Please remit payment at your earliest convenience. For all forms of payment please be sure to include your invoice number {{invoice_number}} for reference.</p>
             <p>If you have any questions or comments please feel free to contact {{company_contact}} at {{company_phone}}.</p>
-            <p>Please login to see your invoice <a href="{{new_password_url}}">Login</a></p>
             <p>Thanks,</p>
             <p>{{company_signature}}</p>'
         },
@@ -262,55 +261,13 @@ CATEGORIES.each do |category|
 end
 
 Role.delete_all
-role = ROLE
-Role.create name: role, deletable: false
-client_role = CLIENT_ROLE
-Role.create name: client_role, for_client: true, deletable: false
 
-Permission.delete_all
-Permission.create(role_id: Role.first.id, entity_type: "Invoice", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Estimate", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Time Tracking", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Payment", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Client", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Item", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Taxes", can_read: true, can_update: true, can_delete: true, can_create: true)
-Permission.create(role_id: Role.first.id, entity_type: "Report", can_read: true)
-Permission.create(role_id: Role.first.id, entity_type: "Settings", can_read: true)
+ROLES.each do |role|
+  Role.create name: role
+end
 
 PaymentTerm.delete_all
 PaymentTerm.create(number_of_days: 10, description: "10 days")
 PaymentTerm.create(number_of_days: 7, description: "Weekly")
 PaymentTerm.create(number_of_days: 30, description: "Monthly")
-PaymentTerm.create(number_of_days: -1, description: "Custom")
-PaymentTerm.create(number_of_days: 0, description: "Due on received")
-
-Settings.delete_all
-Settings.currency = "On"
-Settings.default_currency = "USD"
-Settings.date_format = "%Y-%m-%d"
-Settings.invoice_number_format = "{{invoice_number}}"
-Settings.invoice_item_format = "{{item_description}}"
-
-Account.delete_all
-Account.create(org_name: 'OpenSourceBilling')
-
-Company.delete_all
-Company.create(company_name: Account.first.org_name, account_id: Account.first.id)
-
-User.destroy_all
-u=User.new
-u.email = "admin@opensourcebilling.org"
-u.password = "opensourcebilling"
-u.password_confirmation = "opensourcebilling"
-u.user_name = "OSB"
-u.role_id = Role.first.id
-u.have_all_companies_access = true
-u.current_company = Company.first.id
-u.accounts << Account.first
-u.save
-
-RecurringFrequency.delete_all
-RecurringFrequency.create!(title: 'Weekly', number_of_days: 7)
-RecurringFrequency.create!(title: 'Monthly', number_of_days: 30)
-RecurringFrequency.create!(title: 'Yearly', number_of_days: 365)
+PaymentTerm.create(number_of_days: 0, description: "Custom")

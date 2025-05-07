@@ -1,4 +1,4 @@
-class CreatePaymentTerms < ActiveRecord::Migration[6.0]
+class CreatePaymentTerms < ActiveRecord::Migration
   def change
     create_table :payment_terms do |t|
       t.integer  "number_of_days"

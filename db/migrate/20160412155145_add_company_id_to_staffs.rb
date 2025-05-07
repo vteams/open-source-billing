@@ -1,4 +1,4 @@
-class AddCompanyIdToStaffs < ActiveRecord::Migration[6.0]
+class AddCompanyIdToStaffs < ActiveRecord::Migration
   def change
     add_column :staffs, :company_id, :integer
   end

@@ -1,4 +1,4 @@
-class CreateStaffs < ActiveRecord::Migration[6.0]
+class CreateStaffs < ActiveRecord::Migration
   def change
     create_table :staffs do |t|
       t.string :email

@@ -1,4 +1,4 @@
-class CreateRecurringProfiles < ActiveRecord::Migration[6.0]
+class CreateRecurringProfiles < ActiveRecord::Migration
   def change
     create_table :recurring_profiles do |t|
       t.datetime "first_invoice_date"

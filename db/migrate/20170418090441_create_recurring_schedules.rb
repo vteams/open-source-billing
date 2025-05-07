@@ -1,4 +1,4 @@
-class CreateRecurringSchedules < ActiveRecord::Migration[6.0]
+class CreateRecurringSchedules < ActiveRecord::Migration
   def change
     create_table :recurring_schedules do |t|
       t.datetime :next_invoice_date

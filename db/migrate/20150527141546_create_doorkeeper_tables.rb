@@ -1,4 +1,4 @@
-class CreateDoorkeeperTables < ActiveRecord::Migration[6.0]
+class CreateDoorkeeperTables < ActiveRecord::Migration
   def change
     create_table :oauth_applications do |t|
       t.string  :name,         null: false

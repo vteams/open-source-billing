@@ -1,4 +1,4 @@
-class CreateClients < ActiveRecord::Migration[6.0]
+class CreateClients < ActiveRecord::Migration
   def change
     create_table :clients do |t|
       t.string   "organization_name"

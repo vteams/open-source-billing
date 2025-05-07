@@ -1,4 +1,4 @@
-class AddParentIdToInvoices < ActiveRecord::Migration[6.0]
+class AddParentIdToInvoices < ActiveRecord::Migration
   def change
     add_column :invoices, :parent_id, :integer
   end
