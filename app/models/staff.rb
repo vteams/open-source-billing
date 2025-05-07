@@ -1,4 +1,4 @@
-class Staff < ApplicationRecord
+class Staff < ActiveRecord::Base
   include DateFormats
   include StaffSearch
   paginates_per 10

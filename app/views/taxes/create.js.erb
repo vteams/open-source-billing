@@ -1,11 +1,6 @@
-<% if @taxis.present? %>
-$('.modal').modal('close')
-swal({
-    icon: "success",
-    title: 'Success',
-    buttons: false,
-    timer: 3000,
-    text: "<%= t('views.taxes.created_msg') %>"}).then(function(){
-    window.location = '<%= taxes_path %>'
-});
+<%unless @tax_exists%>
+<% inlineform_action = params[:add_more] ? "inlineform:save_and_add_more" : "inlineform:save" %>
+<%= "{\"action\": \"#{inlineform_action}\", \"record\": \"<option data-tax_1='#{@taxis.percentage}' value='#{@taxis.id}' selected>#{@taxis.name}</option>\"}".html_safe%>
+<%else%>
+<%= "{\"exists\": \"#{@tax_exists}\"}".html_safe%>
 <%end%>

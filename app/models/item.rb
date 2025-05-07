@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Item < ApplicationRecord
+class Item < ActiveRecord::Base
 
   include ItemSearch
   #scopes
@@ -28,10 +28,7 @@ class Item < ApplicationRecord
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :tax_1, -> (tax_1) { where(tax_1: tax_1) }
   scope :quantity, -> (quantity) { where(quantity: quantity) }
-  scope :item_name, -> (item_name) { where(item_name: item_name) }
   scope :unit_cost, -> (unit_cost) { where(unit_cost: unit_cost) }
-  scope :single_search, -> (single_search) { where('item_name LIKE :single_search OR item_description LIKE
-                           :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :invoice_line_items
@@ -39,8 +36,6 @@ class Item < ApplicationRecord
   belongs_to :tax2, :foreign_key => "tax_2", :class_name => "Tax"
   belongs_to :company
   has_many :company_entities, :as => :entity
-
-  validates :item_name, :item_description, :unit_cost, :quantity, presence: true
 
   # archive and delete
   acts_as_archival
@@ -77,9 +72,7 @@ class Item < ApplicationRecord
     # get the items associated with companies
     company_items = company.items
     company_items = company_items.search(params[:search]).records if params[:search].present? and company_items.present?
-    company_items = company_items.single_search(params[:single_search]) if params[:single_search].present?
-    company_items = company_items.send(mappings[params[:status].to_sym]) if params[:status].present?
-    company_items = company_items.item_name(params[:item_name]) if params[:item_name].present?
+    company_items = company_items.send(mappings[params[:status].to_sym])
     company_items = company_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     company_items = company_items.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
@@ -93,9 +86,7 @@ class Item < ApplicationRecord
     # get the items associated with account
     account_items = account.items
     account_items = account_items.search(params[:search]).records if params[:search].present? and account_items.present?
-    account_items = account_items.single_search(params[:single_search]) if params[:single_search].present?
-    account_items = account_items.send(mappings[params[:status].to_sym]) if params[:status].present?
-    account_items = account_items.item_name(params[:item_name]) if params[:item_name].present?
+    account_items = account_items.send(mappings[params[:status].to_sym])
     account_items = account_items.tax_1(params[:tax_1]) if params[:tax_1].present?
     account_items = account_items.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
@@ -106,7 +97,7 @@ class Item < ApplicationRecord
     # get the unique items associated with companies and accounts
 
     items = (account_items + company_items).uniq
-    items = items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
+
     # sort items in ascending or descending order
     items = items.sort do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'
@@ -125,8 +116,7 @@ class Item < ApplicationRecord
         a.send(params[:sort_column]).to_s <=> b.send(params[:sort_column]).to_s
       end
     end if params[:sort_column] && params[:sort_direction]
-    items = items.sort_by!{ |item| item.item_name.downcase }
-    items = items.reverse if params[:direction].eql?('desc')
+
     Kaminari.paginate_array(items).page(params[:page]).per(params[:per])
 
   end

@@ -7,7 +7,7 @@ module Services
         if estimate.save
           {message: 'Successfully created'}
         else
-          {error: estimate.errors.full_messages, message: nil }
+          {error: estimate.errors.full_messages}
         end
       end
 
@@ -17,10 +17,10 @@ module Services
           if estimate.update_attributes(estimate_params_api(params))
             {message: 'Successfully updated'}
           else
-            {error: estimate.errors.full_messages, message: nil }
+            {error: estimate.errors.full_messages}
           end
         else
-          {error: 'Estimate not found', message: nil }
+          {error: 'Estimate not found'}
         end
       end
 
@@ -28,7 +28,7 @@ module Services
         if ::Estimate.destroy(params)
           {message: 'Successfully deleted'}
         else
-          {message: 'Not deleted', message: nil }
+          {message: 'Not deleted'}
         end
       end
 

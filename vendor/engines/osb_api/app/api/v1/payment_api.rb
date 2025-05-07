@@ -1,5 +1,5 @@
 module V1
-  class PaymentAPI < Grape::API
+  class PaymentApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api
@@ -12,9 +12,8 @@ module V1
       desc 'Return all Payments'
       get do
         @payments = Payment.unarchived
-        @payments = @payments.by_company(@current_user.current_company)
-        @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ').order("payments.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
-                        .select('payments.*, clients.organization_name')
+        @payments = @payments.joins('LEFT JOIN companies ON companies.id = payments.company_id')
+        @payments = @payments.joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id').joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id LEFT JOIN clients ON clients.id = invoices.client_id ')
       end
 
       desc 'Fetch a single Payment'
@@ -23,15 +22,14 @@ module V1
       end
 
       get ':id' do
-        payment = Payment.find_by(id: params[:id])
-        payment.present? ? payment : {error: "Payment not found", message: nil }
+        Payment.find params[:id]
       end
 
       desc 'Create Payment'
       params do
         requires :payment, type: Hash do
-          requires :invoice_id, type: Integer, message: :required
-          requires :payment_amount, type: BigDecimal, message: :required
+          requires :invoice_id, type: Integer
+          requires :payment_amount, type: Integer
           optional :payment_type, type: String
           optional :payment_method, type: String
           optional :payment_date, type: Date
@@ -72,12 +70,7 @@ module V1
       end
 
       patch ':id' do
-        payment = Payment.find_by(id: params[:id])
-        if payment.present?
-          Services::Apis::PaymentApiService.update(params)
-        else
-          {error: "Payment not found", message: nil }
-        end
+        Services::Apis::PaymentApiService.update(params)
       end
 
 
@@ -86,12 +79,7 @@ module V1
         requires :id, type: Integer, desc: "Delete payment"
       end
       delete ':id' do
-        payment = Payment.find_by(id: params[:id])
-        if payment.present?
-          Services::Apis::PaymentApiService.destroy(payment)
-        else
-          {error: "Payment not found", message: nil }
-        end
+        Services::Apis::PaymentApiService.destroy(params[:id])
       end
     end
   end

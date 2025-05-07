@@ -32,7 +32,7 @@ module Services
       new_credit_payment = Payment.create!(payment.permit!)
       new_credit_payment.notify_client(client_email)
 
-      # loop through all the credit payments of clients
+      # loop through all the credit payments of client
       client.credit_payments.each do |credit_payment|
 
         credit_amount, credit_applied = credit_payment.payment_amount.to_f, credit_payment.credit_applied.to_f
@@ -58,8 +58,6 @@ module Services
          if ::Payment.check_client_credit(pay[:invoice_id]) && pay[:payment_method] == "Credit" #Ignore payment if credit is not enough
            unpaid_invoice_ids << pay[:invoice_number]
          else
-
-
            pay[:payment_amount] = pay[:payment_method] == "Credit" ? ::Payment.update_invoice_status_credit(pay[:invoice_id], pay[:payment_amount].to_f) : (::Payment.update_invoice_status pay[:invoice_id], pay[:payment_amount].to_f)
            pay[:payment_date] ||= Date.today
            pay[:credit_applied] ||= 0.00

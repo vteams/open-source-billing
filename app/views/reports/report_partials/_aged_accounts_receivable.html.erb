@@ -67,7 +67,7 @@
     <% end %>
 <% else %>
     <tr>
-      <td colspan="6" class="report_no_data no-record-message"><%= t('views.reports.report_no_data') %></td>
+      <td colspan="6" class="report_no_data"><%= t('views.reports.report_no_data') %></td>
     </tr>
 <% end %>
 <% unless @report.report_data.blank? %>
@@ -76,53 +76,53 @@
       <td><strong><%= t("views.common.total") %></strong></td>
       <td class="align-right">
         <% @report.report_total.each do |total| %>
-          <div>
+          <span>
             <b>
               <%= total["currency_code"] %>
               <%= number_to_currency(total["zero_to_thirty"], unit: '') %>
             </b>
-          </div>
+          </span>
 
         <% end %>
       </td>
       <td class="align-right">
         <% @report.report_total.each do |total| %>
-          <div>
+          <span>
             <b>
               <%= total["currency_code"] %>
                 <%= number_to_currency(total["thirty_one_to_sixty"],unit:'') %>
             </b>
-          </div>
+          </span>
         <% end %>
       </td>
       <td class="align-right">
         <% @report.report_total.each do |total| %>
-          <div>
+          <span>
             <b>
               <%= total["currency_code"] %>
               <%= number_to_currency(total["sixty_one_to_ninety"],unit:'') %>
             </b>
-          </div>
+          </span>
         <% end %>
       </td>
       <td class="align-right">
         <% @report.report_total.each do |total| %>
-            <div>
+            <span>
               <b>
                 <%= total["currency_code"] %>
                 <%= number_to_currency(total["ninety_one_and_above"],unit:'') %>
               </b>
-            </div>
+            </span>
         <% end %>
       </td>
       <td class="align-right">
         <% @report.report_total.each do |total| %>
-           <div>
+           <span>
              <b>
                <%= total["currency_code"] %>
                <%= number_to_currency(total["total_amount"],unit:'') %>
              </b>
-           </div>
+           </span>
         <% end %>
       </td>
     </tr>

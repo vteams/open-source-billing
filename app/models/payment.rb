@@ -18,26 +18,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Payment < ApplicationRecord
-  include Trackstamps
+class Payment < ActiveRecord::Base
   include DateFormats
   include PaymentSearch
-  include PublicActivity::Model
-  tracked only: [:create], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
-
   attr_accessor :invoice_number
   # associations
   belongs_to :invoice
   belongs_to :client
   belongs_to :company
-
-  belongs_to :currency
-
   has_many :sent_emails, :as => :notification
   has_many :credit_payments
 
   after_create :add_company_id
-  after_create :set_currency_id
 
   # validation
   #validates :payment_amount, :numericality => {:greater_than => 0}
@@ -48,12 +40,6 @@ class Payment < ApplicationRecord
   scope :payment_date, -> (payment_date) { where(payment_date: payment_date) }
   scope :payment_method, -> (payment_method) { where(payment_method: payment_method) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
-
-  scope :by_company, -> (company_id){ where("payments.company_id IN (?)", company_id) }
-
-  scope :received, -> { where("payment_amount >= ?", 0) }
-  scope :refunds, -> { where("payment_amount < ?", 0) }
-  scope :in_year, ->(year) { where('extract(year from payments.created_at) = ?', year) }
 
   paginates_per 10
 
@@ -103,7 +89,7 @@ class Payment < ApplicationRecord
     invoice = Invoice.find(inv_id)
     diff = (self.invoice_old_paid_amount(invoice.id, pay.try(:id)) + c_pay) - invoice.invoice_total
     #if invoice.client.present?? invoice.client.client_credit < c_pay || diff < 0 : invoice.unscoped_client.client_credit < c_pay || diff < 0
-    if diff < 0 && invoice.status != 'paid'
+    if diff < 0
       status = (invoice.status == 'draft' || invoice.status == 'draft-partial') ? 'draft-partial' : 'partial'
       return_v = diff < 0 ? c_pay : invoice.client.client_credit
     else
@@ -142,21 +128,21 @@ class Payment < ApplicationRecord
     invoice_payments = self.invoice_paid_detail(inv_id)
     invoice_paid_amount = 0
     invoice_payments.each do |inv_p|
-      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount if inv_p.payment_amount.present? && inv_p.payment_amount >= 0
+      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
     end
     invoice_paid_amount
   end
 
-  def self.invoice_old_paid_amount(inv_id, pay_id)
-    invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
-    invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
+ def self.invoice_old_paid_amount(inv_id, pay_id)
+   invoice_old_payments = Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id)
+   invoice_old_payments = invoice_old_payments.where("id != #{pay_id}") if pay_id
 
-    invoice_paid_amount = 0
-    invoice_old_payments.all.each do |inv_p|
-      invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount if inv_p.payment_amount.present? && inv_p.payment_amount >= 0
-    end
-    invoice_paid_amount
-  end
+   invoice_paid_amount = 0
+   invoice_old_payments.all.each do |inv_p|
+     invoice_paid_amount= invoice_paid_amount + inv_p.payment_amount unless inv_p.payment_amount.blank?
+   end
+   invoice_paid_amount
+ end
 
   def self.invoice_paid_detail(inv_id)
     Payment.where("invoice_id = ? and (payment_type is null || payment_type != 'credit')", inv_id).all
@@ -180,18 +166,16 @@ class Payment < ApplicationRecord
     end
   end
 
-  def self.filter_params(params)
+  def self.filter(params)
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
-    @payments = Payment.joins('LEFT JOIN invoices as payments_invoices ON payments_invoices.id = payments.invoice_id')
-                    .joins('LEFT JOIN companies ON companies.id = payments.company_id')
-                    .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
-                    .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients as payment_clients ON payment_clients.id = invs.client_id')
+    @payments = Payment.joins('LEFT JOIN invoices ON invoices.id = payments.invoice_id')
+                       .joins('LEFT JOIN companies ON companies.id = payments.company_id')
+                       .joins('LEFT JOIN clients as payments_clients ON  payments_clients.id = payments.client_id')
+                       .joins('LEFT JOIN invoices as invs ON invs.id = payments.invoice_id LEFT JOIN clients ON clients.id = invs.client_id')
 
     payments = params[:search].present? ? @payments.search(params[:search]).records : @payments
-    payments = payments.where('payments.payment_method LIKE :single_search OR payments.notes LIKE :single_search OR
-               payments_clients.organization_name  LIKE :single_search OR invs.invoice_number LIKE :single_search',
-                              single_search: "%#{params[:single_search]}%") if params[:single_search].present?
+
     payments = payments.payment_method(params[:type]) if params[:type].present?
     payments = payments.client_id(params[:client_id]) if params[:client_id].present?
     payments = payments.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
@@ -209,10 +193,19 @@ class Payment < ApplicationRecord
     CreditPayment.where('credit_id = ?', payment_id).map(&:destroy)
   end
 
-  def notify_client current_user
-    # PaymentMailer.delay.payment_notification_email(current_user, self) if self.send_payment_notification
-    current_company = Company.find(current_user.current_company)
-    NotificationWorker.perform_async('PaymentMailer','payment_notification_email',[current_user.id, self.id], current_company.smtp_settings) if self.send_payment_notification
+  def notify_client_with_invoice_attachment(current_user)
+    invoice_string  = ApplicationController.new.render_to_string(
+        'invoices/pdf_invoice.html',
+        show_as_html: true,
+        layout: 'pdf_mode',
+        locals: {invoice: self.invoice}
+    )
+    invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
+    notify_client(current_user, invoice_pdf_file)
+  end
+
+  def notify_client current_user, invoice_pdf_file = nil
+    PaymentMailer.payment_notification_email(current_user, self, invoice_pdf_file).deliver #if self.send_payment_notification
   end
 
   def self.payments_history(client)
@@ -245,7 +238,7 @@ class Payment < ApplicationRecord
   end
 
   def unscoped_client
-    ::Client.with_deleted.unscoped.find self.unscoped_invoice.client_id rescue unscoped_invoice.client
+    Client.unscoped.find self.client_id rescue unscoped_invoice.client
   end
 
   def unscoped_invoice
@@ -254,33 +247,31 @@ class Payment < ApplicationRecord
   end
 
   def add_company_id
-    self.update_attribute(:company_id, self.invoice.company_id) if self.company_id.blank?
+    if self.company_id.blank?
+      self.update_attribute(:company_id, self.invoice.company_id)
+    end
   end
 
-  def set_currency_id
-    self.update_attribute(:currency_id, self.invoice.currency_id) if self.currency_id.blank?
-  end
-
-  def payment_name
-    "#{::Client.with_deleted.find_by(id: self.invoice.client_id).first_name.first.camelize}#{::Client.with_deleted.find_by(id: self.invoice.client_id).last_name.first.camelize }" rescue 'NA'
-  end
+ def payment_name
+   "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue 'NA'
+ end
 
   def group_date
     created_at.strftime('%B %Y')
   end
 
-  def self.sum_per_month(client_ids, company_id)
-    payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
-    payments_per_month = {}
+ def self.sum_per_month(client_ids, company_id)
+   payments_for_clients = joins(:client).where(client_id: client_ids, status: nil, company_id: company_id)
+   payments_per_month = {}
 
-    payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
-      payments_per_month[date] = payments.sum{|p| p.payment_amount.to_f}
-    end
+   payments_for_clients.group_by { |p| p.group_payment_date }.each do |date, payments|
+     payments_per_month[date] = payments.sum{|p| p.payment_amount.to_f}
+   end
 
-    payments_per_month
-  end
+   payments_per_month
+ end
 
-  def group_payment_date
+ def group_payment_date
     payment_date.to_date.strftime('%B %Y')
-  end
+ end
 end

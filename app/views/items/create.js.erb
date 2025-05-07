@@ -4,10 +4,8 @@
     });
     showWarningSweetAlert('error', "<%= t('views.items.duplicate_name') %>", function(){});
     $('#' + '<%= params[:position] %>').val('').material_select();
-    $('.select_2').material_select('destroy');
-    $('.select_2').select2();
 
-<% elsif @item.present? %>
+<% else %>
     $('table.invoice-grid-table > tbody.invoice-line-items-table > tr.line-items-fields, table.estimate-grid-table > tbody.estimate-line-items-table > tr.line-items-fields').each(function(){
         $items_list_select = $(this).find('td:nth-child(2)').find('select.items_list');
         last_option = $items_list_select.find('option:last').clone();
@@ -26,16 +24,5 @@
         }
     });
     $('.modal').modal('close');
-    swal({
-        icon: "success",
-        title: 'Success',
-        buttons: false,
-        timer: 3000,
-        text: "<%= t('views.items.created_msg') %>"}).then(function(){
-        window.location = '<%= item_path(@item) %>'
-    });
-    $('.select_2').material_select('destroy');
-    $('.select_2').select2('destroy');
-    $('.select_2').select2();
-
+    swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
 <% end %>

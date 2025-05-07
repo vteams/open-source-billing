@@ -1,9 +1,0 @@
-<% estimate = Estimate.find_by_id(activity.trackable_id) %>
-<li class="collection-item">
-  <a href="<%= estimate_path(estimate) if estimate.present? %>" data-remote="true">
-  <span>
-    <p>[ <span class="<%= pick_trackable_color[activity.trackable_type.to_sym] %>"><%= activity.trackable_type %></span> ] <strong><%= activity.owner.user_name.capitalize %></strong> created a new estimate <strong><%= estimate.estimate_number %></strong> for client <strong><%= estimate.client.full_name rescue '' %></strong></p>
-    <time class="activity-time"><div><%= activity.created_at.strftime('%d-%b-%Y at %I %p') %></div><div><i class="material-icons">access_time</i> <span><%= distance_of_time_in_words(Time.now - activity.created_at.to_time) %> ago</span></div> </time>
-  </span>
-  </a>
-</li>

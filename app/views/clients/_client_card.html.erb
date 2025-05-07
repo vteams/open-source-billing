@@ -1,8 +1,8 @@
-<div class="flex-item box client-table-row">
+<div class="flex-item box">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <%= link_to '', client , remote: true, class: 'invoice_show_link', style: 'display: none' unless client.deleted? %>
-  <div class="card-white-panel invoice-card card-white-panel-bg-color" data-client_id= <%=client.id %>>
+  <div class="card-white-panel invoice-card" data-client_id= <%=client.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}", class: "filled-in" %>
       <label for="<%= "client_#{client.id}" %>"></label>
@@ -53,24 +53,6 @@
                   </a>
                 </li>
             <% end %>
-            <li>
-              <%= link_to(raw("<i class='material-icons'>receipt</i>New Invoice") , new_invoice_path(invoice_for_client: client.id)) %>
-            </li>
-            <li>
-              <%= link_to(raw("<i class='material-icons'>receipt</i>All Invoices") , invoices_path(client_id: client.id)) %>
-            </li>
-            <li>
-              <%= link_to(raw("<i class='material-icons'>payment</i>New Payment") , unpaid_client_invoices_path(client.id), class: "#{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
-            </li>
-            <li>
-              <%= link_to(raw("<i class='material-icons'>payment</i>All Payments") , payments_path(client_id: client.id)) %>
-            </li>
-            <li>
-              <%= link_to raw("<i class='material-icons'>person</i>Login"),masquerades_path(client_id: client.id), method: :post,
-                          target: '_blank'
-              %>
-
-            </li>
           </ul>
       <% end %>
     </div>

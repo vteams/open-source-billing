@@ -1,0 +1,63 @@
+.new-invoice-holder .info-section.details {
+  border-bottom: none !important;
+}
+.new-invoice-holder .info-section .info-left-section {
+  width: 40% !important;
+}
+.new-invoice-holder .info-section .info-middle-section{
+  width: 25% !important;
+  display: inline-block !important;
+}
+.new-invoice-holder .info-section .info-right-section {
+  width: 25% !important;
+}
+new-invoice-holder .info-section .info-left-section.half-box {
+  width: 60% !important;
+}
+.new-invoice-holder .info-section .info-right-section.half-box {
+  width: 40% !important;
+}
+.pt_pdf_invoice.report-copyrights {
+  padding-top: 20px;
+  float: right;
+  font-size: 11px;
+}
+.pt_pdf_invoice.report-copyrights img {
+  display: inline-block;
+  position: relative;
+  top: 4px;
+}
+.left-section.left.notes-section{
+  padding-left: 30px;
+  padding-top: 20px;
+}
+table.pt_pdf_invoice th{
+  background-color: #E0E0E0 !important;
+}
+
+.new-invoice-holder .new-invoice-table-holder table.pt_pdf_invoice th{
+  border-right: none;
+}
+.new-invoice-holder .new-invoice-table-holder table.pt_pdf_invoice thead{
+  border-bottom: none !important;
+  border: solid 0.5px #C8C8C8 !important;
+}
+.new-invoice-holder .info-right-section.half-box b.pt_pdf_invoice{
+  background-color: #E0E0E0;
+  border: solid 0.5px #C8C8C8;
+  line-height: 2.0 !important;
+  padding: 5px !important;
+}
+
+.side-show.pt_pdf_invoice {
+  .info-left-section p, .info-right-section p, .new-invoice-footer-row span, .invoice-total-right .f-invoice-price {
+    font-size: 12px !important;
+    color: black !important;
+  }
+}
+  .new-invoice-footer.pt_pdf_invoice .right-section{
+    padding: 0px 30px !important;
+  }
+  .new-invoice-footer.pt_pdf_invoice .right-section .new-invoice-footer-row.rmv_underline{
+    border-bottom: none;
+  }

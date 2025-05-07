@@ -39,28 +39,8 @@ module Reporting
       recent_activity.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
     end
 
-    def self.get_recent_client_activity(currency=nil, client = nil)
-      # columns returned: activity type, client, amount, activity date, currency unit, currency code
-      # fetch last 10 invoices and payments
-      client_filter = client.nil? ? "" : "client_id=#{client}"
-      payment_client_filter = client.nil? ? "" : "payments.client_id=#{client}"
-      currency_filter = currency.present? ?  "currency_id=#{currency.id}" : ""
-      invoices = Invoice.select("id, client_id, currency_id, invoice_total, created_at").where(currency_filter).where(client_filter).order("created_at DESC").limit(10)
-      payments = Payment.select("payments.id, clients.organization_name, payments.payment_amount, payments.created_at, invoice_id").where(payment_client_filter).includes(:invoice => :client).joins(:invoice => :client).order("payments.created_at DESC").limit(100)
-
-      # merge invoices and payments in activity array
-      recent_activity = []
-
-      invoices.each { |inv| recent_activity << {:activity_type => "invoice", :activity_action => "received invoice", :amount => inv.invoice_total, :unit => (inv.currency.present? ? inv.currency.unit : "USD"), :code => (inv.currency.present? ? inv.currency.code : "$"), :activity_date => inv.created_at.strftime("%d/%m/%Y"), :activity_path => "/invoices/#{inv.id}/edit"} }
-      payments.each { |pay| recent_activity << {:activity_type => "payment", :activity_action => "paid", :client => (pay.invoice.unscoped_client.organization_name rescue ''), :amount => pay.payment_amount, :unit => (pay.invoice.currency.present? ? pay.invoice.currency.unit : "USD"), :code => (pay.invoice.currency.present? ? pay.invoice.currency.code : "$"), :activity_date => pay.created_at.strftime("%d/%m/%Y"), :activity_path => "/payments/#{pay.id}/edit"} }
-      # sort them by created_at in descending order
-      recent_activity.sort{ |a, b| b[:activity_date] <=> a[:activity_date] }
-    end
-
     # get chart data
     def self.get_chart_data(currency=nil, company_id=nil)
-      #invoices = Invoice.where("created_at > ?", 6.months.ago.to_date.at_beginning_of_month).joins(:currency).group('currencies.unit')
-
       # month, invoices amount, payments amount
       number_of_months = 6
       chart_months = {}

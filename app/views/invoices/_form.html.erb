@@ -1,256 +1,182 @@
-<% dis_type = '' %>
-<div class="new-invoice-holder editInvoice invoice-form-container">
-  <%= simple_form_for invoice, remote: true, html: { class: 'invoice-form form-invoice form-horizontal nested-forms' } do |f| %>
-    <% dis_type = f.object.discount_type || '%' %>
-    <div class="new-invoice-header clearfix">
-      <%= render 'form_action_links', f: f %>
-      <%= render 'form_heading', f: f, invoice: invoice %>
-    </div>
+<div class="editInvoice inline_form">
+  <%= nested_form_for invoice, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
 
-    <div class="scroll-area">
       <div class="info-section clearfix">
-        <div class="info-left-section new-invoice-section">
-
-          <div class="select-invoice-client">
-            <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'><%= t('views.clients.client') %> </span>
+        <div class="info-left-section left">
+          <h6>Invoice Number: <%= invoice.invoice_number %>
             <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-            <%= f.select :client_id, ("<option value='-1'>#{t('views.common.add_new')}</option>".html_safe+options_for_select((load_clients(action_name, invoice.company_id)),
-                                                                                                                              selected: selected_client)),
-                         {prompt: t('views.invoices.select_client'), include_blank: false}, data: {action_path: new_client_path}, class: 'add_link_select invoice-client-select form_select_2' %>
+            <%= f.select :client_id, options_for_select(load_clients(action_name, invoice.company_id), selected: selected_client),  {prompt: "Select Client", include_blank: false}, {:class => "inline-select custom_select" } %>
+          </h6>
+          <div>
+          <span>Invoice: <small id="invoice_date"> <%= f.object.invoice_date %></small> <i class="material-icons" id="invoice_date_picker">date_range</i></span>
+          <span class="text-blue"> Due: <small id="invoice_due_date_text"> <%= f.object.due_date.present? ? f.object.due_date : 'TBD'   %> </small> <i class="material-icons" id="invoice_due_date_picker">date_range</i></span>
+          <%= f.hidden_field :invoice_date,value: f.object.invoice_date, :required => "" %>
+          <%= f.hidden_field :due_date, :placeholder => "TBD" %>
           </div>
-          <div class="billing-month-div">
-            <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the client for which you are creating invoice' data-step= '5'>Billing Month </span>
-            <%= f.select :billing_month, MONTHS.map { |month| [month, month]  }, {:include_blank => "Select Month"}, {class: 'select_2'} %>
+          <div class="terms">
+            <span>Terms:</span>
+            <small>
+              <%= f.select :payment_terms_id, options_for_select(PaymentTerm.unscoped.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => f.object.payment_terms_id), {:include_blank => false}, {class: 'inline-select custom_select'} %>
+            </small>
           </div>
+          <div class="">
+            <strong><strong class="invoice_total_strongs">Currency</strong>
 
-          <div class="terms hidden">
-            <span class="label-font intro invoices-new-false-intro" data-intro = 'Here you can select the payment terms' data-step= '6'><%= t('views.invoices.terms') %>: </span>
-            <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }, :selected => selected_payment_term(f.object)), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms payment-term-dropdown invoice-client-select select_2", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
-          </div>
-          <div class="clearfix"></div>
-
-          <div class="invoice-date-div">
-            <%= f.input :invoice_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
-                        input_html: { class: 'date-field-style1 date_picker', value: f.object.invoice_date, id: 'invoice_date_picker' }, as: :string %>
-          </div>
-          <div class="due-date-div">
-            <%= f.input :due_date, wrapper_tag: :span, label_html: { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the due date for your invoice', :'data-step' => '8' },
-                        input_html: { class: 'date-field-style1 date_picker', id: 'invoice_due_date_picker', value: default_due_date(current_company, f.object) }, as: :string %>
-          </div>
-          <div class="clearfix"></div>
-
-
-          <div class="paymentInfo">
-            <strong><strong class="invoice_total_strong" currency="<%= Currency.find(invoice_selected_currency(f.object)).code %>"></strong>
-              <% selected_currency = invoice_selected_currency(f.object) %>
-              <%# binding.pry %>
-
-              <%= f.input :currency_id, collection: Currency.unscoped.collect{|c| [c.unit,c.id] }, selected: selected_currency,
-                          include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
-
-              <% if Settings.currency.eql?('On') %>
-                <div class="base-currency-conversion">
-                  <%= f.input :conversion_rate, label: 'Conversion Rate (Base Currency Value)' %>
-
-                  <strong class="invoice_total_base_currency"></strong>
-                  <%= f.input :base_currency_equivalent_total, as: :hidden %>
-                  <%= f.input :base_currency_id, collection: Currency.where(id: current_company_obj.base_currency_id).collect{|c| [c.unit, c.id, {"symbol" => c.code}] }, selected: current_company_obj.base_currency_id,
-                              include_blank: false, input_html: { class: 'inline-select currency-select', disabled: currency_is_off? }, wrapper_tag: :small, label: false %>
-
-                </div>
-              <% end %>
-
+              <small>
+                <% selected_currency = (@client.present? ? @client.currency_id : f.object.currency_id) %>
+                <%= f.select :currency_id, options_for_select(Currency.unscoped.collect{|c| ["#{c.unit} #{c.title}",c.id] }, selected: selected_currency),  {include_blank: false}, {class: 'inline-select large-select custom_select'} %>
+              </small>
             </strong>
           </div>
         </div>
-        <div class="info-right-section recurring_checkbox" >
-
-          <% has_recurring = invoice.new_record? ? false : !invoice.recurring_schedule.new_record? %>
-          <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
-          <label for="recurring" class=" intro invoices-new-false-intro" data-intro = 'Here you can set the recurring procedure for your invoice' data-step= '9'><h6><%= t('views.common.recurring') %></h6></label>
-          <div class="" id="recurring_schedule_container">
-            <%=  f.simple_fields_for :recurring_schedule do |rs| %>
-              <div class="">
-                <% next_invoice_date = has_recurring ? (rs.object.next_invoice_date.strftime(get_date_format) rescue "") :  f.object.invoice_date %>
-                <div class="date-wrapper">
-                  <!--                  <span class="next-invoice-date"><%#= t('views.invoices.next_issue_date') %>:</span>-->
-                  <span>
-                      <small>
-                  <%= rs.input :next_invoice_date, label: 'Next Issue Date', wrapper_tag: :span, label_html:
-                    { class: 'intro invoices-new-false-intro', :'data-intro' => 'Here you can select the invoice date for your invoice', :'data-step' => '7' },
-                         input_html: { class: 'date-field-style1 date_picker',value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date }, as: :string %>
-
-                        <%#= rs.input :next_invoice_date, label: false, input_html: { class: 'date-field-style date_picker', value: next_invoice_date, id: 'next_issue_date', next_date: next_invoice_date },
-                                     wrapper_tag: :small, as: :string %>
-                        <!--                        <span><i class="material-icons calendar-icon">date_range</i></spa n>-->
-                      </small>
-                  </span>
+        <div class="info-center-section recurring_invoice_container">
+          <% has_recurring = @invoice.new_record? ? false : !@invoice.recurring_schedule.new_record? %>
+          <div class="col s12">
+            <h6>
+              <%= check_box_tag 'recurring', true, has_recurring, class: 'filled-in' %>
+              <%= label_tag 'recurring', nil %>
+            </h6>
+          </div>
+          <div class='<%= "#{'hide_visibility' unless has_recurring }" %>' id="recurring_schedule_container">
+            <%= f.fields_for :recurring_schedule do |rs| %>
+                <div class="row">
+                  <div class="col s12">
+                    <% next_invoice_date = has_recurring ? rs.object.next_invoice_date.strftime(get_date_format) :  f.object.invoice_date %>
+                    <span>Next Issue Date: <small id="next_invoice_date"> <%= next_invoice_date %></small> <i class="material-icons" id="next_invoice_date_picker">date_range</i></span>
+                    <%= rs.hidden_field :next_invoice_date, value: next_invoice_date, class: 'next_invoice_date' %>
+                  </div>
                 </div>
-                <div id="how-often-tags" class="invoice-input-holder">
-                  <%= rs.input :frequency, collection:
-
-                    (RecurringFrequency.all.map{ |f| [f.title, f.number_of_days, {'number_of_days' => f.number_of_days}]} +
-                      [['Custom', custom_recurring_value(rs), {'number_of_days' => custom_recurring_value(rs) }]]),
-                               include_blank: false, label: t('helpers.messages.how_ofter'), wrapper_html: { class: 'input-field' },
-                               input_html: { id: 'how-often', class: 'input-select select_2' }, boolean_style: :inline, label_html: { class: 'active lb_contents' } %>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <%= rs.select :frequency, Invoice_FREQUENCY, {include_blank: false}, {class: 'inline-select' }%>
+                    <%= rs.label :frequency, "How Often?"%>
+                  </div>
+                  <div class="input-field col s6">
+                    <%= rs.number_field :occurrences, min: 0 %>
+                    <%= rs.label :occurrences, "How Many?", class: 'active'%>
+                  </div>
                 </div>
-
-                <div class="custom-often hidden">
-                  <span>Every</span>
-                  <%= rs.input :frequency_repetition,  collection: 1..12, label: false, input_html: {class: 'custom_frequency'} %>
-                  <%= rs.input :frequency_type,  collection: OFTEN_LIST, label: false, input_html: {class: 'custom_frequency'} %>
+                <label>DELIVERY OPTIONS</label>
+                <div class="row">
+                  <div class="col s12">
+                    <%= rs.radio_button :delivery_option, 'send_invoice', id: 'send_invoice'%>
+                    <label for="send_invoice">Send invoices automatically</label>
+                  </div>
                 </div>
-                <%# binding.pry %>
-                <div id="how-many" class="invoice-input-holder">
-                  <%= rs.input :occurrences, as: :radio_buttons, label: 'How Many?',
-                               collection: [['-1', 'Infinte'],
-                                            [rs.object.occurrences, '<input class="numeric optional remaining_occurrences center-align occurrence_input" type="number" step="any" name="" value="occurrences" id="how_many_rec"> remaining'.html_safe, {'occurrence' => rs.object.occurrences}]],
-                               checked: rs.object.occurrences == -1 ? '-1' : rs.object.occurrences,
-                               label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' }, input_html: {class: 'occurrences_radio_button occurrence_input'},
-                               boolean_style: :inline %>
-                  <%#= rs.input :occurrences, label: t('helpers.messages.how_many'), label_html: { class: 'active lb_contents' },
-                               wrapper_html: { class: 'input-field' },
-                               input_html: { class: 'recurring_occurrences', min: 0,
-                                             onkeydown: 'javascript: return event.keyCode == 69 ? false : true',
-                                             id: 'how_many_rec' }
-                  %>
-
+                <div class="row">
+                  <div class="col s12">
+                    <%= rs.radio_button :delivery_option, 'draft_invoice', id: 'draft_invoice'%>
+                    <label for="draft_invoice">Create Draft invoices and send manually</label>
+                  </div>
                 </div>
-                <% draft_invoice = invoice.new_record? || rs.object.delivery_option.eql?("draft_invoice") %>
-
-                <hr class="solid">
-                <%= rs.input :delivery_option, as: :radio_buttons, label: false,
-                             collection: [['send_invoice', t('views.invoices.send_invoice_automatically')],
-                                          ['draft_invoice', t('views.invoices.create_draft_and_send_manully')]],
-                             checked: rs.object.delivery_option,
-                             label_method: :second, value_method: :first, wrapper_html: { class: 'invoice-input-holder rad-holder' },
-                             boolean_style: :inline %>
-                <%= rs.input :_destroy, as: :hidden %>
-              </div>
-              </div>
+                <%= rs.hidden_field :_destroy %>
             <% end %>
-            </div>
-        </div>
-    </div>
-    <div class="new-invoice-table-holder main-invoice ">
-      <table id="invoice_grid_fields" class="invoice_grid_fields invoice-grid-table">
-        <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th class="item_name_width center-align"><%= t('views.common.item') %></th>
-          <th class="item_desc_width center-align"><%= t('views.common.description') %></th>
-          <th class="item_unit_cost_width center-align"><%= t('views.common.unit_cost') %></th>
-          <th class="item_quantity_width center-align"><%= t('views.items.quantity') %></th>
-          <th class="item_tax_width center-align"><%= t('views.common.tax') %> 1</th>
-          <th class="item_tax_width center-align"><%= t('views.common.tax') %> 2</th>
-          <th class="item_total_width center-align"><%= t('views.common.total') %></th>
-        </tr>
-        </thead>
-        <tbody id="invoice_line_items_tbl" class="invoice-line-items-table">
-        <%= f.simple_fields_for :invoice_line_items do |invoice_line_item| %>
-          <%= render 'invoice_line_item_fields', f: invoice_line_item, count: invoice_line_item.index %>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="new-invoice-footer">
-      <%= link_to_add_association t('views.invoices.add_line_item'), f, :invoice_line_items, class: 'invoice-add-items-button addItemRow',
-                                  id: 'add_line_item', data: { association_insertion_node: '#invoice_line_items_tbl',
-                                                               association_insertion_method: :append } %>
-      <div class="right-section right">
-        <div class="invoice-total-left">
-          <strong class="invoice-total-title"><%= t('views.invoices.subtotal') %></strong>
-          <%= f.input :discount_type, collection: @discount_types, selected: f.object.discount_type, label: t('Discount(%)'),
-                      input_html: { class: 'discount_select inline-select small-select invoice-client-select', id: 'discount_type' },
-                      wrapper_html: { class: 'new-invoice-footer-row' } %>
-
-          <%= f.input :tax_id, collection: Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id,
-                      label: t('views.common.tax'), include_blank: t('views.common.select'), wrapper_html: { class: 'new-invoice-footer-row invicetax' },
-                      input_html: { class: 'discount_select inline-select small-select form_select_2 invoice_tax_select'} %>
-          <div class="new-invoice-footer-row taxes_total"></div>
-          <strong class="invoice-total-title bottom"><%= t('views.common.invoice_tax') %></strong>
-          <% if invoice.persisted? %>
-            <strong class="invoice-total-title bottom"><%= t('views.common.total_amount_paid') %></strong>
-          <% end %>
-          <strong class="invoice-total-title bottom"><%= t('views.common.total') %></strong>
-        </div>
-        <div class="invoice-total-right">
-          <%= f.input :sub_total, as: :hidden, label: false, wrapper: false %>
-          <strong class="invoice-total-title"><div style="display: inline;" id="subtotal_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div> <span><%= label_tag '', '', :id => 'invoice_sub_total_lbl' %></span></strong>
-          <div class="new-invoice-footer-row">
-            <span id="discount_amount_currency_unit"><%= invoice.currency.unit rescue 'USD' %></span>
-            <%= f.input :discount_amount, as: :hidden, label: false, wrapper: false %>
-            <%= f.input :discount_percentage, label: '', label_html: { id: 'invoice_discount_amount_lbl', style: 'font-weight:normal; display:none;' },
-                        input_html: { class: 'input-inoive-number invoice_discount line_item_qtip right-align', placeholder:  "00.00", min: 0 }, wrapper: false %>
           </div>
-          <div class="new-invoice-footer-row invicetax">
-            <span id="tax_currency_unit"><%= invoice.currency.unit rescue 'USD' %></span>
-            <%= f.input :invoice_tax_amount, label: false, wrapper: false,
-                        input_html: { class: 'input-inoive-number invoice_tax line_item_qtip right-align',
-                                      placeholder:  "00.00", readOnly: true }  %>
-          </div>
-          <%= f.input :tax_amount, as: :hidden, label: false, wrapper: false %>
-          <%= f.input :invoice_total, as: :hidden, label: false, wrapper: false %>
-          <div class="new-invoice-footer-row taxes_total values"></div>
-          <strong class="invoice-total-title bottom">
-            <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
-            <span><%= label_tag '', '0', :id => 'invoice_paid_lbl', :class => 'net_total_value' %></span>
-          </strong>
 
-          <% if invoice.persisted? %>
-            <strong class="invoice-total-title bottom">
-              <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
-              <span><%= label_tag '', number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.code), :id => 'invoice_paid_lbl', :class => 'net_total_value' %></span>
-            </strong>
-          <% end %>
-          <strong class="invoice-total-title bottom">
-            <div style="display: inline;" id="total_currency_unit"><%= invoice.currency.unit rescue 'USD' %></div>
-            <span><%= label_tag '', '0', :id => 'invoice_total_lbl', :class => 'net_total_value' %></span>
-          </strong>
         </div>
-
       </div>
-    </div>
-    <div class="invoice-add-notes">
-      <a href="#"><i class="material-icons">chat</i> </a>
-      <%= f.input :notes, label: false, as: :text, input_html: { placeholder: t('views.common.add_notes'), maxlength: 400, value: "#{default_company_note(current_company, f.object)}"},
-                  wrapper_html: { class: 'invoice-add-notes-textare'} %>
-    </div>
-    <% if f.object.persisted? %>
-      <%#= render 'invoice_history' %>
-    <% end %>
-    </div>
+      <div class="modal-body">
+        <table class="bordered responsive-table invoice_grid_fields" id="invoice_grid_fields">
+          <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th><%= t('item') %></th>
+            <th><%= t('views.common.description') %></th>
+            <th class="center-align"><%= t('views.common.unit_cost') %></th>
+            <th class="center-align"><%= t('views.common.qty') %></th>
+            <th class="center-align"><%= t('views.common.tax') %></th>
+            <th class="right-align"><%= t('views.invoices.line_total') %></th>
+          </tr>
+          </thead>
+          <tbody id="invoice_line_items_tbl">
+          <%= f.fields_for :invoice_line_items, :wrapper => false %>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td>&nbsp;</td>
+            <td class="add_line_item_row"><%#= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %></td>
+          </tr>
+          </tfoot>
+
+        </table>
+      </div>
+      <div class="modal-footer clearfix">
+        <div class="right-section left">
+          <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, class: 'add_line_item_row addItemRow', id: 'add_line_item', data: { target: '#invoice_line_items_tbl' } %>
+          <div class="input-field col">
+            <%= f.label :notes %>
+            <%= f.text_area :notes, maxlength: 400, class: "materialize-textarea" %>
+          </div>
+        </div>
+        <div class="right-section right grid_summary_description">
+          <div class="item-result">
+            <div class="table-row">
+              <%= f.hidden_field :sub_total %>
+              <span><strong>Subtotal</strong></span>
+              <span><strong><%= label_tag '', '', :id => 'invoice_sub_total_lbl' %></strong></span>
+            </div>
+            <div class="table-row">
+                <span>
+                    Discount  &nbsp;&nbsp;
+                  <%= f.select :discount_type, @discount_types, { selected: f.object.discount_type } , {:class => "discount_select inline-select small-select", :id => "discount_type"} %>
+                </span>
+                <span class="input-field">
+                  <%= f.hidden_field :discount_amount %>
+                  <%= f.text_field :discount_percentage, :class => "invoice_discount line_item_qtip right-align", placeholder:  "00.00" %>
+                  <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                </span>
+            </div>
+            <div class="table-row">
+                <span>
+                    Invoice Tax  &nbsp;&nbsp;
+                  <%= f.select :tax_id, options_for_select(Tax.all.collect{|t| [t.name, t.id, {'data-tax_percentage'=>t.percentage.to_f}] }, selected: f.object.tax_id), { prompt: 'Select', include_blank: true},{:class => "discount_select inline-select small-select"} %>
+                </span>
+                <span class="input-field invoice_tax">
+                  <%= f.text_field :invoice_tax_amount, class: "invoice_tax line_item_qtip right-align", placeholder:  "00.00", readOnly: true %>
+                </span>
+            </div>
+
+            <%= f.hidden_field :tax_amount %>
+            <div class="taxes_total">
+              <% @invoice.tax_detail_with_discount.map do |tax, amount| %>
+                  <div class="table-row">
+                    <span><%= tax %></span>
+                    <span class="grid_summary_description tax_amount"><%= amount%></span>
+                  </div>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="item-total net_total">
+            <div class="table-row">
+              <span><strong><%= t('views.invoices.net_total') %></strong></span>
+              <%= f.hidden_field :invoice_total %>
+              <span><strong><%= label_tag '', '0', :id => 'invoice_total_lbl', :class => 'net_total_value' %></strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content_bottom">
+        <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+        <div class="right">
+          <button class="btn waves-effect waves-light site-btn" type="submit" name="save"><%= t('views.invoices.send_invoice') %>
+            <i class="material-icons right">send</i>
+          </button>
+          <button class="btn waves-effect waves-light site-btn" type="submit" name="save_as_draft"><%= button_text %>
+            <i class="material-icons right">save</i>
+          </button>
+        </div>
+        <div class="left">
+          <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, class: 'waves-effect waves-teal btn-flat' %>
+        </div>
+      </div>
   <% end %>
-  </div>
+</div>
 
-  <script>
-      window.currency_symbol = "<%= if params[:action].eql?('new') && !params['invoice_for_client'].present?
-                                    currency = Currency.default_currency.code
-                                 else
-                                   currency = (@client.present? ? @client.currency.code : invoice.currency.code)
-                                 end
-                               %>";
-      <% if params[:invoice_for_client].present? %>
-      $('#invoice_currency_id').val("<%= Currency.find_by(code: currency).id %>")
-      $("#invoice_currency_id").trigger('contentChanged');
-
-      <% end %>
-      $(document).ready(function (){
-          $('#discount_type').val('<%= @invoice.discount_type || '%' %>');
-
-          load_item = "<%= load_item_data_items_path %>"
-          Invoice.change_invoice_item();
-          Invoice.changeTax();
-          OsbPlugins.load_functions();
-          Validation.InvoiceForm();
-
-          set_client_currency = "<%= set_client_currency_invoices_path %>"
-          new_client_form = "<%= new_client_path %>"
-          $("#invoice_client_id").on('change', function(){
-              $.get(set_client_currency+'?client_id=' + $(this).val())
-          })
-          <% if params[:action].eql?('new') %>
-          // $('#recurring').prop('checked', true)
-          <% end %>
-      });
-  </script>
+<script>
+  $(document).ready(function (){
+      Invoice.change_invoice_item();
+      Invoice.changeTax();
+      OsbPlugins.load_functions();
+  });
+</script>

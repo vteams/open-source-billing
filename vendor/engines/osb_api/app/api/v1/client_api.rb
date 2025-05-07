@@ -1,8 +1,7 @@
 module V1
-  class ClientAPI < Grape::API
+  class ClientApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
-    formatter :json, Grape::Formatter::Rabl
     #prefix :api
 
     helpers do
@@ -15,86 +14,16 @@ module V1
     resource :clients do
       before {current_user}
 
-      desc 'Fetch all industries'
-      get :industries do
-        INDUSTRY_LIST
-      end
-
-      desc 'Fetch all currencies'
-      get :currencies do
-        Currency.all
-      end
-
-      desc 'Fetch all countries'
-      get :countries do
-        COUNTRY_LIST
-      end
-
-      desc 'Return all unscoped Clients',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-      get 'unscoped_clients', :rabl => 'clients/unscoped_clients.rabl' do
-        @clients = Company.find(@current_user.current_company).clients.with_deleted.to_a
-        @clients = @clients.sort_by!{|client| client.organization_name.downcase}
-        @clients = @clients.reverse if params[:sort_direction].eql?('desc')
-        @clients
-      end
-
-      desc 'Fetch  single client',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Fetch  single client'
       params do
         requires :id, type: String
       end
       get ':id' do
-        client = Client.find_by(id: params[:id])
-        if !client.present?
-          {error: 'No client found', message: nil }
-        else
-        client = Client.find(params[:id])
-        {client: client, amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
-         outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
-         client_payments: client.payments}
-        end
+        {client: Client.find(params[:id]), client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id])}
       end
 
-      desc 'Fetch  single client with companies',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      params do
-        requires :id, type: String
-      end
-      get ':id/with_companies' do
-        client = Client.find_by(id: params[:id])
-        if !client.present?
-          {error: 'No client found', message: nil }
-        else
-          {client: client, company_ids: CompanyEntity.company_ids(client.id, 'Client'), amount_billed: client.amount_billed.to_s+" "+client.currency_code, payments_received: client.payments_received.to_s+" "+client.currency_code,
-           outstanding_amount: client.outstanding_amount.to_s+" "+client.currency_code, client_invoices: Invoice.joins(:client).where("client_id = ?", params[:id]),
-           client_payments: client.payments}
-        end
-      end
-
-      desc 'Return clients',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      get :rabl => 'clients/client.rabl' do
+      desc 'Return clients'
+      get do
         criteria = {
             status: params[:status] || 'unarchived',
             user: @current_user,
@@ -102,26 +31,19 @@ module V1
             company_id: get_company_id,
             sort_direction: 'desc',
             sort_column: 'contact_name',
-            sort: params[:sort].present? ? params[:sort] : 'organization_name',
-            per: params[:per],
-            direction: params[:direction]
+            per: params[:per]
         }
-        @clients = Client.get_clients(params.merge!(criteria))
+
+        @clients = Client.get_clients(criteria)
       end
 
-      desc 'Create Client',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Create Client'
       params do
         requires :client, type: Hash do
-          requires :organization_name, type: String, message: :required
-          requires :email, type: String, message: :required
-          requires :first_name, type: String, message: :required
-          requires :last_name, type: String, message: :required
+          optional :organization_name, type: String
+          requires :email, type: String
+          requires :first_name, type: String
+          requires :last_name, type: String
           optional :home_phone, type: String
           optional :mobile_number, type: String
           optional :send_invoice_by, type: String
@@ -139,21 +61,15 @@ module V1
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
-          optional :available_credit, type: BigDecimal
+          optional :available_credit, type: Integer
         end
       end
 
       post do
-        Services::Apis::ClientApiService.create(params.merge(controller: 'clients'))
+        Services::Apis::ClientApiService.create(params)
       end
 
-      desc 'Update Client',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Update Client'
       params do
         requires :client, type: Hash do
           optional :organization_name, type: String
@@ -177,54 +93,20 @@ module V1
           optional :archive_number, type: String
           optional :archived_at, type: DateTime
           optional :deleted_at, type: DateTime
-          optional :available_credit, type: BigDecimal
+          optional :available_credit, type: Integer
         end
       end
 
       patch ':id' do
-        client = Client.find_by(id: params[:id])
-        if client.present?
-          Services::Apis::ClientApiService.update(params)
-        else
-          {error: 'Client not found', message: nil }
-        end
+        Services::Apis::ClientApiService.update(params)
       end
 
-      desc 'Delete client',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Delete client'
       params do
         requires :id, type: Integer, desc: 'Delete Client'
       end
       delete ':id' do
-        client = Client.find_by(id: params[:id])
-        if client.present?
-          Services::Apis::ClientApiService.destroy(client)
-        else
-          {error: 'Client not found', message: nil }
-        end
-      end
-
-      desc 'Recover Clients',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-      post 'bulk_actions' do
-        @clients = Client.with_deleted.where(id: JSON.parse(params[:client_ids]))
-        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
-        if @clients.present?
-          @clients.map(&actions[params[:action].to_sym].to_sym)
-          {error: "Client(s) recovered successfully"}
-        else
-          {error: "No Client found"}
-        end
+        Services::Apis::ClientApiService.destroy(params[:id])
       end
 
     end

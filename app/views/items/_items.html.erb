@@ -1,6 +1,6 @@
 <div class="flex-item box">
   <%= link_to '', item , remote: true, class: 'invoice_show_link', style: 'display: none' unless item.deleted? %>
-  <div class="card-white-panel invoice-card card-white-panel-bg-color" data-item_id= <%=item.id %>>
+  <div class="card-white-panel invoice-card" data-item_id= <%=item.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}", class: "filled-in" %>
       <label for="<%= "item_#{item.id}" %>"></label>
@@ -18,16 +18,16 @@
           <strong><%= item.quantity %></strong>
         </div>
         <% if item.tax_1.present? %>
-          <div class="amount-box">
-            <span><%= t('views.invoice_line_item.tax_1') %></span>
-            <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
-          </div>
+            <div class="amount-box">
+              <span><%= t('views.invoice_line_item.tax_1') %></span>
+              <strong><%= item.tax1_name %> <%= item.tax1_percentage %></strong>
+            </div>
         <% end %>
         <% if item.tax_2.present? %>
-          <div class="amount-box">
-            <span><%= t('views.invoice_line_item.tax_2') %></span>
-            <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
-          </div>
+            <div class="amount-box">
+              <span><%= t('views.invoice_line_item.tax_2') %></span>
+              <strong><%= item.tax2_name %> <%= item.tax2_percentage  %> </strong>
+            </div>
         <% end %>
       </div>
     </div>
@@ -42,15 +42,25 @@
         <%= link_to raw("<i class='material-icons'>delete</i>"),item, method: :delete,
                     data: {confirm: t('helpers.messages.confirm'), success: t('views.items.bulk_action_msg', action: 'deleted')},
                     title: t('helpers.links.edit') %>
-        <% if !item.archived? %>
-          <a href="javascript:;" class="single_archive">
-            <i class="material-icons">archive</i>
-          </a>
-        <% else %>
-          <a href="javascript:;" class="single_recover">
-            <i class="material-icons">unarchive</i>
-          </a>
-        <% end %>
+        <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= item.id %>' data-alignment="right" data-beloworigin="true">
+          <i class="material-icons">more_vert</i>
+        </a>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown_<%= item.id %>" class='dropdown-content z-depth-4'>
+          <% if !item.archived? %>
+            <li>
+              <a href="javascript:;" class="single_archive">
+                <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
+              </a>
+            </li>
+          <% else %>
+            <li>
+              <a href="javascript:;" class="single_recover">
+                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
     </div>
   </div>

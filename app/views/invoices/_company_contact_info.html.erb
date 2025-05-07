@@ -1,5 +1,0 @@
-<b><%= company.company_name %></b>
-<div>
-  <%= [company.street_address_1, company.street_address_2, company.city, "#{company.state} #{company.zipcode}", company.country].reject(&:blank?).compact.join(', ') %><br>
-  Tel: <%= company.phone_number %>
-</div>

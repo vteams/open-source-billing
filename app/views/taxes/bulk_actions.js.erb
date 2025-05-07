@@ -1,8 +1,39 @@
-swal({
-    icon: "success",
-    title: 'Success',
-    buttons: false,
-    timer: 3000,
-    text: "<%= t('views.taxes.bulk_action_msg', action: @action) %>"}).then(function(){
-    window.location = '<%= taxes_path %>'
-});
+jQuery(".alert").hide()
+
+<% unless params[:flag]%>
+    <% if @action == "archived" or @action == "deleted" %>
+    jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
+    <% else %>
+    jQuery(".alert.alert-success").show().find('span').html("Tax(es) are <%= @action %> successfully");
+    <% end %>
+<% end %>
+
+<% unless params[:tax_ids].blank? %>
+    jQuery('tbody#tax_body').html('<%= escape_javascript render("taxes") %>');
+    jQuery('#bulk_actions').html('<%= escape_javascript render("bulk_actions") %>');
+<% end %>
+
+jQuery('#active_links').html('<%= escape_javascript render("filter_links") %>');
+
+jQuery('#active_links a').removeClass('active');
+jQuery('.top_links').hide();
+
+<% if @action == "recovered from archived"%>
+    jQuery('.recover_archived,.destroy_archived').show();
+    jQuery('.get_archived').addClass('active');
+<% elsif @action == "recovered from deleted" %>
+    jQuery('.recover_deleted').show();
+    jQuery('.get_deleted').addClass('active');
+<% elsif @action == "deleted from archived" %>
+    jQuery('.destroy_archived').show();
+    jQuery('.recover_archived').show();
+    jQuery('.get_archived').addClass('active');
+<%else%>
+    jQuery('.archive,.destroy').show();
+    jQuery('.get_actives').addClass('active');
+<%end%>
+
+jQuery('#select_all').attr('checked', false);
+jQuery('tfoot#paging_links').html('<%= escape_javascript render :partial => "application_partials/paging", :page => params[:page] %>');
+jQuery("table.table_listing").trigger('update');
+bind_deleted_entry();

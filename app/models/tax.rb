@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Tax < ApplicationRecord
+class Tax < ActiveRecord::Base
 
   include TaxSearch
   # scope
@@ -27,8 +27,6 @@ class Tax < ApplicationRecord
   scope :delete_multiple, lambda {|ids| multiple(ids).map(&:destroy)}
   scope :created_at, -> (created_at) { where(created_at: created_at) }
   scope :percentage, -> (percentage) { where(percentage: percentage) }
-  scope :tax_name, -> (tax_id) { where(id: tax_id) }
-  scope :single_search, -> (single_search) { where('name LIKE :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :invoice_line_items
@@ -59,13 +57,11 @@ class Tax < ApplicationRecord
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
     taxes = params[:search].present? ? Tax.search(params[:search]).records : Tax.all
-    taxes = taxes.single_search(params[:single_search]) if params[:single_search].present?
     taxes = taxes.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
     taxes = taxes.percentage((params[:min_percentage].to_i .. params[:max_percentage].to_i)) if params[:min_percentage].present?
     taxes = taxes.send(mappings[params[:status].to_sym]) if params[:status].present?
-    taxes = taxes.tax_name(params[:tax_id]) if params[:tax_id].present?
 
     taxes.page(params[:page]).per(per_page)
   end

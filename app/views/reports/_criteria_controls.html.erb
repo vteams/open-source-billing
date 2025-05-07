@@ -1,16 +1,1 @@
-<div class="flex-wrapper">
-  <div class="flex-item breadcrum-bar">
-    <div class="card-white-panel">
-      <h3 class="with-grid-icons intro reports-invoice_detail-false-intro" data-intro="<%= t('views.reports.invoice_detail_dtl') %>" data-step="1">
-        <span><%= link_to(t('header.links.reports.reports'), reports_path) %> <%= t('views.reports.' + @report.report_name.parameterize.underscore) if request.format.pdf? %> </span>
-        <%= link_to "/ #{@report.report_name.titlecase}", 'javascript:;', class: 'active'  %>
-      </h3>
-      <div class="with-grid-icons">
-        <div class="right">
-          <%= link_to( raw('<i class="material-icons intro reports-invoice_detail-false-intro" data-intro="You can filter your reports from here" data-step="2">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters')) unless request.format.pdf? %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <%= render "reports/criteria_partials/#{@report.report_name}" %>

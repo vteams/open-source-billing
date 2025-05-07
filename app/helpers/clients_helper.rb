@@ -21,52 +21,12 @@
 module ClientsHelper
   include ApplicationHelper
 
-
   def new_client id
     notice = <<-HTML
      <p>#{t('views.clients.created_msg')}</p>
     HTML
     notice.html_safe
   end
-
-  def load_client_roles
-    Role.all.where(for_client: true).map{|r| [r.name.humanize, r.id]}
-  end
-
-  def client_introduction_parameter
-    cookies[:intro] = controller_name.singularize
-  end
-
-  def client_intro_class
-    controller_name+"-"+params[:action]+"-"+"#{current_portal_client.introduction.send(controller_name.singularize)}"+"-intro"
-  end
-
-  def history_of_client
-    activities_arr=[]
-    @client.activities.each do |activity|
-      unless activity.parameters.empty?
-        if activity.key == "client.create"
-          activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name} created client on #{activity.created_at.strftime("%d-%b-%y")}</div>")
-        else
-          activity.parameters['obj'].each do |p|
-            previous_value = p[1][0]
-            changed_value = p[1][1]
-            unless p[0].include?('updated_at') || p[0].include?('created_at')
-              if previous_value.present? && changed_value.present?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} changed #{p[0]} to #{changed_value}</div>")
-              elsif (previous_value.nil? || previous_value.empty?) && changed_value.present?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} added #{p[0].humanize}  #{changed_value}</div>")
-              elsif previous_value.present? && changed_value.empty?
-                activities_arr << strip_tags("<div class='col-sm-12'>#{activity.owner.user_name rescue ''} removed #{p[0].humanize}  #{previous_value}</div>")
-              end
-            end
-          end
-        end
-      end
-    end
-    activities_arr.reverse.join(", ").gsub(",", '<br/>').html_safe
-  end
-
 
   def clients_archived ids
     notice = <<-HTML
@@ -109,18 +69,5 @@ module ClientsHelper
 
   def qb_client_email?(client_email)
     client_email.present? && client_email['Address'].present?
-  end
-
-  def total_payment_recieved
-    total_payment = 0
-    # binding.pry
-    if @clients == nil
-      total_payment = total_payment
-    else
-      @clients.each do |client|
-        total_payment = total_payment + client.payments_received
-      end
-    end
-    total_payment
   end
 end

@@ -18,22 +18,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class PaymentMailer < ApplicationMailer
+class PaymentMailer < ActionMailer::Base
+  default :from => 'support@opensourcebilling.org'
 
-  def payment_notification_email(current_user, payment)
-   # @clients, @invoice, @amount = clients, invoice, payment.payment_amount
-    get_user = User.find(current_user)
-    client = Payment.find(payment).invoice.unscoped_client
-    template = replace_template_body(current_user, Payment.find(payment), 'Payment Received') #(logged in user,invoice,email type)
+  def payment_notification_email(current_user, payment, invoice_pdf_file=nil)
+   # @client, @invoice, @amount = client, invoice, payment.payment_amount
+    get_user = current_user.is_a?(String)? User.find_by_email(current_user) : current_user
+    client = payment.invoice.unscoped_client
+    template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(to: client.email, cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
-   Payment.find(payment).sent_emails.create({
+    attachments["Invoice-PTMP-#{payment.invoice.invoice_number}.pdf"] = invoice_pdf_file if invoice_pdf_file
+    email_body = mail(to: (client.billing_email if client.billing_email.present?),
+                      cc: (template.cc.present? ? (client.email + ',' + template.cc) : client.email),
+                      bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
+    payment.sent_emails.create({
                                    :content => email_body,
                                    :sender => get_user.email, #User email
-                                   :recipient => client.email, #clients email
+                                   :recipient => client.email, #client email
                                    :subject => 'Payment notification',
                                    :type => 'Payment',
-                                   :company_id => Payment.find(payment).company_id,
+                                   :company_id => payment.company_id,
                                    :date => Date.today
                                })
   end
@@ -52,7 +56,7 @@ class PaymentMailer < ApplicationMailer
     get_user = user.is_a?(String)? User.find_by_email(user) : user
     template = get_email_template(get_user, invoice, template_type)
     param_values = {
-        'client_name'=> (invoice.unscoped_client.first_name rescue 'ERROR'),
+        'client_name'=> (invoice.unscoped_client.first_name.blank? ? 'Client' : invoice.unscoped_client.first_name),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'payment_amount' => (payment.payment_amount  rescue 'ERROR'),
         'invoice_number' => (invoice.invoice_number  rescue 'ERROR'),

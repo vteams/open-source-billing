@@ -48,7 +48,7 @@ module CompanySearch
     def self.sql_search(keyword)
       query = []
       keyword.each do |key,val|
-        query << "#{key} like '%#{val}%'"
+        query << "#{key} like '#{val}%'"
       end
       query = query.join(" AND ")
       return where(query)

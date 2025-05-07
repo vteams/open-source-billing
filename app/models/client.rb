@@ -17,28 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-class Client < ApplicationRecord
-  # Include default clients modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  attr_accessor :skip_password_validation
-
-  after_create :set_introduction
+class Client < ActiveRecord::Base
 
   include ClientSearch
-  include Hashid::Rails
-  include PublicActivity::Model
-  tracked only: [:create, :update], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
-
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :created_at, -> (created_at) { where(created_at: created_at) }
-  scope :client_id, -> (client_id) { where(id: client_id) }
-  scope :single_search, -> (single_search) { where('first_name LIKE :single_search OR last_name LIKE :single_search OR
-             organization_name LIKE :single_search OR email LIKE :single_search', single_search: "%#{single_search}%") }
 
   # associations
   has_many :estimates
@@ -48,15 +32,10 @@ class Client < ApplicationRecord
   has_many :projects
   accepts_nested_attributes_for :client_contacts, :allow_destroy => true
   belongs_to :company
-  belongs_to :role
-  belongs_to :currency, touch: false
+  belongs_to :currency
   has_many :company_entities, :as => :entity
   has_many :expenses
-  has_one :introduction
-
-  validates :organization_name, :first_name, :last_name, :email, presence: true
-
-  before_create :create_default_currency
+  after_create :create_default_currency
 
   acts_as_archival
   acts_as_paranoid
@@ -78,13 +57,6 @@ class Client < ApplicationRecord
   def last_estimate
     estimates.unarchived.first.id rescue nil
   end
-
-  def set_introduction
-    intro = Introduction.new
-    intro.client_id = self.id
-    intro.save
-  end
-
 
   def purchase_options
     {
@@ -145,7 +117,7 @@ class Client < ApplicationRecord
     credit.flatten
   end
 
-  def old_available_credit
+  def available_credit
     client_invoice_ids = Invoice.with_deleted.where("client_id = ?", self.id).all.pluck(:id)
     # total credit
 
@@ -155,7 +127,6 @@ class Client < ApplicationRecord
     client_total_credit += self.payments.first.payment_amount.to_f rescue 0
     # avail credit    client_avail_credit = client_payments.sum { |f| f.payment_amount }
     client_total_credit
-    0
   end
 
   def update_payment_status(payments)
@@ -207,7 +178,7 @@ class Client < ApplicationRecord
   end
 
   def self.get_clients(params)
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', unarchived: 'unarchived'}
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
@@ -217,27 +188,21 @@ class Client < ApplicationRecord
     # get the clients associated with companies
     company_clients = company.clients
     company_clients = company_clients.search(params[:search]).records if params[:search].present? and company_clients.present?
-    company_clients = company_clients.single_search(params[:single_search]) if params[:single_search].present?
-    company_clients = company_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
-    company_clients = company_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
+    company_clients = company_clients.send(mappings[params[:status].to_sym])
     company_clients = company_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
-    company_clients = company_clients.client_id(params[:client_id]) if params[:client_id].present?
-    # binding.pry
+
     # get the account
     account = params[:user].current_account
 
     # get the clients associated with accounts
     account_clients = account.clients
     account_clients = account_clients.search(params[:search]).records if params[:search].present? and account_clients.present?
-    account_clients = account_clients.single_search(params[:single_search]) if params[:single_search].present?
-    account_clients = account_clients.send(mappings[params[:status].to_sym]) if params[:status].present?
-    account_clients = account_clients.send(mappings[params[:client_email]]) if params[:client_email].present?
+    account_clients = account_clients.send(mappings[params[:status].to_sym])
     account_clients = account_clients.created_at(
         (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
     ) if params[:create_at_start_date].present?
-    account_clients = account_clients.client_id(params[:client_id]) if params[:client_id].present?
 
     # get the unique clients associated with companies and accounts
     clients = ( account_clients + company_clients).uniq
@@ -248,16 +213,15 @@ class Client < ApplicationRecord
       params[:sort_column] = 'contact_name' if params[:sort_column].starts_with?('concat')
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
-    clients = clients.sort_by!{ |client| params[:sort].eql?('organization_name') ? client.organization_name.downcase : client.created_at}
-    clients = clients.reverse if params[:direction].eql?('desc')
-    clients
-    # Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
+
+    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
 
   end
 
   def create_default_currency
     return true if self.currency.present?
     self.currency = Currency.default_currency
+    self.save
   end
 
   def group_date
@@ -265,58 +229,6 @@ class Client < ApplicationRecord
   end
 
   def client_name
-    [first_name.first.capitalize, last_name.first.capitalize].compact.join
-  end
-
-  def full_name
-    [first_name, last_name].reject(&:blank?).collect(&:capitalize).join(' ')
-  end
-
-  def outstanding_amount
-    amount = 0
-    self.invoices.each do |invoice|
-      amount += Payment.invoice_remaining_amount(invoice.id)
-    end unless invoices.blank?
-    amount
-  end
-
-  def payments_received
-    payments = 0
-    self.invoices.each do |invoice|
-      payments += invoice.payments.where("payment_type is null or payment_type != 'credit'").sum(:payment_amount).to_f
-    end  unless invoices.blank?
-    payments
-  end
-
-  def total_amount
-    total_payment = 0
-    self.clients.each do |client|
-      total_payment = total_payment + payments_received
-    end unless clients.blank?
-    total_payment
-  end
-
-  def amount_billed
-    self.invoices.sum(:invoice_total).to_f
-  end
-
-  def state
-    province_state
-  end
-
-  def zipcode
-    postal_zip_code
-  end
-
-  def profile_picture
-    'img-user.png'
-  end
-
-
-  protected
-
-  def password_required?
-    return false if skip_password_validation
-    super
+    "#{first_name.first.capitalize}#{last_name.first.capitalize}"
   end
 end

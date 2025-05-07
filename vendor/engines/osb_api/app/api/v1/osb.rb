@@ -1,23 +1,17 @@
-require 'grape-swagger'
-
 module V1
-  class Osb < Grape::API
+  class OSB < Grape::API
 
     version 'v1', using: :path, vendor: 'osb'
     format :json
-    rescue_from Grape::Exceptions::ValidationErrors do |e|
-      error!({ errors: e.full_messages.map { |msg| msg }, message: nil}, 400)
-    end
+    #prefix :apis
 
     helpers do
       def current_token
         Doorkeeper::AccessToken.authenticate request.headers["Access-Token"]
       end
       def current_user
-        @current_user ||= ::User.find_by(authentication_token: request.headers["Access-Token"]) if request.headers["Access-Token"]
-        if @current_user
-          User.current = @current_user
-        else
+        @current_user ||= ::User.find(current_token.resource_owner_id) if current_token
+        unless @current_user
           error!('Unauthorized. Invalid or expired token.', 401)
         end
       end
@@ -38,36 +32,19 @@ module V1
         end
       end
     end
-    mount V1::ClientAPI
-    mount V1::AccountAPI
-    mount V1::CompanyAPI
-    mount V1::InvoiceAPI
-    mount V1::ItemAPI
-    mount V1::PaymentAPI
-    mount V1::TaxAPI
-    mount V1::DashboardAPI
-    mount V1::ReportAPI
-    mount V1::ExpenseAPI
-    mount V1::EstimateAPI
-    mount V1::LogAPI
-    mount V1::TaskAPI
-    mount V1::StaffAPI
-    mount V1::RecurringFrequencyAPI
-    mount V1::SettingsAPI
-    mount V1::UserAPI
-    mount V2::InvoiceAPI
-    mount V2::PaymentAPI
-    mount V2::EstimateAPI
-    mount V2::ClientAPI
-    mount V2::ItemAPI
-    mount V2::TaxAPI
-
-    add_swagger_documentation(
-        base_path: "/api",
-        hide_documentation_path: true,
-        info: {
-            title: "RESTful API"
-        }
-    )
+    mount V1::OSB::ClientApi => '/'
+    mount V1::OSB::AccountApi => '/'
+    mount V1::OSB::CompanyApi => '/'
+    mount V1::OSB::InvoiceApi => '/'
+    mount V1::OSB::ItemApi => '/'
+    mount V1::OSB::PaymentApi => '/'
+    mount V1::OSB::TaxApi => '/'
+    mount V1::OSB::DashboardApi => '/'
+    mount V1::OSB::ReportApi => '/'
+    mount V1::OSB::ExpenseApi => '/'
+    mount V1::OSB::EstimateApi => '/'
+    mount V1::OSB::LogApi => '/'
+    mount V1::OSB::TaskApi => '/'
+    mount V1::OSB::StaffApi => '/'
   end
-end
+ end

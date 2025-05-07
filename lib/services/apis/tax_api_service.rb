@@ -4,31 +4,23 @@ module Services
 
       def self.create(params)
         tax = ::Tax.new(tax_params_api(params))
-        if Tax.where("name LIKE Binary ?", params[:tax][:name]).present?
-          {error: 'Tax already exists with same name', message: nil }
+        if tax.save
+          {message: 'Successfully created'}
         else
-          if tax.save
-            {message: 'Successfully created'}
-          else
-            {error: tax.errors.full_messages, message: nil }
-          end
+          {error: tax.errors.full_messages}
         end
       end
 
       def self.update(params)
         tax = ::Tax.find(params[:id])
-        if Tax.where("name LIKE Binary ?", params[:tax][:name]).present? && params[:tax][:name] != tax.name
-          {error: 'Tax already exists with same name', message: nil}
-        else
-          if tax.present?
-            if tax.update_attributes(tax_params_api(params))
-              {message: 'Successfully updated'}
-            else
-              {error: tax.errors.full_messages, message: nil }
-            end
+        if tax.present?
+          if tax.update_attributes(tax_params_api(params))
+            {message: 'Successfully updated'}
           else
-            {error: 'Tax not found', message: nil }
+            {error: tax.errors.full_messages}
           end
+        else
+          {error: 'tax not found'}
         end
       end
 

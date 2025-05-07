@@ -1,118 +1,70 @@
 <% if @clients.count > 0 %>
-  <div class="new-invoice-holder">
-    <div class="new-invoice-table-holder main-invoice page-box">
-      <table class="bordered grid-view">
-        <thead>
-        <tr>
-          <th class="align_center header align_center center-align not-sortable td-checkbox checkbox-item check_all_behaviour">
-            <div class="">
-              <div class="checkbox-item invoice_checkbox">
-                <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity check_all filled-in checked-invoice hidden', title: 'Select All', id: 'select_all_items' %>
-                <label for="<%= "select_all_items" %>"></label>
-              </div>
-            </div>
-          </th>
-          <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('organization_name', t('views.clients.organization')) %></th>
-          <th class="align_center sorting header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', "#{t('views.clients.contact')}") %></th>
-          <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email', t('views.common.email')) %></th>
-          <th class="align_center header"><%= t('views.clients.invoiced') %></th>
-          <th class="align_center header"><%= t('views.clients.received') %></th>
-        </tr>
-        </thead>
-        <tbody class="table-view-body">
-        <% @clients.each do |client| %>
-          <tr class="client-card invoice-card invoice-table-row clients-table-row" data-invoice-url="<%= url_for(client) %>">
-            <td class="align_center header align_center center-align not-sortable td-checkbox checkbox-item invoice-row">
-              <div class="card-white-panel invoice-card invoice tabel-panel align_center center-align" data-client_id= <%=client.id %>>
-                <div class="checkbox-item invoice_checkbox">
-                  <%= check_box_tag "client_ids[]", client.id, false, :id => "client_#{client.id}", class: "filled-in checked-invoice" %>
-                  <label for="<%= "client_#{client.id}" %>"></label>
-                  <div class="invoice-name-initials invoice-name <%= random_card_color %>"><%= client.client_name%></div>
-                </div>
-              </div>
-            </td>
-            <td><strong><%= link_to_if !client.deleted?, client.organization_name, client , remote: true, class: 'invoice_show_link' %></strong></td>
-            <td><%= client.contact_name %></td>
-            <td><%= mail_to client.email, client.email , class: 'email-link' %></td>
-
-            <td>
-              <strong><%= number_to_currency(client.amount_billed, unit: client.currency_code)%></strong>
-            </td>
-            <td>
-              <strong style="float: left"><%= number_to_currency(client.payments_received, unit: client.currency_code)%></strong>
-              <div class="action-btn-group clients-action" style="float: right">
-                <% if client.deleted? %>
-                    <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
-                      <i class="material-icons">unarchive</i>
-                    </a>
-                <% else %>
-
-                <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true,
-                            class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
-
-                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= client.id %>' data-alignment="right" data-beloworigin="true">
-                  <i class="material-icons">more_vert</i>
-                </a>
-
-                <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
-                  <li>
-                    <%= link_to(raw("<i class='material-icons'>receipt</i>New Invoice") , new_invoice_path(invoice_for_client: client.id)) %>
-                  </li>
-                  <li>
-                    <%= link_to(raw("<i class='material-icons'>receipt</i>All Invoices") , invoices_path(client_id: client.id)) %>
-                  </li>
-                  <li>
-                    <%= link_to(raw("<i class='material-icons'>payment</i>New Payment") , unpaid_client_invoices_path(client.id), class: "#{'disabled_link' if (unpaid_invoice_exists?(client.id)).eql?(false)}", remote: unpaid_invoice_exists?(client.id)) %>
-                  </li>
-                  <li>
-                    <%= link_to(raw("<i class='material-icons'>payment</i>All Payments") , payments_path(client_id: client.id)) %>
-                  </li>
-
+    <div class="new-invoice-holder">
+      <div class="new-invoice-table-holder main-invoice page-box">
+        <table class="bordered grid-view">
+          <thead>
+          <tr>
+            <th class="align_center not-sortable td-checkbox checkbox-item">
+              <%= check_box_tag 'select_all', 1, false, class: 'fix-left-and-opacity', title: 'Select All', id: 'select_all_items' %>
+            </th>
+            <th class="align_left header <%= sortable_class('organization_name') %>"><%= sortable('organization_name', t('views.clients.organization')) %></th>
+            <th class="align_center sorting header <%= sortable_class('contact_name') %>"><%= sortable('contact_name', "#{t('client')}") %></th>
+            <th class="align_left header <%= sortable_class('email') %>"><%= sortable('email', t('views.common.email')) %></th>
+            <th class="align_left header sorting {sorter:'thousands'} <%= sortable_class('business_phone') %>"><%= sortable('business_phone', t('views.common.phone')) %></th>
+            <th class="align_center header <%= sortable_class('available_credit') %>"><%= sortable('available_credit', t('views.clients.available_credit')) %></th>
+            <th class="center-align not-sortable" width="10%"><%= t '.actions', default: t('helpers.actions') %></th>
+          </tr>
+          </thead>
+          <tbody class="table-view-body">
+          <% @clients.each do |client| %>
+              <tr class="invoice-card">
+                <td class="align_center td-checkbox checkbox-item">
+                  <%= check_box_tag 'client_ids[]', client.id, false, :id => "client_#{client.id}", class: 'fix-left-and-opacity' %>
+                </td>
+                <td><strong><%= link_to_if !client.deleted?, client.organization_name, client , remote: true, class: 'invoice_show_link' %></strong></td>
+                <td><%= client.contact_name %></td>
+                <td><%= mail_to client.email, client.email , class: 'email-link' %></td>
+                <td><%= client.business_phone %></td>
+                <td>
+                  <strong><%= number_to_currency(client.available_credit, unit: '')%> <small><%= default_currency_code %></small></strong>
+                </td>
+                <td class="action-btn-group clients-action">
                   <% if client.deleted? %>
-                    <li>
                       <a href="javascript:;" class="single_recover_deleted" title="<%= t('helpers.links.recover') %>">
                         <i class="material-icons">unarchive</i>
                       </a>
-                    </li>
-                  <% end %>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>delete</i>Delete"),client, method: :delete,
-                                data:{confirm: t('helpers.messages.confirm'),
-                                      success: t('views.clients.bulk_action_msg', action: 'deleted') },
-                                title: t('helpers.links.delete') %>
-
-                  </li>
-                  <% if !client.archived? %>
-
-                    <li>
-                      <a href="javascript:;" class="single_archive" title="<%= t('views.common.archive') %>">
-                        <i class="material-icons">archive</i><%= t('views.common.send_to_archive') %>
-                      </a>
-                    </li>
                   <% else %>
-                    <li>
-                      <a href="javascript:;" class="single_recover" title="<%= t('helpers.links.recover') %>">
-                        <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+                      <%= link_to raw("<i class='material-icons'>create</i>"),edit_client_path(client), remote: true,
+                                  class: 'edit_invoice_icon', title: t('helpers.links.edit') %>
+                      <%= link_to raw("<i class='material-icons'>delete</i>"),client, method: :delete,
+                                  data:{confirm: t('helpers.messages.confirm'),
+                                        success: t('views.clients.bulk_action_msg', action: 'deleted') },
+                                  title: t('helpers.links.delete') %>
+                      <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown_<%= client.id %>' data-alignment="right" data-beloworigin="true">
+                        <i class="material-icons">more_vert</i>
                       </a>
-                    </li>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown_<%= client.id %>" class='dropdown-content z-depth-4'>
+                        <% if !client.archived? %>
+                            <li>
+                              <a href="javascript:;" class="single_archive">
+                                <i class="material-icons">archive</i> <%= t('views.common.send_to_archive') %>
+                              </a>
+                            </li>
+                        <% else %>
+                            <li>
+                              <a href="javascript:;" class="single_recover">
+                                <i class="material-icons">unarchive</i> <%= t('helpers.links.recover') %>
+                              </a>
+                            </li>
+                        <% end %>
+                      </ul>
                   <% end %>
-                  <li>
-                    <%= link_to raw("<i class='material-icons'>person</i>Login"),masquerades_path(client_id: client.id), method: :post,
-                                target: '_blank'
-                                 %>
-
-                  </li>
-
-                </ul>
-                  <% end %>
-              </div>
-
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-
 <% end %>

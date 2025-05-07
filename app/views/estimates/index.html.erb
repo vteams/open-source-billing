@@ -4,7 +4,7 @@
   <div class="flex-wrapper">
     <!--- breadcrum Bar --->
     <div class="flex-item  breadcrum-bar">
-      <div class="card-white-panel intro estimates-index-false-intro" data-intro='All of your estimates will be listed here' data-step="1">
+      <div class="card-white-panel ">
         <h3 class="with-grid-icons">
           <span><%= link_to t('header.links.estimates.estimates'), estimates_path %></span>
           <%= link_to "/ #{t('views.common.' + status_text)}", 'javascript:;', class: 'active' %>
@@ -18,9 +18,6 @@
   <div class="invoice-box clearfix">
     <%= form_tag "estimates/bulk_actions", {method: :get, id: "bulk_action_form"} do -%>
       <div class="search_result_container"><%= render partial: 'estimates_container' %></div>
-      <div style="margin-top: 10px" class="right <%= @estimates.count > 7 ? 'invoice_link_right' : '' %>">
-        <%= link_to ' + New Estimate ', new_estimate_path, class: "#{(@estimates.count > 0 && @estimates.total_count <= 9) || @estimates.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
-      </div>
       <%= render partial: 'bulk_actions'%>
     <% end %>
   </div>

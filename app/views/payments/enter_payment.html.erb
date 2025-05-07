@@ -1,6 +1,6 @@
 <%= render 'payment_activity'%>
 <!--content_top-->
-<%= form_tag update_individual_payment_payments_path, :method => :put, remote: true, :novalidate => "", :id => "payments_form" do %>
+<%= form_tag "update_individual_payment", :method => :put, :novalidate => "", :id => "payments_form" do %>
       <%= render "enter_payment" %>
 
       <% if params[:from_invoices] %>
@@ -8,9 +8,6 @@
       <% end %>
 <% end %>
 
-<script>
-  Validation.PaymentForm();
-</script>
 
 <!--content_bottom-->
 

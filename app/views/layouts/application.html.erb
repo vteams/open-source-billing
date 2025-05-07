@@ -14,20 +14,17 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Dosis:400,500" rel="stylesheet">
-      <link href="https://cdn.bootcdn.net/ajax/libs/intro.js/2.9.3/introjs.min.css" rel="stylesheet">
+
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-      <script src="https://cdn.bootcdn.net/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
 
       <%= stylesheet_link_tag "toastr.min.css", :media => "all" %>
-      <%= javascript_pack_tag "application" %>
-      <%= javascript_include_tag "i18n" %>
-      <%= javascript_include_tag "translations", skip_pipeline: true %>
-      <%#= javascript_pack_tag "toastr.min.js" %>
+      <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag "toastr.min.js" %>
       <script>
           I18n.locale = "<%= I18n.locale %>";
       </script>
@@ -36,14 +33,14 @@
     </head>
     <body currency-unit="<%= t("currency_unit") %>" class="invoice-report full-page">
 
-        <%= render 'layouts/header'  unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates')) )%>
+        <%= render 'layouts/header' %>
 
         <main id="main" class="<%= "#{'report-section' if action_name.eql?('reports')}"%> <%= "#{'setting-section' if controller_name.eql?('settings')}"%> <%= "#{'time-tracking' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}"%> ">
           <div class="container-fluid">
             <div id='overly-container'>
               </div>
             <!--- side vertical menu --->
-            <%= render 'layouts/side_nav' unless( action_name.eql?('show') && (controller_name.eql?('invoices') || controller_name.eql?('estimates') ) )%>
+            <%= render 'layouts/side_nav'%>
             <%= render 'layouts/flash_messages'%>
 
             <%= yield %>
@@ -54,28 +51,5 @@
         <div id="loading-indicator" class="hidden">
           <%= image_tag 'ring.gif' %>
         </div>
-
-    <script>
-        $(document).ready(function (){
-
-            <% get_introduction_parameter %>
-            <% if params[:controller] != 'dashboard' %>
-              $('.header-intro').removeAttr('data-intro');
-            <% end %>
-            <% unless params[:controller].eql?('sub_users') || params[:controller].eql?('companies') || params[:controller].eql?('roles') || params[:controller].eql?('recurring_frequencies') || params[:controller].eql?('email_templates') || params[:controller].eql?('payment_terms') || (current_user.present? && !current_user.introduction.present?) %>
-            setTimeout(function () {
-                if($('.intro').hasClass("<%= intro_class %>")){
-                    $('#users .list-item:first').attr('data-intro', 'You can click on any user name to edit a user');
-                    $('#companies .list-item:first').attr('data-intro', 'You can click on any company name to edit a company');
-                    $('#roles .list-item:first').attr('data-intro', 'You can click on any role name to edit a company');
-                    window.introJs().start();
-                    $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
-                    $('.introjs-prevbutton').text('Prev');
-                    $('.introjs-nextbutton').text('Next');
-                }
-            },200)
-            <% end %>
-        });
-    </script>
     </body>
 </html>

@@ -1,2 +1,0 @@
-class PermissionsController < ApplicationController
-end

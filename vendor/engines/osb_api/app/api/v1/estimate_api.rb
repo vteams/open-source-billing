@@ -1,5 +1,5 @@
 module V1
-  class EstimateAPI < Grape::API
+  class EstimateApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api
@@ -23,50 +23,31 @@ module V1
     resource :estimates do
       before  {current_user}
 
-      desc 'Return users estimates',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Return users estimates'
       get do
         params[:status] = params[:status] || 'active'
-        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ").order("estimates.created_at #{params[:direction].present? ? params[:direction] : 'desc'}")
+        @estimates = Estimate.joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id ")
         @estimates = filter_by_company(@estimates)
       end
 
-      desc 'Fetch single estimate',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Fetch single estimates'
       params do
         requires :id, type: String
       end
 
       get ':id' do
-        estimate = Estimate.find_by(id: params[:id])
-        estimate.present? ? estimate : {error: 'Estimate not found', message: nil }
+        Estimate.find params[:id]
       end
 
-      desc 'Create Estimate',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Create Estimate'
       params do
         requires :estimate, type: Hash do
           optional :estimate_number, type: String
-          requires :estimate_date, type: String, message: :required
+          requires :estimate_date, type: String
           optional :po_number, type: String
           optional :discount_percentage, type: String
-          requires :client_id, type: Integer, message: :required
-          optional :terms, type: String
+          requires :client_id, type: Integer
+          requires :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
@@ -88,13 +69,7 @@ module V1
         Services::Apis::EstimateApiService.create(params)
       end
 
-      desc 'Update Estimate',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Update Estimate'
       params do
         requires :estimate, type: Hash do
           optional :estimate_number, type: String
@@ -124,68 +99,13 @@ module V1
       end
 
 
-      desc 'Delete an Estimate',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Delete an Estimate'
       params do
         requires :id, type: Integer, desc: "Delete an estimate"
       end
       delete ':id' do
         Services::Apis::EstimateApiService.destroy(params[:id])
       end
-
-      desc 'Convert to Invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      params do
-        requires :id
-      end
-      get '/:id/convert_to_invoice' do
-        @estimate = Estimate.find(params[:id])
-        @estimate.convert_to_invoice
-      end
-
-      desc 'Send Estimate to Client',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      params do
-        requires :id
-      end
-      get '/send_estimate/:id' do
-        @estimate = Estimate.find(params[:id])
-        @estimate.send_estimate(@current_user, params[:estimate_id])
-      end
-
-      desc 'Recover estimates',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-      post 'bulk_actions' do
-        @estimates = Estimate.with_deleted.where(id: JSON.parse(params[:estimate_ids]))
-        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
-        if @estimates.present?
-          @estimates.map(&actions[params[:action].to_sym].to_sym)
-          {error: "Estimate(s) recovered successfully"}
-        else
-          {error: "No Estimate found"}
-        end
-      end
-
     end
   end
 end

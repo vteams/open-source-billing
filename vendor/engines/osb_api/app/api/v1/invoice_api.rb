@@ -1,8 +1,7 @@
 module V1
-  class InvoiceAPI < Grape::API
+  class InvoiceApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
-    formatter :json, Grape::Formatter::Rabl
     #prefix :api
 
     helpers do
@@ -48,51 +47,12 @@ module V1
     resource :invoices do
       before {current_user}
 
-      desc 'All invoices',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
       get do
-        @invoices = Invoice.unarchived.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id, invoices.currency_id")
-        @invoices = filter_by_company(@invoices)
-        #@invoices = filter_by_company(@invoices).page(params[:page]).per(@current_user.settings.records_per_page)
-        #@invoices={total_records: @invoices.total_count, total_pages: @invoices.total_pages, current_page: @invoices.current_page, per_page: @invoices.limit_value, invoices: @invoices}
-      end
-
-      desc 'All Archived invoices',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      get :archived_invoices do
-        @invoices = Invoice.archived.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id")
+        @invoices = Invoice.joins(:client).select("invoices.*,clients.*")
         @invoices = filter_by_company(@invoices)
       end
 
-      desc 'All Deleted invoices',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      get :deleted_invoices do
-        @invoices = Invoice.deleted.joins(:client).order("invoices.created_at #{params[:direction].present? ? params[:direction] : 'desc'}").select("invoices.*,clients.*, invoices.id")
-        @invoices = filter_by_company(@invoices)
-      end
-
-      desc 'previews the selected invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'previews the selected invoice'
       params do
         requires :invoice_id
       end
@@ -101,38 +61,25 @@ module V1
         @invoice = Services::InvoiceService.get_invoice_for_preview(params[:invoice_id])
       end
 
-      desc 'Return unpaid-invoices',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Return unpaid-invoices'
 
       params do
         optional 'client_id'
-      end
-      get :unpaid_invoices do
-        for_client = params[:client_id].present? ? "and client_id = #{params[:client_id]}" : ''
-        @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
-      end
+       end
+       get :unpaid_invoices do
+         for_client = params[:client_id].present? ? "and client_id = #{params[:client_id]}" : ''
+         @invoices = Invoice.where("(status != 'paid' or status is null) #{for_client}").order('created_at desc')
+       end
 
-      desc 'Dispute Invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
 
       params do
         requires :invoice_id
         requires :reason_for_dispute
       end
       get :dispute_invoice do
-        @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], @current_user)
-        org_name = @current_user.accounts.first.org_name rescue org_name = ''
-        @message = dispute_invoice_message(org_name)
+          @invoice = Services::InvoiceService.dispute_invoice(params[:invoice_id], params[:reason_for_dispute], @current_user)
+          org_name = @current_user.accounts.first.org_name rescue org_name = ''
+          @message = dispute_invoice_message(org_name)
       end
 
       params do
@@ -140,74 +87,21 @@ module V1
       end
       get :pay_with_credit_card do
 
-      end
-
-      desc 'Delete invoices permanently',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-      post 'delete_permanently' do
-        @invoices = Invoice.with_deleted.where(id: JSON.parse(params[:invoice_ids]))
-        if @invoices.present? && @invoices.any? {|i| i.deleted_at.nil?}
-          {error: "Active or Archived invoices cannot be deleted permanently"}
-        elsif @invoices.present? && @invoices.map(&:really_destroy!)
-          {message: "Invoice(s) deleted permanently"}
-        else
-          {error: "No Invoice found"}
+        def pay_with_credit_card
+          paypal = PaypalService.new(params[:invoice_id])
+          @result = paypal.process_payment
         end
       end
 
-      desc 'Recover invoices',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-      post 'bulk_actions' do
-        @invoices = Invoice.with_deleted.where(id: JSON.parse(params[:invoice_ids]))
-        actions = {recover_archived: 'unarchive', recover_deleted: "restore"}
-        if @invoices.present?
-          @invoices.map(&actions[params[:action].to_sym].to_sym)
-          {error: "Invoice(s) recovered successfully"}
-        else
-          {error: "No Invoice found"}
-        end
-      end
-
-
-      desc "Send invoice to client",
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
       params do
-        requires :id
+        requires :invoice_id
       end
-      get '/send_invoice/:id' do
-        invoice = Invoice.find_by(id: params[:id])
-        if !invoice.present?
-          {error: "Invoice not found", message: nil }
-        elsif !Company.find(@current_user.current_company).mail_config.present?
-          {error: "Mail settings are not configured for this company", message: nil }
-        else
+      get :send_invoice do
+        def send_invoice
+          invoice = Invoice.find(params[:invoice_id])
           invoice.send_invoice(@current_user, params[:invoice_id])
-          {message: 'Invoice sent'}
         end
       end
-
-      desc 'Create Payment for Invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
 
       params do
         requires :invoice_ids
@@ -228,24 +122,14 @@ module V1
         end
       end
 
-      desc 'Return all invoice line items',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Return all invoice line items'
       params do
         requires :invoice_id
       end
       get :invoice_line_items do
         @invoice = Invoice.find_by_id(params[:invoice_id])
-        if @invoice.present?
-          {tax: taxes_list(@invoice.tax_details),
-           invoices: @invoice.invoice_line_items}
-        else
-          {error: "Invoice not found", message: nil }
-        end
+        {tax: taxes_list(@invoice.tax_details),
+        invoices: Invoice.find_by_id(params[:invoice_id]).invoice_line_items.joins(:item).select("invoice_line_items.* , items.item_name")}
       end
 
       desc 'Return all invoices'
@@ -253,110 +137,29 @@ module V1
         Invoice.where('company_id IN (?)', get_company_id)
       end
 
-      desc 'Fetch a single invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Fetch a single invoice'
       params do
         requires :id, type: String
       end
 
       get ':id' do
-        invoice = Invoice.find_by(id: params[:id])
-        if !invoice.present?
-          {error: "Invoice not found", message: nil }
-        else
-          payment_details = {amount_due: invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), amount_paid: invoice.payments.sum(:payment_amount)}
-          invoice_hash = []
-          invoice_hash << {invoice: invoice, invoice_line_items: invoice.invoice_line_items, recurring_schedule: invoice.recurring_schedule, payment_details: payment_details}
-          invoice_hash
-        end
+        Invoice.find params[:id]
       end
 
-      desc 'Create Single Invoice. You can also create multiple invoice line items for invoice from Rest Clients e.g Postman',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Create Invoice'
       params do
         requires :invoice, type: Hash do
-          # requires :invoice_number, type: String
-          requires :invoice_date, type: String, message: :required
+          requires :invoice_number, type: String
+          requires :invoice_date, type: String
           optional :po_number, type: String
           optional :discount_percentage, type: String
-          requires :client_id, type: Integer, message: :required
-          optional :terms, type: String
+          requires :client_id, type: Integer
+          requires :terms, type: String
           optional :notes, type: String
           optional :status, type: String
           optional :sub_total, type: String
           optional :discount_amount, type: String
           optional :tax_amount, type: String
-          optional :tax_id, type: Integer
-          optional :invoice_total, type: String
-          optional :archive_number, type: String
-          optional :archived_at, type: Boolean
-          optional :deleted_at, type: String
-          optional :created_at, type: String
-          optional :updated_at, type: String
-          optional :currency_id, type: Integer
-          optional :payment_terms_id, type: String
-          requires :due_date, type: String, message: :required
-          optional :last_invoice_status, type: String
-          optional :discount_type, type: String
-          optional :company_id, type: Integer
-          optional :invoice_line_items_attributes, type: Array do
-            # requires :invoice_id, type: Integer
-            requires :item_id, type: Integer
-            requires :item_name, type: String, message: :required
-            requires :item_description, type: String, message: :required
-            requires :item_unit_cost, type: Integer, message: :required
-            requires :item_quantity, type: Integer, message: :required
-            optional :tax_1, type: Integer
-            optional :tax_2, type: Integer
-            # requires :actual_price, type: String binding.pry
-          end
-          optional :recurring_schedule_attributes, type: Hash do
-            requires :next_invoice_date, type: String, message: :required
-            requires :frequency, type: String, message: :required
-            requires :occurrences, type: Integer, message: :required
-            optional :frequency_repetition, type: Integer
-            optional :frequency_type, type: String
-            requires :delivery_option, type: String, message: :required
-            requires :enable_recurring, type: Boolean, message: :required
-          end
-
-        end
-      end
-      post do
-        #params[:log][:company_id] = get_company_id
-        Services::Apis::InvoiceApiService.create(params)
-      end
-
-      desc 'Update Invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      params do
-        requires :invoice, type: Hash do
-          requires :invoice_number, type: String, message: :required
-          requires :invoice_date, type: String, message: :required
-          optional :po_number, type: String
-          optional :discount_percentage, type: String
-          requires :client_id, type: Integer, message: :required
-          optional :notes, type: String
-          optional :status, type: String
-          optional :sub_total, type: String
-          optional :discount_amount, type: String
-          optional :tax_amount, type: String
-          optional :tax_id, type: Integer
           optional :invoice_total, type: String
           optional :archive_number, type: String
           optional :archived_at, type: Boolean
@@ -368,106 +171,56 @@ module V1
           optional :last_invoice_status, type: String
           optional :discount_type, type: String
           optional :company_id, type: Integer
-          optional :invoice_line_items_attributes, type: Array do
-            # requires :invoice_id, type: Integer
-            requires :item_id, type: Integer
-            requires :item_name, type: String, message: :required
-            requires :item_description, type: String, message: :required
-            requires :item_unit_cost, type: Integer, message: :required
-            requires :item_quantity, type: Integer, message: :required
-            optional :tax_1, type: Integer
-            optional :tax_2, type: Integer
-            # requires :actual_price, type: String binding.pry
-          end
-          optional :recurring_schedule_attributes, type: Hash do
-            requires :next_invoice_date, type: String, message: :required
-            requires :frequency, type: String, message: :required
-            requires :occurrences, type: Integer, message: :required
-            optional :frequency_repetition, type: Integer
-            optional :frequency_type, type: String
-            requires :delivery_option, type: String, message: :required
-            requires :enable_recurring, type: Boolean, message: :required
-          end
+        end
+      end
+      post do
+        params[:log][:company_id] = get_company_id
+        Services::Apis::InvoiceApiService.create(params)
+      end
 
+      desc 'Update Invoice'
+      params do
+        requires :invoice, type: Hash do
+          requires :invoice_number, type: String
+          requires :invoice_date, type: String
+          optional :po_number, type: String
+          optional :discount_percentage, type: String
+          requires :client_id, type: Integer
+          requires :terms, type: String
+          optional :notes, type: String
+          optional :status, type: String
+          optional :sub_total, type: String
+          optional :discount_amount, type: String
+          optional :tax_amount, type: String
+          optional :invoice_total, type: String
+          optional :archive_number, type: String
+          optional :archived_at, type: Boolean
+          optional :deleted_at, type: String
+          optional :created_at, type: String
+          optional :updated_at, type: String
+          optional :payment_terms_id, type: String
+          optional :due_date, type: String
+          optional :last_invoice_status, type: String
+          optional :discount_type, type: String
+          requires :company_id, type: Integer
         end
       end
 
       patch ':id' do
-        invoice = Invoice.find_by(id: params[:id])
-        if invoice.present?
-          Services::Apis::InvoiceApiService.update(params)
-        else
-          {error: "Invoice not found", message: nil }
-        end
+        Services::Apis::InvoiceApiService.update(params)
       end
 
 
-      desc 'Delete an invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
+      desc 'Delete an invoice'
       params do
         requires :id, type: Integer, desc: "Delete an invoice"
       end
       delete ':id' do
-        invoice = Invoice.find_by(id: params[:id])
-        if invoice.present?
-          Services::Apis::InvoiceApiService.destroy(invoice)
-        else
-          {error: "Invoice not found", message: nil }
-        end
+        Services::Apis::InvoiceApiService.destroy(params[:id])
       end
 
-      desc 'Get current user invoices',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               },
-               "user_id" => {
-                   required: true
-               }
-           }
-      get '/get_invoices/:user_id' do
+      get :get_invoices do
         @invoices = @current_user.invoices
-      end
-
-      desc 'Void single invoice',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-      params do
-        requires :id, type: Integer, desc: "Void single invoice"
-      end
-      get '/void_invoice/:id' do
-        @invoice = Invoice.find(params[:id])
-        if @invoice.status == "void"
-          {message: 'Already Voided', message: nil }
-        else
-          @invoice.status = "void"
-          @invoice.base_currency_equivalent_total = 0
-          @invoice.invoice_total = 0
-          @invoice.sub_total = 0
-          @invoice.invoice_line_items.each do |item|
-            item.item_unit_cost = 0
-            item.tax_1 = 0
-            item.tax_2 = 0
-            item.save
-          end
-          if @invoice.save
-            {message: 'Successfully Void'}
-          else
-            {error: @invoice.errors.full_messages}
-          end
-
-        end
-
       end
     end
   end

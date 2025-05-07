@@ -75,17 +75,17 @@ module EstimateSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('estimate_number') or key.eql?('notes') or key.eql?('status')
-          query << "#{key} like '%#{val}%'"
+          query << "#{key} like '#{val}%'"
         end
         if key.eql?('client')
-          query << "(cc.first_name like '%#{val}%' or cc.last_name like '%#{val}%' or cc.email like '%#{keyword[:client]}%' or cc.organization_name like '%#{val}%')"
+          query << "(cc.first_name like '#{val}%' or cc.last_name like '#{val}%' or cc.email like '#{keyword[:client]}%' or cc.organization_name like '#{val}%')"
         end
         if key.eql?('estimate_line_items')
-          query << "(invoice_line_items.item_name like '%#{val}%' or invoice_line_items.item_description like '%#{val}%')"
+          query << "(invoice_line_items.item_name like '#{val}%' or invoice_line_items.item_description like '#{val}%')"
         end
       end
       query = query.join(" AND ")
-      return joins('LEFT OUTER JOIN clients as cc ON estimates.client_id = cc.id').joins(:estimate_line_items).where(query).distinct
+      return joins('LEFT OUTER JOIN clients as cc ON estimates.client_id = cc.id').joins(:estimate_line_items).where(query).uniq
     end
 
   end

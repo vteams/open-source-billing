@@ -1,4 +1,4 @@
-class ProjectTask < ApplicationRecord
+class ProjectTask < ActiveRecord::Base
 
   belongs_to :task
   belongs_to :project

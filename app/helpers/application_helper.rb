@@ -28,22 +28,6 @@ module ApplicationHelper
     super number,options
   end
 
-  def intro_class
-    if params[:action].eql?('new') || params[:action].eql?('enter_payment')
-      params[:controller]+"-"+params[:action]+"-"+"#{current_user.introduction.send('new_'+params[:controller].singularize)}"+"-intro"
-    else
-      params[:controller]+"-"+params[:action]+"-"+"#{current_user.introduction.send(params[:controller].singularize)}"+"-intro" unless params[:action].eql?('show')
-    end
-  end
-
-  def get_introduction_parameter
-    if params[:action].eql?('index') || params[:action].eql?('invoice_detail')
-     cookies[:intro] = params[:controller].singularize
-    elsif params[:action].eql?('new') || params[:action].eql?('enter_payment')
-       cookies[:intro] = "new_"+params[:controller].singularize
-    end
-  end
-
   # to add a active class to current link on main menu
   def nav_link(text, link)
     recognized = Rails.application.routes.recognize_path(link)
@@ -74,11 +58,11 @@ module ApplicationHelper
     link_to_function (block_given? ? capture(&block) : args[0]), "jQuery(this).closest('form').submit();", args.extract_options!
   end
 
-  def sortable(column, title = nil, options={})
+  def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    request.format.pdf? ? title : link_to(params.merge(sort: column, direction: direction, page: 1), {class: "#{css_class} sortable"}.merge(options)) do
+    link_to(params.merge(sort: column, direction: direction, page: 1), {class: "#{css_class} sortable", remote: true}) do
       "#{title} #{sortable_icon(column)}".html_safe
     end
   end
@@ -95,16 +79,8 @@ module ApplicationHelper
     if column == sort_column
       sort_direction == "asc" ? "<i class='fa fa-sort-asc'></i>" : "<i class='fa fa-sort-desc'></i>"
     else
-      # "<i class='fa fa-sort'></i>"
+      "<i class='fa fa-sort'></i>"
     end
-  end
-
-  def self.root_path
-    String === Rails.root ? Pathname.new(Rails.root) : Rails.root
-  end
-
-  def image_tag source, options={}
-    request.format.pdf? ? super(wicked_pdf_asset_path(source), options) : super(source, options)
   end
 
   def associate_account(controller, action, item)
@@ -116,8 +92,8 @@ module ApplicationHelper
         association = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: item.id, parent_id: company.id) : CompanyEntity.where(entity_id: item.id, parent_id: company.id, entity_type: controller.classify)
         checked, global_status = 'checked', 'checked' if company.send(controller).present? && association.present?
       end
-      list += "<div class='col s12 m6 l4 company-checkbox'>
-                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}'  class='company_checkbox filled-in' style='margin-bottom: 15px;'/>
+      list += "<div class='col s12 m6 l4'>
+                  <input type = 'checkbox' #{checked} name='company_ids[]' value='#{company.id}' id='company_#{company.id}' checked='true' class='company_checkbox filled-in' style='margin-bottom: 15px;'/>
                   <label for='company_#{company.id}'>#{company.company_name}</label>
                 </div>"
       checked = ''
@@ -130,21 +106,14 @@ module ApplicationHelper
   def generate_radio_buttons(status, list)
     radio_buttons = <<-HTML
               <div class="row">
-                <div class="col s12 m3 custom"  style="margin-bottom: 20px;">
+                <div class="col s12 m6 custom"  style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='account' checked=true name='association' id='account_association' />
                     <label for='account_association'>#{t('views.common.all_companies')}</label>
                 </div>
 
-                <div class="col s12 m4" style="margin-bottom: 20px;">
+                <div class="col s12 m6" style="margin-bottom: 20px;">
                     <input class='association' type = 'radio' value='company' name='association' id='company_association' #{status}/>
                     <label for='company_association'>#{t('views.common.selected_companies_only')}</label>
-                </div>
-                 
-
-                <div class="col s12 m5 select-deselect checkbox-item invoice_checkbox" style="margin-bottom: 20px;">
-                  #{check_box_tag 'select_all', '', false, class: 'filled-in', title: 'Select All', id: 'select_all_companies'}
-                   <label for="select_all_companies">Select all</label> 
-
                 </div>
               </div>
               #{list}
@@ -171,17 +140,8 @@ module ApplicationHelper
     end
   end
 
-  def current_company
-    current_user.current_company || session[:current_company]
-  end
-
-  def current_company_obj
-    Company.find current_company
-
-  end
-
   def filter_select_by_companies
-    current_user.assigned_companies
+    Company.all
   end
 
   # generate drop down to filter listings by company
@@ -220,12 +180,12 @@ module ApplicationHelper
 
   #Get company name
   def get_company_name
-    company_id = current_user.current_company || session['current_company'] || current_user.first_company_id
+    company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
     Company.unscoped.find(company_id).company_name
   end
 
   def get_company_id
-    current_user.current_company || session['current_company'] || current_user.first_company_id
+    session['current_company'] || current_user.current_company || current_user.first_company_id
   end
   #get Company for invoices
   def get_invoice_company_name(invoice=nil)
@@ -355,7 +315,7 @@ module ApplicationHelper
   end
 
   def contain_bulk_actions
-    %w(invoices estimates expenses payments clients items taxes companies projects tasks staffs sub_users)
+    %w(invoices estimates expenses payments clients items taxes companies projects tasks staffs)
   end
 
   def get_project_count
@@ -383,10 +343,10 @@ module ApplicationHelper
 
   def index_layout_toggle_icons(card_path, table_path)
     content_tag(:div,class: 'right') do
-      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can set the card view by clicking on this icon' data-step='2'>view_comfy</i>"), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
-      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can set the table view by clicking on this icon' data-step='3'>view_list</i>"), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view')) +
+      link_to( raw('<i class="material-icons">view_comfy</i>'), card_path, class: ('active' if render_card_view?), title: t('views.settings.card_view')) +
+      link_to( raw('<i class="material-icons">view_list</i>'), table_path, class: ('active' unless render_card_view?), title: t('views.settings.table_view')) +
       raw('<div class="separator"></div>') +
-      link_to( raw("<i class='material-icons intro #{controller.controller_name}-index-false-intro' data-intro='You can filter your #{controller.controller_name} from here' data-step='4'>tune</i>"), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters'))
+      link_to( raw('<i class="material-icons">tune</i>'), 'javascript:void(0);', class: 'show-filters', id: 'toggle_filters', title: t('views.common.show_filters'))
     end
   end
 
@@ -409,17 +369,5 @@ module ApplicationHelper
     keys.each {|key| condition = condition || params[key.to_sym].present? }
 
     condition
-  end
-
-  def unread_notifications
-    PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').where(is_read: false).count
-  end
-
-  def pick_trackable_color
-    {Invoice: 'text-blue', Client: 'text-green', Estimate: 'text-orange', Payment: 'text-red'}
-  end
-
-  def user_activities_listing
-    PublicActivity::Activity.where.not(owner_id: current_user.id, key: 'client.update').order('created_at desc').page(1).per(10) if current_user.present?
   end
 end

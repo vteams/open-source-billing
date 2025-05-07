@@ -3,20 +3,16 @@
   <div class="flex-wrapper">
     <div class="flex-item col-sm-12 breadcrum-bar">
       <div class="card-white-panel">
-        <h3 class="intro invoices-new-false-intro" data-intro="Here you can create your new active invoice" data-step="1">
+        <h3>
           <span><%= link_to t('header.links.invoices.invoices'), invoices_url %> </span>
           <%= link_to "/ #{t('views.common.active')}", invoices_url %>
         </h3>
       </div>
     </div>
   </div>
+
   <div class="invoice-box-holder">
-    <%= render partial: 'form', locals: {invoice: @invoice} %>
+    <%= render partial: 'invoice_form', locals: {invoice: @invoice} %>
   </div>
 </div>
-<script>
-    $(document).ready(function (){
-        load_item = "<%= load_item_data_items_path %>"
-        Invoice.change_invoice_item();
-    });
-</script>
+

@@ -36,7 +36,7 @@ module PaymentSearch
       keys = keyword.keys
       query_base= {query: {bool: {must: []}}}
 
-      query_base[:query][:bool][:must] << {nested: { path: 'invoice', nested: { path: 'clients', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} }if keys.include?('clients')
+      query_base[:query][:bool][:must] << {nested: { path: 'invoice', nested: { path: 'client', query: {query_string: { query: keyword[:client], fields: [:organization_name, :first_name, :last_name, :email] } }}} }if keys.include?('client')
       query_base[:query][:bool][:must] << {nested: { path: 'invoice', query: {query_string: { query: keyword[:invoice], fields: [:invoice_number] }}}} if keys.include?('invoice')
 
       if keys.include?('payment_type') or keys.include?('payment_method') or keys.include?('notes')
@@ -71,17 +71,17 @@ module PaymentSearch
       query = []
       keyword.each do |key,val|
         if key.eql?('payment_type') or key.eql?('payment_method') or key.eql?('notes')
-          query << "payments.#{key} like '%#{val}%'"
+          query << "payments.#{key} like '#{val}%'"
         end
-        if key.eql?('clients')
-          query << "(clients.first_name like '%#{val}%' or clients.last_name like '%#{val}%' or clients.email like '%#{keyword[:client]}%' or clients.organization_name like '%#{val}%')"
+        if key.eql?('client')
+          query << "(clients.first_name like '#{val}%' or clients.last_name like '#{val}%' or clients.email like '#{keyword[:client]}%' or clients.organization_name like '#{val}%')"
         end
         if key.eql?('invoice')
-          query << "(invoices.invoice_number like '%#{val}%')"
+          query << "(invoices.invoice_number like '#{val}%')"
         end
       end
       query = query.join(" AND ")
-      return joins(invoice: :client).where(query).distinct
+      return joins(invoice: :client).where(query).uniq
     end
 
   end

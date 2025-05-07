@@ -50,9 +50,8 @@ module Reporting
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.payment_date,
         payments.created_at").joins(:company).joins(invoice: [:client,:currency]).
-            where("payments.payment_date" => @report_criteria.from_date.to_time.beginning_of_day.in_time_zone..@report_criteria.to_date.to_time.end_of_day.in_time_zone)
+            where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
 
         payments = payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         payments = payments.where(["payments.payment_method = ?", @report_criteria.payment_method]) unless @report_criteria.payment_method == ""
@@ -66,14 +65,13 @@ module Reporting
         clients.organization_name as client_name,
         clients.id as client_id,
         IFNULL(invoices.currency_id,0) as currency_id,
-        IFNULL(currencies.code,'$') as currency_code,
+        IFNULL(currencies.unit,'USD') as currency_code,
         payments.payment_type,
         payments.payment_method,
         payments.notes,
         payments.payment_amount,
-        payments.payment_date,
         payments.created_at").where("payments.payment_type = 'credit'").joins(:company).joins(:client).joins(invoice: :currency).
-            where("payments.payment_date" => @report_criteria.from_date.to_time.beginning_of_day.in_time_zone..@report_criteria.to_date.to_time.end_of_day.in_time_zone)
+            where("payments.created_at" => @report_criteria.from_date.to_time.beginning_of_day..@report_criteria.to_date.to_time.end_of_day)
         credit_payments = credit_payments.where(["clients.id = ?", @report_criteria.client_id]) unless @report_criteria.client_id == 0
         credit_payments = credit_payments.where(["payments.company_id = ?", @report_criteria.company_id]) unless @report_criteria.company_id == ""
         payments + credit_payments
@@ -83,7 +81,7 @@ module Reporting
         @report_total = []
         @report_data.group_by{|x| x[:currency_id]}.values.each do |row|
           data = Hash.new(0)
-          data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total + p[:payment_amount]  }
+          data[:total] = row.inject(0) { |total,p | p[:payment_method] == 'Credit' ? total : total.to_i + p[:payment_amount].to_i  }
           data[:currency_code] = row.first[:currency_code]
           @report_total<<data
         end
@@ -99,10 +97,12 @@ module Reporting
       end
 
       def payments_collected_csv report, options ={}
+        total_discounted_amount = 0.0
         CSV.generate(options) do |csv|
           csv << HEADER_COLUMNS
           report.report_data.each { |payment| csv << get_data_row(payment) }
-          get_total_row(report,csv)
+          report.report_data.each { |payment| total_discounted_amount = total_discounted_amount + payment.invoice.discount_amount }  
+          get_total_row(report,csv,total_discounted_amount)
         end
       end
 
@@ -114,11 +114,13 @@ module Reporting
         doc = XlsxWriter.new
         doc.quiet_booleans!
         sheet1 = doc.add_sheet("Payments Collected")
+        total_discounted_amount = 0.0
 
         unless report.report_data.blank?
           sheet1.add_row(HEADER_COLUMNS)
           report.report_data.each { |payment| sheet1.add_row(get_data_row(payment)) }
-          get_total_row(report,sheet1)
+          report.report_data.each { |payment| total_discounted_amount = total_discounted_amount + payment.invoice.discount_amount }
+          get_total_row(report,sheet1,total_discounted_amount)
         else
           sheet1.add_row([' ', "No data found against the selected criteria. Please change criteria and try again."])
         end
@@ -134,14 +136,14 @@ module Reporting
             (object.payment_type || object.payment_method || "").capitalize.to_s,
             object.notes.to_s,
             object.created_at.to_date.strftime(get_date_format).to_s,
-            object.payment_amount.to_f.round(2)
+            object.payment_amount.to_f.round(2) - object.invoice.discount_amount.to_f.round(2)
         ]
       end
 
-      def get_total_row report,sheet
+      def get_total_row report,sheet,amount
         is_first=true
         report.report_total.each do |total|
-          row= ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2)]
+          row= ["#{is_first ? 'Total' : ''}", '', '', '', '',  total[:total].round(2) - amount.round(2)]
           is_first=false
           sheet.add_row(row)
         end

@@ -1,8 +1,7 @@
-
 OpenSourceBilling
 ===================
 
-[OpenSourceBilling](http://opensourcebilling.org/) is a simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v6.0.2.2. and Ruby v2.7.1. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
+[OpenSourceBilling](http://opensourcebilling.org/) is a simple web application to create and send invoices, receive payments, manage clients and companies. It generates reports of Item sales, payments, and collected revenues. It supports multi languages and multi currencies. This application is developed in Ruby on Rails v4.2.7.1. and Ruby v2.3.7. This document describes OSB application setup on Ubuntu 14.04 LTS machine.
 
 Features
 ---------
@@ -25,7 +24,6 @@ Features
 * Manage billing for your multiple sister companies under one account
 * Import data from Freshbooks and QuickBooks
 * Reports like `Payments Collected`, `Aged Accounts Receivable`, `Revenue By Client`, `Items Sales` and more to come
-* Customer portal
 
 Try [Demo](http://demo.opensourcebilling.org) here
 
@@ -65,9 +63,9 @@ Run the following commands to install stable version:
 
     source ~/.rvm/scripts/rvm
 
-    rvm install 2.7.1
+    rvm install 2.3.7
 
-    rvm use 2.7.1 --default
+    rvm use 2.3.7 --default
 
 #### 2.3 Installing Bundler
 Bundler is a tool that allows you to install multiple gem versions, run this command to install bundler:
@@ -89,27 +87,24 @@ To clone project code from GitHub, give your GitHub account credential for authe
 #### 3.3 Installing Gems
 
     bundle install
-
-#### 3.4 Installing Yarn
-
-    yarn install
-
-#### 3.5 Configuration PayPal (Optional, for paypal payments integration)
+#### 3.4 Configuration PayPal (Optional, for paypal payments integration)
 Copy config/config.yml.copy to config/config.yml to set your configurations.
 
 Edit config/config.yml with your own paypal settings:
 
     paypal:
+      login: YOUR_PAYPAL_LOGIN
+      password: YOUR_PAYPAL_PASSWORD
       signature: YOUR_PAYPAL_SIGNATURE
       business: YOUR_PAYPAL_BUSINESS
 
-#### 3.6 Configuration Application host and protocol
+#### 3.5 Configuration Application host and protocol
 Edit config/config.yml with your own application settings:
 
     app_host: APP_HOST_HERE # e.g. osb.mydomain.com
     app_protocol: http
 
-#### 3.7 PDF configuration
+#### 3.6 PDF configuration
 Using following command in terminal to get path of wkhtmltopdf library path that is already installed on system.
 
     which wkhtmltopdf
@@ -117,11 +112,18 @@ Edit config/config.yml with your own application wkhtmltopdf path.
 
     wkhtmltopdf_path: YOUR_WKHTMLTOPDF_PATH
 
-#### 3.8 SMTP configuration
-To make smtp_settings, go to settings, open a company edit form by clicking on a company and provide your smtp details in Mail Config section.
+#### 3.7 SMTP configuration
+Edit config/config.yml with your own application smtp settings.
 
+     smtp_setting:
+         address: smtp.gmail.com
+         port: 587
+         authentication: :plain
+         enable_starttls_auto: true
+         user_name: YOUR_EMAIL_HERE
+         password: YOUR_PASSWORD_HERE
 
-#### 3.9 QuickBooks configuration
+#### 3.8 QuickBooks configuration
 Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oauth_consumer_secret.
 
      quickbooks:
@@ -129,7 +131,7 @@ Edit config/config.yml with your own QuickBooksApp's oauth_consumer_key and oaut
        consumer_key: YOUR_QUICKBOOKS_APP_CLIENT_ID
        consumer_secret: YOUR_QUICKBOOKS_APP_CLIENT_SECRET
 
-#### 3.10 Secret key configuration
+#### 3.9 Secret key configuration
 
 Run following command on terminal to generate secret key
 
@@ -139,18 +141,18 @@ copy this (newly generated) secret key from terminal and past it to the value of
 
      encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
-#### 3.11 Configuring Database
+#### 3.10 Configuring Database
 Copy config/database.yml.copy to config/database.yml and set your mysql username/password. After that run following command from terminal to create MySQL database specified in database.yml file.
 
-    rails db:create
+    rake db:create
 
-#### 3.12 Tables schema and seeding
+#### 3.11 Tables schema and seeding
 
-    rails db:migrate
+    rake db:migrate
 
 Loading default values in database
 
-    rails db:seed
+    rake db:seed
 
 ### Step-4. Run
 #### 4.1 Background Services
@@ -169,21 +171,6 @@ and use your application in browser by typing in url: localhost:3000
 
 You can also configure Apache, Nginx or any other web/application server of your choice to execute OSB in production mode.
 
-Login credentials
-------------
-
-Once you successfully configured OSB, you can use the below credentials to login.
-
-    Email: admin@opensourcebilling.org
-    password: opensourcebilling
-   
-You can immediately change the credentials once you successfully logged in.    
-
-Customer Portal
-------------
-
-When a customer receive invoice/estimate through email, he will also receive a login link to see all of his invoices. By visiting that url he can login to his account or can create his account if he don't have one.  
-
 Contributing
 ------------
 
@@ -198,6 +185,6 @@ Contact Information
 Mia Mian
 +1 (858) 586 7777
 
-E-mail: <mia@presstigers.com> | <saadat@presstigers.com> | <support@opensourcebilling.org>
+E-mail: <mia@presstgers.com> | <fahad@presstigers.com> | <support@opensourcebilling.org>
 
 Homepage: <http://www.opensourcebilling.org/>

@@ -1,114 +1,110 @@
 <!--- Activity sidebar --->
-<% @current_company_invoices = Invoice.by_company(current_company).joins(:currency) if @current_company_invoices.nil? %>
 <aside id="activity-sidebar" class='<%= "#{ 'side-show' if side_nav_opened?}"%>'>
   <span class="btn-activity"><i class="material-icons">
     keyboard_arrow_left
   </i></span>
   <div class="activity-scroll-holder mCustomScrollbar">
     <!--- activities list--->
-
     <div class="status-info active">
-
-      <% current_company_active_invoices = @current_company_invoices.unarchived.group("currencies.unit").sum("invoices.invoice_total") %>
-      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your active invoices group by currencies">
-        <%= link_to t('views.common.active'), invoices_path(status: 'active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
-        <span id="actives">(<%= current_company_active_invoices.count %>)</span>
+      <h5>
+        <%= link_to t('views.common.active'), activities_invoices_path('active'), :class => "get_actives #{'active' if params[:status] == 'active'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'unarchived')) %>)</span>
       </h5>
-
-      <% if current_company_active_invoices.count > 3 %>
-        <div class="first-three-invoices set-positions">
-          <% Hash[current_company_active_invoices.sort_by { |k,v| -v }[0..2]].each do |currency_unit, amount| %>
-            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-          <% end %>
-          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'show_more' %>
-        </div>
-      <% else %>
-        <% current_company_active_invoices.each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
+      <div class="amount"><%= number_to_currency(@invoice_activity[:active_invoices_total], unit: default_currency_unit) %></div>
+      <% @invoice_activity[:active_invoice_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @invoice_activity[:active_invoices_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
       <% end %>
-      <% if current_company_active_invoices.count >3 %>
-      <div class="all-invoices hide-class set-positions" id="all_invoice_amounts">
-        <% Hash[current_company_active_invoices.sort_by { |k,v| -v }[3..current_company_active_invoices.count]].each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
-        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'show_less' %>
-      </div>
-        <% end %>
-    </div>
 
+    </div>
     <div class="status-info">
-      <% current_company_deleted_invoices = @current_company_invoices.only_deleted.group("currencies.unit").sum("invoices.invoice_total") %>
-      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your deleted invoices group by currencies">
-        <%= link_to t('views.common.deleted'), invoices_path(status: 'deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
+      <h5>
+        <%= link_to t('header.links.invoices.recurring'), activities_invoices_path('recurring'), :class => "get_actives #{'active' if params[:status] == 'recurring'}" %>
+        <span id="actives">(<%= get_count(params.merge(status: 'recurring')) %>)</span>
+      </h5>
+      <div class="amount"><%= number_to_currency(@invoice_activity[:recurring_invoices_total], unit: default_currency_unit) %></div>
+      <% @invoice_activity[:recurring_invoices_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @invoice_activity[:recurring_invoices_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="status-info">
+      <h5>
+        <%= link_to t('views.common.deleted'), activities_invoices_path('deleted'), :class => "get_deleted #{'active' if params[:status] == 'deleted'}" %>
         <span id="deletes">(<%= get_count(params.merge(status: 'only_deleted')) %>)</span>
       </h5>
-      <% if current_company_deleted_invoices.count > 3 %>
-        <div class="first-three-invoices set-positions">
-          <% Hash[current_company_deleted_invoices.sort_by{|k,v| -v}[0..2]].each do |currency_unit, amount| %>
-            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-          <% end %>
-          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_deleted_invoices' %>
-        </div>
-      <% else %>
-        <% current_company_deleted_invoices.each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
+      <div class="amount"><%= number_to_currency(@invoice_activity[:deleted_invoices_total], unit: default_currency_unit )%></div>
+      <% @invoice_activity[:deleted_invoice_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @invoice_activity[:deleted_invoices_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
       <% end %>
-      <% if current_company_deleted_invoices.count > 3 %>
-      <div class="all-deleted-invoices hide-class set-positions" id="all_invoice_amounts">
-        <% Hash[current_company_deleted_invoices.sort_by{|k,v| -v}[3..current_company_deleted_invoices.count]].each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
-        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_deleted_invoices' %>
-      </div>
-        <% end %>
     </div>
-
     <div class="status-info">
-      <% current_company_archived_invoices = @current_company_invoices.archived %>
-      <h5 class=" intro invoices-index-false-intro" data-intro="Here you can see the sum of your archived invoices group by currencies">
-        <%= link_to t('views.common.archived'), invoices_path(status: 'archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
+      <h5>
+        <%= link_to t('views.common.archived'), activities_invoices_path('archived'), :class => "get_archived #{'active' if params[:status] == 'archived'}" %>
         <span id="archives">(<%= get_count(params.merge(status: 'archived')) %>)</span>
       </h5>
-      <% if current_company_archived_invoices.count > 3 %>
-        <div class="first-three-invoices set-positions">
-          <% current_company_archived_invoices.limit(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-            <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-          <% end %>
-          <%= link_to 'more', 'javascript:void(0);', class: 'toggle-btns show-more', id: 'more_archived_invoices' %>
-        </div>
-      <% else %>
-        <% current_company_archived_invoices.group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
+      <div class="amount"><%= number_to_currency(@invoice_activity[:archived_invoices_total], unit: default_currency_unit )%></div>
+      <% @invoice_activity[:archived_invoices_progress].each do |date, amount| %>
+          <div class="agedWrapper">
+            <div class="aged-ar">
+              <small><%= date %></small>
+              <span><%= number_to_currency(amount, unit: '')%><small> <%= default_currency_code %> </small></span>
+            </div>
+            <div class="progress">
+              <div class="determinate" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= aged_progress_width(amount, @invoice_activity[:archived_invoices_total]) %>%;">
+                <span class="sr-only">60% Complete</span>
+              </div>
+            </div>
+          </div>
       <% end %>
-      <div class="all-archived-invoices hide-class set-positions" id="all_invoice_amounts">
-        <% current_company_archived_invoices.offset(3).group("currencies.unit").sum("invoices.invoice_total").each do |currency_unit, amount| %>
-          <div class="amount"><%= number_to_currency(amount, unit: currency_unit) %></div>
-        <% end %>
-        <%= link_to 'less', 'javascript:void(0);', class: 'toggle-btns show-less', id: 'less_archived_invoices' %>
-      </div>
     </div>
 
     <% if action_name.eql?('index') %>
-      <div class="status-info actionState">
-        <%= form_tag '', method: :get, remote: true, id: 'filter-form' do %>
-          <div class="ui list">
-            <% Invoice::STATUS_DESCRIPTION.each do |status, description|%>
-              <div class="item">
-                <div class="ui checkbox">
-                  <h5>
-                    <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
-                    <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
-
-                  </h5>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+        <div class="status-info actionState">
+          <%= form_tag '', method: :get, remote: true do %>
+             <div class="ui list">
+                <% Invoice::STATUS_DESCRIPTION.each do |status, description|%>
+                    <div class="item">
+                      <div class="ui checkbox">
+                        <h5>
+                          <input class="filter-status filled-in" name="type[]" id="<%= status %>" value="<%= status %>" type="checkbox" <%= (params[:type] and params[:type].include?(status.to_s)) ? "checked='checked'" : false %>>
+                          <label for="<%= status %>" class="<%= pick_status_color[status] %>"><%= t('views.invoices.' + status.to_s) %></label>
+                          <span>(<%= @invoice_activity[status]%>)</span>
+                        </h5>
+                      </div>
+                    </div>
+                <% end %>
+             </div>
+         <% end %>
+        </div>
     <% end %>
   </div>
 </aside>

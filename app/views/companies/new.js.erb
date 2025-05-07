@@ -1,18 +1,6 @@
 $('body').append("<%= escape_javascript render partial: 'company_form_popup', locals: {company: @company}  %>");
-//$('select').material_select();
+$('select').material_select();
 Company.load_functions();
 elem = $("#company_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
-Validation.CompanySettingForm();
-$('.edit-company-select2').select2();
-$('.edit-company-select3').select2();
-$('.client_select_2').select2({});
-$('#company_country').select2()
-$('.us_state_dropdown').hide();
-$('.canada_state_dropdown').hide();
-$('#company_country').on('change', function(){
-    Company.CompanyCountryState();
-})
-$('.edit-company-select2').select2();
-$('.edit-company-select3').select2();

@@ -1,4 +1,4 @@
-class TeamMember < ApplicationRecord
+class TeamMember < ActiveRecord::Base
   belongs_to :staff
   belongs_to :project
 

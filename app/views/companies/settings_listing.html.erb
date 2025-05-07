@@ -1,0 +1,18 @@
+<h5>
+  <%= link_to t('views.companies.companies'), companies_path %>
+  <span><%= "(#{@companies.count})" %></span>
+</h5>
+<div class="user-list">
+  <div id="companies">
+    <%= render partial: 'company', collection: @companies %>
+  </div>
+  <div class="list-buttons">
+    <%= render 'settings_company_form' %>
+    <div id="company_btn_container">
+      <a href="javascript:;" id="company_add_btn" class="sidebar-btn"><%= t('helpers.links.add') %></a>
+      <% unless OSB::CONFIG::DEMO_MODE %>
+        <a href="javascript:;" id="company_delete_btn" class="sidebar-btn disabled"><%= t('helpers.links.remove') %></a>
+      <% end %>
+    </div>
+  </div>
+</div>

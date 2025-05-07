@@ -1,125 +1,107 @@
 <div id="invoice_model" class="modal">
   <div class="modal-content">
-    <div class="modal-header clearfix">
-      <% if @invoice.status == 'paid' %>
-          <%= image_tag("paid.png", size: '150x100', class: 'paid-logo') %>
-      <% end %>
-      <div class="modal-action-btn right">
+        <div class="modal-header clearfix">
+          <div class="modal-action-btn right">
 
-        <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice.total_received == 0 ? 'javascript:void(0);' : {controller: 'invoices', action: 'invoice_receipt', id: invoice.id, format: 'pdf'},
-                    target: '_blank', class: invoice.total_received == 0 ? 'dis_pay' : '', title: 'Receipt' if current_user.present? %>
-        <%= link_to raw("<i class='material-icons'>receipt</i>"), invoice.total_received == 0 ? 'javascript:void(0);' : invoice_receipt_portal_invoice_path(id: invoice.hashid, format: :pdf),
-                    target: '_blank', title: 'Receipt' if current_portal_client.present? %>
-        <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),
-                    class: 'edit_invoice_icon' unless (invoice.invoice_type.eql?('ProjectInvoice') || current_portal_client.present? || session[:masquerade_client_id].present? ) %>
-        <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_path(id: invoice.id), remote: true,
-                    title: t('views.common.send') unless (current_portal_client.present? || session[:masquerade_client_id].present?)%>
-        <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'show',
-                                                                 :id => @invoice.hashid, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
-        <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
-                    target: '_blank' %>
-
-        <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
-          <i class="material-icons close">close</i>
-        </a>
-      </div>
-      <h5 class="left">
-        <% unless invoice.status.eql?("paid") %>
-          <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
-          <button id="enterPayment" class="btn btn-default truncate" onclick="$('.invoice_payment_link')[0].click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
-        <% end %>
-        <span><%= @client.organization_name %></span>
-      </h5>
-    </div>
-    <div class="info-section clearfix">
-      <div class="info-left-section left">
-        <h6><%= invoice.formatted_invoice_number %>: <span><bold><%= invoice.company.company_name %></bold></span></h6>
-        <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
-        <span class="text-blue"> <%= t('views.invoices.due') %>:<small> <%= invoice.due_date rescue "" %></small></span>
-        <% if invoice.term.present? %>
-          <div class="terms">
-            <span><%= t('views.invoices.terms') %>:</span>
-            <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
+            <%= link_to raw("<i class='material-icons'>create</i>"), edit_invoice_path(invoice), title: t('helpers.links.edit'),
+                        class: 'edit_invoice_icon' unless invoice.invoice_type.eql?('ProjectInvoice') %>
+            <%= link_to raw("<i class='material-icons'>send</i>"), send_invoice_invoices_url(id: invoice.id),
+                        title: t('views.common.send') %>
+            <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'invoices', :action => 'invoice_pdf',
+                         :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank', title: t('views.common.print') %>
+            <%= link_to raw("<i class='material-icons'>visibility</i>"), invoice, title: t('views.common.show'),
+                        target: '_blank' %>
+            <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
+              <i class="material-icons close">close</i>
+            </a>
           </div>
-        <% end %>
-        <div class="paymentInfo">
-          <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: @invoice.currency.code) %> <small><%= invoice.currency.unit %></small></strong>
+          <h5 class="left">
+            <% unless invoice.status.eql?("paid") %>
+                <%= link_to 'enter_payment', enter_payment_payments_path(invoice_ids: invoice.id), remote: true, class: "hidden invoice_payment_link"  %>
+                <button id="enterPayment" class="btn btn-default truncate" onclick="$('.invoice_payment_link').click();"><%= t('views.invoices.enter_payment_on_invoice') %></button>
+            <% end %>
+            <span><%= @client.first_name %> <%= @client.last_name %> (<%= @client.organization_name %>)</span>
+          </h5>
         </div>
-      </div>
-      <% unless invoice.company.logo_url.blank? %>
-        <div class="info-right-section right circle">
-          <%= request.format.pdf? ? (wicked_pdf_image_tag  invoice.company.logo_url(:thumb)) : (image_tag invoice.company.logo_url(:thumb), class: 'responsive-img') %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="modal-body">
-      <div class="invoice-popup">
-        <div class="new-invoice-table-holder <%= tax_class %>">
-          <% if @invoice.invoice_type.eql?("ProjectInvoice")%>
-            <%= render partial: 'project_invoice_tasks', locals: {invoice: @invoice} %>
-          <% else %>
-            <%= render partial: 'invoice_items', locals: {invoice: @invoice} %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer clearfix">
-      <div class="right-section right">
-        <div class="item-result">
-          <div class="table-row">
-            <span><strong><%= t('views.invoices.subtotal') %></strong></span>
-            <span><strong><%= number_to_currency(invoice.sub_total, unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
-          </div>
-          <div class="table-row">
-            <span><%= t('views.common.discount') %> <%= invoice.discount_percentage %><%= invoice.discount_type %></span>
-            <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.code : '$') %></span>
-          </div>
-          <% if invoice.tax.present? %>
-            <div class="table-row">
-              <span><%= t('views.common.tax') %>: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
-              <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.code : '$') %></span>
+        <div class="info-section clearfix">
+          <div class="info-left-section left">
+            <h6><%= invoice.invoice_number %>: <span><bold><%= invoice.company.company_name %></bold></span></h6>
+            <span><%= t('invoice') %>: <small> <%= invoice.invoice_date rescue "" %> </small></span>
+            <span class="text-blue"> <%= t('views.invoices.due') %>:<small> <%= invoice.due_date rescue "" %></small></span>
+            <% if invoice.term.present? %>
+            <div class="terms">
+              <span><%= t('views.invoices.terms') %>:</span>
+              <small><%= t('views.invoices.' + invoice.term.parameterize.underscore) %></small>
             </div>
-          <% end %>
-          <% unless invoice.tax_detail_with_discount.blank? %>
-            <%= taxes_list(invoice.tax_detail_with_discount,invoice) %>
-          <% end %>
-          <div class="table-row">
-            <span></span>
-            <span></span>
+            <% end %>
+            <div class="paymentInfo">
+              <strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: '') %> <small><%= invoice.currency.unit %></small></strong>
+            </div>
           </div>
-        </div>
-        <div class="item-total">
-          <div class="table-row">
-            <span><strong><%= t('views.common.total') %></strong></span>
-            <span><strong><%= number_to_currency(invoice.invoice_total, unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
+            <% unless invoice.company.logo_url.blank? %>
+              <div class="info-right-section right circle">
+                <%= request.format.pdf? ? (wicked_pdf_image_tag  invoice.company.logo_url(:thumb)) : (image_tag invoice.company.logo_url(:thumb), class: 'responsive-img') %>
+              </div>
+            <% end %>
           </div>
-          <div class="table-row">
-            <span class="text-blue"><strong><%= t('views.invoices.amount_paid') %></strong></span>
-            <span class="text-blue"><strong><%= number_to_currency(Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
-          </div>
-          <div class="table-row">
-            <span class="text-red"><strong><%= t('views.invoices.amount_refund') %></strong></span>
-            <span class="text-red"><strong><%= number_to_currency(invoice.payments.refunds.sum('payment_amount'), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
-          </div>
-        </div>
-        <div class="item-due">
-          <div class="table-row">
-            <span><strong><%= t('views.invoices.amount_due') %></strong></span>
-            <span><strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.code : '$') %></strong></span>
-          </div>
-        </div>
-      </div>
-      <div class="left-section left notes-section clearfix">
-        <strong><%= t('views.common.notes') %>: </strong> <%=  @invoice.notes.gsub(/\n/, '<br/>').html_safe if @invoice.notes.present? %>
-      </div>
-    </div>
-    <%= render 'invoice_history' unless (request.format.pdf? || current_portal_client.present? || session[:masquerade_client_id].present? ) %>
 
-    <div class="modal-footer clearfix">
-      <div class="left-section left footer-signature">
-        <p><%= t('views.invoices.this_invoice_was_sent_using') %> <%= link_to image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img"), 'http://opensourcebilling.org/'%></p>
-      </div>
+        <div class="modal-body">
+          <% if invoice.invoice_type.eql?("ProjectInvoice")%>
+            <%= render partial: 'project_invoice_tasks', locals: {invoice: invoice} %>
+          <% else %>
+            <%= render partial: 'invoice_items', locals: {invoice: invoice} %>
+          <% end %>
+        </div>
+        <div class="modal-footer clearfix">
+          <div class="right-section right">
+            <div class="item-result">
+              <div class="table-row">
+                <span><strong><%= t('views.invoices.subtotal') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.sub_total, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+              </div>
+              <div class="table-row">
+                <span><%= t('views.common.discount') %> <%= invoice.discount_percentage %><%= invoice.discount_type %></span>
+                <span><%= number_to_currency(invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+              </div>
+              <% if invoice.tax.present? %>
+              <div class="table-row">
+                <span><%= t('views.common.tax') %>: <%= invoice.tax.name %> <%= invoice.tax.percentage %>% </span>
+                <span><%= number_to_currency(invoice.invoice_tax_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></span>
+              </div>
+              <% end %>
+              <% unless invoice.tax_detail_with_discount.blank? %>
+                  <%= taxes_list(invoice.tax_detail_with_discount,invoice) %>
+              <% end %>
+              <div class="table-row">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="item-total">
+              <div class="table-row">
+                <span><strong><%= t('views.common.total') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.invoice_total - invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+              </div>
+              <div class="table-row">
+                <span class="text-blue"><strong><%= t('views.invoices.amount_paid') %></strong></span>
+                <span class="text-blue"><strong>-<%= number_to_currency(Payment.invoice_paid_amount(invoice.id) - invoice.discount_amount, unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+              </div>
+            </div>
+            <div class="item-due">
+              <div class="table-row">
+                <span><strong><%= t('views.invoices.amount_due') %></strong></span>
+                <span><strong><%= number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.present? ? invoice.currency.unit : '$') %></strong></span>
+              </div>
+            </div>
+          </div>
+          <div class="left-section left notes-section clearfix">
+            <strong><%= t('views.common.notes') %>: </strong> <%= @invoice.notes %>
+          </div>
+        </div>
+        <div class="modal-footer clearfix">
+          <div class="left-section left footer-signature">
+            <p><%= t('views.invoices.this_invoice_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
+          </div>
+        </div>
     </div>
-  </div>
 </div>

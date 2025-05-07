@@ -19,10 +19,10 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ItemsController < ApplicationController
-  # before_action :authenticate_user!
+  #before_filter :authenticate_user!
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   protect_from_forgery :except => [:load_item_data]
-  before_action :set_per_page_session
-  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? && (!current_user.introduction.item? || !current_user.introduction.new_item?) }
+  before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   # GET /items
   # GET /items.json
@@ -34,10 +34,8 @@ class ItemsController < ApplicationController
     params[:status] = params[:status] || 'active'
     params[:user]=current_user
     @status = params[:status]
-    @items = Item.get_items(params.merge(get_args))#.sort_by!{ |e| e.item_name.downcase }
-    # @items.sort_by!{ |item| item.item_name.downcase } if params[:sort].eql?('created_at')
+    @items = Item.get_items(params.merge(get_args))
     @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
-    authorize Item
 
     #@items = @items.joins('LEFT JOIN taxes as tax1 ON tax1.id = items.tax_1') if sort_column == 'tax1.name'
     #@items = @items.joins('LEFT JOIN taxes as tax2 ON tax2.id = items.tax_2') if sort_column == 'tax2.name'
@@ -57,10 +55,6 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
-    params[:status] = params[:status] || 'active'
-    @status = params[:status]
-    @items_activity = Reporting::ItemActivity.get_recent_activity(get_company_id,current_user, params.deep_dup)
-    authorize @item
 
     respond_to do |format|
       format.html # show.html.erb
@@ -73,20 +67,20 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = params[:id] ? Item.find_by_id(params[:id]).dup : Item.new
-    authorize @item
     respond_to do |format|
       format.html # new.html.erb
       format.js
       format.json { render :json => @item }
     end
+
   end
 
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
-    authorize @item
     respond_to do |format|
       format.js
+
     end
   end
 
@@ -95,15 +89,19 @@ class ItemsController < ApplicationController
   def create
     company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
+    if Item.is_exists?(params[:item][:item_name], get_association_obj)
+      @item_exists = true
+      redirect_to(items_path, :alert => t('views.items.duplicate_name')) unless params[:position].present?
+      return
+    end
     @item = Item.new(item_params)
-    authorize @item
     options = params[:position].present? ? params.merge(company_ids: company_id) : params
     associate_entity(options, @item)
     respond_to do |format|
       if @item.save
         format.js
         format.json { render :json => @item, :status => :created, :location => @item }
-        format.html { redirect_to item_path(@item),  notice: new_item(@item.id) }
+        format.html { redirect_to items_path,  notice: new_item(@item.id) }
       else
         format.html { render :action => "new" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
@@ -120,17 +118,12 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
-    # binding.pry
-    authorize @item
     associate_entity(params, @item)
     respond_to do |format|
       if @item.update_attributes(item_params)
-        @item_updated = true
-        format.js
-        format.html { redirect_to(item_path(@item), :notice => t('views.items.item_updated')) }
+        format.html { redirect_to(items_path, :notice => t('views.items.item_updated')) }
         format.json { head :no_content }
       else
-        format.js
         format.html { render :action => "edit" }
         format.json { render :json => @item.errors, :status => :unprocessable_entity }
       end
@@ -141,11 +134,10 @@ class ItemsController < ApplicationController
   # DELETE /items/1.json
   def destroy
     @item = Item.find(params[:id])
-    authorize @item
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_path }
+      format.html { redirect_to items_url }
       format.json { head :no_content }
     end
   end
@@ -153,7 +145,7 @@ class ItemsController < ApplicationController
 #  # Load invoice line items data when an item is selected from drop down list
   def load_item_data
     item = Item.find_by_id(params[:id]).present? ?  Item.find(params[:id]) : Item.unscoped.find_by_id(params[:id])
-    render :plain => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_f || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.tax1_name || "", item.tax2_name || "", item.tax1_percentage || 0, item.tax2_percentage || 0 ]
+    render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || "", item.tax1_name || "", item.tax2_name || "", item.tax1_percentage || 0, item.tax2_percentage || 0 ]
   end
 
   def bulk_actions
@@ -165,7 +157,7 @@ class ItemsController < ApplicationController
     @action = result[:action]
 
     respond_to do |format|
-      format.html { redirect_to items_path, notice: t('views.items.bulk_action_msg', action: @action) }
+      format.html { redirect_to items_url, notice: t('views.items.bulk_action_msg', action: @action) }
       format.js
       format.json
     end
@@ -176,16 +168,6 @@ class ItemsController < ApplicationController
     params[:status] = 'active'
     @items = Item.get_items(params.merge(get_args))
     respond_to { |format| format.js }
-  end
-
-  def verify_item_name
-    items = !params[:newItem].eql?('edit_item') ? Item.pluck(:item_name).map(&:downcase) :
-              Item.where.not(item_name: Item.find(params[:item_id]).item_name).pluck(:item_name).map(&:downcase)
-    if items.include?(params[:item_name].downcase)
-      render json: false
-    else
-      render json: true
-    end
   end
 
   private
@@ -201,12 +183,12 @@ class ItemsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'item_name'
+    params[:sort] ||= 'created_at'
     #Item.column_names.include?(params[:sort]) ? params[:sort] : 'item_name'
   end
 
   def sort_direction
-    params[:direction] ||= 'asc'
+    params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 

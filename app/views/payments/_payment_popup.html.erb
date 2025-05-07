@@ -11,11 +11,11 @@
     <% invoice = payment.unscoped_invoice %>
     <div class="info-section clearfix">
       <div class="info-left-section left">
-        <h6 class="text-grey"><%= invoice.formatted_invoice_number rescue "" %></h6>
+        <h6 class="text-grey"><%= invoice.invoice_number rescue "" %></h6>
         <span>Invoice : <small> <%= invoice.invoice_date rescue "" %> </small></span>
         <span class="text-blue"> Due: <small> <%= invoice.due_date rescue "" %></small></span>
         <div class="paymentInfo">
-          <strong><%= "#{number_to_currency(-1 * payment.payment_amount, unit: invoice.currency.unit)} " rescue '' %> </strong>
+          <strong><%= invoice.currency.code rescue '' %><%= "#{number_to_currency(payment.payment_amount, unit: '')} " rescue '' %> <small><%= invoice.currency.unit rescue '' %></small></strong>
         </div>
       </div>
       <% if invoice && invoice.company.logo_url.present? %>
@@ -28,8 +28,8 @@
       <div class="info-right-section">
         <div class="row">
           <div class="field-block col s6">
-            <label>Payment </label>
-            <span><%= "#{number_to_currency(payment.payment_amount, unit: invoice.currency.unit)} " rescue ''%></span>
+            <label>Payment (<%= invoice.currency.unit rescue '' %>)</label>
+            <span><%= "#{number_to_currency(payment.payment_amount, unit: '')} " rescue ''%></span>
           </div>
           <div class="field-block col s6">
             <label>Method</label>
@@ -41,7 +41,7 @@
     <div class="modal-footer">
       <div class="row">
         <div class="text-info col l6">
-          <p><strong>Note</strong><%= raw payment.notes.gsub("\n", "<br>") if payment.notes.present? %></p>
+          <p><strong>Note</strong><%= payment.notes %></p>
         </div>
       </div>
 

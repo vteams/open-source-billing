@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class SentEmail < ApplicationRecord
+class SentEmail < ActiveRecord::Base
   # associations
   belongs_to :notification, :polymorphic => true
   belongs_to :company

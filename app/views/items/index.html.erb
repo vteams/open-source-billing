@@ -5,7 +5,7 @@
   <div class="flex-wrapper">
     <!--- breadcrum Bar --->
     <div class="flex-item breadcrum-bar">
-      <div class="card-white-panel intro items-index-false-intro" data-intro='All of your active items will be listed here' data-step="1">
+      <div class="card-white-panel">
         <h3 class="with-grid-icons">
           <span><%= link_to t('header.links.items.items'), items_path %></span>
           <a class="active"><%= "/ #{t('views.common.' + status_text)}" %></a>
@@ -17,11 +17,8 @@
   </div>
   <%= render 'filters' %>
   <div class="invoice-box items-box clearfix">
-    <%= form_tag bulk_actions_items_path, {method: :get, id: "bulk_action_form", remote: true} do -%>
+    <%= form_tag bulk_actions_items_path, {method: :get, id: "bulk_action_form"} do -%>
         <div class="search_result_container"><%= render 'items_container'%></div>
-      <div style="margin-top: 10px" class="right <%= @items.count > 7 ? 'invoice_link_right' : '' %>">
-        <%= link_to ' + New Item ', new_item_path, remote: true, class: "#{(@items.count > 0 && @items.total_count <= 9) || @items.count == 0 ? "secondary_new_link" : 'primary_new_link'}" %>
-      </div>
         <%= render partial: 'bulk_actions'%>
     <% end %>
   </div>

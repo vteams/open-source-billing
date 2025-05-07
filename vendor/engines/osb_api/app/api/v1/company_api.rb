@@ -1,5 +1,5 @@
 module V1
-  class CompanyAPI < Grape::API
+  class CompanyApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api
@@ -10,14 +10,6 @@ module V1
 
       before {current_user}
 
-      desc 'Return  companies',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
-
       get :get_companies do
         @accounts = @current_user.accounts
         @accounts.each do |account|
@@ -25,27 +17,9 @@ module V1
         end
       end
 
-      desc 'Return  companies',
-           headers: {
-             "Access-Token" => {
-               description: "Validates your identity",
-               required: true
-             }
-           }
+      desc 'Return  companies'
       get do
         @current_user.current_account.companies
-      end
-
-      desc 'Fetch current company',
-          headers: {
-          "Access-Token" => {
-            description: "Validates your identity",
-            required: true
-          }
-        }
-
-      get 'current_company' do
-        Company.find_by(id: @current_user.current_company)
       end
 
       desc 'Fetch a single company'
@@ -54,21 +28,16 @@ module V1
       end
 
       get ':id' do
-        company = Company.find_by(id: params[:id])
-        company.present? ? company : {error: "Company not found", message: nil}
+        Company.find params[:id]
       end
 
       desc 'Create Company'
       params do
         requires :company, type: Hash do
-          requires :account_id, type: Integer, message: :required
-          requires :company_name, type: String, message: :required
-          requires :contact_name, type: String, message: :required
-          requires :contact_title, type: String, message: :required
-          optional :abbreviation, type: String
-          optional :default_note, type: String
-          optional :due_date_period, type: Integer
-          optional :base_currency_id, type: Integer
+          requires :account_id, type: Integer
+          requires :company_name, type: String
+          requires :contact_name, type: String
+          requires :contact_title, type: String
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
@@ -77,8 +46,8 @@ module V1
           optional :postal_or_zipcode, type: String
           optional :phone_number, type: String
           optional :fax_number, type: String
-          requires :email, type: String, message: :required
-          optional :logo
+          requires :email, type: String
+          optional :logo, type: String
           optional :fax, type: String
           optional :company_tag_line, type: String
           optional :memo, type: String
@@ -94,14 +63,10 @@ module V1
       desc 'Update Company'
       params do
         requires :company, type: Hash do
-          optional :account_id, type: Integer
-          optional :company_name, type: String
-          optional :contact_name, type: String
-          optional :contact_title, type: String
-          optional :abbreviation, type: String
-          optional :default_note, type: String
-          optional :due_date_period, type: Integer
-          optional :base_currency_id, type: Integer
+          requires :account_id, type: Integer
+          requires :company_name, type: String
+          requires :contact_name, type: String
+          requires :contact_title, type: String
           optional :country, type: String
           optional :city, type: String
           optional :street_address_1, type: String
@@ -110,9 +75,8 @@ module V1
           optional :postal_or_zipcode, type: String
           optional :phone_number, type: String
           optional :fax_number, type: String
-          optional :email, type: String
-          optional :logo
-          # optional :logo, type: Rack::Multipart::UploadedFile
+          requires :email, type: String
+          optional :logo, type: String
           optional :fax, type: String
           optional :company_tag_line, type: String
           optional :memo, type: String
@@ -123,8 +87,7 @@ module V1
       end
 
       patch ':id' do
-        company = Company.find_by(id: params[:id])
-        company.present? ? Services::Apis::CompanyApiService.update(params) : {error: 'Company not found', message: nil}
+        Services::Apis::CompanyApiService.update(params)
       end
 
 
@@ -134,28 +97,7 @@ module V1
       end
       delete ':id' do
         Services::Apis::CompanyApiService.destroy(params[:id])
-        payment = Payment.find_by(id: params[:id])
-        payment.present? ? Services::Apis::CompanyApiService.destroy(payment) : {error: 'Payment not found', message: nil}
       end
-
-      desc 'Change current company',
-           headers: {
-               "Access-Token" => {
-                   description: "Validates your identity",
-                   required: true
-               }
-           }
-
-      get ':id/current_company' do
-        company = Company.find_by(id: params[:id])
-        if !company.present?
-          {error: "Company not found", message: nil }
-        else
-          @current_user.update_attributes(current_company: company.id)
-          {message: "Current company updated successfully"}
-        end
-      end
-
     end
   end
 end

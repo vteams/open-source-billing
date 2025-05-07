@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
-  before_action :set_per_page_session
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   include CompaniesHelper
   # GET /companies
@@ -42,7 +43,6 @@ class CompaniesController < ApplicationController
   # GET /companies/1/edit
   def edit
     @company = Company.find(params[:id])
-    @company.build_mail_config if @company.mail_config.blank?
     respond_to do |format|
       format.html # new.html.erb
       format.js
@@ -62,7 +62,7 @@ class CompaniesController < ApplicationController
           current_user.update_attributes(current_company: @company)
         end
         format.js { @companies = Company.all }
-        format.html { redirect_to params[:setting_form] == '1' ? settings_path : settings_path, notice: t('views.companies.create_msg') }
+        format.html { redirect_to companies_path, notice: t('views.companies.create_msg') }
         format.json { render json: companies_path, status: :created, location: @company }
       else
         format.js {}
@@ -79,8 +79,6 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(company_params)
-        @company_updated = true
-        format.js
         format.html { redirect_to params[:setting_form] == '1' ? settings_path : companies_path,
                                   notice: t('views.companies.updated_msg') }
         format.json { head :no_content }
@@ -155,7 +153,7 @@ class CompaniesController < ApplicationController
     session['current_company'] = params[:id]
     current_user.update_attributes(current_company: params[:id])
     company =  Company.find(params[:id])
-    render plain:  company.company_name
+    render :text => company.company_name
   end
 
   def settings_listing
@@ -167,21 +165,8 @@ class CompaniesController < ApplicationController
     company = Company.where(id: params[:company_ids]).destroy_all
 
     @companies = Company.all
-    render json: {notice: t('views.companies.deleted_msg')}, status: :ok
-  end
-
-  def verify_name_email_uniqueness
-    company_emails = params[:newCompany].eql?('new_company') ? Company.pluck(:email) :
-                       Company.where.not(email: Company.find(params[:company_id]).email).pluck(:email)
-    company_names = params[:newCompany].present? ? Company.pluck(:company_name) :
-                      Company.where.not(company_name: Company.find(params[:company_id])).pluck(:company_name)
-
-    if (params[:company_email].present? && company_emails.reject{|c| c.nil?}.map(&:downcase).include?(params[:company_email].downcase)) ||
-      (params[:company_name].present? && company_names.map(&:downcase).include?(params[:company_name].downcase))
-      render json: false
-    else
-      render json: true
-    end
+    render json: {notice: t('views.companies.deleted_msg'),
+                  html: render_to_string(action: :settings_listing, layout: false)}
   end
 
   private
@@ -206,16 +191,7 @@ class CompaniesController < ApplicationController
   end
 
   def company_params
-    if params[:company][:mail_config_attributes].present? && params[:company][:mail_config_attributes][:password].empty?
-      params.require(:company).permit(:account_id, :user_ids, :city, :company_name, :company_tag_line, :contact_name,
-                                      :abbreviation, :contact_title, :country, :email, :fax_number, :logo, :memo,
-                                      :phone_number, :postal_or_zipcode, :province_or_state, :default_note, :due_date_period,
-                                      :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes:
-                                        [:id, :address, :port, :authentication, :from, :user_name, :enable_starttls_auto,
-                                         :openssl_verify_mode, :tls,  :_destroy])
-    else
-      params.require(:company).permit(:account_id, :user_ids, :city, :company_name, :company_tag_line, :contact_name, :abbreviation, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :default_note, :due_date_period, :street_address_1, :street_address_2, :base_currency_id, mail_config_attributes: [:id, :address, :port, :authentication, :from, :user_name, :password, :enable_starttls_auto, :openssl_verify_mode, :tls,  :_destroy])
-    end
+    params.require(:company).permit(:account_id, :city, :company_name, :company_tag_line, :contact_name, :contact_title, :country, :email, :fax_number, :logo, :memo, :phone_number, :postal_or_zipcode, :province_or_state, :street_address_1, :street_address_2)
   end
 
 end

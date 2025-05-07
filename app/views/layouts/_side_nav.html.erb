@@ -9,119 +9,80 @@
         <!-- Dropdown Trigger -->
         <a class='dropdown-button '><span><%= current_user.user_name || current_user.email %></span></a>
         <a  class="email-link"><%= current_user.email %> </a>
-        <a id="dLabel" class='dropdown-button user-dropdown' href='#' data-alignment="right" data-beloworigin="true">
-          <i class="material-icons">more_vert</i>
-        </a>
       </div>
     </div>
   </div>
   <!--- side main menu --->
-  <div class="user_menu hidden">
-    <ul class="side-menu scrollContainer">
-      <li>
-        <%= active_link_to edit_user_registration_path, title: "Change Password" do %>
-          <i class="material-icons">lock</i>
-          <span>Change Password</span>
-        <% end %>
-      </li>
-      <li>
-        <%= active_link_to destroy_user_session_path, method: :delete, class: 'logout text-align' do %>
-          <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
-          <span><%= t('header.links.logout') %></span>
-        <% end %>
-      </li>
-    </ul>
-  </div>
-  <div class="main_menu">
-    <ul class="side-menu scrollContainer">
-      <li>
-        <%= active_link_to dashboard_path , title: t('header.links.dashboard') do %>
-          <%= image_tag('ico-dashboard.svg', alt: t('header.links.dashboard'))%>
-          <span><%= t('header.links.dashboard') %></span>
-        <% end %>
-      </li>
 
-      <% if policy(Invoice).show? %>
+  <div>
+      <ul class="side-menu scrollContainer">
+        <li>
+          <%= active_link_to dashboard_path , title: t('header.links.dashboard') do %>
+              <%= image_tag('ico-dashboard.svg', alt: t('header.links.dashboard'))%>
+              <span><%= t('header.links.dashboard') %></span>
+          <% end %>
+        </li>
         <li>
           <%= active_link_to invoices_path, title: t('header.links.invoices.invoices') do %>
-            <%= image_tag('ico-invoices.svg', alt: t('header.links.invoices.invoices')) %>
-            <span><%= t('header.links.invoices.invoices') %></span>
+              <%= image_tag('ico-invoices.svg', alt: t('header.links.invoices.invoices')) %>
+              <span><%= t('header.links.invoices.invoices') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Estimate).show? %>
         <li>
           <%= active_link_to estimates_path, title: t('header.links.estimates.estimates') do %>
-            <%= image_tag('ico-estimates.svg', alt: t('header.links.estimates.estimates'))%>
-            <span><%= t('header.links.estimates.estimates') %></span>
+              <%= image_tag('ico-estimates.svg', alt: t('header.links.estimates.estimates'))%>
+              <span><%= t('header.links.estimates.estimates') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Project).index? %>
         <li>
           <%= active_link_to projects_path, title: t('header.links.time_tracking.time_tracking'),
                              class: "#{'active' if ['projects', 'tasks', 'staffs', 'logs'].include?(controller_name)}" do %>
-            <%= image_tag('ico-time.svg', alt: t('header.links.time_tracking.time_tracking'))%>
-            <span><%= t('header.links.time_tracking.time_tracking') %></span>
+              <%= image_tag('ico-time.svg', alt: t('header.links.time_tracking.time_tracking'))%>
+              <span><%= t('header.links.time_tracking.time_tracking') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Payment).show? %>
         <li>
           <%= active_link_to payments_path, title: t('header.links.payments.payments') do %>
-            <%= image_tag('ico-payments.svg', alt: t('header.links.payments.payments'))%>
-            <span><%= t('header.links.payments.payments') %></span>
+              <%= image_tag('ico-payments.svg', alt: t('header.links.payments.payments'))%>
+              <span><%= t('header.links.payments.payments') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Client).show? %>
         <li>
           <%= active_link_to clients_path, title: t('header.links.clients.clients') do %>
-            <%= image_tag('ico-clients.svg', alt: t('header.links.clients.clients'))%>
-            <span><%= t('header.links.clients.clients') %></span>
+              <%= image_tag('ico-clients.svg', alt: t('header.links.clients.clients'))%>
+              <span><%= t('header.links.clients.clients') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Item).show? %>
         <li>
           <%= active_link_to items_path, title: t('header.links.items.items') do %>
-            <%= image_tag('ico-items.svg', alt: t('header.links.items.items'))%>
-            <span><%= t('header.links.items.items') %></span>
+              <%= image_tag('ico-items.svg', alt: t('header.links.items.items'))%>
+              <span><%= t('header.links.items.items') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Tax).show? %>
         <li>
           <%= active_link_to taxes_path, title: t('header.links.items.taxes') do %>
-            <%= image_tag('ico-expenses.svg', alt: t('header.links.items.taxes'))%>
-            <span><%= t('header.links.items.taxes') %></span>
+              <%= image_tag('ico-expenses.svg', alt: t('header.links.items.taxes'))%>
+              <span><%= t('header.links.items.taxes') %></span>
           <% end %>
         </li>
-      <% end %>
-
-      <% if policy(Reporting::Reports::InvoiceDetail).invoice_detail? %>
         <li>
-          <%= active_link_to reports_path, title: t('header.links.reports.reports') do %>
-            <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
-            <span><%= t('header.links.reports.reports') %></span>
+          <%= active_link_to "/#{locale}/reports/payments_collected", title: t('header.links.reports.reports') do %>
+              <%= image_tag('ico-reports.svg', alt: t('header.links.reports.reports'))%>
+              <span><%= t('header.links.reports.reports') %></span>
           <% end %>
         </li>
-      <%end %>
-
-      <% if policy(Settings).index? %>
         <li>
-          <%= active_link_to settings_path, active: [['settings', 'companies', 'sub_users', 'roles', 'recurring_frequencies', 'email_templates'], ['index']] do %>
-            <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
-            <span><%= t('views.settings.settings') %></span>
+          <%= active_link_to settings_path do %>
+              <%= image_tag('ico-settings.svg', alt: t('views.settings.settings'), width: 22)%>
+              <span><%= t('views.settings.settings') %></span>
           <% end %>
         </li>
-      <% end %>
-    </ul>
+        <li>
+          <%= active_link_to destroy_user_session_path, method: :delete, class: 'logout text-align' do %>
+              <%= image_tag('ico-logout.svg', alt: t('header.links.logout'), width: 18)%>
+              <span><%= t('header.links.logout') %></span>
+          <% end %>
+        </li>
+      </ul>
   </div>
 </nav>

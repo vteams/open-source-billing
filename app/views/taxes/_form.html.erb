@@ -20,12 +20,11 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @taxis, html: {class: "tax_form #{@taxis.persisted? ? 'edit_tax' : ''}"}, remote: true, defaults: { wrapper_html: { class: 'input-field col s12' } } do |f| %>
+    <%= simple_form_for @taxis, defaults: { wrapper_html: { class: 'input-field col s12' } } do |f| %>
         <div class="modal-body">
           <div class="row">
-            <span class="hidden tax_id"><%= @taxis.id %></span>
-            <%= f.input :name, label: t('views.common.name'), label_html: { id: 'step1', class: 'intro taxes-new-false-intro' } %>
-            <%= f.input :percentage, label: t('views.common.percentage'), label_html: { id: 'step2', class: 'intro taxes-new-false-intro' } %>
+            <%= f.input :name, label: t('views.common.name') %>
+            <%= f.input :percentage, label: t('views.common.percentage') %>
             <%= f.submit class: 'btn_large submit hidden' %>
           </div>
         </div>

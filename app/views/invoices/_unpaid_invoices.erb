@@ -1,21 +1,17 @@
 <script type="text/javascript">
-    $(function () {
-        $(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
+    jQuery(function () {
+        jQuery(".sent, .partial,.draft, .draft-partial, .paid, .disputed, .viewed").qtip();
     });
 </script>
-<%= form_tag payments_enter_payment_path, id: "invoice_selection" do %>
+<%= form_tag "/payments/enter_payment", id: "invoice_selection" do %>
     <div id="unpaid_invoices" class="modal editableModal editPayment newModel large_modal unpaid_invoice">
       <div class="modal-content">
         <div class="modal-header clearfix text-content">
           <div class="modal-action-btn right">
             <% unless @invoices.blank? %>
-                <% if @invoices.count == 0 %>
-
-                <% else %>
-                  <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
-                    <i class="material-icons" >done</i>
-                  </a>
-                <% end %>
+                <a href="javascript:void(0);" onclick="$('.payment_select_form').click();" title="Save" class="modal-action waves-effect">
+                  <i class="material-icons" >done</i>
+                </a>
             <% end %>
             <%= submit_tag'', class: 'btn_large payment_select_form hidden' %>
             <a href="javascript:void(0);" title="<%= t('views.common.cancel') %>" class="modal-action modal-close waves-effect">
@@ -58,7 +54,7 @@
               <% @invoices.each do |inv| %>
                   <tr>
                     <td class="align_center td-checkbox"><%= check_box_tag "invoice_ids[]", inv.id, false, class: 'fix-left-and-opacity' %></td>
-                    <td class="align_center"><%= inv.formatted_invoice_number %></td>
+                    <td class="align_center"><%= inv.invoice_number %></td>
                     <td class="align_left"><%= inv.notes %></td>
                     <td class="align_left"><%= inv.client.organization_name rescue "" %></td>
                     <td class="align_center currency"><%= number_to_currency(inv.invoice_total, unit: inv.currency.present? ? inv.currency.unit : "$") %>

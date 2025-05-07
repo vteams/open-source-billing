@@ -1,5 +1,5 @@
 module V1
-  class AccountAPI < Grape::API
+  class AccountApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api

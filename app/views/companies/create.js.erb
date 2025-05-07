@@ -1,19 +1,11 @@
-<% if @company.present? %>
-  $('.modal').modal('close')
-  swal({
-      icon: "success",
-      title: 'Success',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.companies.create_msg') %>"}).then(function(){
-      window.location = '<%= companies_path %>'
-  });
+<% if @company.errors.present? %>
+  showErrorMsg("<%= @company.errors.full_messages.join('.') %>.");
+<% elsif params[:reload].to_i == 1 %>
+  <%  flash[:notice] = t('views.companies.create_msg') %>
+  window.location.reload();
 <% else %>
-  swal({
-      icon: "error",
-      title: 'Oops..!',
-      buttons: false,
-      timer: 3000,
-      text: "<%= @company.errors.full_messages.join('.') %>"
-  });
+  $('#companies_listing').html('<%= escape_javascript render(template: 'companies/settings_listing',
+   layout: false, format: :html) %>');
+  initCompanyListingEvents();
+  showSuccessMsg('Company has been created successfully.');
 <% end %>

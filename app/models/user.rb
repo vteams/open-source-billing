@@ -18,25 +18,21 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class User < ApplicationRecord
+class User < ActiveRecord::Base
   include UserSearch
   acts_as_token_authenticatable
+  rolify
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :confirmable, :validatable, :confirmable,
          :encryptable, :encryptor => :restful_authentication_sha1
   validates_uniqueness_of :email, :uniqueness => :true
-  validates :user_name, :email, :encrypted_password, :role_id, presence: true
-  after_create :set_default_settings, :set_introduction
-  before_save :reset_authentication_token, if: Proc.new { |record| record.persisted? && record.password_salt_changed? }
+  after_create :set_default_settings, :set_default_role
 
   mount_uploader :avatar, ImageUploader
 
   has_one :staff
-  belongs_to :role
   has_many :logs, dependent: :destroy
   has_many :invoices
-  has_and_belongs_to_many :companies
-  has_one :introduction, dependent: :destroy
 
   attr_accessor :account,:login, :notify_user
   include RailsSettings::Extend
@@ -44,7 +40,7 @@ class User < ApplicationRecord
 
   #Scopes
   scope :created_at, -> (created_at) { where(created_at: created_at) }
-  scope :role_id, -> (role_id) { where(role_id: role_id) }
+  scope :role_ids, -> (role_ids) { joins(:users_roles).where(users_roles: {role_id: role_ids}) }
 
   class << self
     def current=(user)
@@ -58,7 +54,7 @@ class User < ApplicationRecord
     def filter(params, per_page)
       date_format = current.nil? ? '%Y-%m-%d' : (current.settings.date_format || '%Y-%m-%d')
       users = params[:search].present? ? self.search(params[:search]).records : self
-      users = users.role_id(params[:role_id]) if params[:role_id].present?
+      users = users.role_ids(params[:role_ids]) if params[:role_ids].present?
       users = users.created_at(
           (Date.strptime(params[:create_at_start_date], date_format).in_time_zone .. Date.strptime(params[:create_at_end_date], date_format).in_time_zone)
       ) if params[:create_at_start_date].present?
@@ -67,42 +63,19 @@ class User < ApplicationRecord
     end
   end
 
-  def reset_authentication_token
-    self.authentication_token = SecureRandom.hex(10)
-  end
-
-  def assigned_companies
-    if self.have_all_companies_access?
-      Company.all.order('company_name asc')
-    else
-      self.companies
-    end
-  end
-
   def set_default_settings
+    self.settings.date_format = "%Y-%m-%d"
+    self.settings.currency = "On"
     self.settings.records_per_page = 9
+    self.settings.default_currency = "USD"
     self.settings.side_nav_opened = true
     self.settings.index_page_format = 'cart'
   end
 
-  def set_introduction
-    intro = Introduction.new
-    intro.user_id = self.id
-    intro.save
-  end
-
-  def reset_default_settings
-    self.settings.language = 'en'
-    self.settings.records_per_page = '9'
-    self.settings.index_page_format = 'table'
-    self.settings.side_nav_opened = true
-    self.introduction.update(dashboard: false, invoice: false, new_invoice: false, estimate: false,
-                             new_estimate: false, payment: false, new_payment: false, client: false,
-                             new_client: false, item: false, new_item: false, tax: false, new_tax: false,
-                             report: false, setting: false, invoice_table: false, estimate_table: false,
-                             payment_table: false, client_table: false, item_table: false, tax_table: false)
-    Settings.default_currency = 'PKR'
-    Settings.invoice_number_format = "{{invoice_number}}"
+  def set_default_role
+    # sign up user only has admin role
+    return self.add_role :staff if self.staff.present?
+    self.add_role :admin if self.roles.blank?
   end
 
   def currency_symbol

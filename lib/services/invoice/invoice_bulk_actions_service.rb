@@ -23,23 +23,16 @@ module Services
     attr_reader :invoices, :invoice_ids, :options, :action_to_perform
 
     def initialize(options)
-      actions_list = %w(archive destroy recover_archived recover_deleted send payment destroy_archived permanent_deleted)
+      actions_list = %w(archive destroy recover_archived recover_deleted send payment destroy_archived)
       @options = options
       @action_to_perform = actions_list.map { |action| action if @options[action] }.compact.first #@options[:commit]
       @invoice_ids = @options[:invoice_ids]
-      @invoices = ::Invoice.with_deleted.multiple(@invoice_ids)
+      @invoices = ::Invoice.multiple(@invoice_ids)
       @current_user = @options[:current_user]
     end
 
     def perform
       method(@action_to_perform == 'send' ? 'send_invoices' : @action_to_perform).call.merge({invoice_ids: @invoice_ids, action_to_perform: @action_to_perform})
-    end
-
-    def permanent_deleted
-      @invoices.map{|invoice| invoice.invoice_line_items.each{|li| li.really_destroy!}}
-      @invoices.map{|invoice| invoice.payments.each{|payment| payment.really_destroy!}}
-      @invoices.map(&:really_destroy!)
-      {action: 'deleted permanently', invoices: get_invoices('only_deleted')}
     end
 
     def archive
@@ -83,7 +76,7 @@ module Services
     end
 
     def recover_deleted
-      @invoices.only_deleted.map { |invoice| invoice.restore; invoice.unarchive; invoice.change_status_after_recover; invoice.invoice_line_items.only_deleted.map(&:restore); invoice.save! }
+      @invoices.only_deleted.map { |invoice| invoice.restore; invoice.unarchive; invoice.change_status_after_recover; invoice.invoice_line_items.only_deleted.map(&:restore); }
       invoices = ::Invoice.only_deleted.page(@options[:page]).per(@options[:per])
       {action: 'recovered from deleted', invoices: get_invoices('only_deleted')}
     end
@@ -101,13 +94,6 @@ module Services
     private
 
     def send_invoice_to_client(invoice)
-      # invoice_hash = {
-      #     invoice_client: invoice.clients,
-      #     invoice: invoice,
-      #     encrypted_id: invoice.encrypted_id,
-      #     user: @current_user
-      # }
-      # NotificationWorker.perform_async('InvoiceMailer','new_invoice_email',[invoice_hash], smtp_settings = Company.smtp_settings)
       InvoiceMailer.delay.new_invoice_email(invoice.client, invoice, invoice.encrypted_id, @current_user)
     end
 

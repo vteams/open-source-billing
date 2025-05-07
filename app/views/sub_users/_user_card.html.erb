@@ -2,8 +2,6 @@
   <%= link_to '', OSB::CONFIG::DEMO_MODE ? 'javascript:void(0)' : edit_sub_user_path(user) , remote: true, class: "invoice_show_link #{'demo-mode' if OSB::CONFIG::DEMO_MODE}", style: 'display: none' %>
   <div class="card-white-panel invoice-card" data-user_id= <%=user.id %>>
     <div class="checkbox-item">
-      <%= check_box_tag "user_ids[]", user.id, false, :id => "user_#{user.id}", class: "filled-in" %>
-      <label for="<%= "user_#{user.id}" %>"></label>
       <div class="invoice-name circle-img <%= random_card_color unless user.avatar_url(:thumb) %>"
            style="background-image: url('<%= user.avatar_url %>');">
         <%= user.card_name unless user.avatar_url(:thumb) %>

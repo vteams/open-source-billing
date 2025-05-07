@@ -1,5 +1,6 @@
 class SubUsersController < ApplicationController
   include SubUsersHelper
+  load_and_authorize_resource :user, :only => [:index, :show, :create, :destroy, :update, :new, :edit, :destroy_bulk]
 
   helper_method :sort_column, :sort_direction
 
@@ -23,17 +24,16 @@ class SubUsersController < ApplicationController
   def create
     @sub_user = User.new({user_name: params[:user_name], email: params[:email],
                          password: params[:password],
-                         password_confirmation: params[:password_confirmation], role_id: params[:role_id],
-                         company_ids: params[:company_ids], have_all_companies_access: params[:have_all_companies_access]
+                         password_confirmation: params[:password_confirmation]
                         })
 
     @sub_user.account_id = current_user.account_id if User.method_defined?(:account_id)
-    @sub_user.role_id = params[:role_id] if params[:role_id].present?
+    @sub_user.role_ids = params[:role_ids]
     # skip email confirmation for login
-    # @sub_user.skip_confirmation!
+    @sub_user.skip_confirmation!
     respond_to do |format|
       if @sub_user.already_exists?(params[:email])
-        redirect_to(sub_users_path, alert: t('views.users.duplicate_email'))
+        redirect_to(sub_users_url, alert: t('views.users.duplicate_email'))
         return
       elsif @sub_user.save
         # assign current user's company to newly created user
@@ -44,8 +44,13 @@ class SubUsersController < ApplicationController
         rescue => e
           puts  e
         end
-        format.js
-        #return
+        if params[:setting_form] == '1'
+          @users = User.unscoped
+          format.js
+        else
+          redirect_to(sub_users_url, notice: t('views.users.saved_msg'))
+        end
+        return
       else
         format.js {}
         format.html { render action: 'new', alert: t('views.users.unable_to_save') }
@@ -65,22 +70,23 @@ class SubUsersController < ApplicationController
     @sub_user = User.find(params[:user_id])
     options = {user_name: params[:user_name], email: params[:email],
                password: params[:password], password_confirmation: params[:password],
-               avatar: params[:avatar], role_id: params[:role_id], company_ids: params[:company_ids], have_all_companies_access: params[:have_all_companies_access]}
+               avatar: params[:avatar]}
+
     # don't update password if not provided
     if params[:password].blank?
       options.delete(:password)
       options.delete(:password_confirmation)
     end
-    # @sub_user.skip_reconfirmation!
+    @sub_user.skip_reconfirmation!
     message = if @sub_user.update_attributes(options)
                 @successfully_updated = true
-                @sub_user.role_id = params[:role_id] if params[:role_id].present?
+                @sub_user.role_ids = params[:role_ids] if params[:role_ids].present?
                 {notice: t('views.users.updated_msg')}
               else
                 {alert: t('views.users.unable_to_save')}
               end
+
     respond_to do |format|
-      format.js
       format.html {
         if password_has_changed?(params[:user_id], params[:password]) && @successfully_updated.eql?(true)
           redirect_to(new_user_session_path, message)
@@ -105,8 +111,9 @@ class SubUsersController < ApplicationController
   def destroy_bulk
     sub_user = User.where(id: params[:user_ids]).destroy_all
     @users = User.all
-    render json: {notice: t('views.users.bulk_delete')}, status: :ok
- end
+    render json: {notice: t('views.users.bulk_delete'),
+                  html: render_to_string(action: :settings_listing, layout: false)}
+  end
 
   def user_settings
   end

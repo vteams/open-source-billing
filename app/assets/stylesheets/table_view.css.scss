@@ -55,7 +55,7 @@
     }
   }
   td {
-    //padding: 13px !important;
+    padding: 13px !important;
     &:last-child { text-align: center; }
 
     .fix-left-and-opacity {
@@ -75,7 +75,6 @@
     ul.dropdown-content.z-depth-4 {
       min-width: 150px;
       top: inherit !important;
-      margin-bottom: 8px;
 
       li a {
         font-size: 12px;
@@ -89,9 +88,6 @@
           i {  color: #09b8e2;  }
         }
       }
-    }
-    ul.dropdown-content.z-depth-4.dropdown_margin{
-      margin-bottom: 45px;
     }
   }
 }

@@ -6062,8 +6062,8 @@ input[type=search].valid,
 input[type=search]:focus.valid,
 textarea.materialize-textarea.valid,
 textarea.materialize-textarea:focus.valid {
-  /*border-bottom: 1px solid #4CAF50;*/
-  /*box-shadow: 0 1px 0 0 #4CAF50;*/
+  border-bottom: 1px solid #4CAF50;
+  box-shadow: 0 1px 0 0 #4CAF50;
 }
 
 input:not([type]).valid + label:after,
@@ -6628,7 +6628,7 @@ form p:last-child {
   height: 20px;
   width: 20px;
   background-color: transparent;
-  border: 2px solid #b1b1b1;
+  border: 2px solid #5a5a5a;
   top: 0px;
   z-index: 0;
 }
@@ -6652,7 +6652,7 @@ form p:last-child {
   top: 0;
   width: 20px;
   height: 20px;
-  /*border: 2px solid #26a69a;*/
+  border: 2px solid #26a69a;
   background-color: #26a69a;
   z-index: 0;
 }
@@ -6676,7 +6676,7 @@ form p:last-child {
 
 [type="checkbox"].filled-in:disabled:not(:checked) + label:after {
   border-color: transparent;
-  /*background-color: #BDBDBD;*/
+  background-color: #BDBDBD;
 }
 
 [type="checkbox"].filled-in:disabled:checked + label:before {

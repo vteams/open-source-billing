@@ -1,18 +1,4 @@
-<% if params[:invoice_number_format].present? && !params[:invoice_number_format].include?('{{invoice_number}}')%>
-swal({
-    text: 'must contain invoice number at least once',
-    icon: 'warning',
-
-})
-<% else %>
-  swal({
-      icon: "success",
-      title: 'Success',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.settings.updated_msg') %>"}).then(function(){
-      window.location = '<%= settings_path(params[:locale]) %>'
-  });
-<%# if @language_changed.present? and @language_changed == true  %>
-
+<% flash[:notice] = t('views.settings.updated_msg') %>
+<% if @language_changed.present? and @language_changed == true  %>
+window.location.href = "/<%= current_user.settings.language.to_sym %>/settings";
 <% end %>

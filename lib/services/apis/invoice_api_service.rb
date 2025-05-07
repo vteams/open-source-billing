@@ -4,30 +4,23 @@ module Services
 
       def self.create(params)
         invoice = ::Invoice.new(invoice_params_api(params))
-        invoice.company_id = User.current.current_company
         if invoice.save
-          invoice.send_invoice(User.current, invoice.id) unless params[:invoice][:save_as_draft].present?
           {message: 'Successfully created'}
         else
-          {error: invoice.errors.full_messages, message: nil }
+          {error: invoice.errors.full_messages}
         end
       end
 
       def self.update(params)
         invoice = ::Invoice.find(params[:id])
         if invoice.present?
-          invoice.company_id = User.current.current_company
-          if invoice.client.nil?
-            invoice.client = Client.with_deleted.find_by(id: invoice.client_id)
-          end
           if invoice.update_attributes(invoice_params_api(params))
-            invoice.send_invoice(User.current, invoice.id) unless params[:invoice][:save_as_draft].present?
             {message: 'Successfully updated'}
           else
-            {error: invoice.errors.full_messages, message: nil }
+            {error: invoice.errors.full_messages}
           end
         else
-          {error: 'Account not found', message: nil }
+          {error: 'Account not found'}
         end
       end
 
@@ -54,7 +47,6 @@ module Services
          :sub_total,
          :discount_amount,
          :tax_amount,
-        :tax_id,
          :invoice_total,
          :archive_number,
          :archived_at,
@@ -62,27 +54,10 @@ module Services
          :created_at,
          :updated_at,
          :payment_terms_id,
-        :currency_id,
          :due_date,
          :last_invoice_status,
          :discount_type,
-         :company_id,{
-
-         invoice_line_items_attributes:
-             [
-                 :id, :invoice_id, :item_description, :item_id, :item_name,
-                 :item_quantity, :actual_price, :item_unit_cost, :tax_1, :tax_2, :_destroy
-             ]
-         },
-         {
-             recurring_schedule_attributes:
-                 [
-                     :id, :invoice_id, :next_invoice_date, :frequency, :occurrences, :frequency_repetition, :frequency_type,
-                     :delivery_option, :_destroy, :enable_recurring
-                 ]
-         }
-
-
+         :company_id,
         )
       end
 

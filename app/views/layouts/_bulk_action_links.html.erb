@@ -1,44 +1,48 @@
 <% if contain_bulk_actions.include? controller_name %>
-  <div class="right">
-    <div class="header action-btn-group">
-      <% if controller_name.eql?('payments') %>
-        <%= link_to raw('<i class="material-icons">delete</i>'), 'javascript:void(0);', class: (OSB::CONFIG::DEMO_MODE ? 'demo-mode' : 'delete'),
-                    title: t('views.payments.delete_forever') %>
-      <% else %>
-        <% if @status.eql?('deleted') %>
-          <a href="javascript:;" class="recover_deleted" title="<%= t('views.common.recover_deleted') %>">
-            <i class="material-icons">unarchive</i>
-          </a>
-          <% if controller_name.eql?('invoices') && !current_user.role.deletable? %>
-            <a href="javascript:;" class="permanent_deleted" title="<%= t('views.common.delete_permanently') %>">
-              <i class="material-icons">delete</i>
-            </a>
-          <% end %>
-        <% elsif @status.eql?('archived') %>
-          <a href="javascript:;" class="recover_archived" title="<%= t('views.common.recover_archived') %>">
-            <i class="material-icons">unarchive</i>
-          </a>
-          <% if controller_name.eql?('invoices') or controller_name.eql?('estimates') %>
-            <a href="javascript:;" class="send_archived" title="<%= t('views.common.send') %>">
-              <i class="material-icons">send</i>
-            </a>
-          <% end %>
-          <a href="javascript:;" class="destroy_archived" title="<%= t('views.common.delete_archived') %>">
-            <i class="material-icons">delete</i>
-          </a>
+    <div class="right">
+      <div class="header action-btn-group">
+        <% if controller_name.eql?('payments') %>
+            <%= link_to raw('<i class="material-icons">delete</i>'), 'javascript:void(0);', class: (OSB::CONFIG::DEMO_MODE ? 'demo-mode' : 'delete'),
+                        title: t('views.payments.delete_forever') %>
         <% else %>
-          <% if controller_name.eql?('invoices') or controller_name.eql?('estimates')  %>
-            <a href="javascript:;" class="send_active" title="<%= t('views.common.send') %>">
-              <i class="material-icons">send</i>
-            </a>
-          <% end %>
-          <a href="javascript:;" class="<%= OSB::CONFIG::DEMO_MODE && controller_name.eql?('companies') ? 'demo-mode' : 'delete' %>" title="<%= t('helpers.links.delete') %>">
-            <i class="material-icons">delete</i>
-          </a>
-          <!-- Dropdown Structure -->
-          <a href="javascript:;" class="archive" title="<%= t('views.common.archive') %>"><i class="material-icons">archive</i></a>
+            <% if @status.eql?('deleted') %>
+                <a href="javascript:;" class="recover_deleted" title="<%= t('views.common.recover_deleted') %>">
+                  <i class="material-icons">unarchive</i>
+                </a>
+            <% elsif @status.eql?('archived') %>
+                <a href="javascript:;" class="recover_archived" title="<%= t('views.common.recover_archived') %>">
+                  <i class="material-icons">unarchive</i>
+                </a>
+                <% if controller_name.eql?('invoices') or controller_name.eql?('estimates') %>
+                    <a href="javascript:;" class="send_archived" title="<%= t('views.common.send') %>">
+                      <i class="material-icons">send</i>
+                    </a>
+                <% end %>
+                <a href="javascript:;" class="destroy_archived" title="<%= t('views.common.delete_archived') %>">
+                  <i class="material-icons">delete</i>
+                </a>
+            <% else %>
+                <% if controller_name.eql?('invoices') or controller_name.eql?('estimates')  %>
+                    <a href="javascript:;" class="send_active" title="<%= t('views.common.send') %>">
+                      <i class="material-icons">send</i>
+                    </a>
+                <% end %>
+                <a href="javascript:;" class="<%= OSB::CONFIG::DEMO_MODE && controller_name.eql?('companies') ? 'demo-mode' : 'delete' %>" title="<%= t('helpers.links.delete') %>">
+                  <i class="material-icons">delete</i>
+                </a>
+                <a id="dLabel" class='dropdown-button' href='#' data-activates='dropdown13' data-alignment="right" data-beloworigin="true">
+                  <i class="material-icons">more_vert</i>
+                </a>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown13' class='dropdown-content z-depth-4'>
+                  <li>
+                    <a href="javascript:;" class="archive"><i class="material-icons">archive</i>
+                      <%= t('views.common.send_to_archive') %>
+                    </a>
+                  </li>
+                </ul>
+            <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
-  </div>
 <% end %>

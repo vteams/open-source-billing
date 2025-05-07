@@ -1,4 +1,4 @@
-module OsbAPI
+module OsbApi
   module ApplicationHelper
   end
 end

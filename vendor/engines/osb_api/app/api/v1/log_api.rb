@@ -1,5 +1,5 @@
 module V1
-  class LogAPI < Grape::API
+  class LogApi < Grape::API
     version 'v1', using: :path, vendor: 'osb'
     format :json
     #prefix :api

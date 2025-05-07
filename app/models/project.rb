@@ -1,4 +1,4 @@
-class Project < ApplicationRecord
+class Project < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps

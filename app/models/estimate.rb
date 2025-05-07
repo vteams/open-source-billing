@@ -1,18 +1,13 @@
-class Estimate < ApplicationRecord
+class Estimate < ActiveRecord::Base
   include ::OSB
   include DateFormats
   include Trackstamps
   include EstimateSearch
-  include PublicActivity::Model
-  tracked only: [:create, :update], owner: ->(controller, model) { controller && controller.current_user }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
-
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :status, -> (status) { where(status: status) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
   scope :estimate_number, -> (estimate_number) { where(id: estimate_number) }
   scope :estimate_date, -> (estimate_date) { where(estimate_date: estimate_date) }
-  scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = estimates.client_id")}
-  scope :skip_draft, -> { where.not('status = ?', 'draft') }
 
   # constants
   STATUS_DESCRIPTION = {
@@ -45,14 +40,6 @@ class Estimate < ApplicationRecord
   acts_as_paranoid
   paginates_per 10
 
-  def has_tax_one?
-    self.estimate_line_items.where('tax_1 is not null').exists?
-  end
-
-  def has_tax_two?
-    self.estimate_line_items.where('tax_2 is not null').exists?
-  end
-
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
   end
@@ -82,15 +69,12 @@ class Estimate < ApplicationRecord
     multiple(ids).only_deleted.each { |estimate| estimate.restore; estimate.unarchive }
   end
 
-  def self.filter_params(params, per_page)
+  def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', invoiced: 'invoiced'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
 
     estimates = params[:search].present? ? self.search(params[:search]).records : self
-    estimates = estimates.joins(:estimate_line_items).where('estimates.status LIKE :single_search OR estimates.estimate_number LIKE
- :single_search OR estimates.notes LIKE :single_search OR clients.organization_name LIKE :single_search OR invoice_line_items.item_name LIKE :single_search',
-                                                         single_search: "%#{params[:single_search]}%") if params[:single_search].present?
     estimates = estimates.status(params[:type]) if params[:type].present?
     estimates = estimates.client_id(params[:client_id]) if params[:client_id].present?
     estimates = estimates.estimate_number((params[:min_estimate_number].to_i .. params[:max_estimate_number].to_i)) if params[:min_estimate_number].present?
@@ -155,13 +139,7 @@ class Estimate < ApplicationRecord
                            invoice_type:          "EstimateInvoice"
                           )
 
-    if invoice.save
-      self.estimate_line_items.each do |item|
-        item.update_attributes(invoice_id: invoice.id)
-        invoice.invoice_line_items << item
-        invoice.save
-      end
-    end
+    self.estimate_line_items.each { |item| item.update_attributes(invoice_id: invoice.id) } if invoice.save
   end
 
   def dispute_history
@@ -242,9 +220,7 @@ class Estimate < ApplicationRecord
   end
 
   def notify(current_user, id = nil)
-    current_company = Company.find(current_user.current_company)
-    NotificationWorker.perform_async('EstimateMailer','new_estimate_email',[self.client_id, self.id, self.encrypted_id, current_user.id], current_company.smtp_settings)
-    # EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
+    EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end
 
   def send_estimate current_user, id
@@ -252,8 +228,8 @@ class Estimate < ApplicationRecord
     self.notify(current_user, id) if self.update_attributes(:status => status)
   end
 
-  def estimate_name client
-    "#{client.first_name.first.camelize}#{client.last_name.first.camelize }" rescue ""
+  def estimate_name
+    "#{unscoped_client.first_name.first.camelize}#{unscoped_client.last_name.first.camelize }" rescue ""
   end
 
   def group_date

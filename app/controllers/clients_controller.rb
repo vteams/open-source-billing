@@ -19,11 +19,9 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class ClientsController < ApplicationController
+  load_and_authorize_resource :client
   helper_method :sort_column, :sort_direction
-  before_action :set_per_page_session
-#  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? &&  (!current_user.introduction.client? || !current_user.introduction.new_client?) }
-  layout :resolve_layout
-  before_action :authenticate_user!, except: %i[new_password create_password]
+  before_filter :set_per_page_session
 
   # GET /clients
   # GET /clients.json
@@ -33,11 +31,9 @@ class ClientsController < ApplicationController
     set_company_session
     params[:status] = params[:status] || 'active'
     @status = params[:status]
+
     @clients = Client.get_clients(params.merge(get_args))
-    @clients = Kaminari.paginate_array(@clients).page(params[:page]).per(@per_page)
     @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
-    # binding.pry
-    authorize Client
 
     respond_to do |format|
       format.html # index.html.erb
@@ -54,13 +50,9 @@ class ClientsController < ApplicationController
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
-    params[:status] = params[:status] || 'active'
-    @status = params[:status]
-    authorize @client
-    @invoices = @client.invoices.last(5)
-    @payments = Payment.payments_history(@client).last(5)
-    @client_activity = Reporting::ClientActivity.get_recent_activity(get_company_id, params.deep_dup, current_user)
-
+    @invoices = @client.invoices
+    @payments = Payment.payments_history(@client)
+    @detail = Services::ClientDetail.new(@client).get_detail
     respond_to do |format|
       format.html # show.html.erb
       format.js
@@ -72,19 +64,18 @@ class ClientsController < ApplicationController
   # GET /clients/new.json
   def new
     @client = Client.new
-    authorize @client
     @client.client_contacts.build()
     respond_to do |format|
       format.html # new.html.erb
       format.js
       format.json { render :json => @client }
     end
+
   end
 
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
-    authorize @client
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
     respond_to do |format|
       format.html
@@ -96,19 +87,24 @@ class ClientsController < ApplicationController
   # POST /clients
   # POST /clients.json
   def create
+    if Client.is_exists?(params[:client][:email], get_association_obj)
+      @client_exists = true
+      redirect_to(clients_path, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
+      return
+    end
+
     @client = Client.new(client_params)
-    @client.skip_password_validation = true
-    authorize @client
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
     associate_entity(options, @client)
 
-    #@client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
+    @client.add_available_credit(params[:available_credit], company_id) if params[:available_credit].present? && params[:available_credit].to_i > 0
+
     respond_to do |format|
       if @client.save
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
-        format.html { redirect_to(client_path(@client), :notice => new_client(@client.id)) }
+        format.html { redirect_to(clients_path, :notice => new_client(@client.id)) }
       else
         format.html { redirect_to clients_path, alert: @client.errors.full_messages.join('<br>')  }
         format.json { render :json => @client.errors, :status => :unprocessable_entity }
@@ -119,30 +115,23 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
-    binding.pry
     @client = Client.find(params[:id])
-    authorize @client
-    if Client.is_exists?(params[:client][:email], get_association_obj) && @client.email != params[:client][:email]
-      @client_exists = true
-      redirect_to(request.referrer, :alert => t('views.clients.duplicate_email')) unless params[:type].present?
-      return
-    end
-
     associate_entity(params, @client)
 
     #add/update available credit
-=begin
     if params[:available_credit].present?
     @client.payments.first.blank? ? @client.add_available_credit(params[:available_credit], get_company_id()) : @client.update_available_credit(params[:available_credit])
     end
-=end
 
     respond_to do |format|
       if @client.update_attributes(client_params)
-        @client_updated = true
-        format.js
+        format.html { redirect_to @client, :notice => t('views.clients.updated_msg') }
+        format.json { head :no_content }
+        redirect_to(clients_path, :notice => t('views.clients.updated_msg'))
+        return
       else
-        format.js
+        format.html { render :action => "edit" }
+        format.json { render :json => @client.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -151,11 +140,10 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     @client = Client.unscoped.find(params[:id])
-    authorize @client
     @client.destroy
 
     respond_to do |format|
-      format.html { redirect_to clients_path }
+      format.html { redirect_to clients_url }
       format.json { render_json(@client) }
     end
   end
@@ -167,34 +155,8 @@ class ClientsController < ApplicationController
     #@message = get_intimation_message(result[:action_to_perform], result[:client_ids])
     @action =  result[:action]
     respond_to do |format|
-      format.html { redirect_to clients_path, notice: t('views.clients.bulk_action_msg', action: @action) }
+      format.html { redirect_to clients_url, notice: t('views.clients.bulk_action_msg', action: @action) }
       format.js
-    end
-  end
-
-  def new_password
-    @client = Client.find(params[:id])
-    if @client.encrypted_password.present?
-      redirect_to new_portal_client_session_path
-    end
-  end
-
-  def create_password
-    @client = Client.find(params[:id])
-    @client.password = params[:client][:password]
-    @client.password_confirmation = params[:client][:password_confirmation]
-    if @client.save
-      redirect_to new_portal_client_session_path
-    end
-  end
-
-  def verify_email
-    client_emails = !params[:newClient].eql?('edit_client') ? Client.pluck(:email) :
-                        Client.where.not(email: Client.find(params[:client_id]).email).pluck(:email)
-    if client_emails.map(&:downcase).include?(params[:email].downcase)
-      render json: false
-    else
-      render json: true
     end
   end
 
@@ -241,36 +203,30 @@ class ClientsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'organization_name'
+    params[:sort] ||= 'created_at'
     sort_col = params[:sort]
   end
 
   def sort_direction
-    params[:direction] ||= 'asc'
+    params[:direction] ||= 'desc'
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
   def get_args
-    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: params[:sort_direction].present? ? params[:sort_direction] : sort_direction, current_company: session['current_company'], company_id: get_company_id}
+    {per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
   end
   private
 
   def client_params
-    params.require(:client).permit( :role_id, :address_street1, :address_street2, :business_phone, :city,
-                                   :company_size, :country, :fax, :industry, :internal_notes, :organization_name,
-                                   :postal_zip_code, :province_state, :province_state_us, :province_state_ca,
-                                   :send_invoice_by, :email, :home_phone, :first_name, :last_name, :mobile_number,
-                                   :client_contacts_attributes, :archive_number, :available_credit, :archived_at,
-                                   :deleted_at,:currency_id, :billing_email, :vat_number,
-                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
+    params.require(:client).permit(:address_street1, :address_street2, :business_phone, :city,
+                                   :company_size, :country, :fax, :industry, :internal_notes,
+                                   :organization_name, :postal_zip_code, :province_state,
+                                   :send_invoice_by, :email, :home_phone, :first_name, :last_name,
+                                   :mobile_number, :client_contacts_attributes, :archive_number,
+                                   :archived_at, :deleted_at,:currency_id, :billing_email, :vat_number,
+                                   client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end
 
-  def resolve_layout
-    case action_name
-    when "new_password"
-      "login"
-    end
-  end
 
 end

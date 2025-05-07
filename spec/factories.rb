@@ -1,22 +1,6 @@
 require 'factory_girl'
 require 'faker'
-FactoryGirl.define do  factory :recurring_frequency do
-    number_of_days 1
-title "MyString"
-  end
-  factory :introduction do
-    user nil
-  end
-  factory :mail_config do
-    address "MyString"
-port 1
-authentication "MyString"
-user_name "MyString"
-password "MyString"
-enable_starttls_auto false
-company nil
-  end
-  factory :recurring_schedule do
+FactoryGirl.define do  factory :recurring_schedule do
     next_invoice_date "2017-04-18 14:04:42"
 frequency "MyString"
 occurrences 1

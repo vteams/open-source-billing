@@ -23,7 +23,7 @@ namespace 'deploy' do
   desc "Start the application"
   task :start do
     on roles(:app) do
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec puma -p 9191 -d"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec puma -p 9393 -d"
     end
   end
 

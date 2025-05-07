@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class InvoiceLineItem < ApplicationRecord
+class InvoiceLineItem < ActiveRecord::Base
 
   include ItemSearch
   # associations
@@ -32,16 +32,7 @@ class InvoiceLineItem < ApplicationRecord
   acts_as_archival
   acts_as_paranoid
 
-
   attr_accessor :tax_one, :tax_two
-
-  after_destroy :recalculate_invoice_total
-
-  attr_accessor :tax_one, :tax_two
-
-  def recalculate_invoice_total
-    self.invoice.save if self.invoice.present?
-  end
 
   def unscoped_item
     Item.unscoped.find_by_id self.item_id
@@ -63,12 +54,5 @@ class InvoiceLineItem < ApplicationRecord
     item_tax_amount + item_total
   end
 
-  def formatted_invoice_item
-    param_values = {
-      'item_name' => (self.item_name),
-      'item_description' => (self.item_description)
-    }
-    Settings.invoice_item_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
-  end
 
 end

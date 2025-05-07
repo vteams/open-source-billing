@@ -1,18 +1,6 @@
-<% if @paid_invoice_ids.present? %>
-  swal({
-      icon: "success",
-      title: 'Success',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.payments.bulk_payment_recorded_msg', paid_ids: @paid_invoice_ids.join(',')) %>"}).then(function(){
-      window.location = '<%= @where_to_redirect %>'
-  });
-<% elsif @unpaid_invoice_ids.present? %>
-  swal({
-      icon: "error",
-      title: 'Oops..!',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.payments.bulk_payment_failed_msg', unpaid_ids: @unpaid_invoice_ids.join(',')) %>"
-  });
-<% end %>
+jQuery("button[class=close]").click();
+jQuery('tbody#invoice_body').html('<%= escape_javascript render("invoices/invoice") %>');
+jQuery('.paginator').html('<%= escape_javascript(paginate(@invoices, :remote => true).to_s) %>' +
+        '<div class="paging_info"><%= page_entries_info @invoices %></div>');
+jQuery(".alert.alert-success").show().find('span').html("Payment against selected invoice has been recorded successfully.");
+bind_edit_payment_links()

@@ -1,4 +1,4 @@
-class Log < ApplicationRecord
+class Log < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :task, class_name: 'ProjectTask', foreign_key: :task_id

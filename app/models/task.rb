@@ -1,4 +1,4 @@
-class Task < ApplicationRecord
+class Task < ActiveRecord::Base
   include DateFormats
   include TaskSearch
   paginates_per 10

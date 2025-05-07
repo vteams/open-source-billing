@@ -1,5 +1,0 @@
-$('body').append('<%= escape_javascript render partial: 'recurring_frequency_form_popup', locals: {payment_term: @payment_term} %>')
-elem = $("#recurring_frequency_form_popup");
-Popup.initialize(elem);
-Popup.open(elem);
-Validation.recurringFrequencyForm();

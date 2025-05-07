@@ -1,0 +1,131 @@
+<% invoice = @invoice if @invoice %>
+<div id="main-content" class="side-show pt_pdf_invoice">
+  <div class="invoice_template">
+    <div class="new-invoice-holder">
+      <div class="info-section details clearfix">
+        <div class="info-left-section">
+          <p><%= invoice.company.company_name %></p>
+          <p><%= invoice.company.street_address_1 %></p>
+          <p><%= invoice.company.street_address_2 %></p>
+          <p><%= invoice.company.city %></p>
+          <p><%= invoice.company.province_or_state %></p>
+        </div>
+        <div class="info-middle-section">
+          <%= wicked_pdf_image_tag 'paid_invoice.png', width: 150, class: 'responsive-img' if invoice.status.eql?('paid')%>
+        </div>
+        <div class="info-right-section">
+          <%= link_to(wicked_pdf_image_tag(invoice.company.logo, title: 'PressTigers logo', class: 'responsive-img'), PRESSTIGERS_SITE, class: 'display_block') if invoice.company.logo.present? %>
+        </div>
+      </div>
+
+      <div class="info-section details clearfix">
+        <div class="info-left-section half-box">
+          <p><%= invoice.client.organization_name rescue '' %></p>
+          <p><%= invoice.client.contact_name %></p>
+          <p><%= invoice.client.address_street1 %></p>
+          <p><%= invoice.client.address_street2 %></p>
+          <p><%= invoice.client.city %></p>
+          <p><%= COUNTRIES_WITH_CODES[invoice.client.country].present? ? COUNTRIES_WITH_CODES[invoice.client.country] : invoice.client.country %></p>
+          <% if invoice.client.vat_number.present? %>
+            <p><%= invoice.client.vat_number %></p>
+          <% end %>
+        </div>
+        <div class="info-right-section half-box">
+          <p><%= t('views.invoices.invoice_number') %> #PTMP-<%= invoice.invoice_number %></p>
+          <p><%= t('views.invoices.invoice_date') %> <%= invoice.invoice_date.to_date.strftime("%B %d, %Y") %></p>
+          <b class="pt_pdf_invoice">Balance Due (<%= invoice.currency.unit %>) <%= invoice.currency.code %>0.00 </b>
+        </div>
+      </div>
+
+      <div class="new-invoice-table-holder">
+        <% if invoice.invoice_line_items.present? %>
+            <table class="pt_pdf_invoice" cellpadding="0" cellspacing="0">
+              <thead>
+              <tr>
+                <th class="left-align"><%= t('views.common.item') %></th>
+                <th class="left-align"><%= t('views.common.description') %></th>
+                <th class="align_right"><%= t('views.common.unit_cost') %></th>
+                <th class="align_right"><%= t('views.items.quantity') %></th>
+                <th class="align_right"><%= t('views.invoices.line_total') %></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% invoice.invoice_line_items.each do |item|
+                item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+              %>
+                  <tr>
+                    <td class="left-align"><%= item.item_name rescue "" %></td>
+                    <td class="left-align"><%= item.item_description %></td>
+                    <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                    <td class="align_right"><%= item.item_quantity.to_i %></td>
+                    <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+        <% end %>
+      </div>
+
+      <div class="new-invoice-footer pt_pdf_invoice">
+        <div class="right-section right">
+          <div class="invoice-total-left">
+            <div class="new-invoice-footer-row">
+              <span><b><%= t('views.common.subtotal') %></b></span>
+            </div>
+            <div class="new-invoice-footer-row">
+              <span><b><%= "Discount #{'(Inc. Coupon)' if invoice.discount_type == 'coupon'}" %></b></span>
+            </div>
+	    <div class="new-invoice-footer-row">
+              <span><b><%= t('views.common.total') %></b></span>
+            </div>
+            <div class="new-invoice-footer-row">
+              <span><%= t('views.invoices.amount_paid') %></span>
+            </div>
+            <b class="pt_pdf_invoice invoice-total-title">Balance Due (<%= invoice.currency.unit %>)</b>
+            <% if invoice.discount_amount.present? && invoice.discount_amount > 0 %>
+              <em class="f-invoice-price">
+                <%= "You Saved: #{number_to_currency(invoice.discount_amount, unit: '$')}" %>
+              </em>
+            <% end %>
+          </div>
+          <div class="invoice-total-right">
+            <div class="new-invoice-footer-row">
+              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total), unit: '' ) %></b>
+            </div>
+	    <div class="new-invoice-footer-row">
+              <b class="f-invoice-price"><%= number_to_currency((invoice.discount_amount || 0), unit: '' ) %></b>
+            </div>
+	    <div class="new-invoice-footer-row">
+              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total - invoice.discount_amount.to_f), unit: '' ) %></b>
+            </div>
+            <div class="new-invoice-footer-row">
+              <em class="f-invoice-price">
+                <%= invoice.status.eql?('sent') ? number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  '' ) : "-#{number_to_currency((invoice.invoice_total - invoice.discount_amount.to_f), unit: '' )}" %>
+              </em>
+            </div>
+	    <% if invoice.discount_amount.present? && invoice.discount_amount > 0 %>
+	      <em class="f-invoice-price">
+              </em>
+	    <% end %>
+            <div class="new-invoice-footer-row rmv_underline">
+              <em class="f-invoice-price">
+                <b><%= invoice.status.eql?('sent') ? (number_to_currency(invoice.invoice_total - Payment.invoice_paid_amount(invoice.id), unit: invoice.currency.code)) : (invoice.currency.code + '0.00') %></b>
+              </em>
+            </div>
+          </div>
+        </div>
+        <div class="left-section left notes-section clearfix">
+          <b><%= t('views.invoices.terms') %>: </b> <%= invoice.notes %>
+        </div>
+      </div>
+
+      <p class="pt_pdf_invoice report-copyrights">
+        <%= t('views.invoices.this_invoice_was_sent_using') %>
+        <%= link_to((wicked_pdf_image_tag 'osb_invoice_footer_logo.png', size: '80', class: 'responsive-img'), OSB_MARKETING_SITE)%>
+      </p>
+
+      <br/>
+
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
 <div class="col s12 l12 xl5">
   <div id="invoices-list" class="scrollContainer">
-    <h3 class="intro dashboard-index-false-intro" data-intro='In this section you can see all your current and past invoices'>
+    <h3>
       <%= t('views.invoices.invoice') %>
       <div id="radioBtn" class="btn-group">
-        <a class="btn btn-primary btn-sm active intro dashboard-index-false-intro" data-intro='In this section you can see the invoices whose due dates are not over yet' data-step="7"><%= "#{t('current')}" %></a>
-        <a class="btn btn-primary btn-sm intro dashboard-index-false-intro" data-intro='In this section you can see the invoices whose due dates are crossed' data-step="8"><%= "#{t('past')}" %></a>
+        <a class="btn btn-primary btn-sm active"><%= "#{t('current')}" %></a>
+        <a class="btn btn-primary btn-sm"><%= "#{t('past')}" %></a>
       </div>
     </h3>
     <!--- Invoices list holder --->
@@ -26,8 +26,6 @@
             </li>
         <% end %>
 
-
-
       </ul>
       <ul class="pastData">
         <% @past_invoices.each do |past_invoice| %>
@@ -45,17 +43,6 @@
             </li>
         <% end %>
       </ul>
-
-      <br><br><br>
-
-      <h4> &nbsp;&nbsp;&nbsp;Invoices by Currency (count)</h4>
-      <br>
-      <%= pie_chart @currencies_chart_data,
-                    legend: 'bottom',
-                    download: true,
-                    colors: ['#00BDE5', '#8EC42A', '#F06312', '#B4E7FA', '#ECECEC', '#FFD502', '#812990', '#04A894', '#650052', '#99728D', '#FF0100', '#0721F8', '#964E27', '#F8E7A0']
-      %>
-
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-class Company < ApplicationRecord
+class Company < ActiveRecord::Base
   include CompanySearch
   scope :multiple, lambda { |ids_list| where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :created_at, -> (created_at) { where(created_at: created_at) }
@@ -7,7 +7,6 @@ class Company < ApplicationRecord
   skip_callback :commit, :after, :remove_logo!
 
   has_many :company_entities, :as => :parent
-  has_one_attached :avatar
   has_many :items, :through => :company_entities, :source => :entity, :source_type => 'Item'
   has_many :tasks, :through => :company_entities, :source => :entity, :source_type => 'Task'
   has_many :staffs, :through => :company_entities, :source => :entity, :source_type => 'Staff'
@@ -20,30 +19,12 @@ class Company < ApplicationRecord
   has_many :payments
   has_many :sent_emails
   belongs_to :account
-  belongs_to :base_currency, class_name: 'Currency', foreign_key: :base_currency_id
-  has_one :mail_config
-  has_and_belongs_to_many :users
-
-  accepts_nested_attributes_for :mail_config, reject_if: :all_blank, allow_destroy: true
 
   # archive and delete
   acts_as_archival
   acts_as_paranoid
 
   # filter companies i.e active, archive, deleted
-  def smtp_settings
-    {
-        address: self.mail_config.address,
-        port: self.mail_config.port,
-        authentication: self.mail_config.authentication,
-        enable_starttls_auto: self.mail_config.enable_starttls_auto,
-        user_name: self.mail_config.user_name,
-        password: self.mail_config.password,
-        openssl_verify_mode: self.mail_config.openssl_verify_mode,
-        tls: self.mail_config.tls
-    }
-  end
-
   def self.filter(params)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     user = User.current
@@ -72,13 +53,5 @@ class Company < ApplicationRecord
 
   def group_date
     created_at.strftime('%B %Y')
-  end
-
-  def state
-    province_or_state
-  end
-
-  def zipcode
-    postal_or_zipcode
   end
 end

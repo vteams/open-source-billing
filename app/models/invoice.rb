@@ -18,31 +18,21 @@
 # You should have received a copy of the GNU General Public License
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
-class Invoice < ApplicationRecord
-  include Trackstamps
+class Invoice < ActiveRecord::Base
+  validates :invoice_number, uniqueness: {message: "should be unique. This invoice is already exist."}
   include ::OSB
   include DateFormats
+  include Trackstamps
   include InvoiceSearch
-  include Hashid::Rails
-  include PublicActivity::Model
-  tracked only: [:create, :update], owner: ->(controller, model) { User.current }, params:{ "obj"=> proc {|controller, model_instance| model_instance.changes}}
-
+  attr_accessor :api_request
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
-  scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('due_date DESC')}
-  scope :current_client_invoices,->{ where("IFNULL(due_date, invoice_date) >= ?", Date.today).order('due_date DESC')}
-  scope :past_client_invoices,->{ where("IFNULL(due_date, invoice_date) < ?", Date.today).order('due_date DESC')}
-  scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('due_date DESC')}
+  scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
+  scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
   scope :status, -> (status) { where(status: status) }
   scope :client_id, -> (client_id) { where(client_id: client_id) }
-  scope :skip_draft, -> { where.not('status = ?', 'draft') }
   scope :invoice_number, -> (invoice_number) { where(id: invoice_number) }
   scope :invoice_date, -> (invoice_date) { where(invoice_date: invoice_date) }
   scope :due_date, -> (due_date) { where(due_date: due_date) }
-  scope :by_company, -> (company_id) { where("invoices.company_id IN(?)", company_id) }
-  scope :by_client, -> (client_id) { where('invoices.client_id IN(?)', client_id) }
-  scope :with_clients, -> { joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ")}
-
-  scope :in_year, ->(year) { where('extract(year from invoices.created_at) = ?', year) }
 
   # constants
   STATUS_DESCRIPTION = {
@@ -52,20 +42,17 @@ class Invoice < ApplicationRecord
       paid: I18n.t('views.invoices.paid_tooltip'),
       partial: I18n.t('views.invoices.partial_tooltip'),
       draft_partial: I18n.t('views.invoices.draft_partial_tooltip'),
-      disputed: I18n.t('views.invoices.disputed_invoice'),
-      void: I18n.t('views.invoices.void_invoice')
+      disputed: I18n.t('views.invoices.disputed_invoice')
   }
 
 
   # associations
   belongs_to :client
-  validates :client, presence: true
   belongs_to :invoice
   belongs_to :payment_term
   belongs_to :company
   belongs_to :project
   belongs_to :currency
-  belongs_to :base_currency, class_name: 'Currency', foreign_key: 'base_currency_id'
   belongs_to :tax
 
   has_many :invoice_line_items, :dependent => :destroy
@@ -95,16 +82,12 @@ class Invoice < ApplicationRecord
 
   paginates_per 10
 
-  def draft?
-    status == 'draft'
-  end
-
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
   end
 
   def set_invoice_number
-    self.invoice_number = Invoice.get_next_invoice_number(nil)
+    self.invoice_number = Invoice.get_next_invoice_number(nil) unless api_request.eql?(true)
   end
 
   def sent!
@@ -145,10 +128,6 @@ class Invoice < ApplicationRecord
 
   def unpaid_amount
     invoice_total - payments.where("payment_type is null || payment_type != 'credit'").sum(:payment_amount)
-  end
-
-  def total_received
-    self.payments.received.sum('payment_amount')
   end
 
   # This doesn't actually dispute the invoice. It just updates the invoice status to dispute.
@@ -194,15 +173,7 @@ class Invoice < ApplicationRecord
   end
 
   def self.get_next_invoice_number user_id
-    current_company = Company.find invoice_current_user.current_company
-    current_company_name = current_company.company_name.downcase
-    if current_company_name.eql?("nextbridge fze")
-      invoice_count = current_company.invoices.count
-      "FZE-"+((invoice_count || 0) + 1).to_s.rjust(5, "0")
-    else
-      invoice_count = current_company.invoices.count
-      ((invoice_count || 0 ) + 1).to_s.rjust(5, "0")
-    end
+    ((Invoice.with_deleted.maximum("id") || 0) + 1).to_s.rjust(5, "0")
   end
 
   def total
@@ -213,26 +184,20 @@ class Invoice < ApplicationRecord
     (self.dup.invoice_line_items << self.invoice_line_items.map(&:dup)).save
   end
 
-  def self.invoice_current_user
-    User.current
-  end
-
-  def generate_recurring_invoice(recurring)
-    invoice = self.clone
-    invoice.status = recurring.delivery_option.eql?('draft_invoice') ? 'draft' : 'sent'
-    invoice.due_date = Date.today + eval(recurring.frequency)
-    invoice.parent_id = self.id
-    invoice.save
-  end
-
-  def clone
+  def use_as_template
     invoice = self.dup
     invoice.invoice_number = Invoice.get_next_invoice_number(nil)
     invoice.invoice_date = Date.today
     invoice.invoice_line_items << self.invoice_line_items.map(&:dup)
-    invoice.status = 'draft'
-    invoice.parent_id = nil
     invoice
+  end
+
+  def generate_recurring_invoice(recurring)
+    invoice = use_as_template
+    invoice.status = recurring.delivery_option.eql?('draft_invoice') ? 'draft' : 'sent'
+    invoice.due_date = Date.today + eval(recurring.frequency)
+    invoice.parent_id = self.id
+    invoice.save
   end
 
   def self.multiple_invoices ids
@@ -253,14 +218,11 @@ class Invoice < ApplicationRecord
     end
   end
 
-  def self.filter_params(params, per_page)
+  def self.filter(params, per_page)
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted', recurring: 'recurring'}
     user = User.current
     date_format = user.nil? ? '%Y-%m-%d' : (user.settings.date_format || '%Y-%m-%d')
     invoices = params[:search].present? ? self.search(params[:search]).records : self
-    invoices = invoices.joins(:invoice_line_items).where('invoices.status LIKE :single_search OR invoices.invoice_number LIKE
- :single_search OR invoices.notes LIKE :single_search OR clients.organization_name LIKE :single_search OR invoice_line_items.item_name LIKE :single_search',
-                                                         single_search: "%#{params[:single_search]}%") if params[:single_search].present?
     invoices = invoices.status(params[:type]) if params[:type].present?
     invoices = invoices.client_id(params[:client_id]) if params[:client_id].present?
     invoices = invoices.invoice_number((params[:min_invoice_number].to_i .. params[:max_invoice_number].to_i)) if params[:min_invoice_number].present?
@@ -291,14 +253,13 @@ class Invoice < ApplicationRecord
   end
 
   def notify_client_with_pdf_invoice_attachment(current_user, id = nil)
-    invoice_string  = ApplicationController.new.render_to_string('invoices/show.html.erb', layout: 'pdf_mode', locals: {invoice: self})
+    invoice_string  = ApplicationController.new.render_to_string('invoices/pdf_invoice.html', layout: 'pdf_mode', locals: {invoice: self})
     invoice_pdf_file = WickedPdf.new.pdf_from_string(invoice_string)
     notify(current_user, self.id, invoice_pdf_file)
   end
 
   def notify(current_user, id = nil, invoice_pdf_file = nil)
-    current_company = Company.find(current_user.current_company)
-    NotificationWorker.perform_async('InvoiceMailer','new_invoice_email',[self.client_id, self.id, self.id, current_user.id, invoice_pdf_file], current_company.smtp_settings)
+    InvoiceMailer.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file).deliver
   end
 
   def send_invoice current_user, id
@@ -329,14 +290,6 @@ class Invoice < ApplicationRecord
     credit_pay.save
   end
 
-  def has_tax_one?
-    self.invoice_line_items.where('tax_1 is not null').exists?
-  end
-
-  def has_tax_two?
-    self.invoice_line_items.where('tax_2 is not null').exists?
-  end
-
   def partial_payments
     where("status = 'partial'")
   end
@@ -346,7 +299,7 @@ class Invoice < ApplicationRecord
   end
 
   def fetch_paypal_url user
-    "#{OSB::CONFIG::PAYPAL[:url]}/cgi-bin/webscr?"
+    OSB::Paypal::URL
   end
 
   def paypal_business user
@@ -362,9 +315,7 @@ class Invoice < ApplicationRecord
         :notify_url => notify_url,
         :invoice => id,
         :item_name => "Invoice",
-        :item_number => id,
-        :amount => unpaid_amount,
-        :currency_code => (self.currency.unit rescue 'USD')
+        :amount => unpaid_amount
     }
     fetch_paypal_url(user) + values.to_query
   end
@@ -408,19 +359,19 @@ class Invoice < ApplicationRecord
       line_total = li.item_unit_cost * li.item_quantity
       # calculate tax1 and tax2
       if li.tax_1.present? and li.tax1.nil?
-        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s}%", amount: ((line_total) * load_deleted_tax1(li).percentage / 100.0) }) unless load_deleted_tax1(li).blank?
+        taxes.push({name: load_deleted_tax1(li).name, pct: "#{load_deleted_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: ((line_total) * load_deleted_tax1(li).percentage / 100.0) }) unless load_deleted_tax1(li).blank?
       elsif li.tax_1.present? and li.tax1.archived?.present?
-        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s}%", amount: ((line_total) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
+        taxes.push({name: load_archived_tax1(li).name, pct: "#{load_archived_tax1(li).percentage.to_s.gsub('.0', '')}%", amount: ((line_total) * load_archived_tax1(li).percentage / 100.0)}) unless load_archived_tax1(li).blank?
       else
-        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
+        taxes.push({name: li.tax1.name, pct: "#{li.tax1.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax1.percentage / 100.0)}) unless li.tax1.blank?
       end
 
       if li.tax_2.present? and li.tax2.nil?
-        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s}%", amount: (line_total * load_deleted_tax2(li).percentage / 100.0) }) unless load_deleted_tax2(li).blank?
+        taxes.push({name: load_deleted_tax2(li).name, pct: "#{load_deleted_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_deleted_tax2(li).percentage / 100.0) }) unless load_deleted_tax2(li).blank?
       elsif li.tax_2.present? and li.tax2.archived?.present?
-        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s}%", amount: (line_total * load_archived_tax2(li).percentage / 100.0) }) unless load_archived_tax2(li).blank?
+        taxes.push({name: load_archived_tax2(li).name, pct: "#{load_archived_tax2(li).percentage.to_s.gsub('.0', '')}%", amount: (line_total * load_archived_tax2(li).percentage / 100.0) }) unless load_archived_tax2(li).blank?
       else
-        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
+        taxes.push({name: li.tax2.name, pct: "#{li.tax2.percentage.to_s.gsub('.0', '')}%", amount: (line_total * li.tax2.percentage / 100.0)}) unless li.tax2.blank?
       end
     end
     taxes.each do |tax|
@@ -526,7 +477,7 @@ class Invoice < ApplicationRecord
   end
 
   def unscoped_client
-    ::Client.with_deleted.find(self.client_id)
+    client
   end
 
   def inv_type
@@ -590,28 +541,12 @@ class Invoice < ApplicationRecord
   end
 
   def update_invoice_total
-    unless self.status.eql?('void')
-      line_items_total_with_taxes = self.invoice_line_items.to_a.sum(&:item_total_amount).to_f
-      discounted_amount = applyDiscount(line_items_total_with_taxes)
-      subtotal = line_items_total_with_taxes - discounted_amount
-      invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.with_deleted.find_by(id: self.tax_id).percentage.to_f)
-      additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
-      self.sub_total = line_items_total_with_taxes
-      self.invoice_total = (subtotal + additional_invoice_tax).round(2)
-    end
-  end
-
-  def formatted_invoice_number
-    param_values = {
-        'invoice_number' => (self.invoice_number),
-        'client_contact' => (self.client.first_name rescue 'Client'),
-        'company_name' => (self.company.company_name rescue 'Company'),
-        'company_contact' => (self.company.company_name rescue 'Company'),
-        'invoice_year' => (self.created_at.year rescue 'Invoice Year'),
-        'invoice_month' => (self.created_at.strftime("%B") rescue 'Invoice Month'),
-        'invoice_day' => (self.created_at.strftime("%d") rescue 'Invoice Day'),
-        'company_abbreviation' => (self.company.abbreviation rescue 'Company Abbreviation')
-    }
-    Settings.invoice_number_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
+    line_items_total_with_taxes = self.invoice_line_items.to_a.sum(&:item_total_amount).to_f
+    discounted_amount = applyDiscount(line_items_total_with_taxes)
+    subtotal = line_items_total_with_taxes - discounted_amount
+    invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
+    additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
+    self.sub_total = line_items_total_with_taxes
+    self.invoice_total = (subtotal + additional_invoice_tax).round(2)
   end
 end

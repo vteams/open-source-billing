@@ -1,8 +1,7 @@
 class EmailTemplatesController < ApplicationController
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
 
-  def index
-    @email_templates = EmailTemplate.all
-  end
+
   # GET /email_templates/1/edit
   def edit
     @email_template = EmailTemplate.find(params[:id])

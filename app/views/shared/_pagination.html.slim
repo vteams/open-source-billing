@@ -1,4 +1,4 @@
 .paginate-info
   = paginate model_object
   -if model_object.count == 0
-    = page_entries_info model_object, entry_name: controller_name.eql?('sub_users') ? 'Users' : controller_name
+    = page_entries_info model_object

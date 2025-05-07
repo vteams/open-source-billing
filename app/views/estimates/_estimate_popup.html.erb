@@ -3,9 +3,9 @@
     <div class="modal-header clearfix">
       <div class="modal-action-btn right">
         <%= link_to raw("<i class='material-icons'>create</i>"),edit_estimate_path(estimate),
-                    class: 'edit_estimate_icon', title: t('helpers.links.edit') unless (current_portal_client.present? || session[:masquerade_client_id].present?) %>
+                    class: 'edit_estimate_icon', title: t('helpers.links.edit') %>
         <%= link_to raw("<i class='material-icons'>send</i>"), send_estimate_estimates_url(id: estimate.id),
-                    title: t('views.common.send') unless (current_portal_client.present? || session[:masquerade_client_id].present?) %>
+                    title: t('views.common.send') %>
         <%= link_to raw("<i class='material-icons'>print</i>"), {:controller => 'estimates',
                                                                  :action => 'estimate_pdf',
                                                                  :id => estimate.encrypted_id,
@@ -16,7 +16,7 @@
         </a>
       </div>
       <h5 class="left">
-        <span><%= @client.organization_name rescue '' %></span>
+        <span><%= @client.organization_name %></span>
       </h5>
     </div>
     <div class="info-section clearfix">
@@ -25,21 +25,43 @@
         <span><%= t('estimate') %>: <small> <%= estimate.estimate_date rescue "" %> </small></span>
 
         <div class="paymentInfo">
-          <strong><%= number_to_currency(estimate.estimate_total, unit: '') %> <small><%= estimate.currency.unit %></small></strong>
+         <strong><%= number_to_currency(estimate.estimate_total, unit: '') %> <small><%= estimate.currency.unit %></small></strong>
         </div>
       </div>
       <% unless estimate.company.logo_url.blank? %>
-        <div class="info-right-section right circle">
-          <%= request.format.pdf? ? (wicked_pdf_image_tag  estimate.company.logo_url(:thumb)) : (image_tag estimate.company.logo_url(:thumb), class: 'responsive-img') %>
-        </div>
+          <div class="info-right-section right circle">
+            <%= request.format.pdf? ? (wicked_pdf_image_tag  estimate.company.logo_url(:thumb)) : (image_tag estimate.company.logo_url(:thumb), class: 'responsive-img') %>
+          </div>
       <% end %>
     </div>
     <div class="modal-body">
-      <div class="estimate-popup">
-        <div class="new-estimate-table-holder <%= taxes_class %>">
-          <%= render partial: 'estimates/estimate_items', locals: {estimate: @estimate} %>
-        </div>
-      </div>
+      <table class="bordered responsive-table">
+        <thead>
+        <tr>
+          <th><%= t('views.common.item') %></th>
+          <th><%= t('views.common.description') %></th>
+          <th class="center-align"><%= t('views.common.unit_cost') %></th>
+          <th class="center-align"><%= t('views.items.quantity') %></th>
+          <th class="center-align"><%= t('views.common.tax') %> </th>
+          <th class="align_right"><%= t('views.common.total') %></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% estimate.estimate_line_items.each do |item|
+          item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+        %>
+            <tr>
+              <td><%= item.item_name rescue "" %></td>
+              <td><%= item.item_description %></td>
+              <td class="center-align"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+              <td class="center-align"><%= item.item_quantity.to_i %></td>
+              <td class="center-align"><%= item.tax1.name rescue ''%></td>
+              <td class="right-align"><%= number_to_currency(item_line_total, unit: "") %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
     </div>
     <div class="modal-footer clearfix">
       <div class="right-section right">
@@ -53,7 +75,7 @@
             <span><%= number_to_currency(estimate.discount_amount, unit: estimate.currency.present? ? estimate.currency.unit : '$') %></span>
           </div>
           <% unless estimate.tax_detail_with_discount.blank? %>
-            <%= taxes_list(estimate.tax_detail_with_discount,estimate) %>
+              <%= taxes_list(estimate.tax_detail_with_discount,estimate) %>
           <% end %>
           <div class="table-row">
             <span></span>
@@ -71,12 +93,10 @@
         <strong><%= t('views.common.notes') %>: </strong> <%= @estimate.notes %>
       </div>
     </div>
-    <%= render 'estimates/estimate_history' unless (request.format.pdf? || current_portal_client.present? || session[:masquerade_client_id].present? ) %>
     <div class="modal-footer clearfix">
       <div class="left-section left">
-        <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= link_to image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img"), 'http://opensourcebilling.org/' %></p>
+        <p><%= t('views.estimates.this_estimate_was_sent_using') %> <%= image_tag('m-bottom-logo.jpg', alt: "bottom-logo", class: "responsive-img")%></p>
       </div>
     </div>
-
   </div>
 </div>

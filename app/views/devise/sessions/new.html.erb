@@ -4,7 +4,7 @@
       <span class="side-nav"></span>
       <a class="logo" href="#">Open<span>Source</span>Billing</a>
 
-      <h2><%= resource_class.name.eql?('User') ? t('views.sessions.sign_in') : t('views.sessions.client_sign_in') %></h2>
+      <h2><%= t('views.sessions.sign_in') %></h2>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {novalidate: '', id: 'user_login' , class: 'col s12'}) do |f| %>
         <div class='input-field'>
           <%= f.email_field :email, :id => "email", :class => 'validate', value: ('demo@opensourcebilling.org' if OSB::CONFIG::DEMO_MODE) %>
@@ -14,22 +14,17 @@
           <%= f.password_field :password, :id => "password", :class => "validate", value: ('password' if OSB::CONFIG::DEMO_MODE) %>
           <label for='password'><%= t('views.staffs.password') %></label>
         </div>
-        <% if devise_mapping.rememberable? -%>
-          <div class="col s12 checkboxsection">
-            <%= f.check_box :remember_me, :class=>'filled-in',:id=>'filled-in-box' %>
-            <label for="filled-in-box"><%= t('views.sessions.keep_me_signed_in') %></label>
-            <label class="right">
-              <%= link_to t('views.sessions.forgot_password'), new_password_path(resource_name), :class => 'forgetpass' %>
-            </label>
-          </div>
-        <% end %>
+          <% if devise_mapping.rememberable? -%>
+        <div class="col s12 checkboxsection">
+          <%= f.check_box :remember_me, :class=>'filled-in',:id=>'filled-in-box' %>
+          <label for="filled-in-box"><%= t('views.sessions.keep_me_signed_in') %></label>
+          <label class="right">
+            <%= link_to t('views.sessions.forgot_password'), new_password_path(resource_name), :class => 'forgetpass' %>
+          </label>
+        </div>
+              <% end %>
         <div class="btn-content">
           <%= f.button t('views.sessions.submit'), type: 'submit' , name: 'btn_login' ,class: 'col s4 btn waves-effect', id: 'user_login_btn'  %>
-          <% if resource_class.name.eql?('User') %>
-            <%= link_to 'Sign In as a Client', new_portal_client_session_path(locale: :en), class: 'client_login_link' %>
-          <% else %>
-            <%= link_to 'Sign In as a User', new_user_session_path(locale: :en), class: 'client_login_link' %>
-          <% end %>
         </div>
       <%end%>
       <p class='col s12'>
@@ -37,7 +32,7 @@
         <%= t('views.sessions.powered_by') %>: <%= link_to 'presstigers.com', 'https://www.presstigers.com/', target: '_blank' %>
       </p>
       <% if User.all.empty? %>
-        <a href="<%= new_user_registration_path %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+          <a href="<%= new_user_registration_path %>" class="btn-login-add btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
       <% end %>
     </div>
   </div>

@@ -20,24 +20,23 @@
               <% end %>
             </h5>
           </div>
-          <%= simple_form_for item, remote: true, html: { class: "item_form #{item.persisted? ? 'edit_item' : ''}" } do |f| %>
+          <%= simple_form_for item, remote: (true if params[:type].present?), html: { class: 'item_form' } do |f| %>
             <div class="modal-body modal-body-balance">
               <div class="row">
-                <span class="hidden item_id"><%= item.id %></span>
                 <%= f.submit class: 'btn_large submit-item-form hidden' %>
-                <%= f.input :item_name, label: t('views.items.item_name'), wrapper_html: { class: 'input-field col s12' }, label_html: { id: 'step1', class: 'intro items-new-false-intro' } %>
-                <%= f.input :item_description, label: t('views.items.description'), wrapper_html: { class: 'input-field col s12' }, label_html: { id: 'step2', class: 'intro items-new-false-intro' } %>
-                <%= f.input :unit_cost, label: t('views.items.default_unit_cost'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string, label_html: { id: 'step3', class: 'intro items-new-false-intro' } %>
-                <%= f.input :quantity, label: t('views.items.default_quantity'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string, label_html: { id: 'step4', class: 'intro items-new-false-intro' } %>
+                <%= f.input :item_name, label: t('views.items.item_name'), wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :item_description, label: t('views.items.description'), wrapper_html: { class: 'input-field col s12' } %>
+                <%= f.input :unit_cost, label: t('views.items.default_unit_cost'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string %>
+                <%= f.input :quantity, label: t('views.items.default_quantity'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string %>
                 <%= f.association :tax1, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
-                                  wrapper_html: { class: 'input-field col s12 m6' }, input_html: {class: 'item_select_2'}, label: false %>
+                                  wrapper_html: { class: 'input-field col s12 m6' }, label: false %>
                 <%= f.association :tax2, collection: Tax.all, prompt: t('views.taxes.select_a_tax'), class: 'tax2 small',
-                                  wrapper_html: { class: 'input-field col s12 m6' }, input_html: {class: 'item_select_2'}, label: false %>
+                                  wrapper_html: { class: 'input-field col s12 m6' }, label: false %>
                 <%= hidden_field_tag :position, params[:position] %>
               </div>
               <div class="row">
                 <div class="col s12 items">
-                  <h5 id="step5" class="text-blue title-heading intro items-new-false-intro"><%= t('views.items.make_this_item_available_to') %></h5>
+                  <h5 class="text-blue title-heading"><%= t('views.items.make_this_item_available_to') %></h5>
                   <div class="input-field col s12">
                     <%= associate_account(controller_name, action_name, @item) %>
                   </div>

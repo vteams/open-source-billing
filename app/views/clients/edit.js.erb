@@ -8,37 +8,19 @@ Client.load_functions();
 elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
-$('.client_select_2').select2({});
-Validation.ClientForm();
-$('#select_all_company').on('click', function (){
-    if ($('#select_all_company').is(':checked')){
-        if ($('#unselect_select_all_company').is(':checked')){
-            $('#unselect_select_all_company').prop('checked', false)
-        }
-//        $('#unselect_select_all_company').prop('checked', false)
-        $('.company_checkbox').prop('checked', true)
-    }
-})
-$('#unselect_select_all_company').on('click', function (){
-    if ($('#unselect_select_all_company').is(':checked')){
-        if ($('#select_all_company').is(':checked')){
-            $('#select_all_company').prop('checked', false)
-        }
-        $('.company_checkbox').prop('checked', false)
-    }
-})
-Item.check_uncheck_all_companies();
-if ($('#account_association').prop('checked', true)){
-    $('#select_all_companies').prop('checked', false)
-    $('#select_all_companies').attr('disabled', true)
-}
-$('#new_client_role_id').material_select('destroy')
-$('#new_client_role_id').material_select('destroy');
-$('#new_client_role_id').select2({
-    placeholder: 'Role'
-})
-Client.ClientCountryState();
-$('#client_country').on('change', function(){
-    Client.ClientCountryState();
-})
-$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
+
+$('#client_country').material_select();
+$('#client_currency_id').material_select();
+$('#client_industry').material_select();
+$('#client_company_size').material_select();
+
+jQuery(function() {
+    jQuery("#detail").click(function() {
+        jQuery("#add_Detail").toggle(500, function() {
+            var action, action_text;
+            action = $(this).find("#action");
+            action_text = jQuery(action).html() === "expand" ? "collaps" : "expand";
+            $(this).find("#id").html(action_text);
+        });
+    });
+});

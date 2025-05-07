@@ -1,13 +1,10 @@
 <% if @client_exists %>
     showWarningSweetAlert('error', "<%= t('views.clients.duplicate_email') %>", function(){});
 <% else %>
-  $('.modal').modal('close')
-  swal({
-      icon: "success",
-      title: 'Success',
-      buttons: false,
-      timer: 3000,
-      text: "<%= t('views.clients.created_msg') %>"}).then(function(){
-      window.location = '<%= client_path(@client) %>'
-});
+    last_option = $("#invoice_client_id option:last, #estimate_client_id option:last").clone();
+    $("#invoice_client_id option:last, #estimate_client_id option:last").remove();
+    $("#invoice_client_id, #estimate_client_id").append('<option value="<%= @client.id %>" selected><%= @client.organization_name %></option>').append(last_option);
+    $("#invoice_client_id, #estimate_client_id").trigger('contentChanged');
+    $('.modal').modal('close');
+    swal({icon: "success", title: "<%= t('views.sessions.done') %>"});
 <% end %>

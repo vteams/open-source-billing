@@ -12,19 +12,7 @@ class ImportDataController < ApplicationController
 
   end
 
-  def show
-
-  end
-
-  def invoice_ninja
-    respond_to do |format|
-      format.js
-      format.html
-    end
-  end
-
   def import_freshbooks_data
-    # binding.pry
     if params[:freshbooks][:account_url].blank? or  params[:freshbooks][:api_token].blank? or params[:freshbooks][:data_filters].blank?
       redirect_to settings_path, alert: "Please provide freshbooks account url , api key and also select alteast one module to import"
     else
@@ -55,38 +43,7 @@ class ImportDataController < ApplicationController
         end
       end
     end
-  end
 
-  def import_invoiceninja_data
-    if params[:ninja_invoice][:invoice]
-      csv_invoice = File.read(params[:ninja_invoice][:invoice])
-      invoices = CSV.parse(csv_invoice, :headers => true)
-      invoices.each do |invoice|
-        if invoice.to_hash["Invoice Date"] != ''
-          name = invoice.to_hash["User"].split(' ')
-          @client = Client.new(
-            organization_name: "#{invoice.to_hash["User"]} Group",
-            first_name: name.first,
-            last_name: name.last,
-            email: "#{invoice.to_hash["Invoice Number"]}@noemail.com",
-            role_id: 2,
-            password: 'uygfsgfu1333'
-          )
-          @client.save
-          client = Client.find_by(email: "#{invoice.to_hash["Invoice Number"]}@noemail.com")
-          @invoice = Invoice.new(client_id: client.id,
-                                 invoice_number: invoice.to_hash["Invoice Number"],
-                                 invoice_date: Date.parse(invoice.to_hash["Invoice Date"], "%Y-%m-%d"),
-                                 po_number: invoice.to_hash["PO Number"],
-                                 notes: invoice.to_hash["Private Notes"],
-                                 status: invoice.to_hash["Status"],
-                                 invoice_total: invoice.to_hash["Amount"],
-                                 due_date: Date.parse(invoice.to_hash["Due Date"], "%Y-%m-%d"),
-                                 )
-          @invoice.save
-        end
-      end
-    end
   end
 
   def authenticate

@@ -1,4 +1,4 @@
-class Expense < ApplicationRecord
+class Expense < ActiveRecord::Base
   include DateFormats
   include ExpenseSearch
   belongs_to :client

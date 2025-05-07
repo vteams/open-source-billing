@@ -32,14 +32,14 @@ module Reporting
     attr_accessor :item_id, :invoice_status
 
     # attributes for *Invoice detail* report
-    attr_accessor :from_date, :to_date, :client_id, :invoice_status, :date_to_use, :sort, :direction
+    attr_accessor :from_date, :to_date, :client_id, :invoice_status, :date_to_use
 
     def initialize(options={})
       Rails.logger.debug "--> Criteria init... #{options.to_yaml}"
       options ||= {} # if explicitly nil is passed then convert it to empty hash
       options = set_filter_date_formats(options)
-      @from_date = options[:from_date].present? ? Date.strptime(options[:from_date], '%Y-%m-%d').in_time_zone : 1.month.ago.to_date
-      @to_date = options[:to_date].present? ? Date.strptime(options[:to_date], '%Y-%m-%d').in_time_zone : Date.today.to_date
+      @from_date = options[:from_date].present? ? options[:from_date].to_date : 1.month.ago.to_date
+      @to_date = options[:to_date].present? ? options[:to_date].to_date : Date.today.to_date
       @client_id = (options[:client_id] || 0).to_i # default to all i.e. 0
       @company_id = (options[:current_company] || 0).to_i # default to all i.e. 0
       @payment_method = (options[:payment_method] || "") # default to all i.e. ""
@@ -47,8 +47,6 @@ module Reporting
       @invoice_status = (options[:invoice_status] || "") # default for all status i.e ""
       @from_month = (options[:quarter].split('-')[0] rescue 1).to_i
       @to_month = (options[:quarter].split('-')[1] rescue 3).to_i
-      @sort = options[:sort]
-      @direction = options[:direction]
       if @from_date.to_s[0] == '-'
         @from_date = @from_date.to_s[1..@from_date.to_s.length-1]
       end

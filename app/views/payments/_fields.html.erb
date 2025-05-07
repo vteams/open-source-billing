@@ -2,7 +2,7 @@
     <div class="row">
 
         <div class="pay_invoice">
-          <% client_credit =payment.invoice.client.present? ? payment.invoice.client.read_attribute(:client_credit) : payment.invoice.unscoped_client.client_credit %>
+          <% client_credit =payment.invoice.client.present? ? payment.invoice.client.client_credit : payment.invoice.unscoped_client.client_credit %>
           <% client_credit = client_credit.present? ? client_credit : 0 %>
           <div class="fields_content">
             <div class="fields_content_container">
@@ -80,12 +80,11 @@
                       <div class="field_row">
                         <%= f.hidden_field :invoice_id %>
                         <div class="label_field left single payment_amount_label"><%= t('payment') %> (<%= payment.invoice.currency.present? ? payment.invoice.currency.code : "USD" %>)</div>
-                        <div class="small_field floating-left intro payments-enter_payment-false-intro" data-intro="You can enter the payment amount here" data-step="2">
-                          <span class="due_amount hidden"><%= due_amount %></span>
-                          <%= f.text_field :payment_amount, :id => "payments_payment_amount_#{index}", :value => '', :required => "", :class => "payment_amount text-field-height" %>
+                        <div class="small_field floating-left">
+                          <%= f.text_field :payment_amount, :id => "payments_#{index}_payment_amount", :value => '', :required => "", :class => "payment_amount text-field-height" %>
                           <%= f.hidden_field :invoice_number, :value => payment.invoice_number %>
                         </div>
-                        <div class="field_check intro payments-enter_payment-false-intro" data-intro="You can check this to enter full remaining payment" data-step="3">
+                        <div class="field_check">
                           <input id="payments_<%= index %>_paid_full" type="checkbox" class="paid_full fix-left-and-opacity checkbox-position" name="payments[][paid_full]"/>
 
                           <div id="<%= index %>" style="display:none" class="rem_payment_amount " value="<%= Payment.invoice_remaining_amount(payment.invoice.id) %>"></div>
@@ -109,11 +108,11 @@
 
                       <div class="field_row payment-method">
                         <div class="label_field left single"><%= f.label t('views.common.method'), :for => "payments_#{index}_payment_method", :class=> 'label-font'%></div>
-                        <div class="small_field intro payments-enter_payment-false-intro" data-intro="Here you can select the payment method" data-step="4">
-                          <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select payment-select2"} %>
+                        <div class="small_field">
+                          <%= f.select :payment_method, PAYMENT_METHODS.map{|val| [t('views.payments.' + val.parameterize.underscore), val]}, {}, {:id => "payments_#{index}_payment_method", :class => "chzn-select"} %>
                         </div>
                         <span>
-                        <div class="date-wrapper intro payments-enter_payment-false-intro" data-intro="Here you can select the date on which you received payment" data-step="5">
+                        <div class="date-wrapper">
                           <span class="payment-date"><%=t('views.common.date')%>:</span>
                             <span>
                               <small>
@@ -130,7 +129,7 @@
 
                       <div class="field_row">
                         <div class="label_field left single"><%= f.label :notes, t('views.common.notes'), :for => "payments_#{index}_notes", :class=> 'label-font'  %></div>
-                        <div class="large_field intro payments-enter_payment-false-intro" data-intro="Here you can enter notes related to your payment" data-step="6">
+                        <div class="large_field">
                           <%= f.text_area :notes, :id => "payments_#{index}_notes" %>
                         </div>
                       </div>

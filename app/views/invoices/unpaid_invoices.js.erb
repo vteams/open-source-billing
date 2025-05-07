@@ -5,7 +5,7 @@ elem = $("#unpaid_invoices");
 Popup.initialize(elem);
 Popup.open(elem);
 
-$('#invoice_selection').submit(function() {
+jQuery('#invoice_selection').submit(function() {
     var flag, invoices;
     invoices = $('#unpaid_invoices').find('tbody');
     var errorDiv = $('#unpaid_invoices').find('table');

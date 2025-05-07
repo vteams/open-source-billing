@@ -17,6 +17,7 @@
  *= require jquery.qtip.min
  *= require pay_invoice
  *= require settings
+ *= require fullcalendar
  *= require custom
  *= require select2.min
  *= require search
@@ -24,8 +25,9 @@
  *= require table_view
  *= require filters
  *= require daterangepicker
- *= require introjs
+ *= require nouislider
 */
+
 .fix-left-and-opacity {
     left: auto !important;
     opacity: 1 !important;

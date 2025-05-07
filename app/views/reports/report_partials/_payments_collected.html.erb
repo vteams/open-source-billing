@@ -1,106 +1,77 @@
-<div class="new-invoice-table-holder main-invoice page-box">
-  <% if request.format.pdf? %>
-    <h1 class="center-align">Payments Collected Report</h1>
-  <% end %>
-  <div class="col s12 page-box-header">
-    <div class="title-desc">
-      <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
-      <span class="text-uppercase"><%= raw @report.period %></span>
-    </div>
-    <p><%= t('views.reports.payments_collected_dtl') %></p>
-
-    <%= render 'reports/report_partials/format_links'%>
+<div class="col s12 page-box-header">
+  <div class="title-desc">
+    <h6><%= all_clients_or_individual_client_name(@report.client_name) %></h6>
+    <span class="text-uppercase"><%= raw @report.period %></span>
   </div>
+  <p><%= t('views.reports.payments_collected_dtl') %></p>
 
-  <% unless @report.report_data.blank? %>
-    <% total_in_base_currency = 0 %>
-    <% count = @report.report_data.count %>
-    <% @report.report_data.each_slice(12).with_index do |payments, index| %>
-      <div class="invoice-items-table">
-        <table class="bordered table_listing grid-view">
-          <% if index == 0 %>
-            <thead>
-            <tr>
-              <th width="30%"><%= t('views.clients.client_name') %></th>
-              <th width="15%"><%= t('views.invoices.invoice') %></th>
-              <th width="15%"><%= t('views.common.type') %></th>
-              <th width=20%"><%= t('views.common.payment_date') %></th>
-              <th class="align_right" width="20%"><%= t('views.dashboard.amount') %></th>
-            </tr>
-            </thead>
-          <% end %>
-
-          <tbody class="table-view-body" >
-
-          <% payments.each_with_index do |payment, index| %>
-            <tr class="invoice-card invoice-table-row invoice-item-row avoid_page_break <%= request.format.pdf? ? ' report-border-bottom' : 'bottom-bordered' %>" data-invoice-url="<%= url_for(payment.client) %>">
-              <td width="30%" class="align_left text-overflow-class item-name" data-overflow-rows="2">
-                <%= payment[:client_name] %>
-              </td>
-              <td width="15%" class="align_left">
-                <%= request.format.pdf? ? payment.invoice.formatted_invoice_number : (link_to payment.invoice.formatted_invoice_number, invoice_path(payment.invoice),remote: true,  class: "invoices_link invoice_show_link") %>
-              </td>
-              <td width="15%" class="align_left">
-                <%= (payment.payment_type || payment.payment_method || "").capitalize %>
-              </td>
-
-              <td width="20%">
-                <%= payment.payment_date.to_date.strftime(get_date_format) rescue "" %>
-              </td>
-              <td width="20%" class="align_right currency">
-                <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
-                <span class="actual-currency"><%= number_to_currency(payment.payment_amount, unit: payment.currency_code) %></span><br>
-                <span class="base-currency-equalent"><%= number_to_currency((payment.payment_amount / payment.invoice.conversion_rate), unit: current_company_obj.base_currency.unit) rescue '' %></span>
-                <% total_in_base_currency += ((payment.payment_amount/payment.invoice.conversion_rate) rescue payment.payment_amount)  unless payment.payment_amount.nil? %>
-              </td>
-            </tr>
-
-          <% end %>
-          </tbody>
-        </table>
-
-        <% if count >= (index  * 12) &&  count <= ((index + 1) * 12) %>
-          <table>
-            <tbody>
-            <tfoot>
-            <tr class="no-border">
-              <td colspan="4"><strong><%= t('views.common.total') %></strong></td>
-              <td class="align_right currency">
-                <% @report.report_total.each do |total| %>
-                  <div>
-                    <b>
-                      <%= number_to_currency(total[:total],unit: total[:currency_code]) %>
-                    </b>
-                  </div>
-                <% end %>
-              </td>
-            </tr>
-            <tr class="no-border">
-              <td colspan="4"><strong><%= t('views.common.total') %> (<%= current_company_obj.base_currency.unit %>)</strong></td>
-              <td class="align_right currency">
-                <div>
-                  <b>
-                    <%= number_to_currency(total_in_base_currency, unit: current_company_obj.base_currency.unit) %>
-                  </b>
-                </div>
-              </td>
-            </tr>
-
-            </tfoot>
-            </tbody>
-          </table>
-
-      <% end %>
-      </div>
-
-    <% end %>
-  <% else %>
-    <tbody>
-    <tr>
-      <td colspan="5"><%= t('views.reports.report_no_data') %></td>
-    </tr>
-    </tbody>
-  <% end %>
-
-
+  <%= render 'reports/report_partials/format_links'%>
 </div>
+<table class="bordered">
+    <thead>
+    <tr>
+      <th width="15%"><%= t('views.clients.client_name') %></th>
+      <th width="10%"><%= t('views.invoices.invoice') %></th>
+      <th width="15%"><%= t('views.common.type') %></th>
+      <th  width="26%"><%= t('views.common.note') %></th>
+      <th class="center-align" width="17%"><%= t('views.common.date') %></th>
+      <th class="align-right {sorter:'thousands'}" width="17%"><%= t('views.dashboard.amount') %></th>
+    </tr>
+    </thead>
+    <% total_discount_amount = 0 %>
+    <% unless @report.report_data.blank? %>
+      <tbody>
+        <% @report.report_data.group_by{|data| data[:client_name]}.values.each do |payments| %>
+          <% payments.each_with_index do |payment, index| %>
+            <tr class="no-border">
+              <% if index == 0 %>
+                  <td class="align_left text-overflow-class bottom-bordered" data-overflow-rows="2"
+                      rowspan="<%= payments.count %>">
+                    <%= payment[:client_name] %>
+                  </td>
+              <% end %>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= request.format.pdf? ? payment.invoice.invoice_number : (link_to payment.invoice.invoice_number, invoice_path(payment.invoice),remote: true) %>
+            </td>
+            <td class="align_left<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= (payment.payment_type || payment.payment_method || "").capitalize %>
+            </td>
+            <td class="left-align text-overflow-class<%= ' bottom-bordered' if index == payments.count - 1 %>" data-overflow-rows="2">
+              <%= payment.notes %>
+            </td>
+            <td class="center-align<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= payment.created_at.to_date.strftime(get_date_format) %>
+            </td>
+            <td class="align-right currency<%= ' bottom-bordered' if index == payments.count - 1 %>">
+              <%= content_tag(:span, '* ') if payment.payment_method == "Credit" %>
+              <%= payment.currency_code %>
+              <%= number_to_currency(payment.payment_amount - payment.invoice.discount_amount,unit: '') %>
+            </td>
+          </tr>
+          <% total_discount_amount = total_discount_amount + payment.invoice.discount_amount %>
+          <% end %>
+       <% end %>
+      </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5"><strong><%= t('views.common.total') %></strong></td>
+        <td class="align-right currency">
+          <% @report.report_total.each do |total| %>
+            <span>
+              <b>
+                <%= total[:currency_code] %>
+                <%= number_to_currency(total[:total] - total_discount_amount, unit: '') %>
+              </b>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    </tfoot>
+<% else %>
+      <tbody>
+      <tr>
+        <td colspan="6"><%= t('views.reports.report_no_data') %></td>
+      </tr>
+      </tbody>
+<% end %>
+</table>

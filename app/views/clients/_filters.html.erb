@@ -1,21 +1,16 @@
 <div class="filter-container" id="filters">
   <div class="nav-wrapper subnav-filters">
-    <%= form_tag clients_path, method: :get, class: 'col s12', id: 'filters_form' do %>
+    <%= form_tag clients_path, method: :get, remote: true, class: 'col s12', id: 'filters_form' do %>
       <div class="row">
-                <div class="input-field col s12 m3">
-                  <input type="hidden" name="create_at_start_date" id="create_at_start_date">
-                  <input type="hidden" name="create_at_end_date" id="create_at_end_date">
-                  <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:created_at] %>" readonly/>
-                  <label class="input_field_label"><%= t('views.projects.created_date_range') %></label>
-                </div>
-        <div class="input-field col s12 m3 select-client">
-          <%= select_tag(:client_id, options_for_select(Client.all.map{|c| [c.full_name, c.id]}),
-                         include_blank: true, class: 'small_list invoice-filter-select select_2') %>
-          <label><%= t('Client') %></label>
+        <div class="input-field col s12 m3">
+          <input type="hidden" name="create_at_start_date" id="create_at_start_date">
+          <input type="hidden" name="create_at_end_date" id="create_at_end_date">
+          <input type="text" class="date-range" name="create_at" id="create_at" placeholder="<%= t('views.common.start_date_to_end_date') %>" value="<%= params[:created_at] %>" readonly/>
+          <label class="input_field_label"><%= t('views.projects.created_date_range') %></label>
         </div>
-        <div class="input-field col s12 m3 select-client">
+        <div class="input-field col s12 m3">
           <%= select_tag(:status, options_for_select(filters_status_select_options, {selected: params[:status] || ''}),
-                         include_blank: false, class: 'small_list invoice-filter-select select_2') %>
+                         include_blank: false, class: 'small_list') %>
           <label><%= t('views.common.type') %></label>
         </div>
       </div>

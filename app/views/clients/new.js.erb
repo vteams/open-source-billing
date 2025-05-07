@@ -3,66 +3,20 @@ Client.load_functions();
 elem = $("#client_form_popup");
 Popup.initialize(elem);
 Popup.open(elem);
-<% get_introduction_parameter %>
-setTimeout(function () {
-    if($('.intro').hasClass("<%= intro_class %>")){
-        intro = introJs();
-        intro.setOptions({
-            scrollToElement: true,
-            scrollTo: 'tooltip',
-            steps: [
-                {
-                    element: document.getElementById("step1"),
-                    intro: "Here you can provide client's organization information"
-                },
-                {
-                    element: document.getElementById("step2"),
-                    intro: "Here you can provide client's personal information"
-                },
-                {
-                    element: document.getElementById("step3"),
-                    intro: "Here you can provide client's additional information"
-                },
-                {
-                    element: document.getElementById("step4"),
-                    intro: "Here you can assign companies to client"
-                },
-            ]
-        });
-        intro.start();
-        $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
-        $(".introjs-tooltipReferenceLayer").prepend("<div class='arrow bounce'><a class='fa fa-arrow-down fa-2x' href='#'></a></div>");
-        $('#client_form_popup').removeClass("introjs-fixParent");
-        intro.onafterchange(function() {
-            $('#client_form_popup').removeClass("introjs-fixParent");
-            $(".introjs-helperLayer").addClass('client-popup-introjs-helperLayer');
-            if ($('.introjs-helperNumberLayer').html() == "2"){
-                $("#client_form_popup").animate({ scrollTop: $(document).height() }, 1000);
-            }
-        });
-    }
-},1000);
-//$('.select_2').material_select('destroy');
-$('.client_select_2').select2({dropdownCssClass: "form_select_2"});
 
+$(".select").trigger('contentChanged');
+$('#client_country').material_select();
+$('#client_currency_id').material_select();
+$('#client_industry').material_select();
+$('#client_company_size').material_select();
 
-//$(".select").trigger('contentChanged');
-$('#client_organization_name').attr('value', '')
-Validation.ClientForm();
-Item.check_uncheck_all_companies();
-if ($('#account_association').prop('checked', true)){
-    $('.company_checkbox').prop('checked', true)
-    $('#select_all_companies').prop('checked', false)
-    $('#select_all_companies').attr('disabled', true)
-}
-$('#new_client_role_id').material_select('destroy')
-$('#new_client_role_id').material_select('destroy');
-$('#new_client_role_id').select2({
-    placeholder: 'Role'
-})
-$('.us_state_dropdown').hide();
-$('.canada_state_dropdown').hide();
-$('#client_country').on('change', function(){
-    Client.ClientCountryState();
-})
-$(".edit-user-select2").prepend("<span class='select-2-asterik'>*</span>");
+jQuery(function() {
+    jQuery("#detail").click(function() {
+        jQuery("#add_Detail").toggle(500, function() {
+            var action, action_text;
+            action = $(this).find("#action");
+            action_text = jQuery(action).html() === "expand" ? "collaps" : "expand";
+            $(this).find("#id").html(action_text);
+        });
+    });
+});

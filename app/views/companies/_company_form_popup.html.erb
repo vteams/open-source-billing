@@ -20,42 +20,28 @@
         <% end %>
       </h5>
     </div>
-    <%= simple_form_for @company, html: { id: 'companyForm', class: "item_form #{@company.persisted? ? 'edit_company' : ''}", multipart: true }, remote: true do |f| %>
+    <%= simple_form_for @company, html: { id: 'companyForm', class: 'item_form', multipart: true } do |f| %>
         <%= hidden_field_tag :select_new, params[:select_new] %>
         <%= hidden_field_tag :setting_form, params[:setting_form] %>
         <div class="modal-body">
           <div class="row">
-            <span class="hidden company_id"><%= @company.id %></span>
             <%= f.submit class: 'btn_large submit hidden' %>
             <h5 class="text-blue title-heading"><%= t('views.clients.organization') %></h5>
-            <%= f.input :company_name, label: t('views.companies.name'), wrapper_html: { class: 'input-field col s6 md-input' } %>
-            <%= f.input :abbreviation, label: t('Abbreviation'), wrapper_html: { class: 'input-field col s6' } %>
+            <%= f.input :company_name, label: t('views.companies.name'), wrapper_html: { class: 'input-field col s12 md-input' } %>
             <%= f.input :contact_name, label: t('views.clients.contact_name'), wrapper_html: { class: 'input-field col s6 m4 md-input' } %>
             <%= f.input :contact_title, label: t('views.clients.contact_title'), wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :email, label: t('views.common.email'), wrapper_html: { class: 'input-field col s6 m4 md-input' } %>
             <%= f.input :phone_number, label: t('views.common.phone'), wrapper_html: { class: 'input-field col s6 m4' }, as: :string %>
             <%= f.input :fax_number, label: t('views.common.fax'), wrapper_html: { class: 'input-field col s6 m4' } %>
-            <%= f.input :base_currency_id, label: t('views.common.base_currency'), collection: Currency.all.collect{|c| [c.unit, c.id] }, prompt: t('views.common.currency'), selected: @company.base_currency_id, input_html: {class: 'edit-company-select2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
-            <div class="clearfix"></div>
-            <%= f.input :default_note, label: "Default Note", as: :text, input_html: {  maxlength: 400},
-                        wrapper_html: { class: 'input-field col s4'} %>
-            <%= f.input :due_date_period, label: "Default Due Date Period", wrapper_html: { class: 'input-field col s2' }, input_html: {value: f.object.due_date_period || 7} %>
-              <%#= f.input :base_currency_id, label: t('views.common.base_currency'), collection: Currency.all.collect{|c| [c.unit, c.id] }, prompt: t('views.common.currency'), selected: @company.base_currency_id, input_html: {class: 'edit-company-select2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
           </div>
 
           <div class="row">
             <h5 class="text-blue title-heading"><%= t('views.common.address') %></h5>
-            <%= f.input :country, label: t('Country'), collection: COUNTRY_LIST, selected: @company.country, prompt: t('views.common.select_a_country'), input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field col s6 m4' } %>
-            <%= f.input :province_or_state, label: 'Province', wrapper_html: { class: 'input-field col s6 m4 country_state_text_field' } %>
-            <%= f.input :province_or_state, label: 'State', collection: US_STATES_LIST,prompt: t('views.common.select_a_country'),
-                        input_html: { class: 'input-select client_select_2', name: 'client[province_state_us]' }, wrapper_html: {class: 'col m4 s6 us_state_dropdown'} %>
-            <%= f.input :province_or_state, label: 'State', collection: CANADA_STATES,prompt: t('views.common.select_a_country'),
-                        input_html: { class: 'input-select client_select_2', name: 'client[province_state_ca]' }, wrapper_html: {class: 'col m4 s6 canada_state_dropdown'} %>
-            <%= f.input :city, label: t('views.common.city'), wrapper_html: { class: 'input-field col s6 m4' } %>
-            <div class="clearfix"></div>
+            <%= f.input :country, label: false, collection: COUNTRY_LIST, prompt: t('views.common.country'), selected: @company.country, wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :street_address_1, label: "#{t('views.common.street')}#1", wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :street_address_2, label: "#{t('views.common.street')}#2", wrapper_html: { class: 'input-field col s6 m4' } %>
-
+            <%= f.input :city, label: t('views.common.city'), wrapper_html: { class: 'input-field col s6 m4' } %>
+            <%= f.input :province_or_state, label: t('views.common.province'), wrapper_html: { class: 'input-field col s6 m4' } %>
             <%= f.input :postal_or_zipcode, label: t('views.common.zip_code'), wrapper_html: { class: 'input-field col s6 m4' } %>
           </div>
           <div class="row">
@@ -65,23 +51,6 @@
             <%= f.input :company_tag_line, label: t('views.companies.tag_line'), wrapper_html: { class: 'input-field col s12 m4' } %>
             <%= f.input :memo, label: t('views.companies.memo'), wrapper_html: { class: 'input-field col s12 m8' } %>
           </div>
-          <%= f.simple_fields_for :mail_config do |mail| %>
-            <div class="row company-mail-config">
-              <h5 class="text-blue title-heading"><%= t('E-Mail Configuration') %></h5>
-              <%= mail.input :address, label: 'Server Address' ,wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :port, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :authentication, collection: MailConfig::AUTHENTICATION_TYPES, input_html: {class: 'edit-company-select2 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
-              <%= mail.input :from, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :user_name, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :password, wrapper_html: { class: 'input-field col s6 m4' } %>
-              <%= mail.input :enable_starttls_auto, label: 'Auto STARTTLS', input_html: { class: 'filled-in'}, as: :boolean,
-                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
-              <%= mail.input :tls, label: 'TLS', input_html: { class: 'filled-in'}, as: :boolean,
-                             wrapper_html: { class: 'checkbox-field inline-checkbox col s6 m4' }, boolean_style: :inline %>
-              <%= mail.input :openssl_verify_mode, collection: MailConfig::OPEN_SSL_VERIFICATIONS_MODES, input_html: {class: 'edit-company-select3 select_2'}, wrapper_html: { class: 'input-field  col s6 m4' } %>
-
-            </div>
-          <% end %>
         </div>
     <% end %>
   </div>

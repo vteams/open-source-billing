@@ -7,8 +7,10 @@ development:
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
   paypal:
-    enabled: false
     url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    login: YOUR_PAYPAL_LOGIN
+    password: YOUR_PAYPAL_PASSWORD
+    signature: YOUR_PAYPAL_SIGNATURE
     business: YOUR_PAYPAL_BUSINESS
 
   smtp_setting:
@@ -32,8 +34,10 @@ production:
   encryption_key: ENTER-YOUR-ENCRYPTED-KEY-HERE
 
   paypal:
-    enabled: false
-    url: https://www.paypal.com/cgi-bin/webscr?
+    url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+    login: YOUR_PAYPAL_LOGIN
+    password: YOUR_PAYPAL_PASSWORD
+    signature: YOUR_PAYPAL_SIGNATURE
     business: YOUR_PAYPAL_BUSINESS
 
   smtp_setting:

@@ -19,8 +19,8 @@
 # along with Open Source Billing.  If not, see <http://www.gnu.org/licenses/>.
 #
 class TaxesController < ApplicationController
-  before_action :set_per_page_session
-  after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? &&  (!current_user.introduction.tax? || !current_user.introduction.new_tax?) }
+  authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  before_filter :set_per_page_session
   helper_method :sort_column, :sort_direction
   # GET /taxes
   # GET /taxes.json
@@ -30,7 +30,6 @@ class TaxesController < ApplicationController
     params[:status] = params[:status] || 'active'
     @status = params[:status]
     @taxes = Tax.filter(params, @per_page).order("#{sort_column} #{sort_direction}")
-    authorize @taxes
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,7 +42,6 @@ class TaxesController < ApplicationController
   # GET /taxes/1.json
   def show
     @tax = Tax.find(params[:id])
-    authorize @tax
 
     respond_to do |format|
       format.html # show.html.erb
@@ -56,7 +54,6 @@ class TaxesController < ApplicationController
   # GET /taxes/new.json
   def new
     @taxis = Tax.new
-    authorize @taxis
 
     respond_to do |format|
       format.html # new.html.erb
@@ -68,14 +65,17 @@ class TaxesController < ApplicationController
   # GET /taxes/1/edit
   def edit
     @taxis = Tax.find(params[:id])
-    authorize @taxis
   end
 
   # POST /taxes
   # POST /taxes.json
   def create
+    if Tax.is_exits?(params[:tax][:name])
+      @tax_exists = true
+      redirect_to(taxes_path, :alert => t('views.taxes.duplicate_name')) unless params[:quick_create]
+      return
+    end
     @taxis = Tax.new(taxes_params)
-    authorize @taxis
 
     respond_to do |format|
       if @taxis.save
@@ -83,10 +83,9 @@ class TaxesController < ApplicationController
         format.html { redirect_to @taxis, notice: t('views.taxes.created_msg') }
         format.json { render json: @taxis, status: :created, location: @taxis }
         new_tax_message = new_tax(@taxis.id)
-        # redirect_to(taxes_path, :notice => new_tax_message) unless params[:quick_create]
-        # return
+        redirect_to({:action => "index", :controller => "taxes"}, :notice => new_tax_message) unless params[:quick_create]
+        return
       else
-        format.js
         format.html { render action: "new" }
         format.json { render json: @taxis.errors, status: :unprocessable_entity }
       end
@@ -97,16 +96,12 @@ class TaxesController < ApplicationController
   # PUT /taxes/1.json
   def update
     @taxis = Tax.find(params[:id])
-    authorize @taxis
 
     respond_to do |format|
       if @taxis.update_attributes(taxes_params)
-        @tax_updated = true
-        format.js
-        format.html { redirect_to taxes_path, notice: t('views.taxes.updated_msg') }
+        format.html { redirect_to taxes_url, notice: t('views.taxes.updated_msg') }
         format.json { head :no_content }
       else
-        format.js
         format.html { render action: "edit" }
         format.json { render json: @taxis.errors, status: :unprocessable_entity }
       end
@@ -117,11 +112,10 @@ class TaxesController < ApplicationController
   # DELETE /taxes/1.json
   def destroy
     @taxis = Tax.find(params[:id])
-    authorize @taxis
     @taxis.destroy
 
     respond_to do |format|
-      format.html { redirect_to taxes_path}
+      format.html { redirect_to taxes_url }
       format.json { render_json(@taxis) }
     end
   end
@@ -133,7 +127,7 @@ class TaxesController < ApplicationController
     @action = result[:action]
     respond_to { |format|
       format.js
-      format.html {redirect_to taxes_path, notice: t('views.taxes.bulk_action_msg', action: @action)}
+      format.html {redirect_to taxes_url, notice: t('views.taxes.bulk_action_msg', action: @action)}
     }
   end
 
@@ -145,16 +139,6 @@ class TaxesController < ApplicationController
     params[:archived] ? Tax.recover_archived(params[:ids]) : Tax.recover_deleted(params[:ids])
     @taxes = Tax.unarchived.page(params[:page]).per(session["#{controller_name}-per_page"])
     respond_to { |format| format.js }
-  end
-
-  def verify_tax_name
-    taxes = !params[:newTax].eql?('edit_tax') ? Tax.with_deleted.pluck(:name).map(&:downcase) :
-              Tax.with_deleted.where.not(name: Tax.find(params[:tax_id]).name).pluck(:name).map(&:downcase)
-    if taxes.include?(params[:tax_name].downcase)
-      render json: false
-    else
-      render json: true
-    end
   end
 
   private

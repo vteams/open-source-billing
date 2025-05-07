@@ -1,19 +1,9 @@
-<% if @company_updated.eql?(true) %>
-$('.modal').modal('close')
-swal({
-    icon: "success",
-    title: 'Success',
-    buttons: false,
-    timer: 3000,
-    text: "<%= t('views.companies.updated_msg') %>"}).then(function(){
-    window.location = '<%= companies_path %>'
-});
+<% if @company.errors.present? %>
+  showErrorMsg("<%= @company.errors.full_messages.join('.') %>.");
 <% else %>
-swal({
-    icon: "error",
-    title: 'Oops..!',
-    buttons: false,
-    timer: 3000,
-    text: "<%= @company.errors.full_messages.join('.') %>"
-});
+  $('#companies_listing').html('<%= escape_javascript render(template: 'companies/settings_listing',
+     layout: false, format: :html) %>');
+  initCompanyListingEvents();
+  $('#companyForm').modal('close');
+  showSuccessMsg('Company has been updated successfully.')
 <% end %>

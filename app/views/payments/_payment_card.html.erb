@@ -2,7 +2,7 @@
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <%= link_to '', payment , remote: true, class: 'invoice_show_link', style: 'display: none' %>
-  <div class="card-white-panel invoice-card card-white-panel-bg-color" data-payment_id= <%=payment.id %>>
+  <div class="card-white-panel invoice-card" data-payment_id= <%=payment.id %>>
     <div class="checkbox-item">
       <%= check_box_tag "payment_ids[]", payment.id, false, :id => "payment_#{payment.id}", class: "filled-in" %>
       <label for="<%= "payment_#{payment.id}" %>"></label>
@@ -22,12 +22,6 @@
     </div>
 
     <div class="action-btn-group">
-      <%= link_to raw("<i class='material-icons'>visibility</i>"), payment, title: t('views.common.show'), remote: true %>
-      <%= link_to raw("<i class='material-icons'>receipt</i>"),
-                  {:controller => 'payments', :action => 'payment_receipt',
-                   :id => payment.id, :format => "pdf"},
-                  :target => '_blank', title: t('views.common.print') %>
-
       <% unless payment.payment_type == "credit" %>
         <%= link_to raw("<i class='material-icons'>delete</i>"),(OSB::CONFIG::DEMO_MODE ? 'javascript:void' : payment), method: :delete,
                     data:{ confirm: t('helpers.messages.confirm'),

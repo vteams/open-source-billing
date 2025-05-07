@@ -1,4 +1,5 @@
 class LogsController < ApplicationController
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   include DateFormats
   before_action :set_log, only: [:show, :edit, :update, :destroy]
   layout 'application'
@@ -180,6 +181,7 @@ class LogsController < ApplicationController
                                     :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                     :invoice_total, :archive_number, :archived_at, :deleted_at,
                                     :payment_terms_id, :due_date, :company_id,:currency_id, :project_id, :invoice_type,:tax_id,:invoice_tax_amount
+
     )
   end
 

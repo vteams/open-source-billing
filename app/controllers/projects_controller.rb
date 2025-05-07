@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
   helper_method :sort_column, :sort_direction
 
   layout :choose_layout
@@ -7,7 +8,7 @@ class ProjectsController < ApplicationController
   include DateFormats
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_filter :authenticate_user!
   protect_from_forgery
 
 
@@ -17,7 +18,6 @@ class ProjectsController < ApplicationController
     @status = params[:status]
     load_projects
     @projects = filter_by_company(@projects) if @projects
-    authorize @projects
     respond_to do |format|
       format.html # index.html.erb
       format.js
@@ -153,21 +153,21 @@ class ProjectsController < ApplicationController
   end
 
   def load_projects
-    # if (current_user.has_role? :staff)
-    #   projects = current_user.staff.projects if current_user.staff.present?
-    # else
-    #   projects = Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
-    # end
+    if (current_user.has_role? :staff)
+      projects = current_user.staff.projects if current_user.staff.present?
+    else
+      projects = Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+    end
 
-    # if projects
-    #   projects = ((current_user.has_role? :staff) && current_user.staff ) ? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
-    #   projects = projects.search(params[:search]).records if params[:search].present?
-    #   projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
-    # else
-    #   projects = nil
-    # end
+    if projects
+      projects = ((current_user.has_role? :staff) && current_user.staff ) ? current_user.staff.projects : Project.joins("LEFT OUTER JOIN clients ON clients.id = projects.client_id ")
+      projects = projects.search(params[:search]).records if params[:search].present?
+      projects = projects.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+    else
+      projects = nil
+    end
 
-    @projects = Project.all
+    @projects = projects
   end
 
 end
