@@ -1,5 +1,6 @@
 module EmailService
   class EstimateEmailService
+    FROM_GMAIL_ADDRESS = 'sales@presstigers.com'
     def initialize
       @gmail_service = GmailService.new
     end
@@ -9,7 +10,7 @@ module EmailService
       # email_body = mail(:to => client.email, :subject => template.subject).body.to_s
       email = Mail::Message.new
       email.header['To'] = client.email
-      email.header['From'] = 'test8122100@gmail.com'
+      email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
         content_type 'text/html; charset=UTF-8'
