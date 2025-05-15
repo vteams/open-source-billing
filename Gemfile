@@ -21,10 +21,9 @@ group :assets do
   gem 'sass-rails', '5.0.4'
   gem 'yajl-ruby', '~>1.3.1'
   gem 'coffee-rails', '4.1.1'
-  gem 'therubyracer', '0.12.2', :platforms => :ruby
   gem 'uglifier', '3.0.0'
 end
-
+gem 'therubyracer', '0.12.2', :platforms => :ruby
 gem 'active_link_to', '1.0.3'
 gem 'jquery-rails', '~> 3.1.3'
 gem 'nested_form', '0.3.2'
