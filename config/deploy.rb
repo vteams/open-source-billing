@@ -9,7 +9,7 @@ set :rvm_binary, '/usr/local/rvm/bin/rvm'
 set :use_sudo, false
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/config.yml'
+append :linked_files, 'config/database.yml', 'config/config.yml', 'config/client_secret'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'tmp/pids'#,'log', 'tmp/cache', 'tmp/sockets', 'public/system'
