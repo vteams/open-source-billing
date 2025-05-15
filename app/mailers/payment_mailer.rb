@@ -42,7 +42,7 @@ class PaymentMailer < ActionMailer::Base
                                })
   end
 
-  def get_email_template(user = nil, invoice, template_type)
+  def self.get_email_template(user = nil, invoice, template_type)
     #find company level template of a template_type
     get_user = user.is_a?(String)? User.find_by_email(user) : user
     template = EmailTemplate.unscoped.where(:template_type => template_type).first
@@ -51,7 +51,7 @@ class PaymentMailer < ActionMailer::Base
     template
   end
 
-  def replace_template_body(user = nil, payment, template_type)
+  def self.replace_template_body(user = nil, payment, template_type)
     invoice = payment.invoice
     get_user = user.is_a?(String)? User.find_by_email(user) : user
     template = get_email_template(get_user, invoice, template_type)

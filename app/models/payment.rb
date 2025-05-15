@@ -205,7 +205,7 @@ class Payment < ActiveRecord::Base
   end
 
   def notify_client current_user, invoice_pdf_file = nil
-    PaymentMailer.payment_notification_email(current_user, self, invoice_pdf_file).deliver #if self.send_payment_notification
+    EmailService::PaymentEmailService.new.send_payment_email(current_user, self, invoice_pdf_file)
   end
 
   def self.payments_history(client)
