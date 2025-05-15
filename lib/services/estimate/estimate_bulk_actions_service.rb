@@ -87,7 +87,7 @@ module Services
     private
 
     def send_estimate_to_client(estimate)
-      EstimateMailer.delay.new_estimate_email(estimate.client, estimate, estimate.encrypted_id, @current_user)
+      EmailService::EstimateEmailService.new.delay.new_estimate_email(estimate.client, estimate, estimate.encrypted_id, @current_user)
     end
 
     def get_estimates(estimate_filter)

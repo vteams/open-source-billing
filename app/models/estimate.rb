@@ -220,7 +220,7 @@ class Estimate < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil)
-    EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
+    EmailService::EstimateEmailService.new.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end
 
   def send_estimate current_user, id

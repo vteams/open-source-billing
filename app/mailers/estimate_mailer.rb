@@ -37,7 +37,7 @@ class EstimateMailer < ActionMailer::Base
                                })
   end
 
-  def replace_template_body(user = nil, estimate, template_type)
+  def self.replace_template_body(user = nil, estimate, template_type)
     template = get_email_template(user, estimate, template_type)
     param_values = {
         'sender_business_name' => 'OSB LLC',
@@ -63,7 +63,7 @@ class EstimateMailer < ActionMailer::Base
   end
 
 
-  def get_email_template(user = nil, estimate, template_type)
+  def self.get_email_template(user = nil, estimate, template_type)
     #find company level template of a template_type
     template =EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of template_type if no company level template
