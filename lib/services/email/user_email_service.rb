@@ -1,5 +1,6 @@
 module EmailService
   class UserEmailService
+    FROM_GMAIL_ADDRESS = 'sales@presstigers.com'
     def initialize
       @gmail_service = GmailService.new
     end
@@ -10,7 +11,7 @@ module EmailService
       # mail(:to => sub_user.email, :subject => template.subject)
       email = Mail::Message.new
       email.header['To'] = sub_user.email
-      email.header['From'] = 'test8122100@gmail.com'
+      email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
         content_type 'text/html; charset=UTF-8'
@@ -30,7 +31,7 @@ module EmailService
     # mail(to: recipient, subject: "OpenSourceBilling: Quickbooks import data result for #{module_name} module")
     email = Mail::Message.new
     email.header['To'] = recipient
-    email.header['From'] = 'test8122100@gmail.com'
+    email.header['From'] = FROM_GMAIL_ADDRESS
     email.header['subject'] = "OpenSourceBilling: Quickbooks import data result for #{module_name} module"
     email.html_part do
       content_type 'text/html; charset=UTF-8'
