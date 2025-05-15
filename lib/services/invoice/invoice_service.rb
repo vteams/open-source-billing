@@ -65,7 +65,7 @@ module Services
       invoice = ::Invoice.find_by_id(invoice_id)
       return nil if invoice.blank?
       invoice.disputed!
-      InvoiceMailer.delay.dispute_invoice_email(current_user, invoice, dispute_reason)
+      EmailService::InvoiceEmailService.new.delay.dispute_invoice_email(current_user, invoice, dispute_reason)
       invoice = ::Invoice.find_by_id(invoice_id)
       invoice
     end

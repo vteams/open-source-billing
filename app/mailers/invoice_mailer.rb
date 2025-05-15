@@ -120,7 +120,7 @@ class InvoiceMailer < ActionMailer::Base
                                })
   end
 
-  def get_email_template(user = nil, invoice, template_type)
+  def self.get_email_template(user = nil, invoice, template_type)
     #find company level template of a template_type
     template = EmailTemplate.unscoped.where(:template_type => template_type).first
     #find account level template of template_type if no company level template
@@ -130,7 +130,7 @@ class InvoiceMailer < ActionMailer::Base
     template
   end
 
-  def replace_template_body(user = nil, invoice, template_type)
+  def self.replace_template_body(user = nil, invoice, template_type)
     template = get_email_template(user, invoice, template_type)
     param_values = {
         'sender_business_name' => 'OSB LLC',

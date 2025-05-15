@@ -259,7 +259,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil, invoice_pdf_file = nil)
-    InvoiceMailer.new_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file).deliver
+    EmailService::InvoiceEmailService.new.send_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
   end
 
   def send_invoice current_user, id
@@ -469,7 +469,7 @@ class Invoice < ActiveRecord::Base
 
   def send_note_only response_to_client, current_user
     self.update_attribute('status', 'sent')
-    InvoiceMailer.delay.send_note_email(response_to_client, self, self.client, current_user)
+    EmailService::InvoiceEmailService.new.delay.send_note_email(response_to_client, self, self.client, current_user)
   end
 
   def late_payment_reminder(reminder_number)

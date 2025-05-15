@@ -39,7 +39,7 @@ module Reporting
       invoices.each do |invoice|
         ["First", "Second", "Third"].each do |reminder_number|
           email_reminder = EmailTemplate.late_payment_reminder_template(invoice, "#{reminder_number} Late Payment Reminder")
-          InvoiceMailer.delay(:run_at => email_reminder.no_of_days.days.from_now).late_payment_reminder_email(invoice.id, "#{reminder_number} Late Payment Reminder")  if invoice.late_payment_reminder(reminder_number).blank? and  email_reminder.send_email
+          EmailService::InvoiceEmailService.new.delay(:run_at => email_reminder.no_of_days.days.from_now).late_payment_reminder_email(invoice.id, "#{reminder_number} Late Payment Reminder")  if invoice.late_payment_reminder(reminder_number).blank? and  email_reminder.send_email
         end
       end
       Reporting::Reminder.delay(:run_at => 1.day.from_now).late_payment_reminder

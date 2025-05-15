@@ -94,7 +94,7 @@ module Services
     private
 
     def send_invoice_to_client(invoice)
-      InvoiceMailer.delay.new_invoice_email(invoice.client, invoice, invoice.encrypted_id, @current_user)
+      EmailService::InvoiceEmailService.new.delay.new_invoice_email(invoice.client, invoice, invoice.encrypted_id, @current_user)
     end
 
     private
