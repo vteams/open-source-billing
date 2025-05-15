@@ -28,11 +28,11 @@ class UserMailer < ActionMailer::Base
      mail(:to => sub_user.email, :subject => template.subject)
    end
 
-  def get_email_template(user, template_type)
+  def self.get_email_template(user, template_type)
    EmailTemplate.unscoped.where(:template_type => template_type).first
   end
 
-  def replace_template_body(current_user, sub_user, template_type)
+  def self.replace_template_body(current_user, sub_user, template_type)
     template = get_email_template(current_user, template_type)
     param_values = {
         'user_name'=> (sub_user.user_name rescue 'ERROR'),

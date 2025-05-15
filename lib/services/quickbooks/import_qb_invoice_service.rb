@@ -78,7 +78,7 @@ module Services
       end
       data_import_result_message = "#{counter} record(s) successfully imported."
       module_name = 'Invoices'
-      ::UserMailer.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
+      EmailService::UserEmailService.new.delay.qb_import_data_result(data_import_result_message, module_name, options[:user])
     end
   end
 end

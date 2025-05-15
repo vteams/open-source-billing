@@ -40,7 +40,7 @@ class SubUsersController < ApplicationController
         @sub_user.update(current_company: get_company_id)
         current_user.accounts.first.users << @sub_user
         begin
-          UserMailer.new_user_account(current_user, @sub_user).deliver if params[:notify_user].to_i == 1
+          EmailService::UserEmailService.new.new_user_account(current_user, @sub_user) if params[:notify_user].to_i == 1
         rescue => e
           puts  e
         end
