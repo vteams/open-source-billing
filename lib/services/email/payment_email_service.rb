@@ -1,5 +1,6 @@
 module EmailService
   class PaymentEmailService
+    FROM_GMAIL_ADDRESS = 'sales@presstigers.com'
     def initialize
       @gmail_service = GmailService.new
     end
@@ -12,7 +13,7 @@ module EmailService
       email.header['To'] = client.billing_email if client.billing_email.present?
       email.header['Cc'] = template.cc.present? ? (client.email + ',' + template.cc) : client.email
       email.header['Bcc'] = template.bcc if template.bcc.present?
-      email.header['From'] = 'test8122100@gmail.com'
+      email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
         content_type 'text/html; charset=UTF-8'
