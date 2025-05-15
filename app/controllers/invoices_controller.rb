@@ -134,10 +134,6 @@ class InvoicesController < ApplicationController
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     manage_clients_and_items_for_invoice if request.format.json?
-    logger.info("<================= INVOICE PAGE ===================>")
-    logger.info("Invoice Discounted Amount: #{@invoice.discount_amount}")
-    logger.info("Invoice SubTotal Amount: #{@invoice.sub_total}")
-    logger.info("Invoice Discount Type: #{@invoice.discount_type}")
     @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount if @invoice.present? && @invoice.discount_type.eql?("coupon")
     respond_to do |format|
       if @invoice.save
