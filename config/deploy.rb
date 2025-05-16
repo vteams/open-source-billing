@@ -5,7 +5,7 @@
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 set :rvm_ruby_version, '2.3.7'
-set :rvm_binary, '/usr/local/rvm/bin/rvm'
+set :rvm_binary, '/home/deploy/.rvm/bin/rvm'
 set :use_sudo, false
 
 # Default value for :linked_files is []
