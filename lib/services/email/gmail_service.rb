@@ -7,8 +7,7 @@ require 'mail'
 class GmailService
   APPLICATION_NAME = 'Open-Source_billing'.freeze
   CREDENTIALS_PATH = File.join(Rails.root, 'config', 'client_secret.json').freeze
-  CONFIG = JSON.parse(File.read(CREDENTIALS_PATH))
-  OOB_URI = CONFIG.dig('web', 'redirect_uris')&.first.freeze
+  OOB_URI = 'https://market.presstigers.com/oauth2callback'.freeze
   TOKEN_PATH = File.join(Rails.root, 'config', 'gmail_token.yaml').freeze
   SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_SEND
 
