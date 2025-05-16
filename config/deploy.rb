@@ -23,21 +23,21 @@ namespace 'deploy' do
   desc "Start the application"
   task :start do
     on roles(:app) do
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec puma -p 9393 -d"
+      execute :sudo, '/usr/bin/systemctl', :start, 'puma.service'
     end
   end
 
   desc "Stop the application"
   task :stop do
     on roles(:app) do
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec pumactl -P tmp/pids/puma.pid stop"
+      execute :sudo, '/usr/bin/systemctl', :stop, 'puma.service'
     end
   end
 
   desc "Restart the application"
   task :restart do
     on roles(:app) do
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec pumactl -P tmp/pids/puma.pid restart"
+      execute :sudo, '/usr/bin/systemctl', :restart, 'puma.service'
     end
   end
 end
