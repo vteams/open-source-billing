@@ -143,14 +143,15 @@ class InvoicesController < ApplicationController
         format.js
         format.json {render :json=> @invoice, :status=> :ok}
       else
-	if @invoice.errors.include?(:invoice_number)
-	 # create_full_payment if @invoice.status.eql?('paid')
-	  @invoice.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) if @invoice.status.eql?('sent')
-	  format.js
-          format.json { render :json => {error: "The invoice PTMP-#{@invoice.invoice_number} already exist."}, :status => :conflict }
-	else
-          format.js
-          format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+        if @invoice.errors.include?(:invoice_number)
+           # create_full_payment if @invoice.status.eql?('paid')
+           @invoice = Invoice.find_by(invoice_number: invoice_params[:invoice_number]) if request.format.json?
+           @invoice.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) if invoice_params[:status].eql?('sent')
+           format.js
+           format.json { render :json => {error: "The invoice PTMP-#{@invoice.invoice_number} already exist."}, :status => :conflict }
+        else
+           format.js
+           format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
       	end
       end
     end
