@@ -134,7 +134,7 @@ class InvoicesController < ApplicationController
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     manage_clients_and_items_for_invoice if request.format.json?
-    @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount if @invoice.present? && @invoice.discount_type.eql?("coupon")
+    @invoice.invoice_total = invoice_params[:sub_total].to_f - invoice_params[:discount_amount].to_f if invoice_params[:discount_type].eql?("coupon") && invoice_params[:sub_total].present? && invoice_params[:discount_amount].present?
     respond_to do |format|
       if @invoice.save
         create_full_payment if @invoice.status.eql?('paid')
