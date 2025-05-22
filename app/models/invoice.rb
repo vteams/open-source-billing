@@ -259,7 +259,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil, invoice_pdf_file = nil)
-    EmailService::InvoiceEmailService.new.send_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file)
+    EmailService::InvoiceEmailService.new.send_invoice_email(self.client, self, self.encrypted_id, current_user, invoice_pdf_file, 'Payment Received')
   end
 
   def send_invoice current_user, id

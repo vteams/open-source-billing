@@ -134,6 +134,7 @@ class InvoiceMailer < ActionMailer::Base
     template = get_email_template(user, invoice, template_type)
     param_values = {
         'sender_business_name' => 'OSB LLC',
+        'client_name'=> (invoice.unscoped_client.first_name.blank? ? 'Client' : invoice.unscoped_client.first_name if template_type.eql? 'Payment Received'),
         'client_contact'=> (invoice.client.first_name rescue 'ERROR'),
         'currency_symbol' => (invoice.currency_symbol  rescue 'ERROR'),
         'invoice_total' => (invoice.invoice_total.to_s  rescue 'ERROR'),

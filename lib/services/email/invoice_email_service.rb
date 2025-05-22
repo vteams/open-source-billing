@@ -33,8 +33,8 @@ module EmailService
                                    :date => Date.today
                                  })
     end
-    def send_invoice_email(client, invoice, e_id , current_user, invoice_pdf_file=nil)
-      template = InvoiceMailer.replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
+    def send_invoice_email(client, invoice, e_id , current_user, invoice_pdf_file=nil, template_type=nil)
+      template = InvoiceMailer.replace_template_body(current_user, invoice, template_type) #(logged in user,invoice,email type)
       @email_html_body = template.body
       email = Mail::Message.new
       email.header['To'] = client.billing_email if client.billing_email.present?
