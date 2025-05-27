@@ -11,7 +11,7 @@ module EmailService
       email = Mail::Message.new
       email.header['To'] = client.billing_email if client.billing_email.present?
       email.header['Cc'] = client.email+","+(template.cc if template.cc.present?)
-      email.header['Bcc'] = template.bcc if template.bcc.present?
+      email.header['Bcc'] = FROM_GMAIL_ADDRESS
       email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
@@ -39,7 +39,7 @@ module EmailService
       email = Mail::Message.new
       email.header['To'] = client.billing_email if client.billing_email.present?
       email.header['Cc'] = template.cc.present? ? (client.email + ',' + template.cc) : client.email
-      email.header['Bcc'] = template.bcc if template.bcc.present?
+      email.header['Bcc'] = FROM_GMAIL_ADDRESS
       email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
@@ -80,7 +80,7 @@ module EmailService
     email = Mail::Message.new
     email.header['To'] = client.email
     email.header['Cc'] = template.cc if template.cc.present?
-    email.header['Bcc'] = template.bcc if template.bcc.present?
+    email.header['Bcc'] = FROM_GMAIL_ADDRESS
     email.header['From'] = FROM_GMAIL_ADDRESS
     email.header['subject'] = template.subject
     email.html_part do
@@ -101,7 +101,7 @@ module EmailService
     email = Mail::Message.new
     email.header['To'] = client.email
     email.header['Cc'] = template.cc if template.cc.present?
-    email.header['Bcc'] = template.bcc if template.bcc.present?
+    email.header['Bcc'] = FROM_GMAIL_ADDRESS
     email.header['From'] = FROM_GMAIL_ADDRESS
     email.header['subject'] = template.subject
     email.html_part do
@@ -128,7 +128,7 @@ module EmailService
     email = Mail::Message.new
     email.header['To'] = client.email
     email.header['Cc'] = template.cc if template.cc.present?
-    email.header['Bcc'] = template.bcc if template.bcc.present?
+    email.header['Bcc'] = FROM_GMAIL_ADDRESS
     email.header['From'] = FROM_GMAIL_ADDRESS
     email.header['subject'] = template.subject
     email.html_part do
@@ -153,7 +153,7 @@ module EmailService
     email = Mail::Message.new
     email.header['To'] = user.email
     email.header['Cc'] = template.cc if template.cc.present?
-    email.header['Bcc'] = template.bcc if template.bcc.present?
+    email.header['Bcc'] = FROM_GMAIL_ADDRESS
     email.header['From'] = FROM_GMAIL_ADDRESS
     email.header['subject'] = template.subject
     email.html_part do
