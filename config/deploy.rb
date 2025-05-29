@@ -7,7 +7,6 @@ ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :rvm_ruby_version, '2.3.7'
 set :rvm_binary, '/home/deploy/.rvm/bin/rvm'
 set :use_sudo, false
-set :git_strategy, Capistrano::Git::CopyStrategy
 
 # Default value for :linked_files is []
 append :linked_files, 'config/database.yml', 'config/config.yml', 'config/client_secret.json', 'config/gmail_token.yaml'
