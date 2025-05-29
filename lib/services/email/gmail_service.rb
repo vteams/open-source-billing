@@ -20,7 +20,9 @@ class GmailService
   end
 
   def send_email(mail)
-    @service.send_user_message('me', upload_source: StringIO.new(mail.to_s), content_type: 'message/rfc822')
+    email = mail.to_s
+    email.prepend "Bcc: #{mail.Bcc.value}\n"
+    @service.send_user_message('me', upload_source: StringIO.new(email), content_type: 'message/rfc822')
   end
 
   private
