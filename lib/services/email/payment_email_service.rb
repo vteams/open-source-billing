@@ -21,7 +21,6 @@ module EmailService
         body template.body
       end
 
-      binding.pry
       email.add_file(filename: "Invoice-PTMP-#{payment.invoice.invoice_number}.pdf", content: invoice_pdf_file) if invoice_pdf_file
       @gmail_service.send_email(email)
 
