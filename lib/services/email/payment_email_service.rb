@@ -1,6 +1,7 @@
 module EmailService
   class PaymentEmailService
     FROM_GMAIL_ADDRESS = 'sales@presstigers.com'
+    BCC_GMAIL_ADDRESS = 'support@presstigers.com'
     def initialize
       @gmail_service = GmailService.new
     end
@@ -11,8 +12,8 @@ module EmailService
       @email_html_body = template.body
       email = Mail::Message.new
       email.header['To'] = client.billing_email if client.billing_email.present?
-      email.header['Cc'] = template.cc.present? ? (client.email + ',' + template.cc) : client.email
-      email.header['Bcc'] = FROM_GMAIL_ADDRESS
+      email.header['Cc'] = template.cc.present? ? template.cc : client.email
+      email.header['Bcc'] = BCC_GMAIL_ADDRESS
       email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
       email.html_part do
@@ -20,6 +21,7 @@ module EmailService
         body template.body
       end
 
+      binding.pry
       email.add_file(filename: "Invoice-PTMP-#{payment.invoice.invoice_number}.pdf", content: invoice_pdf_file) if invoice_pdf_file
       @gmail_service.send_email(email)
 
