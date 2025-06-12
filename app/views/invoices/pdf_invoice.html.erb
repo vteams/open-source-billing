@@ -56,9 +56,9 @@
                   <tr>
                     <td class="left-align"><%= item.item_name rescue "" %></td>
                     <td class="left-align"><%= item.item_description %></td>
-                    <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                    <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "$") %></td>
                     <td class="align_right"><%= item.item_quantity.to_i %></td>
-                    <td class="align_right"><%= number_to_currency(item_line_total, unit: "") %></td>
+                    <td class="align_right"><%= number_to_currency(item_line_total, unit: "$") %></td>
                   </tr>
               <% end %>
               </tbody>
@@ -84,23 +84,23 @@
             <b class="pt_pdf_invoice invoice-total-title">Balance Due (<%= invoice.currency.unit %>)</b>
             <% if invoice.discount_amount.present? && invoice.discount_amount > 0 %>
               <em class="f-invoice-price">
-                <%= "You Saved: #{number_to_currency(invoice.discount_amount, unit: '$')}" %>
+                <%= "You Saved: #{number_to_currency(invoice.discount_amount.to_f, unit: '$')}" %>
               </em>
             <% end %>
           </div>
           <div class="invoice-total-right">
             <div class="new-invoice-footer-row">
-              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total), unit: '' ) %></b>
+              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total.to_f), unit: '$' ) %></b>
             </div>
 	    <div class="new-invoice-footer-row">
-              <b class="f-invoice-price"><%= number_to_currency((invoice.discount_amount || 0), unit: '' ) %></b>
+              <b class="f-invoice-price"><%= number_to_currency((invoice.discount_amount.to_f || 0), unit: '$' ) %></b>
             </div>
 	    <div class="new-invoice-footer-row">
-              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total - invoice.discount_amount.to_f), unit: '' ) %></b>
+              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total.to_f - invoice.discount_amount.to_f), unit: '$' ) %></b>
             </div>
             <div class="new-invoice-footer-row">
               <em class="f-invoice-price">
-                <%= invoice.status.eql?('sent') ? number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  '' ) : "-#{number_to_currency((invoice.invoice_total - invoice.discount_amount.to_f), unit: '' )}" %>
+                <%= invoice.status.eql?('sent') ? number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  '$' ) : "-#{number_to_currency((invoice.invoice_total.to_f - invoice.discount_amount.to_f), unit: '$' )}" %>
               </em>
             </div>
 	    <% if invoice.discount_amount.present? && invoice.discount_amount > 0 %>
