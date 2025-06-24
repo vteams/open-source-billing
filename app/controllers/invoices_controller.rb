@@ -129,6 +129,8 @@ class InvoicesController < ApplicationController
                         'draft'
                       elsif params[:send_invoice]
                         'sent'
+                      elsif params[:invoice][:status].eql?('test')
+                        'test'
                       end
     @invoice.invoice_type = "Invoice"
     @invoice.company_id = get_company_id()
@@ -137,7 +139,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount if invoice_params[:discount_type].eql?("coupon") && invoice_params[:discount_amount].present? && invoice_params[:status].eql?("paid")
     respond_to do |format|
       if @invoice.save
-        create_full_payment if @invoice.status.eql?('paid')
+        create_full_payment if @invoice.status.eql?('paid') || params[:invoice][:status].eql?('test')
         @invoice.notify_client_with_pdf_invoice_attachment(current_user, @invoice.id) if @invoice.status.eql?('sent')
         @new_invoice_message = new_invoice(@invoice.id, @invoice.status).gsub(/<\/?[^>]*>/, "").chop
         format.js

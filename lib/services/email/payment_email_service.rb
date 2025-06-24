@@ -12,7 +12,7 @@ module EmailService
       @email_html_body = template.body
       email = Mail::Message.new
       email.header['To'] = client.billing_email if client.billing_email.present?
-      email.header['Cc'] = template.cc.present? ? template.cc : client.email
+      email.header['Cc'] = template.cc.present? && !payment.invoice.status.eql?('test') ? template.cc : client.email
       email.header['Bcc'] = BCC_GMAIL_ADDRESS
       email.header['From'] = FROM_GMAIL_ADDRESS
       email.header['subject'] = template.subject
