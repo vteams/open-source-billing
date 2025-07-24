@@ -48,6 +48,9 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
+      format.csv do
+        send_data generate_csv(@current_company_invoices), filename: "invoices-#{Date.today}.csv"
+      end
     end
   end
 
@@ -395,6 +398,29 @@ class InvoicesController < ApplicationController
   end
 
   private
+
+  def total(invoice_line_items)
+    invoice_line_items.sum { |item| line_total(item.item_unit_cost, item.item_quantity) }
+  end
+
+  def line_total(unit_cost, quantity)
+    unit_cost.to_f * quantity.to_f
+  end
+
+  def generate_csv(invoices)
+    CSV.generate(headers: true) do |csv|
+      csv << [ 'Client Name', 'Billing Month', 'Issue Date', 'Invoice Number', 'Status', 'Item', 'Description', 'Unit Cost', 'Quantity', 'Sub Total', 'Tax 1', 'Total' ]
+
+      invoices.each do |invoice|
+        billing_month = Date.parse(invoice.invoice_date).strftime("%B %Y") rescue ''
+        client_name = invoice.client.try(:organization_name) || ''
+        invoice_total = total(invoice.invoice_line_items)
+        invoice.invoice_line_items.each do |item|
+          csv << [ client_name, billing_month, invoice.invoice_date, invoice.invoice_number, invoice.status, item.item_name, item.item_description, item.item_unit_cost, item.item_quantity, line_total(item.item_unit_cost, item.item_quantity), item.tax_1, invoice_total ]
+        end
+      end
+    end
+  end
 
   def get_invoice
     @invoice = Invoice.find(params[:id])
