@@ -416,7 +416,7 @@ class InvoicesController < ApplicationController
         client_name = invoice.client.try(:organization_name) || ''
         invoice_total = total(invoice.invoice_line_items)
         invoice.invoice_line_items.each do |item|
-          csv << [ client_name, billing_month, invoice.invoice_date, invoice.invoice_number, invoice.status, item.item_name, item.item_description, item.item_unit_cost, item.item_quantity, line_total(item.item_unit_cost, item.item_quantity), item.tax_1, invoice_total ]
+          csv << [ client_name, invoice.billing_month, invoice.invoice_date, invoice.invoice_number, invoice.status, item.item_name, item.item_description, item.item_unit_cost, item.item_quantity, line_total(item.item_unit_cost, item.item_quantity), item.tax_1, invoice_total ]
         end
       end
     end
