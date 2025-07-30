@@ -90,17 +90,17 @@
           </div>
           <div class="invoice-total-right">
             <div class="new-invoice-footer-row">
-              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total.to_f), unit: '$' ) %></b>
+              <b class="f-invoice-price"><%= number_to_currency((invoice.sub_total.to_f), unit: '$' ) %></b>
             </div>
 	    <div class="new-invoice-footer-row">
               <b class="f-invoice-price"><%= number_to_currency((invoice.discount_amount.to_f || 0), unit: '$' ) %></b>
             </div>
 	    <div class="new-invoice-footer-row">
-              <b class="f-invoice-price"><%= number_to_currency((invoice.invoice_total.to_f - invoice.discount_amount.to_f), unit: '$' ) %></b>
+              <b class="f-invoice-price"><%= number_to_currency((invoice.sub_total.to_f - invoice.discount_amount.to_f), unit: '$' ) %></b>
             </div>
             <div class="new-invoice-footer-row">
               <em class="f-invoice-price">
-                <%= invoice.status.eql?('sent') ? number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  '$' ) : "-#{number_to_currency((invoice.invoice_total.to_f - invoice.discount_amount.to_f), unit: '$' )}" %>
+                <%= invoice.status.eql?('sent') ? number_to_currency(Payment.invoice_paid_amount(invoice.id), unit:  '$' ) : "-#{number_to_currency((invoice.sub_total.to_f - invoice.discount_amount.to_f), unit: '$' )}" %>
               </em>
             </div>
 	    <% if invoice.discount_amount.present? && invoice.discount_amount > 0 %>

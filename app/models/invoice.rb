@@ -73,7 +73,7 @@ class Invoice < ActiveRecord::Base
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
-  before_save :update_invoice_total
+  before_save :update_invoice_total_unless_api_request
 
   # archive and delete
   acts_as_archival
@@ -120,6 +120,12 @@ class Invoice < ActiveRecord::Base
 
   def unpaid?
     self.status != 'paid'
+  end
+
+  def calculate_invoice_subtotal
+    invoice_line_items.map do |item|
+      item.item_unit_cost.to_f * item.item_quantity.to_f
+    end.sum
   end
 
   def paid?
@@ -538,6 +544,10 @@ class Invoice < ActiveRecord::Base
                           discount_type.eql?('%') ? (line_items_total_with_taxes * (discount_value.to_f / 100.0)).round(2) : discount_value
                         end
     discounted_amount
+  end
+
+  def update_invoice_total_unless_api_request
+    update_invoice_total unless api_request
   end
 
   def update_invoice_total

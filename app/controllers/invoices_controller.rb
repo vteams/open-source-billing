@@ -136,7 +136,12 @@ class InvoicesController < ApplicationController
     @invoice.company_id = get_company_id()
     @invoice.create_line_item_taxes()
     manage_clients_and_items_for_invoice if request.format.json?
-    @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount if invoice_params[:discount_type].eql?("coupon") && invoice_params[:discount_amount].present? && invoice_params[:status].eql?("paid")
+
+    if coupon_discount_applicable_in_json?
+      apply_json_coupon_discount
+    elsif coupon_discount_applies_for_paid_status?
+      apply_paid_coupon_discount
+    end
     respond_to do |format|
       if @invoice.save
         create_full_payment if @invoice.status.eql?('paid') || params[:invoice][:status].eql?('test')
@@ -411,6 +416,28 @@ class InvoicesController < ApplicationController
   end
 
   private
+
+  def coupon_discount_applicable_in_json?
+    request.format.json? &&
+      invoice_params[:discount_type].eql?("coupon") &&
+      invoice_params[:discount_amount].present?
+  end
+
+  def coupon_discount_applies_for_paid_status?
+    invoice_params[:discount_type].eql?("coupon") &&
+      invoice_params[:discount_amount].present? &&
+      invoice_params[:status].eql?("paid")
+  end
+
+  def apply_json_coupon_discount
+    @invoice.sub_total      = @invoice.calculate_invoice_subtotal + (params[:invoice][:items_discount].present? ? params[:invoice][:items_discount].to_f : 0.0)
+    @invoice.discount_amount = invoice_params[:discount_amount].to_f
+    @invoice.invoice_total   = @invoice.sub_total - @invoice.discount_amount
+  end
+
+  def apply_paid_coupon_discount
+    @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount
+  end
 
   def updated_invoice_line_items_attributes
     params[:invoice][:invoice_line_items_attributes].each do |key, val|
