@@ -373,7 +373,7 @@ class InvoicesController < ApplicationController
       if existing_item.present?
         line_item.item_id = existing_item.id
       else
-        new_item = Item.create(item_name: line_item.item_name, item_description: line_item.item_description, unit_cost: line_item.item_unit_cost, quantity: line_item.item_quantity)
+        new_item = Item.create(item_name: line_item.item_name, item_description: line_item.item_description, unit_cost: line_item.item_unit_cost, actual_price: line_item.actual_price, quantity: line_item.item_quantity)
         associate_entity(({company_ids: [get_company_id], controller: 'items'}), new_item)
         line_item.item_id = new_item.id
       end
@@ -465,7 +465,7 @@ class InvoicesController < ApplicationController
                                     invoice_line_items_attributes:
                                         [
                                           :id, :invoice_id, :item_description, :item_id, :item_name,
-                                          :item_quantity, :item_unit_cost, :tax_1, :tax_2, :_destroy
+                                          :item_quantity, :item_unit_cost, :actual_price, :tax_1, :tax_2, :_destroy
                                         ],
                                     recurring_schedule_attributes:
                                         [
