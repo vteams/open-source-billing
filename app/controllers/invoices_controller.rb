@@ -139,8 +139,8 @@ class InvoicesController < ApplicationController
 
     if coupon_discount_applicable_in_json?
       apply_json_coupon_discount
-    elsif coupon_discount_applies_for_paid_status?
-      apply_paid_coupon_discount
+    else
+      @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount
     end
     respond_to do |format|
       if @invoice.save
@@ -418,25 +418,15 @@ class InvoicesController < ApplicationController
   private
 
   def coupon_discount_applicable_in_json?
-    request.format.json? &&
+    @invoice.api_request? &&
       invoice_params[:discount_type].eql?("coupon") &&
       invoice_params[:discount_amount].present?
-  end
-
-  def coupon_discount_applies_for_paid_status?
-    invoice_params[:discount_type].eql?("coupon") &&
-      invoice_params[:discount_amount].present? &&
-      invoice_params[:status].eql?("paid")
   end
 
   def apply_json_coupon_discount
     @invoice.sub_total      = @invoice.calculate_invoice_subtotal + (params[:invoice][:items_discount].present? ? params[:invoice][:items_discount].to_f : 0.0)
     @invoice.discount_amount = invoice_params[:discount_amount].to_f
     @invoice.invoice_total   = @invoice.sub_total - @invoice.discount_amount
-  end
-
-  def apply_paid_coupon_discount
-    @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount
   end
 
   def updated_invoice_line_items_attributes
