@@ -419,7 +419,6 @@ class InvoicesController < ApplicationController
 
   def coupon_discount_applicable_in_json?
     request.format.json? &&
-      invoice_params[:discount_type].eql?("coupon") &&
       invoice_params[:discount_amount].present?
   end
 
