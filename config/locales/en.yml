@@ -601,7 +601,7 @@ en:
       item_description: "Item description"
       item_unit_cost: "Unit Cost"
       unit_code: "Unit cost"
-      quantity: "Hours"
+      quantity: "Quantity"
       tax: "Tax"
       make_this_item_available_to: "Make this Item available to"
       no_item_msg: "You haven't created any item yet. Please click on New Item button to create new item."
