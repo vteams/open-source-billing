@@ -137,11 +137,8 @@ class InvoicesController < ApplicationController
     @invoice.create_line_item_taxes()
     manage_clients_and_items_for_invoice if request.format.json?
 
-    if coupon_discount_applicable_in_json?
-      apply_json_coupon_discount
-    else
-      @invoice.invoice_total = @invoice.sub_total - @invoice.discount_amount
-    end
+    apply_json_coupon_discount if coupon_discount_applicable_in_json?
+    
     respond_to do |format|
       if @invoice.save
         create_full_payment if @invoice.status.eql?('paid') || params[:invoice][:status].eql?('test')
@@ -419,7 +416,7 @@ class InvoicesController < ApplicationController
 
   def coupon_discount_applicable_in_json?
     request.format.json? &&
-      invoice_params[:discount_amount].present?
+      invoice_params[:discount_amount].present? && @invoice.status.eql?('test')
   end
 
   def apply_json_coupon_discount

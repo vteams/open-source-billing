@@ -547,7 +547,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def update_invoice_total_unless_api_request
-    update_invoice_total unless api_request
+    update_invoice_total unless status.eql?('test')
   end
 
   def update_invoice_total

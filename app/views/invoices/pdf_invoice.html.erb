@@ -46,7 +46,9 @@
                 <th class="left-align"><%= t('views.common.description') %></th>
                 <th class="align_right"><%= t('views.common.unit_cost') %></th>
                 <th class="align_right"><%= t('views.items.quantity') %></th>
+                <% if invoice.status.eql?('test') %>
                   <th class="align_right">Regular Price</th>
+                <% end %>
                 <th class="align_right"><%= t('views.invoices.line_total') %></th>
               </tr>
               </thead>
@@ -59,7 +61,9 @@
                     <td class="left-align"><%= item.item_description %></td>
                     <td class="align_right"><%= number_to_currency(item.item_unit_cost, unit: "$") %></td>
                     <td class="align_right"><%= item.item_quantity.to_i %></td>
+                    <% if invoice.status.eql?('test') %>
                       <td class="align_right"><%= number_to_currency(item.actual_price, unit: "$") %></td>
+                    <% end %>
                     <td class="align_right"><%= number_to_currency(item_line_total, unit: "$") %></td>
                   </tr>
               <% end %>
