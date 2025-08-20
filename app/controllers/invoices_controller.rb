@@ -123,6 +123,7 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(invoice_params)
     @invoice.api_request = true if request.format.json?
+    @invoice.extra_discount = params[:invoice][:items_discount] if params[:invoice][:items_discount].present?
     @invoice.status = if invoice_params[:status].eql?('paid') or params[:send_paid].eql?('true')
                         'paid'
                       elsif params[:save_as_draft]

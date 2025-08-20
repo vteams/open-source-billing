@@ -24,7 +24,7 @@ class Invoice < ActiveRecord::Base
   include DateFormats
   include Trackstamps
   include InvoiceSearch
-  attr_accessor :api_request
+  attr_accessor :api_request, :extra_discount
   scope :multiple, ->(ids_list) {where("id in (?)", ids_list.is_a?(String) ? ids_list.split(',') : [*ids_list]) }
   scope :current_invoices,->(company_id){ where("IFNULL(due_date, invoice_date) >= ?", Date.today).where(company_id: company_id).order('created_at DESC')}
   scope :past_invoices, -> (company_id){where("IFNULL(due_date, invoice_date) < ?", Date.today).where(company_id: company_id).order('created_at DESC')}
@@ -556,7 +556,7 @@ class Invoice < ActiveRecord::Base
     subtotal = line_items_total_with_taxes - discounted_amount
     invoice_tax_amount = self.tax_id.nil? ? 0.0 : (Tax.find_by(id: self.tax_id).percentage.to_f)
     additional_invoice_tax = invoice_tax_amount.eql?(0.0) ? 0.0 : (subtotal * invoice_tax_amount/100.0).round(2)
-    self.sub_total = line_items_total_with_taxes
-    self.invoice_total = (subtotal + additional_invoice_tax).round(2)
+    self.sub_total = line_items_total_with_taxes + extra_discount.to_f
+    self.invoice_total = extra_discount.present? ? (self.sub_total + additional_invoice_tax - self.discount_amount).round(2) : (subtotal + additional_invoice_tax).round(2)
   end
 end
