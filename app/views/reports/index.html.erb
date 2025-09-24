@@ -30,6 +30,21 @@
         <% end %>
       </div>
       <div class="reportTile-container">
+        <%= link_to(yearly_invoice_detail_reports_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
+          <div class="ember-view">
+            <div class="reportTile-skewer paddingY--quarter">
+              <div class="paddingRight--1 textAlign--center report_img">
+                <i class="material-icons">receipt</i>
+              </div>
+              <div>
+                <span class="js-report-tile-name">Yearly Invoice Details</span>
+                <div class="reportTile-description js-report-tile-description">A detailed summary of all invoices you've sent over a period of time</div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="reportTile-container">
         <%= link_to(item_sales_reports_path, class: 'reportTile-content js-view-invoice-details ember-view') do %>
           <div class="ember-view">
             <div class="reportTile-skewer paddingY--quarter">

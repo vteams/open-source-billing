@@ -1,0 +1,14 @@
+<div class="new-invoice-table-holder main-invoice page-box report-box">
+  <% if request.format.pdf? %>
+    <h1 class="center-align">Yearly Invoice Details</h1>
+  <% end %>
+  <div class="col s12 page-box-header">
+    <div class="title-desc">
+      <h6><%= t('views.reports.yearly_invoice_details') %></h6>
+      <span class="text-uppercase"><%= raw @report.period %></span>
+    </div>
+    <p><%= t('views.reports.invoice_detail_dtl') %></p>
+
+    <%= render 'reports/report_partials/format_links'%>
+  </div>
+</div>

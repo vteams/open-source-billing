@@ -1,0 +1,8 @@
+$('.report_content').html("<%= escape_javascript render("reports/report_partials/#{@report.report_name}")%>").find('table tbody').fadeIn(9000);
+$(".scrollContainer").mCustomScrollbar({
+    scrollInertia: 150,
+    advanced: {
+        updateOnContentResize:true,
+        autoScrollOnFocus: false
+    }
+});

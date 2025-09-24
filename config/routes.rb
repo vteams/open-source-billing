@@ -113,6 +113,7 @@ Osb::Application.routes.draw do
         get :item_sales
         get :payments_collected
         get :revenue_by_client
+        get :yearly_invoice_detail
       end
     end
     resources :activities do

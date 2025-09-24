@@ -48,6 +48,27 @@ class ReportsController < ApplicationController
     end
   end
 
+  def yearly_invoice_detail
+    @report = Reporting::Reporter.get_report({:report_name => 'yearly_invoice_detail', :report_criteria => get_criteria(params)})
+    authorize @report
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data @report.to_csv }
+      format.xls { send_data @report.to_xls }
+      format.xlsx { send_file(@report.to_xlsx.path, :filename => "#{params[:report_name]}.#{request.format.symbol}", :type => "#{request.format.to_s}", :disposition => "inline") }
+      format.pdf do
+        render :pdf          => "#{@report.report_name}",
+               :layout       => 'pdf_mode.html.erb',
+               :template     => 'reports/yearly_invoice_detail.html.erb',
+               footer:{
+                 right: 'Page [page] of [topage]'
+               },
+               show_as_html: false
+      end
+    end
+  end
+
   def item_sales
     @report = Reporting::Reporter.get_report({:report_name => 'item_sales', :report_criteria => get_criteria(params)})
     authorize @report
