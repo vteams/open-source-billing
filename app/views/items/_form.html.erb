@@ -25,6 +25,7 @@
               <div class="row">
                 <span class="hidden item_id"><%= item.id %></span>
                 <%= f.submit class: 'btn_large submit-item-form hidden' %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 <%= f.input :item_name, label: t('views.items.item_name'), wrapper_html: { class: 'input-field col s12' }, label_html: { id: 'step1', class: 'intro items-new-false-intro' } %>
                 <%= f.input :item_description, label: t('views.items.description'), wrapper_html: { class: 'input-field col s12' }, label_html: { id: 'step2', class: 'intro items-new-false-intro' } %>
                 <%= f.input :unit_cost, label: t('views.items.default_unit_cost'), wrapper_html: { class: 'input-field col s12 m6' }, as: :string, label_html: { id: 'step3', class: 'intro items-new-false-intro' } %>

@@ -238,7 +238,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = current_user.settings.language.try(:to_sym) || params[:locale] || I18n.default_locale if current_user
+    if current_user
+      locale = current_user.settings.language.try(:to_sym) || params[:locale]&.to_sym
+      I18n.locale = I18n.available_locales.include?(locale) ? locale : I18n.default_locale
+
+      Rails.logger.info "I18n.locale set to: #{I18n.locale}, params[:locale]: #{params[:locale]}, user language: #{current_user.settings.language}"
+    end
   end
 
   def default_url_options(options = {})

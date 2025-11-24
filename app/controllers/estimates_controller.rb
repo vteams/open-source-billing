@@ -2,7 +2,7 @@ class EstimatesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_per_page_session
   after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? &&  (!current_user.introduction.estimate? || !current_user.introduction.new_estimate?) }
-  protect_from_forgery except: [:preview]
+  protect_from_forgery except: [:preview, :create]
   before_action :authenticate_user!, except: [:preview]
   helper_method :sort_column, :sort_direction
   include DateFormats
