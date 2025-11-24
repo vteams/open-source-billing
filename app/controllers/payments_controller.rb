@@ -25,13 +25,19 @@ class PaymentsController < ApplicationController
   include PaymentsHelper
   helper_method :sort_column, :sort_direction, :get_org_name
 
+  SORTABLE_COLUMNS = {
+    "payments.created_at" => "payments.created_at",
+    "payments.amount" => "payments.amount",
+    "clients.organization_name" => "clients.organization_name"
+  }.freeze
+
   def index
     @current_company_payments = Payment.by_company(get_company_id)
-    @payments = @current_company_payments.filter_params(params).page(params[:page]).per(@per_page).order("#{sort_column} #{sort_direction}")
+    @payments = @current_company_payments.filter_params(params).page(params[:page]).per(@per_page).order(Arel.sql("#{sort_column} #{sort_direction}"))
     authorize @payments
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.js
     end
   end
@@ -258,17 +264,9 @@ class PaymentsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] ||= 'payments.created_at'
-    sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
-    sort_col = get_org_name if sort_col == 'clients.organization_name'
-    sort_col
-  end
-
-  def sort_column
-    params[:sort] ||= 'payments.created_at'
-    sort_col = params[:sort] #Payment.column_names.include?(params[:sort]) ? params[:sort] : 'clients.organization_name'
-    sort_col = get_org_name if sort_col == 'clients.organization_name'
-    sort_col
+    requested = params[:sort].to_s
+    return get_org_name if requested == "clients.organization_name"
+    SORTABLE_COLUMNS[requested] || "payments.created_at"
   end
 
   def sort_direction

@@ -5,12 +5,12 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   def index
-    params[:status] = params[:status] || 'active'
+    params[:status] ||= 'active'
     @status = params[:status]
-    @companies = Company.filter(params.merge(per: @per_page, account: current_user.current_account)).order(sort_column + " " + sort_direction)
+    @companies = Company.filter(params.merge(per: @per_page, account: current_user.current_account)).order("#{sort_column} #{sort_direction}")
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @companies }
       format.js
     end
@@ -196,8 +196,12 @@ class CompaniesController < ApplicationController
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
 
+  def allowed_sort_columns
+    Company.column_names
+  end
+
   def sort_column
-    params[:sort].present? ? params[:sort] : 'created_at'
+    allowed_sort_columns.include?(params[:sort]) ? params[:sort] : "created_at"
   end
 
   def sort_direction

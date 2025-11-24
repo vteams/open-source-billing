@@ -20,7 +20,7 @@
 #
 class InvoicesController < ApplicationController
 
-  before_action :authenticate_user!, except: %i[show preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
+  before_action :authenticate_user!, except: %i[preview paypal_payments pay_with_credit_card dispute_invoice payment_with_credit_card]
 
   before_action :set_per_page_session
   before_action :get_invoice, only: %i[show edit update stop_recurring send_invoice destroy clone]
@@ -28,7 +28,7 @@ class InvoicesController < ApplicationController
   before_action :set_client_id, only: :create
   after_action :user_introduction, only: [:index, :new], if: -> { current_user.introduction.present? && (!current_user.introduction.invoice? || !current_user.introduction.new_invoice?) }
 
-  protect_from_forgery :except => %i[show preview paypal_payments create]
+  protect_from_forgery :except => %i[preview paypal_payments create]
 
   helper_method :sort_column, :sort_direction
 
@@ -55,7 +55,7 @@ class InvoicesController < ApplicationController
     unless !current_user.present?
       authorize @invoice
     end
-    skip_authorization
+
     @client = Client.unscoped.find_by_id @invoice.client_id
     respond_to do |format|
       format.html {render template: 'invoices/show.html.erb'}
