@@ -20,7 +20,6 @@
     "js.cookie": "^0.0.4",
     "loader-runner": "^4.3.0",
     "moment": "^2.26.0",
-    "node": "^16.13.1",
     "nouislider": "^14.6.0",
     "popper.js": "^1.16.1",
     "rails-erb-loader": "^5.5.2",
