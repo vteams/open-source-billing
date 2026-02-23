@@ -30,3 +30,21 @@
     left: auto !important;
     opacity: 1 !important;
 }
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  display: none;
+  padding: 10px 14px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  z-index: 1000;
+}
+
+#back-to-top:hover {
+  background-color: #555;
+}
