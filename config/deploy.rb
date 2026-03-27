@@ -4,7 +4,7 @@
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-set :rvm_ruby_version, '2.3.7'
+set :rvm_ruby_version, '2.7.1'
 set :rvm_binary, '/usr/local/rvm/bin/rvm'
 set :use_sudo, false
 
