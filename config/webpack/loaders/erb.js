@@ -1,5 +1,7 @@
 const path = require('path');
-const railsBin = path.join(__dirname, '..', '..', '..', 'bin', 'rails');
+const appRoot = path.join(__dirname, '..', '..', '..');
+const rubyBin = '/home/dev/.rvm/rubies/ruby-2.7.1/bin/ruby';
+const railsBin = path.join(appRoot, 'bin', 'rails');
 
 module.exports = {
   test: /\.erb$/,
@@ -8,7 +10,7 @@ module.exports = {
   use: [{
     loader: 'rails-erb-loader',
     options: {
-      runner: '/home/dev/.rvm/rubies/ruby-2.7.1/bin/ruby ' + railsBin + ' runner',
+      runner: rubyBin + ' ' + railsBin + ' runner',
       env: { RAILS_ENV: process.env.RAILS_ENV || 'staging' }
     }
   }]
