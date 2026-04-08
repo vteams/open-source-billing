@@ -88,7 +88,12 @@ class DashboardController < ApplicationController
       end
     end
 
-    payments_chart_data = @current_company_payments.where('payments.created_at > ?', 6.months.ago).order('payments.created_at asc').group('currencies.unit').group('MONTHNAME(payments.created_at)').sum('payments.payment_amount')
+    payments_chart_data = @current_company_payments
+                            .where('payments.created_at > ?', 6.months.ago)
+                            .group('currencies.unit')
+                            .group('MONTHNAME(payments.created_at)')
+                            .order('MIN(payments.created_at) asc')
+                            .sum('payments.payment_amount')
     currencies = invoices_chart_data.keys.collect{|a| a.first}.uniq
     @payments_chart_data = {}
     currencies.each do |currency|
