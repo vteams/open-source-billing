@@ -1,0 +1,76 @@
+set :default_env, {
+  'PATH'         => '/home/dev/.nvm/versions/node/v18.20.8/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+  'NODE_OPTIONS' => '--openssl-legacy-provider',
+  'NODE_ENV'     => 'production'
+}
+
+# config valid only for current version of Capistrano
+# lock '3.6.1'
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :rvm_ruby_version, '2.7.1'
+set :rvm_binary, '/usr/local/rvm/bin/rvm'
+set :use_sudo, false
+append :linked_files, 'config/database.yml', 'config/config.yml', 'Gemfile.lock', 'config/secrets.yml'
+append :linked_dirs, 'tmp/pids'
+set :keep_releases, 5
+set :default_shell, '/bin/bash -l'
+
+namespace :deploy do
+  # 1️⃣ Yarn install
+  desc "Install JS dependencies"
+  task :yarn_install do
+    on roles(:web) do
+      execute "export PATH=/home/dev/.nvm/versions/node/v18.20.8/bin:$PATH && cd #{release_path} && yarn install --production=false --silent --no-progress"
+    end
+  end
+
+  # 2️⃣ Asset precompile with legacy OpenSSL and correct RAILS_ENV
+  desc "Precompile assets with legacy OpenSSL support"
+  task :assets_with_openssl do
+    on roles(:web) do
+      execute "export PATH=/home/dev/.nvm/versions/node/v18.20.8/bin:/home/dev/.rvm/rubies/ruby-2.7.1/bin:$PATH && cd #{release_path} && NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production RAILS_ENV=#{fetch(:rails_env)} ~/.rvm/bin/rvm 2.7.1 do bundle exec rake assets:precompile"
+    end
+  end
+
+  # 3️⃣ Fix permissions so nginx can read assets
+  desc "Fix public asset permissions for nginx"
+  task :fix_permissions do
+    on roles(:web) do
+      execute "chmod o+x /home/dev /home/dev/deploy /home/dev/deploy/staging"
+      execute "chmod -R o+rX #{release_path}/public"
+    end
+  end
+
+  # Disable default precompile and replace with our own
+  Rake::Task['deploy:assets:precompile'].clear_actions rescue nil
+
+  before 'deploy:assets:precompile', 'deploy:yarn_install'
+  after  'deploy:yarn_install',      'deploy:assets_with_openssl'
+  after  'deploy:assets_with_openssl', 'deploy:fix_permissions'
+
+  # 4️⃣ Puma tasks
+  desc "Start Puma"
+  task :start do
+    on roles(:app) do
+      if test("[ -d #{current_path} ]")
+        execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} ~/.rvm/bin/rvm 2.7.1 do bundle exec puma -p 9191 -d"
+      end
+    end
+  end
+
+  desc "Stop Puma"
+  task :stop do
+    on roles(:app) do
+      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} ~/.rvm/bin/rvm 2.7.1 do bundle exec pumactl -P tmp/pids/puma.pid stop || true"
+    end
+  end
+
+  desc "Restart Puma"
+  task :restart do
+    on roles(:app) do
+      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} ~/.rvm/bin/rvm 2.7.1 do bundle exec pumactl -P tmp/pids/puma.pid restart || RAILS_ENV=#{fetch(:rails_env)} ~/.rvm/bin/rvm 2.7.1 do bundle exec puma -p 9191 -d"
+    end
+  end
+end
+
+after 'deploy:finishing', 'deploy:restart'
