@@ -297,6 +297,11 @@ class Invoice < ApplicationRecord
 
   def notify(current_user, id = nil, invoice_pdf_file = nil)
     current_company = Company.find(current_user.current_company)
+    unless current_company.mail_config.present?
+      Rails.logger.warn("Invoice notification skipped: missing mail config for company_id=#{current_company.id}, invoice_id=#{self.id}")
+      return
+    end
+
     NotificationWorker.perform_async('InvoiceMailer','new_invoice_email',[self.client_id, self.id, self.id, current_user.id, invoice_pdf_file], current_company.smtp_settings)
   end
 
@@ -611,6 +616,7 @@ class Invoice < ApplicationRecord
         'invoice_day' => (self.created_at.strftime("%d") rescue 'Invoice Day'),
         'company_abbreviation' => (self.company.abbreviation rescue 'Company Abbreviation')
     }
-    Settings.invoice_number_format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
+    format = Settings.invoice_number_format.presence || "{{invoice_number}}"
+    format.gsub(/\{\{(.*?)\}\}/) {|m| param_values[$1] }
   end
 end

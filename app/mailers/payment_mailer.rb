@@ -21,19 +21,21 @@
 class PaymentMailer < ApplicationMailer
 
   def payment_notification_email(current_user, payment)
-   # @clients, @invoice, @amount = clients, invoice, payment.payment_amount
     get_user = User.find(current_user)
-    client = Payment.find(payment).invoice.unscoped_client
-    template = replace_template_body(current_user, Payment.find(payment), 'Payment Received') #(logged in user,invoice,email type)
+    payment = Payment.find(payment)
+    client = payment.invoice.unscoped_client
+    template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(to: client.email, cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
-   Payment.find(payment).sent_emails.create({
+    client_email = [client.email, client.billing_email].compact.reject(&:blank?)
+    email_body = mail(to: client_email, from: payment.company.mail_config.from,
+                      cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
+   payment.sent_emails.create({
                                    :content => email_body,
-                                   :sender => get_user.email, #User email
-                                   :recipient => client.email, #clients email
-                                   :subject => 'Payment notification',
+                                   :sender => get_user.email,
+                                   :recipient => client_email.join(', '),
+                                   :subject => template.subject,
                                    :type => 'Payment',
-                                   :company_id => Payment.find(payment).company_id,
+                                   :company_id => payment.company_id,
                                    :date => Date.today
                                })
   end

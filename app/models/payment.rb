@@ -210,9 +210,15 @@ class Payment < ApplicationRecord
   end
 
   def notify_client current_user
-    # PaymentMailer.delay.payment_notification_email(current_user, self) if self.send_payment_notification
+    return unless self.send_payment_notification
+
     current_company = Company.find(current_user.current_company)
-    NotificationWorker.perform_async('PaymentMailer','payment_notification_email',[current_user.id, self.id], current_company.smtp_settings) if self.send_payment_notification
+    unless current_company.mail_config.present?
+      Rails.logger.warn("Payment notification skipped: missing mail config for company_id=#{current_company.id}, payment_id=#{self.id}")
+      return
+    end
+
+    NotificationWorker.perform_async('PaymentMailer','payment_notification_email',[current_user.id, self.id], current_company.smtp_settings)
   end
 
   def self.payments_history(client)

@@ -243,6 +243,11 @@ class Estimate < ApplicationRecord
 
   def notify(current_user, id = nil)
     current_company = Company.find(current_user.current_company)
+    unless current_company.mail_config.present?
+      Rails.logger.warn("Estimate notification skipped: missing mail config for company_id=#{current_company.id}, estimate_id=#{self.id}")
+      return
+    end
+
     NotificationWorker.perform_async('EstimateMailer','new_estimate_email',[self.client_id, self.id, self.encrypted_id, current_user.id], current_company.smtp_settings)
     # EstimateMailer.delay.new_estimate_email(self.client, self, self.encrypted_id, current_user)
   end
