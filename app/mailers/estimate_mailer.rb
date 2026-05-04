@@ -27,8 +27,8 @@ class EstimateMailer < ApplicationMailer
     current_user = User.find(current_user_id)
     template = replace_template_body(current_user, estimate, 'New Estimate') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    client_email = [client.email, client.billing_email]
-    email_body = mail(:to => client_email, from: (estimate.company.mail_config.from), :subject => template.subject).body.to_s
+    client_email = [client.email, client.billing_email].compact.reject(&:blank?).uniq
+    email_body = mail(:to => client_email, from: sender_email_for(estimate.company), :subject => template.subject).body.to_s
     estimate.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email

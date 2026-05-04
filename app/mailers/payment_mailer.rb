@@ -26,8 +26,8 @@ class PaymentMailer < ApplicationMailer
     client = payment.invoice.unscoped_client
     template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    client_email = [client.email, client.billing_email].compact.reject(&:blank?)
-    email_body = mail(to: client_email, from: payment.company.mail_config.from,
+    client_email = [client.email, client.billing_email].compact.reject(&:blank?).uniq
+    email_body = mail(to: client_email, from: sender_email_for(payment.company),
                       cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
    payment.sent_emails.create({
                                    :content => email_body,

@@ -28,8 +28,8 @@ class InvoiceMailer < ApplicationMailer
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
     attachments["Invoice-#{invoice.invoice_number}.pdf"] = invoice_pdf_file if invoice_pdf_file
-    client_email = [client.email, client.billing_email]
-    email_body = mail(to: (client_email), from: (invoice.company.mail_config.from),
+    client_email = [client.email, client.billing_email].compact.reject(&:blank?).uniq
+    email_body = mail(to: (client_email), from: sender_email_for(invoice.company),
                       cc: (template.cc.present? ? client.email+","+template.cc : client.email), bcc: (template.bcc if template.bcc.present?) , subject: template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
@@ -56,7 +56,7 @@ class InvoiceMailer < ApplicationMailer
                                    :company_id => invoice.company_id,
                                    :date => Date.today
                                })
-    mail(to: client.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
+    mail(to: client.email, from: sender_email_for(invoice.company), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
   end
 
   def soft_payment_reminder_email(invoice_id)
@@ -64,7 +64,7 @@ class InvoiceMailer < ApplicationMailer
     client = invoice.client
     template = replace_template_body(nil, invoice, 'Soft Payment Reminder') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    mail(to: client.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
+    mail(to: client.email, from: sender_email_for(invoice.company), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
 
     invoice.sent_emails.create({
                                    content: @email_html_body,
@@ -81,7 +81,7 @@ class InvoiceMailer < ApplicationMailer
     client = invoice.client
     template = replace_template_body(nil, invoice, 'First Late Payment Reminder') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    mail(to: client.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
+    mail(to: client.email, from: sender_email_for(invoice.company), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
     invoice.sent_emails.create({
                                    content: @email_html_body,
                                    recipient: client.email, #clients email
@@ -97,7 +97,7 @@ class InvoiceMailer < ApplicationMailer
     @@reason_by_client = reason
     template = replace_template_body(user, invoice, 'Dispute Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    mail(to: user.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
+    mail(to: user.email, from: sender_email_for(invoice.company), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject)
     invoice.sent_emails.create({
                                    :content => reason,
                                    :sender => invoice.client.try(:email), #User email
@@ -110,7 +110,7 @@ class InvoiceMailer < ApplicationMailer
   end
   def response_to_client(user, invoice, response)
     @user, @invoice, @response = user, invoice, response
-    mail(to: @invoice.client.email, from: (invoice.company.mail_config.from), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: 'Invoice Undisputed')
+    mail(to: @invoice.client.email, from: sender_email_for(invoice.company), cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: 'Invoice Undisputed')
     invoice.sent_emails.create({
                                    :content => response,
                                    :sender => user.email, #User email
