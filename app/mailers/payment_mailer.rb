@@ -24,11 +24,11 @@ class PaymentMailer < ApplicationMailer
     get_user = User.find(current_user)
     payment = Payment.find(payment)
     client = payment.invoice.unscoped_client
-    template = replace_template_body(current_user, payment, 'Payment Received') #(logged in user,invoice,email type)
+    template = replace_template_body(current_user, payment, 'Payment Received')
     @email_html_body = template.body
     client_email = [client.email, client.billing_email].compact.reject(&:blank?).uniq
     email_body = mail(to: client_email, from: sender_email_for(payment.company),
-                      cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject).body.to_s
+                      cc: (template.cc if template.cc.present?), bcc: (template.bcc if template.bcc.present?), subject: template.subject, 'X-PM-Message-Stream' => 'outbound').body.to_s
    payment.sent_emails.create({
                                    :content => email_body,
                                    :sender => get_user.email,

@@ -2,7 +2,7 @@
   <b><%= client.organization_name rescue '' %></b>
 </div>
 <div>
-  <%= client.full_name %>
+  <%= client.full_name rescue '' %>
 </div>
 <div>
   <% if client.present? %>

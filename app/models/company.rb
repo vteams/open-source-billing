@@ -40,7 +40,9 @@ class Company < ApplicationRecord
         user_name: self.mail_config.user_name,
         password: self.mail_config.password,
         openssl_verify_mode: self.mail_config.openssl_verify_mode,
-        tls: self.mail_config.tls
+        tls: self.mail_config.tls,
+        open_timeout: 10,
+        read_timeout: 10
     }
   end
 
